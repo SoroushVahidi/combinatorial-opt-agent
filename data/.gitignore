@@ -1,0 +1,7 @@
+# Ignore the contents of raw/ (large cloned repos) but keep the directory
+raw/*
+!raw/.gitkeep
+
+# Ignore embeddings (large binary files)
+embeddings/*
+!embeddings/.gitkeep

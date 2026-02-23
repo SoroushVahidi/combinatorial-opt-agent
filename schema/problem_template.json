@@ -1,0 +1,40 @@
+{
+  "problem_id": "string",
+  "problem_name": "string",
+  "aliases": ["list of alternative names"],
+  "category": "string (routing, scheduling, knapsack, covering, assignment, network_flow, graph, location, packing, etc.)",
+  "tags": ["list of tags"],
+  "natural_language_descriptions": ["multiple phrasings of the problem"],
+  "complexity_class": "string (P, NP-hard, NP-complete, etc.)",
+  "formulation": {
+    "sets": [
+      {"symbol": "string", "description": "string"}
+    ],
+    "parameters": [
+      {"symbol": "string", "description": "string", "type": "string"}
+    ],
+    "decision_variables": [
+      {"symbol": "string", "description": "string", "type": "binary/integer/continuous"}
+    ],
+    "objective": {
+      "sense": "minimize/maximize",
+      "expression_latex": "string",
+      "description": "string"
+    },
+    "constraints_ilp": [
+      {"name": "string", "expression_latex": "string", "description": "string"}
+    ],
+    "constraints_lp_relaxation": "string describing the LP relaxation (relax integrality)",
+    "alternative_formulations": ["list of alternative formulation names"]
+  },
+  "solver_code": {
+    "pyomo": "string (optional)",
+    "gurobi": "string (optional)",
+    "pulp": "string (optional)"
+  },
+  "benchmark_instances": [
+    {"source": "string", "instance_name": "string", "optimal_value": "number or null"}
+  ],
+  "references": ["list of references"],
+  "source_dataset": "string"
+}
