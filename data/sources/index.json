@@ -1,0 +1,8 @@
+{
+  "description": "Machine-readable manifests of problem names/lists per source. See docs/data_sources.md for the full list.",
+  "sources": [
+    "or_library.json",
+    "gurobi_modeling_examples.json",
+    "gurobi_optimods.json"
+  ]
+}

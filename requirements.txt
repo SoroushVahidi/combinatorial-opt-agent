@@ -1,0 +1,8 @@
+# Retrieval: semantic search over problem catalog
+sentence-transformers>=2.2.0
+numpy>=1.20.0
+
+# Optional for future collectors / pipeline
+# pandas>=1.3.0
+# requests>=2.26.0
+# beautifulsoup4>=4.10.0

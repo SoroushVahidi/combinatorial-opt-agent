@@ -60,7 +60,10 @@ User (Natural Language)
 
 ## 📊 Data Sources
 
-Our dataset is built from multiple authoritative sources:
+Our dataset is built from multiple authoritative sources. **The full list of libraries and their problem names is in the project:**
+
+- **[docs/data_sources.md](docs/data_sources.md)** — Canonical list of all sources with URLs, sizes, and explicit problem/example names (OR-Library families, Gurobi modeling example folders, Gurobi OptiMods mods, etc.).
+- **data/sources/** — Machine-readable manifests: `or_library.json`, `gurobi_modeling_examples.json`, `gurobi_optimods.json`, `index.json`.
 
 | Source | Type | Size | What We Extract |
 |--------|------|------|-----------------|
@@ -152,6 +155,18 @@ pip install -r requirements.txt
 # Run the collection pipeline
 python pipeline/run_collection.py
 ```
+
+### Try the retrieval (query → problem + IP)
+
+With the starter catalog and retrieval module you can run:
+
+```bash
+pip install -r requirements.txt
+python run_search.py "minimize cost of opening warehouses and assigning customers"
+python run_search.py "knapsack" 2
+```
+
+First run will download the sentence-transformers model (~90MB). Results show the best-matching problem(s) and their integer program (variables, objective, constraints).
 
 ### Option C: HPC (Wulver @ NJIT) — For Phase 4+
 

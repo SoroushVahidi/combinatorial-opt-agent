@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Combinatorial Optimization Problem",
+  "description": "Unified schema for a single problem and its integer program",
+  "type": "object",
+  "required": ["id", "name", "description", "formulation"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier (e.g. knapsack_01, tsp)"
+    },
+    "name": {
+      "type": "string",
+      "description": "Canonical problem name"
+    },
+    "aliases": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Alternative names and spellings for retrieval"
+    },
+    "description": {
+      "type": "string",
+      "description": "Short natural-language description; used for semantic search"
+    },
+    "formulation": {
+      "type": "object",
+      "required": ["variables", "objective", "constraints"],
+      "properties": {
+        "variables": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["symbol", "description", "domain"],
+            "properties": {
+              "symbol": { "type": "string" },
+              "description": { "type": "string" },
+              "domain": { "type": "string" }
+            }
+          }
+        },
+        "objective": {
+          "type": "object",
+          "required": ["sense", "expression"],
+          "properties": {
+            "sense": { "enum": ["minimize", "maximize"] },
+            "expression": { "type": "string" }
+          }
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["expression", "description"],
+            "properties": {
+              "expression": { "type": "string" },
+              "description": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "formulation_latex": {
+      "type": "string",
+      "description": "Optional LaTeX of the full IP for display"
+    },
+    "complexity": {
+      "type": "string",
+      "description": "e.g. NP-hard, P"
+    },
+    "source": {
+      "type": "string",
+      "description": "Reference or dataset origin"
+    }
+  }
+}

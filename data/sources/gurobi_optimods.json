@@ -1,0 +1,21 @@
+{
+  "name": "Gurobi OptiMods",
+  "url": "https://github.com/Gurobi/gurobi-optimods",
+  "type": "python_mods",
+  "mods": [
+    "bipartite_matching",
+    "datasets",
+    "line_optimization",
+    "max_flow",
+    "metromap",
+    "min_cost_flow",
+    "min_cut",
+    "mwis",
+    "opf",
+    "portfolio",
+    "qubo",
+    "regression",
+    "sharpe_ratio",
+    "workforce"
+  ]
+}
