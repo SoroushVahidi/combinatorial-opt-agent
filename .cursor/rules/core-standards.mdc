@@ -1,0 +1,34 @@
+---
+description: Core coding and data-handling standards for the combinatorial-opt-agent project
+alwaysApply: true
+---
+
+# Core Project Rules
+
+- **Python style**
+  - Prefer clear, explicit code over clever one-liners.
+  - Keep functions focused; avoid side effects where possible.
+  - Use type hints for new or significantly edited functions.
+
+- **Data and catalogs**
+  - Treat `schema/problem_schema.json` as the source of truth when adding new problems.
+  - Prefer updating `data/processed/custom_problems.json` (via the template) instead of directly editing `all_problems.json`.
+  - Never commit large raw datasets; `data/raw/` and downloaded artifacts should remain git-ignored.
+
+- **Retrieval behavior**
+  - When changing retrieval logic, keep `_load_catalog`, `search`, and `format_problem_and_ip` behavior consistent with existing JSON schema.
+  - Avoid introducing heavy new dependencies into the query path (CLI and web UI) that would noticeably slow first response.
+
+- **Web UI (Gradio)**
+  - Preserve the simple two-input interface (query textbox + top_k slider) unless there is a strong UX reason to extend it.
+  - Always show some immediate feedback (status text, spinner, etc.) while a query is running.
+  - Keep copy user-friendly and explain any non-obvious buttons (like “Examples” vs “Submit”).
+
+- **Dependencies and environment**
+  - Keep `requirements.txt` minimal; avoid adding large frameworks unless essential.
+  - When bumping `sentence-transformers` / `transformers` versions, verify compatibility with macOS/Python 3.12 and note any required pins in the README.
+
+- **Git hygiene**
+  - Do not commit secrets, API keys, or machine-specific configuration.
+  - Avoid committing large generated files unless they are clearly documented (e.g., small demo catalogs). 
+

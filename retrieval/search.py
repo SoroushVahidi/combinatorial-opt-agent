@@ -94,8 +94,11 @@ def format_problem_and_ip(problem: dict, score: float | None = None) -> str:
         "",
         problem.get("description", ""),
         "",
-        "**Variables:**",
     ]
+
+    # Collapsible variables section
+    lines.append("<details><summary><strong>Variables</strong></summary>")
+    lines.append("")
     for v in problem.get("formulation", {}).get("variables", []):
         symbol = v.get("symbol", "")
         description = v.get("description", "")
@@ -107,23 +110,38 @@ def format_problem_and_ip(problem: dict, score: float | None = None) -> str:
             lines.append(f"- {symbol_tex}: {description} ({domain_tex})")
         else:
             lines.append(f"- {symbol}: {description} ({domain})")
+    lines.append("")
+    lines.append("</details>")
     obj = problem.get("formulation", {}).get("objective", {})
-    lines.extend([
-        "",
-        f"**Objective ({obj.get('sense', '')}):**",
-        obj.get("expression", ""),
-        "",
-        "**Constraints:**",
-    ])
+    lines.extend(
+        [
+            "",
+            "<details><summary><strong>Objective</strong></summary>",
+            "",
+            f"**Sense:** {obj.get('sense', '')}",
+            "",
+            obj.get("expression", ""),
+            "",
+            "</details>",
+            "",
+            "<details><summary><strong>Constraints</strong></summary>",
+            "",
+        ]
+    )
     for c in problem.get("formulation", {}).get("constraints", []):
         lines.append(f"- {c.get('expression', '')} — {c.get('description', '')}")
+    lines.append("")
+    lines.append("</details>")
     if problem.get("formulation_latex"):
         latex = problem["formulation_latex"]
         lines.extend(
             [
                 "",
-                "**LaTeX (rendered):**",
+                "<details><summary><strong>LaTeX (rendered)</strong></summary>",
+                "",
                 f"$$ {latex} $$",
+                "",
+                "</details>",
                 "",
             ]
         )

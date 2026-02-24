@@ -48,10 +48,18 @@ def answer(query: str, top_k: int) -> str:
         yield "No matching problems found."
         return
 
+    # Simple confidence hint based on the top score.
+    top_score = results[0][1]
+    if top_score < 0.4:
+        yield (
+            "The match is not very confident (top relevance score is below 0.4). "
+            "If the result does not look right, try adding more detail to your description."
+        )
+
     out = []
     for i, (problem, score) in enumerate(results, 1):
         out.append(f"### Result {i} (relevance: {score:.3f})")
-        out.append(format_problem_and_ip(problem, score=None))
+        out.append(format_problem_and_ip(problem, score=score))
         out.append("---")
     yield "\n".join(out)
 
