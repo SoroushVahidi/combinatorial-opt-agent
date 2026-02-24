@@ -158,7 +158,16 @@ python pipeline/run_collection.py
 
 ### Try the retrieval (query → problem + IP)
 
-With the starter catalog and retrieval module you can run:
+**Option 1 — Web UI (recommended):** A window in your browser where you type and get an answer.
+
+```bash
+pip install -r requirements.txt
+python app.py
+```
+
+Then open the URL shown (e.g. http://127.0.0.1:7860), type your problem in the text box, and click Submit. The bot shows the best-matching problem(s) and their integer program.
+
+**Option 2 — Command line:**
 
 ```bash
 pip install -r requirements.txt
@@ -168,17 +177,24 @@ python run_search.py "knapsack" 2
 
 First run will download the sentence-transformers model (~90MB). Results show the best-matching problem(s) and their integer program (variables, objective, constraints).
 
-### Option C: HPC (Wulver @ NJIT) — For Phase 4+
+### Option C: HPC (Wulver @ NJIT)
+
+You can run the same retrieval bot on NJIT’s Wulver cluster. See **[docs/wulver.md](docs/wulver.md)** for step-by-step setup. Summary:
 
 ```bash
-# On Wulver
+# SSH to Wulver, then:
 git clone https://github.com/SoroushVahidi/combinatorial-opt-agent.git
 cd combinatorial-opt-agent
 module load python/3.10
-pip install --user -r requirements.txt
+python -m venv venv
+source venv/bin/activate   # or: venv/Scripts/activate on Windows
+pip install -r requirements.txt
 
-# For GPU-intensive tasks (model training)
-sbatch scripts/train_classifier.slurm
+# Run a query (interactive)
+python run_search.py "minimize cost of opening warehouses"
+
+# Or submit as a batch job (optional)
+sbatch scripts/run_search.slurm
 ```
 
 ## 📋 Project Phases
