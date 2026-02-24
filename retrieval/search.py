@@ -17,9 +17,14 @@ def _project_root() -> Path:
 
 
 def _load_catalog() -> list[dict]:
-    path = _project_root() / "data" / "processed" / "all_problems.json"
+    root = _project_root()
+    extended = root / "data" / "processed" / "all_problems_extended.json"
+    base = root / "data" / "processed" / "all_problems.json"
+
+    path = extended if extended.exists() else base
     if not path.exists():
         raise FileNotFoundError(f"Catalog not found: {path}")
+
     with open(path, encoding="utf-8") as f:
         return json.load(f)
 
@@ -92,7 +97,16 @@ def format_problem_and_ip(problem: dict, score: float | None = None) -> str:
         "**Variables:**",
     ]
     for v in problem.get("formulation", {}).get("variables", []):
-        lines.append(f"- {v.get('symbol', '')}: {v.get('description', '')} ({v.get('domain', '')})")
+        symbol = v.get("symbol", "")
+        description = v.get("description", "")
+        domain = v.get("domain", "")
+        # Try to render symbols/domains with LaTeX if they look like math.
+        symbol_tex = f"$ {symbol} $" if symbol else ""
+        domain_tex = f"$ {domain} $" if domain else ""
+        if symbol_tex or domain_tex:
+            lines.append(f"- {symbol_tex}: {description} ({domain_tex})")
+        else:
+            lines.append(f"- {symbol}: {description} ({domain})")
     obj = problem.get("formulation", {}).get("objective", {})
     lines.extend([
         "",
@@ -104,7 +118,15 @@ def format_problem_and_ip(problem: dict, score: float | None = None) -> str:
     for c in problem.get("formulation", {}).get("constraints", []):
         lines.append(f"- {c.get('expression', '')} — {c.get('description', '')}")
     if problem.get("formulation_latex"):
-        lines.extend(["", "**LaTeX:**", problem["formulation_latex"], ""])
+        latex = problem["formulation_latex"]
+        lines.extend(
+            [
+                "",
+                "**LaTeX (rendered):**",
+                f"$$ {latex} $$",
+                "",
+            ]
+        )
     if problem.get("complexity"):
         lines.extend(["", f"*Complexity: {problem['complexity']}*", ""])
     if score is not None:

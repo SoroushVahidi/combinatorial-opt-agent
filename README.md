@@ -127,6 +127,25 @@ combinatorial-opt-agent/
     └── explore_dataset.ipynb
 ```
 
+### Extending the catalog with more problems
+
+The retrieval engine searches over `data/processed/all_problems.json` (or an extended version if present). You can add more problems (from new libraries, textbooks, etc.) without changing any model weights:
+
+1. Copy the template:
+
+   ```bash
+   cp data/processed/custom_problems.template.json data/processed/custom_problems.json
+   ```
+
+2. Edit `data/processed/custom_problems.json` and **append** more problems following the schema (see `schema/problem_schema.json`).
+3. Build the extended catalog:
+
+   ```bash
+   python build_extended_catalog.py
+   ```
+
+   This writes `data/processed/all_problems_extended.json`, which is automatically picked up by the web UI and CLI search.
+
 ## 🚀 Quick Start
 
 ### Option A: GitHub Codespaces (Recommended — zero local setup)
@@ -147,35 +166,50 @@ cd combinatorial-opt-agent
 
 # Create virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
-# Install dependencies
+# Install dependencies (includes sentence-transformers, gradio, numpy)
 pip install -r requirements.txt
 
-# Run the collection pipeline
+# If you see a "Numpy is not available" error on macOS/Python 3.12+, run:
+pip install --force-reinstall "numpy<2" "sentence-transformers==2.5.1" "transformers==4.44.2"
+
+# (Optional) Run the data collection pipeline
 python pipeline/run_collection.py
 ```
 
 ### Try the retrieval (query → problem + IP)
 
-**Option 1 — Web UI (recommended):** A window in your browser where you type and get an answer.
+#### Option 1 — Web UI (recommended)
+
+A browser app where you type in natural language and see the closest matching problem and its integer program.
 
 ```bash
-pip install -r requirements.txt
+source venv/bin/activate    # if not already
 python app.py
 ```
 
-Then open the URL shown (e.g. http://127.0.0.1:7860), type your problem in the text box, and click Submit. The bot shows the best-matching problem(s) and their integer program.
+Then:
 
-**Option 2 — Command line:**
+1. Open the URL printed in the terminal (e.g. `http://127.0.0.1:7860`).
+2. Type your optimization problem in plain English in the textbox.
+3. (Optional) Click one of the **Examples** — this only fills the inputs.
+4. Click **Submit** to actually run the search.
+5. A short message appears (“Searching for matching problems…”) while the model runs, then the results are shown:
+   - Problem name
+   - Natural-language description
+   - **Variables**, **objective**, **constraints** (with LaTeX-style math)
+   - LaTeX formulation and complexity, when available
+
+#### Option 2 — Command line
 
 ```bash
-pip install -r requirements.txt
+source venv/bin/activate    # if not already
 python run_search.py "minimize cost of opening warehouses and assigning customers"
 python run_search.py "knapsack" 2
 ```
 
-First run will download the sentence-transformers model (~90MB). Results show the best-matching problem(s) and their integer program (variables, objective, constraints).
+The first run will download the sentence-transformers model (~90MB). Results show the best-matching problem(s) and their integer program (variables, objective, constraints).
 
 ### Option C: HPC (Wulver @ NJIT)
 

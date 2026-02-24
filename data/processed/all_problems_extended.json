@@ -1,0 +1,1195 @@
+[
+  {
+    "id": "knapsack_01",
+    "name": "0-1 Knapsack Problem",
+    "aliases": [
+      "knapsack",
+      "binary knapsack",
+      "0/1 knapsack"
+    ],
+    "description": "Given items with weights and values, select a subset of items to put in a knapsack of limited capacity so that total value is maximized and total weight does not exceed capacity. Each item can be taken at most once.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_i",
+          "description": "1 if item i is selected, 0 otherwise",
+          "domain": "x_i ∈ {0,1} for each item i"
+        }
+      ],
+      "objective": {
+        "sense": "maximize",
+        "expression": "Σᵢ vᵢ xᵢ  (sum of values of selected items)"
+      },
+      "constraints": [
+        {
+          "expression": "Σᵢ wᵢ xᵢ ≤ W",
+          "description": "Total weight must not exceed knapsack capacity W"
+        }
+      ]
+    },
+    "formulation_latex": "\\max \\sum_i v_i x_i \\quad \\text{s.t.} \\quad \\sum_i w_i x_i \\le W,\\quad x_i \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "set_cover",
+    "name": "Set Cover Problem",
+    "aliases": [
+      "set covering",
+      "hitting set (dual)"
+    ],
+    "description": "Given a universe of elements and a family of subsets, choose the minimum number of subsets such that every element is contained in at least one chosen subset.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_S",
+          "description": "1 if subset S is chosen, 0 otherwise",
+          "domain": "x_S ∈ {0,1} for each subset S"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_S x_S  (number of subsets chosen)"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_{S : e ∈ S} x_S ≥ 1 for each element e",
+          "description": "Every element must be covered by at least one chosen set"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_S x_S \\quad \\text{s.t.} \\quad \\sum_{S : e \\in S} x_S \\ge 1 \\; \\forall e,\\quad x_S \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "vertex_cover",
+    "name": "Vertex Cover",
+    "aliases": [
+      "minimum vertex cover",
+      "node cover"
+    ],
+    "description": "Given an undirected graph, choose a minimum set of vertices such that every edge has at least one endpoint in the set.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_v",
+          "description": "1 if vertex v is in the cover, 0 otherwise",
+          "domain": "x_v ∈ {0,1} for each vertex v"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_v x_v  (size of the vertex cover)"
+      },
+      "constraints": [
+        {
+          "expression": "x_u + x_v ≥ 1 for each edge (u,v)",
+          "description": "Every edge must be covered"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_v x_v \\quad \\text{s.t.} \\quad x_u + x_v \\ge 1 \\; \\forall (u,v) \\in E,\\quad x_v \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "facility_location_ufl",
+    "name": "Uncapacitated Facility Location Problem",
+    "aliases": [
+      "UFL",
+      "simple facility location",
+      "warehouse location",
+      "plant location"
+    ],
+    "description": "Given facilities with opening costs and customers with assignment costs to each facility, decide which facilities to open and assign each customer to one open facility to minimize total opening cost plus assignment cost.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "y_i",
+          "description": "1 if facility i is open, 0 otherwise",
+          "domain": "y_i ∈ {0,1}"
+        },
+        {
+          "symbol": "x_ij",
+          "description": "1 if customer j is assigned to facility i, 0 otherwise",
+          "domain": "x_ij ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σᵢ fᵢ yᵢ + Σᵢⱼ cᵢⱼ xᵢⱼ  (opening + assignment costs)"
+      },
+      "constraints": [
+        {
+          "expression": "Σᵢ xᵢⱼ = 1 for each customer j",
+          "description": "Each customer is assigned to exactly one facility"
+        },
+        {
+          "expression": "xᵢⱼ ≤ yᵢ for each facility i and customer j",
+          "description": "Assignment only to open facilities"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_i f_i y_i + \\sum_{i,j} c_{ij} x_{ij} \\quad \\text{s.t.} \\quad \\sum_i x_{ij}=1 \\; \\forall j,\\quad x_{ij} \\le y_i \\; \\forall i,j,\\quad x_{ij},y_i \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "tsp",
+    "name": "Traveling Salesman Problem",
+    "aliases": [
+      "TSP",
+      "traveling salesman",
+      "salesman problem"
+    ],
+    "description": "Given cities and distances between them, find a shortest tour that visits each city exactly once and returns to the start.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_ij",
+          "description": "1 if edge (i,j) is used in the tour, 0 otherwise",
+          "domain": "x_ij ∈ {0,1} for i < j"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_{i<j} dᵢⱼ xᵢⱼ  (total distance of the tour)"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_j: j>i x_ij + Σ_j: j<i x_ji = 2 for each city i",
+          "description": "Each city has degree 2 in the tour"
+        },
+        {
+          "expression": "Σ_{i,j ∈ S} x_ij ≤ |S| − 1 for each proper subset S of cities",
+          "description": "Subtour elimination constraints"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_{i<j} d_{ij} x_{ij} \\quad \\text{s.t.} \\quad \\text{degree } 2 \\; \\forall i,\\quad \\text{no subtours},\\quad x_{ij} \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "max_cut",
+    "name": "Maximum Cut",
+    "aliases": [
+      "max cut",
+      "maxcut",
+      "maximum cut problem"
+    ],
+    "description": "Given an undirected graph with edge weights, partition the vertices into two sets so that the total weight of edges between the two sets is maximized.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_i",
+          "description": "1 if vertex i is in one side of the cut, 0 for the other",
+          "domain": "x_i ∈ {0,1}"
+        },
+        {
+          "symbol": "y_ij",
+          "description": "1 if edge (i,j) is in the cut (endpoints on different sides)",
+          "domain": "y_ij ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "maximize",
+        "expression": "Σ_{(i,j)∈E} wᵢⱼ yᵢⱼ  (weight of edges in the cut)"
+      },
+      "constraints": [
+        {
+          "expression": "y_ij ≤ x_i + x_j and y_ij ≤ 2 − x_i − x_j for each edge (i,j)",
+          "description": "y_ij = 1 iff x_i ≠ x_j"
+        }
+      ]
+    },
+    "formulation_latex": "\\max \\sum_{(i,j) \\in E} w_{ij} y_{ij} \\quad \\text{s.t.} \\quad y_{ij} \\le x_i + x_j,\\; y_{ij} \\le 2 - x_i - x_j,\\quad x_i, y_{ij} \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "bin_packing",
+    "name": "Bin Packing Problem",
+    "aliases": [
+      "bin packing",
+      "one-dimensional bin packing"
+    ],
+    "description": "Given items with weights and bins of fixed capacity, pack all items into the minimum number of bins so that the sum of item weights in each bin does not exceed capacity.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "y_k",
+          "description": "1 if bin k is used, 0 otherwise",
+          "domain": "y_k ∈ {0,1}"
+        },
+        {
+          "symbol": "x_ik",
+          "description": "1 if item i is assigned to bin k, 0 otherwise",
+          "domain": "x_ik ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_k y_k  (number of bins used)"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_k x_ik = 1 for each item i",
+          "description": "Each item is in exactly one bin"
+        },
+        {
+          "expression": "Σᵢ wᵢ x_ik ≤ C y_k for each bin k",
+          "description": "Bin capacity C; only used bins count"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_k y_k \\quad \\text{s.t.} \\quad \\sum_k x_{ik}=1 \\; \\forall i,\\quad \\sum_i w_i x_{ik} \\le C y_k \\; \\forall k,\\quad x_{ik}, y_k \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "shortest_path",
+    "name": "Shortest Path (s-t)",
+    "aliases": [
+      "shortest path",
+      "s-t shortest path",
+      "min cost path"
+    ],
+    "description": "Given a directed graph with arc costs, a source s and a sink t, find a minimum-cost path from s to t.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_ij",
+          "description": "1 if arc (i,j) is on the path, 0 otherwise",
+          "domain": "x_ij ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_{(i,j)} cᵢⱼ xᵢⱼ  (total path cost)"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_j x_sj − Σ_j x_js = 1",
+          "description": "Net flow out of source is 1"
+        },
+        {
+          "expression": "Σ_j x_tj − Σ_j x_jt = −1",
+          "description": "Net flow into sink is 1"
+        },
+        {
+          "expression": "Σ_j x_ij − Σ_j x_ji = 0 for each node i ≠ s,t",
+          "description": "Flow conservation at intermediate nodes"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_{(i,j)} c_{ij} x_{ij} \\quad \\text{s.t.} \\quad \\text{flow balance } 1 \\text{ at } s,\\; -1 \\text{ at } t,\\; 0 \\text{ else},\\quad x_{ij} \\in \\{0,1\\}.",
+    "complexity": "P",
+    "source": "classic"
+  },
+  {
+    "id": "assignment",
+    "name": "Assignment Problem",
+    "aliases": [
+      "linear assignment",
+      "minimum cost assignment",
+      "matching (bipartite)"
+    ],
+    "description": "Given two sets of equal size and a cost for each pair, assign each element of the first set to exactly one element of the second set so that total cost is minimized.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_ij",
+          "description": "1 if i is assigned to j, 0 otherwise",
+          "domain": "x_ij ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σᵢⱼ cᵢⱼ xᵢⱼ  (total assignment cost)"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_j x_ij = 1 for each i",
+          "description": "Each i is assigned to exactly one j"
+        },
+        {
+          "expression": "Σ_i x_ij = 1 for each j",
+          "description": "Each j receives exactly one i"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_{i,j} c_{ij} x_{ij} \\quad \\text{s.t.} \\quad \\sum_j x_{ij}=1 \\; \\forall i,\\quad \\sum_i x_{ij}=1 \\; \\forall j,\\quad x_{ij} \\in \\{0,1\\}.",
+    "complexity": "P",
+    "source": "classic"
+  },
+  {
+    "id": "max_clique",
+    "name": "Maximum Clique",
+    "aliases": [
+      "max clique",
+      "maximum clique",
+      "clique problem"
+    ],
+    "description": "Given an undirected graph, find a clique of maximum size—a set of vertices such that every two are adjacent.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_v",
+          "description": "1 if vertex v is in the clique, 0 otherwise",
+          "domain": "x_v ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "maximize",
+        "expression": "Σ_v x_v  (size of the clique)"
+      },
+      "constraints": [
+        {
+          "expression": "x_u + x_v ≤ 1 for each non-edge (u,v)",
+          "description": "At most one of u,v can be in the clique if they are not adjacent"
+        }
+      ]
+    },
+    "formulation_latex": "\\max \\sum_v x_v \\quad \\text{s.t.} \\quad x_u + x_v \\le 1 \\; \\forall (u,v) \\not\\in E,\\quad x_v \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "set_partitioning",
+    "name": "Set Partitioning Problem",
+    "aliases": [
+      "set partitioning",
+      "SPP"
+    ],
+    "description": "Given a universe and a family of subsets with costs, choose a collection of disjoint subsets that cover the universe at minimum total cost. Each element is in exactly one chosen subset.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_S",
+          "description": "1 if subset S is chosen, 0 otherwise",
+          "domain": "x_S ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_S c_S x_S"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_{S : e ∈ S} x_S = 1 for each element e",
+          "description": "Each element in exactly one chosen set"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_S c_S x_S \\quad \\text{s.t.} \\quad \\sum_{S : e \\in S} x_S = 1 \\; \\forall e,\\quad x_S \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "graph_coloring",
+    "name": "Graph Coloring",
+    "aliases": [
+      "vertex coloring",
+      "chromatic number",
+      "graph colouring"
+    ],
+    "description": "Color the vertices of a graph with a minimum number of colors so that no two adjacent vertices share the same color.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_vk",
+          "description": "1 if vertex v gets color k, 0 otherwise",
+          "domain": "x_vk ∈ {0,1}"
+        },
+        {
+          "symbol": "y_k",
+          "description": "1 if color k is used, 0 otherwise",
+          "domain": "y_k ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_k y_k  (number of colors)"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_k x_vk = 1 for each vertex v",
+          "description": "Each vertex gets one color"
+        },
+        {
+          "expression": "x_uk + x_vk ≤ 1 for each edge (u,v) and color k",
+          "description": "Adjacent vertices not same color"
+        },
+        {
+          "expression": "x_vk ≤ y_k for each v, k",
+          "description": "Color k used only if y_k=1"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_k y_k \\quad \\text{s.t.} \\quad \\sum_k x_{vk}=1 \\; \\forall v,\\quad x_{uk}+x_{vk}\\le 1 \\; \\forall (u,v),k,\\quad x_{vk}\\le y_k,\\quad x_{vk},y_k \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "generalised_assignment",
+    "name": "Generalised Assignment Problem",
+    "aliases": [
+      "GAP",
+      "generalized assignment"
+    ],
+    "description": "Assign each job to exactly one machine; each machine has limited capacity. Job j on machine i has cost c_ij and consumes resource r_ij. Minimize total cost subject to capacity.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_ij",
+          "description": "1 if job j is assigned to machine i, 0 otherwise",
+          "domain": "x_ij ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σᵢⱼ cᵢⱼ xᵢⱼ"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_i x_ij = 1 for each job j",
+          "description": "Each job assigned to one machine"
+        },
+        {
+          "expression": "Σ_j r_ij x_ij ≤ R_i for each machine i",
+          "description": "Machine capacity"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_{i,j} c_{ij} x_{ij} \\quad \\text{s.t.} \\quad \\sum_i x_{ij}=1 \\; \\forall j,\\quad \\sum_j r_{ij} x_{ij} \\le R_i \\; \\forall i,\\quad x_{ij} \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "p_median",
+    "name": "P-Median Problem",
+    "aliases": [
+      "p-median",
+      "uncapacitated p-median"
+    ],
+    "description": "Choose p facilities and assign each customer to the nearest open facility to minimize total assignment cost (distance or demand-weighted distance).",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "y_i",
+          "description": "1 if facility i is open, 0 otherwise",
+          "domain": "y_i ∈ {0,1}"
+        },
+        {
+          "symbol": "x_ij",
+          "description": "1 if customer j is assigned to facility i, 0 otherwise",
+          "domain": "x_ij ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σᵢⱼ dᵢⱼ xᵢⱼ  (total distance or weighted distance)"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_i y_i = p",
+          "description": "Exactly p facilities open"
+        },
+        {
+          "expression": "Σ_i x_ij = 1 for each j",
+          "description": "Each customer assigned to one facility"
+        },
+        {
+          "expression": "x_ij ≤ y_i for each i, j",
+          "description": "Assign only to open facilities"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_{i,j} d_{ij} x_{ij} \\quad \\text{s.t.} \\quad \\sum_i y_i=p,\\quad \\sum_i x_{ij}=1 \\; \\forall j,\\quad x_{ij} \\le y_i,\\quad x_{ij},y_i \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "capacitated_facility_location",
+    "name": "Capacitated Facility Location",
+    "aliases": [
+      "CFL",
+      "capacitated warehouse location"
+    ],
+    "description": "Open facilities with limited capacity and assign customers to open facilities; minimize opening plus assignment cost. Total demand assigned to a facility cannot exceed its capacity.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "y_i",
+          "description": "1 if facility i is open, 0 otherwise",
+          "domain": "y_i ∈ {0,1}"
+        },
+        {
+          "symbol": "x_ij",
+          "description": "fraction or amount of demand of j served by i",
+          "domain": "x_ij ≥ 0 or binary depending on variant"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σᵢ fᵢ yᵢ + Σᵢⱼ cᵢⱼ xᵢⱼ"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_i x_ij = 1 for each j",
+          "description": "Each customer fully served"
+        },
+        {
+          "expression": "Σ_j d_j x_ij ≤ C_i y_i for each i",
+          "description": "Capacity at facility i"
+        },
+        {
+          "expression": "x_ij ≤ y_i (optional single-source)",
+          "description": "Assign only to open facilities"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_i f_i y_i + \\sum_{i,j} c_{ij} x_{ij} \\quad \\text{s.t.} \\quad \\sum_i x_{ij}=1,\\quad \\sum_j d_j x_{ij} \\le C_i y_i,\\quad x_{ij} \\le y_i,\\quad y_i \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "steiner_tree",
+    "name": "Steiner Tree (in Graphs)",
+    "aliases": [
+      "Steiner tree",
+      "Steiner tree problem in graphs"
+    ],
+    "description": "Given an edge-weighted graph and a set of terminal vertices, find a minimum-weight subtree that connects all terminals (may use non-terminal Steiner nodes).",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_e",
+          "description": "1 if edge e is in the tree, 0 otherwise",
+          "domain": "x_e ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_e w_e x_e"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_{e ∈ δ(S)} x_e ≥ 1 for each cut S separating two terminals",
+          "description": "Terminals must be connected"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_e w_e x_e \\quad \\text{s.t.} \\quad \\text{connectivity of terminals},\\quad x_e \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "maximum_weight_independent_set",
+    "name": "Maximum Weight Independent Set",
+    "aliases": [
+      "MWIS",
+      "stable set",
+      "weighted stable set"
+    ],
+    "description": "Given a graph with vertex weights, find an independent set (no two adjacent) of maximum total weight.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_v",
+          "description": "1 if vertex v is in the set, 0 otherwise",
+          "domain": "x_v ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "maximize",
+        "expression": "Σ_v w_v x_v"
+      },
+      "constraints": [
+        {
+          "expression": "x_u + x_v ≤ 1 for each edge (u,v)",
+          "description": "No two adjacent vertices selected"
+        }
+      ]
+    },
+    "formulation_latex": "\\max \\sum_v w_v x_v \\quad \\text{s.t.} \\quad x_u + x_v \\le 1 \\; \\forall (u,v) \\in E,\\quad x_v \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "job_shop_scheduling",
+    "name": "Job Shop Scheduling",
+    "aliases": [
+      "job shop",
+      "JSP"
+    ],
+    "description": "Each job is a sequence of operations on machines; each operation has a processing time. Assign start times to minimize makespan subject to precedence and one-job-per-machine-at-a-time.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "s_jm",
+          "description": "Start time of operation of job j on machine m",
+          "domain": "s_jm ≥ 0"
+        },
+        {
+          "symbol": "y_jk",
+          "description": "1 if job j precedes job k on same machine",
+          "domain": "y_jk ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "C_max  (makespan)"
+      },
+      "constraints": [
+        {
+          "expression": "Precedence: s_j,m' ≥ s_jm + p_jm for consecutive ops of job j",
+          "description": "Job precedence"
+        },
+        {
+          "expression": "Disjunctive: s_jm + p_jm ≤ s_km + M(1−y_jk) or s_km + p_km ≤ s_jm + M y_jk",
+          "description": "No overlap on same machine"
+        }
+      ]
+    },
+    "formulation_latex": "\\min C_{\\max} \\quad \\text{s.t.} \\quad \\text{precedence \\& disjunctive constraints},\\quad y_{jk} \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "flow_shop",
+    "name": "Flow Shop Scheduling",
+    "aliases": [
+      "flow shop",
+      "permutation flow shop"
+    ],
+    "description": "Jobs are processed on m machines in the same order. Find a permutation of jobs (and start times) to minimize makespan.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "π",
+          "description": "Permutation of jobs (position variables)",
+          "domain": "assignment vars"
+        },
+        {
+          "symbol": "C_jk",
+          "description": "Completion time of job j on machine k",
+          "domain": "C_jk ≥ 0"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "max_j C_jm  (makespan)"
+      },
+      "constraints": [
+        {
+          "expression": "C_jk ≥ C_j,k−1 + p_jk and ordering constraints",
+          "description": "Precedence and no two jobs same machine at same time"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\max_j C_{j,m} \\quad \\text{s.t.} \\quad \\text{flow shop precedence \\& permutation}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "aircraft_landing",
+    "name": "Aircraft Landing Problem",
+    "aliases": [
+      "aircraft landing scheduling",
+      "runway scheduling"
+    ],
+    "description": "Schedule aircraft to land on a runway; each has a time window [E_i, L_i] and target T_i. Minimize total deviation (earliness/tardiness) or weighted sum.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "t_i",
+          "description": "Landing time of aircraft i",
+          "domain": "t_i ≥ 0"
+        },
+        {
+          "symbol": "y_ik",
+          "description": "1 if aircraft i lands before k, 0 otherwise",
+          "domain": "y_ik ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_i (α_i earliness + β_i tardiness) or linearized"
+      },
+      "constraints": [
+        {
+          "expression": "E_i ≤ t_i ≤ L_i",
+          "description": "Time window"
+        },
+        {
+          "expression": "Separation: |t_i − t_k| ≥ sep_ik via big-M and y_ik",
+          "description": "Separation between landings"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_i \\text{deviation}_i \\quad \\text{s.t.} \\quad E_i \\le t_i \\le L_i,\\quad \\text{separation},\\quad y_{ik} \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "cvrp",
+    "name": "Capacitated Vehicle Routing Problem",
+    "aliases": [
+      "CVRP",
+      "vehicle routing",
+      "VRP"
+    ],
+    "description": "One depot, identical vehicles with capacity Q; customers with demand. Find routes (each starting/ending at depot) so each customer is visited once, demand on each route ≤ Q, and total distance is minimized.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_ij",
+          "description": "1 if arc (i,j) is used, 0 otherwise",
+          "domain": "x_ij ∈ {0,1}"
+        },
+        {
+          "symbol": "u_i",
+          "description": "Load accumulated up to customer i (MTZ or flow)",
+          "domain": "u_i ≥ 0"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_{(i,j)} d_ij x_ij"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_j x_ij = 1 for each customer i",
+          "description": "Each customer visited once"
+        },
+        {
+          "expression": "Σ_i x_0i = K (vehicles)",
+          "description": "K routes leave depot"
+        },
+        {
+          "expression": "MTZ or capacity cuts: u_i − u_j + Q x_ij ≤ Q − d_j",
+          "description": "No subtours; capacity"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_{i,j} d_{ij} x_{ij} \\quad \\text{s.t.} \\quad \\text{degree},\\quad \\text{MTZ/capacity cuts},\\quad x_{ij} \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "quadratic_assignment",
+    "name": "Quadratic Assignment Problem",
+    "aliases": [
+      "QAP",
+      "quadratic assignment"
+    ],
+    "description": "Assign n facilities to n locations. Cost includes a quadratic term: flow between facilities times distance between their locations. Minimize total cost.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_ij",
+          "description": "1 if facility i is at location j, 0 otherwise",
+          "domain": "x_ij ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σᵢⱼₖₗ f_ik d_jl x_ij x_kl; linearize with y_ijkl = x_ij x_kl"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_j x_ij = 1 for each i, Σ_i x_ij = 1 for each j",
+          "description": "Assignment"
+        },
+        {
+          "expression": "y_ijkl ≤ x_ij, y_ijkl ≤ x_kl, y_ijkl ≥ x_ij + x_kl − 1",
+          "description": "Linearization of products"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum f_{ik} d_{jl} x_{ij} x_{kl} \\quad \\text{s.t.} \\quad \\sum_j x_{ij}=\\sum_i x_{ij}=1,\\quad x_{ij} \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "max_flow",
+    "name": "Maximum Flow",
+    "aliases": [
+      "max flow",
+      "max-flow"
+    ],
+    "description": "Directed graph with arc capacities; find the maximum flow from source s to sink t respecting capacities.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "f_ij",
+          "description": "Flow on arc (i,j)",
+          "domain": "0 ≤ f_ij ≤ u_ij"
+        }
+      ],
+      "objective": {
+        "sense": "maximize",
+        "expression": "Σ_j f_sj  (flow out of s)"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_j f_ij − Σ_j f_ji = 0 for each node i ≠ s,t",
+          "description": "Flow conservation"
+        },
+        {
+          "expression": "0 ≤ f_ij ≤ u_ij",
+          "description": "Capacity"
+        }
+      ]
+    },
+    "formulation_latex": "\\max \\sum_j f_{sj} \\quad \\text{s.t.} \\quad \\text{flow balance},\\quad 0 \\le f_{ij} \\le u_{ij}.",
+    "complexity": "P",
+    "source": "classic"
+  },
+  {
+    "id": "min_cut",
+    "name": "Minimum Cut",
+    "aliases": [
+      "min cut",
+      "minimum s-t cut"
+    ],
+    "description": "Given capacities on edges, find a minimum-capacity cut that separates source s from sink t. Equivalent to max-flow by duality.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_v",
+          "description": "1 if vertex v is on source side, 0 for sink side",
+          "domain": "x_v ∈ {0,1}"
+        },
+        {
+          "symbol": "y_ij",
+          "description": "1 if arc (i,j) is in the cut",
+          "domain": "y_ij ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_{(i,j)} u_ij y_ij"
+      },
+      "constraints": [
+        {
+          "expression": "x_s = 1, x_t = 0",
+          "description": "Source and sink sides"
+        },
+        {
+          "expression": "y_ij ≥ x_i − x_j for each arc (i,j)",
+          "description": "Cut arcs"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_{(i,j)} u_{ij} y_{ij} \\quad \\text{s.t.} \\quad x_s=1,x_t=0,\\quad y_{ij} \\ge x_i - x_j,\\quad x_v,y_{ij} \\in \\{0,1\\}.",
+    "complexity": "P",
+    "source": "classic"
+  },
+  {
+    "id": "fixed_charge_transportation",
+    "name": "Fixed Charge Transportation",
+    "aliases": [
+      "fixed charge flow"
+    ],
+    "description": "Ship goods from sources to sinks; each used arc incurs a fixed cost plus per-unit cost. Minimize total fixed plus variable cost.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_ij",
+          "description": "Flow on arc (i,j)",
+          "domain": "x_ij ≥ 0"
+        },
+        {
+          "symbol": "y_ij",
+          "description": "1 if arc (i,j) is used, 0 otherwise",
+          "domain": "y_ij ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σᵢⱼ f_ij y_ij + Σᵢⱼ c_ij x_ij"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_j x_ij = supply_i, Σ_i x_ij = demand_j",
+          "description": "Flow balance"
+        },
+        {
+          "expression": "x_ij ≤ M y_ij",
+          "description": "Fixed charge: use y_ij to open arc"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_{i,j} (f_{ij} y_{ij} + c_{ij} x_{ij}) \\quad \\text{s.t.} \\quad \\text{flow},\\quad x_{ij} \\le M y_{ij},\\quad y_{ij} \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "set_packing",
+    "name": "Set Packing Problem",
+    "aliases": [
+      "set packing",
+      "SPP"
+    ],
+    "description": "Given a family of subsets with profits, select a collection of pairwise disjoint subsets to maximize total profit.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_S",
+          "description": "1 if subset S is selected, 0 otherwise",
+          "domain": "x_S ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "maximize",
+        "expression": "Σ_S p_S x_S"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_{S : e ∈ S} x_S ≤ 1 for each element e",
+          "description": "Each element in at most one chosen set"
+        }
+      ]
+    },
+    "formulation_latex": "\\max \\sum_S p_S x_S \\quad \\text{s.t.} \\quad \\sum_{S : e \\in S} x_S \\le 1 \\; \\forall e,\\quad x_S \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "multidimensional_knapsack",
+    "name": "Multidimensional Knapsack",
+    "aliases": [
+      "multi knapsack",
+      "multiple constraints knapsack"
+    ],
+    "description": "Items have values and multiple resource consumptions (weights). One knapsack with multiple capacity limits. Maximize value subject to all capacity constraints.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_i",
+          "description": "1 if item i is selected, 0 otherwise",
+          "domain": "x_i ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "maximize",
+        "expression": "Σᵢ vᵢ xᵢ"
+      },
+      "constraints": [
+        {
+          "expression": "Σᵢ wᵢᵣ xᵢ ≤ W_r for each resource r",
+          "description": "Each dimension capacity"
+        }
+      ]
+    },
+    "formulation_latex": "\\max \\sum_i v_i x_i \\quad \\text{s.t.} \\quad \\sum_i w_{ir} x_i \\le W_r \\; \\forall r,\\quad x_i \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "dominating_set",
+    "name": "Dominating Set",
+    "aliases": [
+      "minimum dominating set"
+    ],
+    "description": "Choose a minimum set of vertices such that every vertex is either in the set or adjacent to a vertex in the set.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_v",
+          "description": "1 if vertex v is in the dominating set, 0 otherwise",
+          "domain": "x_v ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_v x_v"
+      },
+      "constraints": [
+        {
+          "expression": "x_v + Σ_{u ∈ N(v)} x_u ≥ 1 for each vertex v",
+          "description": "v or a neighbor must be selected"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_v x_v \\quad \\text{s.t.} \\quad x_v + \\sum_{u \\in N(v)} x_u \\ge 1 \\; \\forall v,\\quad x_v \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "maximum_matching",
+    "name": "Maximum (Weight) Matching",
+    "aliases": [
+      "matching",
+      "maximum matching",
+      "bipartite matching"
+    ],
+    "description": "Select a set of edges so that no two share an endpoint; maximize the number (or total weight) of edges selected.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_e",
+          "description": "1 if edge e is in the matching, 0 otherwise",
+          "domain": "x_e ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "maximize",
+        "expression": "Σ_e w_e x_e"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_{e ∋ v} x_e ≤ 1 for each vertex v",
+          "description": "At most one edge per vertex"
+        }
+      ]
+    },
+    "formulation_latex": "\\max \\sum_e w_e x_e \\quad \\text{s.t.} \\quad \\sum_{e \\ni v} x_e \\le 1 \\; \\forall v,\\quad x_e \\in \\{0,1\\}.",
+    "complexity": "P (bipartite); NP-hard general",
+    "source": "classic"
+  },
+  {
+    "id": "uncapacitated_lot_sizing",
+    "name": "Uncapacitated Lot-Sizing",
+    "aliases": [
+      "ULS",
+      "economic lot sizing",
+      "dynamic lot sizing"
+    ],
+    "description": "Plan production over periods to meet demand; fixed cost per period if we produce, plus variable production cost. No capacity. Minimize total cost.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_t",
+          "description": "Production in period t",
+          "domain": "x_t ≥ 0"
+        },
+        {
+          "symbol": "y_t",
+          "description": "1 if we produce in period t, 0 otherwise",
+          "domain": "y_t ∈ {0,1}"
+        },
+        {
+          "symbol": "I_t",
+          "description": "Inventory at end of period t",
+          "domain": "I_t ≥ 0"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_t (f_t y_t + c_t x_t + h_t I_t)"
+      },
+      "constraints": [
+        {
+          "expression": "I_t = I_{t−1} + x_t − d_t",
+          "description": "Inventory balance"
+        },
+        {
+          "expression": "x_t ≤ M y_t",
+          "description": "Fixed charge"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_t (f_t y_t + c_t x_t + h_t I_t) \\quad \\text{s.t.} \\quad I_t = I_{t-1}+x_t-d_t,\\quad x_t \\le M y_t,\\quad y_t \\in \\{0,1\\}.",
+    "complexity": "P",
+    "source": "classic"
+  },
+  {
+    "id": "crew_scheduling",
+    "name": "Crew Scheduling",
+    "aliases": [
+      "crew pairing",
+      "crew rostering",
+      "set covering crew"
+    ],
+    "description": "Cover all trips (or duties) with a minimum-cost set of crew rosters/pairings. Each roster is a subset of trips; often formulated as set covering or set partitioning.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_r",
+          "description": "1 if roster/pairing r is used, 0 otherwise",
+          "domain": "x_r ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_r c_r x_r"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_{r : trip t ∈ r} x_r ≥ 1 for each trip t",
+          "description": "Each trip covered at least once"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_r c_r x_r \\quad \\text{s.t.} \\quad \\sum_{r : t \\in r} x_r \\ge 1 \\; \\forall t,\\quad x_r \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "feedback_vertex_set",
+    "name": "Feedback Vertex Set",
+    "aliases": [
+      "FVS",
+      "minimum feedback vertex set"
+    ],
+    "description": "Given a directed graph, remove a minimum set of vertices so that the remaining graph has no directed cycle.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_v",
+          "description": "1 if vertex v is removed, 0 otherwise",
+          "domain": "x_v ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_v x_v"
+      },
+      "constraints": [
+        {
+          "expression": "For each directed cycle C: Σ_{v ∈ C} x_v ≥ 1",
+          "description": "Every cycle must lose at least one vertex"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_v x_v \\quad \\text{s.t.} \\quad \\sum_{v \\in C} x_v \\ge 1 \\; \\forall \\text{ cycle } C,\\quad x_v \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "classic"
+  },
+  {
+    "id": "example_multiobjective_knapsack",
+    "name": "Multiobjective 0-1 Knapsack",
+    "aliases": [
+      "multiobjective knapsack",
+      "bi-criteria knapsack"
+    ],
+    "description": "Select a subset of items with weights and two types of values (e.g., profit and risk) to optimize multiple criteria under a single knapsack capacity constraint.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_i",
+          "description": "1 if item i is selected, 0 otherwise",
+          "domain": "x_i ∈ {0,1} for each item i"
+        }
+      ],
+      "objective": {
+        "sense": "maximize",
+        "expression": "Two objectives, e.g. Σᵢ p_i x_i (profit) and Σᵢ q_i x_i (secondary value)."
+      },
+      "constraints": [
+        {
+          "expression": "Σᵢ w_i x_i ≤ W",
+          "description": "Total weight must not exceed capacity W"
+        }
+      ]
+    },
+    "formulation_latex": "\\max \\left( \\sum_i p_i x_i, \\; \\sum_i q_i x_i \\right) \\quad \\text{s.t.} \\quad \\sum_i w_i x_i \\le W,\\quad x_i \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "custom (e.g. vOptLib / textbooks)"
+  }
+]

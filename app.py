@@ -34,16 +34,26 @@ def get_model():
 def answer(query: str, top_k: int) -> str:
     if not query or not query.strip():
         return "Please type a short description of your optimization problem (e.g. *minimize cost of opening warehouses and assigning customers*)."
+    # Streaming response so users see that work is in progress.
+    yield "Searching for matching problems. This may take a few seconds, especially on the first query..."
+
     model = get_model()
-    results = search(query.strip(), catalog=CATALOG, model=model, top_k=max(1, min(10, top_k)))
+    results = search(
+        query.strip(),
+        catalog=CATALOG,
+        model=model,
+        top_k=max(1, min(10, top_k)),
+    )
     if not results:
-        return "No matching problems found."
+        yield "No matching problems found."
+        return
+
     out = []
     for i, (problem, score) in enumerate(results, 1):
         out.append(f"### Result {i} (relevance: {score:.3f})")
         out.append(format_problem_and_ip(problem, score=None))
         out.append("---")
-    return "\n".join(out)
+    yield "\n".join(out)
 
 
 def main():
@@ -51,7 +61,8 @@ def main():
     description = (
         "Describe your problem in plain English. The bot finds the closest matching "
         "combinatorial optimization problem and shows its **integer program** (variables, "
-        "objective, constraints)."
+        "objective, constraints).\n\n"
+        "Tip: click an example below to fill the inputs, then press **Submit** to run it."
     )
     iface = gr.Interface(
         fn=answer,
