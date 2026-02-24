@@ -557,34 +557,34 @@
   },
   {
     "id": "steiner_tree",
-    "name": "Steiner Tree (in Graphs)",
+    "name": "Steiner Tree in Graphs",
     "aliases": [
       "Steiner tree",
-      "Steiner tree problem in graphs"
+      "minimum Steiner tree"
     ],
-    "description": "Given an edge-weighted graph and a set of terminal vertices, find a minimum-weight subtree that connects all terminals (may use non-terminal Steiner nodes).",
+    "description": "Given an undirected graph with edge costs and a subset of required terminals, find a minimum-cost tree that connects all terminals (possibly using extra Steiner nodes).",
     "formulation": {
       "variables": [
         {
           "symbol": "x_e",
-          "description": "1 if edge e is in the tree, 0 otherwise",
-          "domain": "x_e ∈ {0,1}"
+          "description": "1 if edge e is selected in the Steiner tree, 0 otherwise",
+          "domain": "x_e ∈ {0,1} for each edge e"
         }
       ],
       "objective": {
         "sense": "minimize",
-        "expression": "Σ_e w_e x_e"
+        "expression": "Σ_{e ∈ E} c_e x_e"
       },
       "constraints": [
         {
-          "expression": "Σ_{e ∈ δ(S)} x_e ≥ 1 for each cut S separating two terminals",
-          "description": "Terminals must be connected"
+          "expression": "For every cut (S, V \\ S) with at least one terminal on each side: Σ_{e ∈ δ(S)} x_e ≥ 1",
+          "description": "Every terminal-separated cut must contain at least one selected edge to keep terminals connected"
         }
       ]
     },
-    "formulation_latex": "\\min \\sum_e w_e x_e \\quad \\text{s.t.} \\quad \\text{connectivity of terminals},\\quad x_e \\in \\{0,1\\}.",
+    "formulation_latex": "\\min \\sum_{e \\in E} c_e x_e \\quad \\text{s.t.} \\quad \\sum_{e \\in \\delta(S)} x_e \\ge 1 \\; \\forall S \\subset V \\text{ with terminals on both sides}, \\quad x_e \\in \\{0,1\\}.",
     "complexity": "NP-hard",
-    "source": "classic"
+    "source": "standard Steiner tree formulations in combinatorial optimization textbooks"
   },
   {
     "id": "maximum_weight_independent_set",
@@ -1191,5 +1191,108 @@
     "formulation_latex": "\\max \\left( \\sum_i p_i x_i, \\; \\sum_i q_i x_i \\right) \\quad \\text{s.t.} \\quad \\sum_i w_i x_i \\le W,\\quad x_i \\in \\{0,1\\}.",
     "complexity": "NP-hard",
     "source": "custom (e.g. vOptLib / textbooks)"
+  },
+  {
+    "id": "max_multicommodity_flow",
+    "name": "Maximum Multicommodity Flow",
+    "aliases": [
+      "maximum multicommodity flow",
+      "multi-commodity flow",
+      "max multicommodity flow"
+    ],
+    "description": "Given a directed network with arc capacities and multiple commodities, each with a source, sink, and demand, route flow for all commodities so that arc capacities are respected and the total flow of all commodities is maximized.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_{ij}^k",
+          "description": "flow of commodity k on arc (i,j)",
+          "domain": "x_{ij}^k ≥ 0 for each commodity k and arc (i,j)"
+        }
+      ],
+      "objective": {
+        "sense": "maximize",
+        "expression": "Total flow of all commodities: Σ_k Σ_{(i,j)} x_{ij}^k"
+      },
+      "constraints": [
+        {
+          "expression": "For each commodity k and node i: Σ_{(i,j)} x_{ij}^k − Σ_{(j,i)} x_{ji}^k = b_i^k",
+          "description": "Flow conservation for each commodity at every node (with supplies/demands encoded in b_i^k)"
+        },
+        {
+          "expression": "Σ_k x_{ij}^k ≤ u_{ij} for each arc (i,j)",
+          "description": "Total flow of all commodities on an arc cannot exceed its capacity u_{ij}"
+        }
+      ]
+    },
+    "formulation_latex": "\\max \\sum_{k \\in K} \\sum_{(i,j) \\in A} x_{ij}^k \\quad \\text{s.t.} \\quad \\sum_{(i,j) \\in A} x_{ij}^k - \\sum_{(j,i) \\in A} x_{ji}^k = b_i^k \\; \\forall i \\in V, k \\in K, \\quad \\sum_{k \\in K} x_{ij}^k \\le u_{ij} \\; \\forall (i,j) \\in A, \\quad x_{ij}^k \\ge 0.",
+    "complexity": "NP-hard (integer version)",
+    "source": "classic multicommodity flow formulations in the literature"
+  },
+  {
+    "id": "min_cost_circulation",
+    "name": "Minimum Cost Circulation",
+    "aliases": [
+      "minimum cost circulation",
+      "min-cost circulation"
+    ],
+    "description": "Given a directed network with lower and upper bounds and costs on arcs, find a feasible circulation that satisfies flow conservation at every node and minimizes total cost.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_{ij}",
+          "description": "flow on arc (i,j)",
+          "domain": "ℓ_{ij} ≤ x_{ij} ≤ u_{ij} for each arc (i,j)"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_{(i,j) ∈ A} c_{ij} x_{ij}"
+      },
+      "constraints": [
+        {
+          "expression": "For each node i: Σ_{(i,j) ∈ A} x_{ij} − Σ_{(j,i) ∈ A} x_{ji} = 0",
+          "description": "Flow conservation at every node"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_{(i,j) \\in A} c_{ij} x_{ij} \\quad \\text{s.t.} \\quad \\sum_{(i,j) \\in A} x_{ij} - \\sum_{(j,i) \\in A} x_{ji} = 0 \\; \\forall i \\in V, \\quad \\ell_{ij} \\le x_{ij} \\le u_{ij} \\; \\forall (i,j) \\in A.",
+    "complexity": "P (with polynomial-time combinatorial algorithms); integer variants may be harder",
+    "source": "standard min-cost circulation formulations in combinatorial optimization textbooks"
+  },
+  {
+    "id": "max_bipartite_matching_ilp",
+    "name": "Maximum Bipartite Matching (ILP)",
+    "aliases": [
+      "maximum bipartite matching",
+      "bipartite matching",
+      "assignment without costs"
+    ],
+    "description": "Given a bipartite graph with parts U and V, select a maximum-size set of edges so that no two selected edges share an endpoint.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_{uv}",
+          "description": "1 if edge (u,v) is in the matching, 0 otherwise",
+          "domain": "x_{uv} ∈ {0,1} for each edge (u,v)"
+        }
+      ],
+      "objective": {
+        "sense": "maximize",
+        "expression": "Σ_{(u,v) ∈ E} x_{uv}"
+      },
+      "constraints": [
+        {
+          "expression": "For each u ∈ U: Σ_{v : (u,v) ∈ E} x_{uv} ≤ 1",
+          "description": "Each vertex u in U is incident to at most one selected edge"
+        },
+        {
+          "expression": "For each v ∈ V: Σ_{u : (u,v) ∈ E} x_{uv} ≤ 1",
+          "description": "Each vertex v in V is incident to at most one selected edge"
+        }
+      ]
+    },
+    "formulation_latex": "\\max \\sum_{(u,v) \\in E} x_{uv} \\quad \\text{s.t.} \\quad \\sum_{v : (u,v) \\in E} x_{uv} \\le 1 \\; \\forall u \\in U, \\quad \\sum_{u : (u,v) \\in E} x_{uv} \\le 1 \\; \\forall v \\in V, \\quad x_{uv} \\in \\{0,1\\}.",
+    "complexity": "P (polynomial-time algorithms such as Hungarian or augmenting paths)",
+    "source": "standard bipartite matching formulations in combinatorial optimization textbooks"
   }
 ]

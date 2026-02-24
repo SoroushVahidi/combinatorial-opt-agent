@@ -211,6 +211,64 @@ python run_search.py "knapsack" 2
 
 The first run will download the sentence-transformers model (~90MB). Results show the best-matching problem(s) and their integer program (variables, objective, constraints).
 
+## 🔍 Feedback & logging (privacy)
+
+When you run `python app.py`, the web UI:
+
+- **Stores your queries and the corresponding answers locally** in `data/feedback/chat_logs.jsonl` on the machine where you run the app.
+- **Optionally sends these logs to a remote server** controlled by the app operator *only if* the environment variable `REMOTE_FEEDBACK_ENDPOINT` is set.
+  - In that case, each interaction is sent as a JSON `POST` payload to `REMOTE_FEEDBACK_ENDPOINT` so it can be used to improve the model and catalog over time.
+- The **Flag** button in the UI stores flagged interactions (with a reason such as “wrong problem”, “bad formulation”, etc.) in CSV files under `data/feedback/`.
+
+If you deploy this app for other people to use, you should:
+
+- Make sure they understand that their text inputs and the model’s responses are being logged, and
+- Tell them whether `REMOTE_FEEDBACK_ENDPOINT` is configured so that logs are also sent to your server.
+
+### Running a central feedback server (optional)
+
+If you want to aggregate logs from many users/machines:
+
+1. **Start the feedback server on a machine you control**
+
+   ```bash
+   cd combinatorial-opt-agent
+   python feedback_server.py
+   ```
+
+   This starts a small HTTP server on `http://0.0.0.0:8000/collect` and appends all received logs to:
+
+   - `data/feedback/remote_logs.jsonl`
+
+2. **Configure each deployment of the web app to send logs**
+
+   On every machine where you run `app.py` and want to send logs to your server:
+
+   ```bash
+   export REMOTE_FEEDBACK_ENDPOINT="http://YOUR_SERVER_IP:8000/collect"
+   python app.py
+   ```
+
+   Replace `YOUR_SERVER_IP` with the public or internal IP / hostname of the feedback server machine.
+
+3. **Keep the feedback server running on a remote VM**
+
+   On a Linux VM you can keep the server alive using `tmux` or `screen` (simplest option):
+
+   ```bash
+   ssh user@your-vm
+   cd combinatorial-opt-agent
+   tmux new -s feedback
+   python feedback_server.py
+   # Press Ctrl+B, then D to detach the tmux session
+   ```
+
+   The server continues running in the background even if you disconnect. Later you can reattach with:
+
+   ```bash
+   tmux attach -t feedback
+   ```
+
 ### Option C: HPC (Wulver @ NJIT)
 
 You can run the same retrieval bot on NJIT’s Wulver cluster. See **[docs/wulver.md](docs/wulver.md)** for step-by-step setup. Summary:
@@ -299,5 +357,6 @@ MIT License — see [LICENSE](LICENSE) for details.
 
 ## 📬 Contact
 
-**Soroush Vahidi** — NJIT Student
-- GitHub: [@SoroushVahidi](https://github.com/SoroushVahidi)
+**Soroush Vahidi** — NJIT Student  
+- GitHub: [@SoroushVahidi](https://github.com/SoroushVahidi)  
+- Email: `sv96@njit.edu` (send suggestions, recommendations, or problem ideas)
