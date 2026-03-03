@@ -4,13 +4,6 @@ get the best-matching problem(s) and their integer programs.
 Run: python app.py  then open the URL in your browser.
 """
 from pathlib import Path
-<<<<<<< HEAD
-from datetime import datetime
-import json
-import os
-import urllib.request
-import urllib.error
-=======
 import os
 
 # Disable Gradio analytics to avoid extra thread (fixes "can't start new thread" on HPC)
@@ -25,7 +18,6 @@ _orig_run_in_threadpool = _starlette_concurrency.run_in_threadpool
 async def _run_in_threadpool_same_thread(func, *args, **kwargs):
     return func(*args, **kwargs)  # run in event-loop thread; blocks during request
 _starlette_concurrency.run_in_threadpool = _run_in_threadpool_same_thread
->>>>>>> 5e985ef (Expand catalog, training pipeline, and web UI)
 
 import gradio as gr
 
@@ -43,16 +35,6 @@ from retrieval.search import (
 CATALOG = _load_catalog()
 MODEL = None
 
-# Where to store chat logs and feedback
-FEEDBACK_DIR = Path("data") / "feedback"
-FEEDBACK_DIR.mkdir(parents=True, exist_ok=True)
-CHAT_LOG_PATH = FEEDBACK_DIR / "chat_logs.jsonl"
-
-# Optional: if set, each interaction is also sent as JSON via POST
-# to this URL, so the app operator can collect queries from
-# distributed deployments (e.g. on other machines).
-REMOTE_FEEDBACK_ENDPOINT = os.getenv("REMOTE_FEEDBACK_ENDPOINT") or None
-
 
 def get_model():
     """Lazy-load the embedding model once (so app starts fast). Uses fine-tuned model if present."""
@@ -64,88 +46,21 @@ def get_model():
     return MODEL
 
 
-<<<<<<< HEAD
-def _append_chat_log(record: dict) -> None:
-    """Append one chat interaction to a JSONL log and optionally send it remotely."""
-    try:
-        with CHAT_LOG_PATH.open("a", encoding="utf-8") as f:
-            f.write(json.dumps(record, ensure_ascii=False) + "\n")
-    except Exception:
-        # Logging should never break the app; fail silently.
-        pass
-
-    if REMOTE_FEEDBACK_ENDPOINT:
-        try:
-            data = json.dumps(record).encode("utf-8")
-            req = urllib.request.Request(
-                REMOTE_FEEDBACK_ENDPOINT,
-                data=data,
-                headers={"Content-Type": "application/json"},
-                method="POST",
-            )
-            urllib.request.urlopen(req, timeout=5)
-        except (urllib.error.URLError, TimeoutError, ValueError):
-            # Network/logging failures are ignored so they don't affect the user.
-            pass
-
-
-def answer(query: str, top_k: int) -> str:
-=======
 async def answer(query: str, top_k: int) -> str:
     # Async so FastAPI runs this in the event loop (no thread pool).
     # Avoids "can't start new thread" on Wulver when user clicks Submit.
->>>>>>> 5e985ef (Expand catalog, training pipeline, and web UI)
     if not query or not query.strip():
         return "Please type a short description of your optimization problem (e.g. *minimize cost of opening warehouses and assigning customers*)."
-    # Streaming response so users see that work is in progress.
-    yield "Searching for matching problems. This may take a few seconds, especially on the first query..."
-
     model = get_model()
-    results = search(
-        query.strip(),
-        catalog=CATALOG,
-        model=model,
-        top_k=max(1, min(10, top_k)),
-    )
+    results = search(query.strip(), catalog=CATALOG, model=model, top_k=max(1, min(10, top_k)))
     if not results:
-        yield "No matching problems found."
-        return
-
-    # Simple confidence hint based on the top score.
-    top_score = results[0][1]
-    if top_score < 0.4:
-        yield (
-            "The match is not very confident (top relevance score is below 0.4). "
-            "If the result does not look right, try adding more detail to your description."
-        )
-
+        return "No matching problems found."
     out = []
     for i, (problem, score) in enumerate(results, 1):
         out.append(f"### Result {i} (relevance: {score:.3f})")
-        out.append(format_problem_and_ip(problem, score=score))
+        out.append(format_problem_and_ip(problem, score=None))
         out.append("---")
-
-    final_answer = "\n".join(out)
-
-    # Log this interaction for future analysis / model improvement.
-    _append_chat_log(
-        {
-            "timestamp": datetime.utcnow().isoformat() + "Z",
-            "query": query.strip(),
-            "top_k": max(1, min(10, top_k)),
-            "results": [
-                {
-                    "problem_id": problem.get("id"),
-                    "problem_name": problem.get("name"),
-                    "score": score,
-                }
-                for (problem, score) in results
-            ],
-            "answer_markdown": final_answer,
-        }
-    )
-
-    yield final_answer
+    return "\n".join(out)
 
 
 def main():
@@ -153,14 +68,8 @@ def main():
     description = (
         "Describe your problem in plain English. The bot finds the closest matching "
         "combinatorial optimization problem and shows its **integer program** (variables, "
-<<<<<<< HEAD
-        "objective, constraints).\n\n"
-        "Tip: click an example below to fill the inputs, then press **Submit** to run it.\n\n"
-        "Created by **Soroush Vahidi**. For suggestions or feedback, email **sv96@njit.edu**."
-=======
         "objective, constraints). Use the **Flag** button to mark bad or surprising results; "
         "flagged examples are saved for later review."
->>>>>>> 5e985ef (Expand catalog, training pipeline, and web UI)
     )
     iface = gr.Interface(
         fn=answer,
@@ -177,14 +86,7 @@ def main():
             ),
             gr.Slider(1, 10, value=3, step=1, label="Number of results to show"),
         ],
-        outputs=gr.Markdown(
-            label="Answer",
-            # Ensure LaTeX is rendered as math, not shown as raw source.
-            latex_delimiters=[
-                {"left": "$$", "right": "$$", "display": True},
-                {"left": "$", "right": "$", "display": False},
-            ],
-        ),
+        outputs=gr.Markdown(label="Answer"),
         title=title,
         description=description,
         examples=[
@@ -216,9 +118,6 @@ def main():
                 1,
             ],
         ],
-        allow_flagging="manual",
-        flagging_options=["wrong problem", "bad formulation", "bad LaTeX", "other"],
-        flagging_dir=str(FEEDBACK_DIR),
     )
     # Preload model so first Submit doesn't block the server for 30–60s (avoids "keeps loading").
     print("Loading embedding model (one-time, ~30s on first run)...", flush=True)
