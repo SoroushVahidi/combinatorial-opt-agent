@@ -13,7 +13,7 @@ This is the **canonical list** of external libraries and datasets used (or plann
 | **Size** | 1,101 problems (generation_data) |
 | **What we extract** | Natural language problem statements + LP formulations |
 | **Format** | generation_data/ (CSV or similar); ner_data/ for NER |
-| **Status** | Planned (collector not yet implemented) |
+| **Status** | ✅ Implemented — `collectors/collect_nl4opt.py`; run `python pipeline/run_collection.py` |
 
 - **Subtask 1**: NER (entity extraction).  
 - **Subtask 2**: Generation (NL → formulation).  

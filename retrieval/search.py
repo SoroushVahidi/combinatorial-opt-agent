@@ -16,6 +16,14 @@ def _project_root() -> Path:
     return root
 
 
+def _default_model_path() -> str:
+    """Use fine-tuned model if present, else the default."""
+    finetuned = _project_root() / "data" / "models" / "retrieval_finetuned" / "final"
+    if finetuned.exists():
+        return str(finetuned)
+    return "sentence-transformers/all-MiniLM-L6-v2"
+
+
 def _load_catalog() -> list[dict]:
     root = _project_root()
     extended = root / "data" / "processed" / "all_problems_extended.json"
@@ -68,7 +76,7 @@ def search(
             raise ImportError(
                 "Install sentence-transformers: pip install sentence-transformers"
             ) from None
-        model = SentenceTransformer("all-MiniLM-L6-v2")
+        model = SentenceTransformer(_default_model_path())
 
     if embeddings is None:
         embeddings = build_index(catalog, model)
@@ -167,7 +175,7 @@ def main() -> None:
         print("Installing sentence-transformers is required: pip install sentence-transformers")
         sys.exit(1)
 
-    model = SentenceTransformer("all-MiniLM-L6-v2")
+    model = SentenceTransformer(_default_model_path())
     results = search(query, catalog=catalog, model=model, top_k=top_k)
 
     print(f"Query: \"{query}\"\n")

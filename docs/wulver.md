@@ -55,12 +55,32 @@ The first time, this downloads `sentence-transformers` and the embedding model (
 
 ## 5. Run the bot
 
-**Interactive (login or compute node):**
+**Command-line (login or compute node):**
 
 ```bash
 python run_search.py "minimize cost of opening warehouses and assigning customers"
 python run_search.py "knapsack" 2
 ```
+
+**Web app (`python app.py`) — run on a compute node**
+
+The Gradio app uses the embedding model and Hugging Face’s downloader, which can spawn threads. **Login nodes** on Wulver have a strict thread limit, so the app often fails there with “can’t start new thread” or “Resource temporarily unavailable” when loading the model.
+
+- **Option A — Run the app on a compute node:** Get an interactive session (use your usual partition, e.g. `srun --pty bash` or the partition name from `sinfo`), then in that shell run `python app.py`. Use SSH port forwarding to that compute node’s hostname if your cluster allows it, or run the app on your laptop for the web UI.
+- **Option B — Pre-download the model on a compute node, then run app on login:** In an interactive compute session, run once:  
+  `python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"`  
+  so the model is cached under `~/.cache`. Then on the **login node**, run `python app.py`; it may load from cache and avoid the download thread. If you still see thread/resource errors on the login node, use Option A.
+
+From your laptop, forward the port and open the app:
+
+```bash
+ssh -L 7860:localhost:7860 your_netid@wulver.njit.edu
+```
+
+Then in the browser open **http://127.0.0.1:7860** (not 0.0.0.0).
+
+**If you see `ImportError: cannot import name 'HfFolder'`:** Upgrade the `datasets` package:  
+`pip install --upgrade datasets --user`
 
 **As a SLURM job (optional):**
 
