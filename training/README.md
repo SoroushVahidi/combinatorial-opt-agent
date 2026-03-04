@@ -77,3 +77,32 @@ When you use `--notify-when-stopped`, the script will print a line like: **"Trai
 ## 5. Use the fine-tuned model
 
 Point the app or search to the saved model by setting the model path in `retrieval/search.py` or `app.py` to `data/models/retrieval_finetuned/final` when that path exists (or add a small wrapper that loads the fine-tuned model if present).
+
+---
+
+## 6. Collect real user prompts (for training)
+
+When the app runs (e.g. on Wulver), every search is logged to **`data/collected_queries/user_queries.jsonl`** on the server. Each line is a JSON object:
+
+- `ts`: ISO timestamp (UTC)
+- `query`: the user’s natural-language prompt
+- `top_k`: number of results requested
+- `results`: list of `{ "name": "<problem name>", "score": <relevance> }` for the top results
+
+So prompts from different people using the app are saved under the project directory on Wulver.
+
+### Convert collected queries to training pairs
+
+To turn these into (query, passage) pairs (using the top result’s problem as the passage):
+
+```bash
+python -m training.collected_queries_to_pairs
+```
+
+Output: **`data/processed/collected_training_pairs.jsonl`**. Optional args:
+
+- `--input path` — input JSONL (default: `data/collected_queries/user_queries.jsonl`)
+- `--output path` — output JSONL (default: `data/processed/collected_training_pairs.jsonl`)
+- `--min-score 0.5` — only use queries whose top result has relevance ≥ this (default 0)
+
+You can then merge `collected_training_pairs.jsonl` with synthetic pairs (e.g. concatenate files) and run `training.train_retrieval` on the combined file for training.

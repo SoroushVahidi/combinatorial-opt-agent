@@ -19,6 +19,27 @@ You describe a problem in plain English; the agent identifies the problem type (
 - For **unknown problems:** generate formulation via LLM and verify.
 - **Output:** ILP formulation, LP relaxation, solver code (Pyomo/Gurobi/PuLP), and complexity class when applicable.
 
+## Quick start (use the bot)
+
+1. **Clone and install**
+   ```bash
+   git clone https://github.com/SoroushVahidi/combinatorial-opt-agent.git
+   cd combinatorial-opt-agent
+   python -m venv venv && source venv/bin/activate   # Windows: venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+2. **Run the web app**
+   ```bash
+   python app.py
+   ```
+   Open the URL shown (e.g. **http://127.0.0.1:7860**). Type a short description of your optimization problem and click **Search**. The bot returns the best-matching problem(s) and their integer program (variables, objective, constraints).
+3. **Optional — command line**
+   ```bash
+   python -m retrieval.search "minimize cost of opening warehouses and assigning customers" 3
+   ```
+
+**Note:** When the app is run (e.g. on a server), every search is logged to `data/collected_queries/user_queries.jsonl` so you can use real user prompts for training. See [Training the retrieval model](#training-the-retrieval-model) and [training/README.md](training/README.md).
+
 ## Data sources
 
 The dataset is built from multiple authoritative sources. The full list of libraries and problem names is in the project:
@@ -116,6 +137,14 @@ python run_search.py "minimize cost of opening warehouses"
 sbatch scripts/run_search.slurm
 ```
 
+## Training the retrieval model
+
+The retrieval model can be fine-tuned so it better matches natural-language queries to problems in the catalog.
+
+- **Full guide:** [training/README.md](training/README.md)
+- **Steps:** generate synthetic (query, passage) pairs → optional: add [collected user queries](training/README.md#6-collect-real-user-prompts-for-training) from the app → run training (local or GPU batch on Wulver).
+- **Evaluation:** run `python -m training.evaluate_retrieval --regenerate --num 500` to measure Precision@1 / Precision@5 on 500 held-out instances.
+
 ## 📋 Project Phases
 
 ### ✅ Phase 1: Data Collection & Processing (Current)
@@ -186,4 +215,3 @@ MIT License — see [LICENSE](LICENSE) for details.
 
 **Soroush Vahidi** — NJIT Student
 - GitHub: [@SoroushVahidi](https://github.com/SoroushVahidi)
->>>>>>> 5e985ef (Expand catalog, training pipeline, and web UI)

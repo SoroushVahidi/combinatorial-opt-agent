@@ -211,6 +211,10 @@ __marimo__/
 data/raw/
 data/models/
 data/processed/training_pairs*.jsonl
+data/processed/collected_training_pairs.jsonl
+data/processed/eval_500.jsonl
+data/processed/eval_results.txt
+data/collected_queries/
 
 # Gradio / web UI runtime state
 .gradio/
