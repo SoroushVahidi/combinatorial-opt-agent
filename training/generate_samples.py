@@ -54,6 +54,13 @@ QUERY_TEMPLATES = [
     "Can you give the IP for {text}?",
     "MIP formulation for {text}.",
     "Mixed integer program for {text}.",
+    "Minimize cost subject to: {text}.",
+    "Maximize profit with constraints: {text}.",
+    "I have a problem: {text}.",
+    "Formulate as IP: {text}.",
+    "Need variables and constraints for {text}.",
+    "Which optimization problem fits: {text}?",
+    "Classic problem: {text}.",
 ]
 
 
@@ -135,7 +142,12 @@ def generate_all_samples(
     instances_per_problem: int = 100,
 ) -> list[tuple[str, str]]:
     """Return list of (query, passage) pairs for training."""
-    catalog_path = catalog_path or _project_root() / "data" / "processed" / "all_problems.json"
+    root = _project_root()
+    data_dir = root / "data" / "processed"
+    if catalog_path is None:
+        extended = data_dir / "all_problems_extended.json"
+        base = data_dir / "all_problems.json"
+        catalog_path = extended if extended.exists() else base
     with open(catalog_path, encoding="utf-8") as f:
         catalog = json.load(f)
     rng = random.Random(seed)
@@ -158,6 +170,7 @@ def main() -> None:
         description="Generate synthetic (query, passage) samples from catalog"
     )
     p.add_argument("--output", type=Path, default=None, help="Output JSONL path")
+    p.add_argument("--catalog", type=Path, default=None, help="Catalog JSON (default: all_problems_extended.json if present else all_problems.json)")
     p.add_argument("--seed", type=int, default=42)
     p.add_argument(
         "--instances-per-problem",
@@ -167,6 +180,7 @@ def main() -> None:
     )
     args = p.parse_args()
     pairs = generate_all_samples(
+        catalog_path=args.catalog,
         seed=args.seed,
         instances_per_problem=args.instances_per_problem,
     )

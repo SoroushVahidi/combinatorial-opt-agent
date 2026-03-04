@@ -30,15 +30,18 @@ echo "Installing training deps (datasets, accelerate)..."
 pip install --no-cache-dir datasets 'accelerate>=1.1.0' --quiet
 python -c "import accelerate; print('accelerate', accelerate.__version__)"
 
-echo "Generating training samples (100 instances per problem)..."
+echo "Generating training samples (extended catalog, 100 instances per problem)..."
 python -m training.generate_samples --output data/processed/training_pairs.jsonl --instances-per-problem 100
 
-echo "Starting fine-tuning (GPU, batch_size=16 for stability)..."
+echo "Starting fine-tuning (GPU, regularization + val-based best model)..."
 python -u -m training.train_retrieval \
   --data data/processed/training_pairs.jsonl \
   --base-model sentence-transformers/all-MiniLM-L6-v2 \
   --output-dir data/models/retrieval_finetuned \
-  --epochs 2 \
-  --batch-size 16
+  --epochs 4 \
+  --batch-size 16 \
+  --weight-decay 0.01 \
+  --warmup-ratio 0.1 \
+  --val-ratio 0.1
 
-echo "Done. Model saved to data/models/retrieval_finetuned/final"
+echo "Done. Model saved to data/models/retrieval_finetuned/final (best by val loss)"

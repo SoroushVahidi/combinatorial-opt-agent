@@ -1,6 +1,6 @@
 # Training the retrieval model
 
-Fine-tune the sentence-transformers retrieval model on synthetic (query, passage) pairs so it better matches natural-language queries to problems in the catalog. The catalog includes **NL4Opt**, **OptMATH benchmark**, and **classic + classic_extra** problems (see `docs/open_datasets.md`).
+Fine-tune the sentence-transformers retrieval model on synthetic (query, passage) pairs so it better matches natural-language queries to problems in the catalog. The catalog includes **NL4Opt**, **OptMATH benchmark**, and **classic + classic_extra** problems (see `docs/open_datasets.md`). Training uses **regularization and validation-based early stopping** to improve quality without overfitting.
 
 ## 1. Generate samples
 
@@ -11,6 +11,8 @@ python -m training.generate_samples --output data/processed/training_pairs.jsonl
 # Or 100 instances per problem (for stronger recognition):
 python -m training.generate_samples --output data/processed/training_pairs.jsonl --instances-per-problem 100
 ```
+
+By default, samples are generated from **all_problems_extended.json** if present (otherwise all_problems.json), so you train on the full catalog including custom problems. Use `--catalog path/to/catalog.json` to override.
 
 This creates multiple query phrasings per problem (description, name, aliases, ILP/formulation templates) paired with the same passage (name + aliases + description). With `--instances-per-problem 100` the model gets more examples to recognize each problem; the app then shows the matched problem's description, ILP, variables, constraints, etc.
 
@@ -28,11 +30,30 @@ pip install datasets 'accelerate>=1.1.0'
 python -m training.train_retrieval \
   --data data/processed/training_pairs.jsonl \
   --output-dir data/models/retrieval_finetuned \
-  --epochs 2 \
-  --batch-size 32
+  --epochs 4 \
+  --batch-size 32 \
+  --weight-decay 0.01 \
+  --warmup-ratio 0.1 \
+  --val-ratio 0.1
 ```
 
+- **weight-decay** and **warmup-ratio** reduce overfitting and stabilize training.
+- **val-ratio** holds out 10% of *problems* (by passage) for validation; the best model by validation loss is saved (`load_best_model_at_end`).
+- **epochs** is the maximum; training can effectively stop when validation loss stops improving (best checkpoint is kept).
+
 On a machine with GPU, training will use it automatically.
+
+**Training on CPU (local laptop/desktop):** You do **not** need a GPU. Run the same commands on your machine; training will use CPU and will be slower (e.g. 30–90+ minutes depending on data size and hardware). Use a smaller batch size to avoid running out of RAM:
+
+```bash
+python -m training.train_retrieval \
+  --data data/processed/training_pairs.jsonl \
+  --output-dir data/models/retrieval_finetuned \
+  --epochs 4 --batch-size 8 \
+  --weight-decay 0.01 --warmup-ratio 0.1 --val-ratio 0.1
+```
+
+For a quicker CPU run, generate fewer pairs (e.g. `--instances-per-problem 30`) or use `--max-steps 500` to limit training steps.
 
 ## 4. Run training on Wulver (batch, GPU)
 
