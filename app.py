@@ -74,14 +74,14 @@ def get_model():
     return MODEL
 
 
-async def answer(query: str, top_k: int) -> str:
+async def answer(query: str, top_k: int, validate: bool = False) -> str:
     # Async so FastAPI runs this in the event loop (no thread pool).
     # Avoids "can't start new thread" on Wulver when user clicks Submit.
     if not query or not query.strip():
         return "Please type a short description of your optimization problem (e.g. *minimize cost of opening warehouses and assigning customers*)."
     model = get_model()
     k = max(1, min(10, top_k))
-    results = search(query.strip(), catalog=CATALOG, model=model, top_k=k)
+    results = search(query.strip(), catalog=CATALOG, model=model, top_k=k, validate=validate)
     _log_user_query(query.strip(), k, results)
     if not results:
         return "No matching problems found."
@@ -89,6 +89,13 @@ async def answer(query: str, top_k: int) -> str:
     for i, (problem, score) in enumerate(results, 1):
         out.append(f"### Result {i} (relevance: {score:.3f})")
         out.append(format_problem_and_ip(problem, score=None))
+        if validate and problem.get("_validation"):
+            v = problem["_validation"]
+            errs = (v.get("schema_errors") or []) + (v.get("formulation_errors") or [])
+            if errs:
+                out.append(f"**Validation:** ⚠ {len(errs)} issue(s): " + "; ".join(errs[:3]) + (" ..." if len(errs) > 3 else ""))
+            else:
+                out.append("**Validation:** ✓ Schema and formulation OK")
         out.append("---")
     return "\n".join(out)
 
@@ -133,13 +140,14 @@ def main():
                     1, 10, value=3, step=1,
                     label="Number of results",
                 )
+                validate_in = gr.Checkbox(value=False, label="Validate outputs")
                 gr.Markdown("*Tip: first query may take a few seconds.*")
         with gr.Row():
             submit_btn = gr.Button("Search", variant="primary")
         out_md = gr.Markdown(label="Results", value="*Enter a problem above and click Search.*")
         submit_btn.click(
             fn=answer,
-            inputs=[query_in, top_k_in],
+            inputs=[query_in, top_k_in, validate_in],
             outputs=out_md,
         )
         gr.Examples(

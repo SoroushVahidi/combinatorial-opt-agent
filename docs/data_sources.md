@@ -46,7 +46,7 @@ This is the **canonical list** of external libraries and datasets used (or plann
 
 - 3d_tic_tac_toe, agricultural_pricing, aviation_planning, battery_scheduling, burrito_optimization_game, car_rental, cell_tower_coverage, colgen-cutting_stock, constraint_optimization, covid19_facility_location, curve_fitting, customer_assignment, decentralization_planning, drone_network, economic_planning, efficiency_analysis, electrical_power_generation, facility_location, factory_planning, fantasy_basketball, farm_planning, food_manufacturing, food_program, index_tracking, intro_to_gurobipy, linear_regression, logical_design, lost_luggage_distribution, manpower_planning, market_sharing, marketing_campaign_optimization, milk_collection, mining, music_recommendation, offshore_wind_farming, opencast_mining, optimization101, optimization201, optimization202, optimization301, pooling, portfolio_selection_optimization, power_generation, price_optimization, pricing_competing_products, protein_comparison, protein_folding, railway_dispatching, refinery, supply_network_design, technician_routing_scheduling, text_dissimilarity, traveling_salesman, workforce, yield_management
 
-**Status:** Planned (collect_nl4opt / collect_gurobi_examples).
+**Status:** ✅ In catalog — problem names from `data/sources/gurobi_modeling_examples.json`; merged via `scripts/merge_catalog.py`.
 
 ---
 
@@ -63,7 +63,7 @@ This is the **canonical list** of external libraries and datasets used (or plann
 
 - bipartite_matching, datasets, line_optimization, max_flow, metromap, min_cost_flow, min_cut, mwis (maximum weight independent set), opf (optimal power flow), portfolio, qubo, regression, sharpe_ratio, workforce
 
-**Status:** Planned (collect_gurobi_optimods).
+**Status:** ✅ In catalog — from `data/sources/gurobi_optimods.json`; merged via `scripts/merge_catalog.py`.
 
 ---
 
@@ -75,7 +75,7 @@ This is the **canonical list** of external libraries and datasets used (or plann
 | **Type** | Model catalog |
 | **Size** | 400+ models |
 | **What we extract** | Categorized GAMS formulations (may need GAMS license to run) |
-| **Status** | Phase 2 |
+| **Status** | ✅ In catalog — subset in `data/sources/gams_models.json`; merged via `scripts/merge_catalog.py`. |
 
 ---
 
@@ -87,7 +87,7 @@ This is the **canonical list** of external libraries and datasets used (or plann
 | **Type** | Benchmark instances |
 | **Size** | 1,000+ instances |
 | **What we extract** | Real-world MILP in MPS format (instance data; problem type often inferred) |
-| **Status** | Phase 2 |
+| **Status** | ✅ In catalog — `data/sources/miplib.json` (MIPLIB 2017 entry); merged via `scripts/merge_catalog.py`. |
 
 ---
 
@@ -135,7 +135,7 @@ This is the **canonical list** of external libraries and datasets used (or plann
 - Unit commitment  
 - Vehicle routing: two-echelon, sparse feasibility graph, site-dependent multi-trip period routing, single period, period routing, fixed routes, fixed areas  
 
-**Status:** Planned (collect_or_library); formulations for these families can be added to `all_problems.json` from textbooks/literature.
+**Status:** ✅ In catalog — from `data/sources/or_library.json`; merged via `scripts/merge_catalog.py`. Formulations can be added from textbooks/literature.
 
 ---
 
@@ -147,7 +147,7 @@ This is the **canonical list** of external libraries and datasets used (or plann
 | **Type** | Python optimization models |
 | **Size** | 15+ models |
 | **What we extract** | Formulation from code + comments |
-| **Status** | Phase 2 |
+| **Status** | ✅ In catalog — from `data/sources/pyomo_examples.json`; merged via `scripts/merge_catalog.py`. |
 
 ---
 

@@ -1,0 +1,8 @@
+{
+  "name": "GAMS Model Library",
+  "url": "https://www.gams.com/latest/gamslib_ml/libhtml/",
+  "type": "model_library",
+  "models": [
+    "abel", "acronym", "aircraft", "alan", "albedo", "allopt", "ampl", "arki", "arm", "assign", "batch", "batchdes", "bch", "becker", "bid", "bidopt", "bilevel", "bore", "brachist", "camm", "cardqp", "car", "cement", "chem", "chenery", "chicago", "chip", "chipplan", "circle", "clnl", "clnlbeam", "co2", "co2price", "combustion", "cont", "cqcp", "crude", "crystallization", "cutstock", "dea", "dice", "diet", "dist", "dnieper", "duty", "economic", "eggh", "eighth", "electric", "emp", "energy", "exponential", "farmer", "feed", "ferticrop", "finance", "fitness", "flowshop", "forest", "gasnet", "gasoil", "gastrans", "gdxdump", "gem", "general", "grossmann", "gs", "hans", "harker", "himmel11", "himmel16", "house", "hydro", "indus", "inventory", "jobshop", "john", "kport", "lakes", "least", "lindo", "linear", "link", "lipo", "location", "lottery", "mccormick", "mcp", "melectric", "mexss", "minesweeper", "minlp", "multi", "multmcp", "nash", "neos", "nobound", "nonlinear", "obstacle", "oil", "optca", "optce", "parallel", "path", "petroleum", "peugeot", "pinch", "poly", "portfol", "powery", "process", "prolog", "qcp", "qp", "ramsey", "reactor", "reserves", "rosen", "scarf", "scen", "scheduling", "semiconductor", "sep", "simple", "spatial", "stoch", "tale", "tank", "tax", "titan", "torsion", "tram", "transient", "trnsport", "tsp", "turbine", "two3", "util", "vienna", "water", "waste", "weld", "wsm"
+  ]
+}

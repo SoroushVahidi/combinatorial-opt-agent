@@ -28,7 +28,14 @@ The retrieval model is trained on problems from the following **open datasets**.
   - Shortest Path (LP)
   - Capacitated Facility Location
 
-## 4. Other Public Sources (for reference)
+## 4. Real-world (costumed) problem statements
+
+- **Source:** Curated from EHOP-style (“everyday”) phrasings ([EHOP: Everyday NP-hard Optimization Problems](https://coli-saar.github.io/ehop), Coli Saar / Brown).
+- **Content:** Natural language descriptions that dress up classic problems (e.g. graph coloring as “assign guests to tables so no two who dislike each other sit together”; knapsack as “select deliveries to load in a truck”). Help the model recognize the same problem when users describe it in real-world terms.
+- **File:** `data/sources/real_world_queries.json` — list of `(query, problem_name)`; merged into training pairs by `training.generate_samples` (matched to catalog by name).
+- **Size:** Dozens of costumed queries; expanded as needed.
+
+## 5. Other Public Sources (for reference)
 
 - **MIPLIB** (miplib.zib.de): Benchmark *instances* (MPS/LP files) for solver comparison; no natural language. Not used for retrieval training.
 - **OR-Library** (people.brunel.ac.uk/~mastjjb/jeb/info.html): Test instances for many OR problems; data files rather than NL descriptions. Not ingested here.
@@ -46,7 +53,7 @@ The retrieval model is trained on problems from the following **open datasets**.
 
 3. **Train:**  
    `sbatch scripts/train_retrieval_gpu.slurm`  
-   Generates up to 100 (query, passage) pairs per problem and fine-tunes the retrieval model so it learns to recognize all problems (descriptions, formulations, complexities) from the combined catalog.
+   Generates 150 (query, passage) pairs per problem plus real-world queries from `data/sources/real_world_queries.json`, then fine-tunes the retrieval model.
 
 ## Current catalog size
 

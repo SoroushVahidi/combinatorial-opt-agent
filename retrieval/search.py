@@ -62,10 +62,12 @@ def search(
     embeddings: np.ndarray | None = None,
     model=None,
     top_k: int = 3,
+    validate: bool = False,
 ) -> list[tuple[dict, float]]:
     """
     Return top_k (problem, score) pairs for the natural-language query.
     score is cosine similarity in [0, 1] (assuming normalized vectors).
+    If validate=True, each problem dict gets "_validation": {"schema_errors": [...], "formulation_errors": [...]}.
     """
     if catalog is None:
         catalog = _load_catalog()
@@ -92,7 +94,18 @@ def search(
 
     # Top-k indices
     idx = np.argsort(scores)[::-1][:top_k]
-    return [(catalog[i], float(scores[i])) for i in idx]
+    results = [(catalog[i], float(scores[i])) for i in idx]
+
+    if validate:
+        try:
+            from formulation.verify import run_all_problem_checks
+        except Exception:
+            run_all_problem_checks = None
+        if run_all_problem_checks:
+            for problem, _ in results:
+                problem["_validation"] = run_all_problem_checks(problem)
+
+    return results
 
 
 def format_problem_and_ip(problem: dict, score: float | None = None) -> str:

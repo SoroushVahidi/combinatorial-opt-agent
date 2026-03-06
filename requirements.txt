@@ -1,6 +1,9 @@
 # Retrieval: semantic search over problem catalog
 sentence-transformers>=2.2.0
 numpy>=1.20.0
+# Baselines: BM25, TF-IDF
+rank_bm25>=0.2.2
+scikit-learn>=1.0.0
 
 # Web UI
 gradio>=4.0.0

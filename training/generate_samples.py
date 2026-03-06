@@ -136,12 +136,59 @@ def generate_queries_for_problem(
     return list(dict.fromkeys(queries))[:target_per_problem]  # preserve order, dedupe, cap
 
 
+def _find_problem_by_name(catalog: list[dict], name: str) -> dict | None:
+    """Find first catalog problem whose name equals or contains the given name (case-insensitive)."""
+    name_clean = (name or "").strip().lower()
+    if not name_clean:
+        return None
+    for p in catalog:
+        pname = (p.get("name") or "").strip().lower()
+        if pname == name_clean or name_clean in pname or pname in name_clean:
+            return p
+    return None
+
+
+def load_real_world_queries(root: Path | None = None) -> list[tuple[str, str]]:
+    """Load (query, passage) pairs from data/sources/real_world_queries.json; catalog must be loaded for passage lookup."""
+    root = root or _project_root()
+    path = root / "data" / "sources" / "real_world_queries.json"
+    if not path.exists():
+        return []
+    with open(path, encoding="utf-8") as f:
+        data = json.load(f)
+    pairs_raw = data.get("pairs") or []
+    catalog_path = root / "data" / "processed" / "all_problems.json"
+    if not catalog_path.exists():
+        return []
+    with open(catalog_path, encoding="utf-8") as f:
+        catalog = json.load(f)
+    out = []
+    for item in pairs_raw:
+        query = (item.get("query") or "").strip()
+        pname = item.get("problem_name") or ""
+        if not query or not pname:
+            continue
+        problem = _find_problem_by_name(catalog, pname)
+        if not problem:
+            continue
+        passage = searchable_text(problem)
+        if passage:
+            out.append((query, passage))
+    return out
+
+
 def generate_all_samples(
     catalog_path: Path | None = None,
     seed: int = 42,
     instances_per_problem: int = 100,
+    include_real_world: bool = True,
+    split_problem_ids: list[str] | None = None,
 ) -> list[tuple[str, str]]:
-    """Return list of (query, passage) pairs for training."""
+    """
+    Return list of (query, passage) pairs for training.
+    If split_problem_ids is set, only problems whose id is in this list are used
+    (for leak-free train split: generate pairs only for training problems).
+    """
     root = _project_root()
     data_dir = root / "data" / "processed"
     if catalog_path is None:
@@ -150,6 +197,9 @@ def generate_all_samples(
         catalog_path = extended if extended.exists() else base
     with open(catalog_path, encoding="utf-8") as f:
         catalog = json.load(f)
+    if split_problem_ids is not None:
+        id_set = set(split_problem_ids)
+        catalog = [p for p in catalog if p.get("id") in id_set]
     rng = random.Random(seed)
     pairs = []
     for problem in catalog:
@@ -161,6 +211,10 @@ def generate_all_samples(
         )
         for q in queries:
             pairs.append((q, passage))
+    # When using splits, do not add real_world so eval problems are never in training
+    if include_real_world and split_problem_ids is None:
+        extra = load_real_world_queries()
+        pairs.extend(extra)
     return pairs
 
 
@@ -178,11 +232,25 @@ def main() -> None:
         default=100,
         help="Number of (query, passage) pairs to generate per problem (default 100)",
     )
+    p.add_argument("--splits", type=Path, default=None,
+                   help="Path to splits JSON (train/dev/test problem IDs). If set, --split must be set.")
+    p.add_argument("--split", type=str, default=None, choices=("train", "dev", "test"),
+                   help="Generate pairs only for this split (requires --splits). Use train for training.")
     args = p.parse_args()
+
+    split_problem_ids: list[str] | None = None
+    if args.splits is not None or args.split is not None:
+        if args.splits is None or args.split is None:
+            p.error("Both --splits and --split are required when using split-aware generation.")
+        from training.splits import load_splits, get_problem_ids_for_split
+        splits = load_splits(args.splits)
+        split_problem_ids = get_problem_ids_for_split(splits, args.split)
+
     pairs = generate_all_samples(
         catalog_path=args.catalog,
         seed=args.seed,
         instances_per_problem=args.instances_per_problem,
+        split_problem_ids=split_problem_ids,
     )
     out = args.output or _project_root() / "data" / "processed" / "training_pairs.jsonl"
     out.parent.mkdir(parents=True, exist_ok=True)

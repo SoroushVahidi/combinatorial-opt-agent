@@ -1,0 +1,44 @@
+{
+  "train": [
+    "cvrp",
+    "capacitated_facility_location",
+    "set_partitioning",
+    "set_packing",
+    "maximum_matching",
+    "bin_packing",
+    "max_cut",
+    "generalised_assignment",
+    "graph_coloring",
+    "maximum_weight_independent_set",
+    "max_clique",
+    "dominating_set",
+    "feedback_vertex_set",
+    "min_cut",
+    "job_shop_scheduling",
+    "uncapacitated_lot_sizing",
+    "set_cover",
+    "p_median",
+    "aircraft_landing",
+    "vertex_cover",
+    "flow_shop"
+  ],
+  "dev": [
+    "max_flow",
+    "crew_scheduling",
+    "tsp",
+    "multidimensional_knapsack"
+  ],
+  "test": [
+    "shortest_path",
+    "assignment",
+    "fixed_charge_transportation",
+    "knapsack_01",
+    "facility_location_ufl",
+    "quadratic_assignment",
+    "steiner_tree",
+    "example_multiobjective_knapsack",
+    "max_multicommodity_flow",
+    "min_cost_circulation",
+    "max_bipartite_matching_ilp"
+  ]
+}

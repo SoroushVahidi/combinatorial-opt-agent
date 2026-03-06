@@ -1,0 +1,13 @@
+{
+  "name": "MIPLIB",
+  "url": "https://miplib.zib.de/",
+  "type": "benchmark_instances",
+  "entries": [
+    {
+      "id": "miplib_2017",
+      "name": "MIPLIB 2017",
+      "aliases": ["MIPLIB", "MIPLIB 2017", "mixed integer programming benchmark"],
+      "description": "Benchmark collection of mixed-integer linear programming (MILP) instances. Used for solver benchmarking. Instances in MPS format; problem types vary (scheduling, planning, network, etc.)."
+    }
+  ]
+}

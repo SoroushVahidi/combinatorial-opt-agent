@@ -47809,5 +47809,1780 @@
     "formulation_latex": "\\min \\sum_{ij} c_{ij} x_{ij} \\quad \\text{s.t.} \\quad \\text{flow conservation},\\quad x_{ij} \\ge 0.",
     "complexity": "P (polynomial)",
     "source": "classic_extra"
+  },
+  {
+    "id": "gurobi_optimods_bipartite_matching",
+    "name": "Bipartite Matching",
+    "description": "Gurobi OptiMods: Bipartite Matching. See https://github.com/Gurobi/gurobi-optimods.",
+    "source": "gurobi_optimods"
+  },
+  {
+    "id": "gurobi_optimods_datasets",
+    "name": "Datasets",
+    "description": "Gurobi OptiMods: Datasets. See https://github.com/Gurobi/gurobi-optimods.",
+    "source": "gurobi_optimods"
+  },
+  {
+    "id": "gurobi_optimods_line_optimization",
+    "name": "Line Optimization",
+    "description": "Gurobi OptiMods: Line Optimization. See https://github.com/Gurobi/gurobi-optimods.",
+    "source": "gurobi_optimods"
+  },
+  {
+    "id": "gurobi_optimods_max_flow",
+    "name": "Max Flow",
+    "description": "Gurobi OptiMods: Max Flow. See https://github.com/Gurobi/gurobi-optimods.",
+    "source": "gurobi_optimods"
+  },
+  {
+    "id": "gurobi_optimods_metromap",
+    "name": "Metromap",
+    "description": "Gurobi OptiMods: Metromap. See https://github.com/Gurobi/gurobi-optimods.",
+    "source": "gurobi_optimods"
+  },
+  {
+    "id": "gurobi_optimods_min_cost_flow",
+    "name": "Min Cost Flow",
+    "description": "Gurobi OptiMods: Min Cost Flow. See https://github.com/Gurobi/gurobi-optimods.",
+    "source": "gurobi_optimods"
+  },
+  {
+    "id": "gurobi_optimods_min_cut",
+    "name": "Min Cut",
+    "description": "Gurobi OptiMods: Min Cut. See https://github.com/Gurobi/gurobi-optimods.",
+    "source": "gurobi_optimods"
+  },
+  {
+    "id": "gurobi_optimods_mwis",
+    "name": "Mwis",
+    "description": "Gurobi OptiMods: Mwis. See https://github.com/Gurobi/gurobi-optimods.",
+    "source": "gurobi_optimods"
+  },
+  {
+    "id": "gurobi_optimods_opf",
+    "name": "Opf",
+    "description": "Gurobi OptiMods: Opf. See https://github.com/Gurobi/gurobi-optimods.",
+    "source": "gurobi_optimods"
+  },
+  {
+    "id": "gurobi_optimods_portfolio",
+    "name": "Portfolio",
+    "description": "Gurobi OptiMods: Portfolio. See https://github.com/Gurobi/gurobi-optimods.",
+    "source": "gurobi_optimods"
+  },
+  {
+    "id": "gurobi_optimods_qubo",
+    "name": "Qubo",
+    "description": "Gurobi OptiMods: Qubo. See https://github.com/Gurobi/gurobi-optimods.",
+    "source": "gurobi_optimods"
+  },
+  {
+    "id": "gurobi_optimods_regression",
+    "name": "Regression",
+    "description": "Gurobi OptiMods: Regression. See https://github.com/Gurobi/gurobi-optimods.",
+    "source": "gurobi_optimods"
+  },
+  {
+    "id": "gurobi_optimods_sharpe_ratio",
+    "name": "Sharpe Ratio",
+    "description": "Gurobi OptiMods: Sharpe Ratio. See https://github.com/Gurobi/gurobi-optimods.",
+    "source": "gurobi_optimods"
+  },
+  {
+    "id": "gurobi_optimods_workforce",
+    "name": "Workforce",
+    "description": "Gurobi OptiMods: Workforce. See https://github.com/Gurobi/gurobi-optimods.",
+    "source": "gurobi_optimods"
+  },
+  {
+    "id": "gurobi_ex_3d_tic_tac_toe",
+    "name": "3D Tic Tac Toe",
+    "description": "Gurobi modeling example: 3D Tic Tac Toe. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_agricultural_pricing",
+    "name": "Agricultural Pricing",
+    "description": "Gurobi modeling example: Agricultural Pricing. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_aviation_planning",
+    "name": "Aviation Planning",
+    "description": "Gurobi modeling example: Aviation Planning. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_battery_scheduling",
+    "name": "Battery Scheduling",
+    "description": "Gurobi modeling example: Battery Scheduling. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_burrito_optimization_game",
+    "name": "Burrito Optimization Game",
+    "description": "Gurobi modeling example: Burrito Optimization Game. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_car_rental",
+    "name": "Car Rental",
+    "description": "Gurobi modeling example: Car Rental. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_cell_tower_coverage",
+    "name": "Cell Tower Coverage",
+    "description": "Gurobi modeling example: Cell Tower Coverage. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_colgen-cutting_stock",
+    "name": "Colgen-Cutting Stock",
+    "description": "Gurobi modeling example: Colgen-Cutting Stock. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_constraint_optimization",
+    "name": "Constraint Optimization",
+    "description": "Gurobi modeling example: Constraint Optimization. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_covid19_facility_location",
+    "name": "Covid19 Facility Location",
+    "description": "Gurobi modeling example: Covid19 Facility Location. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_curve_fitting",
+    "name": "Curve Fitting",
+    "description": "Gurobi modeling example: Curve Fitting. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_customer_assignment",
+    "name": "Customer Assignment",
+    "description": "Gurobi modeling example: Customer Assignment. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_decentralization_planning",
+    "name": "Decentralization Planning",
+    "description": "Gurobi modeling example: Decentralization Planning. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_drone_network",
+    "name": "Drone Network",
+    "description": "Gurobi modeling example: Drone Network. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_economic_planning",
+    "name": "Economic Planning",
+    "description": "Gurobi modeling example: Economic Planning. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_efficiency_analysis",
+    "name": "Efficiency Analysis",
+    "description": "Gurobi modeling example: Efficiency Analysis. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_electrical_power_generation",
+    "name": "Electrical Power Generation",
+    "description": "Gurobi modeling example: Electrical Power Generation. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_facility_location",
+    "name": "Facility Location",
+    "description": "Gurobi modeling example: Facility Location. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_factory_planning",
+    "name": "Factory Planning",
+    "description": "Gurobi modeling example: Factory Planning. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_fantasy_basketball",
+    "name": "Fantasy Basketball",
+    "description": "Gurobi modeling example: Fantasy Basketball. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_farm_planning",
+    "name": "Farm Planning",
+    "description": "Gurobi modeling example: Farm Planning. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_food_manufacturing",
+    "name": "Food Manufacturing",
+    "description": "Gurobi modeling example: Food Manufacturing. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_food_program",
+    "name": "Food Program",
+    "description": "Gurobi modeling example: Food Program. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_index_tracking",
+    "name": "Index Tracking",
+    "description": "Gurobi modeling example: Index Tracking. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_intro_to_gurobipy",
+    "name": "Intro To Gurobipy",
+    "description": "Gurobi modeling example: Intro To Gurobipy. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_linear_regression",
+    "name": "Linear Regression",
+    "description": "Gurobi modeling example: Linear Regression. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_logical_design",
+    "name": "Logical Design",
+    "description": "Gurobi modeling example: Logical Design. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_lost_luggage_distribution",
+    "name": "Lost Luggage Distribution",
+    "description": "Gurobi modeling example: Lost Luggage Distribution. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_manpower_planning",
+    "name": "Manpower Planning",
+    "description": "Gurobi modeling example: Manpower Planning. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_market_sharing",
+    "name": "Market Sharing",
+    "description": "Gurobi modeling example: Market Sharing. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_marketing_campaign_optimization",
+    "name": "Marketing Campaign Optimization",
+    "description": "Gurobi modeling example: Marketing Campaign Optimization. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_milk_collection",
+    "name": "Milk Collection",
+    "description": "Gurobi modeling example: Milk Collection. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_mining",
+    "name": "Mining",
+    "description": "Gurobi modeling example: Mining. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_music_recommendation",
+    "name": "Music Recommendation",
+    "description": "Gurobi modeling example: Music Recommendation. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_offshore_wind_farming",
+    "name": "Offshore Wind Farming",
+    "description": "Gurobi modeling example: Offshore Wind Farming. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_opencast_mining",
+    "name": "Opencast Mining",
+    "description": "Gurobi modeling example: Opencast Mining. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_optimization101",
+    "name": "Optimization101",
+    "description": "Gurobi modeling example: Optimization101. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_optimization201",
+    "name": "Optimization201",
+    "description": "Gurobi modeling example: Optimization201. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_optimization202",
+    "name": "Optimization202",
+    "description": "Gurobi modeling example: Optimization202. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_optimization301",
+    "name": "Optimization301",
+    "description": "Gurobi modeling example: Optimization301. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_pooling",
+    "name": "Pooling",
+    "description": "Gurobi modeling example: Pooling. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_portfolio_selection_optimization",
+    "name": "Portfolio Selection Optimization",
+    "description": "Gurobi modeling example: Portfolio Selection Optimization. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_power_generation",
+    "name": "Power Generation",
+    "description": "Gurobi modeling example: Power Generation. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_price_optimization",
+    "name": "Price Optimization",
+    "description": "Gurobi modeling example: Price Optimization. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_pricing_competing_products",
+    "name": "Pricing Competing Products",
+    "description": "Gurobi modeling example: Pricing Competing Products. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_protein_comparison",
+    "name": "Protein Comparison",
+    "description": "Gurobi modeling example: Protein Comparison. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_protein_folding",
+    "name": "Protein Folding",
+    "description": "Gurobi modeling example: Protein Folding. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_railway_dispatching",
+    "name": "Railway Dispatching",
+    "description": "Gurobi modeling example: Railway Dispatching. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_refinery",
+    "name": "Refinery",
+    "description": "Gurobi modeling example: Refinery. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_supply_network_design",
+    "name": "Supply Network Design",
+    "description": "Gurobi modeling example: Supply Network Design. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_technician_routing_scheduling",
+    "name": "Technician Routing Scheduling",
+    "description": "Gurobi modeling example: Technician Routing Scheduling. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_text_dissimilarity",
+    "name": "Text Dissimilarity",
+    "description": "Gurobi modeling example: Text Dissimilarity. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_traveling_salesman",
+    "name": "Traveling Salesman",
+    "description": "Gurobi modeling example: Traveling Salesman. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_workforce",
+    "name": "Workforce",
+    "description": "Gurobi modeling example: Workforce. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_yield_management",
+    "name": "Yield Management",
+    "description": "Gurobi modeling example: Yield Management. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "or_lib_airport_capacity",
+    "name": "Airport Capacity",
+    "description": "OR-Library (J.E. Beasley): Airport Capacity. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_assignment",
+    "name": "Assignment",
+    "description": "OR-Library (J.E. Beasley): Assignment. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_bin_packing_1d",
+    "name": "Bin Packing 1D",
+    "description": "OR-Library (J.E. Beasley): Bin Packing 1D. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_bin_packing_2d",
+    "name": "Bin Packing 2D",
+    "description": "OR-Library (J.E. Beasley): Bin Packing 2D. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_capacitated_minimal_spanning_tree",
+    "name": "Capacitated Minimal Spanning Tree",
+    "description": "OR-Library (J.E. Beasley): Capacitated Minimal Spanning Tree. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_crew_scheduling",
+    "name": "Crew Scheduling",
+    "description": "OR-Library (J.E. Beasley): Crew Scheduling. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_corporate_structuring",
+    "name": "Corporate Structuring",
+    "description": "OR-Library (J.E. Beasley): Corporate Structuring. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_data_envelopment_analysis",
+    "name": "Data Envelopment Analysis",
+    "description": "OR-Library (J.E. Beasley): Data Envelopment Analysis. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_edge_weighted_k_cardinality_tree",
+    "name": "Edge Weighted K Cardinality Tree",
+    "description": "OR-Library (J.E. Beasley): Edge Weighted K Cardinality Tree. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_equitable_partitioning",
+    "name": "Equitable Partitioning",
+    "description": "OR-Library (J.E. Beasley): Equitable Partitioning. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_generalised_assignment",
+    "name": "Generalised Assignment",
+    "description": "OR-Library (J.E. Beasley): Generalised Assignment. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_graph_colouring",
+    "name": "Graph Colouring",
+    "description": "OR-Library (J.E. Beasley): Graph Colouring. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_index_tracking",
+    "name": "Index Tracking",
+    "description": "OR-Library (J.E. Beasley): Index Tracking. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_knapsack_multidimensional",
+    "name": "Knapsack Multidimensional",
+    "description": "OR-Library (J.E. Beasley): Knapsack Multidimensional. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_knapsack_multi_demand_multidimensional",
+    "name": "Knapsack Multi Demand Multidimensional",
+    "description": "OR-Library (J.E. Beasley): Knapsack Multi Demand Multidimensional. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_linear_programming",
+    "name": "Linear Programming",
+    "description": "OR-Library (J.E. Beasley): Linear Programming. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_uncapacitated_warehouse_location",
+    "name": "Uncapacitated Warehouse Location",
+    "description": "OR-Library (J.E. Beasley): Uncapacitated Warehouse Location. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_p_median_capacitated",
+    "name": "P Median Capacitated",
+    "description": "OR-Library (J.E. Beasley): P Median Capacitated. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_p_median_uncapacitated",
+    "name": "P Median Uncapacitated",
+    "description": "OR-Library (J.E. Beasley): P Median Uncapacitated. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_p_hub",
+    "name": "P Hub",
+    "description": "OR-Library (J.E. Beasley): P Hub. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_capacitated_warehouse_location",
+    "name": "Capacitated Warehouse Location",
+    "description": "OR-Library (J.E. Beasley): Capacitated Warehouse Location. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_lot_sizing",
+    "name": "Lot Sizing",
+    "description": "OR-Library (J.E. Beasley): Lot Sizing. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_network_flow_concave_costs",
+    "name": "Network Flow Concave Costs",
+    "description": "OR-Library (J.E. Beasley): Network Flow Concave Costs. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_ore_selection",
+    "name": "Ore Selection",
+    "description": "OR-Library (J.E. Beasley): Ore Selection. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_portfolio_multi_period",
+    "name": "Portfolio Multi Period",
+    "description": "OR-Library (J.E. Beasley): Portfolio Multi Period. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_portfolio_single_period",
+    "name": "Portfolio Single Period",
+    "description": "OR-Library (J.E. Beasley): Portfolio Single Period. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_scheduling_weighted_tardiness",
+    "name": "Scheduling Weighted Tardiness",
+    "description": "OR-Library (J.E. Beasley): Scheduling Weighted Tardiness. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_scheduling_shift_minimization_personnel_task",
+    "name": "Scheduling Shift Minimization Personnel Task",
+    "description": "OR-Library (J.E. Beasley): Scheduling Shift Minimization Personnel Task. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_open_shop",
+    "name": "Open Shop",
+    "description": "OR-Library (J.E. Beasley): Open Shop. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_lot_streaming",
+    "name": "Lot Streaming",
+    "description": "OR-Library (J.E. Beasley): Lot Streaming. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_job_shop",
+    "name": "Job Shop",
+    "description": "OR-Library (J.E. Beasley): Job Shop. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_hybrid_reentrant_shop",
+    "name": "Hybrid Reentrant Shop",
+    "description": "OR-Library (J.E. Beasley): Hybrid Reentrant Shop. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_flow_shop",
+    "name": "Flow Shop",
+    "description": "OR-Library (J.E. Beasley): Flow Shop. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_common_due_date",
+    "name": "Common Due Date",
+    "description": "OR-Library (J.E. Beasley): Common Due Date. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_aircraft_landing",
+    "name": "Aircraft Landing",
+    "description": "OR-Library (J.E. Beasley): Aircraft Landing. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_set_covering",
+    "name": "Set Covering",
+    "description": "OR-Library (J.E. Beasley): Set Covering. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_set_partitioning",
+    "name": "Set Partitioning",
+    "description": "OR-Library (J.E. Beasley): Set Partitioning. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_shortest_path_resource_constrained",
+    "name": "Shortest Path Resource Constrained",
+    "description": "OR-Library (J.E. Beasley): Shortest Path Resource Constrained. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_steiner_graph",
+    "name": "Steiner Graph",
+    "description": "OR-Library (J.E. Beasley): Steiner Graph. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_steiner_rectilinear",
+    "name": "Steiner Rectilinear",
+    "description": "OR-Library (J.E. Beasley): Steiner Rectilinear. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_steiner_euclidean",
+    "name": "Steiner Euclidean",
+    "description": "OR-Library (J.E. Beasley): Steiner Euclidean. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_container_loading",
+    "name": "Container Loading",
+    "description": "OR-Library (J.E. Beasley): Container Loading. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_container_loading_weight_restrictions",
+    "name": "Container Loading Weight Restrictions",
+    "description": "OR-Library (J.E. Beasley): Container Loading Weight Restrictions. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_boxes_on_shelves",
+    "name": "Boxes On Shelves",
+    "description": "OR-Library (J.E. Beasley): Boxes On Shelves. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_time_series_forecasting",
+    "name": "Time Series Forecasting",
+    "description": "OR-Library (J.E. Beasley): Time Series Forecasting. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_timetabling",
+    "name": "Timetabling",
+    "description": "OR-Library (J.E. Beasley): Timetabling. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_tsp_period_salesman",
+    "name": "Tsp Period Salesman",
+    "description": "OR-Library (J.E. Beasley): Tsp Period Salesman. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_cutting_2d_unequal_rectangles",
+    "name": "Cutting 2D Unequal Rectangles",
+    "description": "OR-Library (J.E. Beasley): Cutting 2D Unequal Rectangles. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_cutting_2d_unequal_circles",
+    "name": "Cutting 2D Unequal Circles",
+    "description": "OR-Library (J.E. Beasley): Cutting 2D Unequal Circles. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_cutting_2d_unconstrained_guillotine",
+    "name": "Cutting 2D Unconstrained Guillotine",
+    "description": "OR-Library (J.E. Beasley): Cutting 2D Unconstrained Guillotine. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_strip_packing",
+    "name": "Strip Packing",
+    "description": "OR-Library (J.E. Beasley): Strip Packing. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_cutting_2d_constrained_non_guillotine",
+    "name": "Cutting 2D Constrained Non Guillotine",
+    "description": "OR-Library (J.E. Beasley): Cutting 2D Constrained Non Guillotine. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_cutting_2d_constrained_guillotine",
+    "name": "Cutting 2D Constrained Guillotine",
+    "description": "OR-Library (J.E. Beasley): Cutting 2D Constrained Guillotine. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_assortment_problem",
+    "name": "Assortment Problem",
+    "description": "OR-Library (J.E. Beasley): Assortment Problem. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_unconstrained_binary_quadratic",
+    "name": "Unconstrained Binary Quadratic",
+    "description": "OR-Library (J.E. Beasley): Unconstrained Binary Quadratic. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_unit_commitment",
+    "name": "Unit Commitment",
+    "description": "OR-Library (J.E. Beasley): Unit Commitment. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_vehicle_routing_two_echelon",
+    "name": "Vehicle Routing Two Echelon",
+    "description": "OR-Library (J.E. Beasley): Vehicle Routing Two Echelon. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_vehicle_routing_sparse_feasibility",
+    "name": "Vehicle Routing Sparse Feasibility",
+    "description": "OR-Library (J.E. Beasley): Vehicle Routing Sparse Feasibility. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_vehicle_routing_site_dependent_multi_trip_period",
+    "name": "Vehicle Routing Site Dependent Multi Trip Period",
+    "description": "OR-Library (J.E. Beasley): Vehicle Routing Site Dependent Multi Trip Period. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_vehicle_routing_single_period",
+    "name": "Vehicle Routing Single Period",
+    "description": "OR-Library (J.E. Beasley): Vehicle Routing Single Period. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_vehicle_routing_period",
+    "name": "Vehicle Routing Period",
+    "description": "OR-Library (J.E. Beasley): Vehicle Routing Period. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_vehicle_routing_fixed_routes",
+    "name": "Vehicle Routing Fixed Routes",
+    "description": "OR-Library (J.E. Beasley): Vehicle Routing Fixed Routes. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_vehicle_routing_fixed_areas",
+    "name": "Vehicle Routing Fixed Areas",
+    "description": "OR-Library (J.E. Beasley): Vehicle Routing Fixed Areas. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "source": "or_library"
+  },
+  {
+    "id": "gams_abel",
+    "name": "Abel",
+    "description": "GAMS Model Library: Abel. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_acronym",
+    "name": "Acronym",
+    "description": "GAMS Model Library: Acronym. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_aircraft",
+    "name": "Aircraft",
+    "description": "GAMS Model Library: Aircraft. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_alan",
+    "name": "Alan",
+    "description": "GAMS Model Library: Alan. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_albedo",
+    "name": "Albedo",
+    "description": "GAMS Model Library: Albedo. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_allopt",
+    "name": "Allopt",
+    "description": "GAMS Model Library: Allopt. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_ampl",
+    "name": "Ampl",
+    "description": "GAMS Model Library: Ampl. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_arki",
+    "name": "Arki",
+    "description": "GAMS Model Library: Arki. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_arm",
+    "name": "Arm",
+    "description": "GAMS Model Library: Arm. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_assign",
+    "name": "Assign",
+    "description": "GAMS Model Library: Assign. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_batch",
+    "name": "Batch",
+    "description": "GAMS Model Library: Batch. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_batchdes",
+    "name": "Batchdes",
+    "description": "GAMS Model Library: Batchdes. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_bch",
+    "name": "Bch",
+    "description": "GAMS Model Library: Bch. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_becker",
+    "name": "Becker",
+    "description": "GAMS Model Library: Becker. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_bid",
+    "name": "Bid",
+    "description": "GAMS Model Library: Bid. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_bidopt",
+    "name": "Bidopt",
+    "description": "GAMS Model Library: Bidopt. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_bilevel",
+    "name": "Bilevel",
+    "description": "GAMS Model Library: Bilevel. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_bore",
+    "name": "Bore",
+    "description": "GAMS Model Library: Bore. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_brachist",
+    "name": "Brachist",
+    "description": "GAMS Model Library: Brachist. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_camm",
+    "name": "Camm",
+    "description": "GAMS Model Library: Camm. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_cardqp",
+    "name": "Cardqp",
+    "description": "GAMS Model Library: Cardqp. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_car",
+    "name": "Car",
+    "description": "GAMS Model Library: Car. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_cement",
+    "name": "Cement",
+    "description": "GAMS Model Library: Cement. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_chem",
+    "name": "Chem",
+    "description": "GAMS Model Library: Chem. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_chenery",
+    "name": "Chenery",
+    "description": "GAMS Model Library: Chenery. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_chicago",
+    "name": "Chicago",
+    "description": "GAMS Model Library: Chicago. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_chip",
+    "name": "Chip",
+    "description": "GAMS Model Library: Chip. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_chipplan",
+    "name": "Chipplan",
+    "description": "GAMS Model Library: Chipplan. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_circle",
+    "name": "Circle",
+    "description": "GAMS Model Library: Circle. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_clnl",
+    "name": "Clnl",
+    "description": "GAMS Model Library: Clnl. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_clnlbeam",
+    "name": "Clnlbeam",
+    "description": "GAMS Model Library: Clnlbeam. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_co2",
+    "name": "Co2",
+    "description": "GAMS Model Library: Co2. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_co2price",
+    "name": "Co2Price",
+    "description": "GAMS Model Library: Co2Price. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_combustion",
+    "name": "Combustion",
+    "description": "GAMS Model Library: Combustion. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_cont",
+    "name": "Cont",
+    "description": "GAMS Model Library: Cont. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_cqcp",
+    "name": "Cqcp",
+    "description": "GAMS Model Library: Cqcp. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_crude",
+    "name": "Crude",
+    "description": "GAMS Model Library: Crude. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_crystallization",
+    "name": "Crystallization",
+    "description": "GAMS Model Library: Crystallization. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_cutstock",
+    "name": "Cutstock",
+    "description": "GAMS Model Library: Cutstock. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_dea",
+    "name": "Dea",
+    "description": "GAMS Model Library: Dea. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_dice",
+    "name": "Dice",
+    "description": "GAMS Model Library: Dice. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_diet",
+    "name": "Diet",
+    "description": "GAMS Model Library: Diet. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_dist",
+    "name": "Dist",
+    "description": "GAMS Model Library: Dist. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_dnieper",
+    "name": "Dnieper",
+    "description": "GAMS Model Library: Dnieper. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_duty",
+    "name": "Duty",
+    "description": "GAMS Model Library: Duty. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_economic",
+    "name": "Economic",
+    "description": "GAMS Model Library: Economic. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_eggh",
+    "name": "Eggh",
+    "description": "GAMS Model Library: Eggh. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_eighth",
+    "name": "Eighth",
+    "description": "GAMS Model Library: Eighth. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_electric",
+    "name": "Electric",
+    "description": "GAMS Model Library: Electric. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_emp",
+    "name": "Emp",
+    "description": "GAMS Model Library: Emp. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_energy",
+    "name": "Energy",
+    "description": "GAMS Model Library: Energy. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_exponential",
+    "name": "Exponential",
+    "description": "GAMS Model Library: Exponential. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_farmer",
+    "name": "Farmer",
+    "description": "GAMS Model Library: Farmer. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_feed",
+    "name": "Feed",
+    "description": "GAMS Model Library: Feed. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_ferticrop",
+    "name": "Ferticrop",
+    "description": "GAMS Model Library: Ferticrop. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_finance",
+    "name": "Finance",
+    "description": "GAMS Model Library: Finance. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_fitness",
+    "name": "Fitness",
+    "description": "GAMS Model Library: Fitness. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_flowshop",
+    "name": "Flowshop",
+    "description": "GAMS Model Library: Flowshop. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_forest",
+    "name": "Forest",
+    "description": "GAMS Model Library: Forest. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_gasnet",
+    "name": "Gasnet",
+    "description": "GAMS Model Library: Gasnet. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_gasoil",
+    "name": "Gasoil",
+    "description": "GAMS Model Library: Gasoil. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_gastrans",
+    "name": "Gastrans",
+    "description": "GAMS Model Library: Gastrans. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_gdxdump",
+    "name": "Gdxdump",
+    "description": "GAMS Model Library: Gdxdump. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_gem",
+    "name": "Gem",
+    "description": "GAMS Model Library: Gem. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_general",
+    "name": "General",
+    "description": "GAMS Model Library: General. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_grossmann",
+    "name": "Grossmann",
+    "description": "GAMS Model Library: Grossmann. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_gs",
+    "name": "Gs",
+    "description": "GAMS Model Library: Gs. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_hans",
+    "name": "Hans",
+    "description": "GAMS Model Library: Hans. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_harker",
+    "name": "Harker",
+    "description": "GAMS Model Library: Harker. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_himmel11",
+    "name": "Himmel11",
+    "description": "GAMS Model Library: Himmel11. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_himmel16",
+    "name": "Himmel16",
+    "description": "GAMS Model Library: Himmel16. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_house",
+    "name": "House",
+    "description": "GAMS Model Library: House. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_hydro",
+    "name": "Hydro",
+    "description": "GAMS Model Library: Hydro. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_indus",
+    "name": "Indus",
+    "description": "GAMS Model Library: Indus. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_inventory",
+    "name": "Inventory",
+    "description": "GAMS Model Library: Inventory. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_jobshop",
+    "name": "Jobshop",
+    "description": "GAMS Model Library: Jobshop. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_john",
+    "name": "John",
+    "description": "GAMS Model Library: John. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_kport",
+    "name": "Kport",
+    "description": "GAMS Model Library: Kport. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_lakes",
+    "name": "Lakes",
+    "description": "GAMS Model Library: Lakes. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_least",
+    "name": "Least",
+    "description": "GAMS Model Library: Least. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_lindo",
+    "name": "Lindo",
+    "description": "GAMS Model Library: Lindo. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_linear",
+    "name": "Linear",
+    "description": "GAMS Model Library: Linear. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_link",
+    "name": "Link",
+    "description": "GAMS Model Library: Link. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_lipo",
+    "name": "Lipo",
+    "description": "GAMS Model Library: Lipo. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_location",
+    "name": "Location",
+    "description": "GAMS Model Library: Location. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_lottery",
+    "name": "Lottery",
+    "description": "GAMS Model Library: Lottery. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_mccormick",
+    "name": "Mccormick",
+    "description": "GAMS Model Library: Mccormick. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_mcp",
+    "name": "Mcp",
+    "description": "GAMS Model Library: Mcp. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_melectric",
+    "name": "Melectric",
+    "description": "GAMS Model Library: Melectric. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_mexss",
+    "name": "Mexss",
+    "description": "GAMS Model Library: Mexss. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_minesweeper",
+    "name": "Minesweeper",
+    "description": "GAMS Model Library: Minesweeper. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_minlp",
+    "name": "Minlp",
+    "description": "GAMS Model Library: Minlp. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_multi",
+    "name": "Multi",
+    "description": "GAMS Model Library: Multi. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_multmcp",
+    "name": "Multmcp",
+    "description": "GAMS Model Library: Multmcp. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_nash",
+    "name": "Nash",
+    "description": "GAMS Model Library: Nash. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_neos",
+    "name": "Neos",
+    "description": "GAMS Model Library: Neos. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_nobound",
+    "name": "Nobound",
+    "description": "GAMS Model Library: Nobound. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_nonlinear",
+    "name": "Nonlinear",
+    "description": "GAMS Model Library: Nonlinear. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_obstacle",
+    "name": "Obstacle",
+    "description": "GAMS Model Library: Obstacle. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_oil",
+    "name": "Oil",
+    "description": "GAMS Model Library: Oil. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_optca",
+    "name": "Optca",
+    "description": "GAMS Model Library: Optca. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_optce",
+    "name": "Optce",
+    "description": "GAMS Model Library: Optce. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_parallel",
+    "name": "Parallel",
+    "description": "GAMS Model Library: Parallel. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_path",
+    "name": "Path",
+    "description": "GAMS Model Library: Path. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_petroleum",
+    "name": "Petroleum",
+    "description": "GAMS Model Library: Petroleum. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_peugeot",
+    "name": "Peugeot",
+    "description": "GAMS Model Library: Peugeot. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_pinch",
+    "name": "Pinch",
+    "description": "GAMS Model Library: Pinch. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_poly",
+    "name": "Poly",
+    "description": "GAMS Model Library: Poly. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_portfol",
+    "name": "Portfol",
+    "description": "GAMS Model Library: Portfol. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_powery",
+    "name": "Powery",
+    "description": "GAMS Model Library: Powery. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_process",
+    "name": "Process",
+    "description": "GAMS Model Library: Process. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_prolog",
+    "name": "Prolog",
+    "description": "GAMS Model Library: Prolog. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_qcp",
+    "name": "Qcp",
+    "description": "GAMS Model Library: Qcp. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_qp",
+    "name": "Qp",
+    "description": "GAMS Model Library: Qp. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_ramsey",
+    "name": "Ramsey",
+    "description": "GAMS Model Library: Ramsey. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_reactor",
+    "name": "Reactor",
+    "description": "GAMS Model Library: Reactor. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_reserves",
+    "name": "Reserves",
+    "description": "GAMS Model Library: Reserves. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_rosen",
+    "name": "Rosen",
+    "description": "GAMS Model Library: Rosen. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_scarf",
+    "name": "Scarf",
+    "description": "GAMS Model Library: Scarf. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_scen",
+    "name": "Scen",
+    "description": "GAMS Model Library: Scen. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_scheduling",
+    "name": "Scheduling",
+    "description": "GAMS Model Library: Scheduling. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_semiconductor",
+    "name": "Semiconductor",
+    "description": "GAMS Model Library: Semiconductor. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_sep",
+    "name": "Sep",
+    "description": "GAMS Model Library: Sep. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_simple",
+    "name": "Simple",
+    "description": "GAMS Model Library: Simple. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_spatial",
+    "name": "Spatial",
+    "description": "GAMS Model Library: Spatial. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_stoch",
+    "name": "Stoch",
+    "description": "GAMS Model Library: Stoch. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_tale",
+    "name": "Tale",
+    "description": "GAMS Model Library: Tale. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_tank",
+    "name": "Tank",
+    "description": "GAMS Model Library: Tank. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_tax",
+    "name": "Tax",
+    "description": "GAMS Model Library: Tax. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_titan",
+    "name": "Titan",
+    "description": "GAMS Model Library: Titan. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_torsion",
+    "name": "Torsion",
+    "description": "GAMS Model Library: Torsion. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_tram",
+    "name": "Tram",
+    "description": "GAMS Model Library: Tram. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_transient",
+    "name": "Transient",
+    "description": "GAMS Model Library: Transient. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_trnsport",
+    "name": "Trnsport",
+    "description": "GAMS Model Library: Trnsport. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_tsp",
+    "name": "Tsp",
+    "description": "GAMS Model Library: Tsp. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_turbine",
+    "name": "Turbine",
+    "description": "GAMS Model Library: Turbine. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_two3",
+    "name": "Two3",
+    "description": "GAMS Model Library: Two3. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_util",
+    "name": "Util",
+    "description": "GAMS Model Library: Util. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_vienna",
+    "name": "Vienna",
+    "description": "GAMS Model Library: Vienna. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_water",
+    "name": "Water",
+    "description": "GAMS Model Library: Water. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_waste",
+    "name": "Waste",
+    "description": "GAMS Model Library: Waste. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_weld",
+    "name": "Weld",
+    "description": "GAMS Model Library: Weld. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "gams_wsm",
+    "name": "Wsm",
+    "description": "GAMS Model Library: Wsm. https://www.gams.com/latest/gamslib_ml/libhtml/.",
+    "source": "gams"
+  },
+  {
+    "id": "miplib_2017",
+    "name": "MIPLIB 2017",
+    "aliases": [
+      "MIPLIB",
+      "MIPLIB 2017",
+      "mixed integer programming benchmark"
+    ],
+    "description": "Benchmark collection of mixed-integer linear programming (MILP) instances. Used for solver benchmarking. Instances in MPS format; problem types vary (scheduling, planning, network, etc.).",
+    "source": "miplib"
+  },
+  {
+    "id": "pyomo_abstract2",
+    "name": "Abstract2",
+    "description": "Pyomo example: Abstract2. Open-source optimization model from https://github.com/Pyomo/pyomo.",
+    "source": "pyomo"
+  },
+  {
+    "id": "pyomo_bilevel",
+    "name": "Bilevel",
+    "description": "Pyomo example: Bilevel. Open-source optimization model from https://github.com/Pyomo/pyomo.",
+    "source": "pyomo"
+  },
+  {
+    "id": "pyomo_callback",
+    "name": "Callback",
+    "description": "Pyomo example: Callback. Open-source optimization model from https://github.com/Pyomo/pyomo.",
+    "source": "pyomo"
+  },
+  {
+    "id": "pyomo_concrete",
+    "name": "Concrete",
+    "description": "Pyomo example: Concrete. Open-source optimization model from https://github.com/Pyomo/pyomo.",
+    "source": "pyomo"
+  },
+  {
+    "id": "pyomo_diet",
+    "name": "Diet",
+    "description": "Pyomo example: Diet. Open-source optimization model from https://github.com/Pyomo/pyomo.",
+    "source": "pyomo"
+  },
+  {
+    "id": "pyomo_duality",
+    "name": "Duality",
+    "description": "Pyomo example: Duality. Open-source optimization model from https://github.com/Pyomo/pyomo.",
+    "source": "pyomo"
+  },
+  {
+    "id": "pyomo_eight_process",
+    "name": "Eight Process",
+    "description": "Pyomo example: Eight Process. Open-source optimization model from https://github.com/Pyomo/pyomo.",
+    "source": "pyomo"
+  },
+  {
+    "id": "pyomo_facility_location",
+    "name": "Facility Location",
+    "description": "Pyomo example: Facility Location. Open-source optimization model from https://github.com/Pyomo/pyomo.",
+    "source": "pyomo"
+  },
+  {
+    "id": "pyomo_farmer",
+    "name": "Farmer",
+    "description": "Pyomo example: Farmer. Open-source optimization model from https://github.com/Pyomo/pyomo.",
+    "source": "pyomo"
+  },
+  {
+    "id": "pyomo_gdp",
+    "name": "Gdp",
+    "description": "Pyomo example: Gdp. Open-source optimization model from https://github.com/Pyomo/pyomo.",
+    "source": "pyomo"
+  },
+  {
+    "id": "pyomo_hydro",
+    "name": "Hydro",
+    "description": "Pyomo example: Hydro. Open-source optimization model from https://github.com/Pyomo/pyomo.",
+    "source": "pyomo"
+  },
+  {
+    "id": "pyomo_knapsack",
+    "name": "Knapsack",
+    "description": "Pyomo example: Knapsack. Open-source optimization model from https://github.com/Pyomo/pyomo.",
+    "source": "pyomo"
+  },
+  {
+    "id": "pyomo_piecewise",
+    "name": "Piecewise",
+    "description": "Pyomo example: Piecewise. Open-source optimization model from https://github.com/Pyomo/pyomo.",
+    "source": "pyomo"
+  },
+  {
+    "id": "pyomo_reactor_design",
+    "name": "Reactor Design",
+    "description": "Pyomo example: Reactor Design. Open-source optimization model from https://github.com/Pyomo/pyomo.",
+    "source": "pyomo"
+  },
+  {
+    "id": "pyomo_rosenbrock",
+    "name": "Rosenbrock",
+    "description": "Pyomo example: Rosenbrock. Open-source optimization model from https://github.com/Pyomo/pyomo.",
+    "source": "pyomo"
+  },
+  {
+    "id": "pyomo_simple",
+    "name": "Simple",
+    "description": "Pyomo example: Simple. Open-source optimization model from https://github.com/Pyomo/pyomo.",
+    "source": "pyomo"
+  },
+  {
+    "id": "pyomo_solver_interface",
+    "name": "Solver Interface",
+    "description": "Pyomo example: Solver Interface. Open-source optimization model from https://github.com/Pyomo/pyomo.",
+    "source": "pyomo"
+  },
+  {
+    "id": "pyomo_tsp",
+    "name": "Tsp",
+    "description": "Pyomo example: Tsp. Open-source optimization model from https://github.com/Pyomo/pyomo.",
+    "source": "pyomo"
+  },
+  {
+    "id": "pyomo_warm_start",
+    "name": "Warm Start",
+    "description": "Pyomo example: Warm Start. Open-source optimization model from https://github.com/Pyomo/pyomo.",
+    "source": "pyomo"
   }
 ]

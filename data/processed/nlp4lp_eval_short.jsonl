@@ -1,0 +1,331 @@
+{"query_id": "nlp4lp_test_0", "query": "Mrs. Watson wants to invest in the real-estate market and has a total budget of at most $760000.", "relevant_doc_id": "nlp4lp_test_0"}
+{"query_id": "nlp4lp_test_1", "query": "A breakfast joint makes two different sandwiches: a regular and a special.", "relevant_doc_id": "nlp4lp_test_1"}
+{"query_id": "nlp4lp_test_2", "query": "A cleaning company located in Edmonton wants to get the best exposure possible for promoting their new dishwashing detergent without exceeding their $250,000 advertising budget.", "relevant_doc_id": "nlp4lp_test_2"}
+{"query_id": "nlp4lp_test_3", "query": "There is 1000 mg of gold available that is needed to make long and short cables.", "relevant_doc_id": "nlp4lp_test_3"}
+{"query_id": "nlp4lp_test_4", "query": "A store employs senior citizens who earn $500 per week and young adults who earn $750 per week.", "relevant_doc_id": "nlp4lp_test_4"}
+{"query_id": "nlp4lp_test_5", "query": "A company is deciding where to promote their product.", "relevant_doc_id": "nlp4lp_test_5"}
+{"query_id": "nlp4lp_test_6", "query": "A chair produced by Elm Furniture yields a profit of $43, while every dresser yields a $52 profit.", "relevant_doc_id": "nlp4lp_test_6"}
+{"query_id": "nlp4lp_test_7", "query": "A farmer wants to mix his animal feeds, Feed A and Feed B, in such a way that the mixture will contain a minimum of 30 units of protein and 50 units of fat.", "relevant_doc_id": "nlp4lp_test_7"}
+{"query_id": "nlp4lp_test_8", "query": "An artisan makes two types of terracotta jars: a thin jar and a stubby jar.", "relevant_doc_id": "nlp4lp_test_8"}
+{"query_id": "nlp4lp_test_9", "query": "A grocery store wants to liquidate its stock of 10 apples, 20 bananas, and 80 grapes.", "relevant_doc_id": "nlp4lp_test_9"}
+{"query_id": "nlp4lp_test_10", "query": "A bakery uses a stand-mixer and a slow bake oven to make bread and cookies.", "relevant_doc_id": "nlp4lp_test_10"}
+{"query_id": "nlp4lp_test_11", "query": "A glass factory makes two types of glass panes: a regular glass pane and a tempered glass pane.", "relevant_doc_id": "nlp4lp_test_11"}
+{"query_id": "nlp4lp_test_12", "query": "A souvenir shop makes wooden elephants and tigers with plastic ornaments.", "relevant_doc_id": "nlp4lp_test_12"}
+{"query_id": "nlp4lp_test_13", "query": "An art store makes large and small art pieces.", "relevant_doc_id": "nlp4lp_test_13"}
+{"query_id": "nlp4lp_test_14", "query": "My family has decided to invest in real state for the first time.", "relevant_doc_id": "nlp4lp_test_14"}
+{"query_id": "nlp4lp_test_15", "query": "My grandma is required to take two medicines Z1 and D3 everyday.", "relevant_doc_id": "nlp4lp_test_15"}
+{"query_id": "nlp4lp_test_16", "query": "A hobbyist makes model trains and planes using wood and paint.", "relevant_doc_id": "nlp4lp_test_16"}
+{"query_id": "nlp4lp_test_17", "query": "An electronics store wants to optimize how many phones and laptops are enough to keep in inventory.", "relevant_doc_id": "nlp4lp_test_17"}
+{"query_id": "nlp4lp_test_18", "query": "A candy store mixes regular candy and sour candy to prepare two products, regular mix and sour surprise mix.", "relevant_doc_id": "nlp4lp_test_18"}
+{"query_id": "nlp4lp_test_19", "query": "A suspicious factory has 100 sq.", "relevant_doc_id": "nlp4lp_test_19"}
+{"query_id": "nlp4lp_test_20", "query": "A electronics store sells premium desktops with more power as well as regular desktops for everyday use.", "relevant_doc_id": "nlp4lp_test_20"}
+{"query_id": "nlp4lp_test_21", "query": "A car manufacturer makes two versions of the same car, a regular model and a premium model.", "relevant_doc_id": "nlp4lp_test_21"}
+{"query_id": "nlp4lp_test_22", "query": "You are designing an office space with two types of desks: long desks and short desks.", "relevant_doc_id": "nlp4lp_test_22"}
+{"query_id": "nlp4lp_test_23", "query": "Ayse produces a plant growth compound by mixing two types of fertilizer: C and Y.", "relevant_doc_id": "nlp4lp_test_23"}
+{"query_id": "nlp4lp_test_24", "query": "Sleep inducing medicine and anti-inflammatory medicine is found in two pills, pill A and pill B.", "relevant_doc_id": "nlp4lp_test_24"}
+{"query_id": "nlp4lp_test_25", "query": "A car manufacturer makes two types of car oils: Oil Max and Oil Max Pro.", "relevant_doc_id": "nlp4lp_test_25"}
+{"query_id": "nlp4lp_test_26", "query": "A food truck owner can spend at most $20000 on mangos and guavas.", "relevant_doc_id": "nlp4lp_test_26"}
+{"query_id": "nlp4lp_test_27", "query": "A nutritionist is making a special vitamin mix using two drinks: A and B.", "relevant_doc_id": "nlp4lp_test_27"}
+{"query_id": "nlp4lp_test_28", "query": "An ice cream store makes chocolate and vanilla ice cream by the gallon.", "relevant_doc_id": "nlp4lp_test_28"}
+{"query_id": "nlp4lp_test_29", "query": "Mark has 50 acres of land available to grow potatoes and cucumbers that he sells at a farmers' market.", "relevant_doc_id": "nlp4lp_test_29"}
+{"query_id": "nlp4lp_test_30", "query": "A flooring company produces engineered hardwood and vinyl planks.", "relevant_doc_id": "nlp4lp_test_30"}
+{"query_id": "nlp4lp_test_31", "query": "A berry farmer has two farms, an old and new farm, where he grows raspberries, blueberries, and strawberries.", "relevant_doc_id": "nlp4lp_test_31"}
+{"query_id": "nlp4lp_test_32", "query": "Jordan is a chef.", "relevant_doc_id": "nlp4lp_test_32"}
+{"query_id": "nlp4lp_test_33", "query": "A company sells custom scooters and bikes for customers.", "relevant_doc_id": "nlp4lp_test_33"}
+{"query_id": "nlp4lp_test_34", "query": "John has a 300 acre berry farm on which to plant blueberries and raspberries.", "relevant_doc_id": "nlp4lp_test_34"}
+{"query_id": "nlp4lp_test_35", "query": "A man  only eats vegetable and fruits.", "relevant_doc_id": "nlp4lp_test_35"}
+{"query_id": "nlp4lp_test_36", "query": "A bakery bakes bagels and croissants.", "relevant_doc_id": "nlp4lp_test_36"}
+{"query_id": "nlp4lp_test_37", "query": "A teddy bear company produces three different colored bears: black, white, and brown.", "relevant_doc_id": "nlp4lp_test_37"}
+{"query_id": "nlp4lp_test_38", "query": "A farmer has 500 acres of land to grow turnips and pumpkins.", "relevant_doc_id": "nlp4lp_test_38"}
+{"query_id": "nlp4lp_test_39", "query": "A school employs staff and substitute teachers.", "relevant_doc_id": "nlp4lp_test_39"}
+{"query_id": "nlp4lp_test_40", "query": "A gem factory has two drills, a high intensity one and a low intensity one.", "relevant_doc_id": "nlp4lp_test_40"}
+{"query_id": "nlp4lp_test_41", "query": "A sandwich company can open two types of stores, a dine-in place and a food-truck.", "relevant_doc_id": "nlp4lp_test_41"}
+{"query_id": "nlp4lp_test_42", "query": "There are two processes, process A and process B, to plate a coin with gold.", "relevant_doc_id": "nlp4lp_test_42"}
+{"query_id": "nlp4lp_test_43", "query": "A woodshop can purchase two types of saws, a miter saw and a circular saw.", "relevant_doc_id": "nlp4lp_test_43"}
+{"query_id": "nlp4lp_test_44", "query": "A farmer has 200 acres of land on which he must process hay using either a windrower or hay harvester.", "relevant_doc_id": "nlp4lp_test_44"}
+{"query_id": "nlp4lp_test_45", "query": "A new fast food place makes wraps and platters.", "relevant_doc_id": "nlp4lp_test_45"}
+{"query_id": "nlp4lp_test_46", "query": "An amusement park is installing ticket machines, both cash-based and card-only machines.", "relevant_doc_id": "nlp4lp_test_46"}
+{"query_id": "nlp4lp_test_47", "query": "A honey farmer sells his honey in glass and plastic jars.", "relevant_doc_id": "nlp4lp_test_47"}
+{"query_id": "nlp4lp_test_48", "query": "A bubble tea shop sells mango and lychee bubble tea.", "relevant_doc_id": "nlp4lp_test_48"}
+{"query_id": "nlp4lp_test_49", "query": "A city employs seasonal and permanent snow removers.", "relevant_doc_id": "nlp4lp_test_49"}
+{"query_id": "nlp4lp_test_50", "query": "A high rise building is buying two types of furnaces, a new model and an old model.", "relevant_doc_id": "nlp4lp_test_50"}
+{"query_id": "nlp4lp_test_51", "query": "A cell phone company is building rural and urban factories.", "relevant_doc_id": "nlp4lp_test_51"}
+{"query_id": "nlp4lp_test_52", "query": "An ice cream store can buy two machines, a counter-top sized one and a fridge sized one, to make ice cream.", "relevant_doc_id": "nlp4lp_test_52"}
+{"query_id": "nlp4lp_test_53", "query": "There are two specialized containers, a small and large one, that are used to make a pharmaceutical paste.", "relevant_doc_id": "nlp4lp_test_53"}
+{"query_id": "nlp4lp_test_54", "query": "An oil and gas company operates on 300 acres of land where they use oil wells of small and large size.", "relevant_doc_id": "nlp4lp_test_54"}
+{"query_id": "nlp4lp_test_55", "query": "A bakery makes almond and pistachio croissants.", "relevant_doc_id": "nlp4lp_test_55"}
+{"query_id": "nlp4lp_test_56", "query": "A burger chain is buying both gas and electric grills to make burger patties.", "relevant_doc_id": "nlp4lp_test_56"}
+{"query_id": "nlp4lp_test_57", "query": "A cough syrup company sells cough syrup in kids and adult size bottles.", "relevant_doc_id": "nlp4lp_test_57"}
+{"query_id": "nlp4lp_test_58", "query": "A bakery makes fiber supplemented brownies and lemon squares.", "relevant_doc_id": "nlp4lp_test_58"}
+{"query_id": "nlp4lp_test_59", "query": "A clinic employs nurses and pharmacists to deliver shots to patients.", "relevant_doc_id": "nlp4lp_test_59"}
+{"query_id": "nlp4lp_test_60", "query": "A laundromat can buy two types of washing machines, a top-loading model and a front-loading model.", "relevant_doc_id": "nlp4lp_test_60"}
+{"query_id": "nlp4lp_test_61", "query": "A bank can build small and large branches to serve their customers.", "relevant_doc_id": "nlp4lp_test_61"}
+{"query_id": "nlp4lp_test_62", "query": "A shipping company can purchase regular and hybrid vans to make deliveries.", "relevant_doc_id": "nlp4lp_test_62"}
+{"query_id": "nlp4lp_test_63", "query": "In order to make carbon dioxide, wood is burned using two processes, with a catalyst and without a catalyst.", "relevant_doc_id": "nlp4lp_test_63"}
+{"query_id": "nlp4lp_test_64", "query": "A tea estate has available 500 acres of land and they need to pick the tea leaves either using a traditional machine or modern machine.", "relevant_doc_id": "nlp4lp_test_64"}
+{"query_id": "nlp4lp_test_65", "query": "A grilled cheese shop sells a light and heavy grilled cheese sandwich.", "relevant_doc_id": "nlp4lp_test_65"}
+{"query_id": "nlp4lp_test_66", "query": "A post office is buying stamping machines and they can buy a dual or single model stamping machine.", "relevant_doc_id": "nlp4lp_test_66"}
+{"query_id": "nlp4lp_test_67", "query": "A banana company sells their bananas in small and large crates.", "relevant_doc_id": "nlp4lp_test_67"}
+{"query_id": "nlp4lp_test_68", "query": "A crepe store sells chocolate and peanut butter crepes.", "relevant_doc_id": "nlp4lp_test_68"}
+{"query_id": "nlp4lp_test_69", "query": "A fire department employs regular and emergency fire fighters.", "relevant_doc_id": "nlp4lp_test_69"}
+{"query_id": "nlp4lp_test_70", "query": "A mall buys two types of hand sanitizer machines, a motion activated one and a manual one.", "relevant_doc_id": "nlp4lp_test_70"}
+{"query_id": "nlp4lp_test_71", "query": "A hot dog company can build two types of butcher shops, a small shop and a large shop.", "relevant_doc_id": "nlp4lp_test_71"}
+{"query_id": "nlp4lp_test_72", "query": "An airport buys two types of vehicles, a 4-wheeler and 3-wheeler, to help move luggage.", "relevant_doc_id": "nlp4lp_test_72"}
+{"query_id": "nlp4lp_test_73", "query": "A scientist is conducting two experiments to produce electricity, experiment alpha and experiment beta.", "relevant_doc_id": "nlp4lp_test_73"}
+{"query_id": "nlp4lp_test_74", "query": "A man fishes in a 250 acre lake and can catch fish either using a net or fishing line.", "relevant_doc_id": "nlp4lp_test_74"}
+{"query_id": "nlp4lp_test_75", "query": "A coffee shop sells mochas and regular coffees.", "relevant_doc_id": "nlp4lp_test_75"}
+{"query_id": "nlp4lp_test_76", "query": "A butcher shop is buying meat slicers for their shop, a manual and automatic slicer.", "relevant_doc_id": "nlp4lp_test_76"}
+{"query_id": "nlp4lp_test_77", "query": "A water company sells water in glass and plastic bottles.", "relevant_doc_id": "nlp4lp_test_77"}
+{"query_id": "nlp4lp_test_78", "query": "An Indian restaurant makes goat and chicken curry.", "relevant_doc_id": "nlp4lp_test_78"}
+{"query_id": "nlp4lp_test_79", "query": "An accounting firm employs part time workers and full time workers.", "relevant_doc_id": "nlp4lp_test_79"}
+{"query_id": "nlp4lp_test_80", "query": "A factory has two machines, A and B.", "relevant_doc_id": "nlp4lp_test_80"}
+{"query_id": "nlp4lp_test_81", "query": "A toy company can build two factory types, a medium sized factory and a small factory.", "relevant_doc_id": "nlp4lp_test_81"}
+{"query_id": "nlp4lp_test_82", "query": "A chemical plant can buy two types of generators, generator A and generator B, which use two different processes to generate hydrogen.", "relevant_doc_id": "nlp4lp_test_82"}
+{"query_id": "nlp4lp_test_83", "query": "There are two chemical reactions, chemical reaction A and chemical reaction B.", "relevant_doc_id": "nlp4lp_test_83"}
+{"query_id": "nlp4lp_test_84", "query": "A mining company has available a total of 100 square miles of mining sites and considering the use of two mining techniques: heap leaching and vat leaching.", "relevant_doc_id": "nlp4lp_test_84"}
+{"query_id": "nlp4lp_test_85", "query": "A small chocolate shop makes milk chocolate and dark chocolate bars.", "relevant_doc_id": "nlp4lp_test_85"}
+{"query_id": "nlp4lp_test_86", "query": "An office is buying printers for their headquarters, a premium model and regular model.", "relevant_doc_id": "nlp4lp_test_86"}
+{"query_id": "nlp4lp_test_87", "query": "A vine company sells vine in vintage and regular bottles.", "relevant_doc_id": "nlp4lp_test_87"}
+{"query_id": "nlp4lp_test_88", "query": "A candy company is making peach flavored candy and cherry flavored candy.", "relevant_doc_id": "nlp4lp_test_88"}
+{"query_id": "nlp4lp_test_89", "query": "A patient in the hospital can take two pills, Pill 1 and Pill 2.", "relevant_doc_id": "nlp4lp_test_89"}
+{"query_id": "nlp4lp_test_90", "query": "A man on a strict diet only drinks meal replacement drinks from two brands, alpha and omega.", "relevant_doc_id": "nlp4lp_test_90"}
+{"query_id": "nlp4lp_test_91", "query": "A summer camps does science experiments in two pre filled beakers, beaker 1 and beaker 2.", "relevant_doc_id": "nlp4lp_test_91"}
+{"query_id": "nlp4lp_test_92", "query": "An dog hospital has 2000 units of tooth medication to make both small and large bones.", "relevant_doc_id": "nlp4lp_test_92"}
+{"query_id": "nlp4lp_test_93", "query": "A scientist in the arctic needs to get enough vitamin D and vitamin C in his diet by drinking orange and apple juice.", "relevant_doc_id": "nlp4lp_test_93"}
+{"query_id": "nlp4lp_test_94", "query": "A cleaning company uses a cleansing chemical and odor-removing chemical to clean a house.", "relevant_doc_id": "nlp4lp_test_94"}
+{"query_id": "nlp4lp_test_95", "query": "A drug company is making allergy pills and fever reducing pills in two factories, factory 1 and factory 2.", "relevant_doc_id": "nlp4lp_test_95"}
+{"query_id": "nlp4lp_test_96", "query": "A doctor recommends her patient eat more fish and chicken to increase her protein and iron intake.", "relevant_doc_id": "nlp4lp_test_96"}
+{"query_id": "nlp4lp_test_97", "query": "A pharmaceutical company makes skin cream in batches, a regular batch and premium batch, to sell to hospitals.", "relevant_doc_id": "nlp4lp_test_97"}
+{"query_id": "nlp4lp_test_98", "query": "A clinic takes patient blood pressure either using an automatic machine or a manual machine.", "relevant_doc_id": "nlp4lp_test_98"}
+{"query_id": "nlp4lp_test_99", "query": "A patient with a sore throat can drink two syrups, syrup 1 and syrup 2 for treatment.", "relevant_doc_id": "nlp4lp_test_99"}
+{"query_id": "nlp4lp_test_100", "query": "A sailor can eat either a crab cakes or a lobster roll for his meals.", "relevant_doc_id": "nlp4lp_test_100"}
+{"query_id": "nlp4lp_test_101", "query": "A science show preforms two different demonstrations, demonstration 1 and demonstration 2.", "relevant_doc_id": "nlp4lp_test_101"}
+{"query_id": "nlp4lp_test_102", "query": "A lab has 20000 mg of mRNA anti-viral available to make children's and adult vaccines.", "relevant_doc_id": "nlp4lp_test_102"}
+{"query_id": "nlp4lp_test_103", "query": "A parent feeds their baby two flavors of baby food, apple and carrot, in order to meet the babies fat and folate requirements.", "relevant_doc_id": "nlp4lp_test_103"}
+{"query_id": "nlp4lp_test_104", "query": "Both fertilizer and seeds need to be added to a lawn.", "relevant_doc_id": "nlp4lp_test_104"}
+{"query_id": "nlp4lp_test_105", "query": "A pharmacy has two factories, factory 1 and factory 2, where they make acne cream and anti-bacterial cream.", "relevant_doc_id": "nlp4lp_test_105"}
+{"query_id": "nlp4lp_test_106", "query": "A doctor recommends that a man eat burgers and pizza in order to put on weight.", "relevant_doc_id": "nlp4lp_test_106"}
+{"query_id": "nlp4lp_test_107", "query": "A clinic makes batches of vitamin shots and pills.", "relevant_doc_id": "nlp4lp_test_107"}
+{"query_id": "nlp4lp_test_108", "query": "A doctor's office takes the  temperature of patients one by one either by using an electronic or regular thermometer.", "relevant_doc_id": "nlp4lp_test_108"}
+{"query_id": "nlp4lp_test_109", "query": "A patient can be hooked up to two machines to have medicine delivered, machine 1 and machine 2.", "relevant_doc_id": "nlp4lp_test_109"}
+{"query_id": "nlp4lp_test_110", "query": "A travelling salesman only eats ramen and fries.", "relevant_doc_id": "nlp4lp_test_110"}
+{"query_id": "nlp4lp_test_111", "query": "A science store makes two boxes, a cheap and expensive box.", "relevant_doc_id": "nlp4lp_test_111"}
+{"query_id": "nlp4lp_test_112", "query": "A pharmacy has 3000 mg of morphine to make painkillers and sleeping pills.", "relevant_doc_id": "nlp4lp_test_112"}
+{"query_id": "nlp4lp_test_113", "query": "A boy needs to get enough magnesium and zinc in his diet by eating chewable gummies and taking pills.", "relevant_doc_id": "nlp4lp_test_113"}
+{"query_id": "nlp4lp_test_114", "query": "A patient takes anxiety medication and anti-depressants one after the other.", "relevant_doc_id": "nlp4lp_test_114"}
+{"query_id": "nlp4lp_test_115", "query": "A pharmacy makes eye cream and foot cream using two different machines, machine 1 and machine 2.", "relevant_doc_id": "nlp4lp_test_115"}
+{"query_id": "nlp4lp_test_116", "query": "A woman eats cashews and almonds to get her calorie and protein intake.", "relevant_doc_id": "nlp4lp_test_116"}
+{"query_id": "nlp4lp_test_117", "query": "A company make both liquid and foam hand sanitizer.", "relevant_doc_id": "nlp4lp_test_117"}
+{"query_id": "nlp4lp_test_118", "query": "A clinic is conducting a throat or nasal swabs on each patient.", "relevant_doc_id": "nlp4lp_test_118"}
+{"query_id": "nlp4lp_test_119", "query": "A patient in the hospital can take two different pain killers, pain killer 1 and pain killer 2.", "relevant_doc_id": "nlp4lp_test_119"}
+{"query_id": "nlp4lp_test_120", "query": "A zookeeper feeds a gorilla with bananas and mangoes.", "relevant_doc_id": "nlp4lp_test_120"}
+{"query_id": "nlp4lp_test_121", "query": "In a science club, there are two tables that can be set up to make slime.", "relevant_doc_id": "nlp4lp_test_121"}
+{"query_id": "nlp4lp_test_122", "query": "A pharmaceutical company has 800 units of painkiller medicine and makes daytime and nighttime painkiller.", "relevant_doc_id": "nlp4lp_test_122"}
+{"query_id": "nlp4lp_test_123", "query": "A competitive eater challenges himself to eat slices of cheesecake and caramel cake.", "relevant_doc_id": "nlp4lp_test_123"}
+{"query_id": "nlp4lp_test_124", "query": "Both sulfate and ginger need to be added to a shampoo.", "relevant_doc_id": "nlp4lp_test_124"}
+{"query_id": "nlp4lp_test_125", "query": "A pharmaceutical company has two labs, lab 1 and lab 2, where they make heart and lung medication in pill form.", "relevant_doc_id": "nlp4lp_test_125"}
+{"query_id": "nlp4lp_test_126", "query": "A doctor suggests that his patient eat oranges and grapefruit to meet his vitamin C and vitamin A requirements.", "relevant_doc_id": "nlp4lp_test_126"}
+{"query_id": "nlp4lp_test_127", "query": "A university research lab can make two types of diabetes medicine, medicine A and medicine B.", "relevant_doc_id": "nlp4lp_test_127"}
+{"query_id": "nlp4lp_test_128", "query": "A popup clinic is doing virus testing with either spit tests or swabs.", "relevant_doc_id": "nlp4lp_test_128"}
+{"query_id": "nlp4lp_test_129", "query": "A patient is undergoing radiation treatment involving two beams, Beam 1 and Beam 2.", "relevant_doc_id": "nlp4lp_test_129"}
+{"query_id": "nlp4lp_test_130", "query": "A body builder buys pre prepared meals, a turkey dinner and a tuna salad sandwich.", "relevant_doc_id": "nlp4lp_test_130"}
+{"query_id": "nlp4lp_test_131", "query": "A chemistry teacher teaches her students two experiments, experiment 1 and experiment 2.", "relevant_doc_id": "nlp4lp_test_131"}
+{"query_id": "nlp4lp_test_132", "query": "A lab has 1000 units of medicinal ingredients to make two pills, a large pill and a small pill.", "relevant_doc_id": "nlp4lp_test_132"}
+{"query_id": "nlp4lp_test_133", "query": "Both chorine and water softener need to be added to a pool.", "relevant_doc_id": "nlp4lp_test_133"}
+{"query_id": "nlp4lp_test_134", "query": "A drug company is making pain killers and sleeping pills using two processes, process 1 and process 2.", "relevant_doc_id": "nlp4lp_test_134"}
+{"query_id": "nlp4lp_test_135", "query": "A dietician recommends her client eat blueberries and strawberries to meet her anti-oxidant and mineral requirement.", "relevant_doc_id": "nlp4lp_test_135"}
+{"query_id": "nlp4lp_test_136", "query": "An engineering school has a bridge building competition where students must build as many beam bridges and truss bridges as they can using Popsicle sticks and glue.", "relevant_doc_id": "nlp4lp_test_136"}
+{"query_id": "nlp4lp_test_137", "query": "A clinic administers two vaccines available for the public to take one at a time.", "relevant_doc_id": "nlp4lp_test_137"}
+{"query_id": "nlp4lp_test_138", "query": "A chocolate company can transport their boxes of chocolate either using their own vans or by renting trucks.", "relevant_doc_id": "nlp4lp_test_138"}
+{"query_id": "nlp4lp_test_139", "query": "A bee farmer transports his honey in small and large bottles.", "relevant_doc_id": "nlp4lp_test_139"}
+{"query_id": "nlp4lp_test_140", "query": "An international goods exporter uses ships and planes to transport goods.", "relevant_doc_id": "nlp4lp_test_140"}
+{"query_id": "nlp4lp_test_141", "query": "There has been an oil spill in the ocean and ducks need to be taken to shore to be cleaned either by boat or by canoe.", "relevant_doc_id": "nlp4lp_test_141"}
+{"query_id": "nlp4lp_test_142", "query": "A soda company sends bottles of their soda to stores around the city in old and new vans.", "relevant_doc_id": "nlp4lp_test_142"}
+{"query_id": "nlp4lp_test_143", "query": "A lawn mowing service provides neighborhood services using small teams and large teams.", "relevant_doc_id": "nlp4lp_test_143"}
+{"query_id": "nlp4lp_test_144", "query": "An aquarium does shows using otters and dolphins.", "relevant_doc_id": "nlp4lp_test_144"}
+{"query_id": "nlp4lp_test_145", "query": "A shoe company supplies shoes to stores via vans and trucks.", "relevant_doc_id": "nlp4lp_test_145"}
+{"query_id": "nlp4lp_test_146", "query": "An oil and gas company is sending their oil to the port using containers and trucks.", "relevant_doc_id": "nlp4lp_test_146"}
+{"query_id": "nlp4lp_test_147", "query": "A school is organizing a field trip to a science center and wants to hire small buses and large buses.", "relevant_doc_id": "nlp4lp_test_147"}
+{"query_id": "nlp4lp_test_148", "query": "A meat shop ships their burger patties using refrigerated trucks and vans.", "relevant_doc_id": "nlp4lp_test_148"}
+{"query_id": "nlp4lp_test_149", "query": "A florist transports his flowers to stores in small bouquets and large bouquets.", "relevant_doc_id": "nlp4lp_test_149"}
+{"query_id": "nlp4lp_test_150", "query": "A toy store decides to deliver gifts using two shipping companies, a new one and an old one.", "relevant_doc_id": "nlp4lp_test_150"}
+{"query_id": "nlp4lp_test_151", "query": "A zoo needs to transport their monkeys to the vet either by bus or by car.", "relevant_doc_id": "nlp4lp_test_151"}
+{"query_id": "nlp4lp_test_152", "query": "A farmer decides to move his cows to a nearby farm using helicopters and trucks.", "relevant_doc_id": "nlp4lp_test_152"}
+{"query_id": "nlp4lp_test_153", "query": "A sand company delivers sand for playgrounds in small and large containers.", "relevant_doc_id": "nlp4lp_test_153"}
+{"query_id": "nlp4lp_test_154", "query": "A meal service company delivers meals to customers either on electric bikes or scooters.", "relevant_doc_id": "nlp4lp_test_154"}
+{"query_id": "nlp4lp_test_155", "query": "A car manufacturer ships their cars on large and small planes.", "relevant_doc_id": "nlp4lp_test_155"}
+{"query_id": "nlp4lp_test_156", "query": "A mine sends ore to the surface in small and large wagons.", "relevant_doc_id": "nlp4lp_test_156"}
+{"query_id": "nlp4lp_test_157", "query": "A theme park transports its visitors around the park either by scooter or rickshaw.", "relevant_doc_id": "nlp4lp_test_157"}
+{"query_id": "nlp4lp_test_158", "query": "A company in the middle east delivers their packages to customers on camels and horses.", "relevant_doc_id": "nlp4lp_test_158"}
+{"query_id": "nlp4lp_test_159", "query": "A snack exporter sends snacks to his customer in small and large suitcases.", "relevant_doc_id": "nlp4lp_test_159"}
+{"query_id": "nlp4lp_test_160", "query": "A mail delivery service in an island village delivers mail by regular and speed boats.", "relevant_doc_id": "nlp4lp_test_160"}
+{"query_id": "nlp4lp_test_161", "query": "A chicken farmer has sold his chicken and they need to be transported either by bus or by car.", "relevant_doc_id": "nlp4lp_test_161"}
+{"query_id": "nlp4lp_test_162", "query": "Children can go to school either by van or by minibus.", "relevant_doc_id": "nlp4lp_test_162"}
+{"query_id": "nlp4lp_test_163", "query": "A recycling company collects recycling from neighborhoods using small and large bins.", "relevant_doc_id": "nlp4lp_test_163"}
+{"query_id": "nlp4lp_test_164", "query": "A toy store hires seasonal and full-time volunteers to deliver gifts and gives them points for service.", "relevant_doc_id": "nlp4lp_test_164"}
+{"query_id": "nlp4lp_test_165", "query": "A jam company sends its product out in small and large jars.", "relevant_doc_id": "nlp4lp_test_165"}
+{"query_id": "nlp4lp_test_166", "query": "A corn farmer sends his corn to the city by either tractor or car.", "relevant_doc_id": "nlp4lp_test_166"}
+{"query_id": "nlp4lp_test_167", "query": "A village hosts a banquet and provides bike and car transportation for everyone.", "relevant_doc_id": "nlp4lp_test_167"}
+{"query_id": "nlp4lp_test_168", "query": "An industrial tire company delivers large tires for equipment to remote engineering sites either by cargo planes or ultrawide trucks.", "relevant_doc_id": "nlp4lp_test_168"}
+{"query_id": "nlp4lp_test_169", "query": "A water salesman collects water from a glacier and transports it in either small or large kegs.", "relevant_doc_id": "nlp4lp_test_169"}
+{"query_id": "nlp4lp_test_170", "query": "A tropical city full of islands sends mail either by submarine or by boat.", "relevant_doc_id": "nlp4lp_test_170"}
+{"query_id": "nlp4lp_test_171", "query": "The weather is freezing and the fish in the pond need to be transported either by helicopter or car.", "relevant_doc_id": "nlp4lp_test_171"}
+{"query_id": "nlp4lp_test_172", "query": "A tourist spot in the mountains allows visitors to travel to the top either by hot-air balloon or gondola lift.", "relevant_doc_id": "nlp4lp_test_172"}
+{"query_id": "nlp4lp_test_173", "query": "A factory transports rice to the city in horse-drawn carts that are either medium or large size.", "relevant_doc_id": "nlp4lp_test_173"}
+{"query_id": "nlp4lp_test_174", "query": "A dog school trains labradors and golden retrievers to deliver newspaper.", "relevant_doc_id": "nlp4lp_test_174"}
+{"query_id": "nlp4lp_test_175", "query": "A construction company in the tropics uses cows and elephants to carry bricks.", "relevant_doc_id": "nlp4lp_test_175"}
+{"query_id": "nlp4lp_test_176", "query": "A farmer on an island sends corn to the main land either by ferry or light rail.", "relevant_doc_id": "nlp4lp_test_176"}
+{"query_id": "nlp4lp_test_177", "query": "A factory provides rides for its employees in either taxis or company cars.", "relevant_doc_id": "nlp4lp_test_177"}
+{"query_id": "nlp4lp_test_178", "query": "A chemical company is transporting their hydrogen using two different methods, high pressure tube trailers and liquefied hydrogen tankers.", "relevant_doc_id": "nlp4lp_test_178"}
+{"query_id": "nlp4lp_test_179", "query": "A grape farmer transports his grapes in either small crates or large crates.", "relevant_doc_id": "nlp4lp_test_179"}
+{"query_id": "nlp4lp_test_180", "query": "A shipping company need to transport packages by either truck or car.", "relevant_doc_id": "nlp4lp_test_180"}
+{"query_id": "nlp4lp_test_181", "query": "There has been a horrible accident and patients need to be taken to the hospital by either a helicopter or bus.", "relevant_doc_id": "nlp4lp_test_181"}
+{"query_id": "nlp4lp_test_182", "query": "Employees have the option of car-pooling to work or taking the company bus.", "relevant_doc_id": "nlp4lp_test_182"}
+{"query_id": "nlp4lp_test_183", "query": "A snow removal company removes snow from neighborhoods using small trucks and large trucks.", "relevant_doc_id": "nlp4lp_test_183"}
+{"query_id": "nlp4lp_test_184", "query": "A magic school sends letters to student either by carrier pigeons or owls.", "relevant_doc_id": "nlp4lp_test_184"}
+{"query_id": "nlp4lp_test_185", "query": "An international shipping company uses large and small ships to transport containers around the world.", "relevant_doc_id": "nlp4lp_test_185"}
+{"query_id": "nlp4lp_test_186", "query": "A large fishing boat sends fish back to shore either by small canoes or smaller diesel boats.", "relevant_doc_id": "nlp4lp_test_186"}
+{"query_id": "nlp4lp_test_187", "query": "A volunteer organization transports voters to the polls on Election Day either by vans or cars.", "relevant_doc_id": "nlp4lp_test_187"}
+{"query_id": "nlp4lp_test_188", "query": "A car manufacturing company makes hamburgers and chicken wraps for workers.", "relevant_doc_id": "nlp4lp_test_188"}
+{"query_id": "nlp4lp_test_189", "query": "A meat processing plant uses two machines, a meat slicer and a meat packer, to make their hams and pork ribs.", "relevant_doc_id": "nlp4lp_test_189"}
+{"query_id": "nlp4lp_test_190", "query": "An appliance company sells and installs refrigerators and stoves.", "relevant_doc_id": "nlp4lp_test_190"}
+{"query_id": "nlp4lp_test_191", "query": "An office company makes desks and drawers.", "relevant_doc_id": "nlp4lp_test_191"}
+{"query_id": "nlp4lp_test_192", "query": "A milk tea shop owner would like to sell two different milk teas: black milk tea and matcha milk tea.", "relevant_doc_id": "nlp4lp_test_192"}
+{"query_id": "nlp4lp_test_193", "query": "A young boy is trying to grow taller by drinking milk and eating vegetables.", "relevant_doc_id": "nlp4lp_test_193"}
+{"query_id": "nlp4lp_test_194", "query": "Bob wants to design a diet consisting of protein bars and noodles.", "relevant_doc_id": "nlp4lp_test_194"}
+{"query_id": "nlp4lp_test_195", "query": "A toy store sells plush toys and dolls.", "relevant_doc_id": "nlp4lp_test_195"}
+{"query_id": "nlp4lp_test_196", "query": "Forest Paper makes two types of products: graph paper and music paper.", "relevant_doc_id": "nlp4lp_test_196"}
+{"query_id": "nlp4lp_test_197", "query": "Calcium and Magnesium are found in two health supplements, health supplement A and health supplement B.", "relevant_doc_id": "nlp4lp_test_197"}
+{"query_id": "nlp4lp_test_198", "query": "Lucy has a dog and she wants his food to be mixed.", "relevant_doc_id": "nlp4lp_test_198"}
+{"query_id": "nlp4lp_test_199", "query": "Maple Oil processes three types of crude oil: light oil, non-sticky oil and heavy oil.", "relevant_doc_id": "nlp4lp_test_199"}
+{"query_id": "nlp4lp_test_200", "query": "A flooring company produces engineered laminate planks and carpets.", "relevant_doc_id": "nlp4lp_test_200"}
+{"query_id": "nlp4lp_test_201", "query": "A man takes two supplements to get his daily iron and calcium requirements.", "relevant_doc_id": "nlp4lp_test_201"}
+{"query_id": "nlp4lp_test_202", "query": "A fashion company sells regular handbags and premium handbags made of higher quality material.", "relevant_doc_id": "nlp4lp_test_202"}
+{"query_id": "nlp4lp_test_203", "query": "A woman has $100000 to gamble on two sports bets: a basketball tournament, a horse race, and a soccer game.", "relevant_doc_id": "nlp4lp_test_203"}
+{"query_id": "nlp4lp_test_204", "query": "A repairman fixes washing machines and freezers.", "relevant_doc_id": "nlp4lp_test_204"}
+{"query_id": "nlp4lp_test_205", "query": "A small bakery has 20000 grams of batter and 14000 grams of milk to make their crepe cakes, sponge cakes, and birthday cakes.", "relevant_doc_id": "nlp4lp_test_205"}
+{"query_id": "nlp4lp_test_206", "query": "Super Shop sells cat paw snacks and gold shark snacks in bulk.", "relevant_doc_id": "nlp4lp_test_206"}
+{"query_id": "nlp4lp_test_207", "query": "A taco stand sells regular tacos and deluxe tacos with extra meat.", "relevant_doc_id": "nlp4lp_test_207"}
+{"query_id": "nlp4lp_test_208", "query": "A printing company sells math workbooks and English workbooks.", "relevant_doc_id": "nlp4lp_test_208"}
+{"query_id": "nlp4lp_test_209", "query": "A music company produces two types of digital keyboards, one is full-weighted and another is semi-weighted.", "relevant_doc_id": "nlp4lp_test_209"}
+{"query_id": "nlp4lp_test_210", "query": "Platinum Database sells two types of subscription software packages: a personal license and a commercial license which will cost $550 and $2000 to generate respectively.", "relevant_doc_id": "nlp4lp_test_210"}
+{"query_id": "nlp4lp_test_211", "query": "Zeta Bakery sells two types of cookies.", "relevant_doc_id": "nlp4lp_test_211"}
+{"query_id": "nlp4lp_test_212", "query": "A food company would like to run its commercials on three streaming platforms: Pi TV, Beta Video and Gamma Live.", "relevant_doc_id": "nlp4lp_test_212"}
+{"query_id": "nlp4lp_test_213", "query": "A disease testing station is conducting a temperature check and/or a blood test on each patient.", "relevant_doc_id": "nlp4lp_test_213"}
+{"query_id": "nlp4lp_test_214", "query": "The government is reworking the pipes to transport water to houses in the area.", "relevant_doc_id": "nlp4lp_test_214"}
+{"query_id": "nlp4lp_test_215", "query": "A concert organizer has to transport equipment using carts or trolleys.", "relevant_doc_id": "nlp4lp_test_215"}
+{"query_id": "nlp4lp_test_216", "query": "Both subsoil and topsoil need to be added to a garden bed.", "relevant_doc_id": "nlp4lp_test_216"}
+{"query_id": "nlp4lp_test_217", "query": "An extremely large ski resort is looking into purchasing two types of ski lifts, a densely-seated one and a loosely-seated one.", "relevant_doc_id": "nlp4lp_test_217"}
+{"query_id": "nlp4lp_test_218", "query": "A strata-management company is looking into purchasing two types of air conditioners, a low-power and a high-power model.", "relevant_doc_id": "nlp4lp_test_218"}
+{"query_id": "nlp4lp_test_219", "query": "A student takes calcium pills and vitamin D pills one after the other.", "relevant_doc_id": "nlp4lp_test_219"}
+{"query_id": "nlp4lp_test_220", "query": "An amusement park has two types of games: throwing and climbing games.", "relevant_doc_id": "nlp4lp_test_220"}
+{"query_id": "nlp4lp_test_221", "query": "In a science fair, there are two types of tables that can be used to display the children’s science experiments.", "relevant_doc_id": "nlp4lp_test_221"}
+{"query_id": "nlp4lp_test_222", "query": "An oil and gas company has two types of pipes, a high-volume and a low-volume one.", "relevant_doc_id": "nlp4lp_test_222"}
+{"query_id": "nlp4lp_test_223", "query": "A hospital hires ultrasound technicians and graduate researchers to image patients.", "relevant_doc_id": "nlp4lp_test_223"}
+{"query_id": "nlp4lp_test_224", "query": "A dentist has 3000 units of resin to fill cavities in both molars and canines.", "relevant_doc_id": "nlp4lp_test_224"}
+{"query_id": "nlp4lp_test_225", "query": "A food delivery person can either have shifts on bikes or scooters.", "relevant_doc_id": "nlp4lp_test_225"}
+{"query_id": "nlp4lp_test_226", "query": "A singer has two types of concerts he can hold, pop and R&B.", "relevant_doc_id": "nlp4lp_test_226"}
+{"query_id": "nlp4lp_test_227", "query": "A neighbourhood pizza restaurant has opened and sells pizzas in two sizes; large pizza and medium pizza.", "relevant_doc_id": "nlp4lp_test_227"}
+{"query_id": "nlp4lp_test_228", "query": "A party organizer needs to transport party goers either by limousine or bus.", "relevant_doc_id": "nlp4lp_test_228"}
+{"query_id": "nlp4lp_test_229", "query": "A hospital purchases two pills available for the patients to take one at a time.", "relevant_doc_id": "nlp4lp_test_229"}
+{"query_id": "nlp4lp_test_230", "query": "A dim sum restaurant can deliver their food by cart or by hand.", "relevant_doc_id": "nlp4lp_test_230"}
+{"query_id": "nlp4lp_test_231", "query": "A macro-counting fitness guru only eats salmon and eggs.", "relevant_doc_id": "nlp4lp_test_231"}
+{"query_id": "nlp4lp_test_232", "query": "A restaurant has two combos available to their customers, an original and an experimental meal.", "relevant_doc_id": "nlp4lp_test_232"}
+{"query_id": "nlp4lp_test_233", "query": "A metal-working shop has access to two types of metal-working equipment, a chop saw and a steel cutter.", "relevant_doc_id": "nlp4lp_test_233"}
+{"query_id": "nlp4lp_test_234", "query": "A cruise company can either have two types of trips, a large cruise ship or a small cruise ship.", "relevant_doc_id": "nlp4lp_test_234"}
+{"query_id": "nlp4lp_test_235", "query": "A lighting company has access to two types of lights to provide their customers, an LED fixture, and a fluorescence lamp.", "relevant_doc_id": "nlp4lp_test_235"}
+{"query_id": "nlp4lp_test_236", "query": "A market owner wants to start a jam business.", "relevant_doc_id": "nlp4lp_test_236"}
+{"query_id": "nlp4lp_test_237", "query": "A navy ship is stocking food onto their submarine and their staff can eat either a salad or fruit bowl for their fibre and vitamin intake.", "relevant_doc_id": "nlp4lp_test_237"}
+{"query_id": "nlp4lp_test_238", "query": "A clothing company can sell their product in two types of stores, a retail store and a factory outlet.", "relevant_doc_id": "nlp4lp_test_238"}
+{"query_id": "nlp4lp_test_239", "query": "A soda company sells soda in two types of containers: cans and glass bottles.", "relevant_doc_id": "nlp4lp_test_239"}
+{"query_id": "nlp4lp_test_240", "query": "A candle-making company can move their inventory of candles using freight and air.", "relevant_doc_id": "nlp4lp_test_240"}
+{"query_id": "nlp4lp_test_241", "query": "A production company needs to transport their equipment and staff for a movie they are shooting using large mobile production units or small mobile production units.", "relevant_doc_id": "nlp4lp_test_241"}
+{"query_id": "nlp4lp_test_242", "query": "A mask making company ships masks to their retail stores using small boxes and large boxes.", "relevant_doc_id": "nlp4lp_test_242"}
+{"query_id": "nlp4lp_test_243", "query": "Grain is transported from a farm to local grocery stores in either large bags or tiny bags.", "relevant_doc_id": "nlp4lp_test_243"}
+{"query_id": "nlp4lp_test_244", "query": "An autobody shop needs to purchase two types of car jacks, an automatic electric one, or a gas-powered one.", "relevant_doc_id": "nlp4lp_test_244"}
+{"query_id": "nlp4lp_test_245", "query": "A railway company is planning the infrastructure for the city and is considering two types of transportation, trains and trams.", "relevant_doc_id": "nlp4lp_test_245"}
+{"query_id": "nlp4lp_test_246", "query": "Platinum in combination with palladium has been used as a catalyst in cars and it changes carbon monoxide, which is toxic, into carbon dioxide.", "relevant_doc_id": "nlp4lp_test_246"}
+{"query_id": "nlp4lp_test_247", "query": "There are two ways to extract a metal from mined ores.", "relevant_doc_id": "nlp4lp_test_247"}
+{"query_id": "nlp4lp_test_248", "query": "An airport can either install escalators or elevators.", "relevant_doc_id": "nlp4lp_test_248"}
+{"query_id": "nlp4lp_test_249", "query": "A research group is making fabric and plastic using two methods, method A and method B.", "relevant_doc_id": "nlp4lp_test_249"}
+{"query_id": "nlp4lp_test_250", "query": "A taxi company will purchase vehicles to rent to their drivers.", "relevant_doc_id": "nlp4lp_test_250"}
+{"query_id": "nlp4lp_test_251", "query": "Due to an accident, at least 550 locals must be moved across a lake.", "relevant_doc_id": "nlp4lp_test_251"}
+{"query_id": "nlp4lp_test_252", "query": "A drop-in clinic is performing a test either through the ear or blood.", "relevant_doc_id": "nlp4lp_test_252"}
+{"query_id": "nlp4lp_test_253", "query": "A researcher is outsourcing annotations and has two options: a specialized third-party or a common third-party annotation company.", "relevant_doc_id": "nlp4lp_test_253"}
+{"query_id": "nlp4lp_test_254", "query": "A golf course is hosting an event and can transport guests using either golf carts or pull carts.", "relevant_doc_id": "nlp4lp_test_254"}
+{"query_id": "nlp4lp_test_255", "query": "A smoothie shop has a promotion for their two smoothies; an acai berry smoothie and a banana chocolate smoothie.", "relevant_doc_id": "nlp4lp_test_255"}
+{"query_id": "nlp4lp_test_256", "query": "A handmade sports equipment manufacturing company makes basketballs and footballs.", "relevant_doc_id": "nlp4lp_test_256"}
+{"query_id": "nlp4lp_test_257", "query": "A researcher must perform two types of experiments, in-vivo and ex-vivo.", "relevant_doc_id": "nlp4lp_test_257"}
+{"query_id": "nlp4lp_test_258", "query": "A village delivers mail to nearby villages either by runners or canoers.", "relevant_doc_id": "nlp4lp_test_258"}
+{"query_id": "nlp4lp_test_259", "query": "A woman on a diet needs to eat two types of meal preps, a smoothie and a protein bar.", "relevant_doc_id": "nlp4lp_test_259"}
+{"query_id": "nlp4lp_test_260", "query": "A clinical firm has two factories, a northern factory and a western factory, where they make expensive anti-itch injections and topical cream.", "relevant_doc_id": "nlp4lp_test_260"}
+{"query_id": "nlp4lp_test_261", "query": "A hospital prepares batches of medication patches and anti-biotic creams.", "relevant_doc_id": "nlp4lp_test_261"}
+{"query_id": "nlp4lp_test_262", "query": "A company in the desert can transport goods to rural cities either by camel caravans or desert trucks.", "relevant_doc_id": "nlp4lp_test_262"}
+{"query_id": "nlp4lp_test_263", "query": "A biotechnology company has 35,000 units of antibiotics available which is important to the process of making a first-dose and second-dose of vaccines.", "relevant_doc_id": "nlp4lp_test_263"}
+{"query_id": "nlp4lp_test_264", "query": "Both chemical A and chemical B need to be added to a mixer for making bread.", "relevant_doc_id": "nlp4lp_test_264"}
+{"query_id": "nlp4lp_test_265", "query": "A senior home has snacks of spinach and soybeans to increase their intake of iron.", "relevant_doc_id": "nlp4lp_test_265"}
+{"query_id": "nlp4lp_test_266", "query": "A keyboard manufacturer makes mechanical and standard keyboards.", "relevant_doc_id": "nlp4lp_test_266"}
+{"query_id": "nlp4lp_test_267", "query": "A tourism company can buy sedans or buses to add to their fleet of vehicles to increase their capacity for more tourists.", "relevant_doc_id": "nlp4lp_test_267"}
+{"query_id": "nlp4lp_test_268", "query": "A dessert shop is popular for their only two desserts - matcha ice cream and orange sorbet.", "relevant_doc_id": "nlp4lp_test_268"}
+{"query_id": "nlp4lp_test_269", "query": "A daycare center has children they must pick up and can use two types of vehicles: bus or a personal car.", "relevant_doc_id": "nlp4lp_test_269"}
+{"query_id": "nlp4lp_test_270", "query": "Both coconut oil and lavender need to be added to a body wash.", "relevant_doc_id": "nlp4lp_test_270"}
+{"query_id": "nlp4lp_test_271", "query": "A chemical company uses two tests, a salinity test and a pH test.", "relevant_doc_id": "nlp4lp_test_271"}
+{"query_id": "nlp4lp_test_272", "query": "A municipality hires full-time and part-time staff to deliver mail.", "relevant_doc_id": "nlp4lp_test_272"}
+{"query_id": "nlp4lp_test_273", "query": "A landscaper has 2500 square feet of grass land in a customer’s backyard where they need to cut grass using either a heavy-duty yard machine or a gas lawn mower.", "relevant_doc_id": "nlp4lp_test_273"}
+{"query_id": "nlp4lp_test_274", "query": "A park is designing their trails and can either create a wide trail or a narrow trail.", "relevant_doc_id": "nlp4lp_test_274"}
+{"query_id": "nlp4lp_test_275", "query": "A brewery can ferment their product into either wine or kombucha.", "relevant_doc_id": "nlp4lp_test_275"}
+{"query_id": "nlp4lp_test_276", "query": "A hospital can transport their patients either using a type II ambulance or hospital van.", "relevant_doc_id": "nlp4lp_test_276"}
+{"query_id": "nlp4lp_test_277", "query": "PROBLEM TYPE: LP\n\nPROBLEM INFO: \n\n- Suppose that there are \\var{N} available currencies, and assume that one unit of currency \\var{i} can be exchanged for \\var{rate_{i,j}} units of currency \\var{j} (Naturally, we assume that \\var{rate_{i,j}} > 0).", "relevant_doc_id": "nlp4lp_test_277"}
+{"query_id": "nlp4lp_test_278", "query": "PROBLEM TYPE: LP\n\nPROBLEM INFO: \n- Consider a set \\var{P} described by linear inequality constraints, that is:\n \\var{P} = {\\var{x} \\in R^\\var{N} | \\var{a_i}^T x <= \\var{b_i} , i = 1, ..., m}.", "relevant_doc_id": "nlp4lp_test_278"}
+{"query_id": "nlp4lp_test_279", "query": "PROBLEM TYPE: LP\n\nPROBLEM INFO: \n\n- A company produces and sells \\var{P} different products.", "relevant_doc_id": "nlp4lp_test_279"}
+{"query_id": "nlp4lp_test_280", "query": "PROBLEM TYPE: MILP\n\nPROBLEM INFO: \n- A company produces \\var{N} kinds of products.", "relevant_doc_id": "nlp4lp_test_280"}
+{"query_id": "nlp4lp_test_281", "query": "PROBLEM TYPE: LP\n\nPROBLEM INFO: \n\n- A manager of an oil refinery has \\var{allocated_i} million barrels of crude oil type \\var{i} allocated for production during the coming month.", "relevant_doc_id": "nlp4lp_test_281"}
+{"query_id": "nlp4lp_test_282", "query": "PROBLEM TYPE: LP\n\nPROBLEM INFO: \n\n- An investor has a portfolio of \\var{N} different stocks.", "relevant_doc_id": "nlp4lp_test_282"}
+{"query_id": "nlp4lp_test_283", "query": "PROBLEM TYPE: LP\nPROBLEM INFO:\n\n- A food is manufactured by refining raw oils and blending them together.", "relevant_doc_id": "nlp4lp_test_283"}
+{"query_id": "nlp4lp_test_284", "query": "PROBLEM TYPE: LP or MILP\nPROBLEM INFO:\n\n- A food is manufactured by refining raw oils and blending them together.", "relevant_doc_id": "nlp4lp_test_284"}
+{"query_id": "nlp4lp_test_285", "query": "PROBLEM TYPE: LP\nPROBLEM INFO:\n\n- An engineering factory makes several products on the machines, and the number of machine \\var{m} the factory has is \\var{num_{m}}.", "relevant_doc_id": "nlp4lp_test_285"}
+{"query_id": "nlp4lp_test_286", "query": "PROBLEM TYPE: MILP\nPROBLEM INFO:\n\n- An engineering factory makes several products on the machines, and the number of machine \\var{m} the factory has is \\var{num_{m}}.", "relevant_doc_id": "nlp4lp_test_286"}
+{"query_id": "nlp4lp_test_287", "query": "PROBLEM TYPE: LP\nPROBLEM INFO:\n\n- A company is undergoing a number of changes that will affect its manpower requirements in future years.", "relevant_doc_id": "nlp4lp_test_287"}
+{"query_id": "nlp4lp_test_288", "query": "PROBLEM TYPE: LP\nPROBLEM INFO:\n\n- A company is undergoing a number of changes that will affect its manpower requirements in future years.", "relevant_doc_id": "nlp4lp_test_288"}
+{"query_id": "nlp4lp_test_289", "query": "PROBLEM TYPE: MIP\nPROBLEM INFO:\n\n- A mining company is going to continue operating in a certain area for the next years.", "relevant_doc_id": "nlp4lp_test_289"}
+{"query_id": "nlp4lp_test_290", "query": "PROBLEM TYPE: LP\nPROBLEM INFO:\n\n- A farmer wishes to plan production on his \\var{all_space} acre farm over the next five years.", "relevant_doc_id": "nlp4lp_test_290"}
+{"query_id": "nlp4lp_test_291", "query": "PROBLEM TYPE: LP\nPROBLEM INFO:\n\n- An economy consists of several industries.", "relevant_doc_id": "nlp4lp_test_291"}
+{"query_id": "nlp4lp_test_292", "query": "PROBLEM TYPE: LP\nPROBLEM INFO:\n\n- An economy consists of several industries.", "relevant_doc_id": "nlp4lp_test_292"}
+{"query_id": "nlp4lp_test_293", "query": "PROBLEM TYPE: LP\nPROBLEM INFO:\n\n- An economy consists of several industries.", "relevant_doc_id": "nlp4lp_test_293"}
+{"query_id": "nlp4lp_test_294", "query": "PROBLEM TYPE: MIP\nPROBLEM INFO:\n\n- A large company wishes to move some of its departments out of London.", "relevant_doc_id": "nlp4lp_test_294"}
+{"query_id": "nlp4lp_test_295", "query": "PROBLEM TYPE: LP\nPROBLEM INFO:\n\n- A quantity y is known to depend on another quantity x.", "relevant_doc_id": "nlp4lp_test_295"}
+{"query_id": "nlp4lp_test_296", "query": "PROBLEM TYPE: LP\nPROBLEM INFO:\n\n- A quantity y is known to depend on another quantity x.", "relevant_doc_id": "nlp4lp_test_296"}
+{"query_id": "nlp4lp_test_297", "query": "PROBLEM TYPE: LP\nPROBLEM INFO:\n\n- A quantity y is known to depend on another quantity x.", "relevant_doc_id": "nlp4lp_test_297"}
+{"query_id": "nlp4lp_test_298", "query": "PROBLEM TYPE: MIP\nPROBLEM INFO:\n\n- A number of power stations are committed to meeting the following electricity load demands over a day.", "relevant_doc_id": "nlp4lp_test_298"}
+{"query_id": "nlp4lp_test_299", "query": "PROBLEM TYPE: LP\nPROBLEM INFO:\n\n- We suppose that some products can be produced, each of them passing through several stages.", "relevant_doc_id": "nlp4lp_test_299"}
+{"query_id": "nlp4lp_test_300", "query": "PROBLEM TYPE: MIP\nPROBLEM INFO:\n\n- The knapsack problem has a significant place in the study of integer programming models with binary variables.", "relevant_doc_id": "nlp4lp_test_300"}
+{"query_id": "nlp4lp_test_301", "query": "PROBLEM TYPE: LP\nPROBLEM INFO:\n\n- We assume that there are available at the market different foods and that the food \\var{k} sells at a price \\var{price_{k}} per unit.", "relevant_doc_id": "nlp4lp_test_301"}
+{"query_id": "nlp4lp_test_302", "query": "PROBLEM TYPE: LP\nPROBLEM INFO:\n\n- Consider the problem of operating a warehouse, by buying and selling the stock of a certain commodity, in order to maximize profit over a certain length of time, say several periods.", "relevant_doc_id": "nlp4lp_test_302"}
+{"query_id": "nlp4lp_test_303", "query": "PROBLEM TYPE: LP\nPROBLEM INFO:\n\n- A manufacturer wishes to produce \\var{alloy_quant} lb of an alloy that consists of several kinds of metals.", "relevant_doc_id": "nlp4lp_test_303"}
+{"query_id": "nlp4lp_test_304", "query": "PROBLEM TYPE: LP\nPROBLEM INFO:\n\n- A small firm specializes in making some types of spare automobile parts.", "relevant_doc_id": "nlp4lp_test_304"}
+{"query_id": "nlp4lp_test_305", "query": "PROBLEM TYPE: LP\nPROBLEM INFO:\n\n- A small computer manufacturing company forecasts the demand over the next \\var{n}-th month to be \\var{demand_{n}}.", "relevant_doc_id": "nlp4lp_test_305"}
+{"query_id": "nlp4lp_test_306", "query": "PROBLEM TYPE: LP or MILP\nPROBLEM INFO:\n\n- To operate a cafeteria, the manager must ensure on-call duty based on the statistics on the required staff.", "relevant_doc_id": "nlp4lp_test_306"}
+{"query_id": "nlp4lp_test_307", "query": "PROBLEM TYPE: LP\nPROBLEM INFO:\n\n- A foundry receives a specific order for \\var{n_steel_quant} tons of steel.", "relevant_doc_id": "nlp4lp_test_307"}
+{"query_id": "nlp4lp_test_308", "query": "PROBLEM TYPE: MILP\nPROBLEM INFO:\n\n- Before going on vacation you want to make floppy disk backups of important files.", "relevant_doc_id": "nlp4lp_test_308"}
+{"query_id": "nlp4lp_test_309", "query": "PROBLEM TYPE: LP\nPROBLEM INFO:\n\n- An Italian transport company must send empty containers from its depots to ports.", "relevant_doc_id": "nlp4lp_test_309"}
+{"query_id": "nlp4lp_test_310", "query": "PROBLEM TYPE: LP\n\nPROBLEM INFO:\n\n- Wild Sports produces \\var{M} different products using \\var{N} different raw materials.", "relevant_doc_id": "nlp4lp_test_310"}
+{"query_id": "nlp4lp_test_311", "query": "PROBLEM TYPE: LP\n\nPROBLEM INFO:\n\n- A division of an auto parts manufacturer produces \\var{P} different parts using \\var{M} different machines.", "relevant_doc_id": "nlp4lp_test_311"}
+{"query_id": "nlp4lp_test_312", "query": "PROBLEM TYPE: LP\n\nPROBLEM INFO:\n\n- Custom Tees is planning an online advertising campaign with \\var{A} different ad types across two web companies.", "relevant_doc_id": "nlp4lp_test_312"}
+{"query_id": "nlp4lp_test_313", "query": "PROBLEM TYPE: LP\n\nPROBLEM INFO:\n\n- A company produces \\var{S} different types of steel using \\var{A} different alloys.", "relevant_doc_id": "nlp4lp_test_313"}
+{"query_id": "nlp4lp_test_314", "query": "PROBLEM TYPE: LP or MILP\n\nPROBLEM INFO:\n\n- The town has \\var{S} different shifts for the police officers during the day.", "relevant_doc_id": "nlp4lp_test_314"}
+{"query_id": "nlp4lp_test_315", "query": "PROBLEM TYPE: LP or MILP\n\nPROBLEM INFO:\n\n- A fine foods company produces gift baskets for a season that lasts \\var{W} weeks.", "relevant_doc_id": "nlp4lp_test_315"}
+{"query_id": "nlp4lp_test_316", "query": "PROBLEM TYPE: LP\n\nPROBLEM INFO:\n\n- A division of an auto parts manufacturer produces \\var{P} different parts using \\var{M} different machines.", "relevant_doc_id": "nlp4lp_test_316"}
+{"query_id": "nlp4lp_test_317", "query": "PROBLEM TYPE: LP\n\nPROBLEM INFO:\n\n- A division of an auto parts manufacturer produces \\var{P} different parts using \\var{M} different machines.", "relevant_doc_id": "nlp4lp_test_317"}
+{"query_id": "nlp4lp_test_318", "query": "PROBLEM TYPE: LP\n\nPROBLEM INFO:\n\n- Custom Tees is planning an online advertising campaign with \\var{A} different ad types across two web companies.", "relevant_doc_id": "nlp4lp_test_318"}
+{"query_id": "nlp4lp_test_319", "query": "PROBLEM TYPE: LP\n\nPROBLEM INFO:\n\n- A small electric utility operates \\var{P} power plants to supply electricity to \\var{C} cities.", "relevant_doc_id": "nlp4lp_test_319"}
+{"query_id": "nlp4lp_test_320", "query": "PROBLEM TYPE: LP\n\nPROBLEM INFO:\n\n- US soybean suppliers ship soybeans to different destinations using various routes.", "relevant_doc_id": "nlp4lp_test_320"}
+{"query_id": "nlp4lp_test_321", "query": "PROBLEM TYPE: LP\n\nPROBLEM INFO:\n\n- A division of an auto parts manufacturer produces \\var{P} different parts using \\var{M} different machines.", "relevant_doc_id": "nlp4lp_test_321"}
+{"query_id": "nlp4lp_test_322", "query": "PROBLEM TYPE: LP\n\nPROBLEM INFO:\n\n- A division of an auto parts manufacturer produces \\var{P} different parts using \\var{M} different machines.", "relevant_doc_id": "nlp4lp_test_322"}
+{"query_id": "nlp4lp_test_323", "query": "PROBLEM TYPE: LP\n\nPROBLEM INFO:\n\n- A delivery person starts at the intersection of \\var{1}th Avenue and \\var{1}th Street and needs to reach the intersection of \\var{W}th Avenue and \\var{N}th Street.", "relevant_doc_id": "nlp4lp_test_323"}
+{"query_id": "nlp4lp_test_324", "query": "PROBLEM TYPE: MIP\n\nPROBLEM INFO:\n\n- A seaport unloads shipping containers off of rail cars, holds them in its yard on a transport system, and then loads them onto ships.", "relevant_doc_id": "nlp4lp_test_324"}
+{"query_id": "nlp4lp_test_325", "query": "PROBLEM TYPE: MIP\n\nPROBLEM INFO:\n\n- A division of an auto parts manufacturer produces \\var{P} different parts using \\var{M} different machines.", "relevant_doc_id": "nlp4lp_test_325"}
+{"query_id": "nlp4lp_test_326", "query": "PROBLEM TYPE: MILP\n\nPROBLEM INFO:\n\n- A team of translators is being assem- bled for the summer Olympics to translate from English into the \\{M} other languages.", "relevant_doc_id": "nlp4lp_test_326"}
+{"query_id": "nlp4lp_test_327", "query": "PROBLEM TYPE: MILP\n\nPROBLEM INFO:\n\n- A company has \\var{I} projects to be done by consultants.", "relevant_doc_id": "nlp4lp_test_327"}
+{"query_id": "nlp4lp_test_328", "query": "PROBLEM TYPE: MILP\n\nPROBLEM INFO:\n\n- The network faces an intrusion that requires immediate intervention.", "relevant_doc_id": "nlp4lp_test_328"}
+{"query_id": "nlp4lp_test_329", "query": "PROBLEM TYPE: MILP\n\nPROBLEM INFO:\n\n- A traveler based in \\var{start_city} needs to visit \\var{N} towns for business.", "relevant_doc_id": "nlp4lp_test_329"}
+{"query_id": "nlp4lp_test_330", "query": "PROBLEM TYPE: MILP\n\nPROBLEM INFO:\n\n- A paper company produces large rolls of paper with a width of \\var{large_roll_width} inches.", "relevant_doc_id": "nlp4lp_test_330"}

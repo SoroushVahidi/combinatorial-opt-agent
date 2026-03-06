@@ -3,6 +3,9 @@
   "sources": [
     "or_library.json",
     "gurobi_modeling_examples.json",
-    "gurobi_optimods.json"
+    "gurobi_optimods.json",
+    "gams_models.json",
+    "miplib.json",
+    "pyomo_examples.json"
   ]
 }
