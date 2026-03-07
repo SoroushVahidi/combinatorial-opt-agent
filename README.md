@@ -1,15 +1,18 @@
 # Combinatorial Optimization AI Agent
 
-An **AI-powered agent** that helps users describe **mathematical optimization problems** in **natural language** and automatically provides:
+An **AI-powered agent** for **natural-language optimization**: describe a problem in plain English and get problem recognition, formulations, and solver-ready code.
 
-- Recognition of whether it’s a **known combinatorial optimization problem**
-- The **Integer Linear Program (ILP)** formulation
-- The **Linear Program (LP)** relaxation
-- **Solver-ready code** (e.g. Pyomo, Gurobi, PuLP)
+**Capabilities:**
+
+- **Problem recognition** — Match queries to a catalog of known combinatorial optimization problems (facility location, knapsack, scheduling, etc.).
+- **Formulation retrieval** — Return ILP/LP formulations (variables, objective, constraints) for matched problems.
+- **NLP4LP pipeline** — Schema retrieval, acceptance-aware reranking, constrained assignment (mention→slot), and optimization-role extraction for NL-to-optimization workflows.
+- **GAMSPy integration** — Local GAMSPy/GAMS example collection and catalog for problem-family grouping and evaluation (see [GAMSPy docs](#documentation)).
+- **Solver-ready code** — Pyomo, Gurobi, PuLP, and GAMSPy when applicable.
 
 ## Project vision
 
-You describe a problem in plain English; the agent identifies the problem type (e.g. Uncapacitated Facility Location), returns the ILP/LP formulation, and generates code you can run with standard solvers.
+You describe a problem in plain English; the agent identifies the problem type (e.g. Uncapacitated Facility Location), returns the ILP/LP formulation, and can generate code you run with standard solvers. The project also supports research on **NL-to-optimization** (NLP4LP): schema acceptance, parameter instantiation, and optimization-role extraction.
 
 ## Architecture (high level)
 
@@ -40,14 +43,27 @@ You describe a problem in plain English; the agent identifies the problem type (
 
 **Note:** When the app is run (e.g. on a server), every search is logged to `data/collected_queries/user_queries.jsonl` so you can use real user prompts for training. See [Training the retrieval model](#training-the-retrieval-model) and [training/README.md](training/README.md).
 
+## Documentation
+
+| Topic | Doc |
+|-------|-----|
+| **Data sources** | [docs/data_sources.md](docs/data_sources.md) — OR-Library, Gurobi examples/OptiMods, NL4Opt, etc. |
+| **GAMSPy** | [docs/GAMSPY_SETUP_AND_LICENSE.md](docs/GAMSPY_SETUP_AND_LICENSE.md), [GAMSPY_LOCAL_EXAMPLES_COLLECTION.md](docs/GAMSPY_LOCAL_EXAMPLES_COLLECTION.md), [GAMSPY_LOCAL_EXAMPLES_NEXT_STEPS.md](docs/GAMSPY_LOCAL_EXAMPLES_NEXT_STEPS.md) — setup, license, local example collection and manifests |
+| **NLP4LP** | Acceptance rerank, constrained assignment, optimization-role method, semantic IR — see `docs/NLP4LP_*.md` |
+| **Wulver (HPC)** | [docs/wulver.md](docs/wulver.md) — NJIT cluster setup and batch jobs |
+| **Training** | [training/README.md](training/README.md) — retrieval fine-tuning; mention-slot scorer in `training/` |
+| **Evaluation / paper** | `docs/BASELINE_TABLE_CLI.md`, `docs/PATCH_LEAK_FREE_EVAL.md`, and other experiment docs in `docs/` |
+
+Private data (GAMSPy models, license-related files) live under **`data_private/`** (gitignored). Manifests and catalogs are in `data_private/gams_models/manifests/` and `catalog/`.
+
 ## Data sources
 
-The dataset is built from multiple authoritative sources. The full list of libraries and problem names is in the project:
+The dataset is built from multiple authoritative sources:
 
-- **[docs/data_sources.md](docs/data_sources.md)** — Canonical list of all sources with URLs, sizes, and problem/example names (OR-Library, Gurobi modeling examples, Gurobi OptiMods, etc.).
+- **[docs/data_sources.md](docs/data_sources.md)** — Canonical list with URLs, sizes, and problem/example names (OR-Library, Gurobi modeling examples, Gurobi OptiMods, etc.).
 - **data/sources/** — Machine-readable manifests: `or_library.json`, `gurobi_modeling_examples.json`, `gurobi_optimods.json`, `index.json`.
 
-Notable sources include [NL4Opt](https://github.com/nl4opt/nl4opt-competition) (NL → formulation) and [NLP4LP / OptiMUS](https://github.com/...) for natural language optimization.
+Notable sources: [NL4Opt](https://github.com/nl4opt/nl4opt-competition) (NL→formulation), NLP4LP/OptiMUS, and GAMSPy examples (see [GAMSPy collection](docs/GAMSPY_LOCAL_EXAMPLES_COLLECTION.md)).
 
 ## How to run
 
@@ -57,15 +73,11 @@ Notable sources include [NL4Opt](https://github.com/nl4opt/nl4opt-competition) (
 
 See in-repo documentation for API keys (if using hosted LLMs), environment variables, and example prompts.
 
-## License
+### Option A: GitHub Codespaces
 
-See the `LICENSE` file in the repository. Contributions are welcome via pull requests.
-1. Click **Code → Codespaces → Create codespace on main**
+1. **Code → Codespaces → Create codespace on main**
 2. Wait for the environment to build (~2 minutes)
-3. In the terminal, run:
-   ```bash
-   python pipeline/run_collection.py
-   ```
+3. In the terminal: `python pipeline/run_collection.py`
 
 ### Option B: Local Setup
 
@@ -137,13 +149,14 @@ python run_search.py "minimize cost of opening warehouses"
 sbatch scripts/run_search.slurm
 ```
 
-## Training the retrieval model
+## Training
 
-The retrieval model can be fine-tuned so it better matches natural-language queries to problems in the catalog.
+- **Retrieval model** — Fine-tune the sentence-transformers model so it better matches NL queries to problems in the catalog.  
+  **Full guide:** [training/README.md](training/README.md)  
+  Steps: generate synthetic (query, passage) pairs → optional: add [collected user queries](training/README.md#6-collect-real-user-prompts-for-training) from the app → run training (local or GPU batch on Wulver).  
+  **Evaluation:** `python -m training.evaluate_retrieval --regenerate --num 500` for Precision@1 / Precision@5 on 500 held-out instances.
 
-- **Full guide:** [training/README.md](training/README.md)
-- **Steps:** generate synthetic (query, passage) pairs → optional: add [collected user queries](training/README.md#6-collect-real-user-prompts-for-training) from the app → run training (local or GPU batch on Wulver).
-- **Evaluation:** run `python -m training.evaluate_retrieval --regenerate --num 500` to measure Precision@1 / Precision@5 on 500 held-out instances.
+- **Mention–slot scorer** (NLP4LP) — For constrained assignment (NL numeric mentions → schema slots). Generate pairs with `training/generate_mention_slot_pairs.py` and train with `training/train_mention_slot_scorer.py`. See `docs/NLP4LP_CONSTRAINED_ASSIGNMENT_*.md`.
 
 ## 📋 Project Phases
 
@@ -213,5 +226,10 @@ MIT License — see [LICENSE](LICENSE) for details.
 
 ## 📬 Contact
 
-**Soroush Vahidi** — NJIT Student
+**Soroush Vahidi** — NJIT Student  
 - GitHub: [@SoroushVahidi](https://github.com/SoroushVahidi)
+
+---
+
+**Repository description** (for GitHub **Settings → General → Description**):  
+*NL-to-optimization agent: problem recognition, formulation retrieval, GAMSPy/NLP4LP pipelines, and solver code generation.*
