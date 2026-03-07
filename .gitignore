@@ -75,6 +75,9 @@ docs/_build/
 .pybuilder/
 target/
 
+# Private data (GAMS models, license-related; do not commit)
+data_private/
+
 # Jupyter Notebook
 .ipynb_checkpoints
 

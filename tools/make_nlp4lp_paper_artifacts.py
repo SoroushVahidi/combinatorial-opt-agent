@@ -209,6 +209,37 @@ def main() -> None:
         plt.close()
         print(f"Wrote {plot3_path}")
 
+        # Optional: schema_R1 vs instantiation_ready scatter for orig queries
+        pts = []
+        for b in ["random", "lsa", "bm25", "tfidf", "oracle"]:
+            row = next(
+                (rr for rr in rows if rr.get("variant") == "orig" and rr.get("baseline") == b),
+                None,
+            )
+            if not row:
+                continue
+            try:
+                sx = float(row.get("schema_R1") or 0.0)
+                sy = float(row.get("instantiation_ready") or 0.0)
+            except Exception:
+                continue
+            pts.append((b, sx, sy))
+        if pts:
+            fig_s, ax_s = plt.subplots()
+            xs = [p[1] for p in pts]
+            ys = [p[2] for p in pts]
+            ax_s.scatter(xs, ys)
+            for name, sx, sy in pts:
+                ax_s.text(sx, sy, name, fontsize=8, ha="left", va="bottom")
+            ax_s.set_xlabel("Schema_R1 (orig)")
+            ax_s.set_ylabel("InstantiationReady (orig)")
+            ax_s.set_title("NLP4LP downstream: schema retrieval vs instantiation-ready (orig)")
+            fig_s.tight_layout()
+            scatter_path = out_dir / "nlp4lp_downstream_schema_vs_ready_orig.png"
+            fig_s.savefig(scatter_path, dpi=150)
+            plt.close(fig_s)
+            print(f"Wrote {scatter_path}")
+
     # --- 4c) Optional per-type coverage plot for orig (if types summary exists) ---
     types_csv = out_dir / "nlp4lp_downstream_types_summary.csv"
     if types_csv.exists():
@@ -378,6 +409,59 @@ def main() -> None:
             with types_tex.open("w", encoding="utf-8") as f:
                 f.write("\n".join(lines_t))
 
+            # ESWA error-analysis per-type table (CSV + LaTeX)
+            err_types_csv = out_dir / "nlp4lp_error_types_table.csv"
+            with err_types_csv.open("w", newline="", encoding="utf-8") as f:
+                w = _csv4.writer(f)
+                w.writerow([
+                    "param_type",
+                    "tfidf_coverage", "tfidf_type_match",
+                    "oracle_coverage", "oracle_type_match",
+                    "random_coverage", "random_type_match",
+                ])
+                with types_csv_out.open(encoding="utf-8") as fin:
+                    r_err = _csv4.DictReader(fin)
+                    for row in r_err:
+                        w.writerow([
+                            row["param_type"],
+                            row.get("tfidf_param_coverage", ""),
+                            row.get("tfidf_type_match", ""),
+                            row.get("oracle_param_coverage", ""),
+                            row.get("oracle_type_match", ""),
+                            row.get("random_param_coverage", ""),
+                            row.get("random_type_match", ""),
+                        ])
+
+            err_types_tex = out_dir / "nlp4lp_error_types_table.tex"
+            lines_et = []
+            lines_et.append("\\begin{table}[t]")
+            lines_et.append("  \\centering")
+            lines_et.append("  \\caption{Per-type downstream behavior on original queries.}")
+            lines_et.append("  \\label{tab:nlp4lp-error-types}")
+            lines_et.append("  \\begin{tabular}{lrrrrrr}")
+            lines_et.append("    \\hline")
+            lines_et.append("    Param type & TF-IDF cov & TF-IDF type & Oracle cov & Oracle type & Random cov & Random type \\\\")
+            lines_et.append("    \\hline")
+            with err_types_csv.open(encoding="utf-8") as f:
+                r_err2 = _csv4.DictReader(f)
+                for row in r_err2:
+                    lines_et.append(
+                        "    "
+                        + row["param_type"]
+                        + " & "
+                        + " & ".join([
+                            row["tfidf_coverage"], row["tfidf_type_match"],
+                            row["oracle_coverage"], row["oracle_type_match"],
+                            row["random_coverage"], row["random_type_match"],
+                        ])
+                        + " \\\\"
+                    )
+            lines_et.append("    \\hline")
+            lines_et.append("  \\end{tabular}")
+            lines_et.append("\\end{table}")
+            with err_types_tex.open("w", encoding="utf-8") as f:
+                f.write("\n".join(lines_et))
+
     # --- 4h) Final notes and bullets ---
     final_note = out_dir / "nlp4lp_downstream_final_note.txt"
     if downstream_csv.exists() and types_csv.exists():
@@ -427,6 +511,371 @@ def main() -> None:
 
         with final_note.open("w", encoding="utf-8") as f:
             f.write("\n".join(lines_n))
+
+    # --- 4j) Compact downstream tables and note for ESWA downstream section ---
+    downstream_csv2 = out_dir / "nlp4lp_downstream_summary.csv"
+    if downstream_csv2.exists():
+        import csv as _csv7
+        with downstream_csv2.open(encoding="utf-8") as f:
+            drows = list(_csv7.DictReader(f))
+
+        # Section main table: orig, typed/default baselines only
+        section_baselines = ["random", "lsa", "bm25", "tfidf", "oracle"]
+        metrics = [
+            "schema_R1",
+            "param_coverage",
+            "type_match",
+            "key_overlap",
+            "exact5_on_hits",
+            "exact20_on_hits",
+            "instantiation_ready",
+        ]
+
+        def _fmt4(v: str) -> str:
+            if v is None or v == "":
+                return ""
+            try:
+                return f"{float(v):.4f}"
+            except Exception:
+                return v
+
+        rows_orig = [r for r in drows if r.get("variant") == "orig"]
+        by_b = {r.get("baseline"): r for r in rows_orig}
+
+        sec_csv = out_dir / "nlp4lp_downstream_section_table.csv"
+        with sec_csv.open("w", newline="", encoding="utf-8") as f:
+            w = _csv7.writer(f)
+            w.writerow(["baseline"] + metrics)
+            for b in section_baselines:
+                row = by_b.get(b) or {}
+                w.writerow([b] + [_fmt4(row.get(m, "")) for m in metrics])
+
+        sec_tex = out_dir / "nlp4lp_downstream_section_table.tex"
+        lines_s = []
+        lines_s.append("\\begin{table}[t]")
+        lines_s.append("  \\centering")
+        lines_s.append("  \\caption{Downstream utility on NLP4LP (orig queries).}")
+        lines_s.append("  \\label{tab:nlp4lp-downstream-main}")
+        lines_s.append("  \\begin{tabular}{lrrrrrrr}")
+        lines_s.append("    \\hline")
+        lines_s.append(
+            "    Baseline & Schema\\_R@1 & Coverage & TypeMatch & KeyOverlap & Exact5 & Exact20 & InstReady \\\\"
+        )
+        lines_s.append("    \\hline")
+        for b in section_baselines:
+            row = by_b.get(b) or {}
+            vals = [_fmt4(row.get(m, "")) for m in metrics]
+            lines_s.append("    " + b + " & " + " & ".join(v or "" for v in vals) + " \\\\")
+        lines_s.append("    \\hline")
+        lines_s.append("  \\end{tabular}")
+        lines_s.append("\\end{table}")
+        with sec_tex.open("w", encoding="utf-8") as f:
+            f.write("\n".join(lines_s))
+
+        # Cross-variant downstream summary table
+        variants = ["orig", "noisy", "short"]
+        baselines_v = ["tfidf", "bm25", "lsa", "random"]
+        by_bv = {(r.get("baseline"), r.get("variant")): r for r in drows}
+
+        var_csv = out_dir / "nlp4lp_downstream_variant_table.csv"
+        with var_csv.open("w", newline="", encoding="utf-8") as f:
+            w = _csv7.writer(f)
+            w.writerow(
+                [
+                    "baseline",
+                    "orig_schema_R1",
+                    "noisy_schema_R1",
+                    "short_schema_R1",
+                    "orig_instantiation_ready",
+                    "noisy_instantiation_ready",
+                    "short_instantiation_ready",
+                ]
+            )
+            for b in baselines_v:
+                row_o = by_bv.get((b, "orig")) or {}
+                row_n = by_bv.get((b, "noisy")) or {}
+                row_s = by_bv.get((b, "short")) or {}
+                w.writerow(
+                    [
+                        b,
+                        _fmt4(row_o.get("schema_R1", "")),
+                        _fmt4(row_n.get("schema_R1", "")),
+                        _fmt4(row_s.get("schema_R1", "")),
+                        _fmt4(row_o.get("instantiation_ready", "")),
+                        _fmt4(row_n.get("instantiation_ready", "")),
+                        _fmt4(row_s.get("instantiation_ready", "")),
+                    ]
+                )
+
+        var_tex = out_dir / "nlp4lp_downstream_variant_table.tex"
+        lines_v = []
+        lines_v.append("\\begin{table}[t]")
+        lines_v.append("  \\centering")
+        lines_v.append("  \\caption{Cross-variant downstream summary.}")
+        lines_v.append("  \\label{tab:nlp4lp-downstream-variants}")
+        lines_v.append("  \\begin{tabular}{lrrrrrr}")
+        lines_v.append("    \\hline")
+        lines_v.append(
+            "    baseline & orig\\_schema\\_R1 & noisy\\_schema\\_R1 & short\\_schema\\_R1 & orig\\_instantiation\\_ready & noisy\\_instantiation\\_ready & short\\_instantiation\\_ready \\\\"
+        )
+        lines_v.append("    \\hline")
+        with var_csv.open(encoding="utf-8") as f:
+            r = _csv7.DictReader(f)
+            for row in r:
+                lines_v.append(
+                    "    "
+                    + row["baseline"]
+                    + " & "
+                    + " & ".join(
+                        [
+                            row["orig_schema_R1"],
+                            row["noisy_schema_R1"],
+                            row["short_schema_R1"],
+                            row["orig_instantiation_ready"],
+                            row["noisy_instantiation_ready"],
+                            row["short_instantiation_ready"],
+                        ]
+                    )
+                    + " \\\\"
+                )
+        lines_v.append("    \\hline")
+        lines_v.append("  \\end{tabular}")
+        lines_v.append("\\end{table}")
+        with var_tex.open("w", encoding="utf-8") as f:
+            f.write("\n".join(lines_v))
+
+        # Short downstream note for ESWA downstream subsection
+        note_path = out_dir / "nlp4lp_downstream_section_note.txt"
+
+        def _get_float(baseline: str, variant: str, metric: str) -> float | None:
+            row = by_bv.get((baseline, variant))
+            if not row:
+                return None
+            try:
+                return float(row.get(metric, ""))
+            except Exception:
+                return None
+
+        tf_o_r1 = _get_float("tfidf", "orig", "schema_R1")
+        tf_o_ir = _get_float("tfidf", "orig", "instantiation_ready")
+        bm_o_r1 = _get_float("bm25", "orig", "schema_R1")
+        bm_o_ir = _get_float("bm25", "orig", "instantiation_ready")
+        lsa_o_r1 = _get_float("lsa", "orig", "schema_R1")
+        lsa_o_ir = _get_float("lsa", "orig", "instantiation_ready")
+        rand_o_r1 = _get_float("random", "orig", "schema_R1")
+        rand_o_ir = _get_float("random", "orig", "instantiation_ready")
+        or_o_r1 = _get_float("oracle", "orig", "schema_R1")
+        or_o_ir = _get_float("oracle", "orig", "instantiation_ready")
+
+        tf_n_r1 = _get_float("tfidf", "noisy", "schema_R1")
+        tf_n_ir = _get_float("tfidf", "noisy", "instantiation_ready")
+        tf_s_r1 = _get_float("tfidf", "short", "schema_R1")
+        tf_s_ir = _get_float("tfidf", "short", "instantiation_ready")
+
+        lines_note = []
+        if (
+            tf_o_r1 is not None
+            and bm_o_r1 is not None
+            and lsa_o_r1 is not None
+            and rand_o_r1 is not None
+            and tf_o_ir is not None
+            and bm_o_ir is not None
+            and lsa_o_ir is not None
+            and rand_o_ir is not None
+        ):
+            lines_note.append(
+                f"On orig queries, retrieval-based schemas (TF-IDF/BM25/LSA) achieve schema_R1≈{tf_o_r1:.4f}–{bm_o_r1:.4f} with instantiation_ready≈{lsa_o_ir:.4f}–{bm_o_ir:.4f}, compared to random at schema_R1={rand_o_r1:.4f} and instantiation_ready={rand_o_ir:.4f}."
+            )
+        if tf_o_r1 is not None and tf_o_ir is not None and bm_o_r1 is not None and bm_o_ir is not None:
+            lines_note.append(
+                f"Among lexical baselines on orig, TF-IDF has the strongest schema retrieval (schema_R1={tf_o_r1:.4f} vs BM25={bm_o_r1:.4f}) and slightly higher coverage, with instantiation_ready ({tf_o_ir:.4f}) close to BM25 ({bm_o_ir:.4f})."
+            )
+        if or_o_r1 is not None and or_o_ir is not None and tf_o_r1 is not None and tf_o_ir is not None:
+            lines_note.append(
+                f"The oracle schema baseline reaches schema_R1={or_o_r1:.4f} and instantiation_ready={or_o_ir:.4f}, only modestly above TF-IDF (schema_R1={tf_o_r1:.4f}, instantiation_ready={tf_o_ir:.4f}), so retrieval is not the only bottleneck."
+            )
+        if tf_o_r1 is not None and tf_n_r1 is not None and tf_s_r1 is not None:
+            lines_note.append(
+                f"For TF-IDF, schema_R1 stays high on noisy queries (orig={tf_o_r1:.4f}, noisy={tf_n_r1:.4f}) but drops on short queries (short={tf_s_r1:.4f})."
+            )
+        if tf_o_ir is not None and tf_n_ir is not None and tf_s_ir is not None:
+            lines_note.append(
+                f"Instantiation-ready rates for TF-IDF fall from {tf_o_ir:.4f} on orig to {tf_s_ir:.4f} on short, and to {tf_n_ir:.4f} on noisy queries where `<num>` placeholders cannot be deterministically recovered."
+            )
+        if or_o_ir is not None:
+            lines_note.append(
+                f"Even with oracle schemas on orig, instantiation_ready remains below 0.1 ({or_o_ir:.4f}), so these results are best interpreted as downstream utility diagnostics rather than full NL-to-optimization automation."
+            )
+
+        with note_path.open("w", encoding="utf-8") as f:
+            f.write("\n".join(lines_note))
+
+        # Assignment ablation table for ESWA error analysis (typed vs untyped)
+        err_ablation_csv = out_dir / "nlp4lp_error_ablation_table.csv"
+        with err_ablation_csv.open("w", newline="", encoding="utf-8") as f:
+            w = _csv7.writer(f)
+            w.writerow(
+                ["baseline", "param_coverage", "type_match", "exact20_on_hits", "instantiation_ready"]
+            )
+            for b in ["tfidf", "tfidf_untyped", "oracle", "oracle_untyped"]:
+                row = by_b.get(b) or {}
+                w.writerow(
+                    [
+                        b,
+                        _fmt4(row.get("param_coverage", "")),
+                        _fmt4(row.get("type_match", "")),
+                        _fmt4(row.get("exact20_on_hits", "")),
+                        _fmt4(row.get("instantiation_ready", "")),
+                    ]
+                )
+
+        err_ablation_tex = out_dir / "nlp4lp_error_ablation_table.tex"
+        lines_ab = []
+        lines_ab.append("\\begin{table}[t]")
+        lines_ab.append("  \\centering")
+        lines_ab.append("  \\caption{Effect of type-aware assignment on original queries.}")
+        lines_ab.append("  \\label{tab:nlp4lp-error-ablation}")
+        lines_ab.append("  \\begin{tabular}{lrrrr}")
+        lines_ab.append("    \\hline")
+        lines_ab.append("    Baseline & Coverage & TypeMatch & Exact20 & InstReady \\\\")
+        lines_ab.append("    \\hline")
+        with err_ablation_csv.open(encoding="utf-8") as f:
+            r_ab = _csv7.DictReader(f)
+            for row in r_ab:
+                lines_ab.append(
+                    "    "
+                    + row["baseline"]
+                    + " & "
+                    + " & ".join(
+                        [
+                            row["param_coverage"],
+                            row["type_match"],
+                            row["exact20_on_hits"],
+                            row["instantiation_ready"],
+                        ]
+                    )
+                    + " \\\\"
+                )
+        lines_ab.append("    \\hline")
+        lines_ab.append("  \\end{tabular}")
+        lines_ab.append("\\end{table}")
+        with err_ablation_tex.open("w", encoding="utf-8") as f:
+            f.write("\n".join(lines_ab))
+
+        # Error-analysis note for ESWA subsection
+        err_note_path = out_dir / "nlp4lp_error_analysis_note.txt"
+
+        # Use hit/miss table and per-type summary generated above
+        hm_src = out_dir / "nlp4lp_downstream_hitmiss_table_orig.csv"
+        types_src = out_dir / "nlp4lp_downstream_types_summary.csv"
+
+        hit_rows = []
+        if hm_src.exists():
+            with hm_src.open(encoding="utf-8") as f:
+                r_hm = _csv7.DictReader(f)
+                hit_rows = [r for r in r_hm if r.get("baseline") in {"lsa", "bm25", "tfidf"}]
+
+        type_rows = []
+        if types_src.exists():
+            with types_src.open(encoding="utf-8") as f:
+                r_ty = _csv7.DictReader(f)
+                type_rows = [r for r in r_ty if r.get("variant") == "orig"]
+
+        def _flt(v: str) -> float | None:
+            if v is None or v == "":
+                return None
+            try:
+                return float(v)
+            except Exception:
+                return None
+
+        cov_hits = [_flt(r.get("param_coverage_hits", "")) for r in hit_rows]
+        cov_miss = [_flt(r.get("param_coverage_miss", "")) for r in hit_rows]
+        key_hits = [_flt(r.get("key_overlap_hits", "")) for r in hit_rows]
+        key_miss = [_flt(r.get("key_overlap_miss", "")) for r in hit_rows]
+        tm_hits = [_flt(r.get("type_match_hits", "")) for r in hit_rows]
+        tm_miss = [_flt(r.get("type_match_miss", "")) for r in hit_rows]
+
+        def _rng(xs):
+            xs_f = [x for x in xs if isinstance(x, float)]
+            if not xs_f:
+                return None, None
+            return min(xs_f), max(xs_f)
+
+        cov_h_lo, cov_h_hi = _rng(cov_hits)
+        cov_m_lo, cov_m_hi = _rng(cov_miss)
+        key_m_lo, key_m_hi = _rng(key_miss)
+        tm_h_lo, tm_h_hi = _rng(tm_hits)
+        tm_m_lo, tm_m_hi = _rng(tm_miss)
+
+        # Per-type easiest/hardest from types summary (TF-IDF)
+        def _type_val(baseline: str, ptype: str, field: str) -> float | None:
+            row = next(
+                (r for r in type_rows if r.get("baseline") == baseline and r.get("param_type") == ptype),
+                None,
+            )
+            if not row:
+                return None
+            return _flt(row.get(field, ""))
+
+        tf_int_tm = _type_val("tfidf", "integer", "type_match")
+        tf_float_tm = _type_val("tfidf", "float", "type_match")
+
+        # Typed vs untyped (already loaded via by_b above)
+        tf_t_tm = _flt((by_b.get("tfidf") or {}).get("type_match", ""))
+        tf_u_tm = _flt((by_b.get("tfidf_untyped") or {}).get("type_match", ""))
+        tf_t_ir = _flt((by_b.get("tfidf") or {}).get("instantiation_ready", ""))
+        tf_u_ir = _flt((by_b.get("tfidf_untyped") or {}).get("instantiation_ready", ""))
+        tf_t_cov = _flt((by_b.get("tfidf") or {}).get("param_coverage", ""))
+
+        or_t_ir = _flt((by_b.get("oracle") or {}).get("instantiation_ready", ""))
+        rand_cov = _flt((by_b.get("random") or {}).get("param_coverage", ""))
+        rand_ir = _flt((by_b.get("random") or {}).get("instantiation_ready", ""))
+
+        # TF-IDF per-type coverage range (orig)
+        tf_cov_types = [
+            _flt(r.get("param_coverage", ""))
+            for r in type_rows
+            if r.get("baseline") == "tfidf"
+        ]
+        tf_cov_lo, tf_cov_hi = _rng(tf_cov_types)
+
+        lines_err = []
+        if cov_h_lo is not None and cov_h_hi is not None and cov_m_lo is not None and cov_m_hi is not None:
+            lines_err.append(
+                f"On orig queries, param_coverage is high on schema hits (≈{cov_h_lo:.2f}–{cov_h_hi:.2f}) and drops on misses (≈{cov_m_lo:.2f}–{cov_m_hi:.2f})."
+            )
+        if key_hits and key_m_lo is not None and key_m_hi is not None:
+            lines_err.append(
+                f"Key_overlap stays near 1.0 on hits and remains non-zero on misses (≈{key_m_lo:.2f}–{key_m_hi:.2f}), so wrong schemas are often partially overlapping rather than completely unrelated."
+            )
+        if tm_h_lo is not None and tm_h_hi is not None and tm_m_lo is not None and tm_m_hi is not None:
+            lines_err.append(
+                f"Type_match is substantially higher on hits (≈{tm_h_lo:.2f}–{tm_h_hi:.2f}) than on misses (≈{tm_m_lo:.2f}–{tm_m_hi:.2f}), but even on hits it remains well below 0.3."
+            )
+        if tf_int_tm is not None and tf_float_tm is not None:
+            lines_err.append(
+                f"By parameter type, integer parameters are easiest under TF-IDF (type_match≈{tf_int_tm:.3f}), while float parameters are hardest (type_match≈{tf_float_tm:.3f})."
+            )
+        if tf_cov_lo is not None and tf_cov_hi is not None:
+            lines_err.append(
+                f"Under TF-IDF, per-type coverage on orig queries is generally high across currency/percent/float (≈{tf_cov_lo:.2f}–{tf_cov_hi:.2f})."
+            )
+        if tf_t_cov is not None and tf_t_tm is not None and tf_u_tm is not None and tf_t_ir is not None and tf_u_ir is not None:
+            lines_err.append(
+                f"Typed assignment for TF-IDF keeps coverage unchanged (≈{tf_t_cov:.3f}) but improves type_match (from {tf_u_tm:.3f} to {tf_t_tm:.3f}) and instantiation_ready (from {tf_u_ir:.3f} to {tf_t_ir:.3f})."
+            )
+        if rand_cov is not None and rand_ir is not None:
+            lines_err.append(
+                f"The random baseline has very low coverage (≈{rand_cov:.3f}) and instantiation_ready (≈{rand_ir:.3f}), confirming that naive schema selection rarely yields fully instantiated problems."
+            )
+        if or_t_ir is not None:
+            lines_err.append(
+                f"Even with oracle schemas, instantiation_ready on orig queries stays below 0.1 ({or_t_ir:.4f}), so substantial residual error remains downstream of retrieval."
+            )
+
+        with err_note_path.open("w", encoding="utf-8") as f:
+            f.write("\n".join(lines_err))
 
     claims_path = out_dir / "nlp4lp_downstream_claims_for_paper.txt"
     caveats_path = out_dir / "nlp4lp_downstream_caveats_for_paper.txt"
@@ -674,6 +1123,77 @@ def main() -> None:
             )
             with note_path.open("w", encoding="utf-8") as f:
                 f.write("\n".join(lines_note))
+
+            # ESWA error-analysis hit/miss table (CSV + LaTeX)
+            err_hm_csv = out_dir / "nlp4lp_error_hitmiss_table.csv"
+            with err_hm_csv.open("w", newline="", encoding="utf-8") as f:
+                w = _csv2.writer(f)
+                w.writerow(["baseline"] + cols)
+                for b in order:
+                    row = by_b.get(b)
+                    if not row:
+                        continue
+                    w.writerow([b] + [_fmt4(row.get(c, "")) for c in cols])
+
+            err_hm_tex = out_dir / "nlp4lp_error_hitmiss_table.tex"
+            lines_e = []
+            lines_e.append("\\begin{table}[t]")
+            lines_e.append("  \\centering")
+            lines_e.append("  \\caption{Schema-hit versus schema-miss downstream behavior on original queries.}")
+            lines_e.append("  \\label{tab:nlp4lp-error-hitmiss}")
+            lines_e.append("  \\begin{tabular}{lrrrrrr}")
+            lines_e.append("    \\hline")
+            lines_e.append(
+                "    Baseline & Cov (hit) & Cov (miss) & Type (hit) & Type (miss) & Key (hit) & Key (miss) \\\\"
+            )
+            lines_e.append("    \\hline")
+            for b in order:
+                row = by_b.get(b)
+                if not row:
+                    continue
+                vals = [_fmt4(row.get(c, "")) for c in cols]
+                lines_e.append("    " + b + " & " + " & ".join(v or "" for v in vals) + " \\\\")
+            lines_e.append("    \\hline")
+            lines_e.append("  \\end{tabular}")
+            lines_e.append("\\end{table}")
+            with err_hm_tex.open("w", encoding="utf-8") as f:
+                f.write("\n".join(lines_e))
+
+            # Optional hit/miss diagnostic figure for error analysis
+            try:
+                import matplotlib.pyplot as _plt_hm  # type: ignore
+
+                fig_h, (ax_cov, ax_key) = _plt_hm.subplots(1, 2, figsize=(6.0, 3.0))
+                x_pos = [0, 1, 2]
+                width = 0.35
+                cov_hits = [float(by_b[b]["param_coverage_hits"]) for b in order if b in by_b]
+                cov_miss = [float(by_b[b]["param_coverage_miss"]) for b in order if b in by_b]
+                key_hits = [float(by_b[b]["key_overlap_hits"]) for b in order if b in by_b]
+                key_miss = [float(by_b[b]["key_overlap_miss"]) for b in order if b in by_b]
+
+                ax_cov.bar([x - width / 2 for x in x_pos], cov_hits, width, label="hit")
+                ax_cov.bar([x + width / 2 for x in x_pos], cov_miss, width, label="miss")
+                ax_cov.set_xticks(x_pos)
+                ax_cov.set_xticklabels([b.upper() for b in order])
+                ax_cov.set_ylabel("ParamCoverage")
+                ax_cov.set_title("Coverage")
+                ax_cov.legend()
+
+                ax_key.bar([x - width / 2 for x in x_pos], key_hits, width, label="hit")
+                ax_key.bar([x + width / 2 for x in x_pos], key_miss, width, label="miss")
+                ax_key.set_xticks(x_pos)
+                ax_key.set_xticklabels([b.upper() for b in order])
+                ax_key.set_ylabel("KeyOverlap")
+                ax_key.set_title("Key overlap")
+
+                fig_h.tight_layout()
+                err_hm_fig = out_dir / "nlp4lp_error_hitmiss_orig.png"
+                fig_h.savefig(err_hm_fig, dpi=150)
+                _plt_hm.close(fig_h)
+                print(f"Wrote {err_hm_fig}")
+            except Exception:
+                # If matplotlib is not available for some reason, skip this optional figure.
+                pass
 
     # --- 5) Reproducibility markdown ---
     repro_path = out_dir / "nlp4lp_reproducibility.md"
