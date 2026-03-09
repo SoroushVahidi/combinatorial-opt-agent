@@ -1,0 +1,36 @@
+{
+  "total_eval_examples": 331,
+  "total_ranker_rows": 0,
+  "ranker_data_available": false,
+  "slices": {
+    "entity_association_risk": {
+      "count": 14,
+      "fraction": 0.0423
+    },
+    "lower_upper_risk": {
+      "count": 116,
+      "fraction": 0.3505
+    },
+    "multi_numeric_confusion": {
+      "count": 288,
+      "fraction": 0.8701
+    },
+    "total_vs_per_unit_risk": {
+      "count": 191,
+      "fraction": 0.577
+    },
+    "percent_vs_absolute_risk": {
+      "count": 43,
+      "fraction": 0.1299
+    }
+  },
+  "total_flagged_any_slice": 320,
+  "flagged_multiple_slices": 213,
+  "heuristic_descriptions": {
+    "entity_association_risk": "Query mentions entity/person names alongside numbers, raising risk of wrong variable-entity association.",
+    "lower_upper_risk": "Query contains both lower-bound and upper-bound cues (e.g., 'at least' and 'at most'), risking lower/upper confusion.",
+    "multi_numeric_confusion": "Query contains >=3 distinct numeric values, raising multi-float confusable grounding risk.",
+    "total_vs_per_unit_risk": "Query uses both 'total/aggregate' and 'per/each/unit' language alongside numbers, risking total-vs-per-unit confusion.",
+    "percent_vs_absolute_risk": "Query mixes percentage mentions and large absolute numeric values, risking percent vs absolute value confusion."
+  }
+}

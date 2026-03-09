@@ -1,0 +1,6 @@
+{
+  "ranker_data_dir": "/home/runner/work/combinatorial-opt-agent/combinatorial-opt-agent/artifacts/learning_ranker_data/nlp4lp",
+  "data_available": false,
+  "message": "Ranker data directory not found. Run data preparation first.",
+  "splits": {}
+}
