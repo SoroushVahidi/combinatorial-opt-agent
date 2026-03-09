@@ -231,4 +231,8 @@ train_retrieval_*.out
 train_retrieval_*.err
 training_latest_status.txt
 
+# Learning stage logs and run artifacts (writable output base)
+logs/
+artifacts/runs/
+
 data/external/resocratic

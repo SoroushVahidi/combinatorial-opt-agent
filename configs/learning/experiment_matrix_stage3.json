@@ -1,0 +1,46 @@
+{
+  "_comment": "Stage-3 experiment matrix for NLP4LP downstream learning.",
+  "_version": "1",
+  "experiments": [
+    {
+      "name": "nlp4lp_pairwise_text_only",
+      "type": "pairwise_ranker",
+      "description": "NLP4LP pairwise ranker trained on text-only features (no entity features).",
+      "script": "src/learning/train_nlp4lp_pairwise_ranker.py",
+      "data_dir": "artifacts/learning_ranker_data/nlp4lp",
+      "base_model": "nreimers/MiniLM-L6-H384-uncased",
+      "epochs": 4,
+      "batch_size": 16,
+      "warmup_ratio": 0.1,
+      "weight_decay": 0.01,
+      "priority": 1,
+      "_note": "Run this first — simplest, fastest, most diagnostic."
+    },
+    {
+      "name": "nl4opt_pretrain_then_finetune",
+      "type": "multitask_grounder",
+      "description": "Multitask grounder: pretrain on NL4Opt auxiliary supervision, then fine-tune on NLP4LP.",
+      "script": "src/learning/train_multitask_grounder.py",
+      "ranker_data_dir": "artifacts/learning_ranker_data/nlp4lp",
+      "aux_data_dir": "artifacts/learning_aux_data/nl4opt",
+      "base_model": "nreimers/MiniLM-L6-H384-uncased",
+      "stage": "full",
+      "epochs_pretrain": 2,
+      "epochs_finetune": 4,
+      "batch_size": 16,
+      "warmup_ratio": 0.1,
+      "weight_decay": 0.01,
+      "priority": 2,
+      "_note": "Run after nlp4lp_pairwise_text_only succeeds."
+    }
+  ],
+  "evaluation": {
+    "eval_scripts": [
+      "src/learning/eval_nlp4lp_pairwise_ranker.py",
+      "src/learning/eval_bottleneck_slices.py"
+    ],
+    "rule_baseline": "tfidf_optimization_role_repair",
+    "metrics_file": "metrics.json",
+    "report_file": "metrics.md"
+  }
+}
