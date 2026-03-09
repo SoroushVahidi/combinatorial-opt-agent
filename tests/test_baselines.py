@@ -55,7 +55,10 @@ def test_sbert_returns_top_k_and_scores():
     from retrieval.baselines import SBERTBaseline
     cat = _tiny_catalog()
     bl = SBERTBaseline(model_path="sentence-transformers/all-MiniLM-L6-v2")
-    bl.fit(cat)
+    try:
+        bl.fit(cat)
+    except (OSError, RuntimeError, ImportError) as exc:
+        pytest.skip(f"Skipping SBERT test: model could not be loaded ({exc})")
     out = bl.rank("knapsack", top_k=2)
     assert len(out) == 2
     for item in out:

@@ -49,7 +49,9 @@ def ndcg_at_k(ranked_names: list[str], expected_name: str, k: int) -> float:
 
 def coverage_at_k(ranked_names: list[str], expected_name: str, k: int) -> float:
     """1.0 if expected appears in top-k, else 0.0. Same as P@k for a single instance."""
-    return 1.0 if expected_name in (ranked_names[:k]) else 0.0
+    if k < 1 or not expected_name:
+        return 0.0
+    return 1.0 if expected_name in ranked_names[:k] else 0.0
 
 
 def compute_metrics(
