@@ -45,6 +45,7 @@ Overview of documentation in this repository.
 
 ## Repo maintenance
 
+- **[COPY_PASTE_INFO.md](COPY_PASTE_INFO.md)** — Copy-paste reference card: key numbers, pipeline overview, and pointers to all major docs.
 - **[Q1_JOURNAL_AUDIT.md](Q1_JOURNAL_AUDIT.md)** — Senior researcher code audit for Q1 journal submission; references exact file paths, functions, and line ranges.
 - **[FULL_REPO_SUMMARY.md](FULL_REPO_SUMMARY.md)** — Comprehensive audit of the current GitHub repo state (generated 2026-03-09).
 - **[REPO_CLEANUP_PLAN.md](REPO_CLEANUP_PLAN.md)** — Cleanup plan and deleted-files manifest.
