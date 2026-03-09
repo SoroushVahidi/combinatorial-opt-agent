@@ -14,6 +14,13 @@ An **AI-powered agent** for **natural-language optimization**: describe a proble
 
 You describe a problem in plain English; the agent identifies the problem type (e.g. Uncapacitated Facility Location), returns the ILP/LP formulation, and can generate code you run with standard solvers. The project also supports research on **NL-to-optimization** (NLP4LP): schema acceptance, parameter instantiation, and optimization-role extraction.
 
+## Current evidence-based status
+
+- **Problem recognition / retrieval** — Strong; embeddings + catalog match queries to known problem types.
+- **Downstream grounding** (NL mentions → schema slots for instantiation) — Main bottleneck; active research.
+- **Deterministic methods** (rule-based scoring, typed greedy assignment) — Currently the main trusted, reproducible results for grounding.
+- **Learning** — Infrastructure exists (benchmark-safe train/dev/test splits, split-integrity checks, pairwise ranker training and evaluation). A real-data-only benchmark run showed the current learned formulation did not outperform the deterministic rule baseline; learning is documented as future work. See [docs/learning_runs/](docs/learning_runs/README.md).
+
 ## Architecture (high level)
 
 - **Natural language** → entity and constraint extraction.
@@ -53,6 +60,7 @@ You describe a problem in plain English; the agent identifies the problem type (
 | **Wulver (HPC)** | [docs/wulver.md](docs/wulver.md) — NJIT cluster setup and batch jobs |
 | **Training** | [training/README.md](training/README.md) — retrieval fine-tuning; mention-slot scorer in `training/` |
 | **Evaluation / paper** | `docs/BASELINE_TABLE_CLI.md`, `docs/PATCH_LEAK_FREE_EVAL.md`, and other experiment docs in `docs/` |
+| **Learning (NLP4LP)** | [docs/learning_runs/](docs/learning_runs/README.md) — benchmark-safe splits, real-data-only check, experiment records |
 
 Private data (GAMSPy models, license-related files) live under **`data_private/`** (gitignored). Manifests and catalogs are in `data_private/gams_models/manifests/` and `catalog/`.
 
@@ -212,7 +220,7 @@ sbatch scripts/run_search.slurm
 
 ## 📄 License
 
-MIT License — see [LICENSE](LICENSE) for details.
+This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for the full text. Copyright (c) Soroush Vahidi.
 
 ## 🙏 Acknowledgments
 
@@ -226,10 +234,11 @@ MIT License — see [LICENSE](LICENSE) for details.
 
 ## 📬 Contact
 
-**Soroush Vahidi** — NJIT Student  
+**Soroush Vahidi** — NJIT  
+- Email: [sv96@njit.edu](mailto:sv96@njit.edu)  
 - GitHub: [@SoroushVahidi](https://github.com/SoroushVahidi)
 
 ---
 
-**Repository description** (for GitHub **Settings → General → Description**):  
-*NL-to-optimization agent: problem recognition, formulation retrieval, GAMSPy/NLP4LP pipelines, and solver code generation.*
+**Repository description** (for GitHub **Settings → General → Description**; update manually if needed):  
+*NL-to-optimization agent: problem recognition, formulation retrieval, NLP4LP grounding (deterministic methods primary), and solver code generation.*

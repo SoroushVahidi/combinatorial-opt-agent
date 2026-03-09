@@ -26,10 +26,13 @@ def main() -> None:
     ap.add_argument("--lr", type=float, default=2e-5)
     ap.add_argument("--batch_size", type=int, default=8)
     ap.add_argument("--save_dir", type=Path, default=ROOT / "artifacts" / "learning_runs")
+    ap.add_argument("--seed", type=int, default=42, help="Random seed for reproducibility")
+    ap.add_argument("--init_checkpoint", type=Path, default=None, help="Load this checkpoint before training (for two-stage: aux then NLP4LP)")
     args = ap.parse_args()
     run_dir = args.save_dir / args.run_name
     run_dir.mkdir(parents=True, exist_ok=True)
     train_path = args.data_dir / "train.jsonl"
+    dev_path = args.data_dir / "dev.jsonl"
     if not train_path.exists():
         print(f"Train data not found: {train_path}", file=sys.stderr)
         print("Run build_nlp4lp_pairwise_ranker_data.py first.", file=sys.stderr)
@@ -46,6 +49,9 @@ def main() -> None:
         encoder_name=args.encoder,
         use_structured_features=args.use_features,
     )
+    if args.init_checkpoint and args.init_checkpoint.exists():
+        ranker.load(str(args.init_checkpoint))
+        print(f"Loaded init checkpoint: {args.init_checkpoint}", file=sys.stderr)
     try:
         import torch
         from torch.utils.data import DataLoader, TensorDataset
@@ -73,6 +79,13 @@ def main() -> None:
     ranker.model.train()
     optimizer = torch.optim.AdamW(ranker.model.parameters(), lr=args.lr)
     step = 0
+    train_size = len(rows)
+    # Reproducibility: seed only affects data order if we shuffled; we iterate in order
+    if args.seed is not None:
+        torch.manual_seed(args.seed)
+        if torch.cuda.is_available():
+            torch.cuda.manual_seed_all(args.seed)
+    losses: list[float] = []
     for epoch in range(args.epochs):
         for i in range(0, min(len(rows), args.max_steps * args.batch_size), args.batch_size):
             batch = rows[i : i + args.batch_size]
@@ -114,18 +127,37 @@ def main() -> None:
             loss.backward()
             optimizer.step()
             step += 1
+            loss_val = float(loss.item())
+            losses.append(loss_val)
+            if step % 50 == 0 or step <= 3:
+                print(f"  step {step} loss={loss_val:.4f}")
             if step >= args.max_steps:
                 break
         if step >= args.max_steps:
             break
     ranker.save(str(run_dir / "checkpoint.pt"))
+    dev_count = 0
+    if dev_path.exists():
+        with open(dev_path, encoding="utf-8") as f:
+            dev_count = sum(1 for line in f if line.strip())
+    config = {
+        "encoder": args.encoder,
+        "use_features": args.use_features,
+        "steps": step,
+        "seed": args.seed,
+        "train_size": train_size,
+        "dev_size": dev_count,
+        "max_steps": args.max_steps,
+        "batch_size": args.batch_size,
+        "lr": args.lr,
+        "epochs": args.epochs,
+        "final_loss": losses[-1] if losses else None,
+    }
+    if args.init_checkpoint and args.init_checkpoint.exists():
+        config["init_checkpoint"] = str(args.init_checkpoint)
     with open(run_dir / "config.json", "w") as f:
-        json.dump(
-            {"encoder": args.encoder, "use_features": args.use_features, "steps": step},
-            f,
-            indent=2,
-        )
-    print(f"Saved to {run_dir} (steps={step})")
+        json.dump(config, f, indent=2)
+    print(f"Saved to {run_dir} (steps={step}, train_size={train_size}, final_loss={config['final_loss']})")
 
 
 if __name__ == "__main__":
