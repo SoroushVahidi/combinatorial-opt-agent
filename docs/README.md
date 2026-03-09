@@ -43,6 +43,11 @@ Overview of documentation in this repository.
 - **[LEARNING_AUDIT_ANALYSIS.md](LEARNING_AUDIT_ANALYSIS.md)** — CPU-only bottleneck audit and data-quality analysis of the NLP4LP learning pipeline.
 - **[LEARNING_FIRST_REAL_TRAINING_BLOCKER.md](LEARNING_FIRST_REAL_TRAINING_BLOCKER.md)** — Learning Stage 3: first real training blocker, status, and remediation steps.
 
+## Stronger deterministic pipeline
+
+- **[STRONGER_DETERMINISTIC_PIPELINE_PLAN.md](STRONGER_DETERMINISTIC_PIPELINE_PLAN.md)** — Evidence-based design plan for the `global_consistency_grounding` downstream method: what the current pipeline does, why it fails, and the exact stronger design.
+- **[STRONGER_DETERMINISTIC_PIPELINE_RESULTS.md](STRONGER_DETERMINISTIC_PIPELINE_RESULTS.md)** — Implementation summary, metrics comparison against all existing methods, honest interpretation, and ChatGPT-ready copy-paste summary.
+
 ## Repo maintenance
 
 - **[COPY_PASTE_INFO.md](COPY_PASTE_INFO.md)** — Copy-paste reference card: key numbers, pipeline overview, and pointers to all major docs.

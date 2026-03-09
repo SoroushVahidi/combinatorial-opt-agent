@@ -1618,6 +1618,525 @@ def _run_optimization_role_repair(
     return filled_values, filled_mentions, filled_in_repair
 
 
+# ═══════════════════════════════════════════════════════════════════════════════
+# Global Consistency Grounding (GCG)
+# Stronger deterministic downstream method with six new signals:
+#  1. Polarity mismatch penalty (min↔max operator direction)
+#  2. Percent firewall (block non-percent to percent slot when percent exists)
+#  3. Total vs coefficient cross-penalty (explicit, not just match bonus)
+#  4. Entity anchor bonus (slot-name tokens directly in mention context)
+#  5. Magnitude plausibility (percent>100; int+decimal)
+#  6. Post-assignment min/max conflict repair (swap if min_value > max_value)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+GCG_WEIGHTS: dict[str, float] = {
+    "type_exact_bonus": 5.0,
+    "type_loose_bonus": 1.5,
+    "type_incompatible_penalty": -1e9,
+    "percent_firewall_penalty": -6.0,   # non-percent → percent slot when percent mention exists
+    "percent_magnitude_penalty": -1.5,  # percent slot but value > 100
+    "count_decimal_penalty": -1.5,      # int slot but value has decimal part
+    "opt_role_overlap": 3.0,
+    "fragment_compat_bonus": 1.5,
+    "polarity_match_bonus": 2.0,        # min mention → min slot (or max↔max)
+    "polarity_mismatch_penalty": -4.0,  # min mention → max slot (or max↔min)
+    "operator_match_bonus": 1.2,        # generic operator match when no polarity determined
+    "total_match_bonus": 1.8,           # total-like mention → total-like slot
+    "coeff_match_bonus": 1.8,           # per-unit mention → coefficient slot
+    "total_to_coeff_penalty": -3.0,     # total-like mention → coefficient slot
+    "coeff_to_total_penalty": -3.0,     # per-unit mention → total-like slot
+    "entity_anchor_bonus": 2.0,         # slot-name token found in mention context
+    "lex_context_overlap": 0.5,
+    "lex_sentence_overlap": 0.2,
+    "unit_match_bonus": 2.0,
+    "entity_resource_overlap": 0.8,
+    "weak_match_penalty": -1.0,
+    "schema_prior_bonus": 0.5,
+}
+
+GCG_REPAIR_WEIGHTS: dict[str, float] = {
+    "role_plausibility_bonus": 0.6,
+    "total_vs_coeff_penalty": -1.5,
+    "bound_plausibility_bonus": 0.5,
+    "coverage_repair_bonus": 1.2,
+    "min_role_support": 0.4,
+}
+
+# Function-word tokens that should NOT be treated as entity anchors.
+_GCG_FUNCTION_WORDS = frozenset({
+    "the", "and", "for", "with", "that", "this", "from", "each", "unit",
+    "type", "value", "have", "will", "can", "not", "are", "per", "all",
+    "more", "than", "less", "most", "least", "only", "some", "any", "its",
+    "their", "our", "number", "amount", "total", "variable", "param",
+})
+
+
+def _detect_gcg_sibling_slots(
+    expected_scalar: list[str],
+) -> dict[str, dict[str, str | None]]:
+    """Detect min/max sibling slot pairs for conflict repair.
+
+    Returns dict mapping slot_name -> {"min_sibling": name|None, "max_sibling": name|None}.
+    Two slots are siblings when stripping their bound prefix/suffix produces the same base.
+    E.g. ``["min_cost", "max_cost"]`` → min_cost has max_sibling=max_cost; max_cost has min_sibling=min_cost.
+    """
+    siblings: dict[str, dict[str, str | None]] = {
+        s: {"min_sibling": None, "max_sibling": None} for s in expected_scalar
+    }
+
+    _BOUND_PREFIX_RE = re.compile(
+        r"^(min_?|max_?|lower_?|upper_?|minimum_?|maximum_?)", re.IGNORECASE
+    )
+    _BOUND_SUFFIX_RE = re.compile(
+        r"(_min|_max|_lower|_upper|_minimum|_maximum)$", re.IGNORECASE
+    )
+    _MIN_MARKERS = re.compile(r"(min|lower|minimum)", re.IGNORECASE)
+    _MAX_MARKERS = re.compile(r"(max|upper|maximum)", re.IGNORECASE)
+
+    def _polarity_and_base(name: str) -> tuple[str, str]:
+        """Return ('min'|'max'|'', stripped_base)."""
+        n = name.lower()
+        # Try prefix first
+        pm = _BOUND_PREFIX_RE.match(n)
+        if pm:
+            prefix = pm.group(1)
+            base = n[pm.end():].strip("_")
+            if not base:
+                return "", n
+            pol = "min" if _MIN_MARKERS.search(prefix) else "max"
+            return pol, base
+        # Try suffix
+        sm = _BOUND_SUFFIX_RE.search(n)
+        if sm:
+            suffix = sm.group(1)
+            base = n[: sm.start()].strip("_")
+            if not base:
+                return "", n
+            pol = "min" if _MIN_MARKERS.search(suffix) else "max"
+            return pol, base
+        return "", n
+
+    # Build index: base → list of (slot_name, polarity)
+    base_index: dict[str, list[tuple[str, str]]] = {}
+    for s in expected_scalar:
+        pol, base = _polarity_and_base(s)
+        if pol and base:
+            base_index.setdefault(base, []).append((s, pol))
+
+    for base, entries in base_index.items():
+        min_slots = [s for s, p in entries if p == "min"]
+        max_slots = [s for s, p in entries if p == "max"]
+        for ms in min_slots:
+            if max_slots:
+                siblings[ms]["max_sibling"] = max_slots[0]
+        for ms in max_slots:
+            if min_slots:
+                siblings[ms]["min_sibling"] = min_slots[0]
+
+    return siblings
+
+
+def _score_mention_slot_gcg(
+    m: MentionOptIR,
+    s: SlotOptIR,
+    has_percent_mention: bool,
+) -> tuple[float, dict[str, Any]]:
+    """GCG scoring: optimization_role_repair signals plus six new consistency signals."""
+    features: dict[str, Any] = {}
+    score = 0.0
+    kind = m.type_bucket
+    expected = s.expected_type
+
+    # Hard type incompatibility.
+    if _is_type_incompatible(expected, kind):
+        features["type_incompatible"] = True
+        return GCG_WEIGHTS["type_incompatible_penalty"], features
+
+    # Type compatibility.
+    if kind != "unknown":
+        if (expected == "percent" and kind == "percent") or (
+            expected == "currency" and kind == "currency"
+        ):
+            score += GCG_WEIGHTS["type_exact_bonus"]
+            features["type_exact"] = True
+        elif expected in ("int", "float") and kind in {"int", "currency", "float"}:
+            score += GCG_WEIGHTS["type_loose_bonus"]
+            features["type_loose"] = True
+
+    # NEW 1 — Percent firewall.
+    # If the slot expects percent AND there is at least one percent-kind mention
+    # available but the current mention is not percent, apply a hard penalty.
+    if expected == "percent" and kind != "percent" and has_percent_mention:
+        score += GCG_WEIGHTS["percent_firewall_penalty"]
+        features["percent_firewall"] = True
+
+    # NEW 2 — Magnitude plausibility.
+    if expected == "percent" and m.value is not None and m.value > 100.0:
+        score += GCG_WEIGHTS["percent_magnitude_penalty"]
+        features["percent_magnitude_bad"] = True
+
+    if expected == "int" and m.value is not None:
+        try:
+            if float(int(m.value)) != float(m.value):
+                score += GCG_WEIGHTS["count_decimal_penalty"]
+                features["count_decimal_bad"] = True
+        except (ValueError, OverflowError):
+            pass
+
+    # Optimization-role overlap (same as opt_role).
+    role_overlap = len(m.role_tags & s.slot_role_tags)
+    if role_overlap:
+        score += GCG_WEIGHTS["opt_role_overlap"] * float(role_overlap)
+        features["opt_role_overlap"] = role_overlap
+
+    # Fragment-type compatibility (same as opt_role).
+    if m.fragment_type == "objective" and s.is_objective_like:
+        score += GCG_WEIGHTS["fragment_compat_bonus"]
+        features["fragment_objective"] = True
+    if m.fragment_type in ("constraint", "bound") and s.is_bound_like:
+        score += GCG_WEIGHTS["fragment_compat_bonus"]
+        features["fragment_bound"] = True
+    if m.fragment_type == "resource" and s.is_total_like:
+        score += GCG_WEIGHTS["fragment_compat_bonus"]
+        features["fragment_resource"] = True
+    if m.fragment_type == "ratio" and (
+        "ratio_constraint" in s.slot_role_tags
+        or "percentage_constraint" in s.slot_role_tags
+    ):
+        score += GCG_WEIGHTS["fragment_compat_bonus"]
+        features["fragment_ratio"] = True
+
+    # NEW 3 — Polarity enforcement (replaces the simple +1.2 operator_match_bonus).
+    m_has_min = "min" in m.operator_tags
+    m_has_max = "max" in m.operator_tags
+    s_wants_min = "min" in s.operator_preference
+    s_wants_max = "max" in s.operator_preference
+    if s_wants_min and m_has_max:
+        score += GCG_WEIGHTS["polarity_mismatch_penalty"]
+        features["polarity_mismatch_min"] = True
+    elif s_wants_max and m_has_min:
+        score += GCG_WEIGHTS["polarity_mismatch_penalty"]
+        features["polarity_mismatch_max"] = True
+    elif (s_wants_min and m_has_min) or (s_wants_max and m_has_max):
+        score += GCG_WEIGHTS["polarity_match_bonus"]
+        features["polarity_match"] = True
+    elif m.operator_tags & s.operator_preference:
+        score += GCG_WEIGHTS["operator_match_bonus"]
+        features["operator_match"] = True
+
+    # Lexical overlap (same as opt_role).
+    slot_words = set(s.norm_tokens) | s.alias_tokens
+    ctx_set = set(m.context_tokens)
+    sent_set = set(m.sentence_tokens)
+    ctx_overlap = len(ctx_set & slot_words)
+    if ctx_overlap:
+        score += GCG_WEIGHTS["lex_context_overlap"] * float(ctx_overlap)
+        features["ctx_overlap"] = ctx_overlap
+    sent_overlap = len(sent_set & slot_words)
+    if sent_overlap:
+        score += GCG_WEIGHTS["lex_sentence_overlap"] * float(sent_overlap)
+        features["sent_overlap"] = sent_overlap
+
+    # Unit match (same as opt_role).
+    if m.unit_tags & s.unit_preference:
+        score += GCG_WEIGHTS["unit_match_bonus"]
+        features["unit_match"] = True
+
+    # Entity/resource overlap (same as opt_role).
+    entity_resource = len(
+        (m.nearby_entity_tokens | m.nearby_resource_tokens | m.nearby_product_tokens)
+        & slot_words
+    )
+    if entity_resource:
+        score += GCG_WEIGHTS["entity_resource_overlap"] * float(entity_resource)
+        features["entity_resource_overlap"] = entity_resource
+
+    # NEW 4 — Total vs coefficient cross-penalty (explicit, both directions).
+    if s.is_total_like and m.is_per_unit:
+        score += GCG_WEIGHTS["coeff_to_total_penalty"]
+        features["coeff_to_total_conflict"] = True
+    elif s.is_total_like and m.is_total_like:
+        score += GCG_WEIGHTS["total_match_bonus"]
+        features["total_match"] = True
+
+    if s.is_coefficient_like and m.is_total_like:
+        score += GCG_WEIGHTS["total_to_coeff_penalty"]
+        features["total_to_coeff_conflict"] = True
+    elif s.is_coefficient_like and m.is_per_unit:
+        score += GCG_WEIGHTS["coeff_match_bonus"]
+        features["coeff_match"] = True
+
+    # NEW 5 — Entity anchor: slot-name tokens directly present in mention context.
+    entity_anchor_tokens = frozenset(
+        t for t in s.norm_tokens
+        if len(t) > 3 and t not in _GCG_FUNCTION_WORDS
+    )
+    if entity_anchor_tokens & ctx_set:
+        score += GCG_WEIGHTS["entity_anchor_bonus"]
+        features["entity_anchor"] = True
+
+    # Schema prior bonus (same as opt_role).
+    score += GCG_WEIGHTS["schema_prior_bonus"]
+    features["schema_prior"] = True
+
+    # Weak-match penalty.
+    if score <= 0.0:
+        score += GCG_WEIGHTS["weak_match_penalty"]
+        features["weak_penalty"] = True
+
+    features["total_score"] = score
+    return score, features
+
+
+def _gcg_global_assignment(
+    mentions: list[MentionOptIR],
+    slots: list[SlotOptIR],
+    has_percent_mention: bool,
+) -> tuple[dict[str, MentionOptIR], dict[str, float], dict[str, list[dict[str, Any]]]]:
+    """GCG bipartite matching using the richer GCG scoring."""
+    assignments: dict[str, MentionOptIR] = {}
+    scores_out: dict[str, float] = {}
+    debug: dict[str, list[dict[str, Any]]] = {}
+
+    if not mentions or not slots:
+        return assignments, scores_out, debug
+
+    m_len, s_len = len(mentions), len(slots)
+    cost = [[0.0] * s_len for _ in range(m_len)]
+    for i, mr in enumerate(mentions):
+        for j, sr in enumerate(slots):
+            sc, feats = _score_mention_slot_gcg(mr, sr, has_percent_mention)
+            cost[i][j] = -sc if sc > -1e8 else 1e9
+            debug.setdefault(sr.name, []).append(
+                {"mention_id": mr.mention_id, "mention_raw": mr.raw_surface, "score": sc, "features": feats}
+            )
+
+    for name in debug:
+        debug[name].sort(key=lambda x: x["score"], reverse=True)
+
+    try:
+        from scipy.optimize import linear_sum_assignment
+        import numpy as np
+
+        cost_arr = np.array(cost)
+        row_ind, col_ind = linear_sum_assignment(cost_arr)
+        for ri, cj in zip(row_ind, col_ind):
+            if cost_arr[ri, cj] < 1e8:
+                sr = slots[cj]
+                mr = mentions[ri]
+                sc, _ = _score_mention_slot_gcg(mr, sr, has_percent_mention)
+                assignments[sr.name] = mr
+                scores_out[sr.name] = sc
+    except ImportError:
+        from math import inf
+
+        num_states = 1 << s_len
+        dp = [[-inf] * num_states for _ in range(m_len + 1)]
+        parent: list[list[tuple[int, int | None]]] = [
+            [(-1, None)] * num_states for _ in range(m_len + 1)
+        ]
+        dp[0][0] = 0.0
+        for i in range(m_len):
+            for mask in range(num_states):
+                if dp[i][mask] == -inf:
+                    continue
+                if dp[i][mask] > dp[i + 1][mask]:
+                    dp[i + 1][mask] = dp[i][mask]
+                    parent[i + 1][mask] = (mask, None)
+                for j in range(s_len):
+                    if (mask >> j) & 1:
+                        continue
+                    sc = -cost[i][j]
+                    if sc <= 0:
+                        continue
+                    new_mask = mask | (1 << j)
+                    val = dp[i][mask] + sc
+                    if val > dp[i + 1][new_mask]:
+                        dp[i + 1][new_mask] = val
+                        parent[i + 1][new_mask] = (mask, j)
+        best_mask = max(range(num_states), key=lambda mk: dp[m_len][mk])
+        i, mask = m_len, best_mask
+        used_slot_for_mention: dict[int, int] = {}
+        while i > 0:
+            prev_mask, j = parent[i][mask]
+            if j is not None:
+                used_slot_for_mention[i - 1] = j
+            mask = prev_mask
+            i -= 1
+        for mi, cj in used_slot_for_mention.items():
+            sr = slots[cj]
+            mr = mentions[mi]
+            sc, _ = _score_mention_slot_gcg(mr, sr, has_percent_mention)
+            assignments[sr.name] = mr
+            scores_out[sr.name] = sc
+
+    return assignments, scores_out, debug
+
+
+def _gcg_conflict_repair(
+    assignments: dict[str, MentionOptIR],
+    siblings: dict[str, dict[str, str | None]],
+) -> dict[str, MentionOptIR]:
+    """NEW 6 — Post-assignment min/max conflict repair.
+
+    For each min/max sibling pair where both slots are assigned:
+    if assigned_min_value > assigned_max_value, swap the two assignments.
+    """
+    repaired = dict(assignments)
+    visited: set[frozenset[str]] = set()
+
+    for slot_name, sib_info in siblings.items():
+        max_sib = sib_info.get("max_sibling")
+        min_sib = sib_info.get("min_sibling")
+
+        for partner in (max_sib, min_sib):
+            if partner is None:
+                continue
+            pair_key: frozenset[str] = frozenset([slot_name, partner])
+            if pair_key in visited:
+                continue
+            visited.add(pair_key)
+
+            # Determine which slot is min and which is max.
+            if sib_info.get("max_sibling") == partner:
+                min_name, max_name = slot_name, partner
+            else:
+                min_name, max_name = partner, slot_name
+
+            min_m = repaired.get(min_name)
+            max_m = repaired.get(max_name)
+            if min_m is None or max_m is None:
+                continue
+
+            min_val = min_m.value
+            max_val = max_m.value
+            if min_val is None or max_val is None:
+                continue
+
+            # Conflict detected: swap.
+            if min_val > max_val:
+                repaired[min_name] = max_m
+                repaired[max_name] = min_m
+
+    return repaired
+
+
+def _gcg_validate_and_repair(
+    mentions: list[MentionOptIR],
+    slots: list[SlotOptIR],
+    initial_assignments: dict[str, MentionOptIR],
+    initial_scores: dict[str, float],
+    debug: dict[str, list[dict[str, Any]]],
+    siblings: dict[str, dict[str, str | None]],
+    has_percent_mention: bool,
+) -> tuple[dict[str, MentionOptIR], dict[str, str]]:
+    """GCG validation, coverage repair, and conflict repair."""
+    filled = dict(initial_assignments)
+    filled_in_repair: dict[str, str] = {slot: "initial" for slot in filled}
+
+    used_ids = {m.mention_id for m in filled.values()}
+
+    # Remove type-incompatible or low-confidence assignments.
+    for s in list(slots):
+        if s.name not in filled:
+            continue
+        m = filled[s.name]
+        score = initial_scores.get(s.name, 0.0)
+        if _is_type_incompatible(s.expected_type, m.type_bucket):
+            del filled[s.name]
+            del filled_in_repair[s.name]
+            used_ids.discard(m.mention_id)
+            continue
+        if score < GCG_REPAIR_WEIGHTS["min_role_support"] and not (
+            m.role_tags & s.slot_role_tags
+        ):
+            del filled[s.name]
+            del filled_in_repair[s.name]
+            used_ids.discard(m.mention_id)
+
+    # Coverage repair: try to fill unfilled slots from remaining candidates.
+    unfilled = [s for s in slots if s.name not in filled]
+    unfilled.sort(key=lambda x: len(x.slot_role_tags) + len(x.alias_tokens), reverse=True)
+    for s in unfilled:
+        for cand in debug.get(s.name, []):
+            mid = cand.get("mention_id")
+            if mid is None:
+                continue
+            mr = next((m for m in mentions if m.mention_id == mid), None)
+            if mr is None or mr.mention_id in used_ids:
+                continue
+            sc = cand.get("score", 0.0)
+            if sc <= 0 or _is_type_incompatible(s.expected_type, mr.type_bucket):
+                continue
+            if sc > GCG_REPAIR_WEIGHTS["min_role_support"] or (
+                mr.role_tags & s.slot_role_tags
+            ):
+                filled[s.name] = mr
+                filled_in_repair[s.name] = "repair"
+                used_ids.add(mr.mention_id)
+                break
+
+    # Min/max conflict repair.
+    filled = _gcg_conflict_repair(filled, siblings)
+    for slot in filled:
+        if slot not in filled_in_repair:
+            filled_in_repair[slot] = "conflict_repair"
+
+    return filled, filled_in_repair
+
+
+def _run_global_consistency_grounding(
+    query: str,
+    variant: str,
+    expected_scalar: list[str],
+) -> tuple[dict[str, Any], dict[str, MentionOptIR], dict[str, str]]:
+    """Global Consistency Grounding: stronger deterministic downstream grounding.
+
+    Improvements over ``optimization_role_repair``:
+
+    1. **Percent firewall** — if percent mentions exist, non-percent → percent slot is
+       penalised by −6.0, preventing ``type_loose_bonus`` from overriding type safety.
+    2. **Polarity enforcement** — min-context mention → max-slot (or vice versa) receives
+       −4.0 penalty instead of just losing a +1.2 bonus.
+    3. **Total/coeff cross-penalty** — total mention → coefficient slot and per-unit
+       mention → total slot both receive −3.0 instead of merely missing a +1.2 bonus.
+    4. **Entity anchor** — slot-name tokens (non-function words, length > 3) appearing
+       directly in the mention context window receive a +2.0 bonus.
+    5. **Magnitude plausibility** — percent slot with value > 100 or int slot with
+       decimal value each receive −1.5.
+    6. **Min/max conflict repair** — after bipartite matching, if a min/max sibling pair
+       has min_value > max_value the two assignments are swapped.
+    """
+    filled_values: dict[str, Any] = {}
+    filled_mentions: dict[str, MentionOptIR] = {}
+    filled_in_repair: dict[str, str] = {}
+
+    if not expected_scalar:
+        return filled_values, filled_mentions, filled_in_repair
+
+    # Reuse optimization_role_repair's extraction (MentionOptIR) and slot building (SlotOptIR).
+    mentions = _extract_opt_role_mentions(query, variant)
+    slots = _build_slot_opt_irs(expected_scalar)
+    if not mentions or not slots:
+        return filled_values, filled_mentions, filled_in_repair
+
+    has_percent_mention = any(m.type_bucket == "percent" for m in mentions)
+    siblings = _detect_gcg_sibling_slots(expected_scalar)
+
+    initial_assignments, initial_scores, debug = _gcg_global_assignment(
+        mentions, slots, has_percent_mention
+    )
+    filled, filled_in_repair = _gcg_validate_and_repair(
+        mentions, slots, initial_assignments, initial_scores, debug,
+        siblings, has_percent_mention,
+    )
+
+    for slot_name, m in filled.items():
+        filled_values[slot_name] = m.tok.value if m.tok.value is not None else m.tok.raw
+        filled_mentions[slot_name] = m
+    return filled_values, filled_mentions, filled_in_repair
+
+
 def _constrained_assignment(
     mentions: list[MentionRecord],
     slots: list[SlotRecord],
@@ -2347,6 +2866,39 @@ def run_setting(
                                 type_exact5_num[btype] += 1
                             if err <= 0.20:
                                 type_exact20_num[btype] += 1
+            elif assignment_mode == "global_consistency_grounding" and expected_scalar:
+                # Global Consistency Grounding: stronger deterministic method.
+                filled_values, filled_mentions, _ = _run_global_consistency_grounding(
+                    query, variant, expected_scalar
+                )
+                for p in expected_scalar:
+                    if p not in filled_values:
+                        continue
+                    m_ir = filled_mentions.get(p)
+                    tok = m_ir.tok if m_ir else None
+                    if tok is None:
+                        continue
+                    n_filled += 1
+                    filled[p] = filled_values[p]
+                    btype = _bucket_type(p)
+                    type_filled_total[btype] += 1
+                    type_filled_q[btype] += 1
+                    et = _expected_type(p)
+                    if tok.kind == et:
+                        type_matches += 1
+                        type_correct_total[btype] += 1
+                        type_correct_q[btype] += 1
+                    if schema_hit and tok.value is not None and _is_scalar(gold_params.get(p)):
+                        gold_val = float(gold_params[p])
+                        err = _rel_err(float(tok.value), gold_val)
+                        comparable_errs.append(err)
+                        if btype in type_names:
+                            type_exact5_den[btype] += 1
+                            type_exact20_den[btype] += 1
+                            if err <= 0.05:
+                                type_exact5_num[btype] += 1
+                            if err <= 0.20:
+                                type_exact20_num[btype] += 1
             elif assignment_mode == "constrained" and expected_scalar:
                 # Global constrained assignment over mention-slot pairs.
                 mention_records = _extract_num_mentions(query, variant)
@@ -2586,7 +3138,7 @@ def main() -> None:
         "--assignment-mode",
         type=str,
         default="typed",
-        choices=("typed", "untyped", "constrained", "semantic_ir_repair", "optimization_role_repair"),
+        choices=("typed", "untyped", "constrained", "semantic_ir_repair", "optimization_role_repair", "global_consistency_grounding"),
     )
     args = p.parse_args()
 
@@ -2647,6 +3199,8 @@ def main() -> None:
         effective_baseline = f"{args.baseline}_semantic_ir_repair"
     elif args.assignment_mode == "optimization_role_repair":
         effective_baseline = f"{args.baseline}_optimization_role_repair"
+    elif args.assignment_mode == "global_consistency_grounding":
+        effective_baseline = f"{args.baseline}_global_consistency_grounding"
 
     out_dir = ROOT / "results" / "paper"
     run_setting(
