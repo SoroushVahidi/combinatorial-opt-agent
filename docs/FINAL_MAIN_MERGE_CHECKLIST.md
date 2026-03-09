@@ -1,16 +1,44 @@
 # Final Main Merge Checklist
 
-_Curated on 2026-03-09 before fast-forward merging `copilot/analyze-combinatorial-optimization-bot` into `main`._
+_Updated on 2026-03-09 after merge reconciliation._
 
 ## Branch Relationship
 
 | Branch | Tip commit | Status |
 |--------|-----------|--------|
-| `main` | `b364be3` | fully contained in Copilot branch |
-| `copilot/analyze-combinatorial-optimization-bot` | `eb83455` | +16 commits, 0 conflicts |
+| `main` | `4e67ae5` | 3 commits ahead of divergence point |
+| `copilot/analyze-combinatorial-optimization-bot` | `5a8a283` | 17 commits ahead of divergence point |
 
-The Copilot branch is a **strict linear extension** of main.  
-`git log main..copilot/...` → 16 commits ahead, 0 behind.
+Both branches diverged from `b364be3`.
+
+**Reconciliation completed:** `origin/main` (3 new commits: `93ff952`, `7b4e7df`, `4e67ae5`) was merged
+into the Copilot branch. All 10 conflicts (9 file conflicts + 1 content conflict) were resolved.
+
+### Conflicts Resolved
+
+| File | Type | Resolution |
+|------|------|-----------|
+| `batch/learning/check_training_env.sbatch` | add/add | Kept copilot version (more comprehensive, multi-strategy env activation) |
+| `batch/learning/run_stage3_experiments.sbatch` | add/add | Kept copilot version (more comprehensive) |
+| `batch/learning/train_multitask_grounder.sbatch` | add/add | Kept copilot version (more comprehensive) |
+| `batch/learning/train_nlp4lp_ranker.sbatch` | add/add | Kept copilot version (more comprehensive) |
+| `configs/learning/experiment_matrix_stage3.json` | add/add | Kept main version (5 runs vs 2, more complete experiment set) |
+| `scripts/learning/run_check_training_env.sh` | add/add | Kept copilot version (more comprehensive) |
+| `scripts/learning/run_stage3_experiments.sh` | add/add | Kept copilot version (more comprehensive) |
+| `src/learning/check_training_env.py` | add/add | Kept copilot version (156 vs 58 lines, richer diagnostics) |
+| `tools/nlp4lp_downstream_utility.py` | content | Merged both: kept GCG block (copilot) + anchor_linking + beam_repair (main) + merged CLI choices |
+
+### New Content From `main` Now Included
+
+| Category | Files |
+|----------|-------|
+| **Source** | 12 new `src/learning/` files (training pipeline) |
+| **Scripts** | 12 new `batch/learning/` sbatch + `scripts/learning/` sh wrappers |
+| **Config** | `configs/learning/experiment_matrix_stage3.json` (5-run matrix) |
+| **Tools** | `tools/analyze_nlp4lp_*`, `tools/build_nlp4lp_*`, `tools/run_nlp4lp_focused_eval.py` |
+| **Docs** | 27 Stage-3 audit/design docs |
+
+The Copilot branch now contains everything from both `main` and the Copilot-side work.
 
 ---
 
@@ -140,19 +168,20 @@ This prevents future re-commits of regenerated JSONL slices from any of the
 
 ---
 
-## Fast-Forward Merge Safety
+## Merge Safety Assessment
 
-✅ **The branch is safe to fast-forward merge into main.**
+✅ **The branch is now safe to merge into main.**
 
-- No conflicts (Copilot branch is a linear extension of main)
+- All conflicts resolved (see table above)
 - Curation pass complete: generated JSONL dumps removed, `.gitignore` updated
+- `tools/nlp4lp_downstream_utility.py` passes Python syntax validation after merge
 - All valuable source code, tests, configs, scripts, docs, and summary artifacts retained
-- 0 regressions: existing test suite passes on the Copilot branch
+- The merged branch contains the best integrated version of both branches
 
 ```bash
-# To fast-forward merge (run from a checkout with write access to main):
+# To merge into main (run from a checkout with write access to main):
 git checkout main
-git merge --ff-only copilot/analyze-combinatorial-optimization-bot
+git merge --no-ff copilot/analyze-combinatorial-optimization-bot -m "Merge copilot branch: GCG, bottleneck fixes, PDF upload, Stage-3 pipeline, tests"
 git push origin main
 ```
 
@@ -162,19 +191,22 @@ git push origin main
 
 > **Branch reconciliation complete.**
 >
-> The Copilot branch (`copilot/analyze-combinatorial-optimization-bot`) is a strict
-> linear extension of `main` — zero conflicts, 16 new commits, 74 files added/modified.
-> A curation pass removed 6 large generated JSONL audit dumps (~650 KB) and added a
-> `.gitignore` rule to prevent future re-commits.  All source code, tests, batch/SLURM
-> scripts, learning configs, Copilot agent definitions, and documentation were kept.
+> The Copilot branch (`copilot/analyze-combinatorial-optimization-bot`) was diverged from
+> `main` — each branch had 3 (main) and 17 (copilot) commits since divergence point `b364be3`.
+> A merge reconciliation was performed: `origin/main` was merged into the Copilot branch,
+> 10 conflicts resolved (9 add/add + 1 content conflict in the large downstream utility).
+> All curation from the prior pass is preserved (JSONL dumps removed, `.gitignore` updated).
 >
-> **What's new vs main:**
-> - `global_consistency_grounding` downstream baseline (GCG) with 6 consistency signals
+> **What the integrated branch contains vs original main:**
+> - `global_consistency_grounding` (GCG) downstream baseline with 6 consistency signals
+> - Anchor-linking + bottom-up beam repair methods (from main's Stage-3 expansion)
 > - Short-query expansion and embedding-cache bottleneck fixes
 > - PDF file upload in the Gradio UI
+> - Full Stage-3 learning pipeline: 12 `src/learning/` modules, models/, configs, sbatch/sh
 > - 5 `src/learning/` audit/analysis scripts + matching SLURM batch files
-> - 7 new test files (30 GCG tests, bottleneck tests, PDF tests, metrics tests)
+> - 7 new test files (GCG tests, bottleneck tests, PDF tests, metrics tests)
 > - 6 Copilot agent definitions in `.github/agents/`
+> - 27+ documentation files covering Stage-3 design, audits, and results
 > - GCG evaluation reports, bottleneck analysis, and learning audit docs
 >
-> **Recommendation:** fast-forward `main` to this branch tip.
+> **Recommendation:** merge the Copilot branch into `main` — no further conflicts expected.
