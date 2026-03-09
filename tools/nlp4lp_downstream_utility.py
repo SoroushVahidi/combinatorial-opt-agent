@@ -115,8 +115,35 @@ def _load_catalog_as_problems(catalog_path: Path) -> tuple[list[dict], dict[str,
     return catalog, id_to_text
 
 
-def _load_hf_gold(split: str = "test") -> dict[str, dict]:
-    """Load NLP4LP HF split and return doc_id -> parsed fields."""
+def _apply_low_resource_env() -> None:
+    """Set environment variables for low-resource/safe execution (thread limits, no tokenizer parallelism)."""
+    env_settings = {
+        "OMP_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "TOKENIZERS_PARALLELISM": "false",
+        "HF_DATASETS_DISABLE_PROGRESS_BARS": "1",
+    }
+    for k, v in env_settings.items():
+        if k not in os.environ:
+            os.environ[k] = v
+
+
+def _load_hf_gold(split: str = "test", use_cache: bool = True) -> dict[str, dict]:
+    """Load NLP4LP HF split and return doc_id -> parsed fields.
+    If NLP4LP_GOLD_CACHE env is set and file exists, load from that JSON (avoids HF threads).
+    If use_cache and we load from HF, write to NLP4LP_GOLD_CACHE for next time."""
+    cache_path = os.environ.get("NLP4LP_GOLD_CACHE")
+    if cache_path and use_cache:
+        p = Path(cache_path)
+        if p.exists():
+            with open(p, encoding="utf-8") as f:
+                data = json.load(f)
+            if isinstance(data, dict) and data.get("split") == split:
+                out = data.get("gold_by_id")
+                if isinstance(out, dict):
+                    return out
     try:
         from datasets import load_dataset
     except Exception as e:
@@ -127,7 +154,8 @@ def _load_hf_gold(split: str = "test") -> dict[str, dict]:
         or (os.environ.get("HUGGINGFACE_HUB_TOKEN") or "")
         or (os.environ.get("HUGGINGFACE_TOKEN") or "")
     ).strip()
-    kwargs = {"token": raw} if raw else {}
+    kwargs: dict[str, Any] = {"token": raw} if raw else {}
+    # Thread limits should be set by caller (OMP_NUM_THREADS etc.) for constrained nodes.
     ds = load_dataset("udell-lab/NLP4LP", split=split, **kwargs)
 
     gold: dict[str, dict] = {}
@@ -141,6 +169,13 @@ def _load_hf_gold(split: str = "test") -> dict[str, dict]:
             "optimus_code": ex.get("optimus_code") or "",
             "solution": _safe_json_loads(ex.get("solution")),
         }
+    if cache_path and use_cache:
+        try:
+            Path(cache_path).parent.mkdir(parents=True, exist_ok=True)
+            with open(cache_path, "w", encoding="utf-8") as f:
+                json.dump({"split": split, "gold_by_id": gold}, f, indent=0)
+        except Exception:
+            pass
     return gold
 
 
@@ -1368,11 +1403,366 @@ def _score_mention_slot_opt(m: MentionOptIR, s: SlotOptIR) -> tuple[float, dict[
     return score, features
 
 
+# Weights for anchor-linking (context-aware number-to-slot grounding).
+ANCHOR_WEIGHTS = {
+    "operator_compat_bonus": 1.5,
+    "entity_alignment_bonus": 1.2,
+    "lex_profile_overlap_bonus": 0.8,
+    "edge_prune_penalty": -1e8,
+}
+
+
+def _slot_profile_tokens(s: SlotOptIR) -> set[str]:
+    """Slot profile for alignment: name, aliases, and role tag tokens."""
+    out: set[str] = set(s.norm_tokens) | s.alias_tokens
+    for tag in s.slot_role_tags:
+        for part in tag.split("_"):
+            if len(part) > 1:
+                out.add(part.lower())
+    return out
+
+
+def _score_mention_slot_anchor(
+    m: MentionOptIR,
+    s: SlotOptIR,
+    use_entity_alignment: bool = True,
+    use_edge_pruning: bool = True,
+) -> tuple[float, dict[str, Any]]:
+    """Context-aware anchor-linking score: alignment between mention context and slot profile."""
+    base_score, base_feats = _score_mention_slot_opt(m, s)
+    if base_score <= -1e8:
+        return base_score, {**base_feats, "anchor_pruned": True}
+
+    score = base_score
+    features: dict[str, Any] = dict(base_feats)
+
+    # Operator compatibility: lower-bound mention <-> lower-bound slot, etc.
+    if m.operator_tags & s.operator_preference:
+        score += ANCHOR_WEIGHTS["operator_compat_bonus"]
+        features["anchor_operator_compat"] = True
+    # Total/budget mention <-> total-like slot; per/each <-> coefficient-like
+    if s.is_total_like and m.is_total_like:
+        score += ANCHOR_WEIGHTS["operator_compat_bonus"] * 0.5
+        features["anchor_total_match"] = True
+    if s.is_coefficient_like and m.is_per_unit:
+        score += ANCHOR_WEIGHTS["operator_compat_bonus"] * 0.5
+        features["anchor_per_unit_match"] = True
+    # Percent/fraction mention <-> ratio/percent slot
+    if m.type_bucket == "percent" and ("ratio_constraint" in s.slot_role_tags or "percentage_constraint" in s.slot_role_tags or "percent" in (s.name or "").lower()):
+        score += ANCHOR_WEIGHTS["operator_compat_bonus"] * 0.5
+        features["anchor_percent_match"] = True
+    # Objective cue (profit/cost/revenue) <-> objective-like slot
+    if m.fragment_type == "objective" and s.is_objective_like:
+        score += ANCHOR_WEIGHTS["operator_compat_bonus"] * 0.5
+        features["anchor_objective_match"] = True
+
+    # Entity alignment: overlap of mention context + nearby entity/resource with slot name/aliases
+    if use_entity_alignment:
+        slot_words = set(s.norm_tokens) | s.alias_tokens
+        mention_ctx = set(m.context_tokens) | m.nearby_entity_tokens | m.nearby_resource_tokens | m.nearby_product_tokens
+        overlap = len(mention_ctx & slot_words)
+        if overlap:
+            score += ANCHOR_WEIGHTS["entity_alignment_bonus"] * min(overlap, 3)
+            features["anchor_entity_overlap"] = overlap
+
+    # Lexical/context similarity: mention context vs slot profile
+    slot_profile = _slot_profile_tokens(s)
+    ctx_set = set(m.context_tokens)
+    profile_overlap = len(ctx_set & slot_profile)
+    if profile_overlap:
+        score += ANCHOR_WEIGHTS["lex_profile_overlap_bonus"] * min(profile_overlap, 4)
+        features["anchor_profile_overlap"] = profile_overlap
+
+    # Edge pruning: strongly implausible pairs get large penalty
+    if use_edge_pruning:
+        # Percent-like mention to clearly non-percent slot
+        if m.type_bucket == "percent" and "ratio_constraint" not in s.slot_role_tags and "percentage_constraint" not in s.slot_role_tags and "percent" not in (s.name or "").lower():
+            score = ANCHOR_WEIGHTS["edge_prune_penalty"]
+            features["anchor_pruned_percent"] = True
+        # At-least/min cue to upper-bound-only slot
+        elif "min" in m.operator_tags and "min" not in s.operator_preference and "max" in s.operator_preference:
+            score = ANCHOR_WEIGHTS["edge_prune_penalty"]
+            features["anchor_pruned_min_to_max"] = True
+        # Max cue to lower-bound-only slot
+        elif "max" in m.operator_tags and "max" not in s.operator_preference and "min" in s.operator_preference:
+            score = ANCHOR_WEIGHTS["edge_prune_penalty"]
+            features["anchor_pruned_max_to_min"] = True
+        # Per-unit mention to obvious total-budget-only slot (no coefficient role)
+        elif m.is_per_unit and s.is_total_like and not s.is_coefficient_like and not (m.role_tags & s.slot_role_tags):
+            score = ANCHOR_WEIGHTS["edge_prune_penalty"]
+            features["anchor_pruned_per_to_total"] = True
+        # Total/budget mention to per-unit-only coefficient slot
+        elif m.is_total_like and s.is_coefficient_like and not s.is_total_like:
+            score = ANCHOR_WEIGHTS["edge_prune_penalty"]
+            features["anchor_pruned_total_to_per"] = True
+
+    features["anchor_total_score"] = score
+    return score, features
+
+
+# --- Entity-semantic beam: semantic role families, entity binding, polarity/scope ---
+
+# Fine-grained semantic role families for mention-slot alignment (beyond coarse type).
+SEMANTIC_ROLE_FAMILIES = frozenset({
+    "objective_coeff", "lower_bound", "upper_bound", "rhs_total_or_budget",
+    "per_unit_rate", "resource_usage_coeff", "ratio_or_share", "fixed_requirement",
+})
+
+# Map existing role tags / fragment / operator to semantic family.
+def _mention_semantic_families(m: MentionOptIR) -> frozenset[str]:
+    """Infer semantic role families from mention context (deterministic)."""
+    out: set[str] = set()
+    if m.fragment_type == "objective" or (m.role_tags & {"objective_coeff", "unit_profit", "unit_revenue", "unit_return", "unit_cost"}):
+        out.add("objective_coeff")
+    if m.is_per_unit:
+        out.add("per_unit_rate")
+    if m.fragment_type == "resource" or m.is_total_like:
+        out.add("rhs_total_or_budget")
+    if m.fragment_type in ("ratio",) or m.type_bucket == "percent":
+        out.add("ratio_or_share")
+    if "min" in m.operator_tags or "lower_bound" in m.role_tags or "minimum_requirement" in m.role_tags:
+        out.add("lower_bound")
+    if "max" in m.operator_tags or "upper_bound" in m.role_tags or "maximum_allowance" in m.role_tags:
+        out.add("upper_bound")
+    if m.role_tags & {"resource_consumption", "time_requirement"}:
+        out.add("resource_usage_coeff")
+    if m.role_tags & {"fixed_cost", "setup_cost", "penalty"}:
+        out.add("fixed_requirement")
+    return frozenset(out) if out else frozenset({"objective_coeff"})
+
+
+def _slot_semantic_families(s: SlotOptIR) -> frozenset[str]:
+    """Infer semantic role families from slot name and existing tags."""
+    out: set[str] = set()
+    n = (s.name or "").lower()
+    if s.is_objective_like or s.is_coefficient_like and ("profit" in n or "revenue" in n or "return" in n or "cost" in n):
+        out.add("objective_coeff")
+    if s.is_coefficient_like:
+        out.add("per_unit_rate")
+    if s.is_total_like:
+        out.add("rhs_total_or_budget")
+    if "percent" in n or "ratio" in n or "fraction" in n or "share" in n:
+        out.add("ratio_or_share")
+    if "min" in n or "minimum" in n or "least" in n:
+        out.add("lower_bound")
+    if "max" in n or "maximum" in n or "most" in n:
+        out.add("upper_bound")
+    if s.slot_role_tags & {"resource_consumption", "time_requirement"}:
+        out.add("resource_usage_coeff")
+    if s.slot_role_tags & {"fixed_cost", "setup_cost", "penalty"}:
+        out.add("fixed_requirement")
+    return frozenset(out) if out else frozenset({"objective_coeff"})
+
+
+def _mention_entity_family_tokens(m: MentionOptIR) -> set[str]:
+    """Entity-first: tokens that anchor this mention to variable/owner (for slot binding)."""
+    out: set[str] = set()
+    out |= m.nearby_entity_tokens
+    out |= m.nearby_resource_tokens
+    out |= m.nearby_product_tokens
+    # Add noun-like or role words from context (longer tokens often entity names)
+    for t in m.context_tokens:
+        if len(t) >= 3 and t.isalpha():
+            out.add(t.lower())
+    return out
+
+
+def _mention_polarity(m: MentionOptIR) -> str:
+    """Lower / upper / neutral for operator scope."""
+    if "min" in m.operator_tags:
+        return "lower"
+    if "max" in m.operator_tags:
+        return "upper"
+    return "neutral"
+
+
+def _mention_style(m: MentionOptIR) -> str:
+    """Total / per_unit / percent / scalar."""
+    if m.is_total_like and not m.is_per_unit:
+        return "total"
+    if m.is_per_unit:
+        return "per_unit"
+    if m.type_bucket == "percent":
+        return "percent"
+    return "scalar"
+
+
+def _slot_polarity(s: SlotOptIR) -> str:
+    if "min" in s.operator_preference:
+        return "lower"
+    if "max" in s.operator_preference:
+        return "upper"
+    return "neutral"
+
+
+ENTITY_SEMANTIC_WEIGHTS = {
+    "entity_binding_bonus": 2.0,
+    "semantic_family_bonus": 1.8,
+    "polarity_match_bonus": 1.5,
+    "style_match_bonus": 1.0,
+    "edge_prune_penalty": -1e8,
+}
+
+
+def _score_mention_slot_entity_semantic(m: MentionOptIR, s: SlotOptIR) -> tuple[float, dict[str, Any]]:
+    """Entity-first + semantic role-family + polarity/scope; for use in entity_semantic_beam."""
+    base_score, base_feats = _score_mention_slot_anchor(m, s, use_entity_alignment=True, use_edge_pruning=True)
+    if base_score <= -1e8:
+        return base_score, {**base_feats, "entity_semantic_pruned": True}
+
+    score = base_score
+    features: dict[str, Any] = dict(base_feats)
+
+    # A. Entity-first binding: mention entity family vs slot name/aliases
+    entity_tokens = _mention_entity_family_tokens(m)
+    slot_entity_tokens = set(s.norm_tokens) | s.alias_tokens
+    entity_overlap = len(entity_tokens & slot_entity_tokens)
+    if entity_overlap:
+        score += ENTITY_SEMANTIC_WEIGHTS["entity_binding_bonus"] * min(entity_overlap, 4)
+        features["entity_binding_overlap"] = entity_overlap
+
+    # B. Semantic role-family match
+    m_families = _mention_semantic_families(m)
+    s_families = _slot_semantic_families(s)
+    family_overlap = len(m_families & s_families)
+    if family_overlap:
+        score += ENTITY_SEMANTIC_WEIGHTS["semantic_family_bonus"] * min(family_overlap, 3)
+        features["semantic_family_overlap"] = family_overlap
+
+    # C. Lower/upper operator scope
+    m_pol = _mention_polarity(m)
+    s_pol = _slot_polarity(s)
+    if m_pol == s_pol and m_pol != "neutral":
+        score += ENTITY_SEMANTIC_WEIGHTS["polarity_match_bonus"]
+        features["polarity_match"] = True
+    if m_pol != "neutral" and s_pol != "neutral" and m_pol != s_pol:
+        score = ENTITY_SEMANTIC_WEIGHTS["edge_prune_penalty"]
+        features["polarity_mismatch_pruned"] = True
+        return score, features
+
+    # D. Style: total / per_unit / percent consistency
+    m_style = _mention_style(m)
+    if s.is_total_like and m_style == "total":
+        score += ENTITY_SEMANTIC_WEIGHTS["style_match_bonus"]
+        features["style_total_match"] = True
+    if s.is_coefficient_like and m_style == "per_unit":
+        score += ENTITY_SEMANTIC_WEIGHTS["style_match_bonus"]
+        features["style_per_unit_match"] = True
+    if "ratio_or_share" in s_families and m_style == "percent":
+        score += ENTITY_SEMANTIC_WEIGHTS["style_match_bonus"] * 0.5
+        features["style_percent_match"] = True
+
+    features["entity_semantic_total_score"] = score
+    return score, features
+
+
+def _run_optimization_role_entity_semantic_beam_repair(
+    query: str,
+    variant: str,
+    expected_scalar: list[str],
+    beam_width: int = 5,
+) -> tuple[dict[str, Any], dict[str, MentionOptIR], dict[str, str]]:
+    """Entity-first + semantic role families + beam over partial assignments. Returns (filled_values, filled_mentions, filled_in_repair)."""
+    filled_values: dict[str, Any] = {}
+    filled_mentions: dict[str, MentionOptIR] = {}
+    filled_in_repair: dict[str, str] = {}
+
+    if not expected_scalar:
+        return filled_values, filled_mentions, filled_in_repair
+
+    mentions = _extract_opt_role_mentions(query, variant)
+    slots = _build_slot_opt_irs(expected_scalar)
+    if not mentions or not slots:
+        return filled_values, filled_mentions, filled_in_repair
+
+    m, s = len(mentions), len(slots)
+
+    # Score matrix: entity_semantic scorer
+    score_matrix: list[list[float]] = [[0.0 for _ in range(s)] for _ in range(m)]
+    for i, mr in enumerate(mentions):
+        for j, sr in enumerate(slots):
+            sc, _ = _score_mention_slot_entity_semantic(mr, sr)
+            score_matrix[i][j] = sc
+
+    # Reuse bottom-up beam logic (atoms, extend, admissibility, relation bonus)
+    atoms: list[tuple[int, int, float]] = []
+    for i in range(m):
+        for j in range(s):
+            if score_matrix[i][j] > 0 and score_matrix[i][j] < 1e7:
+                atoms.append((i, j, score_matrix[i][j]))
+    atoms.sort(key=lambda x: -x[2])
+
+    def _bundle_to_partial(bundle: frozenset[tuple[int, int]]) -> dict[str, MentionOptIR]:
+        return {slots[j].name: mentions[i] for i, j in bundle}
+
+    def _add_relation_bonus(bundle: frozenset[tuple[int, int]], base_score: float) -> float:
+        partial = _bundle_to_partial(bundle)
+        bonus = 0.0
+        for i, j in bundle:
+            bonus += _relation_bonus(mentions[i], slots[j], partial, slots, mentions)
+        return base_score + bonus
+
+    beam: list[tuple[frozenset[tuple[int, int]], float]] = []
+    for i, j, sc in atoms[: beam_width * 2]:
+        bundle = frozenset({(i, j)})
+        partial = _bundle_to_partial(bundle)
+        if not _is_partial_admissible(partial, slots):
+            continue
+        beam.append((bundle, sc))
+    beam.sort(key=lambda x: -(x[1] + _add_relation_bonus(x[0], 0.0)))
+    beam = beam[:beam_width]
+
+    for _ in range(max(0, min(m, s) - 1)):
+        next_beam: list[tuple[frozenset[tuple[int, int]], float]] = []
+        for bundle, sum_scores in beam:
+            used_m = {i for i, _ in bundle}
+            used_s = {j for _, j in bundle}
+            for i, j, sc in atoms:
+                if i in used_m or j in used_s:
+                    continue
+                new_bundle = bundle | frozenset({(i, j)})
+                partial = _bundle_to_partial(new_bundle)
+                if not _is_partial_admissible(partial, slots):
+                    continue
+                new_sum = sum_scores + sc
+                next_beam.append((new_bundle, new_sum))
+        if not next_beam:
+            break
+        next_beam.sort(key=lambda x: (-len(x[0]), -(x[1] + _add_relation_bonus(x[0], 0.0))))
+        beam = next_beam[:beam_width]
+
+    if not beam:
+        return filled_values, filled_mentions, filled_in_repair
+
+    def _rank_score(item: tuple[frozenset[tuple[int, int]], float]) -> tuple[int, float]:
+        b, ss = item
+        return (len(b), ss + _add_relation_bonus(b, 0.0))
+
+    best_bundle, _ = max(beam, key=_rank_score)
+    partial = _bundle_to_partial(best_bundle)
+    initial_scores = {slots[j].name: score_matrix[i][j] for i, j in best_bundle}
+    debug: dict[str, list[dict[str, Any]]] = {}
+    for j, sr in enumerate(slots):
+        debug[sr.name] = [
+            {"mention_id": mentions[i].mention_id, "mention_raw": mentions[i].raw_surface, "score": score_matrix[i][j], "features": {}}
+            for i in range(m)
+        ]
+        debug[sr.name].sort(key=lambda x: x["score"], reverse=True)
+    filled, filled_in_repair = _opt_role_validate_and_repair(mentions, slots, partial, initial_scores, debug)
+
+    for slot_name, m in filled.items():
+        filled_values[slot_name] = m.tok.value if m.tok.value is not None else m.tok.raw
+        filled_mentions[slot_name] = m
+    return filled_values, filled_mentions, filled_in_repair
+
+
 def _opt_role_global_assignment(
     mentions: list[MentionOptIR],
     slots: list[SlotOptIR],
+    score_matrix: list[list[float]] | None = None,
 ) -> tuple[dict[str, MentionOptIR], dict[str, float], dict[str, list[dict[str, Any]]]]:
-    """Stage 5: Maximum-weight bipartite matching for optimization-role assignment."""
+    """Stage 5: Maximum-weight bipartite matching for optimization-role assignment.
+    If score_matrix is provided, use it (score_matrix[i][j]); else compute from _score_mention_slot_opt."""
     assignments: dict[str, MentionOptIR] = {}
     scores_out: dict[str, float] = {}
     debug: dict[str, list[dict[str, Any]]] = {}
@@ -1382,18 +1772,35 @@ def _opt_role_global_assignment(
 
     m, s = len(mentions), len(slots)
     cost = [[0.0 for _ in range(s)] for _ in range(m)]
-    for i, mr in enumerate(mentions):
+    if score_matrix is not None:
+        for i in range(m):
+            for j in range(s):
+                sc = score_matrix[i][j]
+                cost[i][j] = -sc if sc > -1e8 else 1e9
         for j, sr in enumerate(slots):
-            sc, feats = _score_mention_slot_opt(mr, sr)
-            cost[i][j] = -sc if sc > -1e8 else 1e9
-            if sr.name not in debug:
-                debug[sr.name] = []
-            debug[sr.name].append(
-                {"mention_id": mr.mention_id, "mention_raw": mr.raw_surface, "score": sc, "features": feats}
-            )
+            debug[sr.name] = [
+                {"mention_id": mentions[i].mention_id, "mention_raw": mentions[i].raw_surface, "score": score_matrix[i][j], "features": {}}
+                for i in range(m)
+            ]
+            debug[sr.name].sort(key=lambda x: x["score"], reverse=True)
+    else:
+        for i, mr in enumerate(mentions):
+            for j, sr in enumerate(slots):
+                sc, feats = _score_mention_slot_opt(mr, sr)
+                cost[i][j] = -sc if sc > -1e8 else 1e9
+                if sr.name not in debug:
+                    debug[sr.name] = []
+                debug[sr.name].append(
+                    {"mention_id": mr.mention_id, "mention_raw": mr.raw_surface, "score": sc, "features": feats}
+                )
+        for name in debug:
+            debug[name].sort(key=lambda x: x["score"], reverse=True)
 
-    for name in debug:
-        debug[name].sort(key=lambda x: x["score"], reverse=True)
+    def _get_score(ri: int, cj: int) -> float:
+        if score_matrix is not None:
+            return score_matrix[ri][cj]
+        sc, _ = _score_mention_slot_opt(mentions[ri], slots[cj])
+        return sc
 
     try:
         from scipy.optimize import linear_sum_assignment
@@ -1404,7 +1811,7 @@ def _opt_role_global_assignment(
             if cost_arr[ri, cj] < 1e8:
                 sr = slots[cj]
                 mr = mentions[ri]
-                sc, _ = _score_mention_slot_opt(mr, sr)
+                sc = _get_score(ri, cj)
                 assignments[sr.name] = mr
                 scores_out[sr.name] = sc
     except ImportError:
@@ -1443,7 +1850,7 @@ def _opt_role_global_assignment(
         for mi, cj in used_slot_for_mention.items():
             sr = slots[cj]
             mr = mentions[mi]
-            sc, _ = _score_mention_slot_opt(mr, sr)
+            sc = _get_score(mi, cj)
             assignments[sr.name] = mr
             scores_out[sr.name] = sc
 
@@ -1520,6 +1927,231 @@ def _opt_role_validate_and_repair(
     return filled, filled_in_repair
 
 
+# --- Relation-aware + incremental admissible (RAT-SQL / PICARD inspired) ---
+
+def _slot_slot_relation_tags(s1: SlotOptIR, s2: SlotOptIR) -> frozenset[str]:
+    """Relation tags between two slots for relation-aware scoring."""
+    out: set[str] = set()
+    if s1.name == s2.name:
+        return frozenset(out)
+    if s1.is_coefficient_like and s2.is_coefficient_like:
+        out.add("both_coeff")
+    if s1.is_bound_like and s2.is_bound_like:
+        if "min" in s1.operator_preference and "max" in s2.operator_preference:
+            out.add("min_max_pair")
+        elif "max" in s1.operator_preference and "min" in s2.operator_preference:
+            out.add("min_max_pair")
+    if s1.is_total_like and s2.is_coefficient_like:
+        out.add("total_and_coeff")
+    if s2.is_total_like and s1.is_coefficient_like:
+        out.add("total_and_coeff")
+    if (s1.slot_role_tags & s2.slot_role_tags) and s1.slot_role_tags and s2.slot_role_tags:
+        out.add("same_role_family")
+    return frozenset(out)
+
+
+def _mention_mention_relation_tags(m1: MentionOptIR, m2: MentionOptIR) -> frozenset[str]:
+    """Relation tags between two mentions for relation-aware scoring."""
+    out: set[str] = set()
+    if m1.mention_id == m2.mention_id:
+        return frozenset(out)
+    sent1 = set(m1.sentence_tokens)
+    sent2 = set(m2.sentence_tokens)
+    if sent1 and sent2 and len(sent1 & sent2) >= max(1, min(len(sent1), len(sent2)) // 2):
+        out.add("same_sentence")
+    if m1.fragment_type and m1.fragment_type == m2.fragment_type:
+        out.add("same_fragment_type")
+    if m1.is_per_unit and m2.is_per_unit:
+        out.add("both_per_unit")
+    if m1.is_total_like and m2.is_total_like:
+        out.add("both_total")
+    if m1.role_tags & m2.role_tags:
+        out.add("same_role_family")
+    return frozenset(out)
+
+
+def _is_partial_admissible(
+    partial: dict[str, MentionOptIR],
+    slots: list[SlotOptIR],
+) -> bool:
+    """PICARD-style: whether current partial assignment is still valid (hard constraints)."""
+    slot_by_name = {s.name: s for s in slots}
+    # Use mention_id (hashable) instead of MentionOptIR (has list fields, unhashable)
+    assigned_mention_ids = {m.mention_id for m in partial.values()}
+    if len(assigned_mention_ids) != len(partial):
+        return False
+    for slot_name, m in partial.items():
+        s = slot_by_name.get(slot_name)
+        if not s:
+            continue
+        if _is_type_incompatible(s.expected_type, m.type_bucket):
+            return False
+        if s.is_total_like and m.is_per_unit and not m.is_total_like:
+            return False
+        if s.is_coefficient_like and m.is_total_like and not m.is_per_unit:
+            return False
+        if s.is_bound_like and ("ratio_constraint" in s.slot_role_tags or "percentage_constraint" in s.slot_role_tags):
+            if m.fragment_type == "ratio":
+                pass
+            elif m.type_bucket == "percent":
+                pass
+        if m.type_bucket == "percent" and not (
+            "ratio_constraint" in s.slot_role_tags or "percentage_constraint" in s.slot_role_tags
+            or "percent" in (s.name or "").lower()
+        ):
+            return False
+    min_slots = [s for s in slots if s.name in partial and "min" in s.operator_preference]
+    max_slots = [s for s in slots if s.name in partial and "max" in s.operator_preference]
+    for s in min_slots:
+        m = partial.get(s.name)
+        if m and "max" in m.operator_tags and "min" not in m.operator_tags:
+            return False
+    for s in max_slots:
+        m = partial.get(s.name)
+        if m and "min" in m.operator_tags and "max" not in m.operator_tags:
+            return False
+    return True
+
+
+# Weights for relation-aware bonus/penalty (additive to base score).
+RELATION_WEIGHTS = {
+    "consistent_pair_bonus": 1.2,
+    "inconsistent_pair_penalty": -2.0,
+}
+
+
+def _relation_bonus(
+    m: MentionOptIR,
+    s: SlotOptIR,
+    partial: dict[str, MentionOptIR],
+    slots: list[SlotOptIR],
+    mentions: list[MentionOptIR],
+) -> float:
+    """RAT-SQL-style: bonus/penalty from relation consistency with current partial assignment."""
+    bonus = 0.0
+    slot_by_name = {sx.name: sx for sx in slots}
+    for slot_name, m_other in partial.items():
+        s_other = slot_by_name.get(slot_name)
+        if not s_other or s_other.name == s.name:
+            continue
+        slot_rel = _slot_slot_relation_tags(s, s_other)
+        mention_rel = _mention_mention_relation_tags(m, m_other)
+        if "both_coeff" in slot_rel and "both_per_unit" in mention_rel:
+            if "same_sentence" in mention_rel or "same_fragment_type" in mention_rel:
+                bonus += RELATION_WEIGHTS["consistent_pair_bonus"]
+        if "total_and_coeff" in slot_rel:
+            if s.is_total_like and m.is_total_like and s_other.is_coefficient_like and m_other.is_per_unit:
+                bonus += RELATION_WEIGHTS["consistent_pair_bonus"]
+            elif s.is_coefficient_like and m.is_per_unit and s_other.is_total_like and m_other.is_total_like:
+                bonus += RELATION_WEIGHTS["consistent_pair_bonus"]
+            elif (s.is_total_like and m.is_per_unit) or (s.is_coefficient_like and m.is_total_like):
+                bonus += RELATION_WEIGHTS["inconsistent_pair_penalty"]
+        if "min_max_pair" in slot_rel:
+            if ("min" in s.operator_preference and "min" in m.operator_tags and
+                "max" in s_other.operator_preference and "max" in m_other.operator_tags):
+                bonus += RELATION_WEIGHTS["consistent_pair_bonus"]
+            elif ("max" in s.operator_preference and "max" in m.operator_tags and
+                  "min" in s_other.operator_preference and "min" in m_other.operator_tags):
+                bonus += RELATION_WEIGHTS["consistent_pair_bonus"]
+    return bonus
+
+
+def _opt_role_incremental_admissible_assignment(
+    mentions: list[MentionOptIR],
+    slots: list[SlotOptIR],
+    base_score_matrix: list[list[float]],
+    debug: dict[str, list[dict[str, Any]]],
+) -> tuple[dict[str, MentionOptIR], dict[str, float], dict[str, list[dict[str, Any]]]]:
+    """
+    PICARD-style: build assignment incrementally; only extend with admissible partial states.
+    RAT-SQL-style: when choosing candidate for next slot, add relation_bonus from current partial.
+    """
+    assignments: dict[str, MentionOptIR] = {}
+    scores_out: dict[str, float] = {}
+    m, s = len(mentions), len(slots)
+    slot_order = sorted(
+        range(s),
+        key=lambda j: (len(slots[j].slot_role_tags) + len(slots[j].alias_tokens), slots[j].name),
+        reverse=True,
+    )
+    used_mention_ids: set[int] = set()
+    for j in slot_order:
+        sr = slots[j]
+        best_i: int | None = None
+        best_score = float("-inf")
+        for i in range(m):
+            if mentions[i].mention_id in used_mention_ids:
+                continue
+            base_sc = base_score_matrix[i][j]
+            if base_sc <= -1e8:
+                continue
+            tentative = dict(assignments)
+            tentative[sr.name] = mentions[i]
+            if not _is_partial_admissible(tentative, slots):
+                continue
+            rel_bonus = _relation_bonus(mentions[i], sr, assignments, slots, mentions)
+            total = base_sc + rel_bonus
+            if total > best_score:
+                best_score = total
+                best_i = i
+        if best_i is not None and best_score > -1e8:
+            assignments[sr.name] = mentions[best_i]
+            scores_out[sr.name] = best_score
+            used_mention_ids.add(mentions[best_i].mention_id)
+    return assignments, scores_out, debug
+
+
+def _run_optimization_role_relation_repair(
+    query: str,
+    variant: str,
+    expected_scalar: list[str],
+) -> tuple[dict[str, Any], dict[str, MentionOptIR], dict[str, str]]:
+    """
+    Relation-aware + incremental admissible assignment (RAT-SQL + PICARD inspired).
+    Pipeline: extract opt-role mentions -> build slot opt IRs -> base pair scores ->
+    incremental admissible assignment with relation bonus -> validate_and_repair unfilled.
+    """
+    filled_values: dict[str, Any] = {}
+    filled_mentions: dict[str, MentionOptIR] = {}
+    filled_in_repair: dict[str, str] = {}
+
+    if not expected_scalar:
+        return filled_values, filled_mentions, filled_in_repair
+
+    mentions = _extract_opt_role_mentions(query, variant)
+    slots = _build_slot_opt_irs(expected_scalar)
+    if not mentions or not slots:
+        return filled_values, filled_mentions, filled_in_repair
+
+    m, s = len(mentions), len(slots)
+    cost = [[0.0 for _ in range(s)] for _ in range(m)]
+    debug: dict[str, list[dict[str, Any]]] = {}
+    for i, mr in enumerate(mentions):
+        for j, sr in enumerate(slots):
+            sc, feats = _score_mention_slot_opt(mr, sr)
+            cost[i][j] = -sc if sc > -1e8 else 1e9
+            if sr.name not in debug:
+                debug[sr.name] = []
+            debug[sr.name].append(
+                {"mention_id": mr.mention_id, "mention_raw": mr.raw_surface, "score": sc, "features": feats}
+            )
+    for name in debug:
+        debug[name].sort(key=lambda x: x["score"], reverse=True)
+
+    base_score_matrix = [[-cost[i][j] if cost[i][j] < 1e8 else -1e9 for j in range(s)] for i in range(m)]
+    initial_assignments, initial_scores, _ = _opt_role_incremental_admissible_assignment(
+        mentions, slots, base_score_matrix, debug
+    )
+    filled, filled_in_repair = _opt_role_validate_and_repair(
+        mentions, slots, initial_assignments, initial_scores, debug
+    )
+
+    for slot_name, m in filled.items():
+        filled_values[slot_name] = m.tok.value if m.tok.value is not None else m.tok.raw
+        filled_mentions[slot_name] = m
+    return filled_values, filled_mentions, filled_in_repair
+
+
 def _run_optimization_role_repair(
     query: str,
     variant: str,
@@ -1542,6 +2174,153 @@ def _run_optimization_role_repair(
     filled, filled_in_repair = _opt_role_validate_and_repair(
         mentions, slots, initial_assignments, initial_scores, debug
     )
+
+    for slot_name, m in filled.items():
+        filled_values[slot_name] = m.tok.value if m.tok.value is not None else m.tok.raw
+        filled_mentions[slot_name] = m
+    return filled_values, filled_mentions, filled_in_repair
+
+
+def _run_optimization_role_anchor_linking(
+    query: str,
+    variant: str,
+    expected_scalar: list[str],
+    use_entity_alignment: bool = True,
+    use_edge_pruning: bool = True,
+) -> tuple[dict[str, Any], dict[str, MentionOptIR], dict[str, str]]:
+    """Anchor-linking: context-aware number-to-slot grounding with alignment features and edge pruning.
+    Returns (filled_values, filled_mentions, filled_in_repair)."""
+    filled_values: dict[str, Any] = {}
+    filled_mentions: dict[str, MentionOptIR] = {}
+    filled_in_repair: dict[str, str] = {}
+
+    if not expected_scalar:
+        return filled_values, filled_mentions, filled_in_repair
+
+    mentions = _extract_opt_role_mentions(query, variant)
+    slots = _build_slot_opt_irs(expected_scalar)
+    if not mentions or not slots:
+        return filled_values, filled_mentions, filled_in_repair
+
+    m, s = len(mentions), len(slots)
+    score_matrix: list[list[float]] = [[0.0 for _ in range(s)] for _ in range(m)]
+    for i, mr in enumerate(mentions):
+        for j, sr in enumerate(slots):
+            sc, _ = _score_mention_slot_anchor(mr, sr, use_entity_alignment=use_entity_alignment, use_edge_pruning=use_edge_pruning)
+            score_matrix[i][j] = sc
+
+    initial_assignments, initial_scores, debug = _opt_role_global_assignment(mentions, slots, score_matrix=score_matrix)
+    filled, filled_in_repair = _opt_role_validate_and_repair(
+        mentions, slots, initial_assignments, initial_scores, debug
+    )
+
+    for slot_name, m in filled.items():
+        filled_values[slot_name] = m.tok.value if m.tok.value is not None else m.tok.raw
+        filled_mentions[slot_name] = m
+    return filled_values, filled_mentions, filled_in_repair
+
+
+def _run_optimization_role_bottomup_beam_repair(
+    query: str,
+    variant: str,
+    expected_scalar: list[str],
+    beam_width: int = 5,
+    use_anchor_scores: bool = True,
+) -> tuple[dict[str, Any], dict[str, MentionOptIR], dict[str, str]]:
+    """Bottom-up beam over partial assignment bundles. Returns (filled_values, filled_mentions, filled_in_repair)."""
+    filled_values: dict[str, Any] = {}
+    filled_mentions: dict[str, MentionOptIR] = {}
+    filled_in_repair: dict[str, str] = {}
+
+    if not expected_scalar:
+        return filled_values, filled_mentions, filled_in_repair
+
+    mentions = _extract_opt_role_mentions(query, variant)
+    slots = _build_slot_opt_irs(expected_scalar)
+    if not mentions or not slots:
+        return filled_values, filled_mentions, filled_in_repair
+
+    m, s = len(mentions), len(slots)
+
+    # Score matrix: (i, j) -> score
+    score_matrix: list[list[float]] = [[0.0 for _ in range(s)] for _ in range(m)]
+    for i, mr in enumerate(mentions):
+        for j, sr in enumerate(slots):
+            if use_anchor_scores:
+                sc, _ = _score_mention_slot_anchor(mr, sr, use_entity_alignment=True, use_edge_pruning=True)
+            else:
+                sc, _ = _score_mention_slot_opt(mr, sr)
+            score_matrix[i][j] = sc
+
+    # Atomic candidates: (mention_idx, slot_idx, score); only admissible pairs with positive score
+    atoms: list[tuple[int, int, float]] = []
+    for i in range(m):
+        for j in range(s):
+            if score_matrix[i][j] > 0 and score_matrix[i][j] < 1e7:
+                atoms.append((i, j, score_matrix[i][j]))
+    atoms.sort(key=lambda x: -x[2])
+
+    # Bundle: (frozenset of (mention_idx, slot_idx), total_score)
+    def _bundle_to_partial(bundle: frozenset[tuple[int, int]]) -> dict[str, MentionOptIR]:
+        return {slots[j].name: mentions[i] for i, j in bundle}
+
+    def _add_relation_bonus(bundle: frozenset[tuple[int, int]], base_score: float) -> float:
+        partial = _bundle_to_partial(bundle)
+        bonus = 0.0
+        for i, j in bundle:
+            bonus += _relation_bonus(mentions[i], slots[j], partial, slots, mentions)
+        return base_score + bonus
+
+    # Beam: list of (bundle, sum_of_pair_scores); relation bonus added when ranking
+    beam: list[tuple[frozenset[tuple[int, int]], float]] = []
+    for i, j, sc in atoms[: beam_width * 2]:
+        bundle = frozenset({(i, j)})
+        partial = _bundle_to_partial(bundle)
+        if not _is_partial_admissible(partial, slots):
+            continue
+        beam.append((bundle, sc))
+    beam.sort(key=lambda x: -(x[1] + _add_relation_bonus(x[0], 0.0)))
+    beam = beam[:beam_width]
+
+    # Extend beam iteratively
+    for _ in range(max(0, min(m, s) - 1)):
+        next_beam: list[tuple[frozenset[tuple[int, int]], float]] = []
+        for bundle, sum_scores in beam:
+            used_m = {i for i, _ in bundle}
+            used_s = {j for _, j in bundle}
+            for i, j, sc in atoms:
+                if i in used_m or j in used_s:
+                    continue
+                new_bundle = bundle | frozenset({(i, j)})
+                partial = _bundle_to_partial(new_bundle)
+                if not _is_partial_admissible(partial, slots):
+                    continue
+                new_sum = sum_scores + sc
+                next_beam.append((new_bundle, new_sum))
+        if not next_beam:
+            break
+        next_beam.sort(key=lambda x: (-len(x[0]), -(x[1] + _add_relation_bonus(x[0], 0.0))))
+        beam = next_beam[:beam_width]
+
+    if not beam:
+        return filled_values, filled_mentions, filled_in_repair
+
+    # Best bundle: prefer more slots filled, then higher (sum_scores + relation_bonus)
+    def _rank_score(item: tuple[frozenset[tuple[int, int]], float]) -> tuple[int, float]:
+        b, ss = item
+        return (len(b), ss + _add_relation_bonus(b, 0.0))
+
+    best_bundle, best_sum = max(beam, key=_rank_score)
+    partial = _bundle_to_partial(best_bundle)
+    initial_scores = {slots[j].name: score_matrix[i][j] for i, j in best_bundle}
+    debug: dict[str, list[dict[str, Any]]] = {}
+    for j, sr in enumerate(slots):
+        debug[sr.name] = [
+            {"mention_id": mentions[i].mention_id, "mention_raw": mentions[i].raw_surface, "score": score_matrix[i][j], "features": {}}
+            for i in range(m)
+        ]
+        debug[sr.name].sort(key=lambda x: x["score"], reverse=True)
+    filled, filled_in_repair = _opt_role_validate_and_repair(mentions, slots, partial, initial_scores, debug)
 
     for slot_name, m in filled.items():
         filled_values[slot_name] = m.tok.value if m.tok.value is not None else m.tok.raw
@@ -2212,7 +2991,136 @@ def run_setting(
                 t = _bucket_type(p)
                 type_expected_q[t] += 1
 
-            if assignment_mode == "optimization_role_repair" and expected_scalar:
+            if assignment_mode == "optimization_role_relation_repair" and expected_scalar:
+                # Relation-aware + incremental admissible (RAT-SQL + PICARD inspired).
+                filled_values, filled_mentions, _ = _run_optimization_role_relation_repair(
+                    query, variant, expected_scalar
+                )
+                for p in expected_scalar:
+                    if p not in filled_values:
+                        continue
+                    m_ir = filled_mentions.get(p)
+                    tok = m_ir.tok if m_ir else None
+                    if tok is None:
+                        continue
+                    n_filled += 1
+                    filled[p] = filled_values[p]
+                    btype = _bucket_type(p)
+                    type_filled_total[btype] += 1
+                    type_filled_q[btype] += 1
+                    et = _expected_type(p)
+                    if tok.kind == et:
+                        type_matches += 1
+                        type_correct_total[btype] += 1
+                        type_correct_q[btype] += 1
+                    if schema_hit and tok.value is not None and _is_scalar(gold_params.get(p)):
+                        gold_val = float(gold_params[p])
+                        err = _rel_err(float(tok.value), gold_val)
+                        comparable_errs.append(err)
+                        if btype in type_names:
+                            type_exact5_den[btype] += 1
+                            type_exact20_den[btype] += 1
+                            if err <= 0.05:
+                                type_exact5_num[btype] += 1
+                            if err <= 0.20:
+                                type_exact20_num[btype] += 1
+            elif assignment_mode == "optimization_role_anchor_linking" and expected_scalar:
+                filled_values, filled_mentions, _ = _run_optimization_role_anchor_linking(
+                    query, variant, expected_scalar
+                )
+                for p in expected_scalar:
+                    if p not in filled_values:
+                        continue
+                    m_ir = filled_mentions.get(p)
+                    tok = m_ir.tok if m_ir else None
+                    if tok is None:
+                        continue
+                    n_filled += 1
+                    filled[p] = filled_values[p]
+                    btype = _bucket_type(p)
+                    type_filled_total[btype] += 1
+                    type_filled_q[btype] += 1
+                    et = _expected_type(p)
+                    if tok.kind == et:
+                        type_matches += 1
+                        type_correct_total[btype] += 1
+                        type_correct_q[btype] += 1
+                    if schema_hit and tok.value is not None and _is_scalar(gold_params.get(p)):
+                        gold_val = float(gold_params[p])
+                        err = _rel_err(float(tok.value), gold_val)
+                        comparable_errs.append(err)
+                        if btype in type_names:
+                            type_exact5_den[btype] += 1
+                            type_exact20_den[btype] += 1
+                            if err <= 0.05:
+                                type_exact5_num[btype] += 1
+                            if err <= 0.20:
+                                type_exact20_num[btype] += 1
+            elif assignment_mode == "optimization_role_bottomup_beam_repair" and expected_scalar:
+                filled_values, filled_mentions, _ = _run_optimization_role_bottomup_beam_repair(
+                    query, variant, expected_scalar
+                )
+                for p in expected_scalar:
+                    if p not in filled_values:
+                        continue
+                    m_ir = filled_mentions.get(p)
+                    tok = m_ir.tok if m_ir else None
+                    if tok is None:
+                        continue
+                    n_filled += 1
+                    filled[p] = filled_values[p]
+                    btype = _bucket_type(p)
+                    type_filled_total[btype] += 1
+                    type_filled_q[btype] += 1
+                    et = _expected_type(p)
+                    if tok.kind == et:
+                        type_matches += 1
+                        type_correct_total[btype] += 1
+                        type_correct_q[btype] += 1
+                    if schema_hit and tok.value is not None and _is_scalar(gold_params.get(p)):
+                        gold_val = float(gold_params[p])
+                        err = _rel_err(float(tok.value), gold_val)
+                        comparable_errs.append(err)
+                        if btype in type_names:
+                            type_exact5_den[btype] += 1
+                            type_exact20_den[btype] += 1
+                            if err <= 0.05:
+                                type_exact5_num[btype] += 1
+                            if err <= 0.20:
+                                type_exact20_num[btype] += 1
+            elif assignment_mode == "optimization_role_entity_semantic_beam_repair" and expected_scalar:
+                filled_values, filled_mentions, _ = _run_optimization_role_entity_semantic_beam_repair(
+                    query, variant, expected_scalar
+                )
+                for p in expected_scalar:
+                    if p not in filled_values:
+                        continue
+                    m_ir = filled_mentions.get(p)
+                    tok = m_ir.tok if m_ir else None
+                    if tok is None:
+                        continue
+                    n_filled += 1
+                    filled[p] = filled_values[p]
+                    btype = _bucket_type(p)
+                    type_filled_total[btype] += 1
+                    type_filled_q[btype] += 1
+                    et = _expected_type(p)
+                    if tok.kind == et:
+                        type_matches += 1
+                        type_correct_total[btype] += 1
+                        type_correct_q[btype] += 1
+                    if schema_hit and tok.value is not None and _is_scalar(gold_params.get(p)):
+                        gold_val = float(gold_params[p])
+                        err = _rel_err(float(tok.value), gold_val)
+                        comparable_errs.append(err)
+                        if btype in type_names:
+                            type_exact5_den[btype] += 1
+                            type_exact20_den[btype] += 1
+                            if err <= 0.05:
+                                type_exact5_num[btype] += 1
+                            if err <= 0.20:
+                                type_exact20_num[btype] += 1
+            elif assignment_mode == "optimization_role_repair" and expected_scalar:
                 # Optimization-role-aware assignment.
                 filled_values, filled_mentions, _ = _run_optimization_role_repair(
                     query, variant, expected_scalar
@@ -2497,6 +3405,100 @@ def run_setting(
         _upsert_types_rows(types_summary_path, types_rand)
 
 
+def run_single_setting(
+    variant: str,
+    baseline_arg: str,
+    assignment_mode: str,
+    out_dir: Path,
+    eval_path: Path | None = None,
+    catalog_path: Path | None = None,
+    acceptance_k: int = 10,
+    eval_items: list[dict] | None = None,
+    gold_by_id: dict[str, dict] | None = None,
+    catalog: list[dict] | None = None,
+    doc_ids: list[str] | None = None,
+    random_control: bool = False,
+) -> bool:
+    """Run one (variant, baseline, assignment_mode). If eval_items/gold_by_id/catalog/doc_ids
+    are provided, use them (avoids reload; safe for low-resource). Returns True on success."""
+    eval_path = eval_path or ROOT / "data" / "processed" / f"nlp4lp_eval_{variant}.jsonl"
+    catalog_path = catalog_path or ROOT / "data" / "catalogs" / "nlp4lp_catalog.jsonl"
+    if eval_items is None:
+        eval_items = _load_eval(Path(eval_path))
+    if not eval_items:
+        return False
+    if gold_by_id is None:
+        gold_by_id = _load_hf_gold(split="test")
+    if catalog is None or doc_ids is None:
+        catalog, _ = _load_catalog_as_problems(catalog_path)
+        doc_ids = [p["id"] for p in catalog if p.get("id")]
+
+    rank_fn = None
+    effective_baseline = baseline_arg
+    if baseline_arg == "oracle":
+        rank_fn = None
+    elif baseline_arg in ("tfidf_acceptance_rerank", "tfidf_hierarchical_acceptance_rerank"):
+        from retrieval.baselines import get_baseline
+        base = get_baseline("tfidf")
+        base.fit(catalog)
+        rank_fn = make_rerank_rank_fn(
+            base.rank,
+            gold_by_id,
+            catalog,
+            k_retrieval=acceptance_k,
+            use_hierarchy=(baseline_arg == "tfidf_hierarchical_acceptance_rerank"),
+            variant=variant,
+        )
+    elif baseline_arg in ("bm25_acceptance_rerank", "bm25_hierarchical_acceptance_rerank"):
+        from retrieval.baselines import get_baseline
+        base = get_baseline("bm25")
+        base.fit(catalog)
+        rank_fn = make_rerank_rank_fn(
+            base.rank,
+            gold_by_id,
+            catalog,
+            k_retrieval=acceptance_k,
+            use_hierarchy=(baseline_arg == "bm25_hierarchical_acceptance_rerank"),
+            variant=variant,
+        )
+    else:
+        if baseline_arg not in ("bm25", "tfidf", "lsa"):
+            return False
+        from retrieval.baselines import get_baseline
+        baseline = get_baseline(baseline_arg)
+        baseline.fit(catalog)
+        rank_fn = baseline.rank
+    if assignment_mode == "untyped":
+        effective_baseline = f"{baseline_arg}_untyped"
+    elif assignment_mode == "constrained":
+        effective_baseline = f"{baseline_arg}_constrained"
+    elif assignment_mode == "semantic_ir_repair":
+        effective_baseline = f"{baseline_arg}_semantic_ir_repair"
+    elif assignment_mode == "optimization_role_repair":
+        effective_baseline = f"{baseline_arg}_optimization_role_repair"
+    elif assignment_mode == "optimization_role_relation_repair":
+        effective_baseline = f"{baseline_arg}_optimization_role_relation_repair"
+    elif assignment_mode == "optimization_role_anchor_linking":
+        effective_baseline = f"{baseline_arg}_optimization_role_anchor_linking"
+    elif assignment_mode == "optimization_role_bottomup_beam_repair":
+        effective_baseline = f"{baseline_arg}_optimization_role_bottomup_beam_repair"
+    elif assignment_mode == "optimization_role_entity_semantic_beam_repair":
+        effective_baseline = f"{baseline_arg}_optimization_role_entity_semantic_beam_repair"
+
+    run_setting(
+        variant=variant,
+        baseline_name=effective_baseline,
+        eval_items=eval_items,
+        gold_by_id=gold_by_id,
+        rank_fn=rank_fn,
+        doc_ids=doc_ids,
+        random_control=random_control,
+        assignment_mode=assignment_mode,
+        out_dir=out_dir,
+    )
+    return True
+
+
 def main() -> None:
     import argparse
 
@@ -2517,7 +3519,13 @@ def main() -> None:
         "--assignment-mode",
         type=str,
         default="typed",
-        choices=("typed", "untyped", "constrained", "semantic_ir_repair", "optimization_role_repair"),
+        choices=(
+            "typed", "untyped", "constrained", "semantic_ir_repair",
+            "optimization_role_repair", "optimization_role_relation_repair",
+            # Experimental/archived (not in default focused eval; use run_nlp4lp_focused_eval.py --experimental):
+            "optimization_role_anchor_linking", "optimization_role_bottomup_beam_repair",
+            "optimization_role_entity_semantic_beam_repair",
+        ),
     )
     args = p.parse_args()
 
@@ -2578,6 +3586,14 @@ def main() -> None:
         effective_baseline = f"{args.baseline}_semantic_ir_repair"
     elif args.assignment_mode == "optimization_role_repair":
         effective_baseline = f"{args.baseline}_optimization_role_repair"
+    elif args.assignment_mode == "optimization_role_relation_repair":
+        effective_baseline = f"{args.baseline}_optimization_role_relation_repair"
+    elif args.assignment_mode == "optimization_role_anchor_linking":
+        effective_baseline = f"{args.baseline}_optimization_role_anchor_linking"
+    elif args.assignment_mode == "optimization_role_bottomup_beam_repair":
+        effective_baseline = f"{args.baseline}_optimization_role_bottomup_beam_repair"
+    elif args.assignment_mode == "optimization_role_entity_semantic_beam_repair":
+        effective_baseline = f"{args.baseline}_optimization_role_entity_semantic_beam_repair"
 
     out_dir = ROOT / "results" / "paper"
     run_setting(
