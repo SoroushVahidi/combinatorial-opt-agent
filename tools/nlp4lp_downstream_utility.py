@@ -23,6 +23,62 @@ NUM_TOKEN_RE = re.compile(r"[$]?\d[\d,]*(?:\.\d+)?%?")
 MONEY_CONTEXT = {"budget", "cost", "price", "profit", "revenue", "dollar", "dollars", "$", "€", "usd", "eur"}
 PERCENT_CONTEXT = {"percent", "percentage", "rate", "fraction"}
 
+# ── Written-word number recognition ──────────────────────────────────────────
+_ONES: dict[str, int] = {
+    "zero": 0,
+    "one": 1,
+    "two": 2,
+    "three": 3,
+    "four": 4,
+    "five": 5,
+    "six": 6,
+    "seven": 7,
+    "eight": 8,
+    "nine": 9,
+    "ten": 10,
+    "eleven": 11,
+    "twelve": 12,
+    "thirteen": 13,
+    "fourteen": 14,
+    "fifteen": 15,
+    "sixteen": 16,
+    "seventeen": 17,
+    "eighteen": 18,
+    "nineteen": 19,
+}
+_TENS: dict[str, int] = {
+    "twenty": 20,
+    "thirty": 30,
+    "forty": 40,
+    "fifty": 50,
+    "sixty": 60,
+    "seventy": 70,
+    "eighty": 80,
+    "ninety": 90,
+}
+_LARGE: dict[str, int] = {
+    "hundred": 100,
+    "thousand": 1_000,
+    "million": 1_000_000,
+}
+
+_WORD_TO_NUM: dict[str, int] = {**_ONES, **_TENS, **_LARGE}
+for tens_word, tens_val in _TENS.items():
+    for ones_word, ones_val in _ONES.items():
+        if ones_val > 0:
+            _WORD_TO_NUM[f"{tens_word}-{ones_word}"] = tens_val + ones_val
+
+_WRITTEN_NUM_RE = re.compile(
+    r"\b(" + "|".join(re.escape(k) for k in sorted(_WORD_TO_NUM, key=len, reverse=True)) + r")\b",
+    re.IGNORECASE,
+)
+
+
+def _word_to_number(word: str) -> float | None:
+    """Return the numeric value of a written English number word, or None."""
+    val = _WORD_TO_NUM.get(word.lower())
+    return float(val) if val is not None else None
+
 # Cue words and simple operator markers used by constrained assignment.
 CUE_WORDS = {
     "budget",
@@ -251,12 +307,19 @@ def _extract_num_tokens(query: str, variant: str) -> list[NumTok]:
         if w == "<num>" and variant in ("noisy", "nonum"):
             out.append(NumTok(raw=w, value=None, kind="unknown"))
             continue
-        m = NUM_TOKEN_RE.fullmatch(w.strip())
-        if not m:
-            continue
         # local context window
         ctx = set(x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 3) : i + 4])
-        out.append(_parse_num_token(w, ctx))
+        # Digit-based token
+        m = NUM_TOKEN_RE.fullmatch(w.strip())
+        if m:
+            out.append(_parse_num_token(w, ctx))
+            continue
+        # Written-word number: "two", "twenty-five", etc.
+        clean = w.lower().strip(".,;:()[]{}\"'")
+        wval = _word_to_number(clean)
+        if wval is not None:
+            kind = "int" if float(int(wval)) == wval else "float"
+            out.append(NumTok(raw=w, value=wval, kind=kind))
     return out
 
 
@@ -295,28 +358,36 @@ def _slot_aliases(param_name: str) -> list[str]:
 
 
 def _extract_num_mentions(query: str, variant: str) -> list[MentionRecord]:
-    """Extract numeric mentions with richer context for constrained assignment."""
+    """Extract numeric mentions with richer context for constrained assignment.
+
+    In addition to digit-based tokens (e.g. "100", "$5000", "20%"), this also
+    recognises written-word numbers such as "two", "twenty-five", "hundred".
+    """
     toks = query.split()
     sent_tokens = [t.lower().strip(".,;:()[]{}") for t in toks]
     mentions: list[MentionRecord] = []
     for i, w in enumerate(toks):
-        if w == "<num>" and variant in ("noisy", "nonum"):
-            tok = NumTok(raw=w, value=None, kind="unknown")
-        else:
-            m = NUM_TOKEN_RE.fullmatch(w.strip())
-            if not m:
-                continue
-            # slightly wider context window for constrained assignment
-            ctx_tokens = [
-                x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 8) : i + 9]
-            ]
-            ctx_set = {c for c in ctx_tokens if c}
-            tok = _parse_num_token(w, ctx_set)
+        # slightly wider context window for constrained assignment
         ctx_tokens = [
             x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 8) : i + 9]
         ]
         ctx_tokens = [c for c in ctx_tokens if c]
         cue_words = set(ctx_tokens) & CUE_WORDS
+        if w == "<num>" and variant in ("noisy", "nonum"):
+            tok = NumTok(raw=w, value=None, kind="unknown")
+        else:
+            # Digit-based token first
+            m = NUM_TOKEN_RE.fullmatch(w.strip())
+            if m:
+                ctx_set = set(ctx_tokens)
+                tok = _parse_num_token(w, ctx_set)
+            else:
+                clean = w.lower().strip(".,;:()[]{}\"'")
+                wval = _word_to_number(clean)
+                if wval is None:
+                    continue
+                kind = "int" if float(int(wval)) == wval else "float"
+                tok = NumTok(raw=w, value=wval, kind=kind)
         mentions.append(
             MentionRecord(
                 index=i,
