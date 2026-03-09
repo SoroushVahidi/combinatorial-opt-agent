@@ -223,10 +223,14 @@ data/processed/eval_results.txt
 data/collected_queries/
 
 # Stage-3 learning artifacts and local reports
-artifacts/
+artifacts/runs/
+artifacts/learning_runs/
 logs/
 comparison_reports/
 results/
+
+# Generated per-example JSONL audit slices (regenerable from src/learning scripts)
+artifacts/learning_audit/*.jsonl
 
 # Gradio / web UI runtime state
 .gradio/

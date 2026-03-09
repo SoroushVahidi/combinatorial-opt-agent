@@ -3,6 +3,10 @@ Simple web UI: type your combinatorial problem in natural language,
 get the best-matching problem(s) and their integer programs.
 Run: python app.py  then open the URL in your browser.
 User queries are logged to data/collected_queries/user_queries.jsonl for training.
+
+PDF support: you can also upload a PDF file (e.g. a paper or problem spec).
+Its text will be extracted and placed in the query box so you can edit it
+before running the search.
 """
 from pathlib import Path
 import json
@@ -30,13 +34,20 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from retrieval.search import (
     _load_catalog,
+    build_index,
     search,
     format_problem_and_ip,
 )
+from retrieval.pdf_utils import extract_text_from_pdf
+
 
 # Load catalog once at startup
 CATALOG = _load_catalog()
 MODEL = None
+# Pre-built embedding matrix for the catalog.
+# Built alongside the model in get_model() so every search() call skips re-encoding
+# the full catalog (fixes O(N) encode cost per query — the main runtime bottleneck).
+EMBEDDINGS = None
 
 # Where to save user prompts on Wulver (or any run) for later training
 COLLECTED_QUERIES_DIR = Path(__file__).resolve().parent / "data" / "collected_queries"
@@ -65,12 +76,18 @@ def _log_user_query(query: str, top_k: int, results: list) -> None:
 
 
 def get_model():
-    """Lazy-load the embedding model once (so app starts fast). Uses fine-tuned model if present."""
-    global MODEL
+    """Lazy-load the embedding model and pre-build the catalog index once.
+
+    Building the index here (alongside the model) means every call to search()
+    can pass the pre-built ``EMBEDDINGS`` array and skip re-encoding all
+    catalog problems — the main per-query runtime bottleneck.
+    """
+    global MODEL, EMBEDDINGS
     if MODEL is None:
         from sentence_transformers import SentenceTransformer
         from retrieval.search import _default_model_path
         MODEL = SentenceTransformer(_default_model_path())
+        EMBEDDINGS = build_index(CATALOG, MODEL)
     return MODEL
 
 
@@ -81,7 +98,7 @@ async def answer(query: str, top_k: int, validate: bool = False) -> str:
         return "Please type a short description of your optimization problem (e.g. *minimize cost of opening warehouses and assigning customers*)."
     model = get_model()
     k = max(1, min(10, top_k))
-    results = search(query.strip(), catalog=CATALOG, model=model, top_k=k, validate=validate)
+    results = search(query.strip(), catalog=CATALOG, model=model, embeddings=EMBEDDINGS, top_k=k, validate=validate)
     _log_user_query(query.strip(), k, results)
     if not results:
         return "No matching problems found."
@@ -98,6 +115,21 @@ async def answer(query: str, top_k: int, validate: bool = False) -> str:
                 out.append("**Validation:** ✓ Schema and formulation OK")
         out.append("---")
     return "\n".join(out)
+
+
+def handle_pdf_upload(file_path: str) -> tuple[str, str]:
+    """Gradio event handler for PDF file upload.
+
+    Extracts text from the uploaded PDF and returns a ``(query_text, status)``
+    tuple consumed by the ``[query_in, pdf_status]`` output components.
+    When *file_path* is falsy (file cleared) both outputs are reset.
+    """
+    if not file_path:
+        return "", "*Upload a PDF to extract its text into the query box above.*"
+    text = extract_text_from_pdf(file_path)
+    if text.startswith("(Could not extract PDF text:"):
+        return text, f"⚠ {text}"
+    return text, "*PDF loaded — text extracted into the query box. Edit as needed, then click Search.*"
 
 
 def main():
@@ -142,6 +174,18 @@ def main():
                 )
                 validate_in = gr.Checkbox(value=False, label="Validate outputs")
                 gr.Markdown("*Tip: first query may take a few seconds.*")
+        with gr.Accordion("📄 Upload a PDF (optional)", open=False):
+            pdf_upload = gr.File(
+                label="Upload a PDF problem description",
+                file_types=[".pdf"],
+                type="filepath",
+            )
+            pdf_status = gr.Markdown("*Upload a PDF to extract its text into the query box above.*")
+            pdf_upload.change(
+                fn=handle_pdf_upload,
+                inputs=pdf_upload,
+                outputs=[query_in, pdf_status],
+            )
         with gr.Row():
             submit_btn = gr.Button("Search", variant="primary")
         out_md = gr.Markdown(label="Results", value="*Enter a problem above and click Search.*")
@@ -188,10 +232,12 @@ def main():
             f"**Flag** bad or surprising results for review. Catalog: {n_problems} problems."
             "</div>"
         )
-    # Preload model so first Submit doesn't block the server for 30–60s (avoids "keeps loading").
-    print("Loading embedding model (one-time, ~30s on first run)...", flush=True)
+    # Preload model and build embedding index so first Submit doesn't block the server
+    # for 30–60s (avoids "keeps loading").  Without this, build_index() would run on
+    # every query because EMBEDDINGS would be None.
+    print("Loading embedding model and building catalog index (one-time, ~30s on first run)...", flush=True)
     get_model()
-    print("Model ready. Starting server...", flush=True)
+    print(f"Model ready. Index built for {len(CATALOG)} problems. Starting server...", flush=True)
 
     # On HPC (Wulver) Gradio's launch() uses a thread for the server -> "can't start new thread".
     # Run via FastAPI + uvicorn in the main thread instead (no extra threads).

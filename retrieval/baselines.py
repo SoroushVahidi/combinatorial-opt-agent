@@ -10,6 +10,8 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     pass
 
+from retrieval.utils import expand_short_query
+
 
 def _searchable_text(problem: dict) -> str:
     """Same as retrieval.search._searchable_text."""
@@ -58,7 +60,7 @@ class BM25Baseline(RetrievalBaseline):
         if self._index is None:
             raise RuntimeError("Call fit(catalog) first")
         import numpy as np
-        q_tokens = _tokenize_for_bm25(query)
+        q_tokens = _tokenize_for_bm25(expand_short_query(query))
         scores = self._index.get_scores(q_tokens)
         idx = np.argsort(scores)[::-1][:top_k]
         return [(self._problem_ids[i], float(scores[i])) for i in idx]
@@ -86,7 +88,7 @@ class TfidfBaseline(RetrievalBaseline):
             raise RuntimeError("Call fit(catalog) first")
         from sklearn.metrics.pairwise import cosine_similarity
         import numpy as np
-        q_vec = self._vectorizer.transform([query])
+        q_vec = self._vectorizer.transform([expand_short_query(query)])
         scores = cosine_similarity(q_vec, self._matrix).flatten()
         idx = np.argsort(scores)[::-1][:top_k]
         return [(self._problem_ids[i], float(scores[i])) for i in idx]
@@ -124,7 +126,7 @@ class LSABaseline(RetrievalBaseline):
         if self._matrix is None or self._vectorizer is None or self._svd is None:
             raise RuntimeError("Call fit(catalog) first")
         import numpy as np
-        q_vec = self._vectorizer.transform([query])
+        q_vec = self._vectorizer.transform([expand_short_query(query)])
         q_latent = self._svd.transform(q_vec).flatten()
         q_norm = np.linalg.norm(q_latent) or 1
         q_latent = q_latent / q_norm
@@ -162,7 +164,7 @@ class SBERTBaseline(RetrievalBaseline):
         if self._embeddings is None or self._model is None:
             raise RuntimeError("Call fit(catalog) first")
         import numpy as np
-        q_vec = self._model.encode([query], show_progress_bar=False, convert_to_numpy=True)
+        q_vec = self._model.encode([expand_short_query(query)], show_progress_bar=False, convert_to_numpy=True)
         q_vec = q_vec / (np.linalg.norm(q_vec) or 1)
         scores = (self._embeddings @ q_vec.T).flatten()
         idx = np.argsort(scores)[::-1][:top_k]
