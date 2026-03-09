@@ -123,10 +123,25 @@ def format_problem_and_ip(problem: dict, score: float | None = None) -> str:
         "",
     ]
 
+    formulation = problem.get("formulation") or {}
+    variables = formulation.get("variables") or []
+    constraints = formulation.get("constraints") or []
+    has_formulation = bool(variables or constraints or formulation.get("objective"))
+
+    if not has_formulation:
+        lines.append(
+            "> **Formulation not yet available.** "
+            "This problem is in the catalog but its structured ILP has not been added yet. "
+            "The description above may still help you understand the problem structure."
+        )
+        if score is not None:
+            lines.insert(0, f"(relevance: {score:.3f})\n")
+        return "\n".join(lines)
+
     # Collapsible variables section
     lines.append("<details><summary><strong>Variables</strong></summary>")
     lines.append("")
-    for v in problem.get("formulation", {}).get("variables", []):
+    for v in variables:
         symbol = v.get("symbol", "")
         description = v.get("description", "")
         domain = v.get("domain", "")
@@ -139,7 +154,7 @@ def format_problem_and_ip(problem: dict, score: float | None = None) -> str:
             lines.append(f"- {symbol}: {description} ({domain})")
     lines.append("")
     lines.append("</details>")
-    obj = problem.get("formulation", {}).get("objective", {})
+    obj = formulation.get("objective") or {}
     lines.extend(
         [
             "",
@@ -155,7 +170,7 @@ def format_problem_and_ip(problem: dict, score: float | None = None) -> str:
             "",
         ]
     )
-    for c in problem.get("formulation", {}).get("constraints", []):
+    for c in constraints:
         lines.append(f"- {c.get('expression', '')} — {c.get('description', '')}")
     lines.append("")
     lines.append("</details>")
