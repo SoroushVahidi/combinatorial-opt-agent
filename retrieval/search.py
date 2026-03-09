@@ -10,6 +10,8 @@ from pathlib import Path
 
 import numpy as np
 
+from retrieval.utils import _is_short_query, expand_short_query  # re-exported for callers
+
 
 def _project_root() -> Path:
     root = Path(__file__).resolve().parent.parent
@@ -63,11 +65,14 @@ def search(
     model=None,
     top_k: int = 3,
     validate: bool = False,
+    expand_short_queries: bool = True,
 ) -> list[tuple[dict, float]]:
     """
     Return top_k (problem, score) pairs for the natural-language query.
     score is cosine similarity in [0, 1] (assuming normalized vectors).
     If validate=True, each problem dict gets "_validation": {"schema_errors": [...], "formulation_errors": [...]}.
+    If expand_short_queries=True (default), short keyword queries (≤ 5 words) are
+    expanded with domain context before embedding (see expand_short_query()).
     """
     if catalog is None:
         catalog = _load_catalog()
@@ -88,7 +93,8 @@ def search(
     norms = np.where(norms == 0, 1, norms)
     embeddings_n = embeddings / norms
 
-    q_vec = _embed([query], model)
+    effective_query = expand_short_query(query) if expand_short_queries else query
+    q_vec = _embed([effective_query], model)
     q_vec = q_vec / (np.linalg.norm(q_vec) or 1)
     scores = (embeddings_n @ q_vec.T).flatten()
 
