@@ -216,11 +216,17 @@ data/raw/
 data/models/
 data/processed/training_pairs*.jsonl
 data/processed/collected_training_pairs.jsonl
+data/processed/mention_slot_pairs*.jsonl
 data/processed/eval_500.jsonl
 data/processed/eval_*.jsonl
 data/processed/eval_results.txt
-results/
 data/collected_queries/
+
+# Stage-3 learning artifacts and local reports
+artifacts/
+logs/
+comparison_reports/
+results/
 
 # Gradio / web UI runtime state
 .gradio/
