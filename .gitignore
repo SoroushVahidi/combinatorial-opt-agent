@@ -235,4 +235,7 @@ training_latest_status.txt
 logs/
 artifacts/runs/
 
+# Generated per-example JSONL audit slices (regenerable from src/learning scripts)
+artifacts/learning_audit/*.jsonl
+
 data/external/resocratic
