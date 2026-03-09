@@ -63,6 +63,28 @@ QUERY_TEMPLATES = [
     "Classic problem: {text}.",
 ]
 
+# Short-query templates: single-word or two-word queries that mimic real user short inputs.
+# These are used specifically to generate training examples that look like the short,
+# keyword-style queries that cause a ~12% retrieval performance drop across all baselines
+# (observed in evaluation against the NLP4LP short-query variant).
+SHORT_QUERY_TEMPLATES = [
+    "{text}",
+    "{text} problem",
+    "{text} optimization",
+    "{text} ILP",
+    "{text} LP",
+    "{text} formulation",
+    "{text} model",
+    "solve {text}",
+    "optimize {text}",
+    "{text} integer programming",
+    "{text} scheduling",
+    "{text} routing",
+    "{text} assignment",
+    "{text} minimization",
+    "{text} maximization",
+]
+
 
 def _sentences_from_description(desc: str, max_len: int = 200) -> list[str]:
     """Split description into sentence-level chunks for more query variety."""
@@ -114,6 +136,12 @@ def generate_queries_for_problem(
         for t in QUERY_TEMPLATES:
             if "{text}" in t and len(queries) < target_per_problem * 2:  # allow over then dedupe
                 add(t.format(text=name))
+        # Short-query templates applied to the name only (name is naturally short).
+        # These train the model to recognize short, keyword-style queries — the main
+        # cause of the ~12% performance drop observed on the short-query eval variant.
+        for t in SHORT_QUERY_TEMPLATES:
+            if "{text}" in t:
+                add(t.format(text=name))
 
     # Aliases with templates
     for a in aliases:
@@ -121,6 +149,9 @@ def generate_queries_for_problem(
             continue
         add(a)
         for t in QUERY_TEMPLATES[:15]:  # subset to avoid explosion
+            if "{text}" in t:
+                add(t.format(text=a))
+        for t in SHORT_QUERY_TEMPLATES:
             if "{text}" in t:
                 add(t.format(text=a))
 

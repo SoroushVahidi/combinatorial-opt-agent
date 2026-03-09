@@ -30,6 +30,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from retrieval.search import (
     _load_catalog,
+    build_index,
     search,
     format_problem_and_ip,
 )
@@ -37,6 +38,10 @@ from retrieval.search import (
 # Load catalog once at startup
 CATALOG = _load_catalog()
 MODEL = None
+# Pre-built embedding matrix for the catalog.
+# Built alongside the model in get_model() so every search() call skips re-encoding
+# the full catalog (fixes O(N) encode cost per query — the main runtime bottleneck).
+EMBEDDINGS = None
 
 # Where to save user prompts on Wulver (or any run) for later training
 COLLECTED_QUERIES_DIR = Path(__file__).resolve().parent / "data" / "collected_queries"
@@ -65,12 +70,18 @@ def _log_user_query(query: str, top_k: int, results: list) -> None:
 
 
 def get_model():
-    """Lazy-load the embedding model once (so app starts fast). Uses fine-tuned model if present."""
-    global MODEL
+    """Lazy-load the embedding model and pre-build the catalog index once.
+
+    Building the index here (alongside the model) means every call to search()
+    can pass the pre-built ``EMBEDDINGS`` array and skip re-encoding all
+    catalog problems — the main per-query runtime bottleneck.
+    """
+    global MODEL, EMBEDDINGS
     if MODEL is None:
         from sentence_transformers import SentenceTransformer
         from retrieval.search import _default_model_path
         MODEL = SentenceTransformer(_default_model_path())
+        EMBEDDINGS = build_index(CATALOG, MODEL)
     return MODEL
 
 
@@ -81,7 +92,7 @@ async def answer(query: str, top_k: int, validate: bool = False) -> str:
         return "Please type a short description of your optimization problem (e.g. *minimize cost of opening warehouses and assigning customers*)."
     model = get_model()
     k = max(1, min(10, top_k))
-    results = search(query.strip(), catalog=CATALOG, model=model, top_k=k, validate=validate)
+    results = search(query.strip(), catalog=CATALOG, model=model, embeddings=EMBEDDINGS, top_k=k, validate=validate)
     _log_user_query(query.strip(), k, results)
     if not results:
         return "No matching problems found."
@@ -188,10 +199,12 @@ def main():
             f"**Flag** bad or surprising results for review. Catalog: {n_problems} problems."
             "</div>"
         )
-    # Preload model so first Submit doesn't block the server for 30–60s (avoids "keeps loading").
-    print("Loading embedding model (one-time, ~30s on first run)...", flush=True)
+    # Preload model and build embedding index so first Submit doesn't block the server
+    # for 30–60s (avoids "keeps loading").  Without this, build_index() would run on
+    # every query because EMBEDDINGS would be None.
+    print("Loading embedding model and building catalog index (one-time, ~30s on first run)...", flush=True)
     get_model()
-    print("Model ready. Starting server...", flush=True)
+    print(f"Model ready. Index built for {len(CATALOG)} problems. Starting server...", flush=True)
 
     # On HPC (Wulver) Gradio's launch() uses a thread for the server -> "can't start new thread".
     # Run via FastAPI + uvicorn in the main thread instead (no extra threads).

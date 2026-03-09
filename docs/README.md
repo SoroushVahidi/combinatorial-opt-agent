@@ -32,6 +32,7 @@ Overview of documentation in this repository.
 
 ## Evaluation and tooling
 
+- **[BOTTLENECK_ANALYSIS.md](BOTTLENECK_ANALYSIS.md)** — Identified performance bottlenecks (embedding cache, short-query degradation, downstream instantiation gap, catalog coverage), with quantitative evidence and remediation status.
 - **[BASELINE_TABLE_CLI.md](BASELINE_TABLE_CLI.md)** — Baseline table and CLI usage.
 - **[PATCH_LEAK_FREE_EVAL.md](PATCH_LEAK_FREE_EVAL.md)** — Leak-free evaluation patch.
 - **[VALIDATION_AND_ANALYSIS_CLI.md](VALIDATION_AND_ANALYSIS_CLI.md)** — Validation and analysis CLI.
