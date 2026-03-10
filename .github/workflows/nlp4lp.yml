@@ -13,11 +13,9 @@ name: NLP4LP benchmark
 
 on:
   workflow_dispatch:   # run manually from the Actions tab
-  push:
-    paths:
-      - "training/external/**"
-      - "retrieval/**"
-      - ".github/workflows/nlp4lp.yml"
+  # push trigger intentionally removed: GitHub blocks auto-triggered workflows
+  # from bot commits with `action_required` when HF_TOKEN protection is active.
+  # Trigger this workflow manually after ensuring HF_TOKEN is set.
 
 jobs:
   build-benchmark:
