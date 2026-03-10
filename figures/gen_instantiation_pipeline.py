@@ -35,6 +35,8 @@ COL_OUTPUT = "#FFF2CC"   # pale amber         → output block
 EDGE       = "#555555"   # dark-grey borders & arrows
 TEXT       = "#1A1A1A"   # near-black text
 
+# DejaVu Sans is bundled with matplotlib and is always available —
+# no system font installation needed.
 FONT = "DejaVu Sans"
 FS_BOX   = 9.5   # font size inside boxes
 FS_LABEL = 8.0   # branch label font size
