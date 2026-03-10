@@ -39,6 +39,7 @@ Overview of documentation in this repository.
 ## Experiments
 
 - **[../EXPERIMENTS.md](../EXPERIMENTS.md)** — Consolidated overview of all experiments: retrieval baselines, grounding/assignment methods, learning runs, copilot comparison, and ESWA revision experiments.
+- **[EXPERIMENT_AUDIT.md](EXPERIMENT_AUDIT.md)** — Strict evidence-based audit: which experiments are truly measured vs placeholder/scaffolding only, with a yes/no conclusion on whether more runs are needed.
 
 ## Repo maintenance
 

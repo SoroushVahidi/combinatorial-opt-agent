@@ -2,6 +2,8 @@
 
 This document provides a consolidated overview of all experiments conducted in this project. Detailed results, implementation notes, and reproduction commands are linked in each section.
 
+> **Audit note:** For a strict evidence-driven breakdown of which experiments are truly measured vs. placeholder/scaffolding, see [docs/EXPERIMENT_AUDIT.md](docs/EXPERIMENT_AUDIT.md).
+
 ---
 
 ## 1. Problem Retrieval Experiments
