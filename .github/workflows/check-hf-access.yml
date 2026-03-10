@@ -1,0 +1,31 @@
+# Lightweight one-click workflow to confirm that HF_TOKEN is set correctly
+# and that the NLP4LP dataset is reachable — without running the full benchmark.
+#
+# Trigger from: Actions tab → "Check HF access" → Run workflow
+
+name: Check HF access
+
+on:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install huggingface_hub
+        run: pip install -q huggingface_hub
+
+      - name: Verify HF token and dataset access
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python training/external/verify_hf_access.py

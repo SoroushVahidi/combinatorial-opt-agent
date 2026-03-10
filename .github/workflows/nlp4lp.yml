@@ -22,6 +22,8 @@ on:
 jobs:
   build-benchmark:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
@@ -33,6 +35,12 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r requirements.txt
+
+      - name: Verify HF token and dataset access
+        # Fast-fail before the long benchmark if the token is missing or invalid.
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python training/external/verify_hf_access.py
 
       - name: Build NLP4LP benchmark
         # HF_TOKEN is read from the repository secret of the same name.
