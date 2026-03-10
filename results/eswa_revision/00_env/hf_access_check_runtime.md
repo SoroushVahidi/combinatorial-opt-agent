@@ -1,69 +1,78 @@
 # HF Access Check — Runtime Status
 
 **Date:** 2026-03-10  
-**Branch:** copilot/main-branch-description  
-**Commit:** 8aa9507 (run_full_downstream_benchmark.py + downstream_benchmark.yml added)
+**Branch:** copilot/main-branch-description (commit e6e7a59)  
+**Status:** ⏳ AWAITING GITHUB ACTIONS TRIGGER
 
-## Status: ⏳ AWAITING GITHUB ACTIONS TRIGGER
-
-The Copilot SWE agent sandbox environment cannot access HuggingFace or the
-GitHub Actions API (both blocked by the sandbox DNS monitoring proxy). However,
-ALL code is committed and ready to run in GitHub Actions where HF_TOKEN is available.
-
-## Sandbox environment diagnostics
+## Summary
 
 | Check | Result |
 |-------|--------|
-| `huggingface.co` DNS | **BLOCKED** (No address associated with hostname) |
-| `api.github.com/actions` dispatch | **BLOCKED** (DNS monitoring proxy, HTTP 403) |
-| HF_TOKEN in sandbox env | **NOT SET** |
-| All benchmark code committed | **YES** (commit 8aa9507) |
-| GitHub Actions HF_TOKEN secret | **CONFIGURED** (per repo owner) |
+| `huggingface.co` DNS in sandbox | **BLOCKED** — no address associated with hostname |
+| GitHub API `actions/dispatches` endpoint in sandbox | **BLOCKED** — DNS monitoring proxy, HTTP 403 |
+| `HF_TOKEN` in sandbox environment | **NOT SET** |
+| `HF_TOKEN` in GitHub Actions secrets | **CONFIGURED** (per repo owner's statement) |
+| Benchmark code committed to PR branch | **YES** — commit e6e7a59 |
+| `nlp4lp.yml` workflow updated with downstream benchmark | **YES** |
+| `downstream_benchmark.yml` standalone workflow added | **YES** |
 
-## What has been prepared
+## Why experiments did not run in the Copilot sandbox
 
-1. **`training/external/run_full_downstream_benchmark.py`** — complete pipeline:
-   - Verifies HF access before starting
-   - Loads gold parameters from `udell-lab/NLP4LP` via HF_TOKEN (cached to JSON)
-   - Runs 10 methods × 3 variants = 30 settings + 3 random controls
-   - Runs pre-fix vs post-fix ablation (in-memory patch simulation)
-   - Writes results to `results/eswa_revision/` paths
-   - Commits results back to the branch
+The Copilot SWE agent runs in a restricted sandbox environment. Two independent
+firewall policies block the required external access:
 
-2. **`.github/workflows/nlp4lp.yml`** — updated to run the full downstream benchmark:
-   - Phase 0: Verify HF access
-   - Phase 1: Build NLP4LP eval sets  
-   - Phase 2: Run all downstream experiments
-   - Phase 3: Commit measured results back to branch
+1. **HuggingFace blocked**: `huggingface.co` DNS lookup returns
+   `[Errno -5] No address associated with hostname`. The `udell-lab/NLP4LP`
+   gated dataset is not reachable from this environment.
 
-3. **`.github/workflows/downstream_benchmark.yml`** — standalone workflow for benchmark only
+2. **GitHub Actions API blocked**: `api.github.com/actions/*/dispatches`
+   (workflow_dispatch endpoint) returns HTTP 403 "Blocked by DNS monitoring proxy".
+   This prevents programmatic triggering of the workflow from inside the sandbox.
 
-## How to run (repo owner action required)
+## What HAS been prepared (all code is ready)
 
-**Option A (recommended): Trigger the updated nlp4lp.yml**
+### Pipeline script
+`training/external/run_full_downstream_benchmark.py`:
+- Verifies HF access and writes runtime env report
+- Loads gold parameters from `udell-lab/NLP4LP` (cached as JSON after first load)
+- Runs **9 deterministic methods × 3 variants = 27 settings** + **3 random controls** = **30 total**
+- Simulates pre-fix behavior (patches `_is_type_match` in memory) for ablation
+- Writes results to `results/eswa_revision/` with `source: measured` label
+- All results labeled as "newly measured" — NO manuscript-era estimates
 
+### GitHub Actions workflow (`.github/workflows/nlp4lp.yml`)
+Updated to run in 3 phases:
+1. Verify HF token + dataset access
+2. Build NLP4LP eval sets (existing)  
+3. **Run full downstream benchmark** (all 30 settings + pre/post-fix ablation)
+4. Commit measured results back to branch (`contents: write` permission)
+5. Upload all artifacts (90-day retention)
+
+## HOW TO TRIGGER (repo owner action required)
+
+**Steps:**
 ```
-GitHub.com → SoroushVahidi/combinatorial-opt-agent
-→ Actions tab
-→ "NLP4LP benchmark" workflow
-→ "Run workflow" button (top right)
-→ Select branch: copilot/main-branch-description
-→ Click "Run workflow"
+1. Go to: https://github.com/SoroushVahidi/combinatorial-opt-agent/actions
+2. Click "NLP4LP benchmark" workflow in the left sidebar
+3. Click "Run workflow" button (top right of the run list)
+4. In the dropdown, select branch: copilot/main-branch-description
+   ^^^ IMPORTANT: must select THIS branch (not main) to use the updated workflow
+5. Click the green "Run workflow" button
 ```
 
-**Option B: Trigger downstream_benchmark.yml**
-
-```
-GitHub.com → Actions → "NLP4LP downstream benchmark (authenticated)"
-→ Run workflow → branch: copilot/main-branch-description
-```
+The workflow will:
+- Verify HF_TOKEN access to udell-lab/NLP4LP
+- Run all 30 experiment settings (estimated ~2 hours)
+- Commit the measured results directly to this branch
+- Upload artifacts with 90-day retention
 
 ## Expected outputs after successful run
 
-- `results/eswa_revision/02_downstream_postfix/` — per-query CSVs + JSON (30 files)
-- `results/eswa_revision/13_tables/postfix_main_metrics.csv` — aggregate metrics
+All results will have `source: measured` (no estimates):
+- `results/eswa_revision/02_downstream_postfix/` — per-query CSVs + JSON (30+ files)
+- `results/eswa_revision/13_tables/postfix_main_metrics.csv` — aggregate table
 - `results/eswa_revision/13_tables/prefix_vs_postfix_ablation.csv` — ablation
 - `results/eswa_revision/14_reports/postfix_main_metrics.md` — markdown report
-- `results/eswa_revision/14_reports/prefix_vs_postfix_ablation.md` — ablation report
-- `results/paper/nlp4lp_downstream_summary.csv` — master summary
-- All results labeled `source: measured` (NOT manuscript estimates)
+- `results/eswa_revision/14_reports/prefix_vs_postfix_ablation.md` — ablation
+- `results/paper/nlp4lp_downstream_summary.csv` — master summary CSV
+- `results/paper/nlp4lp_downstream_types_summary.csv` — per-type breakdown
