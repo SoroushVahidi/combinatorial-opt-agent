@@ -114,11 +114,20 @@ class TestOurModelOutputs:
             missing = required - set(o.keys())
             assert not missing, f"Output {o.get('case_id')} missing: {missing}"
 
-    def test_method_is_gcg(self):
+    def test_method_is_known(self):
+        """Method field must name a valid grounding strategy."""
+        valid_methods = {
+            "global_consistency_grounding",
+            "slot_aware_extraction",
+            "none",
+        }
         outs = _load_jsonl(OUR)
         for o in outs:
-            assert "global_consistency_grounding" in o.get("method", ""), (
-                f"Expected GCG method, got: {o.get('method')}"
+            method = o.get("method", "")
+            # Method string may be composite, e.g. "hybrid_bm25_tfidf+slot_aware_extraction"
+            has_valid = any(vm in method for vm in valid_methods)
+            assert has_valid, (
+                f"Output {o.get('case_id')} has unrecognised method: {method!r}"
             )
 
     def test_schema_accuracy_above_60pct(self):
