@@ -1149,6 +1149,45 @@ OPT_REPAIR_WEIGHTS = {
     "min_role_support": 0.4,
 }
 
+# ── Global Consistency Grounding (global_consistency_grounding) ──────────────
+# Configurable weights / thresholds for the new global-assignment method.
+
+# Local scoring weights (reuse OPT_ROLE_WEIGHTS signals but tuneable separately).
+GCG_LOCAL_WEIGHTS: dict[str, float] = {
+    "type_exact_bonus": 4.0,
+    "type_loose_bonus": 1.5,
+    "type_incompatible_penalty": -1e9,
+    "opt_role_overlap": 3.0,
+    "fragment_compat_bonus": 1.5,
+    "operator_match_bonus": 1.2,
+    "lex_context_overlap": 0.5,
+    "lex_sentence_overlap": 0.2,
+    "unit_match_bonus": 2.0,
+    "entity_resource_overlap": 0.8,
+    "coefficient_vs_total_bonus": 1.2,
+    "schema_prior_bonus": 0.5,
+    "weak_match_penalty": -1.0,
+}
+
+# Global consistency rewards/penalties applied to a full assignment as a whole.
+GCG_GLOBAL_WEIGHTS: dict[str, float] = {
+    "coverage_reward_per_slot": 0.8,     # reward per slot that is filled
+    "type_consistency_reward": 0.5,      # reward per slot whose mention type matches expected
+    "percent_misuse_penalty": -3.0,      # percent mention → non-percent slot (when pct exists)
+    "non_percent_to_pct_slot_penalty": -3.0,  # non-percent mention → percent slot
+    "total_to_coeff_penalty": -2.0,      # total-looking mention → per-unit (coeff) slot
+    "coeff_to_total_penalty": -2.0,      # per-unit-looking mention → total slot
+    "bound_flip_penalty": -2.5,          # min mention → max slot or vice versa
+    "duplicate_mention_penalty": -5.0,   # same mention used for two slots (one-to-one violation)
+    "plausibility_coverage_bonus": 1.0,  # bonus if ≥ 80 % of slots are filled
+}
+
+# Candidate pruning: pairs with local score below this are removed from consideration.
+GCG_PRUNE_THRESHOLD: float = -0.5
+
+# Beam width for beam search over partial assignments.
+GCG_BEAM_WIDTH: int = 8
+
 
 @dataclass(frozen=True)
 class MentionOptIR:
@@ -2399,6 +2438,350 @@ def _run_optimization_role_bottomup_beam_repair(
     return filled_values, filled_mentions, filled_in_repair
 
 
+def _gcg_local_score(m: "MentionOptIR", s: "SlotOptIR") -> tuple[float, dict[str, Any]]:
+    """Local compatibility score between one mention and one slot.
+
+    Mirrors the logic of _score_mention_slot_opt but uses GCG_LOCAL_WEIGHTS so
+    that the two scoring functions can be tuned independently.
+    """
+    features: dict[str, Any] = {}
+    score = 0.0
+    kind = m.type_bucket
+    expected = s.expected_type
+
+    if _is_type_incompatible(expected, kind):
+        features["type_incompatible"] = True
+        return GCG_LOCAL_WEIGHTS["type_incompatible_penalty"], features
+
+    if kind != "unknown":
+        if (expected == "percent" and kind == "percent") or (expected == "currency" and kind == "currency"):
+            score += GCG_LOCAL_WEIGHTS["type_exact_bonus"]
+            features["type_exact"] = True
+        elif expected in ("int", "float") and kind in {"int", "currency", "float"}:
+            score += GCG_LOCAL_WEIGHTS["type_loose_bonus"]
+            features["type_loose"] = True
+
+    role_overlap = len(m.role_tags & s.slot_role_tags)
+    if role_overlap:
+        score += GCG_LOCAL_WEIGHTS["opt_role_overlap"] * float(role_overlap)
+        features["opt_role_overlap"] = role_overlap
+
+    if m.fragment_type == "objective" and s.is_objective_like:
+        score += GCG_LOCAL_WEIGHTS["fragment_compat_bonus"]
+        features["fragment_objective"] = True
+    if m.fragment_type in ("constraint", "bound") and s.is_bound_like:
+        score += GCG_LOCAL_WEIGHTS["fragment_compat_bonus"]
+        features["fragment_bound"] = True
+    if m.fragment_type == "resource" and s.is_total_like:
+        score += GCG_LOCAL_WEIGHTS["fragment_compat_bonus"]
+        features["fragment_resource"] = True
+    if m.fragment_type == "ratio" and (
+        "ratio_constraint" in s.slot_role_tags or "percentage_constraint" in s.slot_role_tags
+    ):
+        score += GCG_LOCAL_WEIGHTS["fragment_compat_bonus"]
+        features["fragment_ratio"] = True
+
+    if m.operator_tags & s.operator_preference:
+        score += GCG_LOCAL_WEIGHTS["operator_match_bonus"]
+        features["operator_match"] = True
+
+    slot_words = set(s.norm_tokens) | s.alias_tokens
+    ctx_set = set(m.context_tokens)
+    sent_set = set(m.sentence_tokens)
+    ctx_overlap = len(ctx_set & slot_words)
+    if ctx_overlap:
+        score += GCG_LOCAL_WEIGHTS["lex_context_overlap"] * float(ctx_overlap)
+        features["ctx_overlap"] = ctx_overlap
+    sent_overlap = len(sent_set & slot_words)
+    if sent_overlap:
+        score += GCG_LOCAL_WEIGHTS["lex_sentence_overlap"] * float(sent_overlap)
+        features["sent_overlap"] = sent_overlap
+
+    if m.unit_tags & s.unit_preference:
+        score += GCG_LOCAL_WEIGHTS["unit_match_bonus"]
+        features["unit_match"] = True
+
+    entity_resource = len(
+        (m.nearby_entity_tokens | m.nearby_resource_tokens | m.nearby_product_tokens) & slot_words
+    )
+    if entity_resource:
+        score += GCG_LOCAL_WEIGHTS["entity_resource_overlap"] * float(entity_resource)
+        features["entity_resource_overlap"] = entity_resource
+
+    if s.is_total_like and m.is_total_like:
+        score += GCG_LOCAL_WEIGHTS["coefficient_vs_total_bonus"]
+        features["total_match"] = True
+    if s.is_coefficient_like and m.is_per_unit:
+        score += GCG_LOCAL_WEIGHTS["coefficient_vs_total_bonus"]
+        features["coefficient_match"] = True
+
+    score += GCG_LOCAL_WEIGHTS["schema_prior_bonus"]
+    features["schema_prior"] = True
+
+    if score <= 0.0:
+        score += GCG_LOCAL_WEIGHTS["weak_match_penalty"]
+        features["weak_penalty"] = True
+
+    features["total_score"] = score
+    return score, features
+
+
+def _gcg_global_penalty(
+    assignment: dict[str, "MentionOptIR"],
+    slots_by_name: dict[str, "SlotOptIR"],
+    all_mentions: list["MentionOptIR"],
+) -> tuple[float, list[str]]:
+    """Compute global consistency delta (rewards + penalties) for a full/partial assignment.
+
+    Returns (total_delta, list_of_active_reasons) for diagnostics.
+    """
+    delta = 0.0
+    reasons: list[str] = []
+    w = GCG_GLOBAL_WEIGHTS
+
+    # Detect global evidence: are there percent mentions in the text?
+    has_pct_mention = any(m.type_bucket == "percent" for m in all_mentions)
+
+    # Detect per-slot penalties.
+    used_mention_ids: list[int] = []
+    for slot_name, m in assignment.items():
+        s = slots_by_name.get(slot_name)
+        if s is None:
+            continue
+
+        mid = m.mention_id
+        used_mention_ids.append(mid)
+
+        # Percent misuse.
+        if has_pct_mention and s.expected_type != "percent" and m.type_bucket == "percent":
+            delta += w["percent_misuse_penalty"]
+            reasons.append(f"percent_misuse:{slot_name}")
+
+        if s.expected_type == "percent" and m.type_bucket != "percent" and has_pct_mention:
+            delta += w["non_percent_to_pct_slot_penalty"]
+            reasons.append(f"non_pct_to_pct_slot:{slot_name}")
+
+        # Total vs coefficient mismatch.
+        if s.is_total_like and m.is_per_unit and not m.is_total_like:
+            delta += w["total_to_coeff_penalty"]
+            reasons.append(f"coeff_to_total:{slot_name}")
+        if s.is_coefficient_like and m.is_total_like and not m.is_per_unit:
+            delta += w["coeff_to_total_penalty"]
+            reasons.append(f"total_to_coeff:{slot_name}")
+
+        # Operator/bound flip.
+        if s.operator_preference and m.operator_tags:
+            if "min" in s.operator_preference and "max" in m.operator_tags and "min" not in m.operator_tags:
+                delta += w["bound_flip_penalty"]
+                reasons.append(f"bound_flip_min_to_max:{slot_name}")
+            if "max" in s.operator_preference and "min" in m.operator_tags and "max" not in m.operator_tags:
+                delta += w["bound_flip_penalty"]
+                reasons.append(f"bound_flip_max_to_min:{slot_name}")
+
+        # Coverage reward (per filled slot).
+        delta += w["coverage_reward_per_slot"]
+        reasons.append(f"coverage_reward:{slot_name}")
+
+        # Type consistency reward.
+        if m.type_bucket == s.expected_type or (
+            s.expected_type in ("int", "float") and m.type_bucket in ("int", "float", "currency")
+        ):
+            delta += w["type_consistency_reward"]
+            reasons.append(f"type_consistent:{slot_name}")
+
+    # Duplicate mention penalty (one-to-one should hold).
+    seen: set[int] = set()
+    for mid in used_mention_ids:
+        if mid in seen:
+            delta += w["duplicate_mention_penalty"]
+            reasons.append(f"duplicate_mention:{mid}")
+        seen.add(mid)
+
+    # Overall coverage bonus.
+    if slots_by_name and len(assignment) / max(1, len(slots_by_name)) >= 0.8:
+        delta += w["plausibility_coverage_bonus"]
+        reasons.append("plausibility_coverage_bonus")
+
+    return delta, reasons
+
+
+def _gcg_beam_search(
+    mentions: list["MentionOptIR"],
+    slots: list["SlotOptIR"],
+    local_scores: list[list[float]],
+    local_features: list[list[dict[str, Any]]],
+    beam_width: int = GCG_BEAM_WIDTH,
+) -> tuple[
+    dict[str, "MentionOptIR"],
+    dict[str, float],
+    dict[str, list[dict[str, Any]]],
+    list[dict[str, Any]],
+]:
+    """Beam search over partial slot assignments scored by local + global consistency.
+
+    State: frozenset of (slot_index, mention_index) pairs already committed.
+    Beam entry: (committed_bundle, sum_local_scores).
+
+    At the end, the beam entry with the highest (local_sum + global_delta) wins.
+
+    Returns:
+        assignments        : slot_name -> MentionOptIR
+        slot_scores        : slot_name -> local score
+        debug              : slot_name -> candidate list (for diagnostics)
+        top_assignments    : list of top-k assignment dicts with scores/reasons (diagnostics)
+    """
+    if not mentions or not slots:
+        return {}, {}, {}, []
+
+    slots_by_name = {s.name: s for s in slots}
+
+    # Build debug info: per-slot sorted candidate list.
+    debug: dict[str, list[dict[str, Any]]] = {}
+    for j, sr in enumerate(slots):
+        cands = []
+        for i, mr in enumerate(mentions):
+            cands.append({
+                "mention_id": mr.mention_id,
+                "mention_raw": mr.raw_surface,
+                "score": local_scores[i][j],
+                "features": local_features[i][j],
+            })
+        cands.sort(key=lambda x: x["score"], reverse=True)
+        debug[sr.name] = cands
+
+    # Pruning: build per-slot list of admissible (mention_index, local_score) pairs.
+    admissible: list[list[tuple[int, float]]] = []
+    for j in range(len(slots)):
+        opts = [
+            (i, local_scores[i][j])
+            for i in range(len(mentions))
+            if local_scores[i][j] > GCG_PRUNE_THRESHOLD
+        ]
+        opts.sort(key=lambda x: -x[1])
+        admissible.append(opts)
+
+    # Each beam state: (bundle: frozenset[(slot_j, mention_i)], sum_local)
+    # Slots are processed in their original order.
+    slot_order = list(range(len(slots)))
+
+    # Beam: list of (bundle, sum_local_score)
+    BeamState = tuple[frozenset[tuple[int, int]], float]
+    beam: list[BeamState] = [(frozenset(), 0.0)]
+
+    for j in slot_order:
+        next_beam: list[BeamState] = []
+        for bundle, sum_local in beam:
+            # Option 1: skip this slot (leave unassigned).
+            next_beam.append((bundle, sum_local))
+            # Option 2: assign an admissible mention (one not already used).
+            used_mentions = {mi for _, mi in bundle}
+            for mi, loc_sc in admissible[j]:
+                if mi in used_mentions:
+                    continue
+                new_bundle = bundle | frozenset([(j, mi)])
+                next_beam.append((new_bundle, sum_local + loc_sc))
+
+        # Sort by local sum and prune to beam width.
+        next_beam.sort(key=lambda x: -x[1])
+        beam = next_beam[:beam_width]
+
+    # Score all final beam states with global consistency delta and pick the best.
+    scored_final: list[tuple[float, BeamState, float, list[str]]] = []
+    for bundle, sum_local in beam:
+        assignment_candidate: dict[str, "MentionOptIR"] = {
+            slots[j].name: mentions[mi] for j, mi in bundle
+        }
+        g_delta, reasons = _gcg_global_penalty(assignment_candidate, slots_by_name, mentions)
+        total_score = sum_local + g_delta
+        scored_final.append((total_score, (bundle, sum_local), g_delta, reasons))
+
+    if not scored_final:
+        return {}, {}, debug, []
+
+    scored_final.sort(key=lambda x: -x[0])
+    best_total, (best_bundle, _), best_g_delta, best_reasons = scored_final[0]
+
+    # Build output.
+    assignments: dict[str, "MentionOptIR"] = {}
+    slot_scores: dict[str, float] = {}
+    for j, mi in best_bundle:
+        slot_name = slots[j].name
+        assignments[slot_name] = mentions[mi]
+        slot_scores[slot_name] = local_scores[mi][j]
+
+    # Build top-k diagnostics.
+    top_assignments: list[dict[str, Any]] = []
+    for rank, (total_sc, (bun, loc_sum), g_dl, rsns) in enumerate(scored_final[:beam_width]):
+        asgn_repr = {slots[j].name: mentions[mi].raw_surface for j, mi in bun}
+        top_assignments.append({
+            "rank": rank,
+            "total_score": total_sc,
+            "local_sum": loc_sum,
+            "global_delta": g_dl,
+            "active_reasons": rsns,
+            "assignment": asgn_repr,
+        })
+
+    return assignments, slot_scores, debug, top_assignments
+
+
+def _run_global_consistency_grounding(
+    query: str,
+    variant: str,
+    expected_scalar: list[str],
+    beam_width: int = GCG_BEAM_WIDTH,
+) -> tuple[dict[str, Any], dict[str, "MentionOptIR"], dict[str, Any]]:
+    """Global Consistency Grounding (GCG): beam-search global assignment.
+
+    Stages:
+      1. Extract optimization-role mentions (reuses existing extractor).
+      2. Build slot IRs (reuses existing builder).
+      3. Compute local scores for all (mention, slot) pairs.
+      4. Prune implausible pairs below GCG_PRUNE_THRESHOLD.
+      5. Beam search over partial assignments, scoring by local + global consistency.
+      6. Return the assignment with the highest combined score.
+
+    Returns:
+        filled_values      : slot_name -> numeric value (float or raw string)
+        filled_mentions    : slot_name -> MentionOptIR
+        diagnostics        : dict with top_assignments + per-slot debug info
+    """
+    filled_values: dict[str, Any] = {}
+    filled_mentions: dict[str, "MentionOptIR"] = {}
+    diagnostics: dict[str, Any] = {}
+
+    if not expected_scalar:
+        return filled_values, filled_mentions, diagnostics
+
+    mentions = _extract_opt_role_mentions(query, variant)
+    slots = _build_slot_opt_irs(expected_scalar)
+    if not mentions or not slots:
+        return filled_values, filled_mentions, diagnostics
+
+    m_count, s_count = len(mentions), len(slots)
+
+    # Precompute local scores and features for all (mention, slot) pairs.
+    local_scores: list[list[float]] = [[0.0] * s_count for _ in range(m_count)]
+    local_features: list[list[dict[str, Any]]] = [[{} for _ in range(s_count)] for _ in range(m_count)]
+    for i, mr in enumerate(mentions):
+        for j, sr in enumerate(slots):
+            sc, feats = _gcg_local_score(mr, sr)
+            local_scores[i][j] = sc
+            local_features[i][j] = feats
+
+    assignments, slot_scores, debug, top_assignments = _gcg_beam_search(
+        mentions, slots, local_scores, local_features, beam_width=beam_width
+    )
+
+    for slot_name, mr in assignments.items():
+        filled_values[slot_name] = mr.tok.value if mr.tok.value is not None else mr.tok.raw
+        filled_mentions[slot_name] = mr
+
+    diagnostics["top_assignments"] = top_assignments
+    diagnostics["per_slot_candidates"] = debug
+    return filled_values, filled_mentions, diagnostics
+
+
 def _constrained_assignment(
     mentions: list[MentionRecord],
     slots: list[SlotRecord],
@@ -3257,6 +3640,39 @@ def run_setting(
                                 type_exact5_num[btype] += 1
                             if err <= 0.20:
                                 type_exact20_num[btype] += 1
+            elif assignment_mode == "global_consistency_grounding" and expected_scalar:
+                # Global Consistency Grounding: beam-search assignment with global penalties.
+                filled_values, filled_mentions, _diag = _run_global_consistency_grounding(
+                    query, variant, expected_scalar
+                )
+                for p in expected_scalar:
+                    if p not in filled_values:
+                        continue
+                    m_ir = filled_mentions.get(p)
+                    tok = m_ir.tok if m_ir else None
+                    if tok is None:
+                        continue
+                    n_filled += 1
+                    filled[p] = filled_values[p]
+                    btype = _bucket_type(p)
+                    type_filled_total[btype] += 1
+                    type_filled_q[btype] += 1
+                    et = _expected_type(p)
+                    if tok.kind == et:
+                        type_matches += 1
+                        type_correct_total[btype] += 1
+                        type_correct_q[btype] += 1
+                    if schema_hit and tok.value is not None and _is_scalar(gold_params.get(p)):
+                        gold_val = float(gold_params[p])
+                        err = _rel_err(float(tok.value), gold_val)
+                        comparable_errs.append(err)
+                        if btype in type_names:
+                            type_exact5_den[btype] += 1
+                            type_exact20_den[btype] += 1
+                            if err <= 0.05:
+                                type_exact5_num[btype] += 1
+                            if err <= 0.20:
+                                type_exact20_num[btype] += 1
             elif assignment_mode == "constrained" and expected_scalar:
                 # Global constrained assignment over mention-slot pairs.
                 mention_records = _extract_num_mentions(query, variant)
@@ -3555,6 +3971,8 @@ def run_single_setting(
         effective_baseline = f"{baseline_arg}_optimization_role_bottomup_beam_repair"
     elif assignment_mode == "optimization_role_entity_semantic_beam_repair":
         effective_baseline = f"{baseline_arg}_optimization_role_entity_semantic_beam_repair"
+    elif assignment_mode == "global_consistency_grounding":
+        effective_baseline = f"{baseline_arg}_global_consistency_grounding"
 
     run_setting(
         variant=variant,
@@ -3593,6 +4011,7 @@ def main() -> None:
         choices=(
             "typed", "untyped", "constrained", "semantic_ir_repair",
             "optimization_role_repair", "optimization_role_relation_repair",
+            "global_consistency_grounding",
             # Experimental/archived (not in default focused eval; use run_nlp4lp_focused_eval.py --experimental):
             "optimization_role_anchor_linking", "optimization_role_bottomup_beam_repair",
             "optimization_role_entity_semantic_beam_repair",
@@ -3665,6 +4084,8 @@ def main() -> None:
         effective_baseline = f"{args.baseline}_optimization_role_bottomup_beam_repair"
     elif args.assignment_mode == "optimization_role_entity_semantic_beam_repair":
         effective_baseline = f"{args.baseline}_optimization_role_entity_semantic_beam_repair"
+    elif args.assignment_mode == "global_consistency_grounding":
+        effective_baseline = f"{args.baseline}_global_consistency_grounding"
 
     out_dir = ROOT / "results" / "paper"
     run_setting(

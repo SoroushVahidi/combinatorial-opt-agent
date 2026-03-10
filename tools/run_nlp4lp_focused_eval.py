@@ -37,6 +37,7 @@ FOCUSED_BASELINES_DEFAULT = [
     "tfidf_hierarchical_acceptance_rerank",
     "tfidf_optimization_role_repair",
     "tfidf_optimization_role_relation_repair",
+    "tfidf_global_consistency_grounding",
 ]
 
 BASELINE_ASSIGNMENT_DEFAULT = [
@@ -44,6 +45,7 @@ BASELINE_ASSIGNMENT_DEFAULT = [
     ("tfidf_hierarchical_acceptance_rerank", "typed"),
     ("tfidf", "optimization_role_repair"),
     ("tfidf", "optimization_role_relation_repair"),
+    ("tfidf", "global_consistency_grounding"),
 ]
 
 # Experimental/archived methods (only with --experimental).
@@ -100,6 +102,8 @@ def _effective_baseline(baseline_arg: str, assignment_mode: str) -> str:
         return f"{baseline_arg}_optimization_role_bottomup_beam_repair"
     if assignment_mode == "optimization_role_entity_semantic_beam_repair":
         return f"{baseline_arg}_optimization_role_entity_semantic_beam_repair"
+    if assignment_mode == "global_consistency_grounding":
+        return f"{baseline_arg}_global_consistency_grounding"
     return f"{baseline_arg}_{assignment_mode}"
 
 
