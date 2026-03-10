@@ -3,11 +3,6 @@ Simple web UI: type your combinatorial problem in natural language,
 get the best-matching problem(s) and their integer programs.
 Run: python app.py  then open the URL in your browser.
 User queries are logged to data/collected_queries/user_queries.jsonl for training.
-"""
-Simple web UI: type your combinatorial problem in natural language,
-get the best-matching problem(s) and their integer programs.
-Run: python app.py  then open the URL in your browser.
-User queries are logged to data/collected_queries/user_queries.jsonl for training.
 
 PDF support: you can also upload a PDF file (e.g. a paper or problem spec).
 Its text will be extracted and placed in the query box so you can edit it
