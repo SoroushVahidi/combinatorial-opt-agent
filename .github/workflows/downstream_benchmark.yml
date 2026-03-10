@@ -1,0 +1,145 @@
+# Authenticated downstream benchmark pipeline for ESWA revision.
+#
+# Runs ALL downstream experiments (10 methods × 3 variants) using the
+# real NLP4LP HuggingFace dataset (udell-lab/NLP4LP) with HF_TOKEN.
+# Commits measured results back to the triggering branch.
+#
+# SETUP (one-time):
+#   Settings → Secrets and variables → Actions → HF_TOKEN = hf_...
+#
+# TRIGGER:
+#   Actions tab → "NLP4LP downstream benchmark (authenticated)" → Run workflow
+#   (select the copilot/main-branch-description branch)
+
+name: NLP4LP downstream benchmark (authenticated)
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to commit results back to"
+        required: false
+        default: "copilot/main-branch-description"
+
+jobs:
+  run-downstream-benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240      # 4 h generous budget; 30 settings × ~4 min each ≈ 2 h
+    permissions:
+      contents: write           # needed to push results back to the branch
+
+    env:
+      PYTHONUNBUFFERED: "1"
+      HF_DATASETS_DISABLE_PROGRESS_BARS: "1"
+      OMP_NUM_THREADS: "2"
+      MKL_NUM_THREADS: "2"
+      OPENBLAS_NUM_THREADS: "2"
+
+    steps:
+      # ------------------------------------------------------------------ setup
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch || 'copilot/main-branch-description' }}
+          fetch-depth: 1
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # ------------------------------------------------------------------ preflight
+      - name: Verify HF token and dataset access
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python training/external/verify_hf_access.py
+
+      # ------------------------------------------------------------------ benchmark
+      - name: Run full downstream benchmark (all methods × all variants)
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+          GITHUB_SHA: ${{ github.sha }}
+        run: |
+          python training/external/run_full_downstream_benchmark.py \
+            2>&1 | tee /tmp/benchmark_stdout.log
+          echo "Exit code: $?"
+
+      # ------------------------------------------------------------------ upload raw logs
+      - name: Upload benchmark log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-log-${{ github.run_id }}
+          path: /tmp/benchmark_stdout.log
+          if-no-files-found: warn
+
+      # ------------------------------------------------------------------ upload result artifacts
+      - name: Upload result artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nlp4lp-downstream-results-${{ github.run_id }}
+          path: |
+            results/eswa_revision/
+            results/paper/nlp4lp_downstream_summary.csv
+            results/paper/nlp4lp_downstream_types_summary.csv
+          if-no-files-found: warn
+          retention-days: 90
+
+      # ------------------------------------------------------------------ commit results back to branch
+      - name: Commit and push measured results
+        if: success()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name  "copilot-swe-agent[bot]"
+          git config user.email "198982749+Copilot@users.noreply.github.com"
+
+          # Stage all new/changed result files
+          git add \
+            results/eswa_revision/00_env/ \
+            results/eswa_revision/02_downstream_postfix/ \
+            results/eswa_revision/03_prefix_vs_postfix/ \
+            results/eswa_revision/13_tables/postfix_main_metrics.csv \
+            results/eswa_revision/13_tables/prefix_vs_postfix_ablation.csv \
+            results/eswa_revision/14_reports/postfix_main_metrics.md \
+            results/eswa_revision/14_reports/prefix_vs_postfix_ablation.md \
+            results/eswa_revision/manifests/ \
+            results/paper/nlp4lp_downstream_summary.csv \
+            results/paper/nlp4lp_downstream_types_summary.csv \
+            results/paper/ || true
+
+          # Only commit if there are changes
+          if git diff --cached --quiet; then
+            echo "No changes to commit — results already up to date."
+          else
+            RUN_ID="${{ github.run_id }}"
+            COMMIT="${{ github.sha }}"
+            git commit -m "data: add measured downstream benchmark results (run ${RUN_ID}, commit ${COMMIT:0:8})"
+            git push origin HEAD:${{ github.event.inputs.branch || 'copilot/main-branch-description' }}
+            echo "Results pushed to branch."
+          fi
+
+      # ------------------------------------------------------------------ summary
+      - name: Print result summary
+        if: always()
+        run: |
+          echo "=== Experiment results (orig variant) ==="
+          if [ -f results/eswa_revision/14_reports/postfix_main_metrics.md ]; then
+            cat results/eswa_revision/14_reports/postfix_main_metrics.md
+          else
+            echo "Report not found — check benchmark log above."
+          fi
+          echo ""
+          echo "=== postfix_main_metrics.csv ==="
+          if [ -f results/eswa_revision/13_tables/postfix_main_metrics.csv ]; then
+            cat results/eswa_revision/13_tables/postfix_main_metrics.csv
+          fi
