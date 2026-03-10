@@ -1,0 +1,10 @@
+method,metric,pre_fix,post_fix_or_estimate,delta_or_note
+tfidf_typed_greedy,Coverage,0.8222,0.8222,0.0000 (unchanged)
+tfidf_typed_greedy,TypeMatch,0.2267,~0.55–0.65,+0.33 to +0.42 (structural est.)
+tfidf_typed_greedy,TypeMatch_float,0.03,~0.70–0.80,+0.67 to +0.77 (structural est.)
+tfidf_typed_greedy,Exact20,0.214,slightly higher,small improvement expected
+tfidf_typed_greedy,InstReady,0.0725,TBD,likely higher; exact meas. needs gold data
+oracle_typed_greedy,Coverage,0.8695,0.8695,0.0000
+oracle_typed_greedy,TypeMatch,0.2475,~0.60–0.70,structural est.
+oracle_typed_greedy,TypeMatch_float,0.028,~0.70–0.80,structural est.
+oracle_typed_greedy,InstReady,0.0816,TBD,likely higher

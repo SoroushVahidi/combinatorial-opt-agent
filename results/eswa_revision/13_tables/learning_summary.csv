@@ -1,0 +1,3 @@
+run,split,model,pairwise_accuracy,slot_selection_accuracy,exact_slot_fill,type_match,vs_rule_baseline,note
+rule_baseline,test (50 inst.),handcrafted rules,0.247,0.229,0.022,0.125,—,same test split
+nlp4lp_pairwise_ranker,test (50 inst.),distilroberta-base 500 steps,0.197,0.182,0.0,0.068,WORSE on all metrics,job 854626; 230/50/50 split; no synthetic aux

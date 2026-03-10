@@ -231,7 +231,10 @@ artifacts/paper/
 artifacts/experiments/
 logs/
 comparison_reports/
-results/
+results/*
+# Exception: ESWA revision outputs are committed (reproducibility artifacts)
+!results/eswa_revision/
+!results/eswa_revision/**
 
 # Gradio / web UI runtime state
 .gradio/
