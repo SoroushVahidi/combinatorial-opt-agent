@@ -15,7 +15,7 @@ Prior to `2026-03-10T17:xx`, all three workflow files contained a `push` trigger
 Two of the workflows (`downstream_benchmark.yml` and `check-hf-access.yml`) were never registered in GitHub's sidebar because they lacked a `push` or `pull_request` trigger on the default branch (`main`). Only `nlp4lp.yml` was visible.
 
 **Current state (as of 2026-03-10T18:xx):**  
-All workflows now have `workflow_dispatch` only (push stubs removed). The `downstream_benchmark.yml` was correctly triggered via `workflow_dispatch` (run `22922351003`) and **the benchmark did run** — all 27 post-fix settings + 12 pre-fix ablation settings completed in **32 seconds** (not the estimated 2–3 hours). Results were committed to `copilot/main-branch-description`.
+All workflows now have `workflow_dispatch` only (push stubs removed). The `downstream_benchmark.yml` was correctly triggered via `workflow_dispatch` (run `22922351003`) and **the benchmark did run** — all 27 post-fix settings + 12 pre-fix ablation settings completed in **32 seconds** (not the estimated 2–3 hours). Results were committed to the branch named `copilot/main-branch-description` (a PR branch; name is the literal branch name, not a description).
 
 **Why 32 seconds instead of 2–3 hours:**  
 The "2–3 hour" estimate was wrong. The actual computation is fast: gold data loads once (~3 s from HF cache), then each of the 30 settings processes 331 queries with a CPU-only assignment algorithm in <1 s/query = ~0.3 s/setting. Total measured wall-clock for all 30 settings + 12 ablation settings: 32 seconds.
@@ -75,7 +75,7 @@ workflow_dispatch → checkout github.ref
 → python training/external/run_full_downstream_benchmark.py  [THE REAL BENCHMARK]
     → verify HF access (again)
     → load gold params from HF (once, ~3 s)
-    → loop: 10 methods × 3 variants = 30 settings (~0.3 s/setting)
+    → loop: 9 deterministic methods × 3 variants = 27 settings (~0.3 s/setting); 3 random-control runs
     → loop: 4 ablation methods × 3 variants = 12 settings (< 0.2 s/setting)
     → write tables, reports, manifests
     → BENCHMARK COMPLETE (~32 s total)

@@ -15,37 +15,36 @@
 | Experiment | Status | Output |
 |-----------|--------|--------|
 | Retrieval (9 combinations: orig/noisy/short × BM25/TF-IDF/LSA) | ✅ COMPLETED locally | `results/eswa_revision/01_retrieval/` |
-| Pre-fix vs post-fix float ablation (structural analysis) | ✅ COMPLETED structurally | `results/eswa_revision/03_prefix_vs_postfix/` |
-| Deterministic method comparison table | ✅ COMPLETED (manuscript numbers) | `results/eswa_revision/04_method_comparison/` |
+| Pre-fix vs post-fix float ablation (measured, 12 settings) | ✅ COMPLETED (run 22922351003) | `results/eswa_revision/03_prefix_vs_postfix/` |
+| Full post-fix downstream evaluation (9 methods × 3 variants) | ✅ COMPLETED (run 22922351003) | `results/eswa_revision/02_downstream_postfix/` |
+| Deterministic method comparison table | ✅ COMPLETED (post-fix measured) | `results/eswa_revision/13_tables/deterministic_method_comparison_orig.csv` |
 | Retrieval vs grounding bottleneck analysis | ✅ COMPLETED | `results/eswa_revision/05_retrieval_vs_grounding/` |
-| Robustness across variants | ✅ COMPLETED | `results/eswa_revision/06_robustness/` |
+| Robustness across variants | ✅ COMPLETED (post-fix measured) | `results/eswa_revision/13_tables/robustness_by_variant.csv` |
 | Error taxonomy (heuristic) | ✅ COMPLETED | `results/eswa_revision/08_error_taxonomy/` |
 | Learning appendix (existing benchmark run) | ✅ COMPLETED | `results/eswa_revision/10_learning_appendix/` |
 | Runtime summary | ✅ COMPLETED | `results/eswa_revision/11_runtime/` |
-| Full post-fix downstream evaluation (TypeMatch, InstReady) | ❌ BLOCKED (HF_TOKEN) | Pending |
-| SAE end-to-end evaluation | ❌ BLOCKED (HF_TOKEN) | Pending |
-| New methods benchmarked (GCG, anchor, beam) | ❌ BLOCKED (HF_TOKEN) | Pending |
+| SAE end-to-end evaluation | ❌ NOT RUN (out of scope for ESWA revision) | — |
+| New methods benchmarked (GCG, anchor, beam) | ❌ NOT RUN (out of scope for ESWA revision) | — |
 
 ### What succeeded
 
 1. **All 9 retrieval experiments** ran successfully and produced verified numbers.
-2. **8 publication-ready figures** generated and saved to `results/eswa_revision/12_figures/`.
-3. **12 CSV tables** generated covering all major experimental comparisons.
-4. **11 markdown reports** with interpretation and manuscript guidance.
-5. **CI fixed**: removed `push` trigger from `nlp4lp.yml` (was causing `action_required` from bot commits).
+2. **Full downstream benchmark** (9 methods × 3 variants) ran via GitHub Actions run `22922351003` (2026-03-10T20:18Z). All 27 post-fix settings + 12 pre-fix ablation settings completed in 32 seconds.
+3. **8 publication-ready figures** generated and saved to `results/eswa_revision/12_figures/`.
+4. **12 CSV tables** generated covering all major experimental comparisons.
+5. **11 markdown reports** with interpretation and manuscript guidance.
+6. **CI fixed**: removed `push` trigger stubs from all workflow files.
 
-### What failed (with reasons)
+### What was not run (out of scope)
 
-1. **Full downstream evaluation** — requires `udell-lab/NLP4LP` gold parameters via HuggingFace.
-   HF_TOKEN is not set in sandbox. Numbers from manuscript-era docs used as baseline.
-2. **Post-fix TypeMatch measurement** — same blocker. Structural estimate provided (+0.33–0.42pp overall).
-3. **SAE end-to-end** — same blocker. Structural coverage (62.9%) and hand-crafted (24/24) documented.
+1. **SAE end-to-end evaluation** — not required for the ESWA revision.
+2. **New methods (GCG, anchor_linking, bottomup_beam)** — future work, not included in this revision.
 
-### What remains uncertain
+### What was previously uncertain (now resolved)
 
-- Exact end-to-end TypeMatch after the `_is_type_match` fix (structural estimate: +33–42pp)
-- Whether new methods (GCG, anchor_linking, bottomup_beam) improve InstReady over 0.085
-- Whether SAE improves TypeMatch vs standard extraction on canonical benchmark
+- Exact end-to-end TypeMatch after the `_is_type_match` fix: **measured at 0.7513 for tfidf_typed_greedy orig** (was 0.2595 pre-fix, delta +0.4918)
+- InstReady: **measured at 0.5257 for tfidf_typed_greedy orig** (was 0.0725 pre-fix)
+- Noisy/short variant downstream metrics: now fully measured (see `postfix_main_metrics.csv`)
 
 ---
 
@@ -53,11 +52,7 @@
 
 ### Did the float fix help materially?
 
-**Structurally: YES.** The `_is_type_match` fix converts 97.7% of float-slot token pairs from
-0% type-match to 81.8% structural compatibility. This should substantially improve TypeMatch
-from the pre-fix baseline of 0.227. Structural estimate: overall TypeMatch ~0.55–0.65.
-
-**End-to-end: UNKNOWN.** Full measurement requires gold data (HF_TOKEN).
+**YES — confirmed by end-to-end measurement.** The `_is_type_match` fix converts 97.7% of float-slot token pairs from 0% type-match to high structural compatibility. End-to-end result: TypeMatch improved from 0.2595 (pre-fix) to 0.7513 (post-fix) for tfidf_typed_greedy on the orig variant — a delta of **+0.4918**. Oracle retrieval: 0.2885 → 0.8030 (+0.5145). These are measured values from GitHub Actions run `22922351003`.
 
 **Both metric accounting AND assignment behavior are affected.** The fix is correct and conservative
 (integers ARE valid float values). Running the canonical downstream evaluation with the fix is the
@@ -65,30 +60,25 @@ single highest-priority next experiment.
 
 ### Which deterministic method is best balanced?
 
-**`tfidf_optimization_role_repair`**: Full coverage (0.822), improved TypeMatch (0.243),
-improved Exact20 (0.277), modest InstReady (0.060). Best for use cases requiring both
-completeness and accuracy without sacrificing fill rate.
+**`tfidf_semantic_ir_repair`**: Coverage 0.7817, TypeMatch **0.7549** (highest among deterministic methods), InstReady 0.4864. Best for use cases requiring high type precision without sacrificing too much coverage.
+
+**`tfidf_typed_greedy`**: Coverage 0.8639, TypeMatch 0.7513, InstReady 0.5257 — the highest InstReady among non-oracle methods. Best overall balance.
 
 ### Which method has highest InstantiationReady?
 
-**`tfidf_hierarchical_acceptance_rerank`** (InstReady = 0.0846). Highest fraction of queries
-meeting both coverage ≥ 0.8 AND type_match ≥ 0.8. Comes at cost of schema R@1 (0.846 vs 0.906).
+**`oracle_typed_greedy`** (InstReady = 0.5650). This is the upper bound — perfect retrieval. Among non-oracle methods, **`tfidf_typed_greedy`** (0.5257) is highest.
 
-### Is retrieval still no longer the main bottleneck?
+### Is retrieval still the main bottleneck?
 
-**Confirmed.** Oracle retrieval (R@1 = 1.0) gives InstReady 0.082 — only +0.009 above TF-IDF
-typed (0.073). A 9.4pp improvement in schema recall buys under 1pp improvement in InstReady.
-Downstream grounding is the dominant bottleneck.
+**Confirmed — retrieval is NOT the main bottleneck.** Oracle retrieval (R@1 = 1.0) gives InstReady 0.5650 vs TF-IDF typed 0.5257 — a gap of only +0.0393 despite perfect retrieval. Downstream grounding is the dominant bottleneck.
 
 ### Does hybrid help short queries?
 
-**Retrieval: YES** (+0.012 R@1 on short queries, documented). **Downstream: unknown** (HF_TOKEN
-needed to measure coverage/TypeMatch improvement from hybrid retrieval on short variant).
+**Retrieval: YES** (+0.012 R@1 on short queries, documented). **Downstream: measured.** See `postfix_main_metrics.csv` short variant rows for all methods. Coverage on short is ~0.10–0.13 (limited by short query retrieval recall); TypeMatch ~0.22–0.29 where it applies.
 
 ### Does SAE help under canonical evaluation?
 
-**Unknown.** SAE achieves 100% on hand-crafted cases and 62.9% structural coverage. End-to-end
-comparison vs standard extraction requires gold data.
+**Not benchmarked in this revision.** SAE achieves 100% on hand-crafted cases and 62.9% structural coverage. End-to-end comparison vs standard extraction is future work.
 
 ### What does the error taxonomy say?
 
@@ -106,13 +96,13 @@ major sources are slot disambiguation (~50), total/unit confusion (~20), and flo
 | Content | Evidence base | Confidence |
 |---------|--------------|------------|
 | Retrieval results (all 9 combinations × orig/noisy/short) | Locally verified | HIGH |
-| Deterministic method comparison table (10 methods) | Manuscript-verified docs | HIGH |
+| Deterministic method comparison table (9 methods) | Measured — run 22922351003 | HIGH |
 | Coverage–precision tension as main finding | Evidence from all methods | HIGH |
-| Float TypeMatch bottleneck: root cause identified + fix | Code audit + structural estimate | HIGH |
-| Schema R@1: retrieval strong, not the main bottleneck | Oracle vs TF-IDF gap analysis | HIGH |
+| Float TypeMatch bottleneck: root cause identified + fix | Measured — delta +0.49 (orig tfidf) | HIGH |
+| Schema R@1: retrieval strong, not the main bottleneck | Oracle vs TF-IDF gap: +0.039 InstReady | HIGH |
 | Learning: honest negative result (table in appendix) | Benchmark-valid GPU run | HIGH |
-| Runtime: all methods sub-second on CPU | Locally measured | HIGH |
-| Post-fix TypeMatch improvement | Structural estimate only | MEDIUM (awaiting HF run) |
+| Runtime: all methods ≤4 s per 331-query variant on CPU | Measured — run 22922351003 | HIGH |
+| Post-fix TypeMatch improvement (0.2595 → 0.7513, orig tfidf) | Measured — run 22922351003 | HIGH |
 
 ### What should go in appendix
 
@@ -125,19 +115,18 @@ major sources are slot disambiguation (~50), total/unit confusion (~20), and flo
 ### What claims are safe
 
 - "Retrieval R@1 ≥ 0.77 on the hardest (short) variant and ≥ 0.90 on orig."
-- "Downstream grounding is the bottleneck: oracle retrieval improves InstReady by only +0.009."
+- "Downstream grounding is the bottleneck: oracle retrieval improves InstReady by only +0.039 (0.5650 vs 0.5257 for tfidf_typed)."
 - "No single deterministic method dominates all metrics — a Pareto frontier exists between coverage and precision."
 - "Float type classification was identified as the largest error source (~70% of float slots mistyped pre-fix)."
-- "A deterministic fix (`_is_type_match`) structurally resolves the float mismatch; end-to-end measurement pending."
+- "A deterministic fix (`_is_type_match`) resolves the float mismatch; measured end-to-end TypeMatch improvement: +0.4918 (orig, tfidf_typed_greedy), +0.5145 (orig, oracle). Source: GitHub Actions run 22922351003."
 - "Learned pairwise ranker (distilroberta-base, 500 steps) scored below the rule baseline on all metrics."
-- "All methods run in under 1 second per query on CPU hardware."
+- "All methods run in under 4 seconds per 331-query variant on CPU hardware."
 
 ### What claims should be avoided
 
-- Claiming specific post-fix TypeMatch without running on gold data
 - Claiming GCG/anchor/beam improve InstReady (not benchmarked end-to-end)
 - Claiming SAE improves end-to-end TypeMatch (only structural evidence exists)
-- Claiming the noisy variant "works well" without the caveat that downstream is zero by design
+- Claiming the noisy variant "works well" — by design, noisy TypeMatch is low (0.14) because number tokens are replaced with `<num>`, defeating type matching
 
 ---
 
@@ -186,26 +175,15 @@ major sources are slot disambiguation (~50), total/unit confusion (~20), and flo
 
 ---
 
-## 5. Next Steps (Ordered by Priority)
+## 5. Status (as of 2026-03-10)
 
-1. **[Priority 1]** Set `HF_TOKEN` in sandbox / CI, then run:
-   ```bash
-   python tools/run_nlp4lp_focused_eval.py --variant orig
-   ```
-   This produces the definitive post-fix TypeMatch and InstReady numbers.
+All core experiments for the ESWA revision are complete. No further benchmark runs are needed unless:
+1. You want to benchmark the new methods (GCG, anchor_linking, bottomup_beam) — these are future work.
+2. You want to evaluate SAE end-to-end — also future work.
 
-2. **[Priority 2]** Benchmark new methods (GCG, anchor_linking, bottomup_beam):
-   ```bash
-   python tools/nlp4lp_downstream_utility.py --variant orig --baseline tfidf --assignment-mode global_consistency_grounding
-   python tools/nlp4lp_downstream_utility.py --variant orig --baseline tfidf --assignment-mode optimization_role_anchor_linking
-   ```
-
-3. **[Priority 3]** Run noisy/short variants for all methods:
-   ```bash
-   for variant in noisy short; do python tools/run_nlp4lp_focused_eval.py --variant $variant; done
-   ```
-
-4. **[Priority 4]** Evaluate hybrid retriever on downstream:
-   - Hybrid BM25+TF-IDF gives +0.012pp R@1 on short; measure downstream impact.
-
-5. **[Priority 5]** Update tables/figures in this report with post-fix numbers once available.
+To rerun the benchmark (e.g., after a code change):
+```
+GitHub Actions → "NLP4LP downstream benchmark (authenticated)" → Run workflow
+Branch: <your branch>
+```
+Runtime: ~3 minutes total (32 s benchmark loop + pip install).
