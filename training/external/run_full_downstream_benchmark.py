@@ -35,6 +35,8 @@ VARIANTS = ["orig", "noisy", "short"]
 
 # Each tuple: (baseline_arg, assignment_mode, display_name)
 # These cover all 10 requested methods.
+# 9 deterministic methods (random_seeded control is run separately per variant)
+# Total across 3 variants: 9 × 3 + 3 random = 30 settings
 METHODS: list[tuple[str, str, str]] = [
     ("tfidf", "typed", "tfidf_typed_greedy"),
     ("bm25", "typed", "bm25_typed_greedy"),
@@ -241,7 +243,8 @@ def run_pipeline() -> None:
     all_results: list[dict] = []
 
     # 6. Run all methods × variants (post-fix — current code)
-    total = len(METHODS) * len(VARIANTS) + len(VARIANTS)  # +random
+    # Total: len(METHODS) deterministic + 1 random control, each × len(VARIANTS)
+    total = (len(METHODS) + 1) * len(VARIANTS)
     done = 0
     for variant in VARIANTS:
         eval_path = ROOT / "data" / "processed" / f"nlp4lp_eval_{variant}.jsonl"
