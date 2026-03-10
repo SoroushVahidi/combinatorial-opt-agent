@@ -8,57 +8,53 @@
 
 ## Run workflow button — Root cause and fix
 
-### Root cause
+### What happened: fast (< 20 second) workflow completions
 
-GitHub only shows the **"Run workflow"** button in the Actions UI for `workflow_dispatch` workflows
-that exist on the repository's **default branch** (`main`).
+All runs you saw in the Actions tab were triggered by `push` events (git pushes to the branch),
+**not** by the "Run workflow" button. Those push-triggered runs were deliberately designed to
+exit immediately in ~20 seconds — they just printed a message and did nothing.
 
-Confirmed state (2026-03-10):
-- `main` has **NO `.github/` directory** — verified by GitHub API (`GET /repos/.../contents/.github?ref=main` → 404)
-- All 3 workflow files exist **only** on `copilot/main-branch-description`
-- Result: workflows appear in the Actions sidebar (they have run history from push triggers), but
-  the **"Run workflow" button is absent** on all 3 workflow pages
+This was a mistake: the push triggers were added to "register" the workflows with GitHub so the
+"Run workflow" button would appear. But the fast exit runs caused confusion because they showed
+as green ✅ in ~20 seconds, making it look like the benchmark had completed.
 
-### Minimal fix applied in this PR
+### Fix applied
 
-All 3 workflow files now have `push: branches: [main, copilot/main-branch-description]` triggers
-with path filters. After this PR is merged:
+All three workflow files have been simplified:
+- **Removed** the `push` triggers
+- **Removed** the "Skip on push (registration-only run)" early-exit steps
+- **Removed** all `if: github.event_name == 'workflow_dispatch'` guards
 
-1. The merge commit pushes the workflow files to `main`
-2. The path-filtered push triggers fire on `main` → fast registration runs (~10s each, no benchmark)
-3. All expensive steps are gated with `if: github.event_name == 'workflow_dispatch'`
-4. GitHub detects `workflow_dispatch` on the default branch → **"Run workflow" button appears**
+Now every run of each workflow is a real run — no more fast-exit placeholder runs.
 
-### Exact UI steps after PR merge
+### How to trigger the actual benchmark
+
+The "Run workflow" button works for any branch that contains the workflow file with a
+`workflow_dispatch` trigger. Since the workflows are on `copilot/main-branch-description`,
+the button works right now without merging:
 
 ```
-1. Merge this PR (or repo owner merges via GitHub PR page)
-2. Go to: https://github.com/SoroushVahidi/combinatorial-opt-agent/actions
-3. In the left sidebar, click "NLP4LP benchmark"
+1. Go to: https://github.com/SoroushVahidi/combinatorial-opt-agent/actions
+2. In the left sidebar, click "Check HF access" FIRST (quick test, ~60s)
+   → Verifies your HF_TOKEN is configured correctly
+   → If this fails: Settings → Secrets → Actions → add HF_TOKEN = hf_...
+3. Once HF access is confirmed, click "NLP4LP benchmark"
 4. Click the "Run workflow" button (top-right of the run list)
 5. In the dropdown, select branch: copilot/main-branch-description
-   (or main, after results are merged back)
 6. Click the green "Run workflow" button
 7. Runtime: ~2–3 hours
-8. Results committed automatically to the selected branch with source: measured
+8. Results committed automatically to the branch with source: measured
 ```
 
-### If you cannot merge the PR yet (trigger right now via CLI)
+### If the "Run workflow" button is not visible
+
+Use the GitHub CLI to trigger directly:
 
 ```bash
-# Trigger the full benchmark on the PR branch without merging:
 gh workflow run nlp4lp.yml \
   --repo SoroushVahidi/combinatorial-opt-agent \
   --ref copilot/main-branch-description
-
-# Or use the workflow ID:
-gh workflow run 244220556 \
-  --repo SoroushVahidi/combinatorial-opt-agent \
-  --ref copilot/main-branch-description
 ```
-
-This uses the GitHub CLI which can trigger `workflow_dispatch` on any branch,
-bypassing the UI's default-branch requirement.
 
 ---
 
@@ -66,9 +62,9 @@ bypassing the UI's default-branch requirement.
 
 ### `.github/workflows/nlp4lp.yml` — Name: `NLP4LP benchmark`
 
-- **Triggers:** `workflow_dispatch` + `push` (path-filtered to `[main, copilot/main-branch-description]`)
+- **Triggers:** `workflow_dispatch` only (push triggers removed)
 - **Jobs:** `build-benchmark` (single job, 5h timeout)
-- **Exact run commands (workflow_dispatch only — gated):**
+- **Exact run commands:**
   ```bash
   python training/external/verify_hf_access.py
   python training/external/build_nlp4lp_benchmark.py
@@ -82,9 +78,9 @@ bypassing the UI's default-branch requirement.
 
 ### `.github/workflows/downstream_benchmark.yml` — Name: `NLP4LP downstream benchmark (authenticated)`
 
-- **Triggers:** `workflow_dispatch` + `push` (path-filtered to `[main, copilot/main-branch-description]`)
+- **Triggers:** `workflow_dispatch` only (push triggers removed)
 - **Jobs:** `run-downstream-benchmark` (single job, 4h timeout)
-- **Exact run commands (workflow_dispatch only — gated):**
+- **Exact run commands:**
   ```bash
   python training/external/verify_hf_access.py
   python training/external/run_full_downstream_benchmark.py
@@ -97,9 +93,9 @@ bypassing the UI's default-branch requirement.
 
 ### `.github/workflows/check-hf-access.yml` — Name: `Check HF access`
 
-- **Triggers:** `workflow_dispatch` + `push` (path-filtered to `[main, copilot/main-branch-description]`)
+- **Triggers:** `workflow_dispatch` only (push triggers removed)
 - **Jobs:** `verify` (single job, no timeout)
-- **Exact run commands (workflow_dispatch only — gated):**
+- **Exact run commands:**
   ```bash
   python training/external/verify_hf_access.py
   ```
