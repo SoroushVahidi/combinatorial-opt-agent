@@ -62,7 +62,7 @@ def _log_user_query(query: str, top_k: int, results: list) -> None:
             "query": query.strip(),
             "top_k": int(top_k),
             "results": [
-                {"name": p.get("name", ""), "score": float(s)}
+                {"id": p.get("id", ""), "name": p.get("name", ""), "score": float(s)}
                 for p, s in results
             ],
         }

@@ -5,7 +5,9 @@ Usage:
     python analyze_feedback.py
 
 This script reads:
-  - data/feedback/chat_logs.jsonl  (one JSON record per interaction)
+  - data/collected_queries/user_queries.jsonl  (one JSON record per interaction,
+    written by app.py — primary source)
+  - data/feedback/chat_logs.jsonl  (legacy alternative log path)
   - any CSV files under data/feedback/ produced by Gradio flagging
 
 and prints simple summaries:
@@ -26,21 +28,33 @@ ROOT = Path(__file__).resolve().parent
 FEEDBACK_DIR = ROOT / "data" / "feedback"
 CHAT_LOG_PATH = FEEDBACK_DIR / "chat_logs.jsonl"
 
+# User queries written by app.py (primary source for query/result analytics)
+COLLECTED_QUERIES_DIR = ROOT / "data" / "collected_queries"
+USER_QUERIES_PATH = COLLECTED_QUERIES_DIR / "user_queries.jsonl"
+
 
 def load_chat_logs() -> list[dict]:
+    """Load interaction records from all known log locations.
+
+    ``app.py`` writes to ``data/collected_queries/user_queries.jsonl``.
+    A secondary legacy path ``data/feedback/chat_logs.jsonl`` is also checked
+    for backward compatibility.  Records from both files are merged; duplicates
+    are not de-duplicated (the caller is doing simple counting).
+    """
     records: list[dict] = []
-    if not CHAT_LOG_PATH.exists():
-        return records
-    with CHAT_LOG_PATH.open(encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if not line:
-                continue
-            try:
-                records.append(json.loads(line))
-            except json.JSONDecodeError:
-                # Skip malformed lines rather than failing.
-                continue
+    for path in (USER_QUERIES_PATH, CHAT_LOG_PATH):
+        if not path.exists():
+            continue
+        with path.open(encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    records.append(json.loads(line))
+                except json.JSONDecodeError:
+                    # Skip malformed lines rather than failing.
+                    continue
     return records
 
 
@@ -75,7 +89,9 @@ def summarize_chats(records: list[dict]) -> None:
         if query:
             query_counter[query] += 1
         for res in rec.get("results") or []:
-            pid = res.get("problem_id") or "<unknown>"
+            # "id" is written by current app.py; "problem_id" and "name" are
+            # kept as fallbacks for records written by older versions.
+            pid = res.get("id") or res.get("problem_id") or res.get("name") or "<unknown>"
             problem_counter[pid] += 1
 
     print("\nTop queries:")

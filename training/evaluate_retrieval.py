@@ -157,7 +157,7 @@ def main():
 
     model = SentenceTransformer(_default_model_path())
     embeddings = build_index(catalog, model)
-    k = max(args.top_k, 10)
+    k = max(args.top_k, 1)
 
     results_for_metrics: list[tuple[list[str], str]] = []
     for i, (query, expected_id) in enumerate(eval_pairs):
