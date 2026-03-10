@@ -1,11 +1,28 @@
-variant,method,Coverage,TypeMatch,Exact20_on_hits,InstReady,source
-orig,random_seeded,0.0101,0.006,0.125,0.006,placeholder-pre-fix-manuscript-era (run NLP4LP benchmark workflow to replace)
-orig,lsa_typed_greedy,0.7976,0.2063,0.1965,0.0604,placeholder-pre-fix-manuscript-era (run NLP4LP benchmark workflow to replace)
-orig,bm25_typed_greedy,0.8133,0.2251,0.2175,0.0755,placeholder-pre-fix-manuscript-era (run NLP4LP benchmark workflow to replace)
-orig,tfidf_typed_greedy,0.8222,0.2267,0.214,0.0725,placeholder-pre-fix-manuscript-era (run NLP4LP benchmark workflow to replace)
-orig,oracle_typed_greedy,0.8695,0.2475,0.1871,0.0816,placeholder-pre-fix-manuscript-era (run NLP4LP benchmark workflow to replace)
-orig,tfidf_constrained,0.772,0.198,0.3279,0.0272,placeholder-pre-fix-manuscript-era (run NLP4LP benchmark workflow to replace)
-orig,tfidf_semantic_ir_repair,0.778,0.254,0.261,0.063,placeholder-pre-fix-manuscript-era (run NLP4LP benchmark workflow to replace)
-orig,tfidf_optimization_role_repair,0.822,0.243,0.277,0.06,placeholder-pre-fix-manuscript-era (run NLP4LP benchmark workflow to replace)
-orig,tfidf_acceptance_rerank,0.7974,0.2275,N/A,0.0816,placeholder-pre-fix-manuscript-era (run NLP4LP benchmark workflow to replace)
-orig,tfidf_hierarchical_acceptance_rerank,0.7771,0.2303,N/A,0.0846,placeholder-pre-fix-manuscript-era (run NLP4LP benchmark workflow to replace)
+variant,method,Coverage,TypeMatch,Exact20_on_hits,InstReady,n,elapsed_s,source
+orig,tfidf_typed_greedy,0.860922092342032,0.7452835432442686,0.18344118525153,0.5287009063444109,331,0,measured
+orig,bm25_typed_greedy,0.8508515988878528,0.7335729979989802,0.1883678894205209,0.5196374622356495,331,2,measured
+orig,lsa_typed_greedy,0.8266824145978227,0.7053612299080579,0.18220992805830344,0.5075528700906344,331,2,measured
+orig,oracle_typed_greedy,0.9151052963386356,0.7997681824721105,0.17448784722222216,0.56797583081571,331,0,measured
+orig,tfidf_constrained,0.8081826783488419,0.7093354782176541,0.3238504503159678,0.4229607250755287,331,1,measured
+orig,tfidf_semantic_ir_repair,0.7786856144862194,0.752861480580514,0.27340050403430693,0.486404833836858,331,1,measured
+orig,tfidf_optimization_role_repair,0.8218017128893268,0.7015559130362758,0.3035743501412517,0.44108761329305135,331,1,measured
+orig,tfidf_acceptance_rerank,0.830215261408615,0.7260608894294699,0.1767811724646256,0.525679758308157,331,1,measured
+orig,tfidf_hierarchical_acceptance_rerank,0.8120883731910924,0.7096963375664285,0.1770790402709221,0.5196374622356495,331,1,measured
+noisy,tfidf_typed_greedy,0.7696642062200981,0.14368087434552687,0.19820936639118455,0.03927492447129909,331,0,measured
+noisy,bm25_typed_greedy,0.7650175017999797,0.14310541757671663,0.20819444444444443,0.04229607250755287,331,1,measured
+noisy,lsa_typed_greedy,0.7658278277613632,0.14411246692213453,0.1998611111111111,0.04229607250755287,331,2,measured
+noisy,oracle_typed_greedy,0.8196153731741083,0.15367943570360484,0.2079075425790754,0.04229607250755287,331,0,measured
+noisy,tfidf_constrained,0.41539120496824417,0.2334700043159258,0.25783475783475784,0.03625377643504532,331,1,measured
+noisy,tfidf_semantic_ir_repair,0.3476411889553884,0.0,,0.0,331,1,measured
+noisy,tfidf_optimization_role_repair,0.7100181121329162,0.0,,0.0,331,1,measured
+noisy,tfidf_acceptance_rerank,0.7315365986816145,0.13849217248008786,0.22376811594202897,0.04229607250755287,331,1,measured
+noisy,tfidf_hierarchical_acceptance_rerank,0.695942199794164,0.13566524110330755,0.2345679012345679,0.04229607250755287,331,1,measured
+short,tfidf_typed_greedy,0.10648002403378272,0.24723061430010074,0.19093851132686085,0.015105740181268883,331,0,measured
+short,bm25_typed_greedy,0.10622826169742823,0.2487411883182276,0.20064724919093851,0.015105740181268883,331,0,measured
+short,lsa_typed_greedy,0.100504864584303,0.23212487411883184,0.20666666666666667,0.012084592145015106,331,2,measured
+short,oracle_typed_greedy,0.12584545216054024,0.2880161127895267,0.21544715447154472,0.015105740181268883,331,0,measured
+short,tfidf_constrained,0.10648002403378272,0.2945619335347432,0.2411003236245955,0.015105740181268883,331,0,measured
+short,tfidf_semantic_ir_repair,0.03330456049489282,0.08157099697885196,0.22058823529411764,0.006042296072507553,331,0,measured
+short,tfidf_optimization_role_repair,0.03330456049489282,0.0755287009063444,0.27941176470588236,0.006042296072507553,331,0,measured
+short,tfidf_acceptance_rerank,0.11447873207691941,0.2542799597180262,0.22772277227722773,0.021148036253776436,331,0,measured
+short,tfidf_hierarchical_acceptance_rerank,0.10769193880976362,0.24118831822759318,0.24731182795698925,0.021148036253776436,331,0,measured

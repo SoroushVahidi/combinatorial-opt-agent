@@ -1,67 +1,46 @@
-# Commands Prepared for Runtime — Authenticated Downstream Benchmark
+# Commands Run — Runtime Benchmark (Authenticated)
 
-**Date:** 2026-03-10  
-**Status:** READY TO RUN (awaiting GitHub Actions trigger by repo owner)  
-**Branch:** copilot/main-branch-description (commit 8aa9507)
+**Date:** 2026-03-10T21:05:34Z
+**GitHub Actions Run ID:** 22924153330
+**Branch:** main (commit 17e01d90)
+**Environment:** ubuntu-latest / Python 3.11
 
-## Summary of what was done in this Copilot session
-
-1. Created `training/external/run_full_downstream_benchmark.py` — full pipeline script
-2. Created `.github/workflows/downstream_benchmark.yml` — standalone workflow
-3. Updated `.github/workflows/nlp4lp.yml` — now includes full downstream benchmark
-
-## Why the sandbox couldn't execute the experiments
-
-```
-huggingface.co: DNS lookup blocked by sandbox DNS monitoring proxy
-api.github.com/actions: dispatches endpoint blocked by proxy (HTTP 403)
-HF_TOKEN: not set in Copilot sandbox environment
-```
-
-The Copilot sandbox environment has network restrictions that block:
-- huggingface.co (DNS)
-- GitHub Actions API dispatch endpoints
-
-## Commands the GitHub Actions workflow will run
+## HF Access verification
 
 ```bash
-# Phase 0: verify
 python training/external/verify_hf_access.py
+```
 
-# Phase 1: build eval sets  
-python training/external/build_nlp4lp_benchmark.py
+## Full downstream benchmark
 
-# Phase 2: full downstream benchmark (all 30 settings)
+```bash
 NLP4LP_GOLD_CACHE=results/eswa_revision/00_env/nlp4lp_gold_cache.json \
   python training/external/run_full_downstream_benchmark.py
-
-# Phase 3: git commit + push results (automated in workflow)
-git add results/eswa_revision/ results/paper/
-git commit -m "data: add measured downstream benchmark results"
-git push origin HEAD:copilot/main-branch-description
 ```
 
-## Methods that will be benchmarked (3 variants each)
+## Methods run
 
-| Method | baseline_arg | assignment_mode |
-|--------|-------------|-----------------|
-| random_seeded | tfidf | typed (random_control=True) |
-| tfidf_typed_greedy | tfidf | typed |
-| bm25_typed_greedy | bm25 | typed |
-| lsa_typed_greedy | lsa | typed |
-| oracle_typed_greedy | oracle | typed |
-| tfidf_constrained | tfidf | constrained |
-| tfidf_semantic_ir_repair | tfidf | semantic_ir_repair |
-| tfidf_optimization_role_repair | tfidf | optimization_role_repair |
-| tfidf_acceptance_rerank | tfidf_acceptance_rerank | typed |
-| tfidf_hierarchical_acceptance_rerank | tfidf_hierarchical_acceptance_rerank | typed |
+The script ran 10 methods (incl. random control) × 3 variants
+= 30 total settings.
 
-Total: 10 methods × 3 variants = 30 settings + 4 methods × 3 variants pre-fix ablation
+Methods:
+- tfidf_typed_greedy
+- bm25_typed_greedy
+- lsa_typed_greedy
+- oracle_typed_greedy
+- tfidf_constrained
+- tfidf_semantic_ir_repair
+- tfidf_optimization_role_repair
+- tfidf_acceptance_rerank
+- tfidf_hierarchical_acceptance_rerank
+- random_seeded
 
-## Trigger instructions
+## Output files
 
-```
-GitHub.com → SoroushVahidi/combinatorial-opt-agent
-→ Actions → "NLP4LP benchmark"
-→ Run workflow → branch: copilot/main-branch-description
-```
+- `results/eswa_revision/02_downstream_postfix/` — per-query CSVs + JSON
+- `results/eswa_revision/13_tables/postfix_main_metrics.csv`
+- `results/eswa_revision/13_tables/prefix_vs_postfix_ablation.csv`
+- `results/eswa_revision/14_reports/postfix_main_metrics.md`
+- `results/eswa_revision/14_reports/prefix_vs_postfix_ablation.md`
+- `results/eswa_revision/00_env/hf_access_check_runtime.md`
+- `results/eswa_revision/00_env/nlp4lp_gold_cache.json` (HF gold params cache)

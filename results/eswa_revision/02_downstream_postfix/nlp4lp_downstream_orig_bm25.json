@@ -1,0 +1,26 @@
+{
+  "config": {
+    "variant": "orig",
+    "baseline": "bm25",
+    "k": 1,
+    "random_control": false
+  },
+  "aggregate": {
+    "variant": "orig",
+    "baseline": "bm25",
+    "schema_R1": 0.8851963746223565,
+    "param_coverage": 0.8508515988878528,
+    "type_match": 0.7335729979989802,
+    "exact5_on_hits": 0.16794309004835314,
+    "exact20_on_hits": 0.1883678894205209,
+    "param_coverage_hits": 0.9236582908937859,
+    "param_coverage_miss": 0.2894736842105263,
+    "type_match_hits": 0.7940136371023747,
+    "type_match_miss": 0.2675438596491228,
+    "key_overlap": 0.8936244185488899,
+    "key_overlap_hits": 0.9946367625548513,
+    "key_overlap_miss": 0.11476608187134502,
+    "instantiation_ready": 0.5196374622356495,
+    "n": 331
+  }
+}
