@@ -73,6 +73,41 @@ The dataset is built from multiple authoritative sources:
 
 Notable sources: [NL4Opt](https://github.com/nl4opt/nl4opt-competition) (NL→formulation), NLP4LP/OptiMUS, and GAMSPy examples (see [GAMSPy collection](docs/GAMSPY_LOCAL_EXAMPLES_COLLECTION.md)).
 
+## HuggingFace dataset access
+
+Several scripts (e.g. `training/external/nlp4lp_loader.py`, `training/external/build_nlp4lp_benchmark.py`)
+load gated datasets such as `udell-lab/NLP4LP` from the HuggingFace Hub.
+To use them you need a HuggingFace account with access approved on the dataset page,
+and a personal access token configured locally.
+
+**Safe setup — never paste your token into code or a chat:**
+
+```bash
+# 1. Copy the example env file
+cp .env.example .env          # .env is gitignored — it will NOT be committed
+
+# 2. Edit .env and replace the placeholder with your real token
+#    Get a (read-only) token at: https://huggingface.co/settings/tokens
+#    Then set:  HF_TOKEN=hf_...
+
+# 3. Load the variable into your shell (or let your IDE load .env automatically)
+export $(grep -v '^#' .env | xargs)
+
+# 4. Verify
+python -c "import os; print('HF_TOKEN set:', bool(os.environ.get('HF_TOKEN')))"
+```
+
+Alternatively, authenticate once with the HuggingFace CLI (token is stored in
+`~/.cache/huggingface/token` and is never written to the repo):
+
+```bash
+pip install huggingface_hub
+huggingface-cli login        # paste your token at the prompt; choose read-only
+```
+
+All scripts automatically pick up the token from `HF_TOKEN`, `HUGGINGFACE_TOKEN`,
+or the cached CLI token — in that priority order.
+
 ## How to run
 
 1. Clone the repo and install dependencies (see `requirements.txt` or project docs).
