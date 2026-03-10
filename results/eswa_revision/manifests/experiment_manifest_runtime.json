@@ -1,0 +1,25 @@
+{
+  "date": "2026-03-10T20:18:27Z",
+  "run_id": "22922351003",
+  "branch": "main",
+  "commit": "17e01d90",
+  "n_results": 27,
+  "variants": [
+    "orig",
+    "noisy",
+    "short"
+  ],
+  "methods": [
+    "tfidf_typed_greedy",
+    "bm25_typed_greedy",
+    "lsa_typed_greedy",
+    "oracle_typed_greedy",
+    "tfidf_constrained",
+    "tfidf_semantic_ir_repair",
+    "tfidf_optimization_role_repair",
+    "tfidf_acceptance_rerank",
+    "tfidf_hierarchical_acceptance_rerank",
+    "random_seeded"
+  ],
+  "source": "measured-authenticated"
+}

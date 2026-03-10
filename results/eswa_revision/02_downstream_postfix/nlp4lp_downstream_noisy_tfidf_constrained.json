@@ -1,0 +1,26 @@
+{
+  "config": {
+    "variant": "noisy",
+    "baseline": "tfidf_constrained",
+    "k": 1,
+    "random_control": false
+  },
+  "aggregate": {
+    "variant": "noisy",
+    "baseline": "tfidf_constrained",
+    "schema_R1": 0.9033232628398792,
+    "param_coverage": 0.41404847250768695,
+    "type_match": 0.2334700043159258,
+    "exact5_on_hits": 0.24856321839080459,
+    "exact20_on_hits": 0.2593390804597701,
+    "param_coverage_hits": 0.4256133034561128,
+    "param_coverage_miss": 0.3059895833333333,
+    "type_match_hits": 0.2367176301958911,
+    "type_match_miss": 0.203125,
+    "key_overlap": 0.9200507448241587,
+    "key_overlap_hits": 0.9947443860487339,
+    "key_overlap_miss": 0.22213203463203465,
+    "instantiation_ready": 0.03625377643504532,
+    "n": 331
+  }
+}

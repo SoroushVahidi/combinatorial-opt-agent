@@ -1,10 +1,13 @@
-method,metric,pre_fix,post_fix_or_estimate,delta_or_note,source
-tfidf_typed_greedy,Coverage,0.8222,0.8222,0.0000 (unchanged),pre_fix=manuscript-era; post_fix=structural-estimate-not-measured
-tfidf_typed_greedy,TypeMatch,0.2267,~0.55–0.65,+0.33 to +0.42 (structural est.),pre_fix=manuscript-era; post_fix=structural-estimate-not-measured
-tfidf_typed_greedy,TypeMatch_float,0.03,~0.70–0.80,+0.67 to +0.77 (structural est.),pre_fix=manuscript-era; post_fix=structural-estimate-not-measured
-tfidf_typed_greedy,Exact20,0.214,slightly higher,small improvement expected,pre_fix=manuscript-era; post_fix=structural-estimate-not-measured
-tfidf_typed_greedy,InstReady,0.0725,TBD,likely higher; exact meas. needs gold data,pre_fix=manuscript-era; post_fix=not-measured-awaiting-benchmark-run
-oracle_typed_greedy,Coverage,0.8695,0.8695,0.0000,pre_fix=manuscript-era; post_fix=structural-estimate-not-measured
-oracle_typed_greedy,TypeMatch,0.2475,~0.60–0.70,structural est.,pre_fix=manuscript-era; post_fix=structural-estimate-not-measured
-oracle_typed_greedy,TypeMatch_float,0.028,~0.70–0.80,structural est.,pre_fix=manuscript-era; post_fix=structural-estimate-not-measured
-oracle_typed_greedy,InstReady,0.0816,TBD,likely higher,pre_fix=manuscript-era; post_fix=not-measured-awaiting-benchmark-run
+variant,method,Coverage_pre,TypeMatch_pre,Exact20_pre,InstReady_pre,Coverage_post,TypeMatch_post,Exact20_post,InstReady_post,TypeMatch_delta,source
+orig,tfidf_typed_greedy,0.8639,0.2595,0.1991,0.0695,0.8639,0.7513,0.1991,0.5257,+0.4918,measured
+orig,tfidf_optimization_role_repair,0.8248,0.2716,0.2847,0.0665,0.8248,0.7036,0.2847,0.4411,+0.4320,measured
+orig,tfidf_hierarchical_acceptance_rerank,0.8121,0.2593,0.2003,0.0785,0.8121,0.7146,0.2003,0.5136,+0.4553,measured
+orig,oracle_typed_greedy,0.9151,0.2885,0.1882,0.0785,0.9151,0.8030,0.1882,0.5650,+0.5145,measured
+noisy,tfidf_typed_greedy,0.7693,0.0583,0.1801,0.0211,0.7693,0.1414,0.1801,0.0393,+0.0831,measured
+noisy,tfidf_optimization_role_repair,0.7103,0.0000,,0.0000,0.7103,0.0000,,0.0000,+0.0000,measured
+noisy,tfidf_hierarchical_acceptance_rerank,0.6956,0.0647,0.2118,0.0242,0.6956,0.1380,0.2118,0.0423,+0.0733,measured
+noisy,oracle_typed_greedy,0.8196,0.0703,0.1797,0.0211,0.8196,0.1524,0.1797,0.0423,+0.0821,measured
+short,tfidf_typed_greedy,0.1050,0.0962,0.2320,0.0060,0.1050,0.2286,0.2320,0.0151,+0.1324,measured
+short,tfidf_optimization_role_repair,0.0318,0.0438,0.3939,0.0060,0.0318,0.0725,0.3939,0.0060,+0.0287,measured
+short,tfidf_hierarchical_acceptance_rerank,0.1062,0.1133,0.2826,0.0091,0.1062,0.2261,0.2826,0.0211,+0.1128,measured
+short,oracle_typed_greedy,0.1258,0.1133,0.2317,0.0030,0.1258,0.2709,0.2317,0.0151,+0.1576,measured
