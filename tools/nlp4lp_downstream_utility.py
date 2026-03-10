@@ -401,11 +401,28 @@ def _extract_num_mentions(query: str, variant: str) -> list[MentionRecord]:
 
 
 def _expected_type(param_name: str) -> str:
+    """Infer the expected scalar type of an optimization parameter from its name.
+
+    Type hierarchy (checked in order):
+    1. percent  — clearly represents a rate/fraction/percentage
+    2. int      — primary discrete patterns (num, count, items, …)
+    3. currency — monetary / budget-like quantities
+    4. int      — extended discrete patterns (number-of workers, days, shifts, …)
+                  checked *after* currency so "TotalBudget" still → currency
+    5. float    — catch-all for continuous real-valued parameters
+
+    Note on float/int: many optimization coefficients (e.g. RequiredEggsPerSandwich=2)
+    appear as integer text in queries but are conceptually continuous.  The
+    _is_type_match() helper is the authoritative arbiter: it counts an integer
+    token as a full type-match for a float slot.
+    """
     n = (param_name or "").lower()
     if any(s in n for s in ("percent", "percentage", "rate", "fraction")):
         return "percent"
+    # Primary integer indicators (checked before currency to preserve existing behaviour)
     if any(s in n for s in ("num", "count", "types", "items", "ingredients", "nodes", "edges")):
         return "int"
+    # Currency / monetary quantities
     if any(
         s in n
         for s in (
@@ -424,7 +441,56 @@ def _expected_type(param_name: str) -> str:
         )
     ):
         return "currency"
+    # Extended integer indicators — discrete/countable quantities.
+    # Placed *after* currency so "TotalBudget" is not accidentally reclassified.
+    _EXT_INT_PATTERNS = (
+        "number",    # NumberOfShifts, NumberOfWorkers, NumberOfDays, …
+        "workers",   # TotalWorkers
+        "employee",  # NumberOfEmployees
+        "shifts",    # TotalShifts
+        "batches",   # NumberOfBatches
+        "rounds",    # NumberOfRounds
+        "days",      # NumberOfDays, TotalDays
+        "weeks",     # NumberOfWeeks
+        "months",    # NumberOfMonths
+        "trips",     # NumberOfTrips
+        "persons",   # NumberOfPersons
+        "patients",  # NumberOfPatients
+        "tasks",     # NumberOfTasks
+        "machines",  # NumberOfMachines (distinct from cost-related names like MachineCost)
+        "factories", # NumberOfFactories
+        "farms",     # NumberOfFarms
+        "vehicles",  # NumberOfVehicles
+        "trucks",    # NumberOfTrucks
+        "buses",     # NumberOfBuses
+    )
+    if any(s in n for s in _EXT_INT_PATTERNS):
+        return "int"
     return "float"
+
+
+def _is_type_match(expected: str, kind: str) -> bool:
+    """Return True when *kind* is a full type-match for *expected*.
+
+    Key rule: an integer token is a valid assignment for a float slot.
+    Optimization model coefficients (e.g. RequiredEggsPerSandwich = 2.0)
+    commonly appear as whole numbers in natural-language descriptions.
+    Treating int-as-float as a strict mismatch was the root cause of
+    TypeMatch ≈ 0.03 for float-typed parameters.
+
+    Rules:
+    - same kind always matches
+    - int  → float   = full match  (integer IS a real number)
+    - int  → int     = full match
+    - pct  → percent = full match
+    - ccy  → currency= full match
+    - anything else  = no match (handled by loose-match or incompatibility logic)
+    """
+    if expected == kind:
+        return True
+    if expected == "float" and kind == "int":
+        return True
+    return False
 
 
 def _choose_token(expected: str, candidates: list[NumTok]) -> tuple[int | None, NumTok | None]:
@@ -446,8 +512,14 @@ def _choose_token(expected: str, candidates: list[NumTok]) -> tuple[int | None, 
         if expected == "currency":
             pref = 2 if tok.kind == "currency" else 0
             return (pref, absval, tok.raw)
-        # float
-        pref = 2 if tok.kind == "float" and has_decimal else (1 if tok.kind in ("float", "int", "currency") else 0)
+        # float: integer-valued and decimal-valued tokens are equally preferred;
+        # both are valid real-number assignments for float-typed slots.
+        if tok.kind in {"float", "int"}:
+            pref = 2
+        elif tok.kind == "currency":
+            pref = 1
+        else:
+            pref = 0
         return (pref, absval, tok.raw)
 
     best_i = 0
@@ -513,10 +585,19 @@ def _score_mention_slot(m: MentionRecord, s: SlotRecord) -> tuple[float, dict[st
         ):
             score += ASSIGN_WEIGHTS["type_match_bonus"]
             features["type_match"] = True
-        elif expected == "int" and kind in {"int", "currency", "float"}:
+        elif expected == "float" and kind in {"float", "int"}:
+            # Integer-valued tokens are valid for float slots.  Optimization
+            # coefficients (e.g. RequiredEggsPerSandwich = 2) appear as whole
+            # numbers in text but are continuous parameters in the model.
+            score += ASSIGN_WEIGHTS["type_match_bonus"]
+            features["type_match"] = True
+        elif expected == "int" and kind == "int":
+            score += ASSIGN_WEIGHTS["type_match_bonus"]
+            features["type_match"] = True
+        elif expected == "int" and kind in {"currency", "float"}:
             score += ASSIGN_WEIGHTS["type_match_bonus"] * 0.5
             features["type_loose_match"] = True
-        elif expected == "float" and kind in {"float", "int", "currency"}:
+        elif expected == "float" and kind == "currency":
             score += ASSIGN_WEIGHTS["type_match_bonus"] * 0.5
             features["type_loose_match"] = True
 
@@ -763,7 +844,7 @@ def _extract_enriched_mentions(query: str, variant: str) -> list[MentionIR]:
 
 
 def _slot_semantic_expansion(param_name: str) -> frozenset[str]:
-    """Rule-based slot semantic target tags."""
+    """Rule-based slot semantic target tags (enriched with per-unit / total semantics)."""
     n = (param_name or "").lower()
     tags: set[str] = set()
     if "budget" in n:
@@ -782,6 +863,12 @@ def _slot_semantic_expansion(param_name: str) -> frozenset[str]:
         tags.update(["maximum", "at_most", "upper_bound"])
     if any(w in n for w in ("percent", "percentage", "rate", "fraction", "ratio", "share")):
         tags.update(["percentage", "ratio", "share", "rate", "proportion"])
+    # Per-unit / coefficient semantics — helps score against "per", "each" cues
+    if any(w in n for w in ("per", "each", "unit", "perunit")):
+        tags.update(["per_unit", "coefficient", "unit_rate"])
+    # Total / aggregate semantics
+    if "total" in n or "available" in n or "aggregate" in n:
+        tags.update(["total", "aggregate", "available"])
     if not tags:
         tags.add("quantity")
     return frozenset(tags)
@@ -841,7 +928,17 @@ def _score_mention_slot_ir(m: MentionIR, s: SlotIR) -> tuple[float, dict[str, An
         ):
             score += SEMANTIC_IR_WEIGHTS["type_exact_bonus"]
             features["type_exact"] = True
-        elif expected in ("int", "float") and kind in {"int", "currency", "float"}:
+        elif expected == "float" and kind in {"float", "int"}:
+            # float+float = exact; integer-valued tokens are valid for float slots
+            score += SEMANTIC_IR_WEIGHTS["type_exact_bonus"]
+            features["type_exact"] = True
+        elif expected == "int" and kind == "int":
+            score += SEMANTIC_IR_WEIGHTS["type_exact_bonus"]
+            features["type_exact"] = True
+        elif expected in ("int", "float") and kind in {"currency"}:
+            score += SEMANTIC_IR_WEIGHTS["type_loose_bonus"]
+            features["type_loose"] = True
+        elif expected == "int" and kind == "float":
             score += SEMANTIC_IR_WEIGHTS["type_loose_bonus"]
             features["type_loose"] = True
 
@@ -1352,7 +1449,7 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
 
 
 def _slot_opt_role_expansion(param_name: str) -> frozenset[str]:
-    """Slot name -> optimization-role tags (schema-side priors)."""
+    """Slot name -> optimization-role tags (schema-side priors, enriched with per-unit/total)."""
     n = (param_name or "").lower()
     tags: set[str] = set()
     if "budget" in n:
@@ -1380,6 +1477,12 @@ def _slot_opt_role_expansion(param_name: str) -> frozenset[str]:
         tags.update(["time_requirement", "resource_consumption"])
     if "number" in n or "count" in n or "item" in n or "quantity" in n:
         tags.update(["quantity_limit", "cardinality_limit"])
+    # Per-unit / coefficient semantics — improves match with "per", "each" context cues
+    if any(w in n for w in ("per", "each", "unit", "perunit")):
+        tags.update(["unit_cost", "objective_coeff", "resource_consumption"])
+    # Total / aggregate semantics
+    if "total" in n or "available" in n or "aggregate" in n:
+        tags.update(["total_available", "capacity_limit"])
     if not tags:
         tags.add("quantity_limit")
     return frozenset(tags)
@@ -1446,7 +1549,17 @@ def _score_mention_slot_opt(m: MentionOptIR, s: SlotOptIR) -> tuple[float, dict[
         if (expected == "percent" and kind == "percent") or (expected == "currency" and kind == "currency"):
             score += OPT_ROLE_WEIGHTS["type_exact_bonus"]
             features["type_exact"] = True
-        elif expected in ("int", "float") and kind in {"int", "currency", "float"}:
+        elif expected == "float" and kind in {"float", "int"}:
+            # float+float = exact; integer-valued tokens are valid for float slots
+            score += OPT_ROLE_WEIGHTS["type_exact_bonus"]
+            features["type_exact"] = True
+        elif expected == "int" and kind == "int":
+            score += OPT_ROLE_WEIGHTS["type_exact_bonus"]
+            features["type_exact"] = True
+        elif expected in ("int", "float") and kind in {"currency"}:
+            score += OPT_ROLE_WEIGHTS["type_loose_bonus"]
+            features["type_loose"] = True
+        elif expected == "int" and kind == "float":
             score += OPT_ROLE_WEIGHTS["type_loose_bonus"]
             features["type_loose"] = True
 
@@ -2457,7 +2570,17 @@ def _gcg_local_score(m: "MentionOptIR", s: "SlotOptIR") -> tuple[float, dict[str
         if (expected == "percent" and kind == "percent") or (expected == "currency" and kind == "currency"):
             score += GCG_LOCAL_WEIGHTS["type_exact_bonus"]
             features["type_exact"] = True
-        elif expected in ("int", "float") and kind in {"int", "currency", "float"}:
+        elif expected == "float" and kind in {"float", "int"}:
+            # float+float = exact; integer-valued tokens are valid for float slots
+            score += GCG_LOCAL_WEIGHTS["type_exact_bonus"]
+            features["type_exact"] = True
+        elif expected == "int" and kind == "int":
+            score += GCG_LOCAL_WEIGHTS["type_exact_bonus"]
+            features["type_exact"] = True
+        elif expected in ("int", "float") and kind in {"currency"}:
+            score += GCG_LOCAL_WEIGHTS["type_loose_bonus"]
+            features["type_loose"] = True
+        elif expected == "int" and kind == "float":
             score += GCG_LOCAL_WEIGHTS["type_loose_bonus"]
             features["type_loose"] = True
 
@@ -3463,7 +3586,7 @@ def run_setting(
                     type_filled_total[btype] += 1
                     type_filled_q[btype] += 1
                     et = _expected_type(p)
-                    if tok.kind == et:
+                    if _is_type_match(et, tok.kind):
                         type_matches += 1
                         type_correct_total[btype] += 1
                         type_correct_q[btype] += 1
@@ -3495,7 +3618,7 @@ def run_setting(
                     type_filled_total[btype] += 1
                     type_filled_q[btype] += 1
                     et = _expected_type(p)
-                    if tok.kind == et:
+                    if _is_type_match(et, tok.kind):
                         type_matches += 1
                         type_correct_total[btype] += 1
                         type_correct_q[btype] += 1
@@ -3527,7 +3650,7 @@ def run_setting(
                     type_filled_total[btype] += 1
                     type_filled_q[btype] += 1
                     et = _expected_type(p)
-                    if tok.kind == et:
+                    if _is_type_match(et, tok.kind):
                         type_matches += 1
                         type_correct_total[btype] += 1
                         type_correct_q[btype] += 1
@@ -3559,7 +3682,7 @@ def run_setting(
                     type_filled_total[btype] += 1
                     type_filled_q[btype] += 1
                     et = _expected_type(p)
-                    if tok.kind == et:
+                    if _is_type_match(et, tok.kind):
                         type_matches += 1
                         type_correct_total[btype] += 1
                         type_correct_q[btype] += 1
@@ -3592,7 +3715,7 @@ def run_setting(
                     type_filled_total[btype] += 1
                     type_filled_q[btype] += 1
                     et = _expected_type(p)
-                    if tok.kind == et:
+                    if _is_type_match(et, tok.kind):
                         type_matches += 1
                         type_correct_total[btype] += 1
                         type_correct_q[btype] += 1
@@ -3625,7 +3748,7 @@ def run_setting(
                     type_filled_total[btype] += 1
                     type_filled_q[btype] += 1
                     et = _expected_type(p)
-                    if tok.kind == et:
+                    if _is_type_match(et, tok.kind):
                         type_matches += 1
                         type_correct_total[btype] += 1
                         type_correct_q[btype] += 1
@@ -3658,7 +3781,7 @@ def run_setting(
                     type_filled_total[btype] += 1
                     type_filled_q[btype] += 1
                     et = _expected_type(p)
-                    if tok.kind == et:
+                    if _is_type_match(et, tok.kind):
                         type_matches += 1
                         type_correct_total[btype] += 1
                         type_correct_q[btype] += 1
@@ -3695,7 +3818,7 @@ def run_setting(
                     type_filled_total[btype] += 1
                     type_filled_q[btype] += 1
                     et = _expected_type(p)
-                    if tok.kind == et:
+                    if _is_type_match(et, tok.kind):
                         type_matches += 1
                         type_correct_total[btype] += 1
                         type_correct_q[btype] += 1
@@ -3728,7 +3851,7 @@ def run_setting(
                     btype = _bucket_type(p)
                     type_filled_total[btype] += 1
                     type_filled_q[btype] += 1
-                    if tok.kind == et:
+                    if _is_type_match(et, tok.kind):
                         type_matches += 1
                         type_correct_total[btype] += 1
                         type_correct_q[btype] += 1
