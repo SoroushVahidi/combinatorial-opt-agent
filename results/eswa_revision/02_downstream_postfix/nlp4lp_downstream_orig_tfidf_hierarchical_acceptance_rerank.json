@@ -1,0 +1,26 @@
+{
+  "config": {
+    "variant": "orig",
+    "baseline": "tfidf_hierarchical_acceptance_rerank",
+    "k": 1,
+    "random_control": false
+  },
+  "aggregate": {
+    "variant": "orig",
+    "baseline": "tfidf_hierarchical_acceptance_rerank",
+    "schema_R1": 0.8459214501510574,
+    "param_coverage": 0.8120883731910924,
+    "type_match": 0.7146451567901722,
+    "exact5_on_hits": 0.17608531280118006,
+    "exact20_on_hits": 0.20033279553574768,
+    "param_coverage_hits": 0.9207187554508985,
+    "param_coverage_miss": 0.21568627450980393,
+    "type_match_hits": 0.8110031436817156,
+    "type_match_miss": 0.18562091503267975,
+    "key_overlap": 0.8576583704982498,
+    "key_overlap_hits": 0.9964285714285714,
+    "key_overlap_miss": 0.09578275754746343,
+    "instantiation_ready": 0.513595166163142,
+    "n": 331
+  }
+}
