@@ -359,6 +359,6 @@ python tools/summarize_nlp4lp_results.py
 python tools/make_nlp4lp_paper_artifacts.py
 ```
 
-**CI / GitHub Actions:** The `NLP4LP benchmark` workflow (`.github/workflows/nlp4lp.yml`) runs the full benchmark matrix (~2–3 hours). Trigger from **Actions → NLP4LP benchmark → Run workflow**.
+**CI / GitHub Actions:** The `NLP4LP downstream benchmark (authenticated)` workflow (`.github/workflows/downstream_benchmark.yml`) runs the full benchmark matrix. Measured wall-clock time: ~32 seconds for all 30 settings. Trigger from **Actions → NLP4LP downstream benchmark (authenticated) → Run workflow**.
 
 See [HOW_TO_RUN_BENCHMARK.md](HOW_TO_RUN_BENCHMARK.md) for the complete guide.

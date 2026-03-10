@@ -72,7 +72,9 @@ jobs:
       - name: Build NLP4LP eval sets
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: python training/external/build_nlp4lp_benchmark.py
+        run: |
+          python training/external/build_nlp4lp_benchmark.py \
+            --variants orig,noisy,short
 
       # ── Phase 2: Full downstream benchmark ───────────────────────────────
       - name: Run full downstream benchmark (10 methods × 3 variants)

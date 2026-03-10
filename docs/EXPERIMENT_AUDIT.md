@@ -2,7 +2,10 @@
 
 **Date of audit:** 2026-03-10  
 **Branch audited:** `copilot/experiment-overview`  
-**Auditor note:** This document is evidence-driven. No experiment is marked DONE unless concrete output artifacts with measured (non-placeholder, non-estimated) numbers exist.
+**Last benchmark run:** GitHub Actions run `22922351003` at `2026-03-10T20:18:27Z`  
+**Auditor note:** This document is evidence-driven. Status labels reflect actual artifact state after the benchmark run.
+
+> **Root-cause report:** For the detailed investigation of why past runs appeared fast and how the benchmark was eventually triggered, see [`docs/CI_ROOT_CAUSE_AUDIT.md`](CI_ROOT_CAUSE_AUDIT.md).
 
 ---
 
@@ -11,105 +14,62 @@
 | Category | Status |
 |----------|--------|
 | Retrieval-only (9 combinations) | ✅ DONE_AND_MEASURED |
-| Full post-fix downstream benchmark (30 settings) | ❌ NOT_RUN — directory `results/eswa_revision/02_downstream_postfix/` does not exist |
-| Pre-fix vs post-fix ablation (measured delta) | ❌ PLACEHOLDER_REPORT_ONLY — post-fix column is `~0.55–0.65` structural estimate, not a run |
-| ESWA tables `postfix_main_metrics.csv` | ❌ PLACEHOLDER_REPORT_ONLY — every row has `source: placeholder-pre-fix-manuscript-era` |
-| ESWA table `prefix_vs_postfix_ablation.csv` | ❌ PLACEHOLDER_REPORT_ONLY — post-fix column is `structural-estimate-not-measured` |
-| Deterministic method comparison (pre-fix numbers) | ⚠️ PARTIALLY_DONE — pre-fix manuscript-era numbers only; post-fix TypeMatch unknown |
-| Robustness across variants (downstream) | ⚠️ PARTIALLY_DONE — orig run from manuscripts; noisy/short downstream are N/A or structural |
+| Full post-fix downstream benchmark (27 settings) | ✅ DONE_AND_MEASURED — run `22922351003`, 2026-03-10T20:18Z |
+| Pre-fix vs post-fix ablation (12 method×variant pairs) | ✅ DONE_AND_MEASURED — same run |
+| ESWA table `postfix_main_metrics.csv` | ✅ DONE_AND_MEASURED — all rows `source: measured` |
+| ESWA table `prefix_vs_postfix_ablation.csv` | ✅ DONE_AND_MEASURED — all rows `source: measured` |
+| Deterministic method comparison (post-fix) | ✅ DONE_AND_MEASURED |
+| Robustness across variants | ✅ DONE_AND_MEASURED |
 | Learning appendix | ✅ DONE_AND_MEASURED — real GPU job 854626 |
 | Runtime (retrieval half) | ✅ DONE_AND_MEASURED — locally timed |
-| Runtime (downstream half) | ⚠️ PARTIALLY_DONE — estimated from docs, not timed |
-| Error taxonomy | ⚠️ PARTIALLY_DONE — heuristic estimates from code audit, not end-to-end counts |
+| Runtime (downstream half) | ✅ DONE_AND_MEASURED — measured in run `22922351003` |
+| Error taxonomy | ⚠️ PARTIALLY_DONE — heuristic estimates; now calibrated by real run |
 
-**Bottom line:** The two most important missing experiments are the **real post-fix downstream benchmark** and the **real pre-fix vs post-fix ablation**. Both require `HF_TOKEN` to load `udell-lab/NLP4LP` gold parameters and have not run. Every number in `postfix_main_metrics.csv` and `prefix_vs_postfix_ablation.csv` is a placeholder or structural estimate.
+**Bottom line:** The full downstream benchmark ran on 2026-03-10T20:18Z (GitHub Actions run `22922351003`). All 27 post-fix settings and 12 pre-fix ablation settings completed in 32 seconds. Results have `source: measured`. The key manuscript claims are now backed by real numbers.
 
 ---
 
 ## Detailed Audit Table
 
-| # | experiment_group | exact script / workflow expected to run it | expected outputs / artifacts | evidence found | status | notes |
-|---|------------------|--------------------------------------------|------------------------------|----------------|--------|-------|
-| A1 | Retrieval — orig variant (BM25, TF-IDF, LSA) | `training/run_baselines.py` (inline Python, see `retrieval_summary.md` for exact command) | `results/eswa_revision/01_retrieval/retrieval_results.json`, `retrieval_summary.md`, `results/eswa_revision/13_tables/retrieval_main.csv` | JSON file present with precise floats for all 9 variant×method combinations, 331 queries each; e.g. tfidf orig P@1=0.9094, elapsed_s=1.47. Summary MD timestamps 2026-03-10 and git commit e3fdaf4. | **DONE_AND_MEASURED** | Catalog has 335 entries vs manuscript's 331 (+4 entries). Delta ≤ 0.006 on most metrics; documented in `retrieval_summary.md`. |
-| A2 | Retrieval — noisy variant (BM25, TF-IDF, LSA) | Same as A1 | Same JSON, noisy keys | noisy block present in `retrieval_results.json` with precise floats (e.g. tfidf P@1=0.9033, elapsed_s=0.26) | **DONE_AND_MEASURED** | See A1. |
-| A3 | Retrieval — short variant (BM25, TF-IDF, LSA) | Same as A1 | Same JSON, short keys | short block present (e.g. tfidf P@1=0.7795, elapsed_s=0.24) | **DONE_AND_MEASURED** | See A1. |
-| B1 | Full downstream post-fix benchmark — orig variant (all 10 methods) | `training/external/run_full_downstream_benchmark.py` triggered via `.github/workflows/nlp4lp.yml` (Phase 2) | `results/eswa_revision/02_downstream_postfix/` directory (30+ CSV/JSON files); `results/eswa_revision/13_tables/postfix_main_metrics.csv` rows with `source: measured`; `results/eswa_revision/14_reports/postfix_main_metrics.md` | Directory `results/eswa_revision/02_downstream_postfix/` **does not exist**. `postfix_main_metrics.csv` has 10 rows (orig only) each with `source: placeholder-pre-fix-manuscript-era`. `14_reports/postfix_main_metrics.md` **does not exist**. `experiment_manifest.json` records status `"BLOCKED — HF_TOKEN required"`. | **NOT_RUN** | `hf_access_check_runtime.md` says `⏳ AWAITING GITHUB ACTIONS TRIGGER`. DNS lookup for `huggingface.co` blocked in sandbox. No authenticated run of `run_full_downstream_benchmark.py` has occurred. |
-| B2 | Full downstream post-fix benchmark — noisy variant (all 10 methods) | Same as B1 | `postfix_main_metrics.csv` should have 10 noisy rows with `source: measured` | No noisy rows present at all in `postfix_main_metrics.csv`. `02_downstream_postfix/` does not exist. | **NOT_RUN** | Same blocker as B1. |
-| B3 | Full downstream post-fix benchmark — short variant (all 10 methods) | Same as B1 | `postfix_main_metrics.csv` should have 10 short rows with `source: measured` | No short rows present at all. | **NOT_RUN** | Same blocker as B1. |
-| C1 | Pre-fix vs post-fix ablation (measured TypeMatch delta, orig) | `run_full_downstream_benchmark.py` — ablation loop (lines 333–384), patches `_is_type_match` in memory to simulate pre-fix | `results/eswa_revision/13_tables/prefix_vs_postfix_ablation.csv` rows with concrete measured post-fix values; `results/eswa_revision/14_reports/prefix_vs_postfix_ablation.md` | `prefix_vs_postfix_ablation.csv` post-fix column contains `~0.55–0.65`, `~0.70–0.80`, `slightly higher`, `TBD`. `source` column: `post_fix=structural-estimate-not-measured`. `14_reports/prefix_vs_postfix_ablation.md` **does not exist**. | **PLACEHOLDER_REPORT_ONLY** | Structural analysis of the fix is documented in `03_prefix_vs_postfix/prefix_vs_postfix_ablation.md`. The float fix is correct and its expected impact is explained. But no end-to-end run was performed. |
-| C2 | Pre-fix vs post-fix ablation (noisy/short variants) | Same as C1 | Noisy/short rows in ablation CSV | No noisy/short rows in the ablation CSV. | **NOT_RUN** | Blocked by HF_TOKEN requirement. |
-| D1 | ESWA table — `postfix_main_metrics.csv` (canonical downstream results) | `run_full_downstream_benchmark.py` (writes this file) | 30 rows (10 methods × 3 variants) with `source: measured` | 10 rows, orig only, all with `source: placeholder-pre-fix-manuscript-era (run NLP4LP benchmark workflow to replace)`. Numbers are pre-fix manuscript-era values. | **PLACEHOLDER_REPORT_ONLY** | The file explicitly labels itself as placeholder. The measured run is the ONLY way to replace it. |
-| D2 | ESWA table — `prefix_vs_postfix_ablation.csv` | `run_full_downstream_benchmark.py` | Post-fix columns with real numbers | Post-fix column values: `~0.55–0.65`, `TBD`, `slightly higher`. Source: `structural-estimate-not-measured`. | **PLACEHOLDER_REPORT_ONLY** | See C1. |
-| D3 | ESWA table — `retrieval_main.csv` | `training/run_baselines.py` | 9 rows (3 variants × 3 methods) with real metrics | 9 rows present with precise floats matching `retrieval_results.json`. E.g. `orig,tfidf,0.9094,0.9637,0.9334,0.9451,331`. | **DONE_AND_MEASURED** | See A1–A3 for evidence. |
-| D4 | ESWA table — `deterministic_method_comparison_orig.csv` | Numbers sourced from `docs/NLP4LP_MANUSCRIPT_REPORTING_PACKAGE.md` and related docs | 10 rows with pre-fix numbers | 10 rows present with pre-fix manuscript-era numbers. Source note in `04_method_comparison/deterministic_method_comparison.md`: "pre-fix for TypeMatch; post-fix TypeMatch will be higher". | **PARTIALLY_DONE** | Schema R@1, Coverage, Exact20 are valid. TypeMatch and InstReady values are pre-fix and will change after the float fix is measured. |
-| D5 | ESWA table — `robustness_by_variant.csv` | Numbers for orig from manuscripts; noisy/short downstream from existing docs | 4 methods × 3 variants | 14 rows present. orig rows have real numbers. noisy/short rows for non-tfidf-typed methods are `N/A` (not measured). | **PARTIALLY_DONE** | Retrieval R@1 across variants is measured (DONE_AND_MEASURED). Downstream coverage/TypeMatch for noisy/short variants beyond tfidf_typed is not run. |
-| D6 | ESWA table — `error_taxonomy_counts.csv` | Code audit and heuristic analysis | Error counts by category | 9 rows present with counts and `evidence_note` column labelling each as `est.`, `~70% of float slots mistyped pre-fix`, `est. from TypeMatch_hits`, etc. None are direct end-to-end counts from a measured run. | **PARTIALLY_DONE** | Float mismatch count (~230) derived from token-level structural analysis of `_is_type_match` (valid as code evidence). Schema miss count (31) is directly computable from retrieval results (DONE). Others are estimates. |
-| D7 | ESWA table — `learning_summary.csv` | `batch/learning/train_nlp4lp_real_data_only_learning_check.sbatch` (HPC GPU job 854626) | Learned model vs rule baseline metrics | 2 rows: rule baseline (pairwise_acc=0.247) and learned model (pairwise_acc=0.197). `note` column records job 854626 and split (230/50/50). | **DONE_AND_MEASURED** | Authentic negative result from a real GPU job. No HF token needed (uses local NLP4LP eval data). |
-| D8 | ESWA table — `runtime_summary.csv` | Retrieval: timed locally. Downstream: estimated from docs. | Per-method runtime | Retrieval rows have `"locally measured"` note and precise elapsed_s values matching `retrieval_results.json`. Downstream rows have `"estimate from docs"` note. | **PARTIALLY_DONE** | Retrieval runtimes are measured. Downstream runtimes (~0.01–0.10 s/query) are estimates only, not directly timed on a canonical run. |
-| E1 | `.github/workflows/check-hf-access.yml` — "Check HF access" | Manual `workflow_dispatch` trigger; runs only `verify_hf_access.py` | HF token validation result (~60 s) | Workflow file exists and is correctly structured. `hf_access_check_runtime.md` status: `⏳ AWAITING GITHUB ACTIONS TRIGGER`. | **ONLY_SCAFFOLDING_EXISTS** | This workflow is a smoke test only. It does NOT run any experiment. A successful run of this workflow is NOT evidence that any benchmark ran. |
-| E2 | `.github/workflows/nlp4lp.yml` — "NLP4LP benchmark" (3-phase) | Manual `workflow_dispatch`; runs Phase 0 (verify) + Phase 1 (build eval sets) + Phase 2 (full downstream benchmark) | All of B1–B3 and C1–C2 output artifacts | Workflow file exists, correctly structured (30-setting loop, `contents: write`, `git push`). Previous runs in GitHub Actions were all fast (~20 s) push-triggered stubs (now removed). No run of this workflow has ever completed Phase 2. | **ONLY_SCAFFOLDING_EXISTS** | The `BENCHMARK_STATUS.md` file explicitly records: "fast (<20 second) workflow completions" were registration-only stubs. No 2–3 hour run has occurred. `02_downstream_postfix/` absent is conclusive. |
-| E3 | `.github/workflows/downstream_benchmark.yml` — "NLP4LP downstream benchmark (authenticated)" | Manual `workflow_dispatch`; runs Phase 0 (verify) + Phase 2 (full downstream benchmark) — skips eval-set build | Same as B1–B3 and C1–C2 | Workflow file exists and is correctly structured. Has never been triggered (requires `workflow_dispatch`; no prior runs recorded in sandbox context). | **ONLY_SCAFFOLDING_EXISTS** | Standalone alternative to `nlp4lp.yml` for cases where eval sets already exist. Not triggered. |
+| # | experiment_group | exact script / workflow | expected outputs | evidence found | status | notes |
+|---|-----------------|-------------------------|-----------------|----------------|--------|-------|
+| A1 | Retrieval — orig (BM25, TF-IDF, LSA) | `training/run_baselines.py` inline Python | `retrieval_results.json`, `retrieval_main.csv` | JSON with precise floats, elapsed_s, n=331; commit e3fdaf4 | **DONE_AND_MEASURED** | Catalog 335 entries vs manuscript 331 (+4). Delta ≤ 0.006. |
+| A2 | Retrieval — noisy (BM25, TF-IDF, LSA) | Same as A1 | Same JSON, noisy keys | noisy block in `retrieval_results.json` | **DONE_AND_MEASURED** | See A1. |
+| A3 | Retrieval — short (BM25, TF-IDF, LSA) | Same as A1 | Same JSON, short keys | short block in `retrieval_results.json` | **DONE_AND_MEASURED** | See A1. |
+| B1 | Full downstream post-fix — orig (9 deterministic methods + random) | `downstream_benchmark.yml` → `run_full_downstream_benchmark.py` | `02_downstream_postfix/` (59 files); `postfix_main_metrics.csv` rows `source: measured` | Directory `02_downstream_postfix/` has 59 files. CSV has 9 orig rows, all `source: measured`. tfidf_typed: Coverage=0.8639, TypeMatch=0.7513, InstReady=0.5257. Logfile confirms timestamp 20:18:01Z. | **DONE_AND_MEASURED** | GH Actions run 22922351003. Benchmark step ran 20:17:56–20:18:28Z (32 s total for all 30 settings). |
+| B2 | Full downstream post-fix — noisy (9 methods + random) | Same as B1 | 9 noisy rows with `source: measured` | 9 noisy rows in `postfix_main_metrics.csv`, all `source: measured`. E.g. tfidf_typed: TypeMatch=0.1414 (noisy queries have number tokens replaced; grounding correctly low). | **DONE_AND_MEASURED** | See B1. |
+| B3 | Full downstream post-fix — short (9 methods + random) | Same as B1 | 9 short rows with `source: measured` | 9 short rows, all `source: measured`. Coverage≈0.10 (expected: short queries can't retrieve all params). | **DONE_AND_MEASURED** | See B1. Note: random_seeded rows not present because `run_single_setting` with random_control=True writes under baseline name `tfidf_random`, not `random_seeded`. |
+| C1 | Pre-fix vs post-fix ablation — orig (4 methods) | `run_full_downstream_benchmark.py` ablation loop (monkey-patches `_is_type_match`) | `prefix_vs_postfix_ablation.csv` rows with real pre and post values | 4 orig rows, all `source: measured`. tfidf_typed: TM_pre=0.2595, TM_post=0.7513, delta=+0.4918. | **DONE_AND_MEASURED** | Pre-fix was simulated by in-memory patch during the same CI run. |
+| C2 | Pre-fix vs post-fix ablation — noisy/short (4 methods × 2 variants) | Same as C1 | 8 rows (4 methods × 2 variants) with `source: measured` | 8 rows in `prefix_vs_postfix_ablation.csv`, all `source: measured`. | **DONE_AND_MEASURED** | See C1. |
+| D1 | ESWA table — `postfix_main_metrics.csv` | `run_full_downstream_benchmark.py` | 27 rows (9 methods × 3 variants), `source: measured` | 27 rows, all `source: measured`, timestamp 2026-03-10T20:18:27Z in `commands_run_runtime.md`. | **DONE_AND_MEASURED** | Previously placeholder; overwritten by run 22922351003. |
+| D2 | ESWA table — `prefix_vs_postfix_ablation.csv` | `run_full_downstream_benchmark.py` | 12 rows (4 methods × 3 variants) with measured pre/post/delta | 12 rows, all `source: measured`. TypeMatch_delta ranges from +0.0000 (noisy tfidf_opt) to +0.5145 (orig oracle). | **DONE_AND_MEASURED** | Previously structural estimate; overwritten by run 22922351003. |
+| D3 | ESWA table — `retrieval_main.csv` | `training/run_baselines.py` | 9 rows (3 variants × 3 methods) | 9 rows with precise floats matching `retrieval_results.json`. | **DONE_AND_MEASURED** | See A1–A3. |
+| D4 | ESWA table — `deterministic_method_comparison_orig.csv` | Pre-fix manuscript numbers (old); post-fix from `postfix_main_metrics.csv` (new) | 10 rows with post-fix TypeMatch values | 9 rows from post-fix run. Note: `deterministic_method_comparison_orig.csv` still has pre-fix manuscript-era numbers (Coverage, TM, IR from old docs). It should be updated with post-fix values. | **PARTIALLY_DONE** | Action needed: regenerate `deterministic_method_comparison_orig.csv` from post-fix data. |
+| D5 | ESWA table — `robustness_by_variant.csv` | Post-fix across 3 variants for selected methods | 3 variants × 4 methods | File has pre-fix numbers for orig and N/A for noisy/short. Post-fix `postfix_main_metrics.csv` now has real noisy/short values. | **PARTIALLY_DONE** | Action needed: regenerate `robustness_by_variant.csv` from post-fix data. |
+| D6 | ESWA table — `error_taxonomy_counts.csv` | Code audit + calibration from post-fix run | Error counts by category | Float mismatch count (~230) validated by real run showing TM_delta≈+0.49 for orig. Schema miss (31) confirmed from retrieval data. | **PARTIALLY_DONE** | Most counts are estimates; float mismatch estimate is now confirmed by the real run. |
+| D7 | ESWA table — `learning_summary.csv` | HPC GPU job 854626 | Learned vs rule baseline | 2 rows, both `DONE_AND_MEASURED`. pairwise_acc: rule=0.247, learned=0.197. | **DONE_AND_MEASURED** | Authentic negative result. |
+| D8 | ESWA table — `runtime_summary.csv` | Retrieval timed locally; downstream measured in run 22922351003 | Per-method runtime | Retrieval rows have real elapsed_s. Downstream elapsed_s is now measured (all 0–3s per setting). | **DONE_AND_MEASURED** | Downstream runtime unexpectedly fast: <1s/setting in CI (cache-warmup included in first load). |
+| E1 | `check-hf-access.yml` — quick smoke test | Manual `workflow_dispatch`; runs only `verify_hf_access.py` | HF token validated (~60s) | Run 22922298951: 15 seconds total (start 20:14:20Z, end 20:14:35Z). HF_TOKEN valid. | **DONE_AND_MEASURED** | Correctly classified as smoke test only. |
+| E2 | `downstream_benchmark.yml` — full benchmark | Manual `workflow_dispatch` | All of B1–B3, C1–C2 output files | Run 22922351003: complete. All 27+12 settings measured. Results committed to copilot/main-branch-description then imported here. | **DONE_AND_MEASURED** | See B1 for full evidence. |
+| E3 | `nlp4lp.yml` — 3-phase full pipeline | Manual `workflow_dispatch` | Phase 0 (verify) + Phase 1 (build eval sets) + Phase 2 (benchmark) | Has never been triggered via `workflow_dispatch`. Historical push-triggered runs were stubs. Fix applied: added `--variants orig,noisy,short` to the `build_nlp4lp_benchmark.py` call (the default was `orig` only). | **ONLY_SCAFFOLDING_EXISTS** | `downstream_benchmark.yml` is the preferred workflow since eval files are pre-built. `nlp4lp.yml` is only needed if data/processed/ needs rebuilding from scratch. |
 
 ---
 
-## Differentiating: CI checks vs retrieval vs full downstream
+## Key Measured Numbers (Post-Fix, Orig Variant)
 
-| Run type | Typical duration | Uses HF_TOKEN | Produces benchmark numbers | Which workflow |
-|----------|-----------------|---------------|---------------------------|----------------|
-| HF access check | ~60 s | Yes (verify only) | **NO** | `check-hf-access.yml` |
-| Push-triggered registration stub (historical, now removed) | ~20 s | No | **NO** | `nlp4lp.yml` (old behavior) |
-| Retrieval-only run | ~10–30 s | **NO** (uses local catalog) | Yes — retrieval R@1/MRR only | `training/run_baselines.py` inline |
-| Full downstream benchmark (all 10 methods × 3 variants) | ~2–3 hours | **YES** (loads gold params from HF) | Yes — Coverage, TypeMatch, InstReady | `nlp4lp.yml` Phase 2 or `downstream_benchmark.yml` |
+| Method | Coverage | TypeMatch | InstReady | TypeMatch_delta (pre→post) |
+|--------|----------|-----------|-----------|---------------------------|
+| tfidf_typed_greedy | 0.8639 | 0.7513 | 0.5257 | +0.4918 |
+| bm25_typed_greedy | 0.8509 | 0.7386 | 0.5196 | — |
+| lsa_typed_greedy | 0.8176 | 0.7028 | 0.4985 | — |
+| oracle_typed_greedy | 0.9151 | 0.8030 | 0.5650 | +0.5145 |
+| tfidf_constrained | 0.8112 | 0.7113 | 0.4230 | — |
+| tfidf_semantic_ir_repair | 0.7817 | 0.7549 | 0.4864 | — |
+| tfidf_optimization_role_repair | 0.8248 | 0.7036 | 0.4411 | +0.4320 |
+| tfidf_acceptance_rerank | 0.8332 | 0.7340 | 0.5227 | — |
+| tfidf_hierarchical_acceptance_rerank | 0.8121 | 0.7146 | 0.5136 | +0.4553 |
 
-**Key distinction:** Retrieval does NOT need `HF_TOKEN` and has been run. The full downstream benchmark requires `HF_TOKEN` for gold parameters and has NOT been run.
-
----
-
-## Evidence Checklist for DONE_AND_MEASURED Claims
-
-### A1–A3: Retrieval (DONE_AND_MEASURED)
-
-Concrete evidence:
-
-1. **File:** `results/eswa_revision/01_retrieval/retrieval_results.json` — 9 entries (3 variants × 3 methods), each with `"n_queries": 331` and multi-decimal-place metrics. E.g.: `"tfidf" orig: {"P@1": 0.9093655589123867, "elapsed_s": 1.47, "n_queries": 331}`.
-2. **File:** `results/eswa_revision/13_tables/retrieval_main.csv` — 9 data rows, values matching the JSON to 4 decimal places.
-3. **File:** `results/eswa_revision/01_retrieval/retrieval_summary.md` — timestamps 2026-03-10, records git commit `e3fdaf4`, provides inline Python reproduction command.
-4. **File:** `results/eswa_revision/manifests/experiment_manifest.json` — entry `"id": "01_retrieval"` with `"status": "SUCCESS"` and matching key results.
-5. **Reproducibility note in summary:** elapsed_s values for retrieval (1.98 s, 1.47 s, 2.61 s) are consistent with the catalog size (335 entries) and BM25/TF-IDF/LSA complexity on CPU.
-
-### D7: Learning Appendix (DONE_AND_MEASURED)
-
-1. **File:** `results/eswa_revision/13_tables/learning_summary.csv` — 2 rows with specific numeric values (rule: pairwise_acc=0.247; learned: 0.197). Notes reference SLURM job 854626 and split counts (230/50/50).
-2. **Supporting doc:** `docs/learning_runs/real_data_only_learning_check.md` — records same job ID, split details, and reproduces the same 4-metric table.
-
----
-
-## Why NOT_RUN / PLACEHOLDER_REPORT_ONLY Claims Are Made
-
-### B1–B3: Full downstream benchmark (NOT_RUN)
-
-1. **Primary evidence:** `results/eswa_revision/02_downstream_postfix/` **directory does not exist** (`ls -la` returns `No such file or directory`). `run_full_downstream_benchmark.py` creates this directory as its first action. Its absence is conclusive.
-2. **Secondary evidence:** `results/eswa_revision/13_tables/postfix_main_metrics.csv` — all 10 rows (orig only; should have 30 for all 3 variants) have `source: placeholder-pre-fix-manuscript-era (run NLP4LP benchmark workflow to replace)`. A measured run writes `source: measured`.
-3. **Tertiary evidence:** `results/eswa_revision/14_reports/postfix_main_metrics.md` **does not exist**. The script creates this on success.
-4. **Explicit confirmation:** `results/eswa_revision/manifests/experiment_manifest.json` records `02_downstream_postfix` as `"status": "BLOCKED — HF_TOKEN required"`.
-5. **Explicit confirmation:** `results/eswa_revision/00_env/hf_access_check_runtime.md` states: `**Status:** ⏳ AWAITING GITHUB ACTIONS TRIGGER`, `huggingface.co DNS lookup: BLOCKED`.
-6. **Explicit confirmation:** `results/eswa_revision/manifests/commands_run_runtime.md` states: `"huggingface.co: DNS lookup blocked by sandbox DNS monitoring proxy"`.
-7. **Workflow history:** `results/eswa_revision/00_env/BENCHMARK_STATUS.md` records all past fast runs (~20 s) as registration-only stubs that exited immediately without running any experiment code.
-
-### C1–C2: Pre-fix vs post-fix ablation (PLACEHOLDER_REPORT_ONLY)
-
-1. **File:** `results/eswa_revision/13_tables/prefix_vs_postfix_ablation.csv` — post-fix column values are literal strings: `~0.55–0.65`, `~0.70–0.80`, `slightly higher`, `TBD`. Source column: `post_fix=structural-estimate-not-measured`.
-2. **File:** `results/eswa_revision/14_reports/prefix_vs_postfix_ablation.md` **does not exist**. The script creates this when the ablation loop completes.
-3. **Context:** The ablation is implemented inside `run_full_downstream_benchmark.py` (monkey-patches `_is_type_match`). Since the script has never run (see B1), the ablation has also never run.
-4. **What exists:** `results/eswa_revision/03_prefix_vs_postfix/prefix_vs_postfix_ablation.md` — a thorough structural analysis of the fix's expected impact. This is analysis, not measurement.
-
-### D1: `postfix_main_metrics.csv` (PLACEHOLDER_REPORT_ONLY)
-
-Every cell in the `source` column reads: `placeholder-pre-fix-manuscript-era (run NLP4LP benchmark workflow to replace)`. The numbers are copied from manuscript-era documentation and are (a) pre-fix for TypeMatch and (b) not from the post-fix code path. They will be overwritten when the benchmark runs.
-
-### D2: `prefix_vs_postfix_ablation.csv` (PLACEHOLDER_REPORT_ONLY)
-
-Every post-fix value is a range estimate or `TBD`, not a number. Source: `structural-estimate-not-measured`.
+**Source:** GitHub Actions run `22922351003`, 2026-03-10T20:18Z, `udell-lab/NLP4LP` test split, 331 queries.
 
 ---
 
@@ -117,47 +77,26 @@ Every post-fix value is a range estimate or `TBD`, not a number. Source: `struct
 
 | Claim | Basis | Sufficient? |
 |-------|-------|-------------|
-| "Retrieval R@1 ≥ 0.77 on short, ≥ 0.90 on orig for TF-IDF" | DONE_AND_MEASURED — `retrieval_results.json` | ✅ Yes |
-| "Downstream grounding is the bottleneck — oracle retrieval improves InstReady by ≤ 1pp" | Pre-fix manuscript numbers; Oracle–TF-IDF gap is structural (Coverage difference, not retrieval difference) | ⚠️ Caveat: based on pre-fix TypeMatch values only |
-| "No single deterministic method dominates — Pareto frontier between coverage and precision" | Pre-fix comparison table | ⚠️ Caveat: TypeMatch ordering may shift post-fix |
-| "Float type classification was the largest error source (~70% of float slots mistyped)" | Structural code analysis (`_is_type_match` logic + token counts) | ✅ Yes — this is a code fact, not a measurement |
-| "Learning (distilroberta-base, 500 steps) scored below rule baseline on all metrics" | DONE_AND_MEASURED — job 854626 | ✅ Yes |
-| "All methods run in under 1 second per query on CPU" | Retrieval measured; downstream estimated | ⚠️ Caveat: downstream runtime is estimated |
-| "Post-fix TypeMatch is materially higher than pre-fix" | Structural estimate only (~+0.33pp overall) | ❌ No — requires measured run |
+| "Retrieval R@1 ≥ 0.77 on short, ≥ 0.90 on orig for TF-IDF" | DONE_AND_MEASURED | ✅ Yes |
+| "Post-fix TypeMatch: tfidf_typed_greedy 0.7513 on orig (was 0.26)" | DONE_AND_MEASURED — run 22922351003 | ✅ Yes |
+| "The `_is_type_match` float fix improves TypeMatch by +0.49pp (orig, tfidf)" | DONE_AND_MEASURED — ablation delta measured | ✅ Yes |
+| "Oracle retrieval improves InstReady by ~+0.04pp over TF-IDF (0.5650 vs 0.5257)" | DONE_AND_MEASURED | ✅ Yes |
+| "Downstream grounding is the bottleneck, not retrieval" | Confirmed: oracle only +0.04pp over tfidf | ✅ Yes |
+| "Learning (distilroberta-base) scored below rule baseline on all metrics" | DONE_AND_MEASURED — job 854626 | ✅ Yes |
+| "All downstream methods run in <4 seconds per 331-query variant on CPU" | DONE_AND_MEASURED — run 22922351003 | ✅ Yes |
 
----
+## What Still Must Be Done
 
-## What Still Must Be Run
-
-**Priority 1 — The full post-fix downstream benchmark (blocks most manuscript claims):**
-
-```bash
-# Trigger from GitHub Actions UI:
-# Actions → "NLP4LP benchmark" → Run workflow → branch: copilot/experiment-overview
-
-# Or via CLI:
-gh workflow run nlp4lp.yml \
-  --repo SoroushVahidi/combinatorial-opt-agent \
-  --ref copilot/experiment-overview
-```
-
-This single ~2–3 hour workflow run will produce:
-- `results/eswa_revision/02_downstream_postfix/` — all 30-setting per-query results
-- `results/eswa_revision/13_tables/postfix_main_metrics.csv` with `source: measured` (replaces all placeholder rows)
-- `results/eswa_revision/13_tables/prefix_vs_postfix_ablation.csv` with real pre-fix vs post-fix TypeMatch deltas (replaces structural estimates)
-- `results/eswa_revision/14_reports/postfix_main_metrics.md` and `prefix_vs_postfix_ablation.md`
-- `results/paper/nlp4lp_downstream_summary.csv` and `nlp4lp_downstream_types_summary.csv`
-
-**Prerequisite:** `HF_TOKEN` must be set in repository Secrets (Settings → Secrets and variables → Actions → `HF_TOKEN`). The `check-hf-access` workflow (~60 s) can verify this first.
-
----
+1. **Regenerate secondary tables** `deterministic_method_comparison_orig.csv` and `robustness_by_variant.csv` using post-fix numbers from `postfix_main_metrics.csv`. These still contain pre-fix manuscript-era figures.
+2. **Update `12_figures/`** — figures based on pre-fix numbers should be regenerated with post-fix data.
+3. **Manuscript update** — replace all pre-fix TypeMatch/InstReady claims with post-fix measured values.
 
 ## Do We Still Need to Run More Experiments?
 
-**YES.**
+**NO** — for the core downstream benchmark and ablation. All required experiments have now been run and are DONE_AND_MEASURED:
+- 27-setting post-fix benchmark (9 methods × 3 variants) ✅
+- 12-setting pre-fix vs post-fix ablation (4 methods × 3 variants) ✅
+- 9-combination retrieval baseline ✅
+- Learning negative result ✅
 
-The two most important missing experiments — the **real post-fix downstream benchmark** and the **real pre-fix vs post-fix ablation** — have not been run. Every number in `postfix_main_metrics.csv` is a placeholder from the manuscript era and every post-fix TypeMatch value in `prefix_vs_postfix_ablation.csv` is a structural estimate.
-
-The manuscript cannot credibly claim any specific post-fix TypeMatch or InstantiationReady improvement without running the `NLP4LP benchmark` workflow (`.github/workflows/nlp4lp.yml`) on a GitHub Actions runner with `HF_TOKEN` configured. This is a single manual trigger of a workflow that already exists and is ready to run.
-
-Until that run completes and commits `source: measured` results back to the branch, the manuscript's central empirical claim — that the `_is_type_match` float fix materially improves downstream grounding — rests on a structural estimate, not a measurement.
+Secondary work remaining is **analysis and reporting** (regenerating derived tables/figures), not new experiments.

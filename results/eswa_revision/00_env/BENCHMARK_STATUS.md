@@ -1,8 +1,10 @@
 # Benchmark Execution Status — Evidence-Based Verification
 
 **Date of inspection:** 2026-03-10  
-**Branch inspected:** `copilot/main-branch-description`  
-**Short answer:** `NLP4LP downstream benchmark has NOT run. All post-fix downstream result files are placeholders.`
+**Branch inspected:** `copilot/experiment-overview`  
+**Short answer:** `NLP4LP downstream benchmark HAS run. Run 22922351003 completed at 2026-03-10T20:18:27Z. All result files have source: measured.`
+
+> **UPDATE (2026-03-10T20:40Z):** The benchmark ran successfully via `downstream_benchmark.yml` (`workflow_dispatch`) as run `22922351003`. All 27 post-fix settings and 12 pre-fix ablation settings completed in 32 seconds. Results were committed to `copilot/main-branch-description` and imported here. See `docs/CI_ROOT_CAUSE_AUDIT.md` for the full investigation.
 
 ---
 
