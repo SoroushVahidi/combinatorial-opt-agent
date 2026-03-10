@@ -1,5 +1,17 @@
 # Runs the full NLP4LP benchmark pipeline against the HuggingFace gated dataset.
 #
+# ══════════════════════════════════════════════════════════════════════════════
+# ⚠️  IMPORTANT — "Run workflow" button not visible?
+#     The button only appears when this file is on the DEFAULT BRANCH (main).
+#     Merge PR #3 first, then the button will appear here:
+#     https://github.com/SoroushVahidi/combinatorial-opt-agent/actions/workflows/nlp4lp.yml
+#
+#     Alternative (no merge needed) — use GitHub CLI:
+#       gh workflow run nlp4lp.yml \
+#         --repo SoroushVahidi/combinatorial-opt-agent \
+#         --ref copilot/main-branch-description
+# ══════════════════════════════════════════════════════════════════════════════
+#
 # Phase 1: Build eval sets from udell-lab/NLP4LP
 # Phase 2: Run ALL downstream experiments (10 methods × 3 variants) and commit
 #           measured results back to the branch.

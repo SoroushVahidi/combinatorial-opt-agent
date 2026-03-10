@@ -1,6 +1,18 @@
 # Lightweight one-click workflow to confirm that HF_TOKEN is set correctly
 # and that the NLP4LP dataset is reachable — without running the full benchmark.
 #
+# ══════════════════════════════════════════════════════════════════════════════
+# ⚠️  IMPORTANT — "Run workflow" button not visible?
+#     The button only appears when this file is on the DEFAULT BRANCH (main).
+#     Merge PR #3 first, then the button will appear here:
+#     https://github.com/SoroushVahidi/combinatorial-opt-agent/actions/workflows/check-hf-access.yml
+#
+#     Alternative (no merge needed) — use GitHub CLI:
+#       gh workflow run check-hf-access.yml \
+#         --repo SoroushVahidi/combinatorial-opt-agent \
+#         --ref copilot/main-branch-description
+# ══════════════════════════════════════════════════════════════════════════════
+#
 # Trigger from: Actions tab → "Check HF access" → Run workflow
 
 name: Check HF access

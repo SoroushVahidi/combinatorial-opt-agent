@@ -1,5 +1,17 @@
 # Authenticated downstream benchmark pipeline for ESWA revision.
 #
+# ══════════════════════════════════════════════════════════════════════════════
+# ⚠️  IMPORTANT — "Run workflow" button not visible?
+#     The button only appears when this file is on the DEFAULT BRANCH (main).
+#     Merge PR #3 first, then the button will appear here:
+#     https://github.com/SoroushVahidi/combinatorial-opt-agent/actions/workflows/downstream_benchmark.yml
+#
+#     Alternative (no merge needed) — use GitHub CLI:
+#       gh workflow run downstream_benchmark.yml \
+#         --repo SoroushVahidi/combinatorial-opt-agent \
+#         --ref copilot/main-branch-description
+# ══════════════════════════════════════════════════════════════════════════════
+#
 # Runs ALL downstream experiments (10 methods × 3 variants) using the
 # real NLP4LP HuggingFace dataset (udell-lab/NLP4LP) with HF_TOKEN.
 # Commits measured results back to the triggering branch.
