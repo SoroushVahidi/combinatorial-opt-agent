@@ -1,0 +1,52 @@
+# Runs the NLP4LP benchmark pipeline against the HuggingFace gated dataset.
+#
+# SETUP (one-time, by the repo owner):
+#   1. Go to https://huggingface.co/settings/tokens and create a read-only token.
+#   2. In this GitHub repo: Settings → Secrets and variables → Actions → New repository secret
+#      Name:  HF_TOKEN
+#      Value: your token (starts with hf_...)
+#
+# The token is NEVER written to code or logs — it is injected only into
+# the process environment of the steps that need it.
+
+name: NLP4LP benchmark
+
+on:
+  workflow_dispatch:   # run manually from the Actions tab
+  push:
+    paths:
+      - "training/external/**"
+      - "retrieval/**"
+      - ".github/workflows/nlp4lp.yml"
+
+jobs:
+  build-benchmark:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build NLP4LP benchmark
+        # HF_TOKEN is read from the repository secret of the same name.
+        # Scripts fall back to the HuggingFace CLI cache and then to no-auth.
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python training/external/build_nlp4lp_benchmark.py
+
+      - name: Upload benchmark artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: nlp4lp-benchmark
+          path: |
+            data/processed/nlp4lp_catalog.jsonl
+            data/processed/nlp4lp_eval_*.jsonl
+            results/nlp4lp_benchmark_stats.json
+          if-no-files-found: warn

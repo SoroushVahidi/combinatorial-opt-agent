@@ -108,6 +108,13 @@ huggingface-cli login        # paste your token at the prompt; choose read-only
 All scripts automatically pick up the token from `HF_TOKEN`, `HUGGINGFACE_TOKEN`,
 or the cached CLI token — in that priority order.
 
+**For CI / GitHub Actions** — add the token as a repository secret (token never appears in logs):
+
+1. Go to **Settings → Secrets and variables → Actions → New repository secret**
+2. Name: `HF_TOKEN`, Value: your token (starts with `hf_...`)
+3. The `NLP4LP benchmark` workflow (`.github/workflows/nlp4lp.yml`) will pick it up automatically.
+   Trigger it from the **Actions** tab → **NLP4LP benchmark** → **Run workflow**.
+
 ## How to run
 
 1. Clone the repo and install dependencies (see `requirements.txt` or project docs).
