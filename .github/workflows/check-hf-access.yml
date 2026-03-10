@@ -1,0 +1,43 @@
+# Lightweight one-click workflow to confirm that HF_TOKEN is set correctly
+# and that the NLP4LP dataset is reachable — without running the full benchmark.
+#
+# ══════════════════════════════════════════════════════════════════════════════
+# ⚠️  IMPORTANT — "Run workflow" button not visible?
+#     The button only appears when this file is on the DEFAULT BRANCH (main).
+#     Merge PR #3 first, then the button will appear here:
+#     https://github.com/SoroushVahidi/combinatorial-opt-agent/actions/workflows/check-hf-access.yml
+#
+#     Alternative (no merge needed) — use GitHub CLI:
+#       gh workflow run check-hf-access.yml \
+#         --repo SoroushVahidi/combinatorial-opt-agent \
+#         --ref copilot/main-branch-description
+# ══════════════════════════════════════════════════════════════════════════════
+#
+# Trigger from: Actions tab → "Check HF access" → Run workflow
+
+name: Check HF access
+
+on:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install huggingface_hub
+        run: pip install -q huggingface_hub
+
+      - name: Verify HF token and dataset access
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python training/external/verify_hf_access.py

@@ -1,0 +1,11 @@
+method,Schema_R1,Coverage,TypeMatch,Exact20_on_hits,InstReady,rank_InstReady
+random_seeded,0.006,0.0101,0.006,0.125,0.006,10
+lsa_typed_greedy,0.855,0.7976,0.2063,0.1965,0.0604,7
+bm25_typed_greedy,0.8852,0.8133,0.2251,0.2175,0.0755,4
+tfidf_typed_greedy,0.9063,0.8222,0.2267,0.214,0.0725,5
+tfidf_constrained,0.9063,0.772,0.198,0.3279,0.0272,9
+tfidf_semantic_ir_repair,0.9063,0.778,0.254,0.261,0.063,6
+tfidf_optimization_role_repair,0.9063,0.822,0.243,0.277,0.06,8
+tfidf_acceptance_rerank,0.8761,0.7974,0.2275,N/A,0.0816,2
+tfidf_hierarchical_acceptance_rerank,0.8459,0.7771,0.2303,N/A,0.0846,1
+oracle_typed_greedy,1.0,0.8695,0.2475,0.1871,0.0816,3

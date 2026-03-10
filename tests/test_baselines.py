@@ -49,6 +49,7 @@ def test_tfidf_returns_top_k_and_scores():
         assert isinstance(score, (int, float))
 
 
+@pytest.mark.requires_network
 def test_sbert_returns_top_k_and_scores():
     """SBERT baseline rank() returns exactly top_k items with (problem_id, score)."""
     pytest.importorskip("torch", reason="SBERT requires torch")

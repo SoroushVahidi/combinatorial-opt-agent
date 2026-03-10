@@ -223,10 +223,18 @@ data/processed/eval_results.txt
 data/collected_queries/
 
 # Stage-3 learning artifacts and local reports
-artifacts/
+# Exclude specific artifacts subdirs (not the root, to allow negation)
+artifacts/stage*/
+artifacts/learning_runs/
+artifacts/training_results/
+artifacts/paper/
+artifacts/experiments/
 logs/
 comparison_reports/
-results/
+results/*
+# Exception: ESWA revision outputs are committed (reproducibility artifacts)
+!results/eswa_revision/
+!results/eswa_revision/**
 
 # Gradio / web UI runtime state
 .gradio/

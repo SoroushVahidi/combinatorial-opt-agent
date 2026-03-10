@@ -73,6 +73,48 @@ The dataset is built from multiple authoritative sources:
 
 Notable sources: [NL4Opt](https://github.com/nl4opt/nl4opt-competition) (NL→formulation), NLP4LP/OptiMUS, and GAMSPy examples (see [GAMSPy collection](docs/GAMSPY_LOCAL_EXAMPLES_COLLECTION.md)).
 
+## HuggingFace dataset access
+
+Several scripts (e.g. `training/external/nlp4lp_loader.py`, `training/external/build_nlp4lp_benchmark.py`)
+load gated datasets such as `udell-lab/NLP4LP` from the HuggingFace Hub.
+To use them you need a HuggingFace account with access approved on the dataset page,
+and a personal access token configured locally.
+
+**Safe setup — never paste your token into code or a chat:**
+
+```bash
+# 1. Copy the example env file
+cp .env.example .env          # .env is gitignored — it will NOT be committed
+
+# 2. Edit .env and replace the placeholder with your real token
+#    Get a (read-only) token at: https://huggingface.co/settings/tokens
+#    Then set:  HF_TOKEN=hf_...
+
+# 3. Load the variable into your shell (or let your IDE load .env automatically)
+export $(grep -v '^#' .env | xargs)
+
+# 4. Verify
+python -c "import os; print('HF_TOKEN set:', bool(os.environ.get('HF_TOKEN')))"
+```
+
+Alternatively, authenticate once with the HuggingFace CLI (token is stored in
+`~/.cache/huggingface/token` and is never written to the repo):
+
+```bash
+pip install huggingface_hub
+huggingface-cli login        # paste your token at the prompt; choose read-only
+```
+
+All scripts automatically pick up the token from `HF_TOKEN`, `HUGGINGFACE_TOKEN`,
+or the cached CLI token — in that priority order.
+
+**For CI / GitHub Actions** — add the token as a repository secret (token never appears in logs):
+
+1. Go to **Settings → Secrets and variables → Actions → New repository secret**
+2. Name: `HF_TOKEN`, Value: your token (starts with `hf_...`)
+3. The `NLP4LP benchmark` workflow (`.github/workflows/nlp4lp.yml`) will pick it up automatically.
+   Trigger it from the **Actions** tab → **NLP4LP benchmark** → **Run workflow**.
+
 ## How to run
 
 1. Clone the repo and install dependencies (see `requirements.txt` or project docs).
@@ -168,38 +210,38 @@ sbatch scripts/run_search.slurm
 
 ## 📋 Project Phases
 
-### ✅ Phase 1: Data Collection & Processing (Current)
+### ✅ Phase 1: Data Collection & Processing
 - [x] Define unified data schema
 - [x] Collect NL4Opt dataset (1,101 NL→LP pairs) — public data added via `pipeline/run_collection.py`
-- [ ] Collect Gurobi Modeling Examples (40+ notebooks)
-- [ ] Collect Gurobi OptiMods (15+ documented mods)
-- [ ] Parse all sources into unified JSON format
-- [ ] Generate `all_problems.json`
+- [x] Collect Gurobi Modeling Examples (40+ notebooks) — `data/sources/gurobi_modeling_examples.json`
+- [x] Collect Gurobi OptiMods (15+ documented mods) — `data/sources/gurobi_optimods.json`
+- [x] Parse all sources into unified JSON format
+- [x] Generate `all_problems.json` — `data/processed/all_problems.json`
 
-### 🔲 Phase 2: Expand Dataset
-- [ ] Parse GAMS Model Library (400+ models, needs GAMS license)
-- [ ] Download & parse MIPLIB 2017 instances
-- [ ] Scrape OR-Library problem families
-- [ ] Extract Pyomo example formulations
+### ✅ Phase 2: Expand Dataset
+- [x] Parse GAMS Model Library (400+ models, requires GAMS license) — `data/sources/gams_models.json`
+- [x] Download & parse MIPLIB 2017 instances — `data/sources/miplib.json`
+- [x] Scrape OR-Library problem families — `data/sources/or_library.json`
+- [x] Extract Pyomo example formulations — `data/sources/pyomo_examples.json`
 - [ ] Manual additions from Williams' textbook
 
-### 🔲 Phase 3: Problem Recognition Engine
-- [ ] Generate embeddings for all problem descriptions
-- [ ] Build similarity search index (FAISS/ChromaDB)
-- [ ] Train/fine-tune problem classifier
+### ✅ Phase 3: Problem Recognition Engine
+- [x] Generate embeddings for all problem descriptions (sentence-transformers)
+- [x] Build similarity search index (cosine similarity; FAISS-ready)
+- [x] Train/fine-tune problem classifier — `training/train_retrieval.py`
 - [ ] Implement disambiguation (clarifying questions)
 
-### 🔲 Phase 4: Formulation Generation
-- [ ] Retrieval pipeline for known problems
+### ✅ Phase 4: Formulation Generation
+- [x] Retrieval pipeline for known problems — `retrieval/search.py`
 - [ ] LLM-based generation for novel problems
-- [ ] LaTeX + solver code output formatting
-- [ ] Validation against benchmark instances
+- [x] LaTeX + solver code output formatting — LaTeX via Markdown rendering and solver code in `app.py`
+- [x] Validation against benchmark instances — `formulation/verify.py`, evaluation datasets in `data/processed/`
 
-### 🔲 Phase 5: Conversational Agent
-- [ ] Conversation flow design
-- [ ] Backend API (FastAPI)
-- [ ] Frontend (Streamlit/Gradio)
-- [ ] Deployment
+### ✅ Phase 5: Conversational Agent
+- [x] Conversation flow design
+- [x] Backend API (FastAPI + Uvicorn) — `app.py`
+- [x] Frontend (Gradio web UI) — `app.py`
+- [x] Deployment — Hugging Face Spaces (`deploy_to_hf.py`), HPC (`run_app_wulver.sh`)
 
 ## 🛠️ Tech Stack
 

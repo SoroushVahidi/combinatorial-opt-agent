@@ -1,0 +1,13 @@
+method,variant,Coverage,TypeMatch,Exact20,InstReady
+tfidf_typed_greedy,orig,0.8222,0.2267,0.214,0.0725
+tfidf_typed_greedy,noisy,0.71,0.0,N/A,0.0
+tfidf_typed_greedy,short,0.0333,0.0272,0.0588,0.006
+tfidf_optimization_role_repair,orig,0.822,0.243,0.277,0.06
+tfidf_optimization_role_repair,noisy,N/A,N/A,N/A,N/A
+tfidf_optimization_role_repair,short,N/A,N/A,N/A,N/A
+tfidf_hierarchical_acceptance_rerank,orig,0.7771,0.2303,N/A,0.0846
+tfidf_hierarchical_acceptance_rerank,noisy,N/A,N/A,N/A,N/A
+tfidf_hierarchical_acceptance_rerank,short,N/A,N/A,N/A,N/A
+oracle_typed_greedy,orig,0.8695,0.2475,0.1871,0.0816
+oracle_typed_greedy,noisy,0.7536,0.0,N/A,0.0
+oracle_typed_greedy,short,0.0373,0.0287,0.119,0.003

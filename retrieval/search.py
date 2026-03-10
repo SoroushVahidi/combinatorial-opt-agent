@@ -27,9 +27,45 @@ def _default_model_path() -> str:
 
 
 def _load_catalog() -> list[dict]:
+    """Load the problem catalog.
+
+    Prefers ``all_problems_extended.json`` (merged base + custom + enriched)
+    when it exists, but guards against a **stale extended catalog**: if the
+    extended file contains fewer problems than the base file, it was likely
+    built from an older version of the base and is missing most of the catalog.
+    In that case a warning is printed and the (larger) base catalog is used
+    instead, so that the search is never silently restricted to a tiny subset.
+
+    To fix a stale extended catalog, run::
+
+        python build_extended_catalog.py
+
+    from the project root.
+    """
     root = _project_root()
     extended = root / "data" / "processed" / "all_problems_extended.json"
     base = root / "data" / "processed" / "all_problems.json"
+
+    if extended.exists() and base.exists():
+        with open(extended, encoding="utf-8") as f:
+            ext_catalog = json.load(f)
+        with open(base, encoding="utf-8") as f:
+            base_catalog = json.load(f)
+        if len(ext_catalog) < len(base_catalog):
+            import warnings
+            warnings.warn(
+                f"all_problems_extended.json has {len(ext_catalog)} problems "
+                f"but all_problems.json has {len(base_catalog)}. "
+                "The extended catalog is stale. "
+                "Run `python build_extended_catalog.py` to rebuild it. "
+                "Falling back to all_problems.json.",
+                # stacklevel=2: points the warning at the _load_catalog() call
+                # site (one frame up), which is the actionable location for the
+                # developer to investigate.
+                stacklevel=2,
+            )
+            return base_catalog
+        return ext_catalog
 
     path = extended if extended.exists() else base
     if not path.exists():

@@ -1,0 +1,6 @@
+method,avg_per_query_s,total_331_est_s,hardware,note
+retrieval_bm25,0.006,1.98,CPU,"variant=orig, locally measured"
+retrieval_tfidf,0.0044,1.47,CPU,"variant=orig, locally measured"
+retrieval_lsa,0.0079,2.61,CPU,"variant=orig, locally measured"
+tfidf_typed_greedy_downstream,~0.01–0.05,~3–17,CPU,extraction+assignment estimate from docs
+tfidf_constrained_downstream,~0.02–0.10,~7–33,CPU,DP over slots; slightly slower

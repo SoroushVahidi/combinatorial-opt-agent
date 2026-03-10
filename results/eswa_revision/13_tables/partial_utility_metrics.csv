@@ -1,0 +1,5 @@
+method,variant,mean_coverage,approx_frac_any_slot,InstReady_80_80,note
+tfidf_typed_greedy,orig,0.8222,0.8222,0.0725,~82% queries ≥1 slot filled
+oracle_typed_greedy,orig,0.8695,0.8695,0.0816,~87% queries ≥1 slot filled
+tfidf_constrained,orig,0.772,0.772,0.0272,~77% queries ≥1 slot filled
+tfidf_semantic_ir_repair,orig,0.778,0.778,0.063,~78% queries ≥1 slot filled

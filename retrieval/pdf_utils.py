@@ -28,7 +28,7 @@ def extract_text_from_pdf(file_path: str) -> str:
             pages.append(text.strip())
         combined = " ".join(p for p in pages if p)
         # Collapse runs of whitespace (tabs, newlines, multiple spaces) to a single space.
-        return re.sub(r"\\s+", " ", combined).strip()
+        return re.sub(r"\s+", " ", combined).strip()
     except Exception as exc:
         return f"(Could not extract PDF text: {exc})"
 

@@ -1,0 +1,19 @@
+component,previous_status,new_status,evidence_type,metric,old_value,new_value,delta,blocked_by,notes
+_expected_type float catch-all,79.7% of catalog slots classified as float,77.7% classified as float,structural measurement on catalog,% slots typed as float,79.7,77.7,-2.0 pp,,76 discrete-quantity slots reclassified to int
+_expected_type int coverage,3.3% classified as int,5.4% classified as int,structural measurement on catalog,% slots typed as int,3.3,5.4,+2.1 pp,,Added patterns: workers/shifts/days/machines/vehicles/persons/batches/rounds/trips/months/weeks
+_is_type_match helper,did not exist (strict == check),new helper: int counts as float match,unit test,bool function correctness,N/A,True for (float;int),new API,,Centralises type-match logic across all scoring paths
+TypeMatch on float slots,2.3% of digit-token/float-slot pairs matched,81.8% matched,structural estimate on orig eval (331 queries),% type-matched,2.3,81.8,+79.5 pp,gated gold for end-to-end confirm,Structural: counts token-slot pairs not assignment accuracy
+_score_mention_slot bonus for int on float,1.5 (type_loose_match at 0.5x),3.0 (type_match at 1.0x),unit test + scoring trace,score bonus per pair,1.5,3.0,+1.5,,All scoring paths updated consistently
+_choose_token for float slots,pref=2 only for decimal-having float tokens; pref=1 for int,pref=2 for both float and int tokens,unit test,token preference rank,1 for int,2 for int,+1 rank,,Integer tokens now equally preferred for float slots
+_slot_semantic_expansion per-unit tags,no per-unit tag for Per/Each slots,per_unit/coefficient/unit_rate tags added,unit test,slot tag coverage,absent,present,new,,Helps match "per"/"each" context cues to per-unit slots
+_slot_semantic_expansion total tags,no total/aggregate tags,total/aggregate/available tags added,unit test,slot tag coverage,absent,present,new,,Helps match total-resource mentions to aggregate slots
+_slot_opt_role_expansion per-unit,limited coverage,per/each/unit names get unit_cost + objective_coeff + resource_consumption,unit test,slot role tag coverage,partial,fuller,improved,,
+_slot_opt_role_expansion total,limited coverage,total/available/aggregate names get total_available + capacity_limit,unit test,slot role tag coverage,partial,fuller,improved,,
+run_one TypeMatch counting,if tok.kind == et (9 occurrences),if _is_type_match(et; tok.kind) (9 occurrences),code review + grep,code correctness,strict equality,type-aware equality,fixed,,int-as-float promoted in evaluation metric
+GCG _gcg_local_score,float+float and int+float both gave type_loose_bonus,float+float and int+float give type_exact_bonus,unit test,score per pair,1.5 (loose),4.0 (exact),+2.5,,Consistent with _score_mention_slot_opt and _score_mention_slot_ir
+_score_mention_slot_ir,same issue,fixed: float+{float;int} = type_exact,unit test,type_exact flag,False for int on float,True,fixed,,
+_score_mention_slot_opt,same issue,fixed: float+{float;int} = type_exact,unit test,type_exact flag,False for int on float,True,fixed,,
+Retrieval (TF-IDF; 331 queries),unaffected,unaffected,local reproduction,Recall@5,0.961,0.961,0.0,,Retrieval code not changed; no regression
+46 new targeted tests,did not exist,all pass,automated test,test pass rate,N/A,46/46,new,,Covers float/int; percent/scalar; bounds; total/per-unit; slot tags
+Full end-to-end TypeMatch,blocked,still blocked,N/A,actual TypeMatch metric,~0.03 (estimate),unknown,unknown,gated gold params required,Structural estimate +79 pp but canonical number needs gold data
+Learning methods,no trustworthy gains,unchanged,N/A,N/A,N/A,N/A,N/A,out of scope,Not addressed in this change set
