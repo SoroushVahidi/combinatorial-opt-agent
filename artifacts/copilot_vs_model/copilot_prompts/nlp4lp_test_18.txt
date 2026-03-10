@@ -1,0 +1,35 @@
+You are an expert in mathematical optimization (linear programming, integer programming, etc.).
+
+Given the following natural-language optimization problem description, produce a structured instantiation.
+Do NOT solve the problem. Only identify the structure and extract parameter values from the text.
+
+---
+PROBLEM:
+A candy store mixes regular candy and sour candy to prepare two products, regular mix and sour surprise mix. Each kilogram of the regular mix contains 0.8 kg of regular candy and 0.2 kg of sour candy. The profit per kilogram of the regular mix is $3. Each kilogram of the sour surprise mix contains 0.1 kg of regular candy and 0.9 kg of sour candy. The profit per kilogram of the sour surprise mix is $5. The candy store has 80 kg of regular candy and 60 kg of sour candy available. How many kilograms of each type of candy mix should be created to maximize profits?
+---
+
+Return your answer as a valid JSON object with exactly these fields:
+
+{
+  "predicted_problem_type": "<string: e.g. 'linear_programming', 'integer_programming', 'transportation', 'diet', 'investment', 'product_mix', etc.>",
+  "objective_direction": "<string: 'maximize' or 'minimize' or 'unknown'>",
+  "decision_variables": [
+    {"name": "<variable name>", "description": "<brief description>"}
+  ],
+  "constraints_summary": ["<one constraint per item, plain English>"],
+  "extracted_numeric_mentions": [
+    {"value": <number>, "unit": "<string or null>", "context": "<surrounding words>"}
+  ],
+  "slot_value_assignments": {
+    "<slot_name>": <numeric_value>
+  },
+  "modeling_notes": "<optional: any caveats or assumptions you made>"
+}
+
+Rules:
+- slot_value_assignments must contain every numeric parameter mentioned in the problem.
+- Use the exact numeric value from the text (do NOT compute or infer values).
+- Slot names should be CamelCase descriptive names (e.g. TotalBudget, ProfitPerUnit, MinDemand).
+- If a value is a percentage (e.g. 20%), store it as a decimal (0.20) AND note the percentage context in the slot name.
+- Do not add, remove, or change any numbers.
+- Output only valid JSON. No markdown, no commentary outside the JSON.
