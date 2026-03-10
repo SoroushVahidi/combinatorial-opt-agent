@@ -11,7 +11,7 @@ name: Check HF access
 on:
   workflow_dispatch:
   # Restricted push trigger so GitHub registers this workflow for sidebar display.
-  # The verify step is gated with 'if: github.event_name == workflow_dispatch'
+  # The verify step is gated with `if: github.event_name == 'workflow_dispatch'`
   # so nothing meaningful runs on push.
   push:
     branches:
