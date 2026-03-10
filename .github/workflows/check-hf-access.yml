@@ -10,11 +10,13 @@ name: Check HF access
 
 on:
   workflow_dispatch:
-  # Restricted push trigger so GitHub registers this workflow for sidebar display.
+  # Restricted push trigger so GitHub registers this workflow and shows the
+  # "Run workflow" button after this PR is merged to main.
   # The verify step is gated with `if: github.event_name == 'workflow_dispatch'`
   # so nothing meaningful runs on push.
   push:
     branches:
+      - main
       - "copilot/main-branch-description"
     paths:
       - ".github/workflows/check-hf-access.yml"

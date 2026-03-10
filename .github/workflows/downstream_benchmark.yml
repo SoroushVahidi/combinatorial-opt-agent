@@ -24,11 +24,13 @@ on:
         description: "Branch to commit results back to"
         required: false
         default: "copilot/main-branch-description"
-  # Restricted push trigger so GitHub registers this workflow in its sidebar.
+  # Restricted push trigger so GitHub registers this workflow and shows the
+  # "Run workflow" button after this PR is merged to main.
   # The benchmark steps below are gated with `if: github.event_name == 'workflow_dispatch'`
   # so they are skipped when this fires on a push event.
   push:
     branches:
+      - main
       - "copilot/main-branch-description"
     paths:
       - ".github/workflows/downstream_benchmark.yml"

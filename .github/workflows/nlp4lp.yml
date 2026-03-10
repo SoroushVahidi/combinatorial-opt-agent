@@ -19,10 +19,15 @@
 name: NLP4LP benchmark
 
 on:
-  workflow_dispatch:   # run manually from the Actions tab
-  # push trigger intentionally removed: GitHub blocks auto-triggered workflows
-  # from bot commits with `action_required` when HF_TOKEN protection is active.
-  # Trigger this workflow manually after ensuring HF_TOKEN is set.
+  workflow_dispatch:   # run manually from the Actions tab (primary trigger)
+  # Path-filtered push trigger so GitHub registers this workflow and shows
+  # the "Run workflow" button after this PR is merged to main.
+  # ALL expensive benchmark steps are gated with:
+  #   if: github.event_name == 'workflow_dispatch'
+  # so the registration-only push run completes in <10 seconds.
+  push:
+    branches: [main, "copilot/main-branch-description"]
+    paths: [".github/workflows/nlp4lp.yml"]
 
 jobs:
   build-benchmark:
@@ -44,18 +49,30 @@ jobs:
           ref: ${{ github.ref }}
           fetch-depth: 1
 
+      # Skip everything expensive when triggered by the registration push.
+      - name: Skip benchmark on push (registration-only run)
+        if: github.event_name == 'push'
+        run: |
+          echo "This run was triggered by a push event to register this workflow in GitHub Actions."
+          echo "All benchmark steps are skipped. To run the real benchmark, use workflow_dispatch:"
+          echo "  Actions → 'NLP4LP benchmark' → Run workflow → select branch"
+          exit 0
+
       - name: Set up Python
+        if: github.event_name == 'workflow_dispatch'
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: pip
 
       - name: Install dependencies
+        if: github.event_name == 'workflow_dispatch'
         run: pip install -r requirements.txt
 
       # ── Phase 0: Verify HF access ─────────────────────────────────────────
       - name: Verify HF token and dataset access
         # Fast-fail before the long benchmark if the token is missing or invalid.
+        if: github.event_name == 'workflow_dispatch'
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: python training/external/verify_hf_access.py
@@ -63,12 +80,14 @@ jobs:
       # ── Phase 1: Build eval sets ──────────────────────────────────────────
       - name: Build NLP4LP eval sets
         # HF_TOKEN is read from the repository secret of the same name.
+        if: github.event_name == 'workflow_dispatch'
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: python training/external/build_nlp4lp_benchmark.py
 
       # ── Phase 2: Full downstream benchmark ───────────────────────────────
       - name: Run full downstream benchmark (10 methods × 3 variants)
+        if: github.event_name == 'workflow_dispatch'
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           NLP4LP_GOLD_CACHE: results/eswa_revision/00_env/nlp4lp_gold_cache.json
@@ -81,7 +100,7 @@ jobs:
 
       # ── Upload raw log ────────────────────────────────────────────────────
       - name: Upload benchmark log
-        if: always()
+        if: always() && github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v4
         with:
           name: benchmark-log-${{ github.run_id }}
@@ -90,7 +109,7 @@ jobs:
 
       # ── Upload result artifacts ───────────────────────────────────────────
       - name: Upload result artifacts
-        if: always()
+        if: always() && github.event_name == 'workflow_dispatch'
         uses: actions/upload-artifact@v4
         with:
           name: nlp4lp-results-${{ github.run_id }}
@@ -106,7 +125,7 @@ jobs:
 
       # ── Commit measured results back to branch ────────────────────────────
       - name: Commit and push measured results
-        if: success()
+        if: github.event_name == 'workflow_dispatch' && success()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -137,7 +156,7 @@ jobs:
 
       # ── Print summary ─────────────────────────────────────────────────────
       - name: Print result summary
-        if: always()
+        if: always() && github.event_name == 'workflow_dispatch'
         run: |
           echo "=== postfix_main_metrics.csv ==="
           cat results/eswa_revision/13_tables/postfix_main_metrics.csv 2>/dev/null || echo "(not found)"
