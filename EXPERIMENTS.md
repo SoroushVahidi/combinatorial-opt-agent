@@ -21,6 +21,8 @@ This document provides a consolidated overview of all experiments conducted in t
 | BM25 | BM25 sparse retrieval |
 | TF-IDF | TF-IDF cosine similarity (primary production baseline) |
 | SBERT (fine-tuned) | Sentence-transformers retrieval, fine-tuned on synthetic pairs |
+| E5 (`intfloat/e5-base-v2`) | Dense retrieval with asymmetric prefixes: `"passage: "` on corpus, `"query: "` on queries |
+| BGE (`BAAI/bge-large-en-v1.5`) | Dense retrieval with task-specific instruction prefix on queries; passages encoded without prefix |
 
 **Key metric — Schema R@1 (orig):**
 
@@ -44,8 +46,10 @@ This document provides a consolidated overview of all experiments conducted in t
 python -m training.run_baselines \
   --splits data/processed/splits.json --split test \
   --regenerate --num 500 --seed 999 --k 10 \
-  --baselines bm25 tfidf sbert --results-dir results
+  --baselines bm25 tfidf lsa sbert e5 bge --results-dir results
 ```
+
+> **Note:** E5 and BGE require downloading model weights from HuggingFace at runtime. Omit them if offline or if model downloads are unavailable.
 
 **Result files:** `results/baselines_test.csv`, `results/nlp4lp_retrieval_summary.csv`
 
