@@ -43,6 +43,30 @@ CATALOG_PATH = ROOT / "data" / "catalogs" / "nlp4lp_catalog.jsonl"
 PRIMARY_METHOD = "tfidf"
 PRIMARY_VARIANT = "orig"
 
+# Methods to include in the cross-method comparison table
+COMPARISON_METHODS = [
+    "tfidf",
+    "bm25",
+    "oracle",
+    "tfidf_acceptance_rerank",
+    "tfidf_hierarchical_acceptance_rerank",
+    "tfidf_optimization_role_repair",
+    # Method Family 1: Global Compatibility Grounding
+    "tfidf_global_compat_local",
+    "tfidf_global_compat_pairwise",
+    "tfidf_global_compat_full",
+    # Method Family 2: Relation-Aware Linking
+    "tfidf_relation_aware_basic",
+    "tfidf_relation_aware_ops",
+    "tfidf_relation_aware_semantic",
+    "tfidf_relation_aware_full",
+    # Method Family 3: Ambiguity-Aware Grounding
+    "tfidf_ambiguity_candidate_greedy",
+    "tfidf_ambiguity_aware_beam",
+    "tfidf_ambiguity_aware_abstain",
+    "tfidf_ambiguity_aware_full",
+]
+
 # ── data loading ─────────────────────────────────────────────────────────────
 
 def _load_query_text() -> dict[str, str]:
@@ -472,6 +496,38 @@ def main() -> None:
     print(f"  Inst-ready:  {n_inst} ({n_inst/n:.3f})")
     for row in hm_rows:
         print(f"  {row['group']}: cov={row['Coverage_mean']} tm={row['TypeMatch_mean']} ir={row['InstReady_rate']}")
+
+    # ── Cross-method comparison table ─────────────────────────────────────────
+    cmp_path = OUT_DIR / "method_comparison_table.csv"
+    cmp_fields = ["method", "variant", "n", "schema_R1", "Coverage", "TypeMatch", "InstReady"]
+    cmp_rows: list[dict] = []
+    for method in COMPARISON_METHODS:
+        for variant in ("orig", "noisy", "short"):
+            mrows = _load_per_query(variant, method)
+            if not mrows:
+                continue
+            nm = len(mrows)
+            s_r1 = sum(int(r.get("schema_hit", 0) or 0) for r in mrows) / nm
+            cov = sum(float(r.get("param_coverage", 0) or 0) for r in mrows) / nm
+            tm = sum(float(r.get("type_match", 0) or 0) for r in mrows) / nm
+            # inst_ready derived from JSON aggregate if per-query lacks the column
+            json_path = DOWNSTREAM_DIR / f"nlp4lp_downstream_{variant}_{method}.json"
+            ir = 0.0
+            if json_path.exists():
+                import json as _json
+                try:
+                    agg = _json.load(open(json_path, encoding="utf-8")).get("aggregate", {})
+                    ir = float(agg.get("instantiation_ready", 0))
+                except Exception:
+                    pass
+            cmp_rows.append({"method": method, "variant": variant, "n": nm,
+                             "schema_R1": round(s_r1, 4), "Coverage": round(cov, 4),
+                             "TypeMatch": round(tm, 4), "InstReady": round(ir, 4)})
+    with open(cmp_path, "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=cmp_fields)
+        w.writeheader()
+        w.writerows(cmp_rows)
+    print(f"Wrote {cmp_path} ({len(cmp_rows)} rows)")
 
 
 if __name__ == "__main__":

@@ -47,6 +47,13 @@ overlapping CIs or p ≥ 0.05 are explicitly called out as non-significant.
 | TFIDF-TG vs Oracle-TG (InstReady) | InstReady | 0.5257 | 0.5650 | -0.0393 | [-0.0665, -0.0151] | 0.0040 | p<0.01 (robust) |
 | TFIDF-TG vs TFIDF-AR (InstReady) | InstReady | 0.5257 | 0.5227 | 0.0030 | [-0.0181, 0.0211] | 0.8900 | CI contains 0 (not significant) |
 | TFIDF-TG vs TFIDF-HAR (InstReady) | InstReady | 0.5257 | 0.5136 | 0.0121 | [-0.0121, 0.0363] | 0.3760 | CI contains 0 (not significant) |
+| TFIDF-TG vs GCG-Full (InstReady) | InstReady | 0.5257 | 0.4320 | 0.0937 | [0.0483, 0.1420] | 0.0000 | p<0.01 (robust) |
+| TFIDF-TG vs RAL-Basic (InstReady) | InstReady | 0.5257 | 0.4985 | 0.0272 | [-0.0091, 0.0665] | 0.2180 | CI contains 0 (not significant) |
+| TFIDF-TG vs RAL-Full (InstReady) | InstReady | 0.5257 | 0.4169 | 0.1088 | [0.0695, 0.1541] | 0.0000 | p<0.01 (robust) |
+| TFIDF-TG vs AAG-Beam (InstReady) | InstReady | 0.5257 | 0.4230 | 0.1027 | [0.0514, 0.1511] | 0.0000 | p<0.01 (robust) |
+| TFIDF-TG vs AAG-Full (InstReady) | InstReady | 0.5257 | 0.4199 | 0.1057 | [0.0574, 0.1511] | 0.0000 | p<0.01 (robust) |
+| RAL-Basic vs Oracle-TG (InstReady) | InstReady | 0.4985 | 0.5650 | -0.0665 | [-0.1118, -0.0211] | 0.0080 | p<0.01 (robust) |
+| TFIDF-TG vs AAG-Abstain (Coverage) | param_coverage | 0.8639 | 0.2207 | 0.6432 | [0.6029, 0.6812] | 0.0000 | p<0.01 (robust) |
 
 ---
 

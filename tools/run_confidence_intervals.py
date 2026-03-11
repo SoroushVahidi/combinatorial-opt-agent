@@ -45,6 +45,20 @@ MAIN_METHODS = {
     "tfidf_const": "tfidf_constrained",
     "tfidf_sem": "tfidf_semantic_ir_repair",
     "tfidf_opt": "tfidf_optimization_role_repair",
+    # Method Family 1: Global Compatibility Grounding
+    "gcg_local": "tfidf_global_compat_local",
+    "gcg_pairwise": "tfidf_global_compat_pairwise",
+    "gcg_full": "tfidf_global_compat_full",
+    # Method Family 2: Relation-Aware Linking
+    "ral_basic": "tfidf_relation_aware_basic",
+    "ral_ops": "tfidf_relation_aware_ops",
+    "ral_semantic": "tfidf_relation_aware_semantic",
+    "ral_full": "tfidf_relation_aware_full",
+    # Method Family 3: Ambiguity-Aware Grounding
+    "aag_greedy": "tfidf_ambiguity_candidate_greedy",
+    "aag_beam": "tfidf_ambiguity_aware_beam",
+    "aag_abstain": "tfidf_ambiguity_aware_abstain",
+    "aag_full": "tfidf_ambiguity_aware_full",
 }
 
 VARIANTS = ["orig", "noisy", "short"]
@@ -57,6 +71,18 @@ PAIRED_COMPARISONS = [
     ("TFIDF-TG vs Oracle-TG (InstReady)", "tfidf", "oracle", "inst_ready"),
     ("TFIDF-TG vs TFIDF-AR (InstReady)", "tfidf", "tfidf_ar", "inst_ready"),
     ("TFIDF-TG vs TFIDF-HAR (InstReady)", "tfidf", "tfidf_har", "inst_ready"),
+    # Method Family 1 vs TFIDF
+    ("TFIDF-TG vs GCG-Full (InstReady)", "tfidf", "gcg_full", "inst_ready"),
+    # Method Family 2 vs TFIDF
+    ("TFIDF-TG vs RAL-Basic (InstReady)", "tfidf", "ral_basic", "inst_ready"),
+    ("TFIDF-TG vs RAL-Full (InstReady)", "tfidf", "ral_full", "inst_ready"),
+    # Method Family 3 vs TFIDF
+    ("TFIDF-TG vs AAG-Beam (InstReady)", "tfidf", "aag_beam", "inst_ready"),
+    ("TFIDF-TG vs AAG-Full (InstReady)", "tfidf", "aag_full", "inst_ready"),
+    # Best new vs Oracle
+    ("RAL-Basic vs Oracle-TG (InstReady)", "ral_basic", "oracle", "inst_ready"),
+    # Coverage comparisons for abstain variant
+    ("TFIDF-TG vs AAG-Abstain (Coverage)", "tfidf", "aag_abstain", "param_coverage"),
 ]
 
 
