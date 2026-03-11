@@ -123,8 +123,8 @@ def main() -> None:
     p.add_argument("--num", type=int, default=500, help="Num eval instances when regenerating")
     p.add_argument("--seed", type=int, default=999, help="RNG seed for eval generation (deterministic)")
     p.add_argument("--k", type=int, default=10, help="Top-k for MRR/nDCG/Coverage")
-    p.add_argument("--baselines", type=str, nargs="+", default=["bm25", "tfidf", "sbert"],
-                   help="Baseline names (default: bm25 tfidf sbert)")
+    p.add_argument("--baselines", type=str, nargs="+", default=["bm25", "tfidf", "sbert", "e5", "bge"],
+                   help="Baseline names (default: bm25 tfidf sbert e5 bge)")
     p.add_argument("--results-dir", type=Path, default=None, help="Output dir (default: results/)")
     p.add_argument("--dataset-name", type=str, default=None,
                    help="Short name for dataset (e.g. test_normal, test_masked, resocratic, nl4opt). "
