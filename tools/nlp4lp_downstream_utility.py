@@ -4132,10 +4132,60 @@ def run_setting(
                 "global_compat_full",
             ) and expected_scalar:
                 # Global Compatibility Grounding (GCGP): beam search with pairwise terms.
-                # ablation_mode is derived from assignment_mode suffix.
-                _gcgp_ablation = assignment_mode[len("global_compat_"):]  # "local", "pairwise", or "full"
+                _gcgp_ablation_map = {
+                    "global_compat_local": "local",
+                    "global_compat_pairwise": "pairwise",
+                    "global_compat_full": "full",
+                }
+                _gcgp_ablation = _gcgp_ablation_map[assignment_mode]
                 filled_values, filled_mentions, _diag = _run_global_compatibility_grounding(
                     query, variant, expected_scalar, ablation_mode=_gcgp_ablation
+                )
+                for p in expected_scalar:
+                    if p not in filled_values:
+                        continue
+                    m_ir = filled_mentions.get(p)
+                    tok = m_ir.tok if m_ir else None
+                    if tok is None:
+                        continue
+                    n_filled += 1
+                    filled[p] = filled_values[p]
+                    btype = _bucket_type(p)
+                    type_filled_total[btype] += 1
+                    type_filled_q[btype] += 1
+                    et = _expected_type(p)
+                    if _is_type_match(et, tok.kind):
+                        type_matches += 1
+                        type_correct_total[btype] += 1
+                        type_correct_q[btype] += 1
+                    if schema_hit and tok.value is not None and _is_scalar(gold_params.get(p)):
+                        gold_val = float(gold_params[p])
+                        err = _rel_err(float(tok.value), gold_val)
+                        comparable_errs.append(err)
+                        if btype in type_names:
+                            type_exact5_den[btype] += 1
+                            type_exact20_den[btype] += 1
+                            if err <= 0.05:
+                                type_exact5_num[btype] += 1
+                            if err <= 0.20:
+                                type_exact20_num[btype] += 1
+            elif assignment_mode in (
+                "relation_aware_basic",
+                "relation_aware_ops",
+                "relation_aware_semantic",
+                "relation_aware_full",
+            ) and expected_scalar:
+                # Relation-aware greedy grounding.
+                _ral_ablation_map = {
+                    "relation_aware_basic": "basic",
+                    "relation_aware_ops": "ops",
+                    "relation_aware_semantic": "semantic",
+                    "relation_aware_full": "full",
+                }
+                _ral_ablation = _ral_ablation_map[assignment_mode]
+                from tools.relation_aware_linking import run_relation_aware_grounding
+                filled_values, filled_mentions, _diag = run_relation_aware_grounding(
+                    query, variant, expected_scalar, ablation_mode=_ral_ablation
                 )
                 for p in expected_scalar:
                     if p not in filled_values:
@@ -4467,6 +4517,13 @@ def run_single_setting(
         effective_baseline = f"{baseline_arg}_global_consistency_grounding"
     elif assignment_mode in ("global_compat_local", "global_compat_pairwise", "global_compat_full"):
         effective_baseline = f"{baseline_arg}_{assignment_mode}"
+    elif assignment_mode in (
+        "relation_aware_basic",
+        "relation_aware_ops",
+        "relation_aware_semantic",
+        "relation_aware_full",
+    ):
+        effective_baseline = f"{baseline_arg}_{assignment_mode}"
 
     run_setting(
         variant=variant,
@@ -4507,6 +4564,8 @@ def main() -> None:
             "optimization_role_repair", "optimization_role_relation_repair",
             "global_consistency_grounding",
             "global_compat_local", "global_compat_pairwise", "global_compat_full",
+            "relation_aware_basic", "relation_aware_ops",
+            "relation_aware_semantic", "relation_aware_full",
             # Experimental/archived (not in default focused eval; use run_nlp4lp_focused_eval.py --experimental):
             "optimization_role_anchor_linking", "optimization_role_bottomup_beam_repair",
             "optimization_role_entity_semantic_beam_repair",
@@ -4582,6 +4641,13 @@ def main() -> None:
     elif args.assignment_mode == "global_consistency_grounding":
         effective_baseline = f"{args.baseline}_global_consistency_grounding"
     elif args.assignment_mode in ("global_compat_local", "global_compat_pairwise", "global_compat_full"):
+        effective_baseline = f"{args.baseline}_{args.assignment_mode}"
+    elif args.assignment_mode in (
+        "relation_aware_basic",
+        "relation_aware_ops",
+        "relation_aware_semantic",
+        "relation_aware_full",
+    ):
         effective_baseline = f"{args.baseline}_{args.assignment_mode}"
 
     out_dir = ROOT / "results" / "paper"
