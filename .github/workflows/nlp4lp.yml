@@ -12,9 +12,10 @@
 #         --ref copilot/main-branch-description
 # ══════════════════════════════════════════════════════════════════════════════
 #
-# Phase 1: Build eval sets from udell-lab/NLP4LP
-# Phase 2: Run ALL downstream experiments (10 methods × 3 variants) and commit
+# Phase 1: Build eval sets from udell-lab/NLP4LP (3 variants: orig, noisy, short)
+# Phase 2: Run ALL downstream experiments (9 methods × 3 variants) and commit
 #           measured results back to the branch.
+#           Measured runtime: ~32 s for the full benchmark loop (CPU-only assignment).
 #
 # SETUP (one-time, by the repo owner):
 #   1. Go to https://huggingface.co/settings/tokens and create a read-only token.
@@ -36,7 +37,7 @@ on:
 jobs:
   build-benchmark:
     runs-on: ubuntu-latest
-    timeout-minutes: 300    # 5 h: ~2 h for downstream benchmark + buffer
+    timeout-minutes: 300    # generous safety budget; measured runtime: ~5 min (32 s benchmark + pip install)
     permissions:
       contents: write         # needed to push measured results back to branch
 
@@ -72,10 +73,12 @@ jobs:
       - name: Build NLP4LP eval sets
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: python training/external/build_nlp4lp_benchmark.py
+        run: |
+          python training/external/build_nlp4lp_benchmark.py \
+            --variants orig,noisy,short
 
       # ── Phase 2: Full downstream benchmark ───────────────────────────────
-      - name: Run full downstream benchmark (10 methods × 3 variants)
+      - name: Run full downstream benchmark (9 methods × 3 variants + ablation)
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           NLP4LP_GOLD_CACHE: results/eswa_revision/00_env/nlp4lp_gold_cache.json

@@ -36,6 +36,12 @@ Overview of documentation in this repository.
 - **[PATCH_LEAK_FREE_EVAL.md](PATCH_LEAK_FREE_EVAL.md)** — Leak-free evaluation patch.
 - **[VALIDATION_AND_ANALYSIS_CLI.md](VALIDATION_AND_ANALYSIS_CLI.md)** — Validation and analysis CLI.
 
+## Experiments
+
+- **[../EXPERIMENTS.md](../EXPERIMENTS.md)** — Consolidated overview of all experiments: retrieval baselines, grounding/assignment methods, learning runs, copilot comparison, and ESWA revision experiments.
+- **[EXPERIMENT_AUDIT.md](EXPERIMENT_AUDIT.md)** — Strict evidence-based audit: which experiments are truly measured vs placeholder/scaffolding only. Updated to reflect benchmark run `22922351003`.
+- **[CI_ROOT_CAUSE_AUDIT.md](CI_ROOT_CAUSE_AUDIT.md)** — Root-cause analysis of why prior workflow runs appeared fast (push-triggered stubs) and confirmation that the real benchmark ran in 32 s.
+
 ## Repo maintenance
 
 - **[REPO_CLEANUP_PLAN.md](REPO_CLEANUP_PLAN.md)** — Cleanup plan and deleted-files manifest.

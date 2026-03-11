@@ -12,8 +12,9 @@
 #         --ref copilot/main-branch-description
 # ══════════════════════════════════════════════════════════════════════════════
 #
-# Runs ALL downstream experiments (10 methods × 3 variants) using the
+# Runs ALL downstream experiments (9 methods × 3 variants) using the
 # real NLP4LP HuggingFace dataset (udell-lab/NLP4LP) with HF_TOKEN.
+# Measured runtime: ~32 s for the benchmark loop.  Total job: ~3 min (includes pip install).
 # Commits measured results back to the triggering branch.
 #
 # SETUP (one-time):
@@ -36,7 +37,7 @@ on:
 jobs:
   run-downstream-benchmark:
     runs-on: ubuntu-latest
-    timeout-minutes: 240      # 4 h generous budget; 30 settings × ~4 min each ≈ 2 h
+    timeout-minutes: 240      # generous safety budget; measured runtime: ~3 min (32 s benchmark + pip install)
     permissions:
       contents: write           # needed to push results back to the branch
 

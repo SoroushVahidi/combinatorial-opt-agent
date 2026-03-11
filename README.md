@@ -54,6 +54,7 @@ You describe a problem in plain English; the agent identifies the problem type (
 
 | Topic | Doc |
 |-------|-----|
+| **Experiments** | [EXPERIMENTS.md](EXPERIMENTS.md) — Consolidated overview of all experiments (retrieval, grounding methods, learning, copilot comparison) |
 | **Data sources** | [docs/data_sources.md](docs/data_sources.md) — OR-Library, Gurobi examples/OptiMods, NL4Opt, etc. |
 | **GAMSPy** | [docs/GAMSPY_SETUP_AND_LICENSE.md](docs/GAMSPY_SETUP_AND_LICENSE.md), [GAMSPY_LOCAL_EXAMPLES_COLLECTION.md](docs/GAMSPY_LOCAL_EXAMPLES_COLLECTION.md), [GAMSPY_LOCAL_EXAMPLES_NEXT_STEPS.md](docs/GAMSPY_LOCAL_EXAMPLES_NEXT_STEPS.md) — setup, license, local example collection and manifests |
 | **NLP4LP** | Acceptance rerank, constrained assignment, optimization-role method, semantic IR — see `docs/NLP4LP_*.md` |

@@ -67,13 +67,114 @@ def test_sbert_returns_top_k_and_scores():
 
 
 def test_get_baseline():
-    """get_baseline(name) returns correct type for bm25, tfidf, sbert."""
-    from retrieval.baselines import get_baseline, BM25Baseline, TfidfBaseline, SBERTBaseline
+    """get_baseline(name) returns correct type for bm25, tfidf, sbert, e5, bge."""
+    from retrieval.baselines import get_baseline, BM25Baseline, TfidfBaseline, SBERTBaseline, E5Baseline, BGEBaseline
     assert isinstance(get_baseline("bm25"), BM25Baseline)
     assert isinstance(get_baseline("tfidf"), TfidfBaseline)
     assert isinstance(get_baseline("sbert"), SBERTBaseline)
+    assert isinstance(get_baseline("e5"), E5Baseline)
+    assert isinstance(get_baseline("bge"), BGEBaseline)
     with pytest.raises(ValueError, match="Unknown baseline"):
         get_baseline("unknown")
+
+
+@pytest.mark.requires_network
+def test_e5_returns_top_k_and_scores():
+    """E5 baseline rank() returns exactly top_k items with (problem_id, score)."""
+    pytest.importorskip("torch", reason="E5 requires torch")
+    from retrieval.baselines import E5Baseline
+    cat = _tiny_catalog()
+    bl = E5Baseline(model_name="intfloat/e5-base-v2")
+    bl.fit(cat)
+    out = bl.rank("knapsack weight capacity", top_k=2)
+    assert len(out) == 2
+    for item in out:
+        assert isinstance(item, tuple) and len(item) == 2
+        pid, score = item
+        assert pid in ("p1", "p2", "p3")
+        assert isinstance(score, (int, float))
+
+
+@pytest.mark.requires_network
+def test_bge_returns_top_k_and_scores():
+    """BGE baseline rank() returns exactly top_k items with (problem_id, score)."""
+    pytest.importorskip("torch", reason="BGE requires torch")
+    from retrieval.baselines import BGEBaseline
+    cat = _tiny_catalog()
+    bl = BGEBaseline(model_name="BAAI/bge-large-en-v1.5")
+    bl.fit(cat)
+    out = bl.rank("cover all elements with minimum subsets", top_k=2)
+    assert len(out) == 2
+    for item in out:
+        assert isinstance(item, tuple) and len(item) == 2
+        pid, score = item
+        assert pid in ("p1", "p2", "p3")
+        assert isinstance(score, (int, float))
+
+
+def test_e5_prefix_applied():
+    """E5Baseline correctly prepends 'passage: ' to corpus and 'query: ' to queries (offline check)."""
+    from retrieval.baselines import E5Baseline
+
+    class _FakeModel:
+        """Records inputs passed to encode()."""
+
+        def __init__(self):
+            self.encoded: list[list[str]] = []
+
+        def encode(self, texts, *, show_progress_bar=False, convert_to_numpy=False):
+            import numpy as np
+            self.encoded.append(list(texts))
+            return np.ones((len(texts), 4), dtype="float32")
+
+    cat = [{"id": "x", "name": "Foo", "aliases": [], "description": "bar baz"}]
+    bl = E5Baseline.__new__(E5Baseline)
+    bl._model_name = "intfloat/e5-base-v2"
+    bl._problem_ids = []
+    bl._embeddings = None
+    fake = _FakeModel()
+    bl._model = fake
+
+    import numpy as np
+    bl._problem_ids = ["x"]
+    raw = np.ones((1, 4), dtype="float32")
+    norms = np.linalg.norm(raw, axis=1, keepdims=True)
+    bl._embeddings = raw / norms
+
+    bl.rank("my query", top_k=1)
+    # The query passed to encode() should start with "query: "
+    assert fake.encoded and fake.encoded[0][0].startswith("query: ")
+
+
+def test_bge_instruction_applied():
+    """BGEBaseline correctly prepends instruction prefix to queries (offline check)."""
+    from retrieval.baselines import BGEBaseline
+
+    class _FakeModel:
+        def __init__(self):
+            self.encoded: list[list[str]] = []
+
+        def encode(self, texts, *, show_progress_bar=False, convert_to_numpy=False):
+            import numpy as np
+            self.encoded.append(list(texts))
+            return np.ones((len(texts), 4), dtype="float32")
+
+    cat = [{"id": "x", "name": "Foo", "aliases": [], "description": "bar baz"}]
+    bl = BGEBaseline.__new__(BGEBaseline)
+    bl._model_name = "BAAI/bge-large-en-v1.5"
+    bl._problem_ids = ["x"]
+    fake = _FakeModel()
+    bl._model = fake
+
+    import numpy as np
+    raw = np.ones((1, 4), dtype="float32")
+    norms = np.linalg.norm(raw, axis=1, keepdims=True)
+    bl._embeddings = raw / norms
+
+    bl.rank("my query", top_k=1)
+    assert fake.encoded and fake.encoded[0][0].startswith(
+        "Represent this sentence for searching relevant passages: "
+    )
 
 
 def test_runner_produces_json_and_csv():

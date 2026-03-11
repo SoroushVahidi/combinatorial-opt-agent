@@ -175,6 +175,95 @@ class SBERTBaseline(RetrievalBaseline):
         return [(self._problem_ids[i], float(scores[i])) for i in idx]
 
 
+class E5Baseline(RetrievalBaseline):
+    """Dense retrieval using intfloat/e5-base-v2.
+
+    E5 requires asymmetric prefixes: passages are prefixed with "passage: " and
+    queries with "query: " before encoding.
+    """
+
+    _MODEL_NAME = "intfloat/e5-base-v2"
+    _QUERY_PREFIX = "query: "
+    _PASSAGE_PREFIX = "passage: "
+
+    def __init__(self, model_name: str | None = None) -> None:
+        self._model_name = model_name or self._MODEL_NAME
+        self._problem_ids: list[str] = []
+        self._embeddings = None
+        self._model = None
+
+    def fit(self, catalog: list[dict]) -> RetrievalBaseline:
+        from sentence_transformers import SentenceTransformer
+        import numpy as np
+        self._model = SentenceTransformer(self._model_name)
+        raw_texts = [_searchable_text(p) for p in catalog]
+        self._problem_ids = [p.get("id", "") for p in catalog]
+        # E5 passage prefix
+        passages = [self._PASSAGE_PREFIX + t for t in raw_texts]
+        self._embeddings = self._model.encode(passages, show_progress_bar=False, convert_to_numpy=True)
+        norms = np.linalg.norm(self._embeddings, axis=1, keepdims=True)
+        norms = np.where(norms == 0, 1, norms)
+        self._embeddings = self._embeddings / norms
+        return self
+
+    def rank(self, query: str, top_k: int) -> list[tuple[str, float]]:
+        if self._embeddings is None or self._model is None:
+            raise RuntimeError("Call fit(catalog) first")
+        import numpy as np
+        # E5 query prefix
+        q_text = self._QUERY_PREFIX + expand_short_query(query)
+        q_vec = self._model.encode([q_text], show_progress_bar=False, convert_to_numpy=True)
+        q_norm = np.linalg.norm(q_vec) or 1
+        q_vec = q_vec / q_norm
+        scores = (self._embeddings @ q_vec.T).flatten()
+        idx = np.argsort(scores)[::-1][:top_k]
+        return [(self._problem_ids[i], float(scores[i])) for i in idx]
+
+
+class BGEBaseline(RetrievalBaseline):
+    """Dense retrieval using BAAI/bge-large-en-v1.5.
+
+    BGE uses a task-specific query instruction prefix for retrieval:
+    "Represent this sentence for searching relevant passages: <query>"
+    Passages/schemas are encoded without any prefix.
+    """
+
+    _MODEL_NAME = "BAAI/bge-large-en-v1.5"
+    _QUERY_INSTRUCTION = "Represent this sentence for searching relevant passages: "
+
+    def __init__(self, model_name: str | None = None) -> None:
+        self._model_name = model_name or self._MODEL_NAME
+        self._problem_ids: list[str] = []
+        self._embeddings = None
+        self._model = None
+
+    def fit(self, catalog: list[dict]) -> RetrievalBaseline:
+        from sentence_transformers import SentenceTransformer
+        import numpy as np
+        self._model = SentenceTransformer(self._model_name)
+        texts = [_searchable_text(p) for p in catalog]
+        self._problem_ids = [p.get("id", "") for p in catalog]
+        # BGE passages: no prefix
+        self._embeddings = self._model.encode(texts, show_progress_bar=False, convert_to_numpy=True)
+        norms = np.linalg.norm(self._embeddings, axis=1, keepdims=True)
+        norms = np.where(norms == 0, 1, norms)
+        self._embeddings = self._embeddings / norms
+        return self
+
+    def rank(self, query: str, top_k: int) -> list[tuple[str, float]]:
+        if self._embeddings is None or self._model is None:
+            raise RuntimeError("Call fit(catalog) first")
+        import numpy as np
+        # BGE query instruction prefix
+        q_text = self._QUERY_INSTRUCTION + expand_short_query(query)
+        q_vec = self._model.encode([q_text], show_progress_bar=False, convert_to_numpy=True)
+        q_norm = np.linalg.norm(q_vec) or 1
+        q_vec = q_vec / q_norm
+        scores = (self._embeddings @ q_vec.T).flatten()
+        idx = np.argsort(scores)[::-1][:top_k]
+        return [(self._problem_ids[i], float(scores[i])) for i in idx]
+
+
 def bm25() -> BM25Baseline:
     """Factory: BM25 baseline. Call fit(catalog) with list of problem dicts."""
     return BM25Baseline()
@@ -190,8 +279,25 @@ def sbert(model_path: str | None = None) -> SBERTBaseline:
     return SBERTBaseline(model_path=model_path)
 
 
+def e5(model_name: str | None = None) -> E5Baseline:
+    """Factory: E5 dense retrieval baseline (intfloat/e5-base-v2).
+
+    Uses asymmetric prefixes: 'passage: ' for schema texts, 'query: ' for queries.
+    """
+    return E5Baseline(model_name=model_name)
+
+
+def bge(model_name: str | None = None) -> BGEBaseline:
+    """Factory: BGE dense retrieval baseline (BAAI/bge-large-en-v1.5).
+
+    Uses instruction prefix 'Represent this sentence for searching relevant passages: '
+    for queries; passages are encoded without any prefix.
+    """
+    return BGEBaseline(model_name=model_name)
+
+
 def get_baseline(name: str, model_path: str | None = None) -> RetrievalBaseline:
-    """Get baseline by name: 'bm25', 'tfidf', 'lsa', 'sbert'."""
+    """Get baseline by name: 'bm25', 'tfidf', 'lsa', 'sbert', 'e5', 'bge'."""
     name = (name or "").strip().lower()
     if name == "bm25":
         return BM25Baseline()
@@ -201,4 +307,8 @@ def get_baseline(name: str, model_path: str | None = None) -> RetrievalBaseline:
         return LSABaseline()
     if name == "sbert":
         return SBERTBaseline(model_path=model_path)
-    raise ValueError(f"Unknown baseline: {name!r}. Use bm25, tfidf, lsa, or sbert.")
+    if name == "e5":
+        return E5Baseline(model_name=model_path)
+    if name == "bge":
+        return BGEBaseline(model_name=model_path)
+    raise ValueError(f"Unknown baseline: {name!r}. Use bm25, tfidf, lsa, sbert, e5, or bge.")
