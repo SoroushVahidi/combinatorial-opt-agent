@@ -2905,6 +2905,336 @@ def _run_global_consistency_grounding(
     return filled_values, filled_mentions, diagnostics
 
 
+# ── Global Compatibility Grounding (global_compatibility_grounding) ───────────
+# Extends GCG with explicit pairwise slot-slot compatibility terms that score
+# *pairs* of (slot, mention) assignments jointly.  This implements the
+# reviewer-requested "structured slot filling" idea: adjacent slots should be
+# coherent with each other, not only individually compatible with their mentions.
+#
+# Ablation modes (controlled by the ablation_mode argument):
+#   "local_only"  — local mention-slot scores only (no pairwise, no global)
+#   "pairwise"    — local + pairwise slot-slot terms (no global coverage bonuses)
+#   "full"        — local + pairwise + global consistency (complete method)
+#
+# The pairwise score Phi((si,mi),(sj,mj)) is a sum over pairwise feature detectors.
+# Each detector fires based on:
+#   - slot role semantics (min/max, total/coeff, percent/scalar, objective/bound)
+#   - mention types and per-unit / total flags
+#   - relative mention values (ordering coherence for min/max)
+#   - mention identity (duplicate penalty)
+
+GCGP_PAIRWISE_WEIGHTS: dict[str, float] = {
+    # ── Min/max value ordering ────────────────────────────────────────────────
+    "minmax_correct_order_bonus": 2.5,  # min_val <= max_val → bonus
+    "minmax_inverted_order_penalty": -4.0,  # min_val > max_val → penalty
+    # ── Total vs coefficient separation ──────────────────────────────────────
+    "total_coeff_type_distinct_bonus": 1.5,  # total slot + coeff slot → different types/sizes → bonus
+    "total_coeff_both_same_type_penalty": -2.0,  # both get same mention type → penalty
+    # ── Percent exclusivity ───────────────────────────────────────────────────
+    "percent_exclusive_bonus": 1.5,  # percent slot ← pct mention, other ← non-pct → bonus
+    "percent_collision_penalty": -3.5,  # two percent slots both get non-pct (when pct exists) → penalty
+    # ── Duplicate mention penalty ─────────────────────────────────────────────
+    "duplicate_mention_pairwise_penalty": -6.0,  # two slots share the same mention_id → hard penalty
+    # ── Semantic role compatibility ───────────────────────────────────────────
+    "objective_bound_compatible_bonus": 1.0,  # objective slot + bound slot → different mention roles → bonus
+    "objective_objective_collision_penalty": -1.0,  # two objective slots with same-role mention → mild penalty
+    # ── Value magnitude plausibility ─────────────────────────────────────────
+    "magnitude_budget_gt_coeff_bonus": 1.0,  # total slot value > coeff slot value → bonus
+    "magnitude_budget_lt_coeff_penalty": -2.0,  # total slot value < coeff slot value → penalty
+}
+
+# Beam width for the pairwise-aware beam search.
+GCGP_BEAM_WIDTH: int = 12  # slightly wider than GCG because pairwise reranking helps
+
+
+def _gcgp_pairwise_score(
+    si: "SlotOptIR",
+    mi: "MentionOptIR",
+    sj: "SlotOptIR",
+    mj: "MentionOptIR",
+) -> tuple[float, list[str]]:
+    """Compute a pairwise compatibility score for the joint assignment (si→mi, sj→mj).
+
+    This scores *cross-slot coherence*: do the two assigned mentions make sense
+    together given the semantic relationship between si and sj?
+
+    Returns (delta, reasons) where reasons is a diagnostic list of strings.
+    """
+    delta = 0.0
+    reasons: list[str] = []
+    w = GCGP_PAIRWISE_WEIGHTS
+
+    # ── Hard duplicate penalty ────────────────────────────────────────────────
+    if mi.mention_id == mj.mention_id:
+        delta += w["duplicate_mention_pairwise_penalty"]
+        reasons.append(f"duplicate_mention:({si.name},{sj.name})")
+        return delta, reasons  # no other terms make sense if same mention
+
+    # ── Min/max value ordering ────────────────────────────────────────────────
+    si_is_min = bool(si.operator_preference and "min" in si.operator_preference)
+    sj_is_max = bool(sj.operator_preference and "max" in sj.operator_preference)
+    si_is_max = bool(si.operator_preference and "max" in si.operator_preference)
+    sj_is_min = bool(sj.operator_preference and "min" in sj.operator_preference)
+
+    if si_is_min and sj_is_max and mi.value is not None and mj.value is not None:
+        if mi.value <= mj.value:
+            delta += w["minmax_correct_order_bonus"]
+            reasons.append(f"minmax_correct_order:({si.name},{sj.name})")
+        else:
+            delta += w["minmax_inverted_order_penalty"]
+            reasons.append(f"minmax_inverted_order:({si.name},{sj.name})")
+    elif si_is_max and sj_is_min and mi.value is not None and mj.value is not None:
+        if mj.value <= mi.value:
+            delta += w["minmax_correct_order_bonus"]
+            reasons.append(f"minmax_correct_order_rev:({si.name},{sj.name})")
+        else:
+            delta += w["minmax_inverted_order_penalty"]
+            reasons.append(f"minmax_inverted_order_rev:({si.name},{sj.name})")
+
+    # ── Total vs coefficient separation ──────────────────────────────────────
+    one_total_one_coeff = (si.is_total_like and sj.is_coefficient_like) or (
+        si.is_coefficient_like and sj.is_total_like
+    )
+    if one_total_one_coeff:
+        # Good: different mention kinds (or different is_per_unit / is_total_like flags)
+        if mi.is_total_like != mj.is_total_like or mi.is_per_unit != mj.is_per_unit:
+            delta += w["total_coeff_type_distinct_bonus"]
+            reasons.append(f"total_coeff_distinct:({si.name},{sj.name})")
+        elif mi.type_bucket == mj.type_bucket:
+            delta += w["total_coeff_both_same_type_penalty"]
+            reasons.append(f"total_coeff_same_type:({si.name},{sj.name})")
+        # Magnitude plausibility: total slot should have larger value than coeff slot.
+        total_m = mi if si.is_total_like else mj
+        coeff_m = mj if si.is_total_like else mi
+        if total_m.value is not None and coeff_m.value is not None:
+            if total_m.value > coeff_m.value:
+                delta += w["magnitude_budget_gt_coeff_bonus"]
+                reasons.append(f"magnitude_total_gt_coeff:({si.name},{sj.name})")
+            elif total_m.value < coeff_m.value:
+                delta += w["magnitude_budget_lt_coeff_penalty"]
+                reasons.append(f"magnitude_total_lt_coeff:({si.name},{sj.name})")
+
+    # ── Percent exclusivity ───────────────────────────────────────────────────
+    si_is_pct = si.expected_type == "percent"
+    sj_is_pct = sj.expected_type == "percent"
+    if si_is_pct != sj_is_pct:
+        # One percent slot, one non-percent slot.
+        pct_slot_m = mi if si_is_pct else mj
+        non_pct_slot_m = mj if si_is_pct else mi
+        if pct_slot_m.type_bucket == "percent" and non_pct_slot_m.type_bucket != "percent":
+            delta += w["percent_exclusive_bonus"]
+            reasons.append(f"percent_exclusive:({si.name},{sj.name})")
+    elif si_is_pct and sj_is_pct:
+        # Both percent slots — check they don't both get non-percent mentions.
+        if mi.type_bucket != "percent" and mj.type_bucket != "percent":
+            delta += w["percent_collision_penalty"]
+            reasons.append(f"percent_collision:({si.name},{sj.name})")
+
+    # ── Objective vs bound role compatibility ─────────────────────────────────
+    si_obj = si.is_objective_like
+    sj_bnd = sj.is_bound_like
+    si_bnd = si.is_bound_like
+    sj_obj = sj.is_objective_like
+    if (si_obj and sj_bnd) or (si_bnd and sj_obj):
+        # Objective-like slot and bound-like slot: prefer different fragment types.
+        mi_obj = mi.fragment_type == "objective"
+        mj_bnd = mj.fragment_type in ("constraint", "bound")
+        mi_bnd = mi.fragment_type in ("constraint", "bound")
+        mj_obj = mj.fragment_type == "objective"
+        if (si_obj and mi_obj and sj_bnd and mj_bnd) or (si_bnd and mi_bnd and sj_obj and mj_obj):
+            delta += w["objective_bound_compatible_bonus"]
+            reasons.append(f"obj_bound_compat:({si.name},{sj.name})")
+    elif si_obj and sj_obj:
+        # Both objective: mild penalty if they share the same fragment context.
+        if mi.fragment_type == mj.fragment_type == "objective":
+            delta += w["objective_objective_collision_penalty"]
+            reasons.append(f"obj_obj_collision:({si.name},{sj.name})")
+
+    return delta, reasons
+
+
+def _gcgp_beam_search(
+    mentions: list["MentionOptIR"],
+    slots: list["SlotOptIR"],
+    local_scores: list[list[float]],
+    local_features: list[list[dict[str, Any]]],
+    ablation_mode: str = "full",
+    beam_width: int = GCGP_BEAM_WIDTH,
+) -> tuple[
+    dict[str, "MentionOptIR"],
+    dict[str, float],
+    dict[str, list[dict[str, Any]]],
+    list[dict[str, Any]],
+]:
+    """Beam search with pairwise slot-slot compatibility terms.
+
+    ablation_mode controls which scoring components are active:
+      "local_only"  — only local mention-slot scores (GCG without global/pairwise)
+      "pairwise"    — local + pairwise (no GCG global consistency terms)
+      "full"        — local + pairwise + GCG global consistency terms
+
+    Returns same structure as _gcg_beam_search for drop-in compatibility.
+    """
+    if not mentions or not slots:
+        return {}, {}, {}, []
+
+    slots_by_name = {s.name: s for s in slots}
+
+    # Build per-slot candidate debug info.
+    debug: dict[str, list[dict[str, Any]]] = {}
+    for j, sr in enumerate(slots):
+        cands = []
+        for i, mr in enumerate(mentions):
+            cands.append({
+                "mention_id": mr.mention_id,
+                "mention_raw": mr.raw_surface,
+                "score": local_scores[i][j],
+                "features": local_features[i][j],
+            })
+        cands.sort(key=lambda x: x["score"], reverse=True)
+        debug[sr.name] = cands
+
+    # Per-slot admissible (mention_index, local_score) lists, pruned.
+    admissible: list[list[tuple[int, float]]] = []
+    for j in range(len(slots)):
+        opts = [
+            (i, local_scores[i][j])
+            for i in range(len(mentions))
+            if local_scores[i][j] > GCG_PRUNE_THRESHOLD
+        ]
+        opts.sort(key=lambda x: -x[1])
+        admissible.append(opts)
+
+    # Beam state: (bundle: frozenset[(slot_j, mention_i)], running_score)
+    # running_score accumulates local + pairwise scores during the search.
+    BeamState = tuple[frozenset[tuple[int, int]], float]
+    beam: list[BeamState] = [(frozenset(), 0.0)]
+
+    for j in range(len(slots)):
+        next_beam: list[BeamState] = []
+        for bundle, running_score in beam:
+            # Option 1: leave slot j unassigned.
+            next_beam.append((bundle, running_score))
+            # Option 2: assign an admissible, unused mention.
+            used_mentions = {mi for _, mi in bundle}
+            for mi, loc_sc in admissible[j]:
+                if mi in used_mentions:
+                    continue
+                new_score = running_score + loc_sc
+                # Add pairwise terms against all already-committed slots.
+                if ablation_mode in ("pairwise", "full"):
+                    for prev_j, prev_mi in bundle:
+                        pw_delta, _ = _gcgp_pairwise_score(
+                            slots[j], mentions[mi],
+                            slots[prev_j], mentions[prev_mi],
+                        )
+                        new_score += pw_delta
+                new_bundle = bundle | frozenset([(j, mi)])
+                next_beam.append((new_bundle, new_score))
+
+        next_beam.sort(key=lambda x: -x[1])
+        beam = next_beam[:beam_width]
+
+    # Re-score final beam states with global consistency terms (full mode only).
+    scored_final: list[tuple[float, BeamState, float, list[str]]] = []
+    for bundle, running_score in beam:
+        assignment_candidate: dict[str, "MentionOptIR"] = {
+            slots[j].name: mentions[mi] for j, mi in bundle
+        }
+        if ablation_mode == "full":
+            g_delta, reasons = _gcg_global_penalty(assignment_candidate, slots_by_name, mentions)
+        else:
+            g_delta, reasons = 0.0, []
+        total_score = running_score + g_delta
+        scored_final.append((total_score, (bundle, running_score), g_delta, reasons))
+
+    if not scored_final:
+        return {}, {}, debug, []
+
+    scored_final.sort(key=lambda x: -x[0])
+    best_total, (best_bundle, _), best_g_delta, best_reasons = scored_final[0]
+
+    assignments: dict[str, "MentionOptIR"] = {}
+    slot_scores: dict[str, float] = {}
+    for j, mi in best_bundle:
+        slot_name = slots[j].name
+        assignments[slot_name] = mentions[mi]
+        slot_scores[slot_name] = local_scores[mi][j]
+
+    # Top-k diagnostics.
+    top_assignments: list[dict[str, Any]] = []
+    for rank, (total_sc, (bun, loc_sum), g_dl, rsns) in enumerate(scored_final[:beam_width]):
+        asgn_repr = {slots[j].name: mentions[mi].raw_surface for j, mi in bun}
+        top_assignments.append({
+            "rank": rank,
+            "total_score": total_sc,
+            "local_sum": loc_sum,
+            "global_delta": g_dl,
+            "active_reasons": rsns,
+            "assignment": asgn_repr,
+        })
+
+    return assignments, slot_scores, debug, top_assignments
+
+
+def _run_global_compatibility_grounding(
+    query: str,
+    variant: str,
+    expected_scalar: list[str],
+    ablation_mode: str = "full",
+    beam_width: int = GCGP_BEAM_WIDTH,
+) -> tuple[dict[str, Any], dict[str, "MentionOptIR"], dict[str, Any]]:
+    """Global Compatibility Grounding (GCGP): beam search with pairwise slot-slot terms.
+
+    Extension of Global Consistency Grounding that adds explicit pairwise
+    compatibility terms between assigned slot-mention pairs.
+
+    ablation_mode:
+      "local_only"  — local scores only (same as simplified GCG)
+      "pairwise"    — local + pairwise slot-slot terms
+      "full"        — local + pairwise + global consistency (complete method)
+
+    Returns:
+        filled_values      : slot_name -> numeric value
+        filled_mentions    : slot_name -> MentionOptIR
+        diagnostics        : dict with top_assignments, per_slot_candidates, ablation_mode
+    """
+    filled_values: dict[str, Any] = {}
+    filled_mentions: dict[str, "MentionOptIR"] = {}
+    diagnostics: dict[str, Any] = {"ablation_mode": ablation_mode}
+
+    if not expected_scalar:
+        return filled_values, filled_mentions, diagnostics
+
+    mentions = _extract_opt_role_mentions(query, variant)
+    slots = _build_slot_opt_irs(expected_scalar)
+    if not mentions or not slots:
+        return filled_values, filled_mentions, diagnostics
+
+    m_count, s_count = len(mentions), len(slots)
+    local_scores: list[list[float]] = [[0.0] * s_count for _ in range(m_count)]
+    local_features: list[list[dict[str, Any]]] = [[{} for _ in range(s_count)] for _ in range(m_count)]
+    for i, mr in enumerate(mentions):
+        for j, sr in enumerate(slots):
+            sc, feats = _gcg_local_score(mr, sr)
+            local_scores[i][j] = sc
+            local_features[i][j] = feats
+
+    assignments, slot_scores, debug, top_assignments = _gcgp_beam_search(
+        mentions, slots, local_scores, local_features,
+        ablation_mode=ablation_mode,
+        beam_width=beam_width,
+    )
+
+    for slot_name, mr in assignments.items():
+        filled_values[slot_name] = mr.tok.value if mr.tok.value is not None else mr.tok.raw
+        filled_mentions[slot_name] = mr
+
+    diagnostics["top_assignments"] = top_assignments
+    diagnostics["per_slot_candidates"] = debug
+    return filled_values, filled_mentions, diagnostics
+
+
 def _constrained_assignment(
     mentions: list[MentionRecord],
     slots: list[SlotRecord],
@@ -3796,6 +4126,45 @@ def run_setting(
                                 type_exact5_num[btype] += 1
                             if err <= 0.20:
                                 type_exact20_num[btype] += 1
+            elif assignment_mode in (
+                "global_compat_local",
+                "global_compat_pairwise",
+                "global_compat_full",
+            ) and expected_scalar:
+                # Global Compatibility Grounding (GCGP): beam search with pairwise terms.
+                # ablation_mode is derived from assignment_mode suffix.
+                _gcgp_ablation = assignment_mode[len("global_compat_"):]  # "local", "pairwise", or "full"
+                filled_values, filled_mentions, _diag = _run_global_compatibility_grounding(
+                    query, variant, expected_scalar, ablation_mode=_gcgp_ablation
+                )
+                for p in expected_scalar:
+                    if p not in filled_values:
+                        continue
+                    m_ir = filled_mentions.get(p)
+                    tok = m_ir.tok if m_ir else None
+                    if tok is None:
+                        continue
+                    n_filled += 1
+                    filled[p] = filled_values[p]
+                    btype = _bucket_type(p)
+                    type_filled_total[btype] += 1
+                    type_filled_q[btype] += 1
+                    et = _expected_type(p)
+                    if _is_type_match(et, tok.kind):
+                        type_matches += 1
+                        type_correct_total[btype] += 1
+                        type_correct_q[btype] += 1
+                    if schema_hit and tok.value is not None and _is_scalar(gold_params.get(p)):
+                        gold_val = float(gold_params[p])
+                        err = _rel_err(float(tok.value), gold_val)
+                        comparable_errs.append(err)
+                        if btype in type_names:
+                            type_exact5_den[btype] += 1
+                            type_exact20_den[btype] += 1
+                            if err <= 0.05:
+                                type_exact5_num[btype] += 1
+                            if err <= 0.20:
+                                type_exact20_num[btype] += 1
             elif assignment_mode == "constrained" and expected_scalar:
                 # Global constrained assignment over mention-slot pairs.
                 mention_records = _extract_num_mentions(query, variant)
@@ -4096,6 +4465,8 @@ def run_single_setting(
         effective_baseline = f"{baseline_arg}_optimization_role_entity_semantic_beam_repair"
     elif assignment_mode == "global_consistency_grounding":
         effective_baseline = f"{baseline_arg}_global_consistency_grounding"
+    elif assignment_mode in ("global_compat_local", "global_compat_pairwise", "global_compat_full"):
+        effective_baseline = f"{baseline_arg}_{assignment_mode}"
 
     run_setting(
         variant=variant,
@@ -4135,6 +4506,7 @@ def main() -> None:
             "typed", "untyped", "constrained", "semantic_ir_repair",
             "optimization_role_repair", "optimization_role_relation_repair",
             "global_consistency_grounding",
+            "global_compat_local", "global_compat_pairwise", "global_compat_full",
             # Experimental/archived (not in default focused eval; use run_nlp4lp_focused_eval.py --experimental):
             "optimization_role_anchor_linking", "optimization_role_bottomup_beam_repair",
             "optimization_role_entity_semantic_beam_repair",
@@ -4209,6 +4581,8 @@ def main() -> None:
         effective_baseline = f"{args.baseline}_optimization_role_entity_semantic_beam_repair"
     elif args.assignment_mode == "global_consistency_grounding":
         effective_baseline = f"{args.baseline}_global_consistency_grounding"
+    elif args.assignment_mode in ("global_compat_local", "global_compat_pairwise", "global_compat_full"):
+        effective_baseline = f"{args.baseline}_{args.assignment_mode}"
 
     out_dir = ROOT / "results" / "paper"
     run_setting(
