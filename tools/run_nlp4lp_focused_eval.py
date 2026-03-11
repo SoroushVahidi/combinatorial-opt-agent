@@ -45,6 +45,10 @@ FOCUSED_BASELINES_DEFAULT = [
     "tfidf_relation_aware_ops",
     "tfidf_relation_aware_semantic",
     "tfidf_relation_aware_full",
+    "tfidf_ambiguity_candidate_greedy",
+    "tfidf_ambiguity_aware_beam",
+    "tfidf_ambiguity_aware_abstain",
+    "tfidf_ambiguity_aware_full",
 ]
 
 BASELINE_ASSIGNMENT_DEFAULT = [
@@ -60,6 +64,10 @@ BASELINE_ASSIGNMENT_DEFAULT = [
     ("tfidf", "relation_aware_ops"),
     ("tfidf", "relation_aware_semantic"),
     ("tfidf", "relation_aware_full"),
+    ("tfidf", "ambiguity_candidate_greedy"),
+    ("tfidf", "ambiguity_aware_beam"),
+    ("tfidf", "ambiguity_aware_abstain"),
+    ("tfidf", "ambiguity_aware_full"),
 ]
 
 # Experimental/archived methods (only with --experimental).
@@ -125,6 +133,13 @@ def _effective_baseline(baseline_arg: str, assignment_mode: str) -> str:
         "relation_aware_ops",
         "relation_aware_semantic",
         "relation_aware_full",
+    ):
+        return f"{baseline_arg}_{assignment_mode}"
+    if assignment_mode in (
+        "ambiguity_candidate_greedy",
+        "ambiguity_aware_beam",
+        "ambiguity_aware_abstain",
+        "ambiguity_aware_full",
     ):
         return f"{baseline_arg}_{assignment_mode}"
     return f"{baseline_arg}_{assignment_mode}"
