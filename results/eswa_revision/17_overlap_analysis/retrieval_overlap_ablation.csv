@@ -1,0 +1,13 @@
+sanitize_variant,method,n,Schema_R1
+baseline,tfidf,331,0.9063
+baseline,bm25,331,0.8852
+baseline,lsa,331,0.7734
+no_numbers,tfidf,331,0.9063
+no_numbers,bm25,331,0.8973
+no_numbers,lsa,331,0.7734
+stopword_stripped,tfidf,331,0.9124
+stopword_stripped,bm25,331,0.9063
+stopword_stripped,lsa,331,0.8731
+no_numbers_plus_stopwords,tfidf,331,0.9124
+no_numbers_plus_stopwords,bm25,331,0.9063
+no_numbers_plus_stopwords,lsa,331,0.8731

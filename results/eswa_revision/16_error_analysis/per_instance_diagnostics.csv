@@ -1,0 +1,538 @@
+query_id,variant,method,schema_hit,schema_miss,n_expected_scalar,n_filled,full_coverage,all_types_correct,inst_ready,any_type_mismatch,any_slot_comparable,param_coverage,type_match,n_numeric_mentions,ambiguity_bucket,slot_count_bucket,predicted_doc_id,gold_doc_id,query_text_preview
+nlp4lp_test_0,orig,tfidf,1,0,5,5,1,0,1,1,1,1.0000,0.8000,5,medium,4+,nlp4lp_test_0,nlp4lp_test_0,Mrs. Watson wants to invest in the real-estate market and has a total budget of at most $760000. She has two choices whi
+nlp4lp_test_1,orig,tfidf,1,0,2,2,1,1,1,0,1,1.0000,1.0000,8,high,2,nlp4lp_test_1,nlp4lp_test_1,A breakfast joint makes two different sandwiches: a regular and a special. Both need eggs and bacon. Each regular sandwi
+nlp4lp_test_2,orig,tfidf,1,0,8,7,0,0,1,1,1,0.8750,0.8571,10,high,4+,nlp4lp_test_2,nlp4lp_test_2,A cleaning company located in Edmonton wants to get the best exposure possible for promoting their new dishwashing deter
+nlp4lp_test_3,orig,tfidf,1,0,7,7,1,0,1,1,1,1.0000,0.8571,7,high,4+,nlp4lp_test_3,nlp4lp_test_3,There is 1000 mg of gold available that is needed to make long and short cables. Long cables require 10 mg of gold while
+nlp4lp_test_4,orig,tfidf,0,1,0,0,1,0,0,0,0,0.0000,0.0000,5,medium,0,nlp4lp_test_41,nlp4lp_test_4,A store employs senior citizens who earn $500 per week and young adults who earn $750 per week. The store must keep the 
+nlp4lp_test_5,orig,tfidf,1,0,10,10,1,0,1,1,1,1.0000,0.8000,8,high,4+,nlp4lp_test_5,nlp4lp_test_5,"A company is deciding where to promote their product. Some options include z-tube, soorchle engine, and wassa advertisem"
+nlp4lp_test_6,orig,tfidf,1,0,8,8,1,0,1,1,1,1.0000,0.8750,8,high,4+,nlp4lp_test_6,nlp4lp_test_6,"A chair produced by Elm Furniture yields a profit of $43, while every dresser yields a $52 profit. Each week, 17 gallons"
+nlp4lp_test_7,orig,tfidf,1,0,8,8,1,1,1,0,1,1.0000,1.0000,8,high,4+,nlp4lp_test_7,nlp4lp_test_7,"A farmer wants to mix his animal feeds, Feed A and Feed B, in such a way that the mixture will contain a minimum of 30 u"
+nlp4lp_test_8,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,8,high,3,nlp4lp_test_8,nlp4lp_test_8,An artisan makes two types of terracotta jars: a thin jar and a stubby jar. Each thin jar requires 50 minutes of shaping
+nlp4lp_test_9,orig,tfidf,1,0,2,2,1,1,1,0,1,1.0000,1.0000,8,high,2,nlp4lp_test_9,nlp4lp_test_9,"A grocery store wants to liquidate its stock of 10 apples, 20 bananas, and 80 grapes. Given past experience, the store k"
+nlp4lp_test_10,orig,tfidf,1,0,8,6,0,1,0,0,1,0.7500,1.0000,7,high,4+,nlp4lp_test_10,nlp4lp_test_10,A bakery uses a stand-mixer and a slow bake oven to make bread and cookies. Each machine can run for at most 3000 hours 
+nlp4lp_test_11,orig,tfidf,1,0,8,8,1,0,1,1,1,1.0000,0.8750,7,high,4+,nlp4lp_test_11,nlp4lp_test_11,A glass factory makes two types of glass panes: a regular glass pane and a tempered glass pane. Both require time on a h
+nlp4lp_test_12,orig,tfidf,0,1,0,0,1,0,0,0,0,0.0000,0.0000,8,high,0,nlp4lp_test_260,nlp4lp_test_12,A souvenir shop makes wooden elephants and tigers with plastic ornaments. Each elephant requires 50 grams of wood and 20
+nlp4lp_test_13,orig,tfidf,1,0,13,12,0,1,1,0,1,0.9231,1.0000,12,high,4+,nlp4lp_test_13,nlp4lp_test_13,"An art store makes large and small art pieces. The store has available 100 units of paint, 50 units of glitter, and 70 u"
+nlp4lp_test_14,orig,tfidf,1,0,5,1,0,1,0,0,1,0.2000,1.0000,4,medium,4+,nlp4lp_test_14,nlp4lp_test_14,"My family has decided to invest in real state for the first time. Currently, they have $600,000 to invest, some in apart"
+nlp4lp_test_15,orig,tfidf,1,0,8,8,1,0,1,1,1,1.0000,0.8750,8,high,4+,nlp4lp_test_15,nlp4lp_test_15,My grandma is required to take two medicines Z1 and D3 everyday. She needs to take at least 5 grams of Z1 and 10 grams o
+nlp4lp_test_16,orig,tfidf,1,0,8,8,1,1,1,0,1,1.0000,1.0000,8,high,4+,nlp4lp_test_16,nlp4lp_test_16,A hobbyist makes model trains and planes using wood and paint. A model train requires 3 units of wood and 3 units of pai
+nlp4lp_test_17,orig,tfidf,1,0,9,6,0,0,0,1,1,0.6667,0.8333,9,high,4+,nlp4lp_test_17,nlp4lp_test_17,An electronics store wants to optimize how many phones and laptops are enough to keep in inventory. A phone will earn th
+nlp4lp_test_18,orig,tfidf,1,0,2,2,1,1,1,0,1,1.0000,1.0000,8,high,2,nlp4lp_test_18,nlp4lp_test_18,"A candy store mixes regular candy and sour candy to prepare two products, regular mix and sour surprise mix. Each kilogr"
+nlp4lp_test_19,orig,tfidf,1,0,4,4,1,1,1,0,1,1.0000,1.0000,9,high,4+,nlp4lp_test_19,nlp4lp_test_19,A suspicious factory has 100 sq. feet of space. It makes bootleg phones and laptops. Phones require 2 hours of labor and
+nlp4lp_test_20,orig,tfidf,1,0,6,4,0,1,0,0,1,0.6667,1.0000,6,high,4+,nlp4lp_test_20,nlp4lp_test_20,A electronics store sells premium desktops with more power as well as regular desktops for everyday use. Each premium de
+nlp4lp_test_21,orig,tfidf,1,0,5,5,1,0,0,1,1,1.0000,0.6000,6,high,4+,nlp4lp_test_21,nlp4lp_test_21,"A car manufacturer makes two versions of the same car, a regular model and a premium model. They make x1 regular models "
+nlp4lp_test_22,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,8,high,3,nlp4lp_test_22,nlp4lp_test_22,You are designing an office space with two types of desks: long desks and short desks. You can spend at most $2000. Long
+nlp4lp_test_23,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,8,high,3,nlp4lp_test_23,nlp4lp_test_23,Ayse produces a plant growth compound by mixing two types of fertilizer: C and Y. This growth compound must contain at l
+nlp4lp_test_24,orig,tfidf,0,1,0,0,1,0,0,0,0,0.0000,0.0000,8,high,0,nlp4lp_test_122,nlp4lp_test_24,"Sleep inducing medicine and anti-inflammatory medicine is found in two pills, pill A and pill B. One pill A contains 3 u"
+nlp4lp_test_25,orig,tfidf,1,0,2,2,1,1,1,0,1,1.0000,1.0000,11,high,2,nlp4lp_test_25,nlp4lp_test_25,A car manufacturer makes two types of car oils: Oil Max and Oil Max Pro. A container of Oil Max contains 46 grams of sub
+nlp4lp_test_26,orig,tfidf,1,0,8,5,0,1,0,0,1,0.6250,1.0000,7,high,4+,nlp4lp_test_26,nlp4lp_test_26,A food truck owner can spend at most $20000 on mangos and guavas. A mango costs the food truck owner $5 and a guava cost
+nlp4lp_test_27,orig,tfidf,1,0,2,2,1,1,1,0,1,1.0000,1.0000,11,high,2,nlp4lp_test_27,nlp4lp_test_27,A nutritionist is making a special vitamin mix using two drinks: A and B. The vitamin mix must contain at least 150 unit
+nlp4lp_test_28,orig,tfidf,1,0,12,11,0,0,1,1,1,0.9167,0.9091,11,high,4+,nlp4lp_test_28,nlp4lp_test_28,"An ice cream store makes chocolate and vanilla ice cream by the gallon. In a week, they must make at least 5 gallons of "
+nlp4lp_test_29,orig,tfidf,1,0,6,5,0,0,1,1,1,0.8333,0.8000,5,medium,4+,nlp4lp_test_29,nlp4lp_test_29,Mark has 50 acres of land available to grow potatoes and cucumbers that he sells at a farmers' market. He must grow at l
+nlp4lp_test_30,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.7143,7,high,4+,nlp4lp_test_30,nlp4lp_test_30,A flooring company produces engineered hardwood and vinyl planks. Their sales forecasts show an expected demand of at le
+nlp4lp_test_31,orig,tfidf,1,0,2,2,1,1,1,0,1,1.0000,1.0000,11,high,2,nlp4lp_test_31,nlp4lp_test_31,"A berry farmer has two farms, an old and new farm, where he grows raspberries, blueberries, and strawberries. He has a c"
+nlp4lp_test_32,orig,tfidf,1,0,8,8,1,0,1,1,1,1.0000,0.8750,8,high,4+,nlp4lp_test_32,nlp4lp_test_32,Jordan is a chef. He wants to design a diet consisting of Kebabs and Rice.  Assume that each serving of Rice costs $3 an
+nlp4lp_test_33,orig,tfidf,1,0,8,7,0,0,1,1,1,0.8750,0.8571,8,high,4+,nlp4lp_test_33,nlp4lp_test_33,A company sells custom scooters and bikes for customers. The profit per scooter is $200 and the profit per bike is $300.
+nlp4lp_test_34,orig,tfidf,1,0,4,4,1,1,1,0,1,1.0000,1.0000,9,high,4+,nlp4lp_test_34,nlp4lp_test_34,John has a 300 acre berry farm on which to plant blueberries and raspberries. John has $10000 to spend on watering and 5
+nlp4lp_test_35,orig,tfidf,1,0,8,8,1,0,0,1,1,1.0000,0.7500,8,high,4+,nlp4lp_test_35,nlp4lp_test_35,A man  only eats vegetable and fruits. A serving of vegetables contains 2 units of vitamins and 3 units of minerals. A s
+nlp4lp_test_36,orig,tfidf,0,1,0,0,1,0,0,0,0,0.0000,0.0000,8,high,0,nlp4lp_test_10,nlp4lp_test_36,A bakery bakes bagels and croissants. A batch of bagels can be made using 2 hours of oven time and 0.25 hours of pastry 
+nlp4lp_test_37,orig,tfidf,1,0,2,2,1,1,1,0,1,1.0000,1.0000,14,high,2,nlp4lp_test_37,nlp4lp_test_37,"A teddy bear company produces three different colored bears: black, white, and brown. These bears are made in two differ"
+nlp4lp_test_38,orig,tfidf,1,0,9,9,1,0,1,1,1,1.0000,0.8889,9,high,4+,nlp4lp_test_38,nlp4lp_test_38,A farmer has 500 acres of land to grow turnips and pumpkins. Turnips require 50 minutes of watering and $80 worth of pes
+nlp4lp_test_39,orig,tfidf,1,0,6,4,0,0,0,1,1,0.6667,0.7500,6,high,4+,nlp4lp_test_39,nlp4lp_test_39,"A school employs staff and substitute teachers. Per shift, staff teachers work 6 hours and get paid $300. Per shift, sub"
+nlp4lp_test_40,orig,tfidf,1,0,8,8,1,1,1,0,1,1.0000,1.0000,8,high,4+,nlp4lp_test_40,nlp4lp_test_40,"A gem factory has two drills, a high intensity one and a low intensity one. Each day, the high intensity drill can proce"
+nlp4lp_test_41,orig,tfidf,1,0,3,3,1,0,0,1,1,1.0000,0.3333,6,high,3,nlp4lp_test_41,nlp4lp_test_41,"A sandwich company can open two types of stores, a dine-in place and a food-truck. A dine-in place can make 100 sandwich"
+nlp4lp_test_42,orig,tfidf,1,0,8,8,1,1,1,0,1,1.0000,1.0000,8,high,4+,nlp4lp_test_42,nlp4lp_test_42,"There are two processes, process A and process B, to plate a coin with gold. Process A requires 3 units of gold, 2 wires"
+nlp4lp_test_43,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,6,high,3,nlp4lp_test_43,nlp4lp_test_43,"A woodshop can purchase two types of saws, a miter saw and a circular saw. A miter saw can cut 50 planks of wood and pro"
+nlp4lp_test_44,orig,tfidf,1,0,4,4,1,0,0,1,1,1.0000,0.7500,9,high,4+,nlp4lp_test_44,nlp4lp_test_44,A farmer has 200 acres of land on which he must process hay using either a windrower or hay harvester. For each acre of 
+nlp4lp_test_45,orig,tfidf,1,0,9,9,1,0,0,1,1,1.0000,0.7778,9,high,4+,nlp4lp_test_45,nlp4lp_test_45,A new fast food place makes wraps and platters. Each wrap requires 5 units of meat and 3 units of rice. Each platter req
+nlp4lp_test_46,orig,tfidf,1,0,6,6,1,0,0,1,1,1.0000,0.6667,6,high,4+,nlp4lp_test_46,nlp4lp_test_46,"An amusement park is installing ticket machines, both cash-based and card-only machines. A cash-based machine can proces"
+nlp4lp_test_47,orig,tfidf,1,0,5,4,0,0,0,1,1,0.8000,0.7500,4,medium,4+,nlp4lp_test_47,nlp4lp_test_47,A honey farmer sells his honey in glass and plastic jars. A glass jar can hold 250 ml of honey while a plastic jar can h
+nlp4lp_test_48,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.7143,7,high,4+,nlp4lp_test_48,nlp4lp_test_48,A bubble tea shop sells mango and lychee bubble tea. Each mango bubble tea requires 4 units of mango juice and 8 units o
+nlp4lp_test_49,orig,tfidf,1,0,6,4,0,1,0,0,1,0.6667,1.0000,6,high,4+,nlp4lp_test_49,nlp4lp_test_49,A city employs seasonal and permanent snow removers. A seasonal snow remover works 6 hours per shift and gets paid $120.
+nlp4lp_test_50,orig,tfidf,1,0,8,8,1,0,1,1,1,1.0000,0.8750,8,high,4+,nlp4lp_test_50,nlp4lp_test_50,"A high rise building is buying two types of furnaces, a new model and an old model. A new model furnace can heat 10 apar"
+nlp4lp_test_51,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,6,high,3,nlp4lp_test_51,nlp4lp_test_51,A cell phone company is building rural and urban factories. A rural factory can make 100 phones per day and requires 8 m
+nlp4lp_test_52,orig,tfidf,1,0,6,6,1,1,1,0,1,1.0000,1.0000,6,high,4+,nlp4lp_test_52,nlp4lp_test_52,"An ice cream store can buy two machines, a counter-top sized one and a fridge sized one, to make ice cream. The counter-"
+nlp4lp_test_53,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,8,high,3,nlp4lp_test_53,nlp4lp_test_53,"There are two specialized containers, a small and large one, that are used to make a pharmaceutical paste. The small con"
+nlp4lp_test_54,orig,tfidf,1,0,4,4,1,1,1,0,1,1.0000,1.0000,9,high,4+,nlp4lp_test_54,nlp4lp_test_54,"An oil and gas company operates on 300 acres of land where they use oil wells of small and large size. Per acre of land,"
+nlp4lp_test_55,orig,tfidf,1,0,9,9,1,1,1,0,1,1.0000,1.0000,9,high,4+,nlp4lp_test_55,nlp4lp_test_55,A bakery makes almond and pistachio croissants. An almond croissant requires 5 units of butter and 8 units of flour. A p
+nlp4lp_test_56,orig,tfidf,1,0,6,6,1,1,1,0,1,1.0000,1.0000,6,high,4+,nlp4lp_test_56,nlp4lp_test_56,A burger chain is buying both gas and electric grills to make burger patties. A gas grill can cook 20 patties per minute
+nlp4lp_test_57,orig,tfidf,1,0,5,5,1,0,1,1,1,1.0000,0.8000,5,medium,4+,nlp4lp_test_57,nlp4lp_test_57,A cough syrup company sells cough syrup in kids and adult size bottles. A kids size bottle can hold 100 ml of cough syru
+nlp4lp_test_58,orig,tfidf,1,0,8,7,0,0,0,1,1,0.8750,0.7143,7,high,4+,nlp4lp_test_58,nlp4lp_test_58,A bakery makes fiber supplemented brownies and lemon squares. Each brownie requires 5 units of chocolate mix and 4 units
+nlp4lp_test_59,orig,tfidf,1,0,6,6,1,1,1,0,1,1.0000,1.0000,6,high,4+,nlp4lp_test_59,nlp4lp_test_59,A clinic employs nurses and pharmacists to deliver shots to patients. A nurse works 5 hours per shift while a pharmacist
+nlp4lp_test_60,orig,tfidf,1,0,8,8,1,0,0,1,1,1.0000,0.7500,8,high,4+,nlp4lp_test_60,nlp4lp_test_60,"A laundromat can buy two types of washing machines, a top-loading model and a front-loading model. The top-loading model"
+nlp4lp_test_61,orig,tfidf,1,0,6,6,1,0,1,1,1,1.0000,0.8333,6,high,4+,nlp4lp_test_61,nlp4lp_test_61,A bank can build small and large branches to serve their customers. A small branch can serve 50 customers per day and re
+nlp4lp_test_62,orig,tfidf,1,0,6,6,1,0,0,1,1,1.0000,0.6667,6,high,4+,nlp4lp_test_62,nlp4lp_test_62,A shipping company can purchase regular and hybrid vans to make deliveries. A regular van can deliver 500 packages per d
+nlp4lp_test_63,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,8,high,3,nlp4lp_test_63,nlp4lp_test_63,"In order to make carbon dioxide, wood is burned using two processes, with a catalyst and without a catalyst. The process"
+nlp4lp_test_64,orig,tfidf,1,0,4,4,1,1,1,0,1,1.0000,1.0000,9,high,4+,nlp4lp_test_64,nlp4lp_test_64,A tea estate has available 500 acres of land and they need to pick the tea leaves either using a traditional machine or 
+nlp4lp_test_65,orig,tfidf,1,0,9,9,1,1,1,0,1,1.0000,1.0000,9,high,4+,nlp4lp_test_65,nlp4lp_test_65,A grilled cheese shop sells a light and heavy grilled cheese sandwich. A light grilled cheese sandwich requires 2 slices
+nlp4lp_test_66,orig,tfidf,1,0,6,6,1,0,0,1,1,1.0000,0.6667,6,high,4+,nlp4lp_test_66,nlp4lp_test_66,A post office is buying stamping machines and they can buy a dual or single model stamping machine. A dual model stampin
+nlp4lp_test_67,orig,tfidf,1,0,5,4,0,0,0,1,1,0.8000,0.5000,4,medium,4+,nlp4lp_test_67,nlp4lp_test_67,A banana company sells their bananas in small and large crates. A small crate can hold 20 bananas while a large crate ca
+nlp4lp_test_68,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.7143,7,high,4+,nlp4lp_test_68,nlp4lp_test_68,A crepe store sells chocolate and peanut butter crepes. A chocolate crepe requires 3 units of chocolate spread and 6 uni
+nlp4lp_test_69,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,6,high,3,nlp4lp_test_69,nlp4lp_test_69,A fire department employs regular and emergency fire fighters. A regular fire fighter works 10 hours per shift and earns
+nlp4lp_test_70,orig,tfidf,1,0,8,8,1,0,0,1,1,1.0000,0.7500,8,high,4+,nlp4lp_test_70,nlp4lp_test_70,"A mall buys two types of hand sanitizer machines, a motion activated one and a manual one. The motion activated one can "
+nlp4lp_test_71,orig,tfidf,1,0,6,6,1,0,1,1,1,1.0000,0.8333,6,high,4+,nlp4lp_test_71,nlp4lp_test_71,"A hot dog company can build two types of butcher shops, a small shop and a large shop. A small shop can make 30 hot dogs"
+nlp4lp_test_72,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,10,high,3,nlp4lp_test_72,nlp4lp_test_72,"An airport buys two types of vehicles, a 4-wheeler and 3-wheeler, to help move luggage. A 4-wheeler vehicle can move 60 "
+nlp4lp_test_73,orig,tfidf,1,0,2,2,1,1,1,0,1,1.0000,1.0000,8,high,2,nlp4lp_test_73,nlp4lp_test_73,"A scientist is conducting two experiments to produce electricity, experiment alpha and experiment beta. In experiment al"
+nlp4lp_test_74,orig,tfidf,1,0,9,9,1,1,1,0,1,1.0000,1.0000,9,high,4+,nlp4lp_test_74,nlp4lp_test_74,"A man fishes in a 250 acre lake and can catch fish either using a net or fishing line. For each acre of the lake, using "
+nlp4lp_test_75,orig,tfidf,1,0,9,9,1,1,1,0,1,1.0000,1.0000,9,high,4+,nlp4lp_test_75,nlp4lp_test_75,A coffee shop sells mochas and regular coffees. Each mocha requires 3 units of coffee powder and 6 units of milk. Each r
+nlp4lp_test_76,orig,tfidf,1,0,6,6,1,0,0,1,1,1.0000,0.0000,6,high,4+,nlp4lp_test_76,nlp4lp_test_76,"A butcher shop is buying meat slicers for their shop, a manual and automatic slicer. The manual slicer can cut 5 slices "
+nlp4lp_test_77,orig,tfidf,1,0,5,5,1,0,1,1,1,1.0000,0.8000,5,medium,4+,nlp4lp_test_77,nlp4lp_test_77,A water company sells water in glass and plastic bottles. A glass bottle can hole 500 ml of water while a plastic bottle
+nlp4lp_test_78,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.7143,7,high,4+,nlp4lp_test_78,nlp4lp_test_78,An Indian restaurant makes goat and chicken curry. Each bowl of goat curry requires 3 units of goat meat and 6 units of 
+nlp4lp_test_79,orig,tfidf,1,0,6,6,1,0,0,1,1,1.0000,0.6667,6,high,4+,nlp4lp_test_79,nlp4lp_test_79,An accounting firm employs part time workers and full time workers. Full time workers work 8 hours per shift while part 
+nlp4lp_test_80,orig,tfidf,1,0,8,8,1,0,1,1,1,1.0000,0.8750,8,high,4+,nlp4lp_test_80,nlp4lp_test_80,"A factory has two machines, A and B. Each day, machine A can make 30 items and consumes 100 kWh. Machine B can make 50 i"
+nlp4lp_test_81,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,6,high,3,nlp4lp_test_81,nlp4lp_test_81,"A toy company can build two factory types, a medium sized factory and a small factory. A medium sized factory can make 5"
+nlp4lp_test_82,orig,tfidf,1,0,6,6,1,1,1,0,1,1.0000,1.0000,6,high,4+,nlp4lp_test_82,nlp4lp_test_82,"A chemical plant can buy two types of generators, generator A and generator B, which use two different processes to gene"
+nlp4lp_test_83,orig,tfidf,1,0,2,2,1,1,1,0,1,1.0000,1.0000,8,high,2,nlp4lp_test_83,nlp4lp_test_83,"There are two chemical reactions, chemical reaction A and chemical reaction B. Chemical reaction A requires 5 units of r"
+nlp4lp_test_84,orig,tfidf,1,0,4,4,1,1,1,0,1,1.0000,1.0000,9,high,4+,nlp4lp_test_84,nlp4lp_test_84,A mining company has available a total of 100 square miles of mining sites and considering the use of two mining techniq
+nlp4lp_test_85,orig,tfidf,1,0,9,9,1,0,0,1,1,1.0000,0.7778,9,high,4+,nlp4lp_test_85,nlp4lp_test_85,A small chocolate shop makes milk chocolate and dark chocolate bars. Milk chocolate bars require 4 units of cocoa and 7 
+nlp4lp_test_86,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,6,high,3,nlp4lp_test_86,nlp4lp_test_86,"An office is buying printers for their headquarters, a premium model and regular model. The premium model can print 30 p"
+nlp4lp_test_87,orig,tfidf,1,0,5,5,1,0,1,1,1,1.0000,0.8000,5,medium,4+,nlp4lp_test_87,nlp4lp_test_87,A vine company sells vine in vintage and regular bottles. A vintage bottle can hold 500 ml of vine while a regular bottl
+nlp4lp_test_88,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.7143,7,high,4+,nlp4lp_test_88,nlp4lp_test_88,A candy company is making peach flavored candy and cherry flavored candy. Each pack of peach flavored candy requires 3 u
+nlp4lp_test_89,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,14,high,3,nlp4lp_test_89,nlp4lp_test_89,"A patient in the hospital can take two pills, Pill 1 and Pill 2. Per pill, pill 1 provides 0.2 units of pain medication "
+nlp4lp_test_90,orig,tfidf,1,0,9,9,1,1,1,0,1,1.0000,1.0000,9,high,4+,nlp4lp_test_90,nlp4lp_test_90,"A man on a strict diet only drinks meal replacement drinks from two brands, alpha and omega. The alpha brand drink conta"
+nlp4lp_test_91,orig,tfidf,1,0,4,4,1,1,1,0,1,1.0000,1.0000,17,high,4+,nlp4lp_test_91,nlp4lp_test_91,"A summer camps does science experiments in two pre filled beakers, beaker 1 and beaker 2. Beaker 1 uses 4 units of flour"
+nlp4lp_test_92,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.7143,7,high,4+,nlp4lp_test_92,nlp4lp_test_92,An dog hospital has 2000 units of tooth medication to make both small and large bones. A small bone requires 10 units of
+nlp4lp_test_93,orig,tfidf,1,0,7,7,1,0,1,1,1,1.0000,0.8571,7,high,4+,nlp4lp_test_93,nlp4lp_test_93,A scientist in the arctic needs to get enough vitamin D and vitamin C in his diet by drinking orange and apple juice. Ea
+nlp4lp_test_94,orig,tfidf,1,0,5,4,0,1,1,0,1,0.8000,1.0000,4,medium,4+,nlp4lp_test_94,nlp4lp_test_94,A cleaning company uses a cleansing chemical and odor-removing chemical to clean a house. Each unit of the cleansing che
+nlp4lp_test_95,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,15,high,3,nlp4lp_test_95,nlp4lp_test_95,"A drug company is making allergy pills and fever reducing pills in two factories, factory 1 and factory 2. Factory 1 pro"
+nlp4lp_test_96,orig,tfidf,0,1,0,0,1,0,0,0,0,0.0000,0.0000,8,high,0,nlp4lp_test_231,nlp4lp_test_96,A doctor recommends her patient eat more fish and chicken to increase her protein and iron intake. Each fish meal contai
+nlp4lp_test_97,orig,tfidf,1,0,9,9,1,0,0,1,1,1.0000,0.7778,9,high,4+,nlp4lp_test_97,nlp4lp_test_97,"A pharmaceutical company makes skin cream in batches, a regular batch and premium batch, to sell to hospitals. The regul"
+nlp4lp_test_98,orig,tfidf,1,0,5,4,0,1,1,0,1,0.8000,1.0000,4,medium,4+,nlp4lp_test_98,nlp4lp_test_98,A clinic takes patient blood pressure either using an automatic machine or a manual machine. The automatic machine takes
+nlp4lp_test_99,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,14,high,3,nlp4lp_test_99,nlp4lp_test_99,"A patient with a sore throat can drink two syrups, syrup 1 and syrup 2 for treatment. Per serving, syrup 1 delivers 0.5 "
+nlp4lp_test_100,orig,tfidf,1,0,9,9,1,0,0,1,1,1.0000,0.5556,9,high,4+,nlp4lp_test_100,nlp4lp_test_100,A sailor can eat either a crab cakes or a lobster roll for his meals. He needs to ensure he gets at least 80 units of vi
+nlp4lp_test_101,orig,tfidf,1,0,4,4,1,1,1,0,1,1.0000,1.0000,17,high,4+,nlp4lp_test_101,nlp4lp_test_101,"A science show preforms two different demonstrations, demonstration 1 and demonstration 2. In demonstration 1, 10 units "
+nlp4lp_test_102,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,7,high,3,nlp4lp_test_102,nlp4lp_test_102,A lab has 20000 mg of mRNA anti-viral available to make children's and adult vaccines. Each children's vaccine contains 
+nlp4lp_test_103,orig,tfidf,1,0,7,7,1,1,1,0,1,1.0000,1.0000,6,high,4+,nlp4lp_test_103,nlp4lp_test_103,"A parent feeds their baby two flavors of baby food, apple and carrot, in order to meet the babies fat and folate require"
+nlp4lp_test_104,orig,tfidf,1,0,5,5,1,1,1,0,1,1.0000,1.0000,4,medium,4+,nlp4lp_test_104,nlp4lp_test_104,Both fertilizer and seeds need to be added to a lawn. One unit of fertilizer takes 0.5 minutes to be effective while one
+nlp4lp_test_105,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,15,high,3,nlp4lp_test_105,nlp4lp_test_105,"A pharmacy has two factories, factory 1 and factory 2, where they make acne cream and anti-bacterial cream. Factory 1 pr"
+nlp4lp_test_106,orig,tfidf,0,1,0,0,1,0,0,0,0,0.0000,0.0000,8,high,0,nlp4lp_test_227,nlp4lp_test_106,A doctor recommends that a man eat burgers and pizza in order to put on weight. Each burger contains 10 units of fat and
+nlp4lp_test_107,orig,tfidf,1,0,10,9,0,0,0,1,1,0.9000,0.7778,9,high,4+,nlp4lp_test_107,nlp4lp_test_107,A clinic makes batches of vitamin shots and pills. Each batch of vitamin shots requires 30 units of vitamin C and 40 uni
+nlp4lp_test_108,orig,tfidf,1,0,5,5,1,1,1,0,1,1.0000,1.0000,4,medium,4+,nlp4lp_test_108,nlp4lp_test_108,A doctor's office takes the  temperature of patients one by one either by using an electronic or regular thermometer. Th
+nlp4lp_test_109,orig,tfidf,1,0,8,8,1,0,0,1,1,1.0000,0.2500,14,high,4+,nlp4lp_test_109,nlp4lp_test_109,"A patient can be hooked up to two machines to have medicine delivered, machine 1 and machine 2. Machine 1 delivers 0.5 u"
+nlp4lp_test_110,orig,tfidf,1,0,9,9,1,0,0,1,1,1.0000,0.7778,9,high,4+,nlp4lp_test_110,nlp4lp_test_110,"A travelling salesman only eats ramen and fries. Each pack of ramen contains 400 calories, 20 grams of protein, and 100 "
+nlp4lp_test_111,orig,tfidf,1,0,4,4,1,1,1,0,1,1.0000,1.0000,11,high,4+,nlp4lp_test_111,nlp4lp_test_111,"A science store makes two boxes, a cheap and expensive box. The cheap box contains 3 units of metal and 5 units of acid "
+nlp4lp_test_112,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.7143,7,high,4+,nlp4lp_test_112,nlp4lp_test_112,A pharmacy has 3000 mg of morphine to make painkillers and sleeping pills. Each painkiller pill requires 10 mg of morphi
+nlp4lp_test_113,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.7143,7,high,4+,nlp4lp_test_113,nlp4lp_test_113,A boy needs to get enough magnesium and zinc in his diet by eating chewable gummies and taking pills. Each gummy contain
+nlp4lp_test_114,orig,tfidf,1,0,5,5,1,0,0,1,1,1.0000,0.4000,4,medium,4+,nlp4lp_test_114,nlp4lp_test_114,A patient takes anxiety medication and anti-depressants one after the other. Each unit of anxiety medication takes 3 min
+nlp4lp_test_115,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,15,high,3,nlp4lp_test_115,nlp4lp_test_115,"A pharmacy makes eye cream and foot cream using two different machines, machine 1 and machine 2. Machine 1 can  make 30 "
+nlp4lp_test_116,orig,tfidf,1,0,4,4,1,1,1,0,1,1.0000,1.0000,8,high,4+,nlp4lp_test_116,nlp4lp_test_116,A woman eats cashews and almonds to get her calorie and protein intake. A serving of almonds contains 200 calories and 2
+nlp4lp_test_117,orig,tfidf,0,1,0,0,1,0,0,0,0,0.0000,0.0000,9,high,0,nlp4lp_test_131,nlp4lp_test_117,A company make both liquid and foam hand sanitizer. Liquid hand sanitizer requires 40 units of water and 50 units of alc
+nlp4lp_test_118,orig,tfidf,1,0,5,5,1,1,1,0,1,1.0000,1.0000,5,medium,4+,nlp4lp_test_118,nlp4lp_test_118,A clinic is conducting a throat or nasal swabs on each patient. A throat swab takes 5 minutes while a nasal swab takes 3
+nlp4lp_test_119,orig,tfidf,1,0,4,4,1,1,1,0,1,1.0000,1.0000,14,high,4+,nlp4lp_test_119,nlp4lp_test_119,"A patient in the hospital can take two different pain killers, pain killer 1 and pain killer 2. Per dose, pain killer 1 "
+nlp4lp_test_120,orig,tfidf,1,0,9,9,1,0,1,1,1,1.0000,0.8889,9,high,4+,nlp4lp_test_120,nlp4lp_test_120,"A zookeeper feeds a gorilla with bananas and mangoes. Each banana contains 80 calories, 20 grams of potassium, and 10 gr"
+nlp4lp_test_121,orig,tfidf,1,0,4,4,1,1,1,0,1,1.0000,1.0000,15,high,4+,nlp4lp_test_121,nlp4lp_test_121,"In a science club, there are two tables that can be set up to make slime. At table 1, 3 units of powder and 5 units of g"
+nlp4lp_test_122,orig,tfidf,1,0,7,7,1,1,1,0,1,1.0000,1.0000,7,high,4+,nlp4lp_test_122,nlp4lp_test_122,A pharmaceutical company has 800 units of painkiller medicine and makes daytime and nighttime painkiller. A daytime pill
+nlp4lp_test_123,orig,tfidf,1,0,7,7,1,1,1,0,1,1.0000,1.0000,7,high,4+,nlp4lp_test_123,nlp4lp_test_123,A competitive eater challenges himself to eat slices of cheesecake and caramel cake. Each slice of cheesecake contains 2
+nlp4lp_test_124,orig,tfidf,1,0,5,5,1,1,1,0,1,1.0000,1.0000,4,medium,4+,nlp4lp_test_124,nlp4lp_test_124,Both sulfate and ginger need to be added to a shampoo. One unit of sulfate takes 0.5 minutes to be effective while one u
+nlp4lp_test_125,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,15,high,3,nlp4lp_test_125,nlp4lp_test_125,"A pharmaceutical company has two labs, lab 1 and lab 2, where they make heart and lung medication in pill form. At lab 1"
+nlp4lp_test_126,orig,tfidf,1,0,9,9,1,1,1,0,1,1.0000,1.0000,9,high,4+,nlp4lp_test_126,nlp4lp_test_126,A doctor suggests that his patient eat oranges and grapefruit to meet his vitamin C and vitamin A requirements. One oran
+nlp4lp_test_127,orig,tfidf,1,0,9,9,1,1,1,0,1,1.0000,1.0000,9,high,4+,nlp4lp_test_127,nlp4lp_test_127,"A university research lab can make two types of diabetes medicine, medicine A and medicine B. Per dose, medicine A takes"
+nlp4lp_test_128,orig,tfidf,1,0,5,4,0,0,0,1,1,0.8000,0.7500,4,medium,4+,nlp4lp_test_128,nlp4lp_test_128,A popup clinic is doing virus testing with either spit tests or swabs. A spit test takes 10 minutes to administer while 
+nlp4lp_test_129,orig,tfidf,1,0,8,8,1,0,0,1,1,1.0000,0.2500,14,high,4+,nlp4lp_test_129,nlp4lp_test_129,"A patient is undergoing radiation treatment involving two beams, Beam 1 and Beam 2. Beam 1 delivers a dose of 0.3 units "
+nlp4lp_test_130,orig,tfidf,0,1,0,0,1,0,0,0,0,0.0000,0.0000,9,high,0,nlp4lp_test_120,nlp4lp_test_130,"A body builder buys pre prepared meals, a turkey dinner and a tuna salad sandwich. The turkey dinner contains 20 grams o"
+nlp4lp_test_131,orig,tfidf,1,0,4,4,1,1,1,0,1,1.0000,1.0000,17,high,4+,nlp4lp_test_131,nlp4lp_test_131,"A chemistry teacher teaches her students two experiments, experiment 1 and experiment 2. In experiment 1, 3 units of the"
+nlp4lp_test_132,orig,tfidf,1,0,2,2,1,1,1,0,1,1.0000,1.0000,7,high,2,nlp4lp_test_132,nlp4lp_test_132,"A lab has 1000 units of medicinal ingredients to make two pills, a large pill and a small pill. A large pill requires 3 "
+nlp4lp_test_133,orig,tfidf,1,0,5,5,1,1,1,0,1,1.0000,1.0000,4,medium,4+,nlp4lp_test_133,nlp4lp_test_133,Both chorine and water softener need to be added to a pool. One unit of chlorine takes 1 minute to be effective while on
+nlp4lp_test_134,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,15,high,3,nlp4lp_test_134,nlp4lp_test_134,"A drug company is making pain killers and sleeping pills using two processes, process 1 and process 2. Process 1 produce"
+nlp4lp_test_135,orig,tfidf,1,0,9,9,1,0,0,1,1,1.0000,0.6667,9,high,4+,nlp4lp_test_135,nlp4lp_test_135,A dietician recommends her client eat blueberries and strawberries to meet her anti-oxidant and mineral requirement. A p
+nlp4lp_test_136,orig,tfidf,1,0,9,9,1,1,1,0,1,1.0000,1.0000,9,high,4+,nlp4lp_test_136,nlp4lp_test_136,An engineering school has a bridge building competition where students must build as many beam bridges and truss bridges
+nlp4lp_test_137,orig,tfidf,1,0,5,5,1,1,1,0,1,1.0000,1.0000,5,medium,4+,nlp4lp_test_137,nlp4lp_test_137,A clinic administers two vaccines available for the public to take one at a time. One vaccine is taken as a pill and ano
+nlp4lp_test_138,orig,tfidf,1,0,6,4,0,0,0,1,1,0.6667,0.5000,6,high,4+,nlp4lp_test_138,nlp4lp_test_138,A chocolate company can transport their boxes of chocolate either using their own vans or by renting trucks. Their vans 
+nlp4lp_test_139,orig,tfidf,1,0,7,6,0,0,0,1,1,0.8571,0.6667,6,high,4+,nlp4lp_test_139,nlp4lp_test_139,A bee farmer transports his honey in small and large bottles. A small bottle can take 5 units of honey while a large bot
+nlp4lp_test_140,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.7143,7,high,4+,nlp4lp_test_140,nlp4lp_test_140,An international goods exporter uses ships and planes to transport goods. A ship can take 40 containers worth of goods a
+nlp4lp_test_141,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.7143,7,high,4+,nlp4lp_test_141,nlp4lp_test_141,There has been an oil spill in the ocean and ducks need to be taken to shore to be cleaned either by boat or by canoe. A
+nlp4lp_test_142,orig,tfidf,1,0,6,6,1,0,0,1,1,1.0000,0.5000,6,high,4+,nlp4lp_test_142,nlp4lp_test_142,A soda company sends bottles of their soda to stores around the city in old and new vans. An old van can take 100 soda b
+nlp4lp_test_143,orig,tfidf,1,0,8,8,1,1,1,0,1,1.0000,1.0000,8,high,4+,nlp4lp_test_143,nlp4lp_test_143,A lawn mowing service provides neighborhood services using small teams and large teams. A small team requires 3 employee
+nlp4lp_test_144,orig,tfidf,1,0,7,7,1,1,1,0,1,1.0000,1.0000,7,high,4+,nlp4lp_test_144,nlp4lp_test_144,An aquarium does shows using otters and dolphins. An otter will do 3 tricks at a time and requires 3 treats to do so. A 
+nlp4lp_test_145,orig,tfidf,1,0,3,3,1,0,0,1,1,1.0000,0.6667,3,medium,3,nlp4lp_test_145,nlp4lp_test_145,A shoe company supplies shoes to stores via vans and trucks. A van can transport 50 pairs of shoes while a truck can tra
+nlp4lp_test_146,orig,tfidf,1,0,5,4,0,0,0,1,1,0.8000,0.5000,4,medium,4+,nlp4lp_test_146,nlp4lp_test_146,An oil and gas company is sending their oil to the port using containers and trucks. A container can hold 30 units of oi
+nlp4lp_test_147,orig,tfidf,1,0,4,4,1,0,0,1,1,1.0000,0.2500,4,medium,4+,nlp4lp_test_147,nlp4lp_test_147,A school is organizing a field trip to a science center and wants to hire small buses and large buses. A small bus can c
+nlp4lp_test_148,orig,tfidf,1,0,3,3,1,0,0,1,1,1.0000,0.6667,6,high,3,nlp4lp_test_148,nlp4lp_test_148,A meat shop ships their burger patties using refrigerated trucks and vans. Each truck can take 1000 patties at a cost of
+nlp4lp_test_149,orig,tfidf,1,0,7,6,0,1,1,0,1,0.8571,1.0000,6,high,4+,nlp4lp_test_149,nlp4lp_test_149,A florist transports his flowers to stores in small bouquets and large bouquets. A small bouquet has 5 flowers while a l
+nlp4lp_test_150,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.7143,7,high,4+,nlp4lp_test_150,nlp4lp_test_150,"A toy store decides to deliver gifts using two shipping companies, a new one and an old one. The new company can deliver"
+nlp4lp_test_151,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.7143,7,high,4+,nlp4lp_test_151,nlp4lp_test_151,A zoo needs to transport their monkeys to the vet either by bus or by car. A bus can transport 20 monkeys per trip and t
+nlp4lp_test_152,orig,tfidf,1,0,6,6,1,0,0,1,1,1.0000,0.6667,6,high,4+,nlp4lp_test_152,nlp4lp_test_152,A farmer decides to move his cows to a nearby farm using helicopters and trucks. A helicopter can take 3 cows per trip a
+nlp4lp_test_153,orig,tfidf,1,0,8,7,0,0,0,1,1,0.8750,0.7143,7,high,4+,nlp4lp_test_153,nlp4lp_test_153,A sand company delivers sand for playgrounds in small and large containers. A small container requires 1 person to unloa
+nlp4lp_test_154,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.7143,7,high,4+,nlp4lp_test_154,nlp4lp_test_154,A meal service company delivers meals to customers either on electric bikes or scooters. A bike can hold 8 meals and req
+nlp4lp_test_155,orig,tfidf,1,0,3,3,1,0,0,1,1,1.0000,0.3333,3,medium,3,nlp4lp_test_155,nlp4lp_test_155,A car manufacturer ships their cars on large and small planes. A large plane can carry 30 cars while a small plane can c
+nlp4lp_test_156,orig,tfidf,1,0,5,4,0,0,0,1,1,0.8000,0.7500,4,medium,4+,nlp4lp_test_156,nlp4lp_test_156,A mine sends ore to the surface in small and large wagons. A small wagon hold 20 units of ore while a large wagon holds 
+nlp4lp_test_157,orig,tfidf,1,0,4,4,1,0,0,1,1,1.0000,0.5000,4,medium,4+,nlp4lp_test_157,nlp4lp_test_157,A theme park transports its visitors around the park either by scooter or rickshaw. A scooter can carry 2 people while a
+nlp4lp_test_158,orig,tfidf,1,0,6,6,1,0,1,1,1,1.0000,0.8333,6,high,4+,nlp4lp_test_158,nlp4lp_test_158,A company in the middle east delivers their packages to customers on camels and horses. A camel can carry 50 packages wh
+nlp4lp_test_159,orig,tfidf,1,0,7,6,0,0,0,1,1,0.8571,0.6667,6,high,4+,nlp4lp_test_159,nlp4lp_test_159,A snack exporter sends snacks to his customer in small and large suitcases. A small suitcase can hold 50 snacks while a 
+nlp4lp_test_160,orig,tfidf,1,0,7,7,1,0,1,1,1,1.0000,0.8571,7,high,4+,nlp4lp_test_160,nlp4lp_test_160,A mail delivery service in an island village delivers mail by regular and speed boats. A regular boat can carry 20 piece
+nlp4lp_test_161,orig,tfidf,0,1,5,5,1,0,1,1,0,1.0000,0.8000,7,high,4+,nlp4lp_test_151,nlp4lp_test_161,A chicken farmer has sold his chicken and they need to be transported either by bus or by car. A bus can take 100 chicke
+nlp4lp_test_162,orig,tfidf,1,0,6,6,1,0,0,1,1,1.0000,0.6667,6,high,4+,nlp4lp_test_162,nlp4lp_test_162,Children can go to school either by van or by minibus. A van can take 6 kids and produces 7 units of pollution. A minibu
+nlp4lp_test_163,orig,tfidf,1,0,8,8,1,0,0,1,1,1.0000,0.5000,7,high,4+,nlp4lp_test_163,nlp4lp_test_163,A recycling company collects recycling from neighborhoods using small and large bins. A small bin requires 2 workers whi
+nlp4lp_test_164,orig,tfidf,1,0,7,7,1,0,1,1,1,1.0000,0.8571,7,high,4+,nlp4lp_test_164,nlp4lp_test_164,A toy store hires seasonal and full-time volunteers to deliver gifts and gives them points for service. A seasonal volun
+nlp4lp_test_165,orig,tfidf,1,0,4,3,0,0,0,1,1,0.7500,0.6667,3,medium,4+,nlp4lp_test_165,nlp4lp_test_165,A jam company sends its product out in small and large jars. A small jar can hold 50 ml of jam while a large jar can hol
+nlp4lp_test_166,orig,tfidf,1,0,4,3,0,0,0,1,1,0.7500,0.0000,3,medium,4+,nlp4lp_test_166,nlp4lp_test_166,A corn farmer sends his corn to the city by either tractor or car.  A tractor can carry 40 kg of corn while a car can ca
+nlp4lp_test_167,orig,tfidf,1,0,4,4,1,0,0,1,1,1.0000,0.5000,4,medium,4+,nlp4lp_test_167,nlp4lp_test_167,A village hosts a banquet and provides bike and car transportation for everyone. A bike can take 3 people while a car ca
+nlp4lp_test_168,orig,tfidf,1,0,6,3,0,0,0,1,1,0.5000,0.3333,6,high,4+,nlp4lp_test_168,nlp4lp_test_168,An industrial tire company delivers large tires for equipment to remote engineering sites either by cargo planes or ultr
+nlp4lp_test_169,orig,tfidf,1,0,7,6,0,0,0,1,1,0.8571,0.6667,6,high,4+,nlp4lp_test_169,nlp4lp_test_169,A water salesman collects water from a glacier and transports it in either small or large kegs. A small keg can hold 40 
+nlp4lp_test_170,orig,tfidf,1,0,7,7,1,0,1,1,1,1.0000,0.8571,7,high,4+,nlp4lp_test_170,nlp4lp_test_170,A tropical city full of islands sends mail either by submarine or by boat. A submarine can carry 100 pieces of mail per 
+nlp4lp_test_171,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.7143,7,high,4+,nlp4lp_test_171,nlp4lp_test_171,The weather is freezing and the fish in the pond need to be transported either by helicopter or car. A helicopter can ta
+nlp4lp_test_172,orig,tfidf,1,0,6,6,1,1,1,0,1,1.0000,1.0000,6,high,4+,nlp4lp_test_172,nlp4lp_test_172,A tourist spot in the mountains allows visitors to travel to the top either by hot-air balloon or gondola lift. A hot ai
+nlp4lp_test_173,orig,tfidf,1,0,8,8,1,0,0,1,1,1.0000,0.7500,7,high,4+,nlp4lp_test_173,nlp4lp_test_173,A factory transports rice to the city in horse-drawn carts that are either medium or large size. A medium sized cart req
+nlp4lp_test_174,orig,tfidf,1,0,4,4,1,1,1,0,1,1.0000,1.0000,7,high,4+,nlp4lp_test_174,nlp4lp_test_174,A dog school trains labradors and golden retrievers to deliver newspaper. A labrador can deliver 7 newspapers at a time 
+nlp4lp_test_175,orig,tfidf,1,0,5,3,0,0,0,1,1,0.6000,0.6667,3,medium,4+,nlp4lp_test_175,nlp4lp_test_175,A construction company in the tropics uses cows and elephants to carry bricks. A cow can carry 20 bricks on its back whi
+nlp4lp_test_176,orig,tfidf,1,0,4,4,1,0,0,1,1,1.0000,0.5000,4,medium,4+,nlp4lp_test_176,nlp4lp_test_176,A farmer on an island sends corn to the main land either by ferry or light rail. Each ferry trip can take 20 boxes of co
+nlp4lp_test_177,orig,tfidf,1,0,5,5,1,1,1,0,1,1.0000,1.0000,5,medium,4+,nlp4lp_test_177,nlp4lp_test_177,A factory provides rides for its employees in either taxis or company cars. Each taxi ride can take 2 employees while ea
+nlp4lp_test_178,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,6,high,3,nlp4lp_test_178,nlp4lp_test_178,"A chemical company is transporting their hydrogen using two different methods, high pressure tube trailers and liquefied"
+nlp4lp_test_179,orig,tfidf,1,0,7,6,0,0,0,1,1,0.8571,0.0000,7,high,4+,nlp4lp_test_179,nlp4lp_test_179,A grape farmer transports his grapes in either small crates or large crates. A small crate can take 200 grapes while a l
+nlp4lp_test_180,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.7143,7,high,4+,nlp4lp_test_180,nlp4lp_test_180,A shipping company need to transport packages by either truck or car. A truck can transport 50 packages per trip while a
+nlp4lp_test_181,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.7143,7,high,4+,nlp4lp_test_181,nlp4lp_test_181,There has been a horrible accident and patients need to be taken to the hospital by either a helicopter or bus. A helico
+nlp4lp_test_182,orig,tfidf,1,0,6,6,1,0,0,1,1,1.0000,0.6667,6,high,4+,nlp4lp_test_182,nlp4lp_test_182,Employees have the option of car-pooling to work or taking the company bus. A car can take 4 employees and produces 10 u
+nlp4lp_test_183,orig,tfidf,1,0,8,7,0,0,0,1,1,0.8750,0.7143,7,high,4+,nlp4lp_test_183,nlp4lp_test_183,A snow removal company removes snow from neighborhoods using small trucks and large trucks. A small truck requires 2 peo
+nlp4lp_test_184,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.5714,6,high,4+,nlp4lp_test_184,nlp4lp_test_184,A magic school sends letters to student either by carrier pigeons or owls. A carrier pigeon can carry two letters at a t
+nlp4lp_test_185,orig,tfidf,1,0,3,3,1,0,0,1,1,1.0000,0.6667,3,medium,3,nlp4lp_test_185,nlp4lp_test_185,An international shipping company uses large and small ships to transport containers around the world. A large ship can 
+nlp4lp_test_186,orig,tfidf,1,0,4,4,1,0,0,1,1,1.0000,0.7500,4,medium,4+,nlp4lp_test_186,nlp4lp_test_186,A large fishing boat sends fish back to shore either by small canoes or smaller diesel boats. A canoe can carry back 10 
+nlp4lp_test_187,orig,tfidf,1,0,4,4,1,0,0,1,1,1.0000,0.5000,4,medium,4+,nlp4lp_test_187,nlp4lp_test_187,A volunteer organization transports voters to the polls on Election Day either by vans or cars. They have vans which can
+nlp4lp_test_188,orig,tfidf,0,1,0,0,1,0,0,0,0,0.0000,0.0000,11,high,0,nlp4lp_test_120,nlp4lp_test_188,A car manufacturing company makes hamburgers and chicken wraps for workers. They need to ensure workers get at least 220
+nlp4lp_test_189,orig,tfidf,1,0,2,2,1,1,1,0,1,1.0000,1.0000,7,high,2,nlp4lp_test_189,nlp4lp_test_189,"A meat processing plant uses two machines, a meat slicer and a meat packer, to make their hams and pork ribs. To produce"
+nlp4lp_test_190,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,8,high,3,nlp4lp_test_190,nlp4lp_test_190,An appliance company sells and installs refrigerators and stoves. Each refrigerator takes 60 minutes of mover time and 2
+nlp4lp_test_191,orig,tfidf,1,0,8,8,1,0,0,1,1,1.0000,0.7500,8,high,4+,nlp4lp_test_191,nlp4lp_test_191,An office company makes desks and drawers. Each desk requires 40 minutes of assembly and 20 minutes of sanding. Each dra
+nlp4lp_test_192,orig,tfidf,1,0,2,2,1,1,1,0,1,1.0000,1.0000,8,high,2,nlp4lp_test_192,nlp4lp_test_192,A milk tea shop owner would like to sell two different milk teas: black milk tea and matcha milk tea. Each contains both
+nlp4lp_test_193,orig,tfidf,1,0,8,8,1,1,1,0,1,1.0000,1.0000,8,high,4+,nlp4lp_test_193,nlp4lp_test_193,A young boy is trying to grow taller by drinking milk and eating vegetables. He wants to get a minimum of 100 units of c
+nlp4lp_test_194,orig,tfidf,0,1,0,0,1,0,0,0,0,0.0000,0.0000,8,high,0,nlp4lp_test_259,nlp4lp_test_194,Bob wants to design a diet consisting of protein bars and noodles. Assume that each serving of noodles costs $5 and cont
+nlp4lp_test_195,orig,tfidf,1,0,8,5,0,1,0,0,1,0.6250,1.0000,7,high,4+,nlp4lp_test_195,nlp4lp_test_195,A toy store sells plush toys and dolls. Each plush toy costs the store $3 and each doll costs the store $2. The store ow
+nlp4lp_test_196,orig,tfidf,1,0,2,2,1,1,1,0,1,1.0000,1.0000,7,high,2,nlp4lp_test_196,nlp4lp_test_196,Forest Paper makes two types of products: graph paper and music paper. Each type of paper requires the use of two machin
+nlp4lp_test_197,orig,tfidf,1,0,2,2,1,1,1,0,1,1.0000,1.0000,8,high,2,nlp4lp_test_197,nlp4lp_test_197,"Calcium and Magnesium are found in two health supplements, health supplement A and health supplement B. One serving of h"
+nlp4lp_test_198,orig,tfidf,1,0,11,11,1,1,1,0,1,1.0000,1.0000,11,high,4+,nlp4lp_test_198,nlp4lp_test_198,"Lucy has a dog and she wants his food to be mixed.  In order to keep the dog healthy but also keep the food tasty, the m"
+nlp4lp_test_199,orig,tfidf,1,0,2,2,1,1,1,0,1,1.0000,1.0000,11,high,2,nlp4lp_test_199,nlp4lp_test_199,"Maple Oil processes three types of crude oil: light oil, non-sticky oil and heavy oil. Each tank of light oil produces a"
+nlp4lp_test_200,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.5714,7,high,4+,nlp4lp_test_200,nlp4lp_test_200,A flooring company produces engineered laminate planks and carpets. The chief marketer reports an expected demand of at 
+nlp4lp_test_201,orig,tfidf,0,1,0,0,1,0,0,0,0,0.0000,0.0000,8,high,0,nlp4lp_test_193,nlp4lp_test_201,A man takes two supplements to get his daily iron and calcium requirements. A pill of supplement A has 5 units of iron a
+nlp4lp_test_202,orig,tfidf,1,0,6,6,1,1,1,0,1,1.0000,1.0000,6,high,4+,nlp4lp_test_202,nlp4lp_test_202,A fashion company sells regular handbags and premium handbags made of higher quality material. They can sell regular han
+nlp4lp_test_203,orig,tfidf,1,0,3,3,1,0,0,1,1,1.0000,0.3333,8,high,3,nlp4lp_test_203,nlp4lp_test_203,"A woman has $100000 to gamble on two sports bets: a basketball tournament, a horse race, and a soccer game. Based on sim"
+nlp4lp_test_204,orig,tfidf,1,0,8,8,1,0,0,1,1,1.0000,0.5000,8,high,4+,nlp4lp_test_204,nlp4lp_test_204,A repairman fixes washing machines and freezers. Each washing machine takes 30 minutes of inspection and 90 minutes of f
+nlp4lp_test_205,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,11,high,3,nlp4lp_test_205,nlp4lp_test_205,"A small bakery has 20000 grams of batter and 14000 grams of milk to make their crepe cakes, sponge cakes, and birthday c"
+nlp4lp_test_206,orig,tfidf,1,0,6,6,1,1,1,0,1,1.0000,1.0000,8,high,4+,nlp4lp_test_206,nlp4lp_test_206,Super Shop sells cat paw snacks and gold shark snacks in bulk. It plans to sell them into two snack mix products. The fi
+nlp4lp_test_207,orig,tfidf,1,0,5,5,1,0,0,1,1,1.0000,0.6000,6,high,4+,nlp4lp_test_207,nlp4lp_test_207,A taco stand sells regular tacos and deluxe tacos with extra meat. The stand makes x1 regular tacos at a profit of $2.50
+nlp4lp_test_208,orig,tfidf,1,0,7,7,1,1,1,0,1,1.0000,1.0000,7,high,4+,nlp4lp_test_208,nlp4lp_test_208,"A printing company sells math workbooks and English workbooks. To meet demand, they must make at least 40 math workbooks"
+nlp4lp_test_209,orig,tfidf,1,0,7,7,1,1,1,0,1,1.0000,1.0000,7,high,4+,nlp4lp_test_209,nlp4lp_test_209,"A music company produces two types of digital keyboards, one is full-weighted and another is semi-weighted. Both keyboar"
+nlp4lp_test_210,orig,tfidf,1,0,6,6,1,1,1,0,1,1.0000,1.0000,6,high,4+,nlp4lp_test_210,nlp4lp_test_210,Platinum Database sells two types of subscription software packages: a personal license and a commercial license which w
+nlp4lp_test_211,orig,tfidf,1,0,5,5,1,0,0,1,1,1.0000,0.6000,6,high,4+,nlp4lp_test_211,nlp4lp_test_211,Zeta Bakery sells two types of cookies. They sell a strawberry cookie and a sugar cookie. Let's say they make x1 strawbe
+nlp4lp_test_212,orig,tfidf,1,0,10,10,1,0,0,1,1,1.0000,0.5000,9,high,4+,nlp4lp_test_212,nlp4lp_test_212,"A food company would like to run its commercials on three streaming platforms: Pi TV, Beta Video and Gamma Live. The cos"
+nlp4lp_test_213,orig,tfidf,1,0,5,5,1,0,1,1,1,1.0000,0.8000,5,medium,4+,nlp4lp_test_213,nlp4lp_test_213,A disease testing station is conducting a temperature check and/or a blood test on each patient. A temperature check tak
+nlp4lp_test_214,orig,tfidf,1,0,5,4,0,0,0,1,1,0.8000,0.5000,4,medium,4+,nlp4lp_test_214,nlp4lp_test_214,The government is reworking the pipes to transport water to houses in the area. The water can be transported through wid
+nlp4lp_test_215,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.5714,7,high,4+,nlp4lp_test_215,nlp4lp_test_215,A concert organizer has to transport equipment using carts or trolleys. Carts can transport 5 kg/min of equipment and re
+nlp4lp_test_216,orig,tfidf,1,0,5,5,1,1,1,0,1,1.0000,1.0000,5,medium,4+,nlp4lp_test_216,nlp4lp_test_216,Both subsoil and topsoil need to be added to a garden bed. One bag of subsoil requires 10 units of water to hydrate whil
+nlp4lp_test_217,orig,tfidf,1,0,7,7,1,0,1,1,1,1.0000,0.8571,6,high,4+,nlp4lp_test_217,nlp4lp_test_217,"An extremely large ski resort is looking into purchasing two types of ski lifts, a densely-seated one and a loosely-seat"
+nlp4lp_test_218,orig,tfidf,1,0,8,8,1,0,1,1,1,1.0000,0.8750,8,high,4+,nlp4lp_test_218,nlp4lp_test_218,"A strata-management company is looking into purchasing two types of air conditioners, a low-power and a high-power model"
+nlp4lp_test_219,orig,tfidf,1,0,4,4,1,1,1,0,1,1.0000,1.0000,4,medium,4+,nlp4lp_test_219,nlp4lp_test_219,A student takes calcium pills and vitamin D pills one after the other. Each calcium pill takes 5 minutes to be effective
+nlp4lp_test_220,orig,tfidf,1,0,7,7,1,1,1,0,1,1.0000,1.0000,6,high,4+,nlp4lp_test_220,nlp4lp_test_220,An amusement park has two types of games: throwing and climbing games. Throwing games attract 15 customers every hour an
+nlp4lp_test_221,orig,tfidf,1,0,11,11,1,0,1,1,1,1.0000,0.9091,11,high,4+,nlp4lp_test_221,nlp4lp_test_221,"In a science fair, there are two types of tables that can be used to display the children’s science experiments. At the "
+nlp4lp_test_222,orig,tfidf,0,1,0,0,1,0,0,0,0,0.0000,0.0000,8,high,0,nlp4lp_test_214,nlp4lp_test_222,"An oil and gas company has two types of pipes, a high-volume and a low-volume one. Every day, the high-volume pipe allow"
+nlp4lp_test_223,orig,tfidf,1,0,7,6,0,0,0,1,1,0.8571,0.6667,6,high,4+,nlp4lp_test_223,nlp4lp_test_223,A hospital hires ultrasound technicians and graduate researchers to image patients. An ultrasound technician works 8 hou
+nlp4lp_test_224,orig,tfidf,1,0,7,7,1,0,1,1,1,1.0000,0.8571,7,high,4+,nlp4lp_test_224,nlp4lp_test_224,A dentist has 3000 units of resin to fill cavities in both molars and canines. Molars require 20 units of resin and 3 un
+nlp4lp_test_225,orig,tfidf,1,0,10,10,1,0,1,1,1,1.0000,0.8000,10,high,4+,nlp4lp_test_225,nlp4lp_test_225,"A food delivery person can either have shifts on bikes or scooters. A shift on a bike can deliver 10 orders, takes 5 uni"
+nlp4lp_test_226,orig,tfidf,1,0,7,7,1,0,1,1,1,1.0000,0.8571,7,high,4+,nlp4lp_test_226,nlp4lp_test_226,"A singer has two types of concerts he can hold, pop and R&B. Each pop concert will bring in 100 audience members and tak"
+nlp4lp_test_227,orig,tfidf,1,0,10,10,1,0,1,1,1,1.0000,0.9000,9,high,4+,nlp4lp_test_227,nlp4lp_test_227,A neighbourhood pizza restaurant has opened and sells pizzas in two sizes; large pizza and medium pizza. Large pizzas re
+nlp4lp_test_228,orig,tfidf,1,0,4,4,1,0,0,1,1,1.0000,0.5000,4,medium,4+,nlp4lp_test_228,nlp4lp_test_228,A party organizer needs to transport party goers either by limousine or bus. Limousines can carry 12 people and buses ca
+nlp4lp_test_229,orig,tfidf,1,0,5,5,1,0,1,1,1,1.0000,0.8000,4,medium,4+,nlp4lp_test_229,nlp4lp_test_229,A hospital purchases two pills available for the patients to take one at a time. One pill is taken as a prevention and a
+nlp4lp_test_230,orig,tfidf,1,0,7,7,1,0,1,1,1,1.0000,0.8571,5,medium,4+,nlp4lp_test_230,nlp4lp_test_230,A dim sum restaurant can deliver their food by cart or by hand. Servers can deliver by cart and have 70 customer interac
+nlp4lp_test_231,orig,tfidf,1,0,4,4,1,1,1,0,1,1.0000,1.0000,9,high,4+,nlp4lp_test_231,nlp4lp_test_231,"A macro-counting fitness guru only eats salmon and eggs. Each bowl of salmon contains 300 calories, 15 grams of protein,"
+nlp4lp_test_232,orig,tfidf,1,0,8,8,1,1,1,0,1,1.0000,1.0000,8,high,4+,nlp4lp_test_232,nlp4lp_test_232,"A restaurant has two combos available to their customers, an original and an experimental meal. The original meal typica"
+nlp4lp_test_233,orig,tfidf,1,0,6,6,1,0,0,1,1,1.0000,0.5000,6,high,4+,nlp4lp_test_233,nlp4lp_test_233,"A metal-working shop has access to two types of metal-working equipment, a chop saw and a steel cutter. A chop saw can w"
+nlp4lp_test_234,orig,tfidf,0,1,0,0,1,0,0,0,0,0.0000,0.0000,7,high,0,nlp4lp_test_185,nlp4lp_test_234,"A cruise company can either have two types of trips, a large cruise ship or a small cruise ship. A large cruise ship tri"
+nlp4lp_test_235,orig,tfidf,1,0,4,4,1,1,1,0,1,1.0000,1.0000,7,high,4+,nlp4lp_test_235,nlp4lp_test_235,"A lighting company has access to two types of lights to provide their customers, an LED fixture, and a fluorescence lamp"
+nlp4lp_test_236,orig,tfidf,1,0,5,5,1,1,1,0,1,1.0000,1.0000,4,medium,4+,nlp4lp_test_236,nlp4lp_test_236,A market owner wants to start a jam business. He can either sell one unit of jam to customers in a set of small packets 
+nlp4lp_test_237,orig,tfidf,1,0,9,9,1,1,1,0,1,1.0000,1.0000,9,high,4+,nlp4lp_test_237,nlp4lp_test_237,A navy ship is stocking food onto their submarine and their staff can eat either a salad or fruit bowl for their fibre a
+nlp4lp_test_238,orig,tfidf,1,0,6,6,1,1,1,0,1,1.0000,1.0000,6,high,4+,nlp4lp_test_238,nlp4lp_test_238,"A clothing company can sell their product in two types of stores, a retail store and a factory outlet. A retail store br"
+nlp4lp_test_239,orig,tfidf,1,0,5,5,1,0,0,1,1,1.0000,0.6000,4,medium,4+,nlp4lp_test_239,nlp4lp_test_239,A soda company sells soda in two types of containers: cans and glass bottles. A can holds 250 ml of soda whereas a bottl
+nlp4lp_test_240,orig,tfidf,1,0,8,6,0,0,0,1,1,0.7500,0.1667,8,high,4+,nlp4lp_test_240,nlp4lp_test_240,A candle-making company can move their inventory of candles using freight and air. Freight can transport 5 tons per trip
+nlp4lp_test_241,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.7143,7,high,4+,nlp4lp_test_241,nlp4lp_test_241,A production company needs to transport their equipment and staff for a movie they are shooting using large mobile produ
+nlp4lp_test_242,orig,tfidf,1,0,5,5,1,1,1,0,1,1.0000,1.0000,4,medium,4+,nlp4lp_test_242,nlp4lp_test_242,A mask making company ships masks to their retail stores using small boxes and large boxes. A small box holds 25 masks w
+nlp4lp_test_243,orig,tfidf,1,0,7,6,0,0,0,1,1,0.8571,0.6667,6,high,4+,nlp4lp_test_243,nlp4lp_test_243,Grain is transported from a farm to local grocery stores in either large bags or tiny bags. Large bags can hold 25 kg of
+nlp4lp_test_244,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.7143,7,high,4+,nlp4lp_test_244,nlp4lp_test_244,"An autobody shop needs to purchase two types of car jacks, an automatic electric one, or a gas-powered one. The automati"
+nlp4lp_test_245,orig,tfidf,1,0,4,4,1,0,0,1,1,1.0000,0.5000,3,medium,4+,nlp4lp_test_245,nlp4lp_test_245,"A railway company is planning the infrastructure for the city and is considering two types of transportation, trains and"
+nlp4lp_test_246,orig,tfidf,0,1,0,0,1,0,0,0,0,0.0000,0.0000,8,high,0,nlp4lp_test_63,nlp4lp_test_246,"Platinum in combination with palladium has been used as a catalyst in cars and it changes carbon monoxide, which is toxi"
+nlp4lp_test_247,orig,tfidf,0,1,0,0,1,0,0,0,0,0.0000,0.0000,8,high,0,nlp4lp_test_233,nlp4lp_test_247,There are two ways to extract a metal from mined ores. The first way is to use process J and the second is process P. Pr
+nlp4lp_test_248,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.7143,6,high,4+,nlp4lp_test_248,nlp4lp_test_248,An airport can either install escalators or elevators. Escalators can transport 20 people every minute whereas elevators
+nlp4lp_test_249,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,9,high,3,nlp4lp_test_249,nlp4lp_test_249,"A research group is making fabric and plastic using two methods, method A and method B. Method A produces 25 units of fa"
+nlp4lp_test_250,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,9,high,3,nlp4lp_test_250,nlp4lp_test_250,A taxi company will purchase vehicles to rent to their drivers. They are interested in purchasing either motorcycles or 
+nlp4lp_test_251,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.7143,7,high,4+,nlp4lp_test_251,nlp4lp_test_251,"Due to an accident, at least 550 locals must be moved across a lake. They can either be transported over the lake by a k"
+nlp4lp_test_252,orig,tfidf,1,0,5,5,1,0,1,1,1,1.0000,0.8000,4,medium,4+,nlp4lp_test_252,nlp4lp_test_252,A drop-in clinic is performing a test either through the ear or blood. A blood test takes 30 minutes to perform while an
+nlp4lp_test_253,orig,tfidf,1,0,6,6,1,0,0,1,1,1.0000,0.3333,5,medium,4+,nlp4lp_test_253,nlp4lp_test_253,A researcher is outsourcing annotations and has two options: a specialized third-party or a common third-party annotatio
+nlp4lp_test_254,orig,tfidf,1,0,4,4,1,0,0,1,1,1.0000,0.5000,4,medium,4+,nlp4lp_test_254,nlp4lp_test_254,A golf course is hosting an event and can transport guests using either golf carts or pull carts. A golf cart can take 4
+nlp4lp_test_255,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.7143,7,high,4+,nlp4lp_test_255,nlp4lp_test_255,A smoothie shop has a promotion for their two smoothies; an acai berry smoothie and a banana chocolate smoothie. It take
+nlp4lp_test_256,orig,tfidf,1,0,5,5,1,1,1,0,1,1.0000,1.0000,7,high,4+,nlp4lp_test_256,nlp4lp_test_256,A handmade sports equipment manufacturing company makes basketballs and footballs. Basketballs require 5 units of materi
+nlp4lp_test_257,orig,tfidf,1,0,8,8,1,1,1,0,1,1.0000,1.0000,8,high,4+,nlp4lp_test_257,nlp4lp_test_257,"A researcher must perform two types of experiments, in-vivo and ex-vivo. In-vivo experiments requires 30 minutes to prep"
+nlp4lp_test_258,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.7143,5,medium,4+,nlp4lp_test_258,nlp4lp_test_258,A village delivers mail to nearby villages either by runners or canoers. Runners can carry three bags of mail each time 
+nlp4lp_test_259,orig,tfidf,1,0,6,6,1,1,1,0,1,1.0000,1.0000,6,high,4+,nlp4lp_test_259,nlp4lp_test_259,"A woman on a diet needs to eat two types of meal preps, a smoothie and a protein bar. Each smoothie contains 2 units of "
+nlp4lp_test_260,orig,tfidf,1,0,9,9,1,0,0,1,1,1.0000,0.4444,9,high,4+,nlp4lp_test_260,nlp4lp_test_260,"A clinical firm has two factories, a northern factory and a western factory, where they make expensive anti-itch injecti"
+nlp4lp_test_261,orig,tfidf,1,0,10,9,0,1,1,0,1,0.9000,1.0000,9,high,4+,nlp4lp_test_261,nlp4lp_test_261,A hospital prepares batches of medication patches and anti-biotic creams. Each medication patch requires 3 minutes to pr
+nlp4lp_test_262,orig,tfidf,1,0,5,5,1,0,1,1,1,1.0000,0.8000,5,medium,4+,nlp4lp_test_262,nlp4lp_test_262,A company in the desert can transport goods to rural cities either by camel caravans or desert trucks. A camel caravan c
+nlp4lp_test_263,orig,tfidf,1,0,6,6,1,1,1,0,1,1.0000,1.0000,6,high,4+,nlp4lp_test_263,nlp4lp_test_263,"A biotechnology company has 35,000 units of antibiotics available which is important to the process of making a first-do"
+nlp4lp_test_264,orig,tfidf,1,0,5,5,1,1,1,0,1,1.0000,1.0000,4,medium,4+,nlp4lp_test_264,nlp4lp_test_264,Both chemical A and chemical B need to be added to a mixer for making bread. One unit of chemical A takes 30 seconds to 
+nlp4lp_test_265,orig,tfidf,1,0,8,8,1,0,1,1,1,1.0000,0.8750,8,high,4+,nlp4lp_test_265,nlp4lp_test_265,A senior home has snacks of spinach and soybeans to increase their intake of iron. A cup of spinach contains 100 units o
+nlp4lp_test_266,orig,tfidf,1,0,9,8,0,0,0,1,1,0.8889,0.6250,3,medium,4+,nlp4lp_test_266,nlp4lp_test_266,A keyboard manufacturer makes mechanical and standard keyboards. Mechanical keyboards are becoming more popular and thus
+nlp4lp_test_267,orig,tfidf,1,0,6,6,1,0,1,1,1,1.0000,0.8333,6,high,4+,nlp4lp_test_267,nlp4lp_test_267,A tourism company can buy sedans or buses to add to their fleet of vehicles to increase their capacity for more tourists
+nlp4lp_test_268,orig,tfidf,0,1,0,0,1,0,0,0,0,0.0000,0.0000,2,low,0,nlp4lp_test_28,nlp4lp_test_268,A dessert shop is popular for their only two desserts - matcha ice cream and orange sorbet. Two units of flavouring and 
+nlp4lp_test_269,orig,tfidf,1,0,4,4,1,0,0,1,1,1.0000,0.5000,4,medium,4+,nlp4lp_test_269,nlp4lp_test_269,A daycare center has children they must pick up and can use two types of vehicles: bus or a personal car. A bus can carr
+nlp4lp_test_270,orig,tfidf,1,0,5,5,1,1,1,0,1,1.0000,1.0000,4,medium,4+,nlp4lp_test_270,nlp4lp_test_270,Both coconut oil and lavender need to be added to a body wash. One unit of coconut oil takes 0.7 minutes to be effective
+nlp4lp_test_271,orig,tfidf,1,0,5,5,1,1,1,0,1,1.0000,1.0000,3,medium,4+,nlp4lp_test_271,nlp4lp_test_271,"A chemical company uses two tests, a salinity test and a pH test. Each unit of the salinity test requires three probes. "
+nlp4lp_test_272,orig,tfidf,1,0,6,6,1,0,0,1,1,1.0000,0.5000,6,high,4+,nlp4lp_test_272,nlp4lp_test_272,A municipality hires full-time and part-time staff to deliver mail. Part-time staff works 15 hours per week and gets pai
+nlp4lp_test_273,orig,tfidf,1,0,9,9,1,0,0,1,1,1.0000,0.7778,9,high,4+,nlp4lp_test_273,nlp4lp_test_273,A landscaper has 2500 square feet of grass land in a customer’s backyard where they need to cut grass using either a hea
+nlp4lp_test_274,orig,tfidf,1,0,6,6,1,1,1,0,1,1.0000,1.0000,6,high,4+,nlp4lp_test_274,nlp4lp_test_274,A park is designing their trails and can either create a wide trail or a narrow trail. A wide trail can take 50 visitors
+nlp4lp_test_275,orig,tfidf,1,0,7,7,1,0,0,1,1,1.0000,0.7143,7,high,4+,nlp4lp_test_275,nlp4lp_test_275,A brewery can ferment their product into either wine or kombucha. Each unit of wine requires 3 units of fruit and 8 unit
+nlp4lp_test_276,orig,tfidf,1,0,6,5,0,0,0,1,1,0.8333,0.4000,6,high,4+,nlp4lp_test_276,nlp4lp_test_276,A hospital can transport their patients either using a type II ambulance or hospital van. The hospital needs to transpor
+nlp4lp_test_277,orig,tfidf,1,0,1,1,1,1,1,0,1,1.0000,1.0000,7,high,1,nlp4lp_test_277,nlp4lp_test_277,"PROBLEM TYPE: LP
+
+PROBLEM INFO: 
+
+- Suppose that there are \var{N} available currencies, and assume that one unit of cur"
+nlp4lp_test_278,orig,tfidf,1,0,2,2,1,1,1,0,1,1.0000,1.0000,5,medium,2,nlp4lp_test_278,nlp4lp_test_278,"PROBLEM TYPE: LP
+
+PROBLEM INFO: 
+- Consider a set \var{P} described by linear inequality constraints, that is:
+ \var{P} "
+nlp4lp_test_279,orig,tfidf,1,0,5,5,1,0,1,1,1,1.0000,0.8000,7,high,4+,nlp4lp_test_279,nlp4lp_test_279,"PROBLEM TYPE: LP
+
+PROBLEM INFO: 
+
+- A company produces and sells \var{P} different products. 
+- The demand for each prod"
+nlp4lp_test_280,orig,tfidf,1,0,7,6,0,0,1,1,1,0.8571,0.8333,7,high,4+,nlp4lp_test_280,nlp4lp_test_280,"PROBLEM TYPE: MILP
+
+PROBLEM INFO: 
+- A company produces \var{N} kinds of products. 
+- A product of the \var{i}-th type r"
+nlp4lp_test_281,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,8,high,3,nlp4lp_test_281,nlp4lp_test_281,"PROBLEM TYPE: LP
+
+PROBLEM INFO: 
+
+- A manager of an oil refinery has \var{allocated_i} million barrels of crude oil type"
+nlp4lp_test_282,orig,tfidf,1,0,4,4,1,0,0,1,1,1.0000,0.5000,7,high,4+,nlp4lp_test_282,nlp4lp_test_282,"PROBLEM TYPE: LP
+
+PROBLEM INFO: 
+
+- An investor has a portfolio of \var{N} different stocks.
+- He has bought \var{bought"
+nlp4lp_test_283,orig,tfidf,0,1,8,0,0,0,0,0,0,0.0000,0.0000,11,high,4+,nlp4lp_test_284,nlp4lp_test_283,"PROBLEM TYPE: LP
+PROBLEM INFO:
+
+- A food is manufactured by refining raw oils and blending them together. 
+- The raw oil"
+nlp4lp_test_284,orig,tfidf,1,0,11,2,0,0,0,1,1,0.1818,0.5000,13,high,4+,nlp4lp_test_284,nlp4lp_test_284,"PROBLEM TYPE: LP or MILP
+PROBLEM INFO:
+
+- A food is manufactured by refining raw oils and blending them together. 
+- The"
+nlp4lp_test_285,orig,tfidf,1,0,6,3,0,0,0,1,1,0.5000,0.6667,16,high,4+,nlp4lp_test_285,nlp4lp_test_285,"PROBLEM TYPE: LP
+PROBLEM INFO:
+
+- An engineering factory makes several products on the machines, and the number of machi"
+nlp4lp_test_286,orig,tfidf,0,1,2,2,1,0,0,1,0,1.0000,0.5000,17,high,2,nlp4lp_test_285,nlp4lp_test_286,"PROBLEM TYPE: MILP
+PROBLEM INFO:
+
+- An engineering factory makes several products on the machines, and the number of mac"
+nlp4lp_test_287,orig,tfidf,0,1,1,1,1,1,1,0,0,1.0000,1.0000,15,high,1,nlp4lp_test_293,nlp4lp_test_287,"PROBLEM TYPE: LP
+PROBLEM INFO:
+
+- A company is undergoing a number of changes that will affect its manpower requirements"
+nlp4lp_test_288,orig,tfidf,0,1,1,1,1,1,1,0,0,1.0000,1.0000,15,high,1,nlp4lp_test_293,nlp4lp_test_288,"PROBLEM TYPE: LP
+PROBLEM INFO:
+
+- A company is undergoing a number of changes that will affect its manpower requirements"
+nlp4lp_test_289,orig,tfidf,1,0,5,2,0,1,0,0,1,0.4000,1.0000,8,high,4+,nlp4lp_test_289,nlp4lp_test_289,"PROBLEM TYPE: MIP
+PROBLEM INFO:
+
+- A mining company is going to continue operating in a certain area for the next years."
+nlp4lp_test_290,orig,tfidf,0,1,0,0,1,0,0,0,0,0.0000,0.0000,17,high,0,nlp4lp_test_293,nlp4lp_test_290,"PROBLEM TYPE: LP
+PROBLEM INFO:
+
+- A farmer wishes to plan production on his \var{all_space} acre farm over the next five"
+nlp4lp_test_291,orig,tfidf,0,1,1,1,1,1,1,0,0,1.0000,1.0000,21,high,1,nlp4lp_test_293,nlp4lp_test_291,"PROBLEM TYPE: LP
+PROBLEM INFO:
+
+- An economy consists of several industries. 
+- Each unit produced by one of the industr"
+nlp4lp_test_292,orig,tfidf,0,1,1,1,1,1,1,0,0,1.0000,1.0000,19,high,1,nlp4lp_test_293,nlp4lp_test_292,"PROBLEM TYPE: LP
+PROBLEM INFO:
+
+- An economy consists of several industries. 
+- Each unit produced by one of the industr"
+nlp4lp_test_293,orig,tfidf,1,0,0,0,1,0,0,0,0,0.0000,0.0000,21,high,0,nlp4lp_test_293,nlp4lp_test_293,"PROBLEM TYPE: LP
+PROBLEM INFO:
+
+- An economy consists of several industries. 
+- Each unit produced by one of the industr"
+nlp4lp_test_294,orig,tfidf,1,0,2,1,0,1,0,0,1,0.5000,1.0000,8,high,2,nlp4lp_test_294,nlp4lp_test_294,"PROBLEM TYPE: MIP
+PROBLEM INFO:
+
+- A large company wishes to move some of its departments out of London. 
+- There are be"
+nlp4lp_test_295,orig,tfidf,1,0,1,0,0,0,0,0,0,0.0000,0.0000,2,low,1,nlp4lp_test_295,nlp4lp_test_295,"PROBLEM TYPE: LP
+PROBLEM INFO:
+
+- A quantity y is known to depend on another quantity x. A set of corresponding values h"
+nlp4lp_test_296,orig,tfidf,1,0,1,0,0,0,0,0,0,0.0000,0.0000,2,low,1,nlp4lp_test_296,nlp4lp_test_296,"PROBLEM TYPE: LP
+PROBLEM INFO:
+
+- A quantity y is known to depend on another quantity x. A set of corresponding values h"
+nlp4lp_test_297,orig,tfidf,1,0,1,0,0,0,0,0,0,0.0000,0.0000,3,medium,1,nlp4lp_test_297,nlp4lp_test_297,"PROBLEM TYPE: LP
+PROBLEM INFO:
+
+- A quantity y is known to depend on another quantity x. A set of corresponding values h"
+nlp4lp_test_298,orig,tfidf,1,0,2,0,0,0,0,0,0,0.0000,0.0000,9,high,2,nlp4lp_test_298,nlp4lp_test_298,"PROBLEM TYPE: MIP
+PROBLEM INFO:
+
+- A number of power stations are committed to meeting the following electricity load de"
+nlp4lp_test_299,orig,tfidf,0,1,1,1,1,1,1,0,0,1.0000,1.0000,6,high,1,nlp4lp_test_321,nlp4lp_test_299,"PROBLEM TYPE: LP
+PROBLEM INFO:
+
+- We suppose that some products can be produced, each of them passing through several st"
+nlp4lp_test_300,orig,tfidf,1,0,2,1,0,1,0,0,1,0.5000,1.0000,3,medium,2,nlp4lp_test_300,nlp4lp_test_300,"PROBLEM TYPE: MIP
+PROBLEM INFO:
+
+- The knapsack problem has a significant place in the study of integer programming mode"
+nlp4lp_test_301,orig,tfidf,1,0,2,0,0,0,0,0,0,0.0000,0.0000,5,medium,2,nlp4lp_test_301,nlp4lp_test_301,"PROBLEM TYPE: LP
+PROBLEM INFO:
+
+- We assume that there are available at the market different foods and that the food \va"
+nlp4lp_test_302,orig,tfidf,1,0,3,1,0,1,0,0,1,0.3333,1.0000,5,medium,3,nlp4lp_test_302,nlp4lp_test_302,"PROBLEM TYPE: LP
+PROBLEM INFO:
+
+- Consider the problem of operating a warehouse, by buying and selling the stock of a ce"
+nlp4lp_test_303,orig,tfidf,1,0,3,2,0,1,0,0,1,0.6667,1.0000,7,high,3,nlp4lp_test_303,nlp4lp_test_303,"PROBLEM TYPE: LP
+PROBLEM INFO:
+
+- A manufacturer wishes to produce \var{alloy_quant} lb of an alloy that consists of sev"
+nlp4lp_test_304,orig,tfidf,1,0,2,0,0,0,0,0,0,0.0000,0.0000,5,medium,2,nlp4lp_test_304,nlp4lp_test_304,"PROBLEM TYPE: LP
+PROBLEM INFO:
+
+- A small firm specializes in making some types of spare automobile parts. 
+- Each part "
+nlp4lp_test_305,orig,tfidf,1,0,5,0,0,0,0,0,0,0.0000,0.0000,3,medium,4+,nlp4lp_test_305,nlp4lp_test_305,"PROBLEM TYPE: LP
+PROBLEM INFO:
+
+- A small computer manufacturing company forecasts the demand over the next \var{n}-th m"
+nlp4lp_test_306,orig,tfidf,1,0,3,0,0,0,0,0,0,0.0000,0.0000,3,medium,3,nlp4lp_test_306,nlp4lp_test_306,"PROBLEM TYPE: LP or MILP
+PROBLEM INFO:
+
+- To operate a cafeteria, the manager must ensure on-call duty based on the stat"
+nlp4lp_test_307,orig,tfidf,1,0,8,5,0,0,0,1,1,0.6250,0.4000,4,medium,4+,nlp4lp_test_307,nlp4lp_test_307,"PROBLEM TYPE: LP
+PROBLEM INFO:
+
+- A foundry receives a specific order for \var{n_steel_quant} tons of steel. 
+- This ste"
+nlp4lp_test_308,orig,tfidf,1,0,2,0,0,0,0,0,0,0.0000,0.0000,2,low,2,nlp4lp_test_308,nlp4lp_test_308,"PROBLEM TYPE: MILP
+PROBLEM INFO:
+
+- Before going on vacation you want to make floppy disk backups of important files. 
+-"
+nlp4lp_test_309,orig,tfidf,1,0,3,1,0,1,0,0,1,0.3333,1.0000,6,high,3,nlp4lp_test_309,nlp4lp_test_309,"PROBLEM TYPE: LP
+PROBLEM INFO:
+
+- An Italian transport company must send empty containers from its depots to ports. 
+- T"
+nlp4lp_test_310,orig,tfidf,1,0,2,2,1,1,1,0,1,1.0000,1.0000,7,high,2,nlp4lp_test_310,nlp4lp_test_310,"PROBLEM TYPE: LP
+
+PROBLEM INFO:
+
+- Wild Sports produces \var{M} different products using \var{N} different raw materials"
+nlp4lp_test_311,orig,tfidf,0,1,0,0,1,0,0,0,0,0.0000,0.0000,9,high,0,nlp4lp_test_321,nlp4lp_test_311,"PROBLEM TYPE: LP
+
+PROBLEM INFO:
+
+- A division of an auto parts manufacturer produces \var{P} different parts using \var{"
+nlp4lp_test_312,orig,tfidf,1,0,5,5,1,1,1,0,1,1.0000,1.0000,15,high,4+,nlp4lp_test_312,nlp4lp_test_312,"PROBLEM TYPE: LP
+
+PROBLEM INFO:
+
+- Custom Tees is planning an online advertising campaign with \var{A} different ad type"
+nlp4lp_test_313,orig,tfidf,1,0,2,2,1,1,1,0,1,1.0000,1.0000,12,high,2,nlp4lp_test_313,nlp4lp_test_313,"PROBLEM TYPE: LP
+
+PROBLEM INFO:
+
+- A company produces \var{S} different types of steel using \var{A} different alloys.
+-"
+nlp4lp_test_314,orig,tfidf,1,0,1,1,1,1,1,0,1,1.0000,1.0000,3,medium,1,nlp4lp_test_314,nlp4lp_test_314,"PROBLEM TYPE: LP or MILP
+
+PROBLEM INFO:
+
+- The town has \var{S} different shifts for the police officers during the day."
+nlp4lp_test_315,orig,tfidf,1,0,8,8,1,0,0,1,1,1.0000,0.3750,9,high,4+,nlp4lp_test_315,nlp4lp_test_315,"PROBLEM TYPE: LP or MILP
+
+PROBLEM INFO:
+
+- A fine foods company produces gift baskets for a season that lasts \var{W} we"
+nlp4lp_test_316,orig,tfidf,0,1,2,2,1,1,1,0,0,1.0000,1.0000,11,high,2,nlp4lp_test_325,nlp4lp_test_316,"PROBLEM TYPE: LP
+
+PROBLEM INFO:
+
+- A division of an auto parts manufacturer produces \var{P} different parts using \var{"
+nlp4lp_test_317,orig,tfidf,0,1,0,0,1,0,0,0,0,0.0000,0.0000,12,high,0,nlp4lp_test_321,nlp4lp_test_317,"PROBLEM TYPE: LP
+
+PROBLEM INFO:
+
+- A division of an auto parts manufacturer produces \var{P} different parts using \var{"
+nlp4lp_test_318,orig,tfidf,0,1,4,4,1,1,1,0,0,1.0000,1.0000,15,high,4+,nlp4lp_test_312,nlp4lp_test_318,"PROBLEM TYPE: LP
+
+PROBLEM INFO:
+
+- Custom Tees is planning an online advertising campaign with \var{A} different ad type"
+nlp4lp_test_319,orig,tfidf,1,0,2,2,1,1,1,0,1,1.0000,1.0000,6,high,2,nlp4lp_test_319,nlp4lp_test_319,"PROBLEM TYPE: LP
+
+PROBLEM INFO:
+
+- A small electric utility operates \var{P} power plants to supply electricity to \var{"
+nlp4lp_test_320,orig,tfidf,1,0,2,1,0,1,0,0,1,0.5000,1.0000,1,low,2,nlp4lp_test_320,nlp4lp_test_320,"PROBLEM TYPE: LP
+
+PROBLEM INFO:
+
+- US soybean suppliers ship soybeans to different destinations using various routes.
+- "
+nlp4lp_test_321,orig,tfidf,1,0,4,4,1,0,0,1,1,1.0000,0.7500,11,high,4+,nlp4lp_test_321,nlp4lp_test_321,"PROBLEM TYPE: LP
+
+PROBLEM INFO:
+
+- A division of an auto parts manufacturer produces \var{P} different parts using \var{"
+nlp4lp_test_322,orig,tfidf,0,1,3,3,1,0,0,1,0,1.0000,0.6667,11,high,3,nlp4lp_test_321,nlp4lp_test_322,"PROBLEM TYPE: LP
+
+PROBLEM INFO:
+
+- A division of an auto parts manufacturer produces \var{P} different parts using \var{"
+nlp4lp_test_323,orig,tfidf,1,0,2,2,1,1,1,0,1,1.0000,1.0000,13,high,2,nlp4lp_test_323,nlp4lp_test_323,"PROBLEM TYPE: LP
+
+PROBLEM INFO:
+
+- A delivery person starts at the intersection of \var{1}th Avenue and \var{1}th Street"
+nlp4lp_test_324,orig,tfidf,1,0,7,5,0,0,0,1,1,0.7143,0.8000,5,medium,4+,nlp4lp_test_324,nlp4lp_test_324,"PROBLEM TYPE: MIP
+
+PROBLEM INFO:
+
+- A seaport unloads shipping containers off of rail cars, holds them in its yard on a "
+nlp4lp_test_325,orig,tfidf,1,0,2,2,1,1,1,0,1,1.0000,1.0000,11,high,2,nlp4lp_test_325,nlp4lp_test_325,"PROBLEM TYPE: MIP
+
+PROBLEM INFO:
+
+- A division of an auto parts manufacturer produces \var{P} different parts using \var"
+nlp4lp_test_326,orig,tfidf,1,0,2,2,1,1,1,0,1,1.0000,1.0000,3,medium,2,nlp4lp_test_326,nlp4lp_test_326,"PROBLEM TYPE: MILP
+
+PROBLEM INFO:
+
+- A team of translators is being assem- bled for the summer Olympics to translate fro"
+nlp4lp_test_327,orig,tfidf,1,0,3,3,1,1,1,0,1,1.0000,1.0000,5,medium,3,nlp4lp_test_327,nlp4lp_test_327,"PROBLEM TYPE: MILP
+
+PROBLEM INFO:
+
+- A company has \var{I} projects to be done by consultants.
+- They have a choice of \"
+nlp4lp_test_328,orig,tfidf,1,0,5,5,1,0,0,1,1,1.0000,0.6000,5,medium,4+,nlp4lp_test_328,nlp4lp_test_328,"PROBLEM TYPE: MILP
+
+PROBLEM INFO:
+
+- The network faces an intrusion that requires immediate intervention.
+- Intervention"
+nlp4lp_test_329,orig,tfidf,1,0,2,2,1,1,1,0,1,1.0000,1.0000,5,medium,2,nlp4lp_test_329,nlp4lp_test_329,"PROBLEM TYPE: MILP
+
+PROBLEM INFO:
+
+- A traveler based in \var{start_city} needs to visit \var{N} towns for business.
+- T"
+nlp4lp_test_330,orig,tfidf,1,0,1,1,1,1,1,0,1,1.0000,1.0000,6,high,1,nlp4lp_test_330,nlp4lp_test_330,"PROBLEM TYPE: MILP
+
+PROBLEM INFO:
+
+- A paper company produces large rolls of paper with a width of \var{large_roll_width"

@@ -1,0 +1,16 @@
+variant,comparison,metric,method_A,mean_A,method_B,mean_B,obs_diff_A_minus_B,ci_lo_diff_95,ci_hi_diff_95,p_two_sided,n,B,seed
+orig,TFIDF vs BM25 (Schema_R@1),Schema_R@1,tfidf,0.9094,bm25,0.8822,0.0272,0.0060,0.0514,0.0220,331,1000,42
+orig,TFIDF-TG vs BM25-TG (InstReady),InstReady,tfidf,0.5257,bm25,0.5196,0.0060,-0.0151,0.0272,0.7120,331,1000,42
+orig,TFIDF-TG vs Oracle-TG (InstReady),InstReady,tfidf,0.5257,oracle,0.5650,-0.0393,-0.0665,-0.0151,0.0040,331,1000,42
+orig,TFIDF-TG vs TFIDF-AR (InstReady),InstReady,tfidf,0.5257,tfidf_acceptance_rerank,0.5227,0.0030,-0.0181,0.0211,0.8900,331,1000,42
+orig,TFIDF-TG vs TFIDF-HAR (InstReady),InstReady,tfidf,0.5257,tfidf_hierarchical_acceptance_rerank,0.5136,0.0121,-0.0121,0.0363,0.3760,331,1000,42
+noisy,TFIDF vs BM25 (Schema_R@1),Schema_R@1,tfidf,0.9033,bm25,0.8912,0.0121,-0.0091,0.0332,0.3400,331,1000,42
+noisy,TFIDF-TG vs BM25-TG (InstReady),InstReady,tfidf,0.0393,bm25,0.0423,-0.0030,-0.0091,0.0000,0.7240,331,1000,42
+noisy,TFIDF-TG vs Oracle-TG (InstReady),InstReady,tfidf,0.0393,oracle,0.0423,-0.0030,-0.0151,0.0091,0.8180,331,1000,42
+noisy,TFIDF-TG vs TFIDF-AR (InstReady),InstReady,tfidf,0.0393,tfidf_acceptance_rerank,0.0423,-0.0030,-0.0091,0.0000,0.7520,331,1000,42
+noisy,TFIDF-TG vs TFIDF-HAR (InstReady),InstReady,tfidf,0.0393,tfidf_hierarchical_acceptance_rerank,0.0423,-0.0030,-0.0091,0.0000,0.7520,331,1000,42
+short,TFIDF vs BM25 (Schema_R@1),Schema_R@1,tfidf,0.7795,bm25,0.7674,0.0121,-0.0151,0.0393,0.4740,331,1000,42
+short,TFIDF-TG vs BM25-TG (InstReady),InstReady,tfidf,0.0151,bm25,0.0151,0.0000,-0.0121,0.0121,1.0000,331,1000,42
+short,TFIDF-TG vs Oracle-TG (InstReady),InstReady,tfidf,0.0151,oracle,0.0151,0.0000,-0.0091,0.0091,1.0000,331,1000,42
+short,TFIDF-TG vs TFIDF-AR (InstReady),InstReady,tfidf,0.0151,tfidf_acceptance_rerank,0.0211,-0.0060,-0.0151,0.0000,0.2680,331,1000,42
+short,TFIDF-TG vs TFIDF-HAR (InstReady),InstReady,tfidf,0.0151,tfidf_hierarchical_acceptance_rerank,0.0211,-0.0060,-0.0151,0.0000,0.2680,331,1000,42
