@@ -1,0 +1,1656 @@
+family,query_id,schema_name,retrieval_correct,grounding_mode,param_coverage,type_match,key_overlap,instantiation_approx,error_type
+Agricultural / Farming,nlp4lp_test_104,nlp4lp_test_104,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Agricultural / Farming,nlp4lp_test_104,nlp4lp_test_104,1,constrained,1.000,1.000,1.000,1,none
+Agricultural / Farming,nlp4lp_test_104,nlp4lp_test_104,1,opt_role_repair,0.800,1.000,1.000,1,none
+Agricultural / Farming,nlp4lp_test_104,nlp4lp_test_104,1,global_compat_full,0.800,1.000,1.000,1,none
+Agricultural / Farming,nlp4lp_test_104,nlp4lp_test_104,1,semantic_ir_repair,0.800,1.000,1.000,1,none
+Agricultural / Farming,nlp4lp_test_277,nlp4lp_test_277,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Agricultural / Farming,nlp4lp_test_277,nlp4lp_test_277,1,constrained,1.000,1.000,1.000,1,none
+Agricultural / Farming,nlp4lp_test_277,nlp4lp_test_277,1,opt_role_repair,1.000,1.000,1.000,1,none
+Agricultural / Farming,nlp4lp_test_277,nlp4lp_test_277,1,global_compat_full,1.000,1.000,1.000,1,none
+Agricultural / Farming,nlp4lp_test_277,nlp4lp_test_277,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Agricultural / Farming,nlp4lp_test_319,nlp4lp_test_319,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Agricultural / Farming,nlp4lp_test_319,nlp4lp_test_319,1,constrained,1.000,1.000,1.000,1,none
+Agricultural / Farming,nlp4lp_test_319,nlp4lp_test_319,1,opt_role_repair,1.000,1.000,1.000,1,none
+Agricultural / Farming,nlp4lp_test_319,nlp4lp_test_319,1,global_compat_full,1.000,1.000,1.000,1,none
+Agricultural / Farming,nlp4lp_test_319,nlp4lp_test_319,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Agricultural / Farming,nlp4lp_test_38,nlp4lp_test_38,1,tfidf_greedy,1.000,0.889,1.000,1,none
+Agricultural / Farming,nlp4lp_test_38,nlp4lp_test_38,1,constrained,1.000,0.889,1.000,1,none
+Agricultural / Farming,nlp4lp_test_38,nlp4lp_test_38,1,opt_role_repair,1.000,0.889,1.000,1,none
+Agricultural / Farming,nlp4lp_test_38,nlp4lp_test_38,1,global_compat_full,1.000,0.667,1.000,0,none
+Agricultural / Farming,nlp4lp_test_38,nlp4lp_test_38,1,semantic_ir_repair,1.000,0.889,1.000,1,none
+Agricultural / Farming,nlp4lp_test_64,nlp4lp_test_64,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Agricultural / Farming,nlp4lp_test_64,nlp4lp_test_64,1,constrained,1.000,0.500,1.000,0,none
+Agricultural / Farming,nlp4lp_test_64,nlp4lp_test_64,1,opt_role_repair,1.000,0.750,1.000,1,none
+Agricultural / Farming,nlp4lp_test_64,nlp4lp_test_64,1,global_compat_full,1.000,0.750,1.000,1,none
+Agricultural / Farming,nlp4lp_test_64,nlp4lp_test_64,1,semantic_ir_repair,1.000,0.750,1.000,1,none
+Agricultural / Farming,nlp4lp_test_74,nlp4lp_test_74,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Agricultural / Farming,nlp4lp_test_74,nlp4lp_test_74,1,constrained,1.000,1.000,1.000,1,none
+Agricultural / Farming,nlp4lp_test_74,nlp4lp_test_74,1,opt_role_repair,1.000,1.000,1.000,1,none
+Agricultural / Farming,nlp4lp_test_74,nlp4lp_test_74,1,global_compat_full,1.000,1.000,1.000,1,none
+Agricultural / Farming,nlp4lp_test_74,nlp4lp_test_74,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Assignment / Matching,nlp4lp_test_327,nlp4lp_test_327,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Assignment / Matching,nlp4lp_test_327,nlp4lp_test_327,1,constrained,1.000,1.000,1.000,1,none
+Assignment / Matching,nlp4lp_test_327,nlp4lp_test_327,1,opt_role_repair,1.000,1.000,1.000,1,none
+Assignment / Matching,nlp4lp_test_327,nlp4lp_test_327,1,global_compat_full,1.000,1.000,1.000,1,none
+Assignment / Matching,nlp4lp_test_327,nlp4lp_test_327,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_100,nlp4lp_test_100,1,tfidf_greedy,1.000,0.556,1.000,0,none
+Blending / Diet / Feed Mix,nlp4lp_test_100,nlp4lp_test_100,1,constrained,0.778,0.714,1.000,0,none
+Blending / Diet / Feed Mix,nlp4lp_test_100,nlp4lp_test_100,1,opt_role_repair,1.000,0.556,1.000,0,none
+Blending / Diet / Feed Mix,nlp4lp_test_100,nlp4lp_test_100,1,global_compat_full,0.889,0.625,1.000,0,none
+Blending / Diet / Feed Mix,nlp4lp_test_100,nlp4lp_test_100,1,semantic_ir_repair,0.778,0.714,1.000,0,none
+Blending / Diet / Feed Mix,nlp4lp_test_103,nlp4lp_test_103,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_103,nlp4lp_test_103,1,constrained,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_103,nlp4lp_test_103,1,opt_role_repair,0.857,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_103,nlp4lp_test_103,1,global_compat_full,0.857,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_103,nlp4lp_test_103,1,semantic_ir_repair,0.857,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_106,nlp4lp_test_106,0,tfidf_greedy,0.000,0.000,0.000,0,retrieval_miss
+Blending / Diet / Feed Mix,nlp4lp_test_106,nlp4lp_test_106,0,constrained,0.000,0.000,0.000,0,retrieval_miss
+Blending / Diet / Feed Mix,nlp4lp_test_106,nlp4lp_test_106,0,opt_role_repair,0.000,0.000,0.000,0,retrieval_miss
+Blending / Diet / Feed Mix,nlp4lp_test_106,nlp4lp_test_106,0,global_compat_full,0.000,0.000,0.000,0,retrieval_miss
+Blending / Diet / Feed Mix,nlp4lp_test_106,nlp4lp_test_106,0,semantic_ir_repair,0.000,0.000,0.000,0,retrieval_miss
+Blending / Diet / Feed Mix,nlp4lp_test_110,nlp4lp_test_110,1,tfidf_greedy,1.000,0.778,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_110,nlp4lp_test_110,1,constrained,1.000,0.778,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_110,nlp4lp_test_110,1,opt_role_repair,1.000,0.778,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_110,nlp4lp_test_110,1,global_compat_full,1.000,0.778,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_110,nlp4lp_test_110,1,semantic_ir_repair,1.000,0.778,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_113,nlp4lp_test_113,1,tfidf_greedy,1.000,0.714,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_113,nlp4lp_test_113,1,constrained,1.000,0.714,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_113,nlp4lp_test_113,1,opt_role_repair,1.000,0.714,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_113,nlp4lp_test_113,1,global_compat_full,1.000,0.714,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_113,nlp4lp_test_113,1,semantic_ir_repair,1.000,0.714,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_116,nlp4lp_test_116,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_116,nlp4lp_test_116,1,constrained,1.000,0.750,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_116,nlp4lp_test_116,1,opt_role_repair,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_116,nlp4lp_test_116,1,global_compat_full,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_116,nlp4lp_test_116,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_123,nlp4lp_test_123,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_123,nlp4lp_test_123,1,constrained,1.000,0.857,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_123,nlp4lp_test_123,1,opt_role_repair,1.000,0.857,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_123,nlp4lp_test_123,1,global_compat_full,1.000,0.857,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_123,nlp4lp_test_123,1,semantic_ir_repair,1.000,0.857,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_124,nlp4lp_test_124,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_124,nlp4lp_test_124,1,constrained,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_124,nlp4lp_test_124,1,opt_role_repair,0.800,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_124,nlp4lp_test_124,1,global_compat_full,0.800,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_124,nlp4lp_test_124,1,semantic_ir_repair,0.800,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_133,nlp4lp_test_133,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_133,nlp4lp_test_133,1,constrained,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_133,nlp4lp_test_133,1,opt_role_repair,0.800,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_133,nlp4lp_test_133,1,global_compat_full,0.800,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_133,nlp4lp_test_133,1,semantic_ir_repair,0.800,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_178,nlp4lp_test_178,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_178,nlp4lp_test_178,1,constrained,1.000,0.667,1.000,0,none
+Blending / Diet / Feed Mix,nlp4lp_test_178,nlp4lp_test_178,1,opt_role_repair,1.000,0.667,1.000,0,none
+Blending / Diet / Feed Mix,nlp4lp_test_178,nlp4lp_test_178,1,global_compat_full,1.000,0.667,1.000,0,none
+Blending / Diet / Feed Mix,nlp4lp_test_178,nlp4lp_test_178,1,semantic_ir_repair,1.000,0.667,1.000,0,none
+Blending / Diet / Feed Mix,nlp4lp_test_194,nlp4lp_test_194,0,tfidf_greedy,0.000,0.000,0.000,0,retrieval_miss
+Blending / Diet / Feed Mix,nlp4lp_test_194,nlp4lp_test_194,0,constrained,0.000,0.000,0.000,0,retrieval_miss
+Blending / Diet / Feed Mix,nlp4lp_test_194,nlp4lp_test_194,0,opt_role_repair,0.000,0.000,0.000,0,retrieval_miss
+Blending / Diet / Feed Mix,nlp4lp_test_194,nlp4lp_test_194,0,global_compat_full,0.000,0.000,0.000,0,retrieval_miss
+Blending / Diet / Feed Mix,nlp4lp_test_194,nlp4lp_test_194,0,semantic_ir_repair,0.000,0.000,0.000,0,retrieval_miss
+Blending / Diet / Feed Mix,nlp4lp_test_197,nlp4lp_test_197,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_197,nlp4lp_test_197,1,constrained,1.000,0.000,1.000,0,type_mismatch
+Blending / Diet / Feed Mix,nlp4lp_test_197,nlp4lp_test_197,1,opt_role_repair,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_197,nlp4lp_test_197,1,global_compat_full,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_197,nlp4lp_test_197,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_198,nlp4lp_test_198,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_198,nlp4lp_test_198,1,constrained,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_198,nlp4lp_test_198,1,opt_role_repair,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_198,nlp4lp_test_198,1,global_compat_full,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_198,nlp4lp_test_198,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_201,nlp4lp_test_201,0,tfidf_greedy,0.000,0.000,0.000,0,retrieval_miss
+Blending / Diet / Feed Mix,nlp4lp_test_201,nlp4lp_test_201,0,constrained,0.000,0.000,0.000,0,retrieval_miss
+Blending / Diet / Feed Mix,nlp4lp_test_201,nlp4lp_test_201,0,opt_role_repair,0.000,0.000,0.000,0,retrieval_miss
+Blending / Diet / Feed Mix,nlp4lp_test_201,nlp4lp_test_201,0,global_compat_full,0.000,0.000,0.000,0,retrieval_miss
+Blending / Diet / Feed Mix,nlp4lp_test_201,nlp4lp_test_201,0,semantic_ir_repair,0.000,0.000,0.000,0,retrieval_miss
+Blending / Diet / Feed Mix,nlp4lp_test_231,nlp4lp_test_231,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_231,nlp4lp_test_231,1,constrained,1.000,0.500,1.000,0,none
+Blending / Diet / Feed Mix,nlp4lp_test_231,nlp4lp_test_231,1,opt_role_repair,1.000,0.500,1.000,0,none
+Blending / Diet / Feed Mix,nlp4lp_test_231,nlp4lp_test_231,1,global_compat_full,1.000,0.500,1.000,0,none
+Blending / Diet / Feed Mix,nlp4lp_test_231,nlp4lp_test_231,1,semantic_ir_repair,1.000,0.500,1.000,0,none
+Blending / Diet / Feed Mix,nlp4lp_test_259,nlp4lp_test_259,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_259,nlp4lp_test_259,1,constrained,1.000,0.833,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_259,nlp4lp_test_259,1,opt_role_repair,1.000,0.833,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_259,nlp4lp_test_259,1,global_compat_full,1.000,0.833,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_259,nlp4lp_test_259,1,semantic_ir_repair,1.000,0.833,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_264,nlp4lp_test_264,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_264,nlp4lp_test_264,1,constrained,1.000,0.800,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_264,nlp4lp_test_264,1,opt_role_repair,0.800,0.750,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_264,nlp4lp_test_264,1,global_compat_full,0.800,0.750,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_264,nlp4lp_test_264,1,semantic_ir_repair,0.800,0.750,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_265,nlp4lp_test_265,1,tfidf_greedy,1.000,0.875,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_265,nlp4lp_test_265,1,constrained,1.000,0.875,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_265,nlp4lp_test_265,1,opt_role_repair,1.000,0.875,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_265,nlp4lp_test_265,1,global_compat_full,1.000,0.875,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_265,nlp4lp_test_265,1,semantic_ir_repair,1.000,0.875,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_271,nlp4lp_test_271,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_271,nlp4lp_test_271,1,constrained,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_271,nlp4lp_test_271,1,opt_role_repair,0.600,1.000,1.000,0,none
+Blending / Diet / Feed Mix,nlp4lp_test_271,nlp4lp_test_271,1,global_compat_full,0.600,1.000,1.000,0,none
+Blending / Diet / Feed Mix,nlp4lp_test_271,nlp4lp_test_271,1,semantic_ir_repair,0.600,1.000,1.000,0,none
+Blending / Diet / Feed Mix,nlp4lp_test_301,nlp4lp_test_301,1,tfidf_greedy,0.000,0.000,1.000,0,low_param_coverage
+Blending / Diet / Feed Mix,nlp4lp_test_301,nlp4lp_test_301,1,constrained,0.000,0.000,1.000,0,low_param_coverage
+Blending / Diet / Feed Mix,nlp4lp_test_301,nlp4lp_test_301,1,opt_role_repair,0.000,0.000,1.000,0,low_param_coverage
+Blending / Diet / Feed Mix,nlp4lp_test_301,nlp4lp_test_301,1,global_compat_full,0.000,0.000,1.000,0,low_param_coverage
+Blending / Diet / Feed Mix,nlp4lp_test_301,nlp4lp_test_301,1,semantic_ir_repair,0.000,0.000,1.000,0,low_param_coverage
+Blending / Diet / Feed Mix,nlp4lp_test_32,nlp4lp_test_32,1,tfidf_greedy,1.000,0.875,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_32,nlp4lp_test_32,1,constrained,1.000,0.875,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_32,nlp4lp_test_32,1,opt_role_repair,1.000,0.875,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_32,nlp4lp_test_32,1,global_compat_full,1.000,0.875,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_32,nlp4lp_test_32,1,semantic_ir_repair,1.000,0.875,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_7,nlp4lp_test_7,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_7,nlp4lp_test_7,1,constrained,1.000,0.875,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_7,nlp4lp_test_7,1,opt_role_repair,1.000,0.750,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_7,nlp4lp_test_7,1,global_compat_full,1.000,0.750,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_7,nlp4lp_test_7,1,semantic_ir_repair,1.000,0.750,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_90,nlp4lp_test_90,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_90,nlp4lp_test_90,1,constrained,1.000,0.889,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_90,nlp4lp_test_90,1,opt_role_repair,1.000,0.889,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_90,nlp4lp_test_90,1,global_compat_full,1.000,0.889,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_90,nlp4lp_test_90,1,semantic_ir_repair,1.000,0.889,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_93,nlp4lp_test_93,1,tfidf_greedy,1.000,0.857,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_93,nlp4lp_test_93,1,constrained,1.000,0.857,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_93,nlp4lp_test_93,1,opt_role_repair,1.000,0.857,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_93,nlp4lp_test_93,1,global_compat_full,1.000,0.857,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_93,nlp4lp_test_93,1,semantic_ir_repair,1.000,0.857,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_94,nlp4lp_test_94,1,tfidf_greedy,0.800,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_94,nlp4lp_test_94,1,constrained,0.800,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_94,nlp4lp_test_94,1,opt_role_repair,0.800,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_94,nlp4lp_test_94,1,global_compat_full,0.800,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_94,nlp4lp_test_94,1,semantic_ir_repair,0.800,1.000,1.000,1,none
+Blending / Diet / Feed Mix,nlp4lp_test_96,nlp4lp_test_96,0,tfidf_greedy,0.000,0.000,0.000,0,retrieval_miss
+Blending / Diet / Feed Mix,nlp4lp_test_96,nlp4lp_test_96,0,constrained,0.000,0.000,0.000,0,retrieval_miss
+Blending / Diet / Feed Mix,nlp4lp_test_96,nlp4lp_test_96,0,opt_role_repair,0.000,0.000,0.000,0,retrieval_miss
+Blending / Diet / Feed Mix,nlp4lp_test_96,nlp4lp_test_96,0,global_compat_full,0.000,0.000,0.000,0,retrieval_miss
+Blending / Diet / Feed Mix,nlp4lp_test_96,nlp4lp_test_96,0,semantic_ir_repair,0.000,0.000,0.000,0,retrieval_miss
+Cutting / Trim / Cable,nlp4lp_test_257,nlp4lp_test_257,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Cutting / Trim / Cable,nlp4lp_test_257,nlp4lp_test_257,1,constrained,1.000,1.000,1.000,1,none
+Cutting / Trim / Cable,nlp4lp_test_257,nlp4lp_test_257,1,opt_role_repair,1.000,1.000,1.000,1,none
+Cutting / Trim / Cable,nlp4lp_test_257,nlp4lp_test_257,1,global_compat_full,1.000,1.000,1.000,1,none
+Cutting / Trim / Cable,nlp4lp_test_257,nlp4lp_test_257,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Cutting / Trim / Cable,nlp4lp_test_278,nlp4lp_test_278,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Cutting / Trim / Cable,nlp4lp_test_278,nlp4lp_test_278,1,constrained,1.000,1.000,1.000,1,none
+Cutting / Trim / Cable,nlp4lp_test_278,nlp4lp_test_278,1,opt_role_repair,1.000,1.000,1.000,1,none
+Cutting / Trim / Cable,nlp4lp_test_278,nlp4lp_test_278,1,global_compat_full,1.000,1.000,1.000,1,none
+Cutting / Trim / Cable,nlp4lp_test_278,nlp4lp_test_278,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Cutting / Trim / Cable,nlp4lp_test_42,nlp4lp_test_42,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Cutting / Trim / Cable,nlp4lp_test_42,nlp4lp_test_42,1,constrained,1.000,1.000,1.000,1,none
+Cutting / Trim / Cable,nlp4lp_test_42,nlp4lp_test_42,1,opt_role_repair,1.000,1.000,1.000,1,none
+Cutting / Trim / Cable,nlp4lp_test_42,nlp4lp_test_42,1,global_compat_full,1.000,1.000,1.000,1,none
+Cutting / Trim / Cable,nlp4lp_test_42,nlp4lp_test_42,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Diet / Nutrition,nlp4lp_test_126,nlp4lp_test_126,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Diet / Nutrition,nlp4lp_test_126,nlp4lp_test_126,1,constrained,1.000,1.000,1.000,1,none
+Diet / Nutrition,nlp4lp_test_126,nlp4lp_test_126,1,opt_role_repair,1.000,1.000,1.000,1,none
+Diet / Nutrition,nlp4lp_test_126,nlp4lp_test_126,1,global_compat_full,1.000,1.000,1.000,1,none
+Diet / Nutrition,nlp4lp_test_126,nlp4lp_test_126,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Diet / Nutrition,nlp4lp_test_219,nlp4lp_test_219,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Diet / Nutrition,nlp4lp_test_219,nlp4lp_test_219,1,constrained,1.000,1.000,1.000,1,none
+Diet / Nutrition,nlp4lp_test_219,nlp4lp_test_219,1,opt_role_repair,1.000,1.000,1.000,1,none
+Diet / Nutrition,nlp4lp_test_219,nlp4lp_test_219,1,global_compat_full,1.000,1.000,1.000,1,none
+Diet / Nutrition,nlp4lp_test_219,nlp4lp_test_219,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Energy / Environment,nlp4lp_test_218,nlp4lp_test_218,1,tfidf_greedy,1.000,0.875,1.000,1,none
+Energy / Environment,nlp4lp_test_218,nlp4lp_test_218,1,constrained,1.000,0.875,1.000,1,none
+Energy / Environment,nlp4lp_test_218,nlp4lp_test_218,1,opt_role_repair,1.000,0.875,1.000,1,none
+Energy / Environment,nlp4lp_test_218,nlp4lp_test_218,1,global_compat_full,1.000,0.875,1.000,1,none
+Energy / Environment,nlp4lp_test_218,nlp4lp_test_218,1,semantic_ir_repair,1.000,0.875,1.000,1,none
+Energy / Environment,nlp4lp_test_235,nlp4lp_test_235,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Energy / Environment,nlp4lp_test_235,nlp4lp_test_235,1,constrained,1.000,0.750,1.000,1,none
+Energy / Environment,nlp4lp_test_235,nlp4lp_test_235,1,opt_role_repair,1.000,1.000,1.000,1,none
+Energy / Environment,nlp4lp_test_235,nlp4lp_test_235,1,global_compat_full,1.000,1.000,1.000,1,none
+Energy / Environment,nlp4lp_test_235,nlp4lp_test_235,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Energy / Environment,nlp4lp_test_244,nlp4lp_test_244,1,tfidf_greedy,1.000,0.714,1.000,1,none
+Energy / Environment,nlp4lp_test_244,nlp4lp_test_244,1,constrained,0.714,1.000,1.000,0,none
+Energy / Environment,nlp4lp_test_244,nlp4lp_test_244,1,opt_role_repair,1.000,0.714,1.000,1,none
+Energy / Environment,nlp4lp_test_244,nlp4lp_test_244,1,global_compat_full,0.857,0.833,1.000,1,none
+Energy / Environment,nlp4lp_test_244,nlp4lp_test_244,1,semantic_ir_repair,0.714,1.000,1.000,0,none
+Energy / Environment,nlp4lp_test_246,nlp4lp_test_246,0,tfidf_greedy,0.000,0.000,0.000,0,retrieval_miss
+Energy / Environment,nlp4lp_test_246,nlp4lp_test_246,0,constrained,0.000,0.000,0.000,0,retrieval_miss
+Energy / Environment,nlp4lp_test_246,nlp4lp_test_246,0,opt_role_repair,0.000,0.000,0.000,0,retrieval_miss
+Energy / Environment,nlp4lp_test_246,nlp4lp_test_246,0,global_compat_full,0.000,0.000,0.000,0,retrieval_miss
+Energy / Environment,nlp4lp_test_246,nlp4lp_test_246,0,semantic_ir_repair,0.000,0.000,0.000,0,retrieval_miss
+Energy / Environment,nlp4lp_test_298,nlp4lp_test_298,1,tfidf_greedy,0.000,0.000,1.000,0,low_param_coverage
+Energy / Environment,nlp4lp_test_298,nlp4lp_test_298,1,constrained,0.000,0.000,1.000,0,low_param_coverage
+Energy / Environment,nlp4lp_test_298,nlp4lp_test_298,1,opt_role_repair,0.000,0.000,1.000,0,low_param_coverage
+Energy / Environment,nlp4lp_test_298,nlp4lp_test_298,1,global_compat_full,0.000,0.000,1.000,0,low_param_coverage
+Energy / Environment,nlp4lp_test_298,nlp4lp_test_298,1,semantic_ir_repair,0.000,0.000,1.000,0,low_param_coverage
+Energy / Environment,nlp4lp_test_50,nlp4lp_test_50,1,tfidf_greedy,1.000,0.875,1.000,1,none
+Energy / Environment,nlp4lp_test_50,nlp4lp_test_50,1,constrained,1.000,0.875,1.000,1,none
+Energy / Environment,nlp4lp_test_50,nlp4lp_test_50,1,opt_role_repair,1.000,0.875,1.000,1,none
+Energy / Environment,nlp4lp_test_50,nlp4lp_test_50,1,global_compat_full,1.000,0.875,1.000,1,none
+Energy / Environment,nlp4lp_test_50,nlp4lp_test_50,1,semantic_ir_repair,1.000,0.875,1.000,1,none
+Energy / Environment,nlp4lp_test_60,nlp4lp_test_60,1,tfidf_greedy,1.000,0.750,1.000,1,none
+Energy / Environment,nlp4lp_test_60,nlp4lp_test_60,1,constrained,0.750,0.667,1.000,0,none
+Energy / Environment,nlp4lp_test_60,nlp4lp_test_60,1,opt_role_repair,1.000,0.500,1.000,0,none
+Energy / Environment,nlp4lp_test_60,nlp4lp_test_60,1,global_compat_full,0.875,0.571,1.000,0,none
+Energy / Environment,nlp4lp_test_60,nlp4lp_test_60,1,semantic_ir_repair,0.750,0.667,1.000,0,none
+Energy / Environment,nlp4lp_test_70,nlp4lp_test_70,1,tfidf_greedy,1.000,0.750,1.000,1,none
+Energy / Environment,nlp4lp_test_70,nlp4lp_test_70,1,constrained,0.750,0.833,1.000,0,none
+Energy / Environment,nlp4lp_test_70,nlp4lp_test_70,1,opt_role_repair,1.000,0.625,1.000,0,none
+Energy / Environment,nlp4lp_test_70,nlp4lp_test_70,1,global_compat_full,0.875,0.714,1.000,1,none
+Energy / Environment,nlp4lp_test_70,nlp4lp_test_70,1,semantic_ir_repair,0.875,0.714,1.000,1,none
+Facility Location,nlp4lp_test_203,nlp4lp_test_203,1,tfidf_greedy,1.000,0.333,1.000,0,type_mismatch
+Facility Location,nlp4lp_test_203,nlp4lp_test_203,1,constrained,1.000,0.000,1.000,0,type_mismatch
+Facility Location,nlp4lp_test_203,nlp4lp_test_203,1,opt_role_repair,1.000,0.000,1.000,0,type_mismatch
+Facility Location,nlp4lp_test_203,nlp4lp_test_203,1,global_compat_full,1.000,0.000,1.000,0,type_mismatch
+Facility Location,nlp4lp_test_203,nlp4lp_test_203,1,semantic_ir_repair,1.000,0.000,1.000,0,type_mismatch
+Facility Location,nlp4lp_test_294,nlp4lp_test_294,1,tfidf_greedy,0.500,1.000,1.000,0,none
+Facility Location,nlp4lp_test_294,nlp4lp_test_294,1,constrained,0.500,1.000,1.000,0,none
+Facility Location,nlp4lp_test_294,nlp4lp_test_294,1,opt_role_repair,0.000,0.000,1.000,0,low_param_coverage
+Facility Location,nlp4lp_test_294,nlp4lp_test_294,1,global_compat_full,0.000,0.000,1.000,0,low_param_coverage
+Facility Location,nlp4lp_test_294,nlp4lp_test_294,1,semantic_ir_repair,0.000,0.000,1.000,0,low_param_coverage
+Healthcare / Medical,nlp4lp_test_114,nlp4lp_test_114,1,tfidf_greedy,1.000,0.400,1.000,0,type_mismatch
+Healthcare / Medical,nlp4lp_test_114,nlp4lp_test_114,1,constrained,1.000,0.400,1.000,0,type_mismatch
+Healthcare / Medical,nlp4lp_test_114,nlp4lp_test_114,1,opt_role_repair,0.800,0.500,1.000,0,none
+Healthcare / Medical,nlp4lp_test_114,nlp4lp_test_114,1,global_compat_full,0.800,0.250,1.000,0,type_mismatch
+Healthcare / Medical,nlp4lp_test_114,nlp4lp_test_114,1,semantic_ir_repair,0.800,0.500,1.000,0,none
+Healthcare / Medical,nlp4lp_test_119,nlp4lp_test_119,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Healthcare / Medical,nlp4lp_test_119,nlp4lp_test_119,1,constrained,1.000,1.000,1.000,1,none
+Healthcare / Medical,nlp4lp_test_119,nlp4lp_test_119,1,opt_role_repair,1.000,1.000,1.000,1,none
+Healthcare / Medical,nlp4lp_test_119,nlp4lp_test_119,1,global_compat_full,1.000,1.000,1.000,1,none
+Healthcare / Medical,nlp4lp_test_119,nlp4lp_test_119,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Healthcare / Medical,nlp4lp_test_129,nlp4lp_test_129,1,tfidf_greedy,1.000,0.250,1.000,0,type_mismatch
+Healthcare / Medical,nlp4lp_test_129,nlp4lp_test_129,1,constrained,0.250,1.000,1.000,0,low_param_coverage
+Healthcare / Medical,nlp4lp_test_129,nlp4lp_test_129,1,opt_role_repair,1.000,0.250,1.000,0,type_mismatch
+Healthcare / Medical,nlp4lp_test_129,nlp4lp_test_129,1,global_compat_full,0.375,0.667,1.000,0,low_param_coverage
+Healthcare / Medical,nlp4lp_test_129,nlp4lp_test_129,1,semantic_ir_repair,0.250,1.000,1.000,0,low_param_coverage
+Healthcare / Medical,nlp4lp_test_137,nlp4lp_test_137,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Healthcare / Medical,nlp4lp_test_137,nlp4lp_test_137,1,constrained,1.000,0.800,1.000,1,none
+Healthcare / Medical,nlp4lp_test_137,nlp4lp_test_137,1,opt_role_repair,1.000,0.800,1.000,1,none
+Healthcare / Medical,nlp4lp_test_137,nlp4lp_test_137,1,global_compat_full,1.000,0.800,1.000,1,none
+Healthcare / Medical,nlp4lp_test_137,nlp4lp_test_137,1,semantic_ir_repair,1.000,0.800,1.000,1,none
+Healthcare / Medical,nlp4lp_test_15,nlp4lp_test_15,1,tfidf_greedy,1.000,0.875,1.000,1,none
+Healthcare / Medical,nlp4lp_test_15,nlp4lp_test_15,1,constrained,1.000,1.000,1.000,1,none
+Healthcare / Medical,nlp4lp_test_15,nlp4lp_test_15,1,opt_role_repair,0.875,1.000,1.000,1,none
+Healthcare / Medical,nlp4lp_test_15,nlp4lp_test_15,1,global_compat_full,0.875,0.714,1.000,1,none
+Healthcare / Medical,nlp4lp_test_15,nlp4lp_test_15,1,semantic_ir_repair,0.875,1.000,1.000,1,none
+Healthcare / Medical,nlp4lp_test_24,nlp4lp_test_24,0,tfidf_greedy,0.000,0.000,0.000,0,retrieval_miss
+Healthcare / Medical,nlp4lp_test_24,nlp4lp_test_24,0,constrained,0.000,0.000,0.000,0,retrieval_miss
+Healthcare / Medical,nlp4lp_test_24,nlp4lp_test_24,0,opt_role_repair,0.000,0.000,0.000,0,retrieval_miss
+Healthcare / Medical,nlp4lp_test_24,nlp4lp_test_24,0,global_compat_full,0.000,0.000,0.000,0,retrieval_miss
+Healthcare / Medical,nlp4lp_test_24,nlp4lp_test_24,0,semantic_ir_repair,0.000,0.000,0.000,0,retrieval_miss
+Healthcare / Medical,nlp4lp_test_89,nlp4lp_test_89,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Healthcare / Medical,nlp4lp_test_89,nlp4lp_test_89,1,constrained,1.000,1.000,1.000,1,none
+Healthcare / Medical,nlp4lp_test_89,nlp4lp_test_89,1,opt_role_repair,1.000,1.000,1.000,1,none
+Healthcare / Medical,nlp4lp_test_89,nlp4lp_test_89,1,global_compat_full,1.000,1.000,1.000,1,none
+Healthcare / Medical,nlp4lp_test_89,nlp4lp_test_89,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Healthcare / Medical,nlp4lp_test_98,nlp4lp_test_98,1,tfidf_greedy,0.800,1.000,1.000,1,none
+Healthcare / Medical,nlp4lp_test_98,nlp4lp_test_98,1,constrained,0.800,1.000,1.000,1,none
+Healthcare / Medical,nlp4lp_test_98,nlp4lp_test_98,1,opt_role_repair,0.800,1.000,1.000,1,none
+Healthcare / Medical,nlp4lp_test_98,nlp4lp_test_98,1,global_compat_full,0.800,0.750,1.000,1,none
+Healthcare / Medical,nlp4lp_test_98,nlp4lp_test_98,1,semantic_ir_repair,0.800,1.000,1.000,1,none
+Healthcare / Medical,nlp4lp_test_99,nlp4lp_test_99,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Healthcare / Medical,nlp4lp_test_99,nlp4lp_test_99,1,constrained,1.000,1.000,1.000,1,none
+Healthcare / Medical,nlp4lp_test_99,nlp4lp_test_99,1,opt_role_repair,1.000,1.000,1.000,1,none
+Healthcare / Medical,nlp4lp_test_99,nlp4lp_test_99,1,global_compat_full,1.000,1.000,1.000,1,none
+Healthcare / Medical,nlp4lp_test_99,nlp4lp_test_99,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Investment / Portfolio,nlp4lp_test_237,nlp4lp_test_237,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Investment / Portfolio,nlp4lp_test_237,nlp4lp_test_237,1,constrained,1.000,1.000,1.000,1,none
+Investment / Portfolio,nlp4lp_test_237,nlp4lp_test_237,1,opt_role_repair,1.000,1.000,1.000,1,none
+Investment / Portfolio,nlp4lp_test_237,nlp4lp_test_237,1,global_compat_full,1.000,1.000,1.000,1,none
+Investment / Portfolio,nlp4lp_test_237,nlp4lp_test_237,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Investment / Portfolio,nlp4lp_test_242,nlp4lp_test_242,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Investment / Portfolio,nlp4lp_test_242,nlp4lp_test_242,1,constrained,1.000,1.000,1.000,1,none
+Investment / Portfolio,nlp4lp_test_242,nlp4lp_test_242,1,opt_role_repair,0.800,1.000,1.000,1,none
+Investment / Portfolio,nlp4lp_test_242,nlp4lp_test_242,1,global_compat_full,0.800,1.000,1.000,1,none
+Investment / Portfolio,nlp4lp_test_242,nlp4lp_test_242,1,semantic_ir_repair,0.800,1.000,1.000,1,none
+Investment / Portfolio,nlp4lp_test_282,nlp4lp_test_282,1,tfidf_greedy,1.000,0.500,1.000,0,none
+Investment / Portfolio,nlp4lp_test_282,nlp4lp_test_282,1,constrained,1.000,0.500,1.000,0,none
+Investment / Portfolio,nlp4lp_test_282,nlp4lp_test_282,1,opt_role_repair,1.000,0.500,1.000,0,none
+Investment / Portfolio,nlp4lp_test_282,nlp4lp_test_282,1,global_compat_full,1.000,0.500,1.000,0,none
+Investment / Portfolio,nlp4lp_test_282,nlp4lp_test_282,1,semantic_ir_repair,1.000,0.500,1.000,0,none
+Knapsack / Packing,nlp4lp_test_300,nlp4lp_test_300,1,tfidf_greedy,0.500,1.000,1.000,0,none
+Knapsack / Packing,nlp4lp_test_300,nlp4lp_test_300,1,constrained,0.500,1.000,1.000,0,none
+Knapsack / Packing,nlp4lp_test_300,nlp4lp_test_300,1,opt_role_repair,0.000,0.000,1.000,0,low_param_coverage
+Knapsack / Packing,nlp4lp_test_300,nlp4lp_test_300,1,global_compat_full,0.000,0.000,1.000,0,low_param_coverage
+Knapsack / Packing,nlp4lp_test_300,nlp4lp_test_300,1,semantic_ir_repair,0.000,0.000,1.000,0,low_param_coverage
+Network / Flow,nlp4lp_test_166,nlp4lp_test_166,1,tfidf_greedy,0.750,0.000,1.000,0,type_mismatch
+Network / Flow,nlp4lp_test_166,nlp4lp_test_166,1,constrained,0.500,0.000,1.000,0,type_mismatch
+Network / Flow,nlp4lp_test_166,nlp4lp_test_166,1,opt_role_repair,0.750,0.000,1.000,0,type_mismatch
+Network / Flow,nlp4lp_test_166,nlp4lp_test_166,1,global_compat_full,0.750,0.000,1.000,0,type_mismatch
+Network / Flow,nlp4lp_test_166,nlp4lp_test_166,1,semantic_ir_repair,0.500,0.000,1.000,0,type_mismatch
+Network / Flow,nlp4lp_test_328,nlp4lp_test_328,1,tfidf_greedy,1.000,0.600,1.000,0,none
+Network / Flow,nlp4lp_test_328,nlp4lp_test_328,1,constrained,1.000,0.600,1.000,0,none
+Network / Flow,nlp4lp_test_328,nlp4lp_test_328,1,opt_role_repair,1.000,0.600,1.000,0,none
+Network / Flow,nlp4lp_test_328,nlp4lp_test_328,1,global_compat_full,1.000,0.600,1.000,0,none
+Network / Flow,nlp4lp_test_328,nlp4lp_test_328,1,semantic_ir_repair,0.600,1.000,1.000,0,none
+Other LP / Optimization,nlp4lp_test_128,nlp4lp_test_128,1,tfidf_greedy,0.800,0.750,1.000,1,none
+Other LP / Optimization,nlp4lp_test_128,nlp4lp_test_128,1,constrained,0.800,0.750,1.000,1,none
+Other LP / Optimization,nlp4lp_test_128,nlp4lp_test_128,1,opt_role_repair,0.800,0.750,1.000,1,none
+Other LP / Optimization,nlp4lp_test_128,nlp4lp_test_128,1,global_compat_full,0.800,0.750,1.000,1,none
+Other LP / Optimization,nlp4lp_test_128,nlp4lp_test_128,1,semantic_ir_repair,0.800,0.750,1.000,1,none
+Other LP / Optimization,nlp4lp_test_136,nlp4lp_test_136,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Other LP / Optimization,nlp4lp_test_136,nlp4lp_test_136,1,constrained,1.000,1.000,1.000,1,none
+Other LP / Optimization,nlp4lp_test_136,nlp4lp_test_136,1,opt_role_repair,1.000,1.000,1.000,1,none
+Other LP / Optimization,nlp4lp_test_136,nlp4lp_test_136,1,global_compat_full,1.000,1.000,1.000,1,none
+Other LP / Optimization,nlp4lp_test_136,nlp4lp_test_136,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Other LP / Optimization,nlp4lp_test_144,nlp4lp_test_144,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Other LP / Optimization,nlp4lp_test_144,nlp4lp_test_144,1,constrained,1.000,1.000,1.000,1,none
+Other LP / Optimization,nlp4lp_test_144,nlp4lp_test_144,1,opt_role_repair,1.000,1.000,1.000,1,none
+Other LP / Optimization,nlp4lp_test_144,nlp4lp_test_144,1,global_compat_full,1.000,1.000,1.000,1,none
+Other LP / Optimization,nlp4lp_test_144,nlp4lp_test_144,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Other LP / Optimization,nlp4lp_test_146,nlp4lp_test_146,1,tfidf_greedy,0.800,0.500,1.000,0,none
+Other LP / Optimization,nlp4lp_test_146,nlp4lp_test_146,1,constrained,0.600,0.667,1.000,0,none
+Other LP / Optimization,nlp4lp_test_146,nlp4lp_test_146,1,opt_role_repair,0.800,0.500,1.000,0,none
+Other LP / Optimization,nlp4lp_test_146,nlp4lp_test_146,1,global_compat_full,0.800,0.500,1.000,0,none
+Other LP / Optimization,nlp4lp_test_146,nlp4lp_test_146,1,semantic_ir_repair,0.600,0.667,1.000,0,none
+Other LP / Optimization,nlp4lp_test_153,nlp4lp_test_153,1,tfidf_greedy,0.875,0.714,1.000,1,none
+Other LP / Optimization,nlp4lp_test_153,nlp4lp_test_153,1,constrained,0.875,0.857,1.000,1,none
+Other LP / Optimization,nlp4lp_test_153,nlp4lp_test_153,1,opt_role_repair,0.875,0.857,1.000,1,none
+Other LP / Optimization,nlp4lp_test_153,nlp4lp_test_153,1,global_compat_full,0.875,0.714,1.000,1,none
+Other LP / Optimization,nlp4lp_test_153,nlp4lp_test_153,1,semantic_ir_repair,0.875,0.857,1.000,1,none
+Other LP / Optimization,nlp4lp_test_154,nlp4lp_test_154,1,tfidf_greedy,1.000,0.714,1.000,1,none
+Other LP / Optimization,nlp4lp_test_154,nlp4lp_test_154,1,constrained,1.000,0.714,1.000,1,none
+Other LP / Optimization,nlp4lp_test_154,nlp4lp_test_154,1,opt_role_repair,1.000,0.714,1.000,1,none
+Other LP / Optimization,nlp4lp_test_154,nlp4lp_test_154,1,global_compat_full,1.000,0.714,1.000,1,none
+Other LP / Optimization,nlp4lp_test_154,nlp4lp_test_154,1,semantic_ir_repair,0.857,0.833,1.000,1,none
+Other LP / Optimization,nlp4lp_test_158,nlp4lp_test_158,1,tfidf_greedy,1.000,0.833,1.000,1,none
+Other LP / Optimization,nlp4lp_test_158,nlp4lp_test_158,1,constrained,1.000,0.833,1.000,1,none
+Other LP / Optimization,nlp4lp_test_158,nlp4lp_test_158,1,opt_role_repair,1.000,0.833,1.000,1,none
+Other LP / Optimization,nlp4lp_test_158,nlp4lp_test_158,1,global_compat_full,1.000,0.833,1.000,1,none
+Other LP / Optimization,nlp4lp_test_158,nlp4lp_test_158,1,semantic_ir_repair,1.000,0.833,1.000,1,none
+Other LP / Optimization,nlp4lp_test_159,nlp4lp_test_159,1,tfidf_greedy,0.857,0.667,1.000,0,none
+Other LP / Optimization,nlp4lp_test_159,nlp4lp_test_159,1,constrained,0.857,0.833,1.000,1,none
+Other LP / Optimization,nlp4lp_test_159,nlp4lp_test_159,1,opt_role_repair,0.857,0.833,1.000,1,none
+Other LP / Optimization,nlp4lp_test_159,nlp4lp_test_159,1,global_compat_full,0.857,0.667,1.000,0,none
+Other LP / Optimization,nlp4lp_test_159,nlp4lp_test_159,1,semantic_ir_repair,0.857,0.833,1.000,1,none
+Other LP / Optimization,nlp4lp_test_174,nlp4lp_test_174,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Other LP / Optimization,nlp4lp_test_174,nlp4lp_test_174,1,constrained,1.000,0.750,1.000,1,none
+Other LP / Optimization,nlp4lp_test_174,nlp4lp_test_174,1,opt_role_repair,1.000,1.000,1.000,1,none
+Other LP / Optimization,nlp4lp_test_174,nlp4lp_test_174,1,global_compat_full,1.000,1.000,1.000,1,none
+Other LP / Optimization,nlp4lp_test_174,nlp4lp_test_174,1,semantic_ir_repair,1.000,0.750,1.000,1,none
+Other LP / Optimization,nlp4lp_test_184,nlp4lp_test_184,1,tfidf_greedy,1.000,0.571,1.000,0,none
+Other LP / Optimization,nlp4lp_test_184,nlp4lp_test_184,1,constrained,0.714,0.800,1.000,0,none
+Other LP / Optimization,nlp4lp_test_184,nlp4lp_test_184,1,opt_role_repair,0.857,0.500,1.000,0,none
+Other LP / Optimization,nlp4lp_test_184,nlp4lp_test_184,1,global_compat_full,0.857,0.500,1.000,0,none
+Other LP / Optimization,nlp4lp_test_184,nlp4lp_test_184,1,semantic_ir_repair,0.714,0.600,1.000,0,none
+Other LP / Optimization,nlp4lp_test_226,nlp4lp_test_226,1,tfidf_greedy,1.000,0.857,1.000,1,none
+Other LP / Optimization,nlp4lp_test_226,nlp4lp_test_226,1,constrained,1.000,0.857,1.000,1,none
+Other LP / Optimization,nlp4lp_test_226,nlp4lp_test_226,1,opt_role_repair,1.000,0.714,1.000,1,none
+Other LP / Optimization,nlp4lp_test_226,nlp4lp_test_226,1,global_compat_full,0.857,0.833,1.000,1,none
+Other LP / Optimization,nlp4lp_test_226,nlp4lp_test_226,1,semantic_ir_repair,1.000,0.714,1.000,1,none
+Other LP / Optimization,nlp4lp_test_252,nlp4lp_test_252,1,tfidf_greedy,1.000,0.800,1.000,1,none
+Other LP / Optimization,nlp4lp_test_252,nlp4lp_test_252,1,constrained,1.000,0.800,1.000,1,none
+Other LP / Optimization,nlp4lp_test_252,nlp4lp_test_252,1,opt_role_repair,0.800,0.750,1.000,1,none
+Other LP / Optimization,nlp4lp_test_252,nlp4lp_test_252,1,global_compat_full,0.800,0.750,1.000,1,none
+Other LP / Optimization,nlp4lp_test_252,nlp4lp_test_252,1,semantic_ir_repair,0.800,0.750,1.000,1,none
+Other LP / Optimization,nlp4lp_test_258,nlp4lp_test_258,1,tfidf_greedy,1.000,0.714,1.000,1,none
+Other LP / Optimization,nlp4lp_test_258,nlp4lp_test_258,1,constrained,0.714,1.000,1.000,0,none
+Other LP / Optimization,nlp4lp_test_258,nlp4lp_test_258,1,opt_role_repair,0.714,1.000,1.000,0,none
+Other LP / Optimization,nlp4lp_test_258,nlp4lp_test_258,1,global_compat_full,0.714,0.800,1.000,0,none
+Other LP / Optimization,nlp4lp_test_258,nlp4lp_test_258,1,semantic_ir_repair,0.714,1.000,1.000,0,none
+Other LP / Optimization,nlp4lp_test_295,nlp4lp_test_295,1,tfidf_greedy,0.000,0.000,1.000,0,low_param_coverage
+Other LP / Optimization,nlp4lp_test_295,nlp4lp_test_295,1,constrained,0.000,0.000,1.000,0,low_param_coverage
+Other LP / Optimization,nlp4lp_test_295,nlp4lp_test_295,1,opt_role_repair,0.000,0.000,1.000,0,low_param_coverage
+Other LP / Optimization,nlp4lp_test_295,nlp4lp_test_295,1,global_compat_full,0.000,0.000,1.000,0,low_param_coverage
+Other LP / Optimization,nlp4lp_test_295,nlp4lp_test_295,1,semantic_ir_repair,0.000,0.000,1.000,0,low_param_coverage
+Other LP / Optimization,nlp4lp_test_296,nlp4lp_test_296,1,tfidf_greedy,0.000,0.000,1.000,0,low_param_coverage
+Other LP / Optimization,nlp4lp_test_296,nlp4lp_test_296,1,constrained,0.000,0.000,1.000,0,low_param_coverage
+Other LP / Optimization,nlp4lp_test_296,nlp4lp_test_296,1,opt_role_repair,0.000,0.000,1.000,0,low_param_coverage
+Other LP / Optimization,nlp4lp_test_296,nlp4lp_test_296,1,global_compat_full,0.000,0.000,1.000,0,low_param_coverage
+Other LP / Optimization,nlp4lp_test_296,nlp4lp_test_296,1,semantic_ir_repair,0.000,0.000,1.000,0,low_param_coverage
+Other LP / Optimization,nlp4lp_test_297,nlp4lp_test_297,1,tfidf_greedy,0.000,0.000,1.000,0,low_param_coverage
+Other LP / Optimization,nlp4lp_test_297,nlp4lp_test_297,1,constrained,0.000,0.000,1.000,0,low_param_coverage
+Other LP / Optimization,nlp4lp_test_297,nlp4lp_test_297,1,opt_role_repair,0.000,0.000,1.000,0,low_param_coverage
+Other LP / Optimization,nlp4lp_test_297,nlp4lp_test_297,1,global_compat_full,0.000,0.000,1.000,0,low_param_coverage
+Other LP / Optimization,nlp4lp_test_297,nlp4lp_test_297,1,semantic_ir_repair,0.000,0.000,1.000,0,low_param_coverage
+Other LP / Optimization,nlp4lp_test_46,nlp4lp_test_46,1,tfidf_greedy,1.000,0.667,1.000,0,none
+Other LP / Optimization,nlp4lp_test_46,nlp4lp_test_46,1,constrained,0.667,1.000,1.000,0,none
+Other LP / Optimization,nlp4lp_test_46,nlp4lp_test_46,1,opt_role_repair,1.000,0.667,1.000,0,none
+Other LP / Optimization,nlp4lp_test_46,nlp4lp_test_46,1,global_compat_full,0.833,0.800,1.000,1,none
+Other LP / Optimization,nlp4lp_test_46,nlp4lp_test_46,1,semantic_ir_repair,0.667,1.000,1.000,0,none
+Other LP / Optimization,nlp4lp_test_61,nlp4lp_test_61,1,tfidf_greedy,1.000,0.833,1.000,1,none
+Other LP / Optimization,nlp4lp_test_61,nlp4lp_test_61,1,constrained,1.000,0.833,1.000,1,none
+Other LP / Optimization,nlp4lp_test_61,nlp4lp_test_61,1,opt_role_repair,1.000,0.833,1.000,1,none
+Other LP / Optimization,nlp4lp_test_61,nlp4lp_test_61,1,global_compat_full,1.000,0.833,1.000,1,none
+Other LP / Optimization,nlp4lp_test_61,nlp4lp_test_61,1,semantic_ir_repair,1.000,0.833,1.000,1,none
+Other LP / Optimization,nlp4lp_test_77,nlp4lp_test_77,1,tfidf_greedy,1.000,0.800,1.000,1,none
+Other LP / Optimization,nlp4lp_test_77,nlp4lp_test_77,1,constrained,1.000,0.800,1.000,1,none
+Other LP / Optimization,nlp4lp_test_77,nlp4lp_test_77,1,opt_role_repair,1.000,0.800,1.000,1,none
+Other LP / Optimization,nlp4lp_test_77,nlp4lp_test_77,1,global_compat_full,1.000,0.800,1.000,1,none
+Other LP / Optimization,nlp4lp_test_77,nlp4lp_test_77,1,semantic_ir_repair,1.000,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_0,nlp4lp_test_0,1,tfidf_greedy,1.000,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_0,nlp4lp_test_0,1,constrained,1.000,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_0,nlp4lp_test_0,1,opt_role_repair,0.800,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_0,nlp4lp_test_0,1,global_compat_full,0.800,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_0,nlp4lp_test_0,1,semantic_ir_repair,0.800,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_1,nlp4lp_test_1,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_1,nlp4lp_test_1,1,constrained,1.000,0.000,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_1,nlp4lp_test_1,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_1,nlp4lp_test_1,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_1,nlp4lp_test_1,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_10,nlp4lp_test_10,1,tfidf_greedy,0.750,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_10,nlp4lp_test_10,1,constrained,0.750,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_10,nlp4lp_test_10,1,opt_role_repair,0.750,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_10,nlp4lp_test_10,1,global_compat_full,0.750,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_10,nlp4lp_test_10,1,semantic_ir_repair,0.750,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_101,nlp4lp_test_101,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_101,nlp4lp_test_101,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_101,nlp4lp_test_101,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_101,nlp4lp_test_101,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_101,nlp4lp_test_101,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_102,nlp4lp_test_102,1,tfidf_greedy,1.000,1.000,0.429,1,none
+Production Planning / LP,nlp4lp_test_102,nlp4lp_test_102,1,constrained,1.000,0.667,0.429,0,none
+Production Planning / LP,nlp4lp_test_102,nlp4lp_test_102,1,opt_role_repair,1.000,1.000,0.429,1,none
+Production Planning / LP,nlp4lp_test_102,nlp4lp_test_102,1,global_compat_full,1.000,1.000,0.429,1,none
+Production Planning / LP,nlp4lp_test_102,nlp4lp_test_102,1,semantic_ir_repair,1.000,1.000,0.429,1,none
+Production Planning / LP,nlp4lp_test_105,nlp4lp_test_105,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_105,nlp4lp_test_105,1,constrained,1.000,0.333,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_105,nlp4lp_test_105,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_105,nlp4lp_test_105,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_105,nlp4lp_test_105,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_107,nlp4lp_test_107,1,tfidf_greedy,0.900,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_107,nlp4lp_test_107,1,constrained,0.900,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_107,nlp4lp_test_107,1,opt_role_repair,0.900,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_107,nlp4lp_test_107,1,global_compat_full,0.900,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_107,nlp4lp_test_107,1,semantic_ir_repair,0.900,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_108,nlp4lp_test_108,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_108,nlp4lp_test_108,1,constrained,1.000,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_108,nlp4lp_test_108,1,opt_role_repair,0.800,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_108,nlp4lp_test_108,1,global_compat_full,0.800,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_108,nlp4lp_test_108,1,semantic_ir_repair,0.800,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_109,nlp4lp_test_109,1,tfidf_greedy,1.000,0.250,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_109,nlp4lp_test_109,1,constrained,0.250,1.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_109,nlp4lp_test_109,1,opt_role_repair,1.000,0.250,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_109,nlp4lp_test_109,1,global_compat_full,0.375,0.667,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_109,nlp4lp_test_109,1,semantic_ir_repair,0.250,1.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_11,nlp4lp_test_11,1,tfidf_greedy,1.000,0.875,1.000,1,none
+Production Planning / LP,nlp4lp_test_11,nlp4lp_test_11,1,constrained,1.000,0.875,1.000,1,none
+Production Planning / LP,nlp4lp_test_11,nlp4lp_test_11,1,opt_role_repair,0.750,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_11,nlp4lp_test_11,1,global_compat_full,0.750,0.833,1.000,0,none
+Production Planning / LP,nlp4lp_test_11,nlp4lp_test_11,1,semantic_ir_repair,0.750,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_111,nlp4lp_test_111,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_111,nlp4lp_test_111,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_111,nlp4lp_test_111,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_111,nlp4lp_test_111,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_111,nlp4lp_test_111,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_112,nlp4lp_test_112,1,tfidf_greedy,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_112,nlp4lp_test_112,1,constrained,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_112,nlp4lp_test_112,1,opt_role_repair,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_112,nlp4lp_test_112,1,global_compat_full,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_112,nlp4lp_test_112,1,semantic_ir_repair,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_115,nlp4lp_test_115,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_115,nlp4lp_test_115,1,constrained,1.000,0.000,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_115,nlp4lp_test_115,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_115,nlp4lp_test_115,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_115,nlp4lp_test_115,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_117,nlp4lp_test_117,0,tfidf_greedy,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_117,nlp4lp_test_117,0,constrained,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_117,nlp4lp_test_117,0,opt_role_repair,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_117,nlp4lp_test_117,0,global_compat_full,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_117,nlp4lp_test_117,0,semantic_ir_repair,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_118,nlp4lp_test_118,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_118,nlp4lp_test_118,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_118,nlp4lp_test_118,1,opt_role_repair,1.000,0.600,1.000,0,none
+Production Planning / LP,nlp4lp_test_118,nlp4lp_test_118,1,global_compat_full,1.000,0.600,1.000,0,none
+Production Planning / LP,nlp4lp_test_118,nlp4lp_test_118,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_12,nlp4lp_test_12,0,tfidf_greedy,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_12,nlp4lp_test_12,0,constrained,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_12,nlp4lp_test_12,0,opt_role_repair,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_12,nlp4lp_test_12,0,global_compat_full,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_12,nlp4lp_test_12,0,semantic_ir_repair,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_120,nlp4lp_test_120,1,tfidf_greedy,1.000,0.889,1.000,1,none
+Production Planning / LP,nlp4lp_test_120,nlp4lp_test_120,1,constrained,1.000,0.889,1.000,1,none
+Production Planning / LP,nlp4lp_test_120,nlp4lp_test_120,1,opt_role_repair,1.000,0.889,1.000,1,none
+Production Planning / LP,nlp4lp_test_120,nlp4lp_test_120,1,global_compat_full,1.000,0.889,1.000,1,none
+Production Planning / LP,nlp4lp_test_120,nlp4lp_test_120,1,semantic_ir_repair,1.000,0.889,1.000,1,none
+Production Planning / LP,nlp4lp_test_121,nlp4lp_test_121,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_121,nlp4lp_test_121,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_121,nlp4lp_test_121,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_121,nlp4lp_test_121,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_121,nlp4lp_test_121,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_122,nlp4lp_test_122,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_122,nlp4lp_test_122,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_122,nlp4lp_test_122,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_122,nlp4lp_test_122,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_122,nlp4lp_test_122,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_125,nlp4lp_test_125,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_125,nlp4lp_test_125,1,constrained,1.000,0.000,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_125,nlp4lp_test_125,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_125,nlp4lp_test_125,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_125,nlp4lp_test_125,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_127,nlp4lp_test_127,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_127,nlp4lp_test_127,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_127,nlp4lp_test_127,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_127,nlp4lp_test_127,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_127,nlp4lp_test_127,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_13,nlp4lp_test_13,1,tfidf_greedy,0.923,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_13,nlp4lp_test_13,1,constrained,0.923,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_13,nlp4lp_test_13,1,opt_role_repair,0.923,0.917,1.000,1,none
+Production Planning / LP,nlp4lp_test_13,nlp4lp_test_13,1,global_compat_full,0.923,0.917,1.000,1,none
+Production Planning / LP,nlp4lp_test_13,nlp4lp_test_13,1,semantic_ir_repair,0.923,0.917,1.000,1,none
+Production Planning / LP,nlp4lp_test_130,nlp4lp_test_130,0,tfidf_greedy,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_130,nlp4lp_test_130,0,constrained,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_130,nlp4lp_test_130,0,opt_role_repair,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_130,nlp4lp_test_130,0,global_compat_full,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_130,nlp4lp_test_130,0,semantic_ir_repair,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_131,nlp4lp_test_131,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_131,nlp4lp_test_131,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_131,nlp4lp_test_131,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_131,nlp4lp_test_131,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_131,nlp4lp_test_131,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_132,nlp4lp_test_132,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_132,nlp4lp_test_132,1,constrained,1.000,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_132,nlp4lp_test_132,1,opt_role_repair,1.000,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_132,nlp4lp_test_132,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_132,nlp4lp_test_132,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_134,nlp4lp_test_134,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_134,nlp4lp_test_134,1,constrained,1.000,0.000,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_134,nlp4lp_test_134,1,opt_role_repair,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_134,nlp4lp_test_134,1,global_compat_full,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_134,nlp4lp_test_134,1,semantic_ir_repair,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_135,nlp4lp_test_135,1,tfidf_greedy,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_135,nlp4lp_test_135,1,constrained,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_135,nlp4lp_test_135,1,opt_role_repair,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_135,nlp4lp_test_135,1,global_compat_full,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_135,nlp4lp_test_135,1,semantic_ir_repair,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_14,nlp4lp_test_14,1,tfidf_greedy,0.200,1.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_14,nlp4lp_test_14,1,constrained,0.200,1.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_14,nlp4lp_test_14,1,opt_role_repair,0.200,1.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_14,nlp4lp_test_14,1,global_compat_full,0.200,1.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_14,nlp4lp_test_14,1,semantic_ir_repair,0.200,1.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_142,nlp4lp_test_142,1,tfidf_greedy,1.000,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_142,nlp4lp_test_142,1,constrained,0.667,0.750,1.000,0,none
+Production Planning / LP,nlp4lp_test_142,nlp4lp_test_142,1,opt_role_repair,1.000,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_142,nlp4lp_test_142,1,global_compat_full,1.000,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_142,nlp4lp_test_142,1,semantic_ir_repair,0.833,0.600,1.000,0,none
+Production Planning / LP,nlp4lp_test_143,nlp4lp_test_143,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_143,nlp4lp_test_143,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_143,nlp4lp_test_143,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_143,nlp4lp_test_143,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_143,nlp4lp_test_143,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_150,nlp4lp_test_150,1,tfidf_greedy,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_150,nlp4lp_test_150,1,constrained,0.714,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_150,nlp4lp_test_150,1,opt_role_repair,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_150,nlp4lp_test_150,1,global_compat_full,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_150,nlp4lp_test_150,1,semantic_ir_repair,0.714,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_152,nlp4lp_test_152,1,tfidf_greedy,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_152,nlp4lp_test_152,1,constrained,0.667,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_152,nlp4lp_test_152,1,opt_role_repair,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_152,nlp4lp_test_152,1,global_compat_full,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_152,nlp4lp_test_152,1,semantic_ir_repair,0.833,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_155,nlp4lp_test_155,1,tfidf_greedy,1.000,0.333,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_155,nlp4lp_test_155,1,constrained,0.333,1.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_155,nlp4lp_test_155,1,opt_role_repair,1.000,0.333,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_155,nlp4lp_test_155,1,global_compat_full,1.000,0.333,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_155,nlp4lp_test_155,1,semantic_ir_repair,0.333,1.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_16,nlp4lp_test_16,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_16,nlp4lp_test_16,1,constrained,1.000,0.875,1.000,1,none
+Production Planning / LP,nlp4lp_test_16,nlp4lp_test_16,1,opt_role_repair,1.000,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_16,nlp4lp_test_16,1,global_compat_full,1.000,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_16,nlp4lp_test_16,1,semantic_ir_repair,1.000,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_162,nlp4lp_test_162,1,tfidf_greedy,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_162,nlp4lp_test_162,1,constrained,0.833,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_162,nlp4lp_test_162,1,opt_role_repair,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_162,nlp4lp_test_162,1,global_compat_full,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_162,nlp4lp_test_162,1,semantic_ir_repair,0.833,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_165,nlp4lp_test_165,1,tfidf_greedy,0.750,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_165,nlp4lp_test_165,1,constrained,0.500,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_165,nlp4lp_test_165,1,opt_role_repair,0.750,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_165,nlp4lp_test_165,1,global_compat_full,0.750,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_165,nlp4lp_test_165,1,semantic_ir_repair,0.500,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_17,nlp4lp_test_17,1,tfidf_greedy,0.667,0.833,1.000,0,none
+Production Planning / LP,nlp4lp_test_17,nlp4lp_test_17,1,constrained,0.667,0.833,1.000,0,none
+Production Planning / LP,nlp4lp_test_17,nlp4lp_test_17,1,opt_role_repair,0.667,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_17,nlp4lp_test_17,1,global_compat_full,0.667,0.833,1.000,0,none
+Production Planning / LP,nlp4lp_test_17,nlp4lp_test_17,1,semantic_ir_repair,0.667,0.833,1.000,0,none
+Production Planning / LP,nlp4lp_test_172,nlp4lp_test_172,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_172,nlp4lp_test_172,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_172,nlp4lp_test_172,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_172,nlp4lp_test_172,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_172,nlp4lp_test_172,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_18,nlp4lp_test_18,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_18,nlp4lp_test_18,1,constrained,1.000,0.000,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_18,nlp4lp_test_18,1,opt_role_repair,1.000,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_18,nlp4lp_test_18,1,global_compat_full,1.000,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_18,nlp4lp_test_18,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_182,nlp4lp_test_182,1,tfidf_greedy,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_182,nlp4lp_test_182,1,constrained,0.667,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_182,nlp4lp_test_182,1,opt_role_repair,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_182,nlp4lp_test_182,1,global_compat_full,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_182,nlp4lp_test_182,1,semantic_ir_repair,0.833,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_188,nlp4lp_test_188,0,tfidf_greedy,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_188,nlp4lp_test_188,0,constrained,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_188,nlp4lp_test_188,0,opt_role_repair,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_188,nlp4lp_test_188,0,global_compat_full,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_188,nlp4lp_test_188,0,semantic_ir_repair,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_189,nlp4lp_test_189,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_189,nlp4lp_test_189,1,constrained,1.000,0.000,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_189,nlp4lp_test_189,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_189,nlp4lp_test_189,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_189,nlp4lp_test_189,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_19,nlp4lp_test_19,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_19,nlp4lp_test_19,1,constrained,1.000,0.250,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_19,nlp4lp_test_19,1,opt_role_repair,1.000,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_19,nlp4lp_test_19,1,global_compat_full,1.000,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_19,nlp4lp_test_19,1,semantic_ir_repair,1.000,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_190,nlp4lp_test_190,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_190,nlp4lp_test_190,1,constrained,1.000,0.000,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_190,nlp4lp_test_190,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_190,nlp4lp_test_190,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_190,nlp4lp_test_190,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_191,nlp4lp_test_191,1,tfidf_greedy,1.000,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_191,nlp4lp_test_191,1,constrained,1.000,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_191,nlp4lp_test_191,1,opt_role_repair,1.000,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_191,nlp4lp_test_191,1,global_compat_full,1.000,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_191,nlp4lp_test_191,1,semantic_ir_repair,1.000,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_192,nlp4lp_test_192,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_192,nlp4lp_test_192,1,constrained,1.000,0.000,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_192,nlp4lp_test_192,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_192,nlp4lp_test_192,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_192,nlp4lp_test_192,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_193,nlp4lp_test_193,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_193,nlp4lp_test_193,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_193,nlp4lp_test_193,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_193,nlp4lp_test_193,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_193,nlp4lp_test_193,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_195,nlp4lp_test_195,1,tfidf_greedy,0.625,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_195,nlp4lp_test_195,1,constrained,0.625,0.800,1.000,0,none
+Production Planning / LP,nlp4lp_test_195,nlp4lp_test_195,1,opt_role_repair,0.625,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_195,nlp4lp_test_195,1,global_compat_full,0.625,0.800,1.000,0,none
+Production Planning / LP,nlp4lp_test_195,nlp4lp_test_195,1,semantic_ir_repair,0.625,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_196,nlp4lp_test_196,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_196,nlp4lp_test_196,1,constrained,1.000,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_196,nlp4lp_test_196,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_196,nlp4lp_test_196,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_196,nlp4lp_test_196,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_199,nlp4lp_test_199,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_199,nlp4lp_test_199,1,constrained,1.000,0.000,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_199,nlp4lp_test_199,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_199,nlp4lp_test_199,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_199,nlp4lp_test_199,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_2,nlp4lp_test_2,1,tfidf_greedy,0.875,0.857,1.000,1,none
+Production Planning / LP,nlp4lp_test_2,nlp4lp_test_2,1,constrained,0.875,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_2,nlp4lp_test_2,1,opt_role_repair,0.750,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_2,nlp4lp_test_2,1,global_compat_full,0.750,0.833,1.000,0,none
+Production Planning / LP,nlp4lp_test_2,nlp4lp_test_2,1,semantic_ir_repair,0.750,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_20,nlp4lp_test_20,1,tfidf_greedy,0.667,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_20,nlp4lp_test_20,1,constrained,0.667,0.750,1.000,0,none
+Production Planning / LP,nlp4lp_test_20,nlp4lp_test_20,1,opt_role_repair,0.667,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_20,nlp4lp_test_20,1,global_compat_full,0.667,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_20,nlp4lp_test_20,1,semantic_ir_repair,0.667,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_200,nlp4lp_test_200,1,tfidf_greedy,1.000,0.571,1.000,0,none
+Production Planning / LP,nlp4lp_test_200,nlp4lp_test_200,1,constrained,1.000,0.571,1.000,0,none
+Production Planning / LP,nlp4lp_test_200,nlp4lp_test_200,1,opt_role_repair,1.000,0.571,1.000,0,none
+Production Planning / LP,nlp4lp_test_200,nlp4lp_test_200,1,global_compat_full,1.000,0.571,1.000,0,none
+Production Planning / LP,nlp4lp_test_200,nlp4lp_test_200,1,semantic_ir_repair,1.000,0.571,1.000,0,none
+Production Planning / LP,nlp4lp_test_202,nlp4lp_test_202,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_202,nlp4lp_test_202,1,constrained,1.000,0.833,1.000,1,none
+Production Planning / LP,nlp4lp_test_202,nlp4lp_test_202,1,opt_role_repair,1.000,0.833,1.000,1,none
+Production Planning / LP,nlp4lp_test_202,nlp4lp_test_202,1,global_compat_full,1.000,0.833,1.000,1,none
+Production Planning / LP,nlp4lp_test_202,nlp4lp_test_202,1,semantic_ir_repair,1.000,0.833,1.000,1,none
+Production Planning / LP,nlp4lp_test_205,nlp4lp_test_205,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_205,nlp4lp_test_205,1,constrained,1.000,0.000,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_205,nlp4lp_test_205,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_205,nlp4lp_test_205,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_205,nlp4lp_test_205,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_206,nlp4lp_test_206,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_206,nlp4lp_test_206,1,constrained,1.000,0.833,1.000,1,none
+Production Planning / LP,nlp4lp_test_206,nlp4lp_test_206,1,opt_role_repair,1.000,0.833,1.000,1,none
+Production Planning / LP,nlp4lp_test_206,nlp4lp_test_206,1,global_compat_full,1.000,0.833,1.000,1,none
+Production Planning / LP,nlp4lp_test_206,nlp4lp_test_206,1,semantic_ir_repair,1.000,0.833,1.000,1,none
+Production Planning / LP,nlp4lp_test_207,nlp4lp_test_207,1,tfidf_greedy,1.000,0.600,1.000,0,none
+Production Planning / LP,nlp4lp_test_207,nlp4lp_test_207,1,constrained,1.000,0.600,1.000,0,none
+Production Planning / LP,nlp4lp_test_207,nlp4lp_test_207,1,opt_role_repair,1.000,0.600,1.000,0,none
+Production Planning / LP,nlp4lp_test_207,nlp4lp_test_207,1,global_compat_full,1.000,0.600,1.000,0,none
+Production Planning / LP,nlp4lp_test_207,nlp4lp_test_207,1,semantic_ir_repair,1.000,0.600,1.000,0,none
+Production Planning / LP,nlp4lp_test_208,nlp4lp_test_208,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_208,nlp4lp_test_208,1,constrained,1.000,0.857,1.000,1,none
+Production Planning / LP,nlp4lp_test_208,nlp4lp_test_208,1,opt_role_repair,1.000,0.857,1.000,1,none
+Production Planning / LP,nlp4lp_test_208,nlp4lp_test_208,1,global_compat_full,1.000,0.857,1.000,1,none
+Production Planning / LP,nlp4lp_test_208,nlp4lp_test_208,1,semantic_ir_repair,1.000,0.857,1.000,1,none
+Production Planning / LP,nlp4lp_test_209,nlp4lp_test_209,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_209,nlp4lp_test_209,1,constrained,1.000,0.857,1.000,1,none
+Production Planning / LP,nlp4lp_test_209,nlp4lp_test_209,1,opt_role_repair,1.000,0.857,1.000,1,none
+Production Planning / LP,nlp4lp_test_209,nlp4lp_test_209,1,global_compat_full,0.857,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_209,nlp4lp_test_209,1,semantic_ir_repair,1.000,0.857,1.000,1,none
+Production Planning / LP,nlp4lp_test_21,nlp4lp_test_21,1,tfidf_greedy,1.000,0.600,1.000,0,none
+Production Planning / LP,nlp4lp_test_21,nlp4lp_test_21,1,constrained,1.000,0.600,1.000,0,none
+Production Planning / LP,nlp4lp_test_21,nlp4lp_test_21,1,opt_role_repair,1.000,0.600,1.000,0,none
+Production Planning / LP,nlp4lp_test_21,nlp4lp_test_21,1,global_compat_full,1.000,0.600,1.000,0,none
+Production Planning / LP,nlp4lp_test_21,nlp4lp_test_21,1,semantic_ir_repair,0.800,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_210,nlp4lp_test_210,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_210,nlp4lp_test_210,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_210,nlp4lp_test_210,1,opt_role_repair,0.833,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_210,nlp4lp_test_210,1,global_compat_full,0.833,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_210,nlp4lp_test_210,1,semantic_ir_repair,0.833,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_211,nlp4lp_test_211,1,tfidf_greedy,1.000,0.600,1.000,0,none
+Production Planning / LP,nlp4lp_test_211,nlp4lp_test_211,1,constrained,1.000,0.600,1.000,0,none
+Production Planning / LP,nlp4lp_test_211,nlp4lp_test_211,1,opt_role_repair,1.000,0.600,1.000,0,none
+Production Planning / LP,nlp4lp_test_211,nlp4lp_test_211,1,global_compat_full,1.000,0.600,1.000,0,none
+Production Planning / LP,nlp4lp_test_211,nlp4lp_test_211,1,semantic_ir_repair,1.000,0.600,1.000,0,none
+Production Planning / LP,nlp4lp_test_217,nlp4lp_test_217,1,tfidf_greedy,1.000,0.857,1.000,1,none
+Production Planning / LP,nlp4lp_test_217,nlp4lp_test_217,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_217,nlp4lp_test_217,1,opt_role_repair,0.857,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_217,nlp4lp_test_217,1,global_compat_full,0.857,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_217,nlp4lp_test_217,1,semantic_ir_repair,0.857,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_220,nlp4lp_test_220,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_220,nlp4lp_test_220,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_220,nlp4lp_test_220,1,opt_role_repair,0.857,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_220,nlp4lp_test_220,1,global_compat_full,0.857,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_220,nlp4lp_test_220,1,semantic_ir_repair,0.857,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_221,nlp4lp_test_221,1,tfidf_greedy,1.000,0.909,1.000,1,none
+Production Planning / LP,nlp4lp_test_221,nlp4lp_test_221,1,constrained,1.000,0.909,1.000,1,none
+Production Planning / LP,nlp4lp_test_221,nlp4lp_test_221,1,opt_role_repair,1.000,0.909,1.000,1,none
+Production Planning / LP,nlp4lp_test_221,nlp4lp_test_221,1,global_compat_full,1.000,0.909,1.000,1,none
+Production Planning / LP,nlp4lp_test_221,nlp4lp_test_221,1,semantic_ir_repair,1.000,0.909,1.000,1,none
+Production Planning / LP,nlp4lp_test_227,nlp4lp_test_227,1,tfidf_greedy,1.000,0.900,1.000,1,none
+Production Planning / LP,nlp4lp_test_227,nlp4lp_test_227,1,constrained,1.000,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_227,nlp4lp_test_227,1,opt_role_repair,0.900,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_227,nlp4lp_test_227,1,global_compat_full,0.900,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_227,nlp4lp_test_227,1,semantic_ir_repair,0.900,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_229,nlp4lp_test_229,1,tfidf_greedy,1.000,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_229,nlp4lp_test_229,1,constrained,1.000,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_229,nlp4lp_test_229,1,opt_role_repair,0.800,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_229,nlp4lp_test_229,1,global_compat_full,0.800,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_229,nlp4lp_test_229,1,semantic_ir_repair,0.800,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_23,nlp4lp_test_23,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_23,nlp4lp_test_23,1,constrained,1.000,0.333,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_23,nlp4lp_test_23,1,opt_role_repair,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_23,nlp4lp_test_23,1,global_compat_full,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_23,nlp4lp_test_23,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_233,nlp4lp_test_233,1,tfidf_greedy,1.000,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_233,nlp4lp_test_233,1,constrained,0.500,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_233,nlp4lp_test_233,1,opt_role_repair,1.000,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_233,nlp4lp_test_233,1,global_compat_full,1.000,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_233,nlp4lp_test_233,1,semantic_ir_repair,0.667,0.750,1.000,0,none
+Production Planning / LP,nlp4lp_test_234,nlp4lp_test_234,0,tfidf_greedy,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_234,nlp4lp_test_234,0,constrained,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_234,nlp4lp_test_234,0,opt_role_repair,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_234,nlp4lp_test_234,0,global_compat_full,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_234,nlp4lp_test_234,0,semantic_ir_repair,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_236,nlp4lp_test_236,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_236,nlp4lp_test_236,1,constrained,1.000,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_236,nlp4lp_test_236,1,opt_role_repair,0.800,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_236,nlp4lp_test_236,1,global_compat_full,0.800,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_236,nlp4lp_test_236,1,semantic_ir_repair,0.800,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_238,nlp4lp_test_238,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_238,nlp4lp_test_238,1,constrained,1.000,0.833,1.000,1,none
+Production Planning / LP,nlp4lp_test_238,nlp4lp_test_238,1,opt_role_repair,1.000,0.833,1.000,1,none
+Production Planning / LP,nlp4lp_test_238,nlp4lp_test_238,1,global_compat_full,1.000,0.833,1.000,1,none
+Production Planning / LP,nlp4lp_test_238,nlp4lp_test_238,1,semantic_ir_repair,1.000,0.833,1.000,1,none
+Production Planning / LP,nlp4lp_test_239,nlp4lp_test_239,1,tfidf_greedy,1.000,0.600,1.000,0,none
+Production Planning / LP,nlp4lp_test_239,nlp4lp_test_239,1,constrained,0.800,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_239,nlp4lp_test_239,1,opt_role_repair,0.800,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_239,nlp4lp_test_239,1,global_compat_full,0.800,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_239,nlp4lp_test_239,1,semantic_ir_repair,0.800,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_241,nlp4lp_test_241,1,tfidf_greedy,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_241,nlp4lp_test_241,1,constrained,0.714,0.800,1.000,0,none
+Production Planning / LP,nlp4lp_test_241,nlp4lp_test_241,1,opt_role_repair,1.000,0.571,1.000,0,none
+Production Planning / LP,nlp4lp_test_241,nlp4lp_test_241,1,global_compat_full,1.000,0.571,1.000,0,none
+Production Planning / LP,nlp4lp_test_241,nlp4lp_test_241,1,semantic_ir_repair,0.714,0.800,1.000,0,none
+Production Planning / LP,nlp4lp_test_247,nlp4lp_test_247,0,tfidf_greedy,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_247,nlp4lp_test_247,0,constrained,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_247,nlp4lp_test_247,0,opt_role_repair,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_247,nlp4lp_test_247,0,global_compat_full,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_247,nlp4lp_test_247,0,semantic_ir_repair,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_249,nlp4lp_test_249,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_249,nlp4lp_test_249,1,constrained,1.000,0.000,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_249,nlp4lp_test_249,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_249,nlp4lp_test_249,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_249,nlp4lp_test_249,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_25,nlp4lp_test_25,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_25,nlp4lp_test_25,1,constrained,1.000,0.000,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_25,nlp4lp_test_25,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_25,nlp4lp_test_25,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_25,nlp4lp_test_25,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_250,nlp4lp_test_250,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_250,nlp4lp_test_250,1,constrained,1.000,0.333,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_250,nlp4lp_test_250,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_250,nlp4lp_test_250,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_250,nlp4lp_test_250,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_255,nlp4lp_test_255,1,tfidf_greedy,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_255,nlp4lp_test_255,1,constrained,1.000,0.571,1.000,0,none
+Production Planning / LP,nlp4lp_test_255,nlp4lp_test_255,1,opt_role_repair,1.000,0.571,1.000,0,none
+Production Planning / LP,nlp4lp_test_255,nlp4lp_test_255,1,global_compat_full,1.000,0.571,1.000,0,none
+Production Planning / LP,nlp4lp_test_255,nlp4lp_test_255,1,semantic_ir_repair,1.000,0.571,1.000,0,none
+Production Planning / LP,nlp4lp_test_256,nlp4lp_test_256,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_256,nlp4lp_test_256,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_256,nlp4lp_test_256,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_256,nlp4lp_test_256,1,global_compat_full,1.000,0.600,1.000,0,none
+Production Planning / LP,nlp4lp_test_256,nlp4lp_test_256,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_26,nlp4lp_test_26,1,tfidf_greedy,0.625,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_26,nlp4lp_test_26,1,constrained,0.625,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_26,nlp4lp_test_26,1,opt_role_repair,0.625,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_26,nlp4lp_test_26,1,global_compat_full,0.625,0.800,1.000,0,none
+Production Planning / LP,nlp4lp_test_26,nlp4lp_test_26,1,semantic_ir_repair,0.625,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_260,nlp4lp_test_260,1,tfidf_greedy,1.000,0.444,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_260,nlp4lp_test_260,1,constrained,0.556,0.800,1.000,0,none
+Production Planning / LP,nlp4lp_test_260,nlp4lp_test_260,1,opt_role_repair,1.000,0.444,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_260,nlp4lp_test_260,1,global_compat_full,0.667,0.833,1.000,0,none
+Production Planning / LP,nlp4lp_test_260,nlp4lp_test_260,1,semantic_ir_repair,0.556,0.800,1.000,0,none
+Production Planning / LP,nlp4lp_test_261,nlp4lp_test_261,1,tfidf_greedy,0.900,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_261,nlp4lp_test_261,1,constrained,0.900,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_261,nlp4lp_test_261,1,opt_role_repair,0.900,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_261,nlp4lp_test_261,1,global_compat_full,0.900,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_261,nlp4lp_test_261,1,semantic_ir_repair,0.900,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_263,nlp4lp_test_263,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_263,nlp4lp_test_263,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_263,nlp4lp_test_263,1,opt_role_repair,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_263,nlp4lp_test_263,1,global_compat_full,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_263,nlp4lp_test_263,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_266,nlp4lp_test_266,1,tfidf_greedy,0.889,0.625,1.000,0,none
+Production Planning / LP,nlp4lp_test_266,nlp4lp_test_266,1,constrained,0.667,0.833,1.000,0,none
+Production Planning / LP,nlp4lp_test_266,nlp4lp_test_266,1,opt_role_repair,0.333,1.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_266,nlp4lp_test_266,1,global_compat_full,0.333,0.667,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_266,nlp4lp_test_266,1,semantic_ir_repair,0.333,1.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_267,nlp4lp_test_267,1,tfidf_greedy,1.000,0.833,1.000,1,none
+Production Planning / LP,nlp4lp_test_267,nlp4lp_test_267,1,constrained,1.000,0.833,1.000,1,none
+Production Planning / LP,nlp4lp_test_267,nlp4lp_test_267,1,opt_role_repair,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_267,nlp4lp_test_267,1,global_compat_full,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_267,nlp4lp_test_267,1,semantic_ir_repair,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_268,nlp4lp_test_268,0,tfidf_greedy,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_268,nlp4lp_test_268,0,constrained,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_268,nlp4lp_test_268,0,opt_role_repair,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_268,nlp4lp_test_268,0,global_compat_full,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_268,nlp4lp_test_268,0,semantic_ir_repair,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_27,nlp4lp_test_27,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_27,nlp4lp_test_27,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_27,nlp4lp_test_27,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_27,nlp4lp_test_27,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_27,nlp4lp_test_27,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_270,nlp4lp_test_270,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_270,nlp4lp_test_270,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_270,nlp4lp_test_270,1,opt_role_repair,0.800,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_270,nlp4lp_test_270,1,global_compat_full,0.800,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_270,nlp4lp_test_270,1,semantic_ir_repair,0.800,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_273,nlp4lp_test_273,1,tfidf_greedy,1.000,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_273,nlp4lp_test_273,1,constrained,1.000,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_273,nlp4lp_test_273,1,opt_role_repair,1.000,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_273,nlp4lp_test_273,1,global_compat_full,1.000,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_273,nlp4lp_test_273,1,semantic_ir_repair,1.000,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_274,nlp4lp_test_274,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_274,nlp4lp_test_274,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_274,nlp4lp_test_274,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_274,nlp4lp_test_274,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_274,nlp4lp_test_274,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_275,nlp4lp_test_275,1,tfidf_greedy,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_275,nlp4lp_test_275,1,constrained,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_275,nlp4lp_test_275,1,opt_role_repair,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_275,nlp4lp_test_275,1,global_compat_full,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_275,nlp4lp_test_275,1,semantic_ir_repair,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_279,nlp4lp_test_279,1,tfidf_greedy,1.000,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_279,nlp4lp_test_279,1,constrained,1.000,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_279,nlp4lp_test_279,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_279,nlp4lp_test_279,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_279,nlp4lp_test_279,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_28,nlp4lp_test_28,1,tfidf_greedy,0.917,0.909,1.000,1,none
+Production Planning / LP,nlp4lp_test_28,nlp4lp_test_28,1,constrained,0.917,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_28,nlp4lp_test_28,1,opt_role_repair,0.917,0.909,1.000,1,none
+Production Planning / LP,nlp4lp_test_28,nlp4lp_test_28,1,global_compat_full,0.917,0.818,1.000,1,none
+Production Planning / LP,nlp4lp_test_28,nlp4lp_test_28,1,semantic_ir_repair,0.917,0.909,1.000,1,none
+Production Planning / LP,nlp4lp_test_280,nlp4lp_test_280,1,tfidf_greedy,0.857,0.833,1.000,1,none
+Production Planning / LP,nlp4lp_test_280,nlp4lp_test_280,1,constrained,0.857,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_280,nlp4lp_test_280,1,opt_role_repair,0.857,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_280,nlp4lp_test_280,1,global_compat_full,0.857,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_280,nlp4lp_test_280,1,semantic_ir_repair,0.857,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_281,nlp4lp_test_281,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_281,nlp4lp_test_281,1,constrained,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_281,nlp4lp_test_281,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_281,nlp4lp_test_281,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_281,nlp4lp_test_281,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_283,nlp4lp_test_283,0,tfidf_greedy,0.000,0.000,0.800,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_283,nlp4lp_test_283,0,constrained,0.000,0.000,0.800,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_283,nlp4lp_test_283,0,opt_role_repair,0.000,0.000,0.800,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_283,nlp4lp_test_283,0,global_compat_full,0.000,0.000,0.800,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_283,nlp4lp_test_283,0,semantic_ir_repair,0.000,0.000,0.800,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_284,nlp4lp_test_284,1,tfidf_greedy,0.182,0.500,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_284,nlp4lp_test_284,1,constrained,0.182,1.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_284,nlp4lp_test_284,1,opt_role_repair,0.091,1.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_284,nlp4lp_test_284,1,global_compat_full,0.091,1.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_284,nlp4lp_test_284,1,semantic_ir_repair,0.091,1.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_285,nlp4lp_test_285,1,tfidf_greedy,0.500,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_285,nlp4lp_test_285,1,constrained,0.500,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_285,nlp4lp_test_285,1,opt_role_repair,0.333,1.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_285,nlp4lp_test_285,1,global_compat_full,0.333,0.500,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_285,nlp4lp_test_285,1,semantic_ir_repair,0.333,1.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_286,nlp4lp_test_286,0,tfidf_greedy,1.000,0.500,0.333,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_286,nlp4lp_test_286,0,constrained,1.000,0.500,0.333,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_286,nlp4lp_test_286,0,opt_role_repair,1.000,1.000,0.333,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_286,nlp4lp_test_286,0,global_compat_full,1.000,1.000,0.333,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_286,nlp4lp_test_286,0,semantic_ir_repair,1.000,1.000,0.333,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_287,nlp4lp_test_287,0,tfidf_greedy,1.000,1.000,0.250,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_287,nlp4lp_test_287,0,constrained,1.000,1.000,0.250,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_287,nlp4lp_test_287,0,opt_role_repair,0.000,0.000,0.250,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_287,nlp4lp_test_287,0,global_compat_full,0.000,0.000,0.250,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_287,nlp4lp_test_287,0,semantic_ir_repair,0.000,0.000,0.250,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_288,nlp4lp_test_288,0,tfidf_greedy,1.000,1.000,0.250,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_288,nlp4lp_test_288,0,constrained,1.000,1.000,0.250,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_288,nlp4lp_test_288,0,opt_role_repair,0.000,0.000,0.250,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_288,nlp4lp_test_288,0,global_compat_full,0.000,0.000,0.250,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_288,nlp4lp_test_288,0,semantic_ir_repair,0.000,0.000,0.250,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_289,nlp4lp_test_289,1,tfidf_greedy,0.400,1.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_289,nlp4lp_test_289,1,constrained,0.400,1.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_289,nlp4lp_test_289,1,opt_role_repair,0.000,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_289,nlp4lp_test_289,1,global_compat_full,0.000,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_289,nlp4lp_test_289,1,semantic_ir_repair,0.000,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_29,nlp4lp_test_29,1,tfidf_greedy,0.833,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_29,nlp4lp_test_29,1,constrained,0.833,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_29,nlp4lp_test_29,1,opt_role_repair,0.833,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_29,nlp4lp_test_29,1,global_compat_full,0.833,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_29,nlp4lp_test_29,1,semantic_ir_repair,0.833,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_290,nlp4lp_test_290,0,tfidf_greedy,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_290,nlp4lp_test_290,0,constrained,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_290,nlp4lp_test_290,0,opt_role_repair,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_290,nlp4lp_test_290,0,global_compat_full,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_290,nlp4lp_test_290,0,semantic_ir_repair,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_291,nlp4lp_test_291,0,tfidf_greedy,1.000,1.000,0.333,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_291,nlp4lp_test_291,0,constrained,1.000,1.000,0.333,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_291,nlp4lp_test_291,0,opt_role_repair,1.000,1.000,0.333,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_291,nlp4lp_test_291,0,global_compat_full,1.000,1.000,0.333,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_291,nlp4lp_test_291,0,semantic_ir_repair,1.000,1.000,0.333,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_292,nlp4lp_test_292,0,tfidf_greedy,1.000,1.000,0.333,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_292,nlp4lp_test_292,0,constrained,1.000,1.000,0.333,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_292,nlp4lp_test_292,0,opt_role_repair,1.000,1.000,0.333,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_292,nlp4lp_test_292,0,global_compat_full,1.000,1.000,0.333,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_292,nlp4lp_test_292,0,semantic_ir_repair,1.000,1.000,0.333,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_293,nlp4lp_test_293,1,tfidf_greedy,0.000,0.000,0.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_293,nlp4lp_test_293,1,constrained,0.000,0.000,0.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_293,nlp4lp_test_293,1,opt_role_repair,0.000,0.000,0.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_293,nlp4lp_test_293,1,global_compat_full,0.000,0.000,0.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_293,nlp4lp_test_293,1,semantic_ir_repair,0.000,0.000,0.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_299,nlp4lp_test_299,0,tfidf_greedy,1.000,1.000,0.500,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_299,nlp4lp_test_299,0,constrained,1.000,1.000,0.500,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_299,nlp4lp_test_299,0,opt_role_repair,1.000,1.000,0.500,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_299,nlp4lp_test_299,0,global_compat_full,1.000,1.000,0.500,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_299,nlp4lp_test_299,0,semantic_ir_repair,1.000,1.000,0.500,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_3,nlp4lp_test_3,1,tfidf_greedy,1.000,0.857,1.000,1,none
+Production Planning / LP,nlp4lp_test_3,nlp4lp_test_3,1,constrained,1.000,0.857,1.000,1,none
+Production Planning / LP,nlp4lp_test_3,nlp4lp_test_3,1,opt_role_repair,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_3,nlp4lp_test_3,1,global_compat_full,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_3,nlp4lp_test_3,1,semantic_ir_repair,1.000,0.857,1.000,1,none
+Production Planning / LP,nlp4lp_test_30,nlp4lp_test_30,1,tfidf_greedy,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_30,nlp4lp_test_30,1,constrained,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_30,nlp4lp_test_30,1,opt_role_repair,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_30,nlp4lp_test_30,1,global_compat_full,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_30,nlp4lp_test_30,1,semantic_ir_repair,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_302,nlp4lp_test_302,1,tfidf_greedy,0.333,1.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_302,nlp4lp_test_302,1,constrained,0.333,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_302,nlp4lp_test_302,1,opt_role_repair,0.000,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_302,nlp4lp_test_302,1,global_compat_full,0.000,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_302,nlp4lp_test_302,1,semantic_ir_repair,0.000,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_303,nlp4lp_test_303,1,tfidf_greedy,0.667,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_303,nlp4lp_test_303,1,constrained,0.667,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_303,nlp4lp_test_303,1,opt_role_repair,0.667,0.000,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_303,nlp4lp_test_303,1,global_compat_full,0.667,0.000,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_303,nlp4lp_test_303,1,semantic_ir_repair,0.667,0.000,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_304,nlp4lp_test_304,1,tfidf_greedy,0.000,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_304,nlp4lp_test_304,1,constrained,0.000,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_304,nlp4lp_test_304,1,opt_role_repair,0.000,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_304,nlp4lp_test_304,1,global_compat_full,0.000,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_304,nlp4lp_test_304,1,semantic_ir_repair,0.000,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_305,nlp4lp_test_305,1,tfidf_greedy,0.000,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_305,nlp4lp_test_305,1,constrained,0.000,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_305,nlp4lp_test_305,1,opt_role_repair,0.000,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_305,nlp4lp_test_305,1,global_compat_full,0.000,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_305,nlp4lp_test_305,1,semantic_ir_repair,0.000,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_307,nlp4lp_test_307,1,tfidf_greedy,0.625,0.400,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_307,nlp4lp_test_307,1,constrained,0.625,0.400,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_307,nlp4lp_test_307,1,opt_role_repair,0.000,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_307,nlp4lp_test_307,1,global_compat_full,0.000,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_307,nlp4lp_test_307,1,semantic_ir_repair,0.000,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_308,nlp4lp_test_308,1,tfidf_greedy,0.000,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_308,nlp4lp_test_308,1,constrained,0.000,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_308,nlp4lp_test_308,1,opt_role_repair,0.000,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_308,nlp4lp_test_308,1,global_compat_full,0.000,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_308,nlp4lp_test_308,1,semantic_ir_repair,0.000,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_310,nlp4lp_test_310,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_310,nlp4lp_test_310,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_310,nlp4lp_test_310,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_310,nlp4lp_test_310,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_310,nlp4lp_test_310,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_311,nlp4lp_test_311,0,tfidf_greedy,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_311,nlp4lp_test_311,0,constrained,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_311,nlp4lp_test_311,0,opt_role_repair,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_311,nlp4lp_test_311,0,global_compat_full,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_311,nlp4lp_test_311,0,semantic_ir_repair,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_313,nlp4lp_test_313,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_313,nlp4lp_test_313,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_313,nlp4lp_test_313,1,opt_role_repair,1.000,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_313,nlp4lp_test_313,1,global_compat_full,1.000,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_313,nlp4lp_test_313,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_315,nlp4lp_test_315,1,tfidf_greedy,1.000,0.375,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_315,nlp4lp_test_315,1,constrained,1.000,0.375,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_315,nlp4lp_test_315,1,opt_role_repair,1.000,0.375,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_315,nlp4lp_test_315,1,global_compat_full,1.000,0.375,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_315,nlp4lp_test_315,1,semantic_ir_repair,0.375,1.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_316,nlp4lp_test_316,0,tfidf_greedy,1.000,1.000,1.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_316,nlp4lp_test_316,0,constrained,1.000,1.000,1.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_316,nlp4lp_test_316,0,opt_role_repair,1.000,1.000,1.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_316,nlp4lp_test_316,0,global_compat_full,1.000,1.000,1.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_316,nlp4lp_test_316,0,semantic_ir_repair,1.000,1.000,1.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_317,nlp4lp_test_317,0,tfidf_greedy,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_317,nlp4lp_test_317,0,constrained,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_317,nlp4lp_test_317,0,opt_role_repair,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_317,nlp4lp_test_317,0,global_compat_full,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_317,nlp4lp_test_317,0,semantic_ir_repair,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_321,nlp4lp_test_321,1,tfidf_greedy,1.000,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_321,nlp4lp_test_321,1,constrained,1.000,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_321,nlp4lp_test_321,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_321,nlp4lp_test_321,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_321,nlp4lp_test_321,1,semantic_ir_repair,0.750,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_322,nlp4lp_test_322,0,tfidf_greedy,1.000,0.667,0.500,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_322,nlp4lp_test_322,0,constrained,1.000,0.667,0.500,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_322,nlp4lp_test_322,0,opt_role_repair,1.000,1.000,0.500,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_322,nlp4lp_test_322,0,global_compat_full,1.000,1.000,0.500,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_322,nlp4lp_test_322,0,semantic_ir_repair,1.000,1.000,0.500,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_325,nlp4lp_test_325,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_325,nlp4lp_test_325,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_325,nlp4lp_test_325,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_325,nlp4lp_test_325,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_325,nlp4lp_test_325,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_33,nlp4lp_test_33,1,tfidf_greedy,0.875,0.857,1.000,1,none
+Production Planning / LP,nlp4lp_test_33,nlp4lp_test_33,1,constrained,0.875,0.857,1.000,1,none
+Production Planning / LP,nlp4lp_test_33,nlp4lp_test_33,1,opt_role_repair,0.875,0.857,1.000,1,none
+Production Planning / LP,nlp4lp_test_33,nlp4lp_test_33,1,global_compat_full,0.875,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_33,nlp4lp_test_33,1,semantic_ir_repair,0.875,0.857,1.000,1,none
+Production Planning / LP,nlp4lp_test_330,nlp4lp_test_330,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_330,nlp4lp_test_330,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_330,nlp4lp_test_330,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_330,nlp4lp_test_330,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_330,nlp4lp_test_330,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_34,nlp4lp_test_34,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_34,nlp4lp_test_34,1,constrained,1.000,0.250,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_34,nlp4lp_test_34,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_34,nlp4lp_test_34,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_34,nlp4lp_test_34,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_35,nlp4lp_test_35,1,tfidf_greedy,1.000,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_35,nlp4lp_test_35,1,constrained,1.000,0.875,1.000,1,none
+Production Planning / LP,nlp4lp_test_35,nlp4lp_test_35,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_35,nlp4lp_test_35,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_35,nlp4lp_test_35,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_36,nlp4lp_test_36,0,tfidf_greedy,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_36,nlp4lp_test_36,0,constrained,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_36,nlp4lp_test_36,0,opt_role_repair,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_36,nlp4lp_test_36,0,global_compat_full,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_36,nlp4lp_test_36,0,semantic_ir_repair,0.000,0.000,0.000,0,retrieval_miss
+Production Planning / LP,nlp4lp_test_37,nlp4lp_test_37,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_37,nlp4lp_test_37,1,constrained,1.000,0.000,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_37,nlp4lp_test_37,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_37,nlp4lp_test_37,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_37,nlp4lp_test_37,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_40,nlp4lp_test_40,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_40,nlp4lp_test_40,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_40,nlp4lp_test_40,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_40,nlp4lp_test_40,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_40,nlp4lp_test_40,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_41,nlp4lp_test_41,1,tfidf_greedy,1.000,0.333,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_41,nlp4lp_test_41,1,constrained,1.000,0.333,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_41,nlp4lp_test_41,1,opt_role_repair,1.000,0.333,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_41,nlp4lp_test_41,1,global_compat_full,1.000,0.333,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_41,nlp4lp_test_41,1,semantic_ir_repair,1.000,0.333,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_43,nlp4lp_test_43,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_43,nlp4lp_test_43,1,constrained,1.000,0.333,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_43,nlp4lp_test_43,1,opt_role_repair,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_43,nlp4lp_test_43,1,global_compat_full,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_43,nlp4lp_test_43,1,semantic_ir_repair,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_44,nlp4lp_test_44,1,tfidf_greedy,1.000,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_44,nlp4lp_test_44,1,constrained,0.750,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_44,nlp4lp_test_44,1,opt_role_repair,1.000,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_44,nlp4lp_test_44,1,global_compat_full,1.000,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_44,nlp4lp_test_44,1,semantic_ir_repair,1.000,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_45,nlp4lp_test_45,1,tfidf_greedy,1.000,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_45,nlp4lp_test_45,1,constrained,1.000,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_45,nlp4lp_test_45,1,opt_role_repair,1.000,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_45,nlp4lp_test_45,1,global_compat_full,1.000,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_45,nlp4lp_test_45,1,semantic_ir_repair,1.000,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_47,nlp4lp_test_47,1,tfidf_greedy,0.800,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_47,nlp4lp_test_47,1,constrained,0.800,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_47,nlp4lp_test_47,1,opt_role_repair,0.800,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_47,nlp4lp_test_47,1,global_compat_full,0.800,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_47,nlp4lp_test_47,1,semantic_ir_repair,0.800,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_48,nlp4lp_test_48,1,tfidf_greedy,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_48,nlp4lp_test_48,1,constrained,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_48,nlp4lp_test_48,1,opt_role_repair,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_48,nlp4lp_test_48,1,global_compat_full,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_48,nlp4lp_test_48,1,semantic_ir_repair,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_5,nlp4lp_test_5,1,tfidf_greedy,1.000,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_5,nlp4lp_test_5,1,constrained,1.000,0.700,1.000,1,none
+Production Planning / LP,nlp4lp_test_5,nlp4lp_test_5,1,opt_role_repair,0.700,0.714,1.000,0,none
+Production Planning / LP,nlp4lp_test_5,nlp4lp_test_5,1,global_compat_full,0.700,0.571,1.000,0,none
+Production Planning / LP,nlp4lp_test_5,nlp4lp_test_5,1,semantic_ir_repair,0.700,0.714,1.000,0,none
+Production Planning / LP,nlp4lp_test_51,nlp4lp_test_51,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_51,nlp4lp_test_51,1,constrained,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_51,nlp4lp_test_51,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_51,nlp4lp_test_51,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_51,nlp4lp_test_51,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_52,nlp4lp_test_52,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_52,nlp4lp_test_52,1,constrained,1.000,0.833,1.000,1,none
+Production Planning / LP,nlp4lp_test_52,nlp4lp_test_52,1,opt_role_repair,1.000,0.833,1.000,1,none
+Production Planning / LP,nlp4lp_test_52,nlp4lp_test_52,1,global_compat_full,1.000,0.833,1.000,1,none
+Production Planning / LP,nlp4lp_test_52,nlp4lp_test_52,1,semantic_ir_repair,1.000,0.833,1.000,1,none
+Production Planning / LP,nlp4lp_test_53,nlp4lp_test_53,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_53,nlp4lp_test_53,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_53,nlp4lp_test_53,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_53,nlp4lp_test_53,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_53,nlp4lp_test_53,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_54,nlp4lp_test_54,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_54,nlp4lp_test_54,1,constrained,1.000,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_54,nlp4lp_test_54,1,opt_role_repair,1.000,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_54,nlp4lp_test_54,1,global_compat_full,1.000,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_54,nlp4lp_test_54,1,semantic_ir_repair,1.000,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_55,nlp4lp_test_55,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_55,nlp4lp_test_55,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_55,nlp4lp_test_55,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_55,nlp4lp_test_55,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_55,nlp4lp_test_55,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_56,nlp4lp_test_56,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_56,nlp4lp_test_56,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_56,nlp4lp_test_56,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_56,nlp4lp_test_56,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_56,nlp4lp_test_56,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_57,nlp4lp_test_57,1,tfidf_greedy,1.000,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_57,nlp4lp_test_57,1,constrained,1.000,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_57,nlp4lp_test_57,1,opt_role_repair,1.000,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_57,nlp4lp_test_57,1,global_compat_full,1.000,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_57,nlp4lp_test_57,1,semantic_ir_repair,0.800,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_58,nlp4lp_test_58,1,tfidf_greedy,0.875,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_58,nlp4lp_test_58,1,constrained,0.875,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_58,nlp4lp_test_58,1,opt_role_repair,0.875,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_58,nlp4lp_test_58,1,global_compat_full,0.875,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_58,nlp4lp_test_58,1,semantic_ir_repair,0.875,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_6,nlp4lp_test_6,1,tfidf_greedy,1.000,0.875,1.000,1,none
+Production Planning / LP,nlp4lp_test_6,nlp4lp_test_6,1,constrained,1.000,0.625,1.000,0,none
+Production Planning / LP,nlp4lp_test_6,nlp4lp_test_6,1,opt_role_repair,1.000,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_6,nlp4lp_test_6,1,global_compat_full,1.000,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_6,nlp4lp_test_6,1,semantic_ir_repair,1.000,0.625,1.000,0,none
+Production Planning / LP,nlp4lp_test_62,nlp4lp_test_62,1,tfidf_greedy,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_62,nlp4lp_test_62,1,constrained,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_62,nlp4lp_test_62,1,opt_role_repair,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_62,nlp4lp_test_62,1,global_compat_full,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_62,nlp4lp_test_62,1,semantic_ir_repair,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_63,nlp4lp_test_63,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_63,nlp4lp_test_63,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_63,nlp4lp_test_63,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_63,nlp4lp_test_63,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_63,nlp4lp_test_63,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_65,nlp4lp_test_65,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_65,nlp4lp_test_65,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_65,nlp4lp_test_65,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_65,nlp4lp_test_65,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_65,nlp4lp_test_65,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_66,nlp4lp_test_66,1,tfidf_greedy,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_66,nlp4lp_test_66,1,constrained,0.667,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_66,nlp4lp_test_66,1,opt_role_repair,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_66,nlp4lp_test_66,1,global_compat_full,0.833,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_66,nlp4lp_test_66,1,semantic_ir_repair,0.667,1.000,1.000,0,none
+Production Planning / LP,nlp4lp_test_67,nlp4lp_test_67,1,tfidf_greedy,0.800,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_67,nlp4lp_test_67,1,constrained,0.800,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_67,nlp4lp_test_67,1,opt_role_repair,0.800,0.250,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_67,nlp4lp_test_67,1,global_compat_full,0.800,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_67,nlp4lp_test_67,1,semantic_ir_repair,0.800,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_68,nlp4lp_test_68,1,tfidf_greedy,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_68,nlp4lp_test_68,1,constrained,0.857,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_68,nlp4lp_test_68,1,opt_role_repair,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_68,nlp4lp_test_68,1,global_compat_full,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_68,nlp4lp_test_68,1,semantic_ir_repair,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_71,nlp4lp_test_71,1,tfidf_greedy,1.000,0.833,1.000,1,none
+Production Planning / LP,nlp4lp_test_71,nlp4lp_test_71,1,constrained,1.000,0.833,1.000,1,none
+Production Planning / LP,nlp4lp_test_71,nlp4lp_test_71,1,opt_role_repair,1.000,0.833,1.000,1,none
+Production Planning / LP,nlp4lp_test_71,nlp4lp_test_71,1,global_compat_full,1.000,0.833,1.000,1,none
+Production Planning / LP,nlp4lp_test_71,nlp4lp_test_71,1,semantic_ir_repair,1.000,0.833,1.000,1,none
+Production Planning / LP,nlp4lp_test_72,nlp4lp_test_72,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_72,nlp4lp_test_72,1,constrained,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_72,nlp4lp_test_72,1,opt_role_repair,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_72,nlp4lp_test_72,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_72,nlp4lp_test_72,1,semantic_ir_repair,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_73,nlp4lp_test_73,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_73,nlp4lp_test_73,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_73,nlp4lp_test_73,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_73,nlp4lp_test_73,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_73,nlp4lp_test_73,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_75,nlp4lp_test_75,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_75,nlp4lp_test_75,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_75,nlp4lp_test_75,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_75,nlp4lp_test_75,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_75,nlp4lp_test_75,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_76,nlp4lp_test_76,1,tfidf_greedy,1.000,0.000,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_76,nlp4lp_test_76,1,constrained,0.333,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_76,nlp4lp_test_76,1,opt_role_repair,1.000,0.000,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_76,nlp4lp_test_76,1,global_compat_full,0.667,0.000,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_76,nlp4lp_test_76,1,semantic_ir_repair,0.333,0.000,1.000,0,low_param_coverage
+Production Planning / LP,nlp4lp_test_78,nlp4lp_test_78,1,tfidf_greedy,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_78,nlp4lp_test_78,1,constrained,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_78,nlp4lp_test_78,1,opt_role_repair,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_78,nlp4lp_test_78,1,global_compat_full,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_78,nlp4lp_test_78,1,semantic_ir_repair,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_8,nlp4lp_test_8,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_8,nlp4lp_test_8,1,constrained,1.000,0.000,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_8,nlp4lp_test_8,1,opt_role_repair,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_8,nlp4lp_test_8,1,global_compat_full,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_8,nlp4lp_test_8,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_80,nlp4lp_test_80,1,tfidf_greedy,1.000,0.875,1.000,1,none
+Production Planning / LP,nlp4lp_test_80,nlp4lp_test_80,1,constrained,1.000,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_80,nlp4lp_test_80,1,opt_role_repair,1.000,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_80,nlp4lp_test_80,1,global_compat_full,1.000,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_80,nlp4lp_test_80,1,semantic_ir_repair,1.000,0.750,1.000,1,none
+Production Planning / LP,nlp4lp_test_81,nlp4lp_test_81,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_81,nlp4lp_test_81,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_81,nlp4lp_test_81,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_81,nlp4lp_test_81,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_81,nlp4lp_test_81,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_82,nlp4lp_test_82,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_82,nlp4lp_test_82,1,constrained,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_82,nlp4lp_test_82,1,opt_role_repair,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_82,nlp4lp_test_82,1,global_compat_full,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_82,nlp4lp_test_82,1,semantic_ir_repair,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_83,nlp4lp_test_83,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_83,nlp4lp_test_83,1,constrained,1.000,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_83,nlp4lp_test_83,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_83,nlp4lp_test_83,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_83,nlp4lp_test_83,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_84,nlp4lp_test_84,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_84,nlp4lp_test_84,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_84,nlp4lp_test_84,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_84,nlp4lp_test_84,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_84,nlp4lp_test_84,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_85,nlp4lp_test_85,1,tfidf_greedy,1.000,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_85,nlp4lp_test_85,1,constrained,1.000,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_85,nlp4lp_test_85,1,opt_role_repair,1.000,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_85,nlp4lp_test_85,1,global_compat_full,1.000,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_85,nlp4lp_test_85,1,semantic_ir_repair,1.000,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_86,nlp4lp_test_86,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_86,nlp4lp_test_86,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_86,nlp4lp_test_86,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_86,nlp4lp_test_86,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_86,nlp4lp_test_86,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_87,nlp4lp_test_87,1,tfidf_greedy,1.000,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_87,nlp4lp_test_87,1,constrained,1.000,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_87,nlp4lp_test_87,1,opt_role_repair,1.000,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_87,nlp4lp_test_87,1,global_compat_full,1.000,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_87,nlp4lp_test_87,1,semantic_ir_repair,1.000,0.800,1.000,1,none
+Production Planning / LP,nlp4lp_test_88,nlp4lp_test_88,1,tfidf_greedy,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_88,nlp4lp_test_88,1,constrained,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_88,nlp4lp_test_88,1,opt_role_repair,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_88,nlp4lp_test_88,1,global_compat_full,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_88,nlp4lp_test_88,1,semantic_ir_repair,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_9,nlp4lp_test_9,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_9,nlp4lp_test_9,1,constrained,1.000,0.000,1.000,0,type_mismatch
+Production Planning / LP,nlp4lp_test_9,nlp4lp_test_9,1,opt_role_repair,1.000,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_9,nlp4lp_test_9,1,global_compat_full,1.000,0.500,1.000,0,none
+Production Planning / LP,nlp4lp_test_9,nlp4lp_test_9,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_91,nlp4lp_test_91,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_91,nlp4lp_test_91,1,constrained,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_91,nlp4lp_test_91,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_91,nlp4lp_test_91,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_91,nlp4lp_test_91,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_92,nlp4lp_test_92,1,tfidf_greedy,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_92,nlp4lp_test_92,1,constrained,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_92,nlp4lp_test_92,1,opt_role_repair,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_92,nlp4lp_test_92,1,global_compat_full,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_92,nlp4lp_test_92,1,semantic_ir_repair,1.000,0.714,1.000,1,none
+Production Planning / LP,nlp4lp_test_95,nlp4lp_test_95,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_95,nlp4lp_test_95,1,constrained,1.000,0.667,1.000,0,none
+Production Planning / LP,nlp4lp_test_95,nlp4lp_test_95,1,opt_role_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_95,nlp4lp_test_95,1,global_compat_full,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_95,nlp4lp_test_95,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Production Planning / LP,nlp4lp_test_97,nlp4lp_test_97,1,tfidf_greedy,1.000,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_97,nlp4lp_test_97,1,constrained,1.000,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_97,nlp4lp_test_97,1,opt_role_repair,1.000,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_97,nlp4lp_test_97,1,global_compat_full,1.000,0.778,1.000,1,none
+Production Planning / LP,nlp4lp_test_97,nlp4lp_test_97,1,semantic_ir_repair,1.000,0.778,1.000,1,none
+Resource Allocation / Advertising,nlp4lp_test_138,nlp4lp_test_138,1,tfidf_greedy,0.667,0.500,1.000,0,none
+Resource Allocation / Advertising,nlp4lp_test_138,nlp4lp_test_138,1,constrained,0.667,0.750,1.000,0,none
+Resource Allocation / Advertising,nlp4lp_test_138,nlp4lp_test_138,1,opt_role_repair,0.667,1.000,1.000,0,none
+Resource Allocation / Advertising,nlp4lp_test_138,nlp4lp_test_138,1,global_compat_full,0.667,1.000,1.000,0,none
+Resource Allocation / Advertising,nlp4lp_test_138,nlp4lp_test_138,1,semantic_ir_repair,0.667,1.000,1.000,0,none
+Resource Allocation / Advertising,nlp4lp_test_212,nlp4lp_test_212,1,tfidf_greedy,1.000,0.500,1.000,0,none
+Resource Allocation / Advertising,nlp4lp_test_212,nlp4lp_test_212,1,constrained,1.000,0.600,1.000,0,none
+Resource Allocation / Advertising,nlp4lp_test_212,nlp4lp_test_212,1,opt_role_repair,0.800,0.500,1.000,0,none
+Resource Allocation / Advertising,nlp4lp_test_212,nlp4lp_test_212,1,global_compat_full,0.800,0.375,1.000,0,type_mismatch
+Resource Allocation / Advertising,nlp4lp_test_212,nlp4lp_test_212,1,semantic_ir_repair,0.800,0.500,1.000,0,none
+Resource Allocation / Advertising,nlp4lp_test_312,nlp4lp_test_312,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Resource Allocation / Advertising,nlp4lp_test_312,nlp4lp_test_312,1,constrained,1.000,0.800,1.000,1,none
+Resource Allocation / Advertising,nlp4lp_test_312,nlp4lp_test_312,1,opt_role_repair,0.400,0.000,1.000,0,low_param_coverage
+Resource Allocation / Advertising,nlp4lp_test_312,nlp4lp_test_312,1,global_compat_full,0.400,0.000,1.000,0,low_param_coverage
+Resource Allocation / Advertising,nlp4lp_test_312,nlp4lp_test_312,1,semantic_ir_repair,0.400,0.500,1.000,0,low_param_coverage
+Resource Allocation / Advertising,nlp4lp_test_318,nlp4lp_test_318,0,tfidf_greedy,1.000,1.000,0.667,0,retrieval_miss
+Resource Allocation / Advertising,nlp4lp_test_318,nlp4lp_test_318,0,constrained,1.000,0.750,0.667,0,retrieval_miss
+Resource Allocation / Advertising,nlp4lp_test_318,nlp4lp_test_318,0,opt_role_repair,0.500,0.500,0.667,0,retrieval_miss
+Resource Allocation / Advertising,nlp4lp_test_318,nlp4lp_test_318,0,global_compat_full,0.500,0.500,0.667,0,retrieval_miss
+Resource Allocation / Advertising,nlp4lp_test_318,nlp4lp_test_318,0,semantic_ir_repair,0.500,0.500,0.667,0,retrieval_miss
+Scheduling,nlp4lp_test_204,nlp4lp_test_204,1,tfidf_greedy,1.000,0.500,1.000,0,none
+Scheduling,nlp4lp_test_204,nlp4lp_test_204,1,constrained,1.000,0.500,1.000,0,none
+Scheduling,nlp4lp_test_204,nlp4lp_test_204,1,opt_role_repair,1.000,0.500,1.000,0,none
+Scheduling,nlp4lp_test_204,nlp4lp_test_204,1,global_compat_full,1.000,0.500,1.000,0,none
+Scheduling,nlp4lp_test_204,nlp4lp_test_204,1,semantic_ir_repair,1.000,0.500,1.000,0,none
+Scheduling,nlp4lp_test_224,nlp4lp_test_224,1,tfidf_greedy,1.000,0.857,1.000,1,none
+Scheduling,nlp4lp_test_224,nlp4lp_test_224,1,constrained,1.000,0.857,1.000,1,none
+Scheduling,nlp4lp_test_224,nlp4lp_test_224,1,opt_role_repair,1.000,0.857,1.000,1,none
+Scheduling,nlp4lp_test_224,nlp4lp_test_224,1,global_compat_full,1.000,0.571,1.000,0,none
+Scheduling,nlp4lp_test_224,nlp4lp_test_224,1,semantic_ir_repair,1.000,0.857,1.000,1,none
+Scheduling,nlp4lp_test_253,nlp4lp_test_253,1,tfidf_greedy,1.000,0.333,1.000,0,type_mismatch
+Scheduling,nlp4lp_test_253,nlp4lp_test_253,1,constrained,1.000,0.333,1.000,0,type_mismatch
+Scheduling,nlp4lp_test_253,nlp4lp_test_253,1,opt_role_repair,0.833,0.400,1.000,0,type_mismatch
+Scheduling,nlp4lp_test_253,nlp4lp_test_253,1,global_compat_full,0.833,0.400,1.000,0,type_mismatch
+Scheduling,nlp4lp_test_253,nlp4lp_test_253,1,semantic_ir_repair,0.833,0.400,1.000,0,type_mismatch
+Set Cover / Covering,nlp4lp_test_326,nlp4lp_test_326,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Set Cover / Covering,nlp4lp_test_326,nlp4lp_test_326,1,constrained,1.000,1.000,1.000,1,none
+Set Cover / Covering,nlp4lp_test_326,nlp4lp_test_326,1,opt_role_repair,1.000,1.000,1.000,1,none
+Set Cover / Covering,nlp4lp_test_326,nlp4lp_test_326,1,global_compat_full,1.000,1.000,1.000,1,none
+Set Cover / Covering,nlp4lp_test_326,nlp4lp_test_326,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_139,nlp4lp_test_139,1,tfidf_greedy,0.857,0.667,1.000,0,none
+Transportation / Shipping,nlp4lp_test_139,nlp4lp_test_139,1,constrained,0.857,0.833,1.000,1,none
+Transportation / Shipping,nlp4lp_test_139,nlp4lp_test_139,1,opt_role_repair,0.857,0.833,1.000,1,none
+Transportation / Shipping,nlp4lp_test_139,nlp4lp_test_139,1,global_compat_full,0.857,0.667,1.000,0,none
+Transportation / Shipping,nlp4lp_test_139,nlp4lp_test_139,1,semantic_ir_repair,0.857,0.833,1.000,1,none
+Transportation / Shipping,nlp4lp_test_140,nlp4lp_test_140,1,tfidf_greedy,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_140,nlp4lp_test_140,1,constrained,0.714,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_140,nlp4lp_test_140,1,opt_role_repair,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_140,nlp4lp_test_140,1,global_compat_full,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_140,nlp4lp_test_140,1,semantic_ir_repair,0.857,0.833,1.000,1,none
+Transportation / Shipping,nlp4lp_test_141,nlp4lp_test_141,1,tfidf_greedy,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_141,nlp4lp_test_141,1,constrained,0.714,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_141,nlp4lp_test_141,1,opt_role_repair,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_141,nlp4lp_test_141,1,global_compat_full,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_141,nlp4lp_test_141,1,semantic_ir_repair,0.714,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_145,nlp4lp_test_145,1,tfidf_greedy,1.000,0.667,1.000,0,none
+Transportation / Shipping,nlp4lp_test_145,nlp4lp_test_145,1,constrained,0.667,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_145,nlp4lp_test_145,1,opt_role_repair,1.000,0.667,1.000,0,none
+Transportation / Shipping,nlp4lp_test_145,nlp4lp_test_145,1,global_compat_full,1.000,0.667,1.000,0,none
+Transportation / Shipping,nlp4lp_test_145,nlp4lp_test_145,1,semantic_ir_repair,0.667,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_148,nlp4lp_test_148,1,tfidf_greedy,1.000,0.667,1.000,0,none
+Transportation / Shipping,nlp4lp_test_148,nlp4lp_test_148,1,constrained,1.000,0.333,1.000,0,type_mismatch
+Transportation / Shipping,nlp4lp_test_148,nlp4lp_test_148,1,opt_role_repair,1.000,0.333,1.000,0,type_mismatch
+Transportation / Shipping,nlp4lp_test_148,nlp4lp_test_148,1,global_compat_full,1.000,0.333,1.000,0,type_mismatch
+Transportation / Shipping,nlp4lp_test_148,nlp4lp_test_148,1,semantic_ir_repair,1.000,0.333,1.000,0,type_mismatch
+Transportation / Shipping,nlp4lp_test_149,nlp4lp_test_149,1,tfidf_greedy,0.857,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_149,nlp4lp_test_149,1,constrained,0.857,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_149,nlp4lp_test_149,1,opt_role_repair,0.857,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_149,nlp4lp_test_149,1,global_compat_full,0.857,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_149,nlp4lp_test_149,1,semantic_ir_repair,0.857,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_151,nlp4lp_test_151,1,tfidf_greedy,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_151,nlp4lp_test_151,1,constrained,0.714,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_151,nlp4lp_test_151,1,opt_role_repair,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_151,nlp4lp_test_151,1,global_compat_full,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_151,nlp4lp_test_151,1,semantic_ir_repair,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_156,nlp4lp_test_156,1,tfidf_greedy,0.800,0.750,1.000,1,none
+Transportation / Shipping,nlp4lp_test_156,nlp4lp_test_156,1,constrained,0.800,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_156,nlp4lp_test_156,1,opt_role_repair,0.800,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_156,nlp4lp_test_156,1,global_compat_full,0.800,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_156,nlp4lp_test_156,1,semantic_ir_repair,0.800,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_157,nlp4lp_test_157,1,tfidf_greedy,1.000,0.500,1.000,0,none
+Transportation / Shipping,nlp4lp_test_157,nlp4lp_test_157,1,constrained,0.500,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_157,nlp4lp_test_157,1,opt_role_repair,1.000,0.500,1.000,0,none
+Transportation / Shipping,nlp4lp_test_157,nlp4lp_test_157,1,global_compat_full,1.000,0.500,1.000,0,none
+Transportation / Shipping,nlp4lp_test_157,nlp4lp_test_157,1,semantic_ir_repair,0.750,0.667,1.000,0,none
+Transportation / Shipping,nlp4lp_test_160,nlp4lp_test_160,1,tfidf_greedy,1.000,0.857,1.000,1,none
+Transportation / Shipping,nlp4lp_test_160,nlp4lp_test_160,1,constrained,0.857,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_160,nlp4lp_test_160,1,opt_role_repair,1.000,0.857,1.000,1,none
+Transportation / Shipping,nlp4lp_test_160,nlp4lp_test_160,1,global_compat_full,1.000,0.857,1.000,1,none
+Transportation / Shipping,nlp4lp_test_160,nlp4lp_test_160,1,semantic_ir_repair,1.000,0.857,1.000,1,none
+Transportation / Shipping,nlp4lp_test_161,nlp4lp_test_161,0,tfidf_greedy,1.000,0.800,0.714,0,retrieval_miss
+Transportation / Shipping,nlp4lp_test_161,nlp4lp_test_161,0,constrained,0.800,1.000,0.714,0,retrieval_miss
+Transportation / Shipping,nlp4lp_test_161,nlp4lp_test_161,0,opt_role_repair,1.000,0.800,0.714,0,retrieval_miss
+Transportation / Shipping,nlp4lp_test_161,nlp4lp_test_161,0,global_compat_full,1.000,0.800,0.714,0,retrieval_miss
+Transportation / Shipping,nlp4lp_test_161,nlp4lp_test_161,0,semantic_ir_repair,1.000,0.800,0.714,0,retrieval_miss
+Transportation / Shipping,nlp4lp_test_167,nlp4lp_test_167,1,tfidf_greedy,1.000,0.500,1.000,0,none
+Transportation / Shipping,nlp4lp_test_167,nlp4lp_test_167,1,constrained,0.500,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_167,nlp4lp_test_167,1,opt_role_repair,1.000,0.500,1.000,0,none
+Transportation / Shipping,nlp4lp_test_167,nlp4lp_test_167,1,global_compat_full,1.000,0.500,1.000,0,none
+Transportation / Shipping,nlp4lp_test_167,nlp4lp_test_167,1,semantic_ir_repair,0.750,0.667,1.000,0,none
+Transportation / Shipping,nlp4lp_test_168,nlp4lp_test_168,1,tfidf_greedy,0.500,0.333,1.000,0,type_mismatch
+Transportation / Shipping,nlp4lp_test_168,nlp4lp_test_168,1,constrained,0.500,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_168,nlp4lp_test_168,1,opt_role_repair,0.500,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_168,nlp4lp_test_168,1,global_compat_full,0.500,0.667,1.000,0,none
+Transportation / Shipping,nlp4lp_test_168,nlp4lp_test_168,1,semantic_ir_repair,0.500,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_169,nlp4lp_test_169,1,tfidf_greedy,0.857,0.667,1.000,0,none
+Transportation / Shipping,nlp4lp_test_169,nlp4lp_test_169,1,constrained,0.857,0.833,1.000,1,none
+Transportation / Shipping,nlp4lp_test_169,nlp4lp_test_169,1,opt_role_repair,0.857,0.833,1.000,1,none
+Transportation / Shipping,nlp4lp_test_169,nlp4lp_test_169,1,global_compat_full,0.857,0.833,1.000,1,none
+Transportation / Shipping,nlp4lp_test_169,nlp4lp_test_169,1,semantic_ir_repair,0.857,0.833,1.000,1,none
+Transportation / Shipping,nlp4lp_test_170,nlp4lp_test_170,1,tfidf_greedy,1.000,0.857,1.000,1,none
+Transportation / Shipping,nlp4lp_test_170,nlp4lp_test_170,1,constrained,0.857,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_170,nlp4lp_test_170,1,opt_role_repair,1.000,0.857,1.000,1,none
+Transportation / Shipping,nlp4lp_test_170,nlp4lp_test_170,1,global_compat_full,1.000,0.857,1.000,1,none
+Transportation / Shipping,nlp4lp_test_170,nlp4lp_test_170,1,semantic_ir_repair,1.000,0.857,1.000,1,none
+Transportation / Shipping,nlp4lp_test_171,nlp4lp_test_171,1,tfidf_greedy,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_171,nlp4lp_test_171,1,constrained,0.714,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_171,nlp4lp_test_171,1,opt_role_repair,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_171,nlp4lp_test_171,1,global_compat_full,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_171,nlp4lp_test_171,1,semantic_ir_repair,0.857,0.833,1.000,1,none
+Transportation / Shipping,nlp4lp_test_173,nlp4lp_test_173,1,tfidf_greedy,1.000,0.750,1.000,1,none
+Transportation / Shipping,nlp4lp_test_173,nlp4lp_test_173,1,constrained,1.000,0.750,1.000,1,none
+Transportation / Shipping,nlp4lp_test_173,nlp4lp_test_173,1,opt_role_repair,0.875,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_173,nlp4lp_test_173,1,global_compat_full,0.875,0.857,1.000,1,none
+Transportation / Shipping,nlp4lp_test_173,nlp4lp_test_173,1,semantic_ir_repair,0.875,0.857,1.000,1,none
+Transportation / Shipping,nlp4lp_test_175,nlp4lp_test_175,1,tfidf_greedy,0.600,0.667,1.000,0,none
+Transportation / Shipping,nlp4lp_test_175,nlp4lp_test_175,1,constrained,0.600,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_175,nlp4lp_test_175,1,opt_role_repair,0.600,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_175,nlp4lp_test_175,1,global_compat_full,0.600,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_175,nlp4lp_test_175,1,semantic_ir_repair,0.600,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_176,nlp4lp_test_176,1,tfidf_greedy,1.000,0.500,1.000,0,none
+Transportation / Shipping,nlp4lp_test_176,nlp4lp_test_176,1,constrained,0.500,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_176,nlp4lp_test_176,1,opt_role_repair,1.000,0.500,1.000,0,none
+Transportation / Shipping,nlp4lp_test_176,nlp4lp_test_176,1,global_compat_full,1.000,0.500,1.000,0,none
+Transportation / Shipping,nlp4lp_test_176,nlp4lp_test_176,1,semantic_ir_repair,0.500,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_179,nlp4lp_test_179,1,tfidf_greedy,0.857,0.000,1.000,0,type_mismatch
+Transportation / Shipping,nlp4lp_test_179,nlp4lp_test_179,1,constrained,0.857,0.000,1.000,0,type_mismatch
+Transportation / Shipping,nlp4lp_test_179,nlp4lp_test_179,1,opt_role_repair,0.857,0.000,1.000,0,type_mismatch
+Transportation / Shipping,nlp4lp_test_179,nlp4lp_test_179,1,global_compat_full,0.857,0.000,1.000,0,type_mismatch
+Transportation / Shipping,nlp4lp_test_179,nlp4lp_test_179,1,semantic_ir_repair,0.857,0.000,1.000,0,type_mismatch
+Transportation / Shipping,nlp4lp_test_180,nlp4lp_test_180,1,tfidf_greedy,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_180,nlp4lp_test_180,1,constrained,0.714,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_180,nlp4lp_test_180,1,opt_role_repair,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_180,nlp4lp_test_180,1,global_compat_full,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_180,nlp4lp_test_180,1,semantic_ir_repair,0.857,0.833,1.000,1,none
+Transportation / Shipping,nlp4lp_test_181,nlp4lp_test_181,1,tfidf_greedy,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_181,nlp4lp_test_181,1,constrained,0.714,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_181,nlp4lp_test_181,1,opt_role_repair,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_181,nlp4lp_test_181,1,global_compat_full,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_181,nlp4lp_test_181,1,semantic_ir_repair,0.714,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_183,nlp4lp_test_183,1,tfidf_greedy,0.875,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_183,nlp4lp_test_183,1,constrained,0.875,0.857,1.000,1,none
+Transportation / Shipping,nlp4lp_test_183,nlp4lp_test_183,1,opt_role_repair,0.875,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_183,nlp4lp_test_183,1,global_compat_full,0.875,0.857,1.000,1,none
+Transportation / Shipping,nlp4lp_test_183,nlp4lp_test_183,1,semantic_ir_repair,0.875,0.857,1.000,1,none
+Transportation / Shipping,nlp4lp_test_185,nlp4lp_test_185,1,tfidf_greedy,1.000,0.667,1.000,0,none
+Transportation / Shipping,nlp4lp_test_185,nlp4lp_test_185,1,constrained,0.667,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_185,nlp4lp_test_185,1,opt_role_repair,1.000,0.667,1.000,0,none
+Transportation / Shipping,nlp4lp_test_185,nlp4lp_test_185,1,global_compat_full,1.000,0.667,1.000,0,none
+Transportation / Shipping,nlp4lp_test_185,nlp4lp_test_185,1,semantic_ir_repair,1.000,0.667,1.000,0,none
+Transportation / Shipping,nlp4lp_test_186,nlp4lp_test_186,1,tfidf_greedy,1.000,0.750,1.000,1,none
+Transportation / Shipping,nlp4lp_test_186,nlp4lp_test_186,1,constrained,0.750,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_186,nlp4lp_test_186,1,opt_role_repair,1.000,0.750,1.000,1,none
+Transportation / Shipping,nlp4lp_test_186,nlp4lp_test_186,1,global_compat_full,1.000,0.750,1.000,1,none
+Transportation / Shipping,nlp4lp_test_186,nlp4lp_test_186,1,semantic_ir_repair,0.750,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_187,nlp4lp_test_187,1,tfidf_greedy,1.000,0.500,1.000,0,none
+Transportation / Shipping,nlp4lp_test_187,nlp4lp_test_187,1,constrained,0.500,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_187,nlp4lp_test_187,1,opt_role_repair,1.000,0.500,1.000,0,none
+Transportation / Shipping,nlp4lp_test_187,nlp4lp_test_187,1,global_compat_full,1.000,0.500,1.000,0,none
+Transportation / Shipping,nlp4lp_test_187,nlp4lp_test_187,1,semantic_ir_repair,0.750,0.667,1.000,0,none
+Transportation / Shipping,nlp4lp_test_214,nlp4lp_test_214,1,tfidf_greedy,0.800,0.500,1.000,0,none
+Transportation / Shipping,nlp4lp_test_214,nlp4lp_test_214,1,constrained,0.600,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_214,nlp4lp_test_214,1,opt_role_repair,0.800,0.750,1.000,1,none
+Transportation / Shipping,nlp4lp_test_214,nlp4lp_test_214,1,global_compat_full,0.800,0.750,1.000,1,none
+Transportation / Shipping,nlp4lp_test_214,nlp4lp_test_214,1,semantic_ir_repair,0.600,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_216,nlp4lp_test_216,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_216,nlp4lp_test_216,1,constrained,1.000,0.800,1.000,1,none
+Transportation / Shipping,nlp4lp_test_216,nlp4lp_test_216,1,opt_role_repair,1.000,0.800,1.000,1,none
+Transportation / Shipping,nlp4lp_test_216,nlp4lp_test_216,1,global_compat_full,1.000,0.800,1.000,1,none
+Transportation / Shipping,nlp4lp_test_216,nlp4lp_test_216,1,semantic_ir_repair,1.000,0.800,1.000,1,none
+Transportation / Shipping,nlp4lp_test_228,nlp4lp_test_228,1,tfidf_greedy,1.000,0.500,1.000,0,none
+Transportation / Shipping,nlp4lp_test_228,nlp4lp_test_228,1,constrained,0.500,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_228,nlp4lp_test_228,1,opt_role_repair,1.000,0.500,1.000,0,none
+Transportation / Shipping,nlp4lp_test_228,nlp4lp_test_228,1,global_compat_full,1.000,0.500,1.000,0,none
+Transportation / Shipping,nlp4lp_test_228,nlp4lp_test_228,1,semantic_ir_repair,0.500,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_240,nlp4lp_test_240,1,tfidf_greedy,0.750,0.167,1.000,0,type_mismatch
+Transportation / Shipping,nlp4lp_test_240,nlp4lp_test_240,1,constrained,0.625,0.400,1.000,0,type_mismatch
+Transportation / Shipping,nlp4lp_test_240,nlp4lp_test_240,1,opt_role_repair,0.625,0.600,1.000,0,none
+Transportation / Shipping,nlp4lp_test_240,nlp4lp_test_240,1,global_compat_full,0.625,0.600,1.000,0,none
+Transportation / Shipping,nlp4lp_test_240,nlp4lp_test_240,1,semantic_ir_repair,0.625,0.600,1.000,0,none
+Transportation / Shipping,nlp4lp_test_243,nlp4lp_test_243,1,tfidf_greedy,0.857,0.667,1.000,0,none
+Transportation / Shipping,nlp4lp_test_243,nlp4lp_test_243,1,constrained,0.714,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_243,nlp4lp_test_243,1,opt_role_repair,0.857,0.833,1.000,1,none
+Transportation / Shipping,nlp4lp_test_243,nlp4lp_test_243,1,global_compat_full,0.857,0.833,1.000,1,none
+Transportation / Shipping,nlp4lp_test_243,nlp4lp_test_243,1,semantic_ir_repair,0.714,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_245,nlp4lp_test_245,1,tfidf_greedy,1.000,0.500,1.000,0,none
+Transportation / Shipping,nlp4lp_test_245,nlp4lp_test_245,1,constrained,0.500,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_245,nlp4lp_test_245,1,opt_role_repair,0.750,0.667,1.000,0,none
+Transportation / Shipping,nlp4lp_test_245,nlp4lp_test_245,1,global_compat_full,0.750,0.667,1.000,0,none
+Transportation / Shipping,nlp4lp_test_245,nlp4lp_test_245,1,semantic_ir_repair,0.500,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_248,nlp4lp_test_248,1,tfidf_greedy,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_248,nlp4lp_test_248,1,constrained,0.714,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_248,nlp4lp_test_248,1,opt_role_repair,0.857,0.833,1.000,1,none
+Transportation / Shipping,nlp4lp_test_248,nlp4lp_test_248,1,global_compat_full,0.857,0.833,1.000,1,none
+Transportation / Shipping,nlp4lp_test_248,nlp4lp_test_248,1,semantic_ir_repair,0.714,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_251,nlp4lp_test_251,1,tfidf_greedy,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_251,nlp4lp_test_251,1,constrained,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_251,nlp4lp_test_251,1,opt_role_repair,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_251,nlp4lp_test_251,1,global_compat_full,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_251,nlp4lp_test_251,1,semantic_ir_repair,1.000,0.714,1.000,1,none
+Transportation / Shipping,nlp4lp_test_254,nlp4lp_test_254,1,tfidf_greedy,1.000,0.500,1.000,0,none
+Transportation / Shipping,nlp4lp_test_254,nlp4lp_test_254,1,constrained,0.500,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_254,nlp4lp_test_254,1,opt_role_repair,1.000,0.500,1.000,0,none
+Transportation / Shipping,nlp4lp_test_254,nlp4lp_test_254,1,global_compat_full,1.000,0.500,1.000,0,none
+Transportation / Shipping,nlp4lp_test_254,nlp4lp_test_254,1,semantic_ir_repair,0.750,0.667,1.000,0,none
+Transportation / Shipping,nlp4lp_test_262,nlp4lp_test_262,1,tfidf_greedy,1.000,0.800,1.000,1,none
+Transportation / Shipping,nlp4lp_test_262,nlp4lp_test_262,1,constrained,1.000,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_262,nlp4lp_test_262,1,opt_role_repair,1.000,0.800,1.000,1,none
+Transportation / Shipping,nlp4lp_test_262,nlp4lp_test_262,1,global_compat_full,1.000,0.800,1.000,1,none
+Transportation / Shipping,nlp4lp_test_262,nlp4lp_test_262,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_269,nlp4lp_test_269,1,tfidf_greedy,1.000,0.500,1.000,0,none
+Transportation / Shipping,nlp4lp_test_269,nlp4lp_test_269,1,constrained,0.500,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_269,nlp4lp_test_269,1,opt_role_repair,1.000,0.500,1.000,0,none
+Transportation / Shipping,nlp4lp_test_269,nlp4lp_test_269,1,global_compat_full,1.000,0.500,1.000,0,none
+Transportation / Shipping,nlp4lp_test_269,nlp4lp_test_269,1,semantic_ir_repair,0.500,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_309,nlp4lp_test_309,1,tfidf_greedy,0.333,1.000,1.000,0,low_param_coverage
+Transportation / Shipping,nlp4lp_test_309,nlp4lp_test_309,1,constrained,0.333,1.000,1.000,0,low_param_coverage
+Transportation / Shipping,nlp4lp_test_309,nlp4lp_test_309,1,opt_role_repair,0.000,0.000,1.000,0,low_param_coverage
+Transportation / Shipping,nlp4lp_test_309,nlp4lp_test_309,1,global_compat_full,0.000,0.000,1.000,0,low_param_coverage
+Transportation / Shipping,nlp4lp_test_309,nlp4lp_test_309,1,semantic_ir_repair,0.000,0.000,1.000,0,low_param_coverage
+Transportation / Shipping,nlp4lp_test_31,nlp4lp_test_31,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_31,nlp4lp_test_31,1,constrained,1.000,0.000,1.000,0,type_mismatch
+Transportation / Shipping,nlp4lp_test_31,nlp4lp_test_31,1,opt_role_repair,1.000,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_31,nlp4lp_test_31,1,global_compat_full,1.000,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_31,nlp4lp_test_31,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_320,nlp4lp_test_320,1,tfidf_greedy,0.500,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_320,nlp4lp_test_320,1,constrained,0.500,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_320,nlp4lp_test_320,1,opt_role_repair,0.500,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_320,nlp4lp_test_320,1,global_compat_full,0.500,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_320,nlp4lp_test_320,1,semantic_ir_repair,0.500,1.000,1.000,0,none
+Transportation / Shipping,nlp4lp_test_323,nlp4lp_test_323,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_323,nlp4lp_test_323,1,constrained,1.000,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_323,nlp4lp_test_323,1,opt_role_repair,1.000,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_323,nlp4lp_test_323,1,global_compat_full,1.000,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_323,nlp4lp_test_323,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_324,nlp4lp_test_324,1,tfidf_greedy,0.714,0.800,1.000,0,none
+Transportation / Shipping,nlp4lp_test_324,nlp4lp_test_324,1,constrained,0.714,0.800,1.000,0,none
+Transportation / Shipping,nlp4lp_test_324,nlp4lp_test_324,1,opt_role_repair,0.714,0.600,1.000,0,none
+Transportation / Shipping,nlp4lp_test_324,nlp4lp_test_324,1,global_compat_full,0.714,0.400,1.000,0,type_mismatch
+Transportation / Shipping,nlp4lp_test_324,nlp4lp_test_324,1,semantic_ir_repair,0.714,0.800,1.000,0,none
+Transportation / Shipping,nlp4lp_test_329,nlp4lp_test_329,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_329,nlp4lp_test_329,1,constrained,1.000,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_329,nlp4lp_test_329,1,opt_role_repair,1.000,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_329,nlp4lp_test_329,1,global_compat_full,1.000,1.000,1.000,1,none
+Transportation / Shipping,nlp4lp_test_329,nlp4lp_test_329,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_147,nlp4lp_test_147,1,tfidf_greedy,1.000,0.250,1.000,0,type_mismatch
+Worker / Staff Scheduling,nlp4lp_test_147,nlp4lp_test_147,1,constrained,1.000,0.250,1.000,0,type_mismatch
+Worker / Staff Scheduling,nlp4lp_test_147,nlp4lp_test_147,1,opt_role_repair,1.000,0.250,1.000,0,type_mismatch
+Worker / Staff Scheduling,nlp4lp_test_147,nlp4lp_test_147,1,global_compat_full,1.000,0.250,1.000,0,type_mismatch
+Worker / Staff Scheduling,nlp4lp_test_147,nlp4lp_test_147,1,semantic_ir_repair,0.750,0.333,1.000,0,type_mismatch
+Worker / Staff Scheduling,nlp4lp_test_163,nlp4lp_test_163,1,tfidf_greedy,1.000,0.500,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_163,nlp4lp_test_163,1,constrained,1.000,0.500,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_163,nlp4lp_test_163,1,opt_role_repair,0.875,0.571,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_163,nlp4lp_test_163,1,global_compat_full,0.875,0.429,1.000,0,type_mismatch
+Worker / Staff Scheduling,nlp4lp_test_163,nlp4lp_test_163,1,semantic_ir_repair,0.875,0.429,1.000,0,type_mismatch
+Worker / Staff Scheduling,nlp4lp_test_164,nlp4lp_test_164,1,tfidf_greedy,1.000,0.857,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_164,nlp4lp_test_164,1,constrained,0.857,1.000,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_164,nlp4lp_test_164,1,opt_role_repair,1.000,0.857,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_164,nlp4lp_test_164,1,global_compat_full,1.000,0.857,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_164,nlp4lp_test_164,1,semantic_ir_repair,1.000,0.857,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_177,nlp4lp_test_177,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_177,nlp4lp_test_177,1,constrained,1.000,1.000,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_177,nlp4lp_test_177,1,opt_role_repair,1.000,1.000,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_177,nlp4lp_test_177,1,global_compat_full,1.000,1.000,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_177,nlp4lp_test_177,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_213,nlp4lp_test_213,1,tfidf_greedy,1.000,0.800,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_213,nlp4lp_test_213,1,constrained,1.000,0.800,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_213,nlp4lp_test_213,1,opt_role_repair,1.000,0.800,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_213,nlp4lp_test_213,1,global_compat_full,1.000,0.800,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_213,nlp4lp_test_213,1,semantic_ir_repair,1.000,0.800,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_215,nlp4lp_test_215,1,tfidf_greedy,1.000,0.571,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_215,nlp4lp_test_215,1,constrained,1.000,0.571,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_215,nlp4lp_test_215,1,opt_role_repair,1.000,0.571,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_215,nlp4lp_test_215,1,global_compat_full,0.857,0.667,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_215,nlp4lp_test_215,1,semantic_ir_repair,0.857,0.667,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_22,nlp4lp_test_22,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_22,nlp4lp_test_22,1,constrained,1.000,0.667,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_22,nlp4lp_test_22,1,opt_role_repair,1.000,0.667,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_22,nlp4lp_test_22,1,global_compat_full,1.000,0.667,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_22,nlp4lp_test_22,1,semantic_ir_repair,1.000,0.667,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_222,nlp4lp_test_222,0,tfidf_greedy,0.000,0.000,0.000,0,retrieval_miss
+Worker / Staff Scheduling,nlp4lp_test_222,nlp4lp_test_222,0,constrained,0.000,0.000,0.000,0,retrieval_miss
+Worker / Staff Scheduling,nlp4lp_test_222,nlp4lp_test_222,0,opt_role_repair,0.000,0.000,0.000,0,retrieval_miss
+Worker / Staff Scheduling,nlp4lp_test_222,nlp4lp_test_222,0,global_compat_full,0.000,0.000,0.000,0,retrieval_miss
+Worker / Staff Scheduling,nlp4lp_test_222,nlp4lp_test_222,0,semantic_ir_repair,0.000,0.000,0.000,0,retrieval_miss
+Worker / Staff Scheduling,nlp4lp_test_223,nlp4lp_test_223,1,tfidf_greedy,0.857,0.667,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_223,nlp4lp_test_223,1,constrained,0.857,0.667,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_223,nlp4lp_test_223,1,opt_role_repair,0.857,0.500,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_223,nlp4lp_test_223,1,global_compat_full,0.857,0.500,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_223,nlp4lp_test_223,1,semantic_ir_repair,0.857,0.667,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_225,nlp4lp_test_225,1,tfidf_greedy,1.000,0.800,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_225,nlp4lp_test_225,1,constrained,1.000,0.800,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_225,nlp4lp_test_225,1,opt_role_repair,1.000,0.800,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_225,nlp4lp_test_225,1,global_compat_full,1.000,0.800,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_225,nlp4lp_test_225,1,semantic_ir_repair,1.000,0.800,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_230,nlp4lp_test_230,1,tfidf_greedy,1.000,0.857,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_230,nlp4lp_test_230,1,constrained,1.000,0.857,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_230,nlp4lp_test_230,1,opt_role_repair,0.714,0.800,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_230,nlp4lp_test_230,1,global_compat_full,0.714,0.800,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_230,nlp4lp_test_230,1,semantic_ir_repair,0.714,0.800,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_232,nlp4lp_test_232,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_232,nlp4lp_test_232,1,constrained,1.000,1.000,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_232,nlp4lp_test_232,1,opt_role_repair,1.000,1.000,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_232,nlp4lp_test_232,1,global_compat_full,1.000,1.000,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_232,nlp4lp_test_232,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_272,nlp4lp_test_272,1,tfidf_greedy,1.000,0.500,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_272,nlp4lp_test_272,1,constrained,1.000,0.167,1.000,0,type_mismatch
+Worker / Staff Scheduling,nlp4lp_test_272,nlp4lp_test_272,1,opt_role_repair,1.000,0.167,1.000,0,type_mismatch
+Worker / Staff Scheduling,nlp4lp_test_272,nlp4lp_test_272,1,global_compat_full,1.000,0.167,1.000,0,type_mismatch
+Worker / Staff Scheduling,nlp4lp_test_272,nlp4lp_test_272,1,semantic_ir_repair,1.000,0.167,1.000,0,type_mismatch
+Worker / Staff Scheduling,nlp4lp_test_276,nlp4lp_test_276,1,tfidf_greedy,0.833,0.400,1.000,0,type_mismatch
+Worker / Staff Scheduling,nlp4lp_test_276,nlp4lp_test_276,1,constrained,0.667,0.750,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_276,nlp4lp_test_276,1,opt_role_repair,0.833,0.600,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_276,nlp4lp_test_276,1,global_compat_full,0.833,0.600,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_276,nlp4lp_test_276,1,semantic_ir_repair,0.833,0.600,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_306,nlp4lp_test_306,1,tfidf_greedy,0.000,0.000,1.000,0,low_param_coverage
+Worker / Staff Scheduling,nlp4lp_test_306,nlp4lp_test_306,1,constrained,0.000,0.000,1.000,0,low_param_coverage
+Worker / Staff Scheduling,nlp4lp_test_306,nlp4lp_test_306,1,opt_role_repair,0.000,0.000,1.000,0,low_param_coverage
+Worker / Staff Scheduling,nlp4lp_test_306,nlp4lp_test_306,1,global_compat_full,0.000,0.000,1.000,0,low_param_coverage
+Worker / Staff Scheduling,nlp4lp_test_306,nlp4lp_test_306,1,semantic_ir_repair,0.000,0.000,1.000,0,low_param_coverage
+Worker / Staff Scheduling,nlp4lp_test_314,nlp4lp_test_314,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_314,nlp4lp_test_314,1,constrained,1.000,1.000,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_314,nlp4lp_test_314,1,opt_role_repair,1.000,1.000,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_314,nlp4lp_test_314,1,global_compat_full,1.000,1.000,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_314,nlp4lp_test_314,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_39,nlp4lp_test_39,1,tfidf_greedy,0.667,0.750,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_39,nlp4lp_test_39,1,constrained,0.667,0.750,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_39,nlp4lp_test_39,1,opt_role_repair,0.667,0.750,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_39,nlp4lp_test_39,1,global_compat_full,0.667,0.750,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_39,nlp4lp_test_39,1,semantic_ir_repair,0.667,0.750,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_4,nlp4lp_test_4,0,tfidf_greedy,0.000,0.000,0.000,0,retrieval_miss
+Worker / Staff Scheduling,nlp4lp_test_4,nlp4lp_test_4,0,constrained,0.000,0.000,0.000,0,retrieval_miss
+Worker / Staff Scheduling,nlp4lp_test_4,nlp4lp_test_4,0,opt_role_repair,0.000,0.000,0.000,0,retrieval_miss
+Worker / Staff Scheduling,nlp4lp_test_4,nlp4lp_test_4,0,global_compat_full,0.000,0.000,0.000,0,retrieval_miss
+Worker / Staff Scheduling,nlp4lp_test_4,nlp4lp_test_4,0,semantic_ir_repair,0.000,0.000,0.000,0,retrieval_miss
+Worker / Staff Scheduling,nlp4lp_test_49,nlp4lp_test_49,1,tfidf_greedy,0.667,1.000,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_49,nlp4lp_test_49,1,constrained,0.667,1.000,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_49,nlp4lp_test_49,1,opt_role_repair,0.667,1.000,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_49,nlp4lp_test_49,1,global_compat_full,0.667,1.000,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_49,nlp4lp_test_49,1,semantic_ir_repair,0.667,1.000,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_59,nlp4lp_test_59,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_59,nlp4lp_test_59,1,constrained,1.000,1.000,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_59,nlp4lp_test_59,1,opt_role_repair,1.000,0.833,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_59,nlp4lp_test_59,1,global_compat_full,1.000,0.833,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_59,nlp4lp_test_59,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_69,nlp4lp_test_69,1,tfidf_greedy,1.000,1.000,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_69,nlp4lp_test_69,1,constrained,1.000,1.000,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_69,nlp4lp_test_69,1,opt_role_repair,1.000,0.667,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_69,nlp4lp_test_69,1,global_compat_full,1.000,0.667,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_69,nlp4lp_test_69,1,semantic_ir_repair,1.000,1.000,1.000,1,none
+Worker / Staff Scheduling,nlp4lp_test_79,nlp4lp_test_79,1,tfidf_greedy,1.000,0.667,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_79,nlp4lp_test_79,1,constrained,1.000,0.667,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_79,nlp4lp_test_79,1,opt_role_repair,1.000,0.500,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_79,nlp4lp_test_79,1,global_compat_full,1.000,0.500,1.000,0,none
+Worker / Staff Scheduling,nlp4lp_test_79,nlp4lp_test_79,1,semantic_ir_repair,1.000,0.500,1.000,0,none
