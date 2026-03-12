@@ -1078,21 +1078,46 @@ for tag, words in [
 _OPERATOR_MIN_PATTERNS: tuple[str, ...] = (
     "at least", "atleast", "at_least",
     "no less than", "not less than",
-    "at minimum",
+    "no fewer than", "not fewer than",
+    "at minimum", "at a minimum",
+    "greater than or equal to", "greater than or equal",
 )
 _OPERATOR_MAX_PATTERNS: tuple[str, ...] = (
     "at most", "atmost", "at_most",
     "no more than", "not more than",
     "cannot exceed", "not to exceed",
     "up to", "upto", "limited to",
-    "at maximum",
+    "at maximum", "at a maximum",
+    "less than or equal to", "less than or equal",
+    "no greater than", "not greater than",
 )
+# Exclusive lower/upper-bound phrases (strict inequality: > or <).
+# These are checked AFTER the standard patterns with a negation guard
+# so that "no more than" (already an upper-bound pattern) is not
+# re-tagged as a lower bound via the substring "more than".
+_OPERATOR_MIN_EXCL_PATTERNS: tuple[str, ...] = (
+    "more than",
+    "greater than",
+)
+_OPERATOR_MAX_EXCL_PATTERNS: tuple[str, ...] = (
+    "fewer than",
+    "less than",
+)
+# Toggle to enable the full bound-role layer (bound_role field, wrong-direction
+# penalties, range detection, and swap repair).  Set to False to ablate.
+_ENABLE_BOUND_ROLE_LAYER: bool = True
 # Narrow context window (tokens each side) for operator-phrase detection.
 # A window of 3 keeps operator cues tight to the governing number; this is
 # enough to capture "at least NUMBER" (distance 2) and "minimum of NUMBER"
 # (distance 2–3) while preventing cross-constraint contamination when two
 # "at least"/"at most" clauses appear within the same 14-token span.
 _OPERATOR_NARROW_WINDOW: int = 3
+# Left-side operator window is wider than the right-side window because operator
+# phrases always precede the governed number.  A window of 6 is enough to capture
+# the longest standard phrase "greater than or equal to" (5 tokens) while still
+# preventing cross-contamination from the NEXT constraint's "at most" / "at least"
+# phrase when it appears 7+ tokens to the right of the current number.
+_OPERATOR_LEFT_WINDOW: int = 6
 
 # Directional narrow windows for is_per_unit / is_total_like detection.
 # The wide ±14 token context is too broad: in short optimization queries,
@@ -1217,30 +1242,58 @@ def _detect_operator_tags(
     """Detect min/max operator cues using phrase-level patterns.
 
     When *narrow_context_tokens* is supplied (recommended), phrase matching is
-    performed on that tight window (e.g. ±3 tokens around the governed number)
-    to avoid false positives from operator phrases in neighbouring constraints.
-    Single unambiguous words ("minimum", "maximum", "least", "most", "min",
-    "max", "lower", "upper") are also checked using the same narrow context.
+    performed on that asymmetric window around the governed number:
+      - LEFT  : _OPERATOR_LEFT_WINDOW  (=6) tokens, to capture long phrases like
+                "greater than or equal to" (5 tokens) that precede the number
+      - RIGHT : _OPERATOR_NARROW_WINDOW (=3) tokens, kept tight to prevent
+                contamination from the next constraint's operator phrases
 
-    The previous implementation used individual-word sets including "at", "to",
-    "no", "than" which are shared by both min and max patterns, causing both
-    tags to fire for nearly every mention and neutralising the bound-flip
-    penalty in downstream assignment.
+    Single unambiguous words ("minimum", "maximum", "least", "most", "min",
+    "max", "lower", "upper") are also checked using the same window.
+
+    Exclusive lower-bound phrases ("more than", "greater than") and exclusive
+    upper-bound phrases ("fewer than", "less than") are checked after the
+    standard patterns and only when not negated (e.g. "no more than" → max,
+    NOT additionally min via "more than").
     """
     ctx = narrow_context_tokens if narrow_context_tokens is not None else context_tokens
     ctx_str = " ".join(ctx)
     ctx_set = set(t.lower() for t in ctx if t)
     out: set[str] = set()
+
+    # Standard inclusive lower-bound patterns.
     if (
         any(p in ctx_str for p in _OPERATOR_MIN_PATTERNS)
         or ctx_set & {"least", "min", "minimum", "lower"}
     ):
         out.add("min")
+
+    # Standard inclusive upper-bound patterns.
     if (
         any(p in ctx_str for p in _OPERATOR_MAX_PATTERNS)
         or ctx_set & {"most", "max", "maximum", "upper"}
     ):
         out.add("max")
+
+    if _ENABLE_BOUND_ROLE_LAYER:
+        # Exclusive lower-bound phrases: "more than", "greater than".
+        # Guard: skip if negated ("no more than" / "not more than" → already max).
+        if "min" not in out:
+            for p in _OPERATOR_MIN_EXCL_PATTERNS:
+                if p in ctx_str:
+                    if not any(f"{neg} {p}" in ctx_str for neg in ("no", "not")):
+                        out.add("min")
+                        break
+
+        # Exclusive upper-bound phrases: "fewer than", "less than".
+        # Guard: skip if negated ("no fewer than" / "not less than" → already min).
+        if "max" not in out:
+            for p in _OPERATOR_MAX_EXCL_PATTERNS:
+                if p in ctx_str:
+                    if not any(f"{neg} {p}" in ctx_str for neg in ("no", "not")):
+                        out.add("max")
+                        break
+
     return frozenset(out)
 
 
@@ -1284,7 +1337,7 @@ def _extract_enriched_mentions(query: str, variant: str) -> list[MentionIR]:
         ctx_tokens = [c for c in ctx_tokens if c]
         semantic_role_tags = _context_to_semantic_tags(ctx_tokens)
         narrow_ctx_tokens = [
-            x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - _OPERATOR_NARROW_WINDOW) : i + _OPERATOR_NARROW_WINDOW + 1]
+            x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - _OPERATOR_LEFT_WINDOW) : i + _OPERATOR_NARROW_WINDOW + 1]
         ]
         narrow_ctx_tokens = [c for c in narrow_ctx_tokens if c]
         operator_tags = _detect_operator_tags(ctx_tokens, narrow_ctx_tokens)
@@ -1713,6 +1766,7 @@ OPT_ROLE_WEIGHTS = {
     # Quantity-role layer bonuses / penalties (added by explicit primary_role field).
     "count_mention_count_slot_bonus": 2.5,   # is_count_like mention → count-like slot
     "bound_direction_bonus": 1.5,            # lower-bound mention → min slot; upper → max
+    "bound_direction_penalty": -3.0,         # lower-bound mention → max-only slot (or vice versa)
     "count_mention_non_count_penalty": -1.5, # count-context mention → non-count slot
 }
 OPT_REPAIR_WEIGHTS = {
@@ -1753,6 +1807,7 @@ GCG_LOCAL_WEIGHTS: dict[str, float] = {
     # Quantity-role layer bonuses / penalties (added by explicit primary_role field).
     "count_mention_count_slot_bonus": 2.5,   # is_count_like mention → count-like slot
     "bound_direction_bonus": 1.5,            # lower-bound mention → min slot; upper → max
+    "bound_direction_penalty": -3.0,         # lower-bound mention → max-only slot (or vice versa)
     "count_mention_non_count_penalty": -1.5, # count-context mention → non-count slot
 }
 
@@ -1804,6 +1859,10 @@ class MentionOptIR:
     is_upper_bound_like: bool = False    # operator_tags contains "max"
     is_percent_like: bool = False        # type_bucket == "percent"
     primary_role: str = "generic"        # dominant role: count | total | coefficient | lower_bound | upper_bound | percent | generic
+    # Fine-grained bound role (requires _ENABLE_BOUND_ROLE_LAYER=True).
+    # Values: lower_inclusive | lower_exclusive | upper_inclusive | upper_exclusive
+    #         range_low | range_high | unknown
+    bound_role: str = "unknown"
 
 
 @dataclass(frozen=True)
@@ -1941,6 +2000,77 @@ def _compute_primary_role(
     return "generic"
 
 
+def _find_range_annotations(toks: list[str]) -> dict[int, str]:
+    """Detect range expressions and return a map from token index → bound role.
+
+    Handles:
+      - "between X and Y"  →  X: range_low,  Y: range_high
+      - "from X to Y"      →  X: range_low,  Y: range_high
+
+    Only fires when _ENABLE_BOUND_ROLE_LAYER is True.
+    """
+    if not _ENABLE_BOUND_ROLE_LAYER:
+        return {}
+    result: dict[int, str] = {}
+    clean = [t.lower().strip(".,;:()[]{}") for t in toks]
+    n = len(clean)
+
+    def _is_number_token(idx: int) -> bool:
+        raw = toks[idx].strip().rstrip(",;:()[]{}").rstrip(".")
+        return bool(NUM_TOKEN_RE.fullmatch(raw)) or clean[idx] in _WORD_FRACTIONS
+
+    for i, tok in enumerate(clean):
+        if tok in ("between", "from"):
+            bridge_words = {"and", "to", "-"} if tok == "between" else {"to"}
+            nums: list[int] = []
+            j = i + 1
+            while j < n and len(nums) < 2:
+                if _is_number_token(j):
+                    nums.append(j)
+                elif clean[j] not in bridge_words:
+                    break
+                j += 1
+            if len(nums) == 2:
+                result[nums[0]] = "range_low"
+                result[nums[1]] = "range_high"
+    return result
+
+
+def _compute_bound_role(
+    operator_tags: frozenset[str],
+    ctx_str: str,
+    range_annotation: str = "",
+) -> str:
+    """Compute fine-grained bound role.
+
+    Returns one of:
+      lower_inclusive  – at least, no fewer than, ≥
+      lower_exclusive  – more than, greater than, >
+      upper_inclusive  – at most, no more than, ≤
+      upper_exclusive  – fewer than, less than, <
+      range_low        – lower end of "between X and Y"
+      range_high       – upper end of "between X and Y"
+      unknown          – no operator cue detected
+    """
+    if not _ENABLE_BOUND_ROLE_LAYER:
+        return "unknown"
+    if range_annotation in ("range_low", "range_high"):
+        return range_annotation
+    if "min" in operator_tags and "max" not in operator_tags:
+        # If an inclusive standard pattern matched (e.g. "greater than or equal to"),
+        # do NOT also fire exclusive via the "greater than" sub-phrase.
+        _has_inclusive = any(p in ctx_str for p in _OPERATOR_MIN_PATTERNS)
+        if not _has_inclusive and any(p in ctx_str for p in _OPERATOR_MIN_EXCL_PATTERNS):
+            return "lower_exclusive"
+        return "lower_inclusive"
+    if "max" in operator_tags and "min" not in operator_tags:
+        _has_inclusive = any(p in ctx_str for p in _OPERATOR_MAX_PATTERNS)
+        if not _has_inclusive and any(p in ctx_str for p in _OPERATOR_MAX_EXCL_PATTERNS):
+            return "upper_exclusive"
+        return "upper_inclusive"
+    return "unknown"
+
+
 def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
     """Stage 1: Optimization-aware mention extraction with role tags.
 
@@ -1951,6 +2081,8 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
     """
     toks = query.split()
     sent_tokens = [t.lower().strip(".,;:()[]{}") for t in toks]
+    # Pre-compute range annotations ("between X and Y", "from X to Y").
+    range_annotations = _find_range_annotations(toks)
     mentions: list[MentionOptIR] = []
     mention_id = 0
     i = 0
@@ -2002,7 +2134,7 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
         ctx_str = " ".join(ctx_tokens)
         role_tags = _context_to_opt_role_tags(ctx_tokens)
         narrow_ctx_tokens = [
-            x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - _OPERATOR_NARROW_WINDOW) : i + _OPERATOR_NARROW_WINDOW + 1]
+            x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - _OPERATOR_LEFT_WINDOW) : i + _OPERATOR_NARROW_WINDOW + 1]
         ]
         narrow_ctx_tokens = [c for c in narrow_ctx_tokens if c]
         operator_tags = _detect_operator_tags(ctx_tokens, narrow_ctx_tokens)
@@ -2070,12 +2202,22 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
 
         # ── Quantity-role layer: derive explicit boolean role fields ──────────
         _is_count_like = _compute_is_count_like_mention(tok, role_tags, ctx_tokens)
+        # Range annotations override operator_tags for "between X and Y" / "from X to Y".
+        _range_anno = range_annotations.get(i, "")
+        if _range_anno == "range_low":
+            operator_tags = frozenset(operator_tags | {"min"})
+        elif _range_anno == "range_high":
+            operator_tags = frozenset(operator_tags | {"max"})
         _is_lower_bound = "min" in operator_tags
         _is_upper_bound = "max" in operator_tags
         _is_pct = tok.kind == "percent"
         _primary_role = _compute_primary_role(
             tok, _is_count_like, _is_lower_bound, _is_upper_bound, _is_pct, is_total_like, is_per_unit
         )
+        # Use the narrow (left-biased) context for bound_role to keep disambiguation
+        # tight to the governing operator phrase.
+        _narrow_ctx_str = " ".join(narrow_ctx_tokens)
+        _bound_role = _compute_bound_role(operator_tags, _narrow_ctx_str, _range_anno)
 
         mentions.append(
             MentionOptIR(
@@ -2100,6 +2242,7 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
                 is_upper_bound_like=_is_upper_bound,
                 is_percent_like=_is_pct,
                 primary_role=_primary_role,
+                bound_role=_bound_role,
             )
         )
         mention_id += 1
@@ -2201,10 +2344,17 @@ def _build_slot_opt_irs(expected_scalar: list[str]) -> list[SlotOptIR]:
         norm_tokens = _normalize_tokens(name)
         slot_role_tags = _slot_opt_role_expansion(name)
         op_pref: set[str] = set()
-        if any(x in name.lower() for x in ("min", "minimum", "atleast")):
+        n_lower_sl = name.lower()
+        if any(x in n_lower_sl for x in ("min", "minimum", "atleast")):
             op_pref.add("min")
-        if any(x in name.lower() for x in ("max", "maximum", "atmost")):
+        if any(x in n_lower_sl for x in ("max", "maximum", "atmost")):
             op_pref.add("max")
+        # Extended slot-name cues for bound direction (lower/upper/lowerbound/upperbound).
+        if _ENABLE_BOUND_ROLE_LAYER:
+            if any(x in n_lower_sl for x in ("lower", "lowerbound", "lower_bound")):
+                op_pref.add("min")
+            if any(x in n_lower_sl for x in ("upper", "upperbound", "upper_bound")):
+                op_pref.add("max")
         unit_pref: set[str] = set()
         if et == "percent":
             unit_pref.add("percent_marker")
@@ -2367,6 +2517,14 @@ def _score_mention_slot_opt(m: MentionOptIR, s: SlotOptIR) -> tuple[float, dict[
     if m.is_upper_bound_like and "max" in s.operator_preference:
         score += OPT_ROLE_WEIGHTS["bound_direction_bonus"]
         features["upper_bound_match"] = True
+    # Wrong-direction bound penalty: strong discouragement for cross-direction assignments.
+    if _ENABLE_BOUND_ROLE_LAYER:
+        if m.is_lower_bound_like and "max" in s.operator_preference and "min" not in s.operator_preference:
+            score += OPT_ROLE_WEIGHTS["bound_direction_penalty"]
+            features["bound_direction_wrong"] = True
+        elif m.is_upper_bound_like and "min" in s.operator_preference and "max" not in s.operator_preference:
+            score += OPT_ROLE_WEIGHTS["bound_direction_penalty"]
+            features["bound_direction_wrong"] = True
 
     score += OPT_ROLE_WEIGHTS["schema_prior_bonus"]
     features["schema_prior"] = True
@@ -2900,7 +3058,49 @@ def _opt_role_validate_and_repair(
                 used_mention_ids.add(mr.mention_id)
                 break
 
+    # ── Bound-flip swap repair ──────────────────────────────────────────────
+    if _ENABLE_BOUND_ROLE_LAYER:
+        _bound_swap_repair(filled, filled_in_repair, slots)
+
     return filled, filled_in_repair
+
+
+def _bound_swap_repair(
+    filled: dict[str, "MentionOptIR"],
+    filled_in_repair: dict[str, str],
+    slots: list["SlotOptIR"],
+) -> None:
+    """Post-assignment repair: swap min/max slot values when the assignment is inverted.
+
+    Triggered only when there is explicit operator evidence that the assignment is
+    wrong-direction (the mention assigned to the min slot has a "max" operator tag,
+    or the mention assigned to the max slot has a "min" operator tag) AND the
+    numerical values are inverted (assigned-min-value > assigned-max-value).
+
+    Conservative by design: if there is no operator evidence, no swap is made even
+    when the values look inverted, to avoid inadvertently altering legitimate cases
+    where min=max or where ordering is domain-specific.
+    """
+    min_slots = [s for s in slots if "min" in s.operator_preference and s.name in filled]
+    max_slots = [s for s in slots if "max" in s.operator_preference and s.name in filled]
+    for s_min in min_slots:
+        for s_max in max_slots:
+            m_min = filled.get(s_min.name)
+            m_max = filled.get(s_max.name)
+            if m_min is None or m_max is None:
+                continue
+            if m_min.value is None or m_max.value is None:
+                continue
+            if m_min.value <= m_max.value:
+                continue  # ordering is already correct
+            # Values are inverted (min > max).  Only swap when operator evidence confirms it.
+            min_m_has_max_cue = "max" in m_min.operator_tags
+            max_m_has_min_cue = "min" in m_max.operator_tags
+            if min_m_has_max_cue or max_m_has_min_cue:
+                filled[s_min.name] = m_max
+                filled[s_max.name] = m_min
+                filled_in_repair[s_min.name] = "bound_swap_repair"
+                filled_in_repair[s_max.name] = "bound_swap_repair"
 
 
 # --- Relation-aware + incremental admissible (RAT-SQL / PICARD inspired) ---
@@ -3432,6 +3632,14 @@ def _gcg_local_score(m: "MentionOptIR", s: "SlotOptIR") -> tuple[float, dict[str
     if m.is_upper_bound_like and "max" in s.operator_preference:
         score += GCG_LOCAL_WEIGHTS["bound_direction_bonus"]
         features["upper_bound_match"] = True
+    # Wrong-direction bound penalty: strong discouragement for cross-direction assignments.
+    if _ENABLE_BOUND_ROLE_LAYER:
+        if m.is_lower_bound_like and "max" in s.operator_preference and "min" not in s.operator_preference:
+            score += GCG_LOCAL_WEIGHTS["bound_direction_penalty"]
+            features["bound_direction_wrong"] = True
+        elif m.is_upper_bound_like and "min" in s.operator_preference and "max" not in s.operator_preference:
+            score += GCG_LOCAL_WEIGHTS["bound_direction_penalty"]
+            features["bound_direction_wrong"] = True
 
     score += GCG_LOCAL_WEIGHTS["schema_prior_bonus"]
     features["schema_prior"] = True
@@ -3690,6 +3898,11 @@ def _run_global_consistency_grounding(
     assignments, slot_scores, debug, top_assignments = _gcg_beam_search(
         mentions, slots, local_scores, local_features, beam_width=beam_width
     )
+
+    # ── Bound-flip swap repair: correct inverted min/max assignments ──────────
+    gcg_filled_in_repair: dict[str, str] = {k: "initial" for k in assignments}
+    if _ENABLE_BOUND_ROLE_LAYER:
+        _bound_swap_repair(assignments, gcg_filled_in_repair, slots)
 
     for slot_name, mr in assignments.items():
         filled_values[slot_name] = mr.tok.value if mr.tok.value is not None else mr.tok.raw
