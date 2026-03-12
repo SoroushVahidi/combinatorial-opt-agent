@@ -68,6 +68,24 @@ for tens_word, tens_val in _TENS.items():
         if ones_val > 0:
             _WORD_TO_NUM[f"{tens_word}-{ones_word}"] = tens_val + ones_val
 
+# ── Fraction word recognition ─────────────────────────────────────────────────
+# Maps English fraction/rate words to their decimal values (in [0, 1]).
+# These produce NumTok(kind="percent") because they represent fractional quantities.
+# Keep this table conservative: only unambiguous fraction words.
+_WORD_FRACTIONS: dict[str, float] = {
+    "half":           0.5,
+    "halves":         0.5,
+    "third":          1.0 / 3.0,
+    "thirds":         1.0 / 3.0,
+    "quarter":        0.25,
+    "quarters":       0.25,
+    "one-half":       0.5,
+    "one-third":      1.0 / 3.0,
+    "one-quarter":    0.25,
+    "two-thirds":     2.0 / 3.0,
+    "three-quarters": 0.75,
+}
+
 # ── Enumeration-derived count extraction ─────────────────────────────────────
 # Words that are never valid enumeration items (articles, prepositions, …).
 _ENUM_STOP_WORDS: frozenset[str] = frozenset({
@@ -133,6 +151,8 @@ def _extract_enum_derived_counts(query: str) -> list[tuple[float, str, list[str]
         if hw in _ENUM_STOP_WORDS:
             return False
         if _WORD_TO_NUM.get(hw) is not None:
+            return False
+        if hw in _WORD_FRACTIONS:
             return False
         return True
 
@@ -440,8 +460,24 @@ def _extract_num_tokens(query: str, variant: str) -> list[NumTok]:
         clean = w.lower().strip(".,;:()[]{}\"'")
         wval = _word_to_number(clean)
         if wval is not None:
+<<<<<<< HEAD
             kind = "int" if float(int(wval)) == wval else "float"
             out.append(NumTok(raw=w, value=wval, kind=kind))
+=======
+            j = i + consumed  # index of first token after the span
+            raw_surface = " ".join(toks[i:j])
+            out.append(_classify_word_num_tok(raw_surface, wval, ctx, toks, j))
+            i += consumed
+            continue
+        # Fraction word (half, one-third, quarter, …) → kind="percent"
+        _w_clean = w.lower().strip(".,;:()[]{}\"'")
+        _frac_val = _WORD_FRACTIONS.get(_w_clean)
+        if _frac_val is not None:
+            out.append(NumTok(raw=_w_clean, value=_frac_val, kind="percent"))
+            i += 1
+            continue
+        i += 1
+>>>>>>> 626d4d2 (feat: strengthen percent vs int/float type incompatibility in grounding pipeline)
     return out
 
 
@@ -580,7 +616,7 @@ def _expected_type(param_name: str) -> str:
     token as a full type-match for a float slot.
     """
     n = (param_name or "").lower()
-    if any(s in n for s in ("percent", "percentage", "rate", "fraction")):
+    if any(s in n for s in ("percent", "percentage", "rate", "fraction", "pct", "ratio", "proportion", "share")):
         return "percent"
     # Primary integer indicators (checked before currency to preserve existing behaviour)
     if any(s in n for s in ("num", "count", "types", "items", "ingredients", "nodes", "edges")):
@@ -700,11 +736,41 @@ def _is_scalar(x: Any) -> bool:
 
 
 def _is_type_incompatible(expected: str, kind: str) -> bool:
+<<<<<<< HEAD
     """Hard incompatibilities between expected slot type and mention kind."""
     if expected == "percent" and kind in {"currency"}:
         return True
     if expected == "currency" and kind in {"percent"}:
         return True
+=======
+    """Hard incompatibilities between expected slot type and mention kind.
+
+    Rules (extended for type-consistent assignment):
+    - percent <-> currency:  hard incompatible (already enforced)
+    - int/float -> percent:  hard incompatible (a bare integer/decimal is NOT a
+      percentage value; percent tokens are produced by context-aware extraction
+      so this would only fire when the token truly lacks a percent signal)
+    - percent -> int:        hard incompatible (a percentage fraction is NOT a
+      discrete integer count)
+    - percent -> float:      hard incompatible (a percent mention cannot fill a
+      generic float slot; percent slots are always typed "percent" by _expected_type)
+    - float → count-like slot: handled separately in _score_mention_slot and
+      _gcg_local_score (non-integer decimals cannot be cardinality counts)
+    All other cross-type pairs (e.g. currency <-> int/float) are handled via
+    soft scoring (loose-match bonus/penalty).
+    """
+    if expected == "percent" and kind in {"currency", "int", "float"}:
+        return True
+    if expected == "currency" and kind in {"percent"}:
+        return True
+    if expected == "int" and kind == "percent":
+        return True
+    # A percent mention cannot fill a float slot unless the slot is typed percent.
+    # Percent slots always have expected == "percent" (via _expected_type), so this
+    # rule fires only for genuinely float-typed slots receiving a percent mention.
+    if expected == "float" and kind == "percent":
+        return True
+>>>>>>> 626d4d2 (feat: strengthen percent vs int/float type incompatibility in grounding pipeline)
     return False
 
 
@@ -1071,7 +1137,7 @@ def _slot_semantic_expansion(param_name: str) -> frozenset[str]:
         tags.update(["minimum", "at_least", "lower_bound"])
     if "max" in n or "maximum" in n or "atmost" in n:
         tags.update(["maximum", "at_most", "upper_bound"])
-    if any(w in n for w in ("percent", "percentage", "rate", "fraction", "ratio", "share")):
+    if any(w in n for w in ("percent", "percentage", "rate", "fraction", "ratio", "share", "pct", "proportion")):
         tags.update(["percentage", "ratio", "share", "rate", "proportion"])
     # Per-unit / coefficient semantics — helps score against "per", "each" cues
     if any(w in n for w in ("per", "each", "unit", "perunit")):
@@ -1704,20 +1770,29 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
                 ctx_tokens = [c for c in ctx_tokens if c]
                 tok = _parse_num_token(w, set(ctx_tokens))
             else:
-                # ── written-word number (single or multi-token span) ─────────
-                wval, consumed = _parse_word_num_span(toks, i)
-                if wval is None:
-                    i += 1
-                    continue
-                span_size = consumed
-                j = i + consumed  # first token after the span
-                # Use wider context centred on span start, same window as digit path.
-                ctx_tokens = [
-                    x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 14) : i + 15]
-                ]
-                ctx_tokens = [c for c in ctx_tokens if c]
-                raw_surface = " ".join(toks[i:j])
-                tok = _classify_word_num_tok(raw_surface, wval, set(ctx_tokens), toks, j)
+                # ── fraction word (half, one-third, quarter, …) ─────────────
+                # Try the multi-token fraction form first (e.g. "one-half"),
+                # then fall back to single-token forms (e.g. "half").
+                _w_clean = w.lower().strip(".,;:()[]{}\"'")
+                _frac_val = _WORD_FRACTIONS.get(_w_clean)
+                if _frac_val is not None:
+                    tok = NumTok(raw=_w_clean, value=_frac_val, kind="percent")
+                    # span_size stays 1 (single-token fraction word)
+                else:
+                    # ── written-word number (single or multi-token span) ─────────
+                    wval, consumed = _parse_word_num_span(toks, i)
+                    if wval is None:
+                        i += 1
+                        continue
+                    span_size = consumed
+                    j = i + consumed  # first token after the span
+                    # Use wider context centred on span start, same window as digit path.
+                    ctx_tokens = [
+                        x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 14) : i + 15]
+                    ]
+                    ctx_tokens = [c for c in ctx_tokens if c]
+                    raw_surface = " ".join(toks[i:j])
+                    tok = _classify_word_num_tok(raw_surface, wval, set(ctx_tokens), toks, j)
 
         ctx_tokens = [
             x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 14) : i + 15]
@@ -1890,7 +1965,7 @@ def _slot_opt_role_expansion(param_name: str) -> frozenset[str]:
             tags.update(["total_budget", "unit_cost"])
         else:
             tags.update(["unit_cost", "objective_coeff"])
-    if "percent" in n or "ratio" in n or "fraction" in n or "share" in n or "rate" in n:
+    if "percent" in n or "ratio" in n or "fraction" in n or "share" in n or "rate" in n or "pct" in n or "proportion" in n:
         tags.update(["ratio_constraint", "percentage_constraint", "share_constraint"])
     if "min" in n or "minimum" in n or "atleast" in n:
         tags.update(["lower_bound", "minimum_requirement", "demand_requirement"])
