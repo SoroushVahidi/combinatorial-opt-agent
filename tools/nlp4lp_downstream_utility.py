@@ -898,6 +898,20 @@ _TOTAL_RIGHT_CUES: frozenset[str] = frozenset({
 PERCENT_MARKER_TOKENS = {"%", "percent", "percentage", "pct"}
 CURRENCY_MARKER_TOKENS = {"$", "€", "dollar", "dollars", "usd", "eur", "cost", "price", "budget"}
 
+# Context nouns that signal a count/cardinality interpretation when appearing
+# near a small positive integer (e.g. "three types", "two products").
+# Used by the quantity-role layer to derive is_count_like on MentionOptIR.
+_COUNT_CONTEXT_NOUNS: frozenset[str] = frozenset({
+    "type", "types", "kind", "kinds", "product", "products", "item", "items",
+    "resource", "resources", "material", "materials", "ingredient", "ingredients",
+    "machine", "machines", "worker", "workers", "factory", "factories",
+    "category", "categories", "option", "options", "group", "groups",
+    "variant", "variants", "component", "components", "mix", "mixes", "blend", "blends",
+    "mode", "modes", "route", "routes", "vehicle", "vehicles", "part", "parts",
+    "crop", "crops", "food", "foods", "drug", "drugs", "plant", "plants",
+    "class", "classes", "good", "goods", "alloy", "alloys", "fuel", "fuels",
+})
+
 # Weights for semantic IR scoring (interpretable, additive).
 SEMANTIC_IR_WEIGHTS = {
     "type_exact_bonus": 4.0,
@@ -1435,6 +1449,10 @@ OPT_ROLE_WEIGHTS = {
     "total_to_coeff_local_penalty": -2.0,  # total mention → coefficient-like slot
     "weak_match_penalty": -1.0,
     "schema_prior_bonus": 0.5,
+    # Quantity-role layer bonuses / penalties (added by explicit primary_role field).
+    "count_mention_count_slot_bonus": 2.5,   # is_count_like mention → count-like slot
+    "bound_direction_bonus": 1.5,            # lower-bound mention → min slot; upper → max
+    "count_mention_non_count_penalty": -1.5, # count-context mention → non-count slot
 }
 OPT_REPAIR_WEIGHTS = {
     "role_plausibility_bonus": 0.6,
@@ -1473,7 +1491,14 @@ GCG_LOCAL_WEIGHTS: dict[str, float] = {
     "count_large_penalty_threshold": 50, # integers > this get the large-int penalty
     # Enumeration-derived count candidates must not fill non-count slots.
     "derived_count_non_count_penalty": -1e9,
+<<<<<<< HEAD
 >>>>>>> 0357a57 (feat: add enumeration-derived count extraction for implicit cardinality grounding)
+=======
+    # Quantity-role layer bonuses / penalties (added by explicit primary_role field).
+    "count_mention_count_slot_bonus": 2.5,   # is_count_like mention → count-like slot
+    "bound_direction_bonus": 1.5,            # lower-bound mention → min slot; upper → max
+    "count_mention_non_count_penalty": -1.5, # count-context mention → non-count slot
+>>>>>>> 4d14d3c (feat: add explicit quantity-role layer (is_count_like, primary_role, bound flags) to MentionOptIR with scoring bonuses)
 }
 
 # Global consistency rewards/penalties applied to a full assignment as a whole.
@@ -1516,6 +1541,14 @@ class MentionOptIR:
     context_tokens: list[str]
     sentence_tokens: list[str]
     tok: NumTok
+    # ── Quantity-role layer (explicit primary-role signals) ──────────────────
+    # These are derived from type_bucket, operator_tags, role_tags, and context
+    # and provide clean boolean access for role-aware scoring without extra lookups.
+    is_count_like: bool = False          # small int with count-context nouns nearby, or derived_count
+    is_lower_bound_like: bool = False    # operator_tags contains "min"
+    is_upper_bound_like: bool = False    # operator_tags contains "max"
+    is_percent_like: bool = False        # type_bucket == "percent"
+    primary_role: str = "generic"        # dominant role: count | total | coefficient | lower_bound | upper_bound | percent | generic
 
 
 @dataclass(frozen=True)
@@ -1587,6 +1620,69 @@ def _detect_opt_unit_tags(tok: NumTok, context_tokens: list[str]) -> frozenset[s
     if tok.kind == "float" or (tok.value is not None and float(int(tok.value)) != tok.value):
         out.add("decimal_marker")
     return frozenset(out)
+
+
+def _compute_is_count_like_mention(
+    tok: NumTok,
+    role_tags: frozenset[str],
+    context_tokens: list[str],
+) -> bool:
+    """Return True when this mention is likely a count/cardinality value.
+
+    Criteria (any one is sufficient):
+    - Marked as a derived-count from enumeration analysis (reliable signal).
+    - Small positive integer (value in [1, 20], int-valued) AND at least one
+      count-context noun appears in the nearby context tokens (e.g. "three types").
+
+    Importantly, ``cardinality_limit`` in role_tags is NOT sufficient on its own
+    because it can fire for "units" in "100 units must be produced" (a production
+    target, not a cardinality count).  Only explicit ``derived_count`` tagging or
+    the small-int + count-noun rule produces a reliable count signal.
+    """
+    if "derived_count" in role_tags:
+        return True
+    val = tok.value
+    if val is None:
+        return False
+    if not (1 <= val <= 20 and float(int(val)) == val):
+        return False
+    ctx_set = set(t.lower().strip(".,;:()[]{}") for t in context_tokens if t)
+    return bool(ctx_set & _COUNT_CONTEXT_NOUNS)
+
+
+def _compute_primary_role(
+    tok: NumTok,
+    is_count_like: bool,
+    is_lower_bound_like: bool,
+    is_upper_bound_like: bool,
+    is_percent_like: bool,
+    is_total_like: bool,
+    is_per_unit: bool,
+) -> str:
+    """Synthesize a single primary-role string from the binary role signals.
+
+    Priority order (from most to least specific):
+      1. count           – explicit cardinality
+      2. percent         – fractional/rate value
+      3. lower_bound     – min/at-least constraint
+      4. upper_bound     – max/at-most constraint
+      5. coefficient     – per-unit coefficient
+      6. total           – global total/capacity/budget
+      7. generic         – fallback
+    """
+    if is_count_like:
+        return "count"
+    if is_percent_like:
+        return "percent"
+    if is_lower_bound_like and not is_upper_bound_like:
+        return "lower_bound"
+    if is_upper_bound_like and not is_lower_bound_like:
+        return "upper_bound"
+    if is_per_unit and not is_total_like:
+        return "coefficient"
+    if is_total_like and not is_per_unit:
+        return "total"
+    return "generic"
 
 
 def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
@@ -1693,6 +1789,15 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
             t for t in ctx_tokens if t in {"item", "product", "unit", "each", "demand", "quantity"}
         )
 
+        # ── Quantity-role layer: derive explicit boolean role fields ──────────
+        _is_count_like = _compute_is_count_like_mention(tok, role_tags, ctx_tokens)
+        _is_lower_bound = "min" in operator_tags
+        _is_upper_bound = "max" in operator_tags
+        _is_pct = tok.kind == "percent"
+        _primary_role = _compute_primary_role(
+            tok, _is_count_like, _is_lower_bound, _is_upper_bound, _is_pct, is_total_like, is_per_unit
+        )
+
         mentions.append(
             MentionOptIR(
                 mention_id=mention_id,
@@ -1711,6 +1816,11 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
                 context_tokens=ctx_tokens,
                 sentence_tokens=sent_tokens,
                 tok=tok,
+                is_count_like=_is_count_like,
+                is_lower_bound_like=_is_lower_bound,
+                is_upper_bound_like=_is_upper_bound,
+                is_percent_like=_is_pct,
+                primary_role=_primary_role,
             )
         )
         mention_id += 1
@@ -1750,6 +1860,11 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
                 context_tokens=_ectx,
                 sentence_tokens=sent_tokens,
                 tok=_etok,
+                is_count_like=True,
+                is_lower_bound_like=False,
+                is_upper_bound_like=False,
+                is_percent_like=False,
+                primary_role="count",
             )
         )
         mention_id += 1
@@ -1962,6 +2077,24 @@ def _score_mention_slot_opt(m: MentionOptIR, s: SlotOptIR) -> tuple[float, dict[
     if s.is_coefficient_like and not s.is_total_like and m.is_total_like and not m.is_per_unit:
         score += OPT_ROLE_WEIGHTS["total_to_coeff_local_penalty"]
         features["total_to_coeff_penalty"] = True
+
+    # ── Quantity-role layer: primary_role bonuses / penalties ─────────────────
+    # count-like mention + count-like slot → strong bonus
+    if m.is_count_like and s.is_count_like:
+        score += OPT_ROLE_WEIGHTS["count_mention_count_slot_bonus"]
+        features["count_role_match"] = True
+    # count-context mention (not a percent/currency/derived) → non-count slot: soft penalty
+    if m.is_count_like and not s.is_count_like and not m.is_percent_like:
+        score += OPT_ROLE_WEIGHTS["count_mention_non_count_penalty"]
+        features["count_to_non_count_penalty"] = True
+    # lower-bound mention → slot that expects a minimum
+    if m.is_lower_bound_like and "min" in s.operator_preference:
+        score += OPT_ROLE_WEIGHTS["bound_direction_bonus"]
+        features["lower_bound_match"] = True
+    # upper-bound mention → slot that expects a maximum
+    if m.is_upper_bound_like and "max" in s.operator_preference:
+        score += OPT_ROLE_WEIGHTS["bound_direction_bonus"]
+        features["upper_bound_match"] = True
 
     score += OPT_ROLE_WEIGHTS["schema_prior_bonus"]
     features["schema_prior"] = True
@@ -3006,6 +3139,20 @@ def _gcg_local_score(m: "MentionOptIR", s: "SlotOptIR") -> tuple[float, dict[str
     if s.is_coefficient_like and not s.is_total_like and m.is_total_like and not m.is_per_unit:
         score += GCG_LOCAL_WEIGHTS["total_to_coeff_local_penalty"]
         features["total_to_coeff_penalty"] = True
+
+    # ── Quantity-role layer: primary_role bonuses / penalties ─────────────────
+    if m.is_count_like and s.is_count_like:
+        score += GCG_LOCAL_WEIGHTS["count_mention_count_slot_bonus"]
+        features["count_role_match"] = True
+    if m.is_count_like and not s.is_count_like and not m.is_percent_like:
+        score += GCG_LOCAL_WEIGHTS["count_mention_non_count_penalty"]
+        features["count_to_non_count_penalty"] = True
+    if m.is_lower_bound_like and "min" in s.operator_preference:
+        score += GCG_LOCAL_WEIGHTS["bound_direction_bonus"]
+        features["lower_bound_match"] = True
+    if m.is_upper_bound_like and "max" in s.operator_preference:
+        score += GCG_LOCAL_WEIGHTS["bound_direction_bonus"]
+        features["upper_bound_match"] = True
 
     score += GCG_LOCAL_WEIGHTS["schema_prior_bonus"]
     features["schema_prior"] = True
