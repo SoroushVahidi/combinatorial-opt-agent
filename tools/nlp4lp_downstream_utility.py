@@ -379,7 +379,11 @@ class SlotRecord:
 
 
 def _parse_num_token(tok: str, context_words: set[str]) -> NumTok:
-    t = tok.strip()
+    # Strip whitespace, then strip trailing punctuation characters so that
+    # end-of-sentence numbers like "5000." are recognised correctly.
+    # We intentionally strip a broad set of punctuation (not just sentence-ending
+    # '.!?') because tokens can have any trailing bracket, comma, or colon.
+    t = tok.strip().rstrip(".,;:()[]{}")
     if t == "<num>":
         return NumTok(raw=t, value=None, kind="unknown")
     has_dollar = "$" in t
@@ -423,7 +427,7 @@ def _extract_num_tokens(query: str, variant: str) -> list[NumTok]:
         # local context window (centred on span start)
         ctx = set(x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 3) : i + 4])
         # Digit-based token (single token only)
-        m = NUM_TOKEN_RE.fullmatch(w.strip())
+        m = NUM_TOKEN_RE.fullmatch(w.strip().rstrip(",;:()[]{}").rstrip("."))
         if m:
             out.append(_parse_num_token(w, ctx))
             i += 1
@@ -510,7 +514,7 @@ def _extract_num_mentions(query: str, variant: str) -> list[MentionRecord]:
             continue
 
         # Digit-based token (single token only — no multi-token merging needed).
-        m = NUM_TOKEN_RE.fullmatch(w.strip())
+        m = NUM_TOKEN_RE.fullmatch(w.strip().rstrip(",;:()[]{}").rstrip("."))
         if m:
             tok = _parse_num_token(w, set(ctx_tokens))
             mentions.append(
@@ -943,6 +947,39 @@ _OPERATOR_MAX_PATTERNS: tuple[str, ...] = (
 # "at least"/"at most" clauses appear within the same 14-token span.
 _OPERATOR_NARROW_WINDOW: int = 3
 
+# Directional narrow windows for is_per_unit / is_total_like detection.
+# The wide ±14 token context is too broad: in short optimization queries,
+# a global-total cue ("available") and a per-unit cue ("each") can appear
+# within the same window, causing every mention to be flagged as both.
+# Using LEFT ±4 for verbs/determiners and RIGHT ±7 for trailing modifiers
+# keeps each cue tied to the specific mention it governs.
+_LOCALITY_LEFT_WINDOW: int = 4
+_LOCALITY_RIGHT_WINDOW: int = 7
+
+# Per-unit governing verbs: appear as the verb immediately before a coefficient.
+# "requires 2 hours", "uses 3 liters", "costs $12 per unit"
+_PER_UNIT_LEFT_VERBS: frozenset[str] = frozenset({
+    "requires", "require", "needed", "takes", "take", "uses", "use",
+    "needs", "need", "consumes", "consume", "produces", "produce",
+    "contains", "contain", "costs", "cost", "earns", "earn",
+    "yields", "yield",
+})
+# Per-unit determiners: appear left of the governed noun/number.
+# "each X", "per X", "every X", "for each X"
+_PER_UNIT_LEFT_DETERMINERS: frozenset[str] = frozenset({
+    "each", "per", "every",
+})
+# Total/aggregate left cues: "has N", "budget is N", "spend at most N"
+_TOTAL_LEFT_CUES: frozenset[str] = frozenset({
+    "total", "budget", "has", "have", "spend", "spent",
+})
+# Total/aggregate right cues: "N available", "N capacity", "N total"
+# Note: "budget" is NOT here — it is a left-side cue ("budget is N", "the budget N"),
+# not a word that typically follows the global amount.
+_TOTAL_RIGHT_CUES: frozenset[str] = frozenset({
+    "available", "capacity", "limit", "total", "supply",
+})
+
 # Unit/marker detection.
 PERCENT_MARKER_TOKENS = {"%", "percent", "percentage", "pct"}
 CURRENCY_MARKER_TOKENS = {"$", "€", "dollar", "dollars", "usd", "eur", "cost", "price", "budget"}
@@ -1070,7 +1107,7 @@ def _extract_enriched_mentions(query: str, variant: str) -> list[MentionIR]:
         if w == "<num>" and variant in ("noisy", "nonum"):
             tok = NumTok(raw=w, value=None, kind="unknown")
         else:
-            m = NUM_TOKEN_RE.fullmatch(w.strip())
+            m = NUM_TOKEN_RE.fullmatch(w.strip().rstrip(",;:()[]{}").rstrip("."))
             if not m:
                 continue
             ctx_tokens = [
@@ -1508,6 +1545,8 @@ OPT_ROLE_WEIGHTS = {
     "unit_match_bonus": 2.0,
     "entity_resource_overlap": 0.8,
     "coefficient_vs_total_bonus": 1.2,
+    "coeff_to_total_local_penalty": -2.0,  # per-unit mention → total-like slot
+    "total_to_coeff_local_penalty": -2.0,  # total mention → coefficient-like slot
     "weak_match_penalty": -1.0,
     "schema_prior_bonus": 0.5,
 }
@@ -1535,6 +1574,8 @@ GCG_LOCAL_WEIGHTS: dict[str, float] = {
     "unit_match_bonus": 2.0,
     "entity_resource_overlap": 0.8,
     "coefficient_vs_total_bonus": 1.2,
+    "coeff_to_total_local_penalty": -2.0,  # per-unit mention → total-like slot
+    "total_to_coeff_local_penalty": -2.0,  # total mention → coefficient-like slot
     "schema_prior_bonus": 0.5,
     "weak_match_penalty": -1.0,
     # Count-like slot priors: favour small cardinalities, penalise large values.
@@ -1679,7 +1720,7 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
             tok = NumTok(raw=w, value=None, kind="unknown")
         else:
             # ── digit-based token ────────────────────────────────────────────
-            m = NUM_TOKEN_RE.fullmatch(w.strip())
+            m = NUM_TOKEN_RE.fullmatch(w.strip().rstrip(",;:()[]{}").rstrip("."))
             if m:
                 ctx_tokens = [
                     x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 14) : i + 15]
@@ -1716,13 +1757,57 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
         operator_tags = _detect_operator_tags(ctx_tokens, narrow_ctx_tokens)
         unit_tags = _detect_opt_unit_tags(tok, ctx_tokens)
         fragment_type = _classify_fragment_type(ctx_tokens)
-        is_per_unit = any(
-            p.replace(" ", "") in ctx_str.replace(" ", "") or p in ctx_str
-            for p in ["each", "per unit", "per item", "for each", "per"]
+        # Use directional narrow windows to detect per-unit vs total-like role,
+        # preventing cross-contamination when both cue types appear in the same
+        # wide context window (e.g. "2000 hours available" and "each requires 2").
+        _left_narrow = [
+            x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - _LOCALITY_LEFT_WINDOW) : i]
+            if x.strip(".,;:()[]{}").strip()
+        ]
+        # Right context: collect up to _LOCALITY_RIGHT_WINDOW tokens but stop at
+        # sentence boundaries.  A sentence boundary is detected when a token ends
+        # with '.' / '!' / '?' AND the *next* token starts with an uppercase letter.
+        # This prevents cues in a following sentence (e.g. "available" in
+        # "2 hours. There are 2000 hours available.") from contaminating the right
+        # context of a per-unit coefficient that belongs to the preceding sentence.
+        _right_narrow: list[str] = []
+        _right_raw_window = toks[i + span_size : i + span_size + _LOCALITY_RIGHT_WINDOW]
+        for _k, _tok_raw in enumerate(_right_raw_window):
+            _tok_clean = _tok_raw.lower().strip(".,;:()[]{}").strip()
+            if _tok_clean:
+                _right_narrow.append(_tok_clean)
+            # Sentence boundary: period / ! / ? at end of token AND next token is
+            # capitalised (new sentence starts).  Abbreviations like "sq." or "ft."
+            # are typically followed by lowercase, so they do not trigger a break.
+            _stripped_raw = _tok_raw.rstrip()
+            if (
+                _stripped_raw.endswith((".", "!", "?"))
+                and _k + 1 < len(_right_raw_window)
+                and _right_raw_window[_k + 1][:1].isupper()
+                # Guard against an empty next token producing no uppercase char
+                and bool(_right_raw_window[_k + 1].strip())
+            ):
+                break
+        _left_set = set(_left_narrow)
+        _right_set = set(_right_narrow)
+        _left_str = " ".join(_left_narrow)
+        # Per-unit determiner window is narrower (±2) than the verb window (±4).
+        # Governing verbs like "requires" appear immediately before the number (-1 to -2),
+        # but determiners like "each" can appear further back (-3 to -4) in "each X requires N".
+        # The narrow determiner window prevents cross-sentence contamination where "each"
+        # ends one clause and the next clause starts with a global total.
+        _left_det_set = set(
+            x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 2) : i]
+            if x.strip(".,;:()[]{}").strip()
+        )
+        is_per_unit = (
+            bool(_left_set & _PER_UNIT_LEFT_VERBS)
+            or bool(_left_det_set & _PER_UNIT_LEFT_DETERMINERS)
+            or any(p in _left_str for p in ["per unit", "per item", "for each", "for every"])
         )
         is_total_like = bool(
-            ctx_set & {"total", "budget", "available", "capacity", "limit", "amount"}
-            or "total " in ctx_str or "available " in ctx_str
+            _left_set & _TOTAL_LEFT_CUES
+            or _right_set & _TOTAL_RIGHT_CUES
         )
         entity_tokens = frozenset(t for t in ctx_tokens if len(t) > 2 and t in OPT_ROLE_WORDS)
         resource_tokens = frozenset(
@@ -1835,7 +1920,16 @@ def _build_slot_opt_irs(expected_scalar: list[str]) -> list[SlotOptIR]:
             or "availability" in n_lower
             or "capacity" in n_lower
         )
-        is_coeff = bool(slot_role_tags & {"unit_cost", "unit_profit", "unit_revenue", "resource_consumption"})
+        # A slot is coefficient-like when it holds a per-unit value such as cost/profit per item
+        # or resource consumption per unit (e.g. HoursPerProduct, CostPerUnit).
+        # However, if the slot is already total-like (e.g. LaborHoursAvailable), the
+        # resource_consumption tag reflects the domain topic, not the per-unit role.
+        # Exclude total-like slots from coefficient classification to prevent a total-capacity
+        # slot from attracting per-unit mentions via coefficient_vs_total_bonus.
+        is_coeff = (
+            bool(slot_role_tags & {"unit_cost", "unit_profit", "unit_revenue", "resource_consumption"})
+            and not is_total
+        )
 
         slot_irs.append(
             SlotOptIR(
@@ -1936,6 +2030,13 @@ def _score_mention_slot_opt(m: MentionOptIR, s: SlotOptIR) -> tuple[float, dict[
     if s.is_coefficient_like and m.is_per_unit:
         score += OPT_ROLE_WEIGHTS["coefficient_vs_total_bonus"]
         features["coefficient_match"] = True
+    # Local mismatch penalties: per-unit mention → total slot, or total mention → coeff slot.
+    if s.is_total_like and not s.is_coefficient_like and m.is_per_unit and not m.is_total_like:
+        score += OPT_ROLE_WEIGHTS["coeff_to_total_local_penalty"]
+        features["coeff_to_total_penalty"] = True
+    if s.is_coefficient_like and not s.is_total_like and m.is_total_like and not m.is_per_unit:
+        score += OPT_ROLE_WEIGHTS["total_to_coeff_local_penalty"]
+        features["total_to_coeff_penalty"] = True
 
     score += OPT_ROLE_WEIGHTS["schema_prior_bonus"]
     features["schema_prior"] = True
@@ -2974,6 +3075,13 @@ def _gcg_local_score(m: "MentionOptIR", s: "SlotOptIR") -> tuple[float, dict[str
     if s.is_coefficient_like and m.is_per_unit:
         score += GCG_LOCAL_WEIGHTS["coefficient_vs_total_bonus"]
         features["coefficient_match"] = True
+    # Local mismatch penalties: per-unit mention → total slot, or total mention → coeff slot.
+    if s.is_total_like and not s.is_coefficient_like and m.is_per_unit and not m.is_total_like:
+        score += GCG_LOCAL_WEIGHTS["coeff_to_total_local_penalty"]
+        features["coeff_to_total_penalty"] = True
+    if s.is_coefficient_like and not s.is_total_like and m.is_total_like and not m.is_per_unit:
+        score += GCG_LOCAL_WEIGHTS["total_to_coeff_local_penalty"]
+        features["total_to_coeff_penalty"] = True
 
     score += GCG_LOCAL_WEIGHTS["schema_prior_bonus"]
     features["schema_prior"] = True
