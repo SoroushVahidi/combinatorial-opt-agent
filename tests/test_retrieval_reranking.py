@@ -411,3 +411,299 @@ class TestBaselineIntegration:
         assert len(results) == 2
         ids = [r[0] for r in results]
         assert "transport_01" in ids
+
+
+# ---------------------------------------------------------------------------
+# Tests for Feature 5: confusable-schema discrimination
+# ---------------------------------------------------------------------------
+
+class TestConfusableDiscrimination:
+    """Tests for _confusable_discrimination_score in retrieval.reranking."""
+
+    def test_positive_cues_give_non_negative_score(self):
+        from retrieval.reranking import _confusable_discrimination_score, _tokenize
+        # blending problem with positive cues
+        problem = {
+            "id": "blend",
+            "name": "Blending Problem",
+            "tags": ["blending"],
+        }
+        query_tokens = _tokenize("blend ingredients proportion nutrient composition")
+        score = _confusable_discrimination_score(query_tokens, problem)
+        # Positive cues for blending should yield a non-negative score
+        assert score >= 0.0
+
+    def test_negative_cues_give_non_positive_score(self):
+        from retrieval.reranking import _confusable_discrimination_score, _tokenize
+        # blending problem but query has production cues
+        problem = {
+            "id": "blend",
+            "name": "Blending Problem",
+            "tags": ["blending"],
+        }
+        query_tokens = _tokenize("produce product manufacturing labor assembly factory")
+        score = _confusable_discrimination_score(query_tokens, problem)
+        # Negative cues for blending (production cues) should give non-positive score
+        assert score <= 0.0
+
+    def test_score_bounded_in_range(self):
+        from retrieval.reranking import _confusable_discrimination_score, _tokenize
+        problem = {"id": "knapsack", "name": "0-1 Knapsack", "tags": ["knapsack"]}
+        q = _tokenize("select item value weight capacity binary maximize bin container")
+        score = _confusable_discrimination_score(q, problem)
+        assert -0.1 <= score <= 0.1
+
+    def test_no_tags_returns_zero(self):
+        from retrieval.reranking import _confusable_discrimination_score, _tokenize
+        problem = {"id": "foo", "name": "Unknown Schema"}
+        q = _tokenize("some query about optimization")
+        score = _confusable_discrimination_score(q, problem)
+        assert score == 0.0
+
+    def test_name_heuristic_picks_up_domain_key(self):
+        from retrieval.reranking import _confusable_discrimination_score, _tokenize
+        # No tags, but schema name contains 'assignment'
+        problem = {"id": "assgn", "name": "Assignment Problem", "tags": []}
+        q = _tokenize("assign worker task employee job matching")
+        score = _confusable_discrimination_score(q, problem)
+        # Positive cues for assignment → non-negative
+        assert score >= 0.0
+
+
+# ---------------------------------------------------------------------------
+# Tests for Feature 6: grounding-consistency rerank
+# ---------------------------------------------------------------------------
+
+class TestGroundingConsistencyScore:
+    """Tests for grounding_consistency_score in retrieval.reranking."""
+
+    def test_neutral_score_for_no_cue_query(self):
+        from retrieval.reranking import grounding_consistency_score
+        problem = {"id": "foo", "name": "Problem", "formulation": {}}
+        # Pure structural query with no quantity-role cue words → neutral 0.5
+        score = grounding_consistency_score("find the optimal solution", problem)
+        assert score == pytest.approx(0.5)
+
+    def test_budget_cue_match(self):
+        from retrieval.reranking import grounding_consistency_score
+        problem = {
+            "id": "budget_prob",
+            "name": "Budget Allocation",
+            "formulation": {
+                "variables": [{"description": "amount allocated to project X"}],
+                "constraints": [{"description": "total budget must not exceed limit"}],
+            },
+        }
+        # Query mentions budget → should match schema's budget slot
+        score = grounding_consistency_score(
+            "allocate budget of $100,000 across two projects", problem
+        )
+        assert score > 0.0
+
+    def test_capacity_cue_match(self):
+        from retrieval.reranking import grounding_consistency_score
+        problem = {
+            "id": "cap_prob",
+            "name": "Capacity Planning",
+            "formulation": {
+                "variables": [{"description": "production quantity"}],
+                "constraints": [{"description": "total capacity availability limit"}],
+            },
+        }
+        score = grounding_consistency_score(
+            "factory with capacity limit produces two products", problem
+        )
+        assert score > 0.0
+
+    def test_score_in_range(self):
+        from retrieval.reranking import grounding_consistency_score
+        problem = {"id": "foo", "name": "Problem", "formulation": {}}
+        for query in [
+            "maximize profit with budget constraint",
+            "minimize cost with capacity limitation",
+            "at least 40 percent allocation required",
+            "count number of items selected",
+            "transportation from source to destination",
+        ]:
+            score = grounding_consistency_score(query, problem)
+            assert 0.0 <= score <= 1.0, f"Score out of range for: {query!r}"
+
+
+class TestGroundingRerank:
+    """Tests for the grounding_rerank function in retrieval.reranking."""
+
+    def _make_candidates(self) -> list[tuple[dict, float]]:
+        """Tiny candidate list for testing."""
+        return [
+            (
+                {
+                    "id": "prod_01",
+                    "name": "Production Planning",
+                    "formulation": {
+                        "variables": [{"description": "units of product A and B to produce"}],
+                        "constraints": [
+                            {"description": "total labor hours budget constraint"},
+                            {"description": "maximum capacity limit"},
+                        ],
+                    },
+                },
+                0.80,
+            ),
+            (
+                {
+                    "id": "tsp_01",
+                    "name": "Travelling Salesman",
+                    "formulation": {
+                        "variables": [{"description": "binary route selection variables"}],
+                        "constraints": [
+                            {"description": "each city visited exactly once"},
+                        ],
+                    },
+                },
+                0.75,
+            ),
+        ]
+
+    def test_returns_same_length(self):
+        from retrieval.reranking import grounding_rerank
+        cands = self._make_candidates()
+        result = grounding_rerank("production budget labor", cands)
+        assert len(result) == len(cands)
+
+    def test_scores_modified(self):
+        from retrieval.reranking import grounding_rerank
+        cands = self._make_candidates()
+        result = grounding_rerank("production budget labor", cands)
+        orig_scores = {p["id"]: s for p, s in cands}
+        new_scores = {p["id"]: s for p, s in result}
+        # At least one score should differ from the original retrieval score
+        # (because grounding_lambda=0.15 * gc != 0 unless gc is 0)
+        changed = any(
+            abs(new_scores[pid] - orig_scores[pid]) > 1e-9
+            for pid in orig_scores
+        )
+        assert changed
+
+    def test_empty_input_returns_empty(self):
+        from retrieval.reranking import grounding_rerank
+        result = grounding_rerank("any query", [])
+        assert result == []
+
+    def test_output_sorted_descending(self):
+        from retrieval.reranking import grounding_rerank
+        cands = self._make_candidates()
+        result = grounding_rerank("production budget labor", cands)
+        scores = [s for _, s in result]
+        assert scores == sorted(scores, reverse=True)
+
+    def test_lambda_zero_preserves_order(self):
+        from retrieval.reranking import grounding_rerank
+        cands = self._make_candidates()
+        result = grounding_rerank("production labor hours budget", cands, grounding_lambda=0.0)
+        ids = [p["id"] for p, _ in result]
+        orig_ids = [p["id"] for p, _ in cands]
+        # With lambda=0, grounding adds nothing, order should be preserved
+        assert ids == orig_ids
+
+
+# ---------------------------------------------------------------------------
+# Tests for synthetic case builder
+# ---------------------------------------------------------------------------
+
+class TestSyntheticCaseBuilder:
+    """Tests for the synthetic test case generator."""
+
+    def test_get_all_cases_returns_nonempty(self):
+        from tools.build_easy_family_synthetic_cases import get_all_cases
+        cases = get_all_cases()
+        assert len(cases) > 0
+
+    def test_all_five_families_present(self):
+        from tools.build_easy_family_synthetic_cases import get_all_cases
+        expected_families = {
+            "percent_vs_integer",
+            "implicit_count",
+            "minmax_bound",
+            "total_vs_perunit",
+            "retrieval_failure",
+        }
+        cases = get_all_cases()
+        families_in_cases = {c["family"] for c in cases}
+        for fam in expected_families:
+            assert fam in families_in_cases, f"Family {fam} missing from synthetic cases"
+
+    def test_cases_have_required_fields(self):
+        from tools.build_easy_family_synthetic_cases import get_all_cases
+        for case in get_all_cases():
+            assert "id" in case
+            assert "family" in case
+            assert "sub_type" in case
+            assert "query" in case
+            assert "expected_schema" in case
+            assert "notes" in case
+
+    def test_deterministic_on_repeated_import(self):
+        from tools.build_easy_family_synthetic_cases import get_all_cases
+        c1 = get_all_cases()
+        c2 = get_all_cases()
+        assert [c["id"] for c in c1] == [c["id"] for c in c2]
+
+    def test_get_cases_by_family_filter(self):
+        from tools.build_easy_family_synthetic_cases import get_cases_by_family
+        pct_cases = get_cases_by_family("percent_vs_integer")
+        assert len(pct_cases) > 0
+        assert all(c["family"] == "percent_vs_integer" for c in pct_cases)
+
+    def test_all_case_ids_unique(self):
+        from tools.build_easy_family_synthetic_cases import get_all_cases
+        ids = [c["id"] for c in get_all_cases()]
+        assert len(ids) == len(set(ids)), "Duplicate case IDs found"
+
+    def test_percent_cases_have_fraction_expected_slots(self):
+        """At least one expected slot in percent cases should be a float < 1."""
+        from tools.build_easy_family_synthetic_cases import get_cases_by_family
+        pct_cases = get_cases_by_family("percent_vs_integer")
+        found_fraction = False
+        for case in pct_cases:
+            for v in case.get("expected_slots", {}).values():
+                if isinstance(v, float) and 0.0 < v < 1.0:
+                    found_fraction = True
+        assert found_fraction, "No fraction-valued expected slot found in percent cases"
+
+
+# ---------------------------------------------------------------------------
+# Tests for ablation evaluation
+# ---------------------------------------------------------------------------
+
+class TestAblationEvaluation:
+    """Tests for the ablation evaluation mode in scripts/evaluate_retrieval.py."""
+
+    def test_run_ablation_tfidf_returns_four_variants(self):
+        from scripts.evaluate_retrieval import run_ablation
+        catalog = [
+            {"id": "prod", "name": "Production Planning", "aliases": ["manufacturing"],
+             "description": "Produce items to maximize profit subject to resource constraints."},
+            {"id": "blend", "name": "Blending Problem", "aliases": ["diet", "mix"],
+             "description": "Mix ingredients to meet requirements at minimum cost."},
+        ]
+        instances = [
+            ("production profit resource", "prod"),
+            ("blend mix diet ingredients", "blend"),
+        ]
+        results = run_ablation(catalog, instances, top_k_max=2, use_tfidf_fallback=True)
+        assert len(results) == 4
+        variant_names = [r["variant"] for r in results]
+        assert variant_names == ["baseline", "+expansion", "+rerank", "+grounding"]
+
+    def test_ablation_each_result_has_metrics(self):
+        from scripts.evaluate_retrieval import run_ablation
+        catalog = [
+            {"id": "knapsack", "name": "Knapsack", "aliases": [], "description": "Select items to maximize value."},
+            {"id": "tsp", "name": "TSP", "aliases": ["travelling salesman"], "description": "Find shortest tour."},
+        ]
+        instances = [("knapsack items value", "knapsack")]
+        results = run_ablation(catalog, instances, top_k_max=2, use_tfidf_fallback=True)
+        for r in results:
+            assert "accuracy_at_1" in r
+            assert "mrr" in r
+            assert "n" in r

@@ -121,6 +121,8 @@ def search(
     expand_short_queries: bool = True,
     rerank: bool = False,
     rerank_weight: float = 0.3,
+    grounding_rerank: bool = False,
+    grounding_lambda: float = 0.15,
     report_ambiguity: bool = False,
     verbose_rerank: bool = False,
 ) -> list[tuple[dict, float]]:
@@ -135,6 +137,10 @@ def search(
         rerank: if True, apply deterministic lexical reranking on top of first-stage scores
             (alias overlap, slot-name overlap, role-cue overlap; see ``retrieval.reranking``).
         rerank_weight: weight for the lexical reranker in the combined score (default 0.3).
+        grounding_rerank: if True, apply an optional second-stage grounding-consistency
+            rerank after lexical reranking.  Uses quantity-role cue compatibility to
+            re-sort the top-k candidates.  Ablation flag: default False.
+        grounding_lambda: weight for the grounding-consistency term (default 0.15).
         report_ambiguity: if True, print a warning when top-1 and top-2 scores are very close.
         verbose_rerank: if True, print per-candidate reranking feature scores.
     """
@@ -178,6 +184,16 @@ def search(
             verbose=verbose_rerank,
         )
         results = results[:top_k]
+
+    # Optional grounding-consistency second-stage rerank
+    if grounding_rerank:
+        from retrieval.reranking import grounding_rerank as _grounding_rerank
+        results = _grounding_rerank(
+            query,
+            results,
+            grounding_lambda=grounding_lambda,
+            verbose=verbose_rerank,
+        )
 
     # Optional ambiguity / low-margin detection
     if report_ambiguity:

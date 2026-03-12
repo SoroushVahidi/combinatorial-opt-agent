@@ -6,11 +6,13 @@ candidates using schema-aware lexical features:
   - alias/trigger-phrase overlap
   - slot-name and role-vocabulary overlap
   - quantity-role cue matching (budget, capacity, per-unit, min/max, percent, etc.)
+  - optional grounding-consistency second-stage rerank
 
 All logic is deterministic, CPU-only, no external dependencies beyond the standard library.
 
 Toggle reranking via the ``rerank`` flag in ``retrieval.search.search()``.
 Toggle ambiguity reporting via ``report_ambiguity=True``.
+Toggle grounding-consistency rerank via ``grounding_rerank=True`` in ``retrieval.search.search()``.
 """
 from __future__ import annotations
 
@@ -124,6 +126,202 @@ _DOMAIN_TRIGGER_MAP: dict[str, set[str]] = {
         "strip", "size",
     },
 }
+
+
+# ---------------------------------------------------------------------------
+# Confusable-schema discrimination support (Feature 5)
+# Maps each schema domain-key to positive discriminative cues that strongly
+# distinguish it from its most likely confusable neighbour(s).
+# Structure: {domain_key: {"positive": frozenset, "negative": frozenset}}
+# positive = cues that should appear for THIS schema
+# negative = cues more characteristic of the confusable neighbour
+# Only well-justified pairs are listed here.
+# ---------------------------------------------------------------------------
+
+_CONFUSABLE_DISCRIMINATION: dict[str, dict[str, frozenset]] = {
+    # blending vs production: blending mixes ingredients (proportions), production makes products
+    "blending": {
+        "positive": frozenset({"blend", "mix", "ingredient", "nutrient", "proportion",
+                                "composition", "percentage", "fraction", "diet", "recipe"}),
+        "negative": frozenset({"produce", "product", "machine", "labor", "assembly"}),
+    },
+    "production": {
+        "positive": frozenset({"produce", "product", "manufacturing", "profit", "labor",
+                                "machine", "assembly", "output", "factory"}),
+        "negative": frozenset({"blend", "ingredient", "composition", "nutrient"}),
+    },
+    # transportation vs assignment: transportation ships goods; assignment matches entities
+    "transportation": {
+        "positive": frozenset({"ship", "route", "supply", "demand", "source", "destination",
+                                "transport", "flow", "arc", "network"}),
+        "negative": frozenset({"assign", "worker", "task", "matching", "bipartite"}),
+    },
+    "assignment": {
+        "positive": frozenset({"assign", "worker", "task", "employee", "job", "matching",
+                                "bipartite", "one-to-one"}),
+        "negative": frozenset({"ship", "route", "supply", "demand", "flow", "network"}),
+    },
+    # knapsack vs bin_packing: knapsack selects items; bin packing fits items into bins
+    "knapsack": {
+        "positive": frozenset({"select", "item", "value", "weight", "capacity",
+                                "binary", "maximize"}),
+        "negative": frozenset({"bin", "bins", "container", "pack", "size"}),
+    },
+    "bin_packing": {
+        "positive": frozenset({"bin", "bins", "container", "strip", "cutting", "stock"}),
+        "negative": frozenset({"select", "item", "value", "maximize"}),
+    },
+    # facility vs location: facility opening is about fixed charge; location is about distances
+    "facility": {
+        "positive": frozenset({"open", "opening", "fixed", "charge", "depot",
+                                "customer", "serve", "warehouse"}),
+        "negative": frozenset({"median", "distance", "closest", "nearest"}),
+    },
+    "location": {
+        "positive": frozenset({"median", "center", "distance", "closest", "nearest",
+                                "hub", "cluster"}),
+        "negative": frozenset({"open", "opening", "fixed", "charge"}),
+    },
+}
+
+
+def _confusable_discrimination_score(
+    query_tokens: set[str],
+    problem: dict,
+) -> float:
+    """Return a small discrimination bonus/penalty based on confusable-schema cues.
+
+    For schemas that commonly get confused with a neighbour (e.g., blending vs
+    production), positive query cues boost the score and negative cues reduce it.
+    Score is in [-0.1, +0.1]; added to the reranker total.
+    """
+    tags = problem.get("tags") or problem.get("categories") or []
+    if isinstance(tags, str):
+        tags = [tags]
+    domain_keys = {(t or "").lower() for t in tags}
+    # Also heuristically match by schema name
+    name_lower = (problem.get("name") or "").lower()
+    for dk in _CONFUSABLE_DISCRIMINATION:
+        if dk in name_lower:
+            domain_keys.add(dk)
+
+    score = 0.0
+    for dk in domain_keys:
+        entry = _CONFUSABLE_DISCRIMINATION.get(dk)
+        if entry is None:
+            continue
+        pos_hits = len(query_tokens & entry["positive"])
+        neg_hits = len(query_tokens & entry["negative"])
+        # +0.02 per positive hit, -0.02 per negative hit
+        score += 0.02 * pos_hits - 0.02 * neg_hits
+    return max(-0.1, min(0.1, score))
+
+
+# ---------------------------------------------------------------------------
+# Grounding-consistency scoring (Feature 6 — optional second-stage rerank)
+# ---------------------------------------------------------------------------
+
+# Quantity-role cue families for slot compatibility checks
+_QTY_BUDGET_CUES = frozenset({
+    "budget", "cost", "price", "revenue", "profit", "expenditure", "wage", "salary",
+    "expense", "payment",
+})
+_QTY_CAPACITY_CUES = frozenset({
+    "capacity", "supply", "availability", "available", "stock", "inventory",
+    "resource", "quota", "limit", "limitation",
+})
+_QTY_BOUND_CUES = frozenset({
+    "minimum", "maximum", "min", "max", "least", "most", "lower", "upper",
+    "bound", "threshold", "floor", "ceiling",
+})
+_QTY_PERCENT_CUES = frozenset({
+    "percent", "percentage", "fraction", "share", "ratio", "proportion", "rate",
+    "portion",
+})
+_QTY_COUNT_CUES = frozenset({
+    "number", "count", "quantity", "amount", "units", "items", "types",
+    "workers", "employees", "products",
+})
+
+
+def grounding_consistency_score(query: str, problem: dict) -> float:
+    """Estimate how well the query's quantity-role cues align with the schema's slots.
+
+    Checks which quantity-role cue families (budget, capacity, bound, percent,
+    count) are signalled by the query and whether the schema's slot vocabulary
+    also contains those families.  Returns a score in [0, 1].
+
+    This is a lightweight heuristic used as an optional second-stage boost.
+    A score of 0.5 means no quantity-role signal was found in the query
+    (neutral — no evidence either way).
+    """
+    q_tokens = _tokenize(query)
+    q_budget = bool(q_tokens & _QTY_BUDGET_CUES)
+    q_capacity = bool(q_tokens & _QTY_CAPACITY_CUES)
+    q_bound = bool(q_tokens & _QTY_BOUND_CUES)
+    q_percent = bool(q_tokens & _QTY_PERCENT_CUES)
+    q_count = bool(q_tokens & _QTY_COUNT_CUES)
+
+    slot_vocab = _extract_slot_vocabulary(problem)
+    s_budget = bool(slot_vocab & _QTY_BUDGET_CUES)
+    s_capacity = bool(slot_vocab & _QTY_CAPACITY_CUES)
+    s_bound = bool(slot_vocab & _QTY_BOUND_CUES)
+    s_percent = bool(slot_vocab & _QTY_PERCENT_CUES)
+    s_count = bool(slot_vocab & _QTY_COUNT_CUES)
+
+    families_in_query = int(q_budget) + int(q_capacity) + int(q_bound) + int(q_percent) + int(q_count)
+    if families_in_query == 0:
+        return 0.5  # no signal → neutral
+
+    matches = (
+        int(q_budget and s_budget)
+        + int(q_capacity and s_capacity)
+        + int(q_bound and s_bound)
+        + int(q_percent and s_percent)
+        + int(q_count and s_count)
+    )
+    return matches / families_in_query
+
+
+def grounding_rerank(
+    query: str,
+    candidates: list[tuple[dict, float]],
+    grounding_lambda: float = 0.15,
+    verbose: bool = False,
+) -> list[tuple[dict, float]]:
+    """Optional second-stage rerank using grounding-consistency scores.
+
+    Combined score::
+
+        combined = retrieval_score + grounding_lambda * grounding_consistency_score
+
+    Applied AFTER first-stage retrieval (and optionally after lexical reranking).
+    Toggle via ``grounding_rerank=True`` in ``retrieval.search.search()``.
+
+    Args:
+        query: the original search query.
+        candidates: list of (problem_dict, score) sorted by retrieval/rerank score.
+        grounding_lambda: weight for the grounding-consistency term (default 0.15).
+        verbose: if True, print per-candidate grounding scores.
+
+    Returns:
+        Re-sorted list of (problem_dict, combined_score).
+    """
+    if not candidates:
+        return candidates
+    result: list[tuple[dict, float]] = []
+    for problem, retrieval_score in candidates:
+        gc = grounding_consistency_score(query, problem)
+        combined = retrieval_score + grounding_lambda * gc
+        if verbose:
+            print(
+                f"  [{problem.get('id', '')[:30]}] "
+                f"grounding_consistency={gc:.3f} retrieval={retrieval_score:.3f} "
+                f"combined={combined:.3f}"
+            )
+        result.append((problem, combined))
+    result.sort(key=lambda x: x[1], reverse=True)
+    return result
 
 
 # ---------------------------------------------------------------------------
@@ -276,13 +474,18 @@ def _rerank_score(
     else:
         domain_trigger_overlap = 0.0
 
+    # --- Confusable-schema discrimination bonus/penalty ---
+    discrimination = _confusable_discrimination_score(q, problem)
+
     # Weighted sum (weights chosen to make alias and slot most influential)
     total = (
         0.35 * alias_overlap
         + 0.25 * slot_overlap
         + 0.20 * role_cue_overlap
         + 0.20 * domain_trigger_overlap
+        + discrimination  # small additive term in [-0.1, +0.1]
     )
+    total = max(0.0, min(1.1, total))  # clamp to sensible range
     return RerankerFeatures(
         alias_overlap=alias_overlap,
         slot_overlap=slot_overlap,
