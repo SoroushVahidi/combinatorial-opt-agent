@@ -918,9 +918,30 @@ for tag, words in [
     for w in words:
         SEMANTIC_ROLE_WORDS[w.lower()] = tag
 
-# Operator phrase tokens (min/max).
-OPERATOR_MIN_PHRASES = {"at", "least", "minimum", "min", "no", "less", "than", "lower"}
-OPERATOR_MAX_PHRASES = {"at", "most", "maximum", "max", "no", "more", "than", "upper", "up", "to"}
+# Phrase-level operator patterns for min/max detection.
+# Using individual-word sets that include "at", "no", "than", "to" caused both
+# min and max tags to fire for almost every mention (e.g. "to" from "wants to
+# maximize" would trigger max; "at" from "at least" would trigger both).
+# These phrase-level tuples are matched against a narrow context string so that
+# "at most 30 vans" does not contaminate the operator tag of "at least 5000".
+_OPERATOR_MIN_PATTERNS: tuple[str, ...] = (
+    "at least", "atleast", "at_least",
+    "no less than", "not less than",
+    "at minimum",
+)
+_OPERATOR_MAX_PATTERNS: tuple[str, ...] = (
+    "at most", "atmost", "at_most",
+    "no more than", "not more than",
+    "cannot exceed", "not to exceed",
+    "up to", "upto", "limited to",
+    "at maximum",
+)
+# Narrow context window (tokens each side) for operator-phrase detection.
+# A window of 3 keeps operator cues tight to the governing number; this is
+# enough to capture "at least NUMBER" (distance 2) and "minimum of NUMBER"
+# (distance 2–3) while preventing cross-constraint contamination when two
+# "at least"/"at most" clauses appear within the same 14-token span.
+_OPERATOR_NARROW_WINDOW: int = 3
 
 # Unit/marker detection.
 PERCENT_MARKER_TOKENS = {"%", "percent", "percentage", "pct"}
@@ -991,12 +1012,36 @@ def _context_to_semantic_tags(context_tokens: list[str]) -> frozenset[str]:
     return frozenset(tags)
 
 
-def _detect_operator_tags(context_tokens: list[str]) -> frozenset[str]:
+def _detect_operator_tags(
+    context_tokens: list[str],
+    narrow_context_tokens: list[str] | None = None,
+) -> frozenset[str]:
+    """Detect min/max operator cues using phrase-level patterns.
+
+    When *narrow_context_tokens* is supplied (recommended), phrase matching is
+    performed on that tight window (e.g. ±3 tokens around the governed number)
+    to avoid false positives from operator phrases in neighbouring constraints.
+    Single unambiguous words ("minimum", "maximum", "least", "most", "min",
+    "max", "lower", "upper") are also checked using the same narrow context.
+
+    The previous implementation used individual-word sets including "at", "to",
+    "no", "than" which are shared by both min and max patterns, causing both
+    tags to fire for nearly every mention and neutralising the bound-flip
+    penalty in downstream assignment.
+    """
+    ctx = narrow_context_tokens if narrow_context_tokens is not None else context_tokens
+    ctx_str = " ".join(ctx)
+    ctx_set = set(t.lower() for t in ctx if t)
     out: set[str] = set()
-    ctx = set(t.lower() for t in context_tokens if t)
-    if ctx & OPERATOR_MIN_PHRASES or "atleast" in ctx or "at_least" in ctx:
+    if (
+        any(p in ctx_str for p in _OPERATOR_MIN_PATTERNS)
+        or ctx_set & {"least", "min", "minimum", "lower"}
+    ):
         out.add("min")
-    if ctx & OPERATOR_MAX_PHRASES or "atmost" in ctx or "at_most" in ctx or "upto" in ctx:
+    if (
+        any(p in ctx_str for p in _OPERATOR_MAX_PATTERNS)
+        or ctx_set & {"most", "max", "maximum", "upper"}
+    ):
         out.add("max")
     return frozenset(out)
 
@@ -1040,7 +1085,11 @@ def _extract_enriched_mentions(query: str, variant: str) -> list[MentionIR]:
         ]
         ctx_tokens = [c for c in ctx_tokens if c]
         semantic_role_tags = _context_to_semantic_tags(ctx_tokens)
-        operator_tags = _detect_operator_tags(ctx_tokens)
+        narrow_ctx_tokens = [
+            x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - _OPERATOR_NARROW_WINDOW) : i + _OPERATOR_NARROW_WINDOW + 1]
+        ]
+        narrow_ctx_tokens = [c for c in narrow_ctx_tokens if c]
+        operator_tags = _detect_operator_tags(ctx_tokens, narrow_ctx_tokens)
         unit_tags = _detect_unit_tags(tok, ctx_tokens)
         polarity = "min" if "min" in operator_tags else ("max" if "max" in operator_tags else "")
         target_entity_tokens = frozenset(
@@ -1660,7 +1709,11 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
         ctx_set = set(ctx_tokens)
         ctx_str = " ".join(ctx_tokens)
         role_tags = _context_to_opt_role_tags(ctx_tokens)
-        operator_tags = _detect_operator_tags(ctx_tokens)
+        narrow_ctx_tokens = [
+            x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - _OPERATOR_NARROW_WINDOW) : i + _OPERATOR_NARROW_WINDOW + 1]
+        ]
+        narrow_ctx_tokens = [c for c in narrow_ctx_tokens if c]
+        operator_tags = _detect_operator_tags(ctx_tokens, narrow_ctx_tokens)
         unit_tags = _detect_opt_unit_tags(tok, ctx_tokens)
         fragment_type = _classify_fragment_type(ctx_tokens)
         is_per_unit = any(
@@ -1769,7 +1822,19 @@ def _build_slot_opt_irs(expected_scalar: list[str]) -> list[SlotOptIR]:
             unit_pref.add("count_marker")
         is_objective = bool(slot_role_tags & {"objective_coeff", "unit_profit", "unit_revenue", "unit_return", "unit_cost"})
         is_bound = bool(slot_role_tags & {"lower_bound", "upper_bound", "capacity_limit", "demand_requirement", "minimum_requirement", "maximum_allowance"})
-        is_total = bool(slot_role_tags & {"total_budget", "total_available"}) or "budget" in name.lower() or "total" in name.lower()
+        # Widen is_total detection to cover aggregate capacity/availability slots
+        # such as MaxWater, WaterAvailability, PowderedPillAvailability that have
+        # "capacity_limit" in their role tags or "available"/"capacity" in their name
+        # but lack "budget" or "total" keywords.
+        n_lower = name.lower()
+        is_total = (
+            bool(slot_role_tags & {"total_budget", "total_available", "capacity_limit"})
+            or "budget" in n_lower
+            or "total" in n_lower
+            or "available" in n_lower
+            or "availability" in n_lower
+            or "capacity" in n_lower
+        )
         is_coeff = bool(slot_role_tags & {"unit_cost", "unit_profit", "unit_revenue", "resource_consumption"})
 
         slot_irs.append(
