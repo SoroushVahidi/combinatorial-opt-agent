@@ -224,6 +224,11 @@ ASSIGN_WEIGHTS = {
     "unit_percent_bonus": 2.0,
     "unit_currency_bonus": 2.0,
     "weak_match_penalty": -1.0,
+    # Count-like slot priors: favour small cardinalities, penalise large values.
+    "count_small_int_prior": 2.0,        # bonus for int in [1, count_plausible_max]
+    "count_large_int_penalty": -2.0,     # penalty for int > count_large_penalty_threshold
+    "count_plausible_max": 10,           # integers ≤ this get the small-int bonus
+    "count_large_penalty_threshold": 50, # integers > this get the large-int penalty
 }
 
 
@@ -370,6 +375,7 @@ class SlotRecord:
     expected_type: str
     aliases: list[str]
     alias_tokens: set[str]
+    is_count_like: bool = False
 
 
 def _parse_num_token(tok: str, context_words: set[str]) -> NumTok:
@@ -610,6 +616,52 @@ def _expected_type(param_name: str) -> str:
     return "float"
 
 
+# Count-like slot name fragments that indicate a cardinality/count parameter.
+# These slots hold the NUMBER OF distinct entities (products, resources, types…),
+# which is always a non-negative integer, and typically a small one (2–20).
+_COUNT_LIKE_PATTERNS = (
+    "num",        # NumProducts, NumTypes, NumItems, NumMixes, …
+    "count",      # CountProducts, ProductCount, …
+    "types",      # NumCandyTypes, JarTypes, …
+    "items",      # NumItems, …
+    "ingredients",
+    "nodes",
+    "edges",
+    "number",     # NumberOfProducts, NumberOfResources, …
+    "workers",
+    "employee",
+    "shifts",
+    "batches",
+    "rounds",
+    "machines",
+    "factories",
+    "farms",
+    "vehicles",
+    "trucks",
+    "buses",
+    "tasks",
+    "resources",  # NumResources, …
+    "products",   # NumProducts, …
+    "mixes",      # NumMixes, …
+    "materials",  # NumMaterials, …
+    "components",
+    "categories",
+)
+
+
+def _is_count_like_slot(param_name: str) -> bool:
+    """Return True if *param_name* represents a count/cardinality slot.
+
+    Count-like slots hold the number of distinct entities (e.g. NumProducts,
+    NumResources, NumberOfMachines).  They always take non-negative integer
+    values, and in realistic optimization problems are usually small (2–20).
+
+    The detection is purely name-based so it is fast and explainable.
+    """
+    n = (param_name or "").lower()
+    return any(p in n for p in _COUNT_LIKE_PATTERNS)
+
+
 def _is_type_match(expected: str, kind: str) -> bool:
     """Return True when *kind* is a full type-match for *expected*.
 
@@ -687,6 +739,8 @@ def _is_type_incompatible(expected: str, kind: str) -> bool:
       so this would only fire when the token truly lacks a percent signal)
     - percent -> int:        hard incompatible (a percentage fraction is NOT a
       discrete integer count)
+    - float → count-like slot: handled separately in _score_mention_slot and
+      _gcg_local_score (non-integer decimals cannot be cardinality counts)
     All other cross-type pairs (e.g. currency <-> int/float) are handled via
     soft scoring (loose-match bonus/penalty).
     """
@@ -715,6 +769,7 @@ def _build_slot_records(expected_scalar: list[str]) -> list[SlotRecord]:
                 expected_type=et,
                 aliases=aliases,
                 alias_tokens=alias_tokens,
+                is_count_like=_is_count_like_slot(name),
             )
         )
     return slots
@@ -730,6 +785,11 @@ def _score_mention_slot(m: MentionRecord, s: SlotRecord) -> tuple[float, dict[st
     # Hard type incompatibility.
     if _is_type_incompatible(expected, kind):
         features["type_incompatible"] = True
+        return -1e9, features
+
+    # Count-like slot: non-integer decimals and percent values are hard incompatible.
+    if s.is_count_like and kind == "float":
+        features["count_slot_float_incompatible"] = True
         return -1e9, features
 
     # Type compatibility.
@@ -754,6 +814,16 @@ def _score_mention_slot(m: MentionRecord, s: SlotRecord) -> tuple[float, dict[st
         elif expected == "float" and kind == "currency":
             score += ASSIGN_WEIGHTS["type_match_bonus"] * 0.5
             features["type_loose_match"] = True
+
+    # Count-like slot: small-integer cardinality prior and large-value penalty.
+    if s.is_count_like and kind == "int" and m.tok.value is not None:
+        val = m.tok.value
+        if 1 <= val <= ASSIGN_WEIGHTS["count_plausible_max"]:
+            score += ASSIGN_WEIGHTS["count_small_int_prior"]
+            features["count_small_int_prior"] = True
+        elif val > ASSIGN_WEIGHTS["count_large_penalty_threshold"]:
+            score += ASSIGN_WEIGHTS["count_large_int_penalty"]
+            features["count_large_int_penalty"] = True
 
     # Lexical overlap: context vs slot name/aliases.
     ctx_set = set(m.context_tokens)
@@ -1418,6 +1488,11 @@ GCG_LOCAL_WEIGHTS: dict[str, float] = {
     "coefficient_vs_total_bonus": 1.2,
     "schema_prior_bonus": 0.5,
     "weak_match_penalty": -1.0,
+    # Count-like slot priors: favour small cardinalities, penalise large values.
+    "count_small_int_prior": 2.0,        # bonus for int in [1, count_plausible_max]
+    "count_large_int_penalty": -2.0,     # penalty for int > count_large_penalty_threshold
+    "count_plausible_max": 10,           # integers ≤ this get the small-int bonus
+    "count_large_penalty_threshold": 50, # integers > this get the large-int penalty
 }
 
 # Global consistency rewards/penalties applied to a full assignment as a whole.
@@ -1477,6 +1552,7 @@ class SlotOptIR:
     is_bound_like: bool
     is_total_like: bool
     is_coefficient_like: bool
+    is_count_like: bool = False
 
 
 def _context_to_opt_role_tags(context_tokens: list[str]) -> frozenset[str]:
@@ -1709,6 +1785,7 @@ def _build_slot_opt_irs(expected_scalar: list[str]) -> list[SlotOptIR]:
                 is_bound_like=is_bound,
                 is_total_like=is_total,
                 is_coefficient_like=is_coeff,
+                is_count_like=_is_count_like_slot(name),
             )
         )
     return slot_irs
@@ -2746,6 +2823,11 @@ def _gcg_local_score(m: "MentionOptIR", s: "SlotOptIR") -> tuple[float, dict[str
         features["type_incompatible"] = True
         return GCG_LOCAL_WEIGHTS["type_incompatible_penalty"], features
 
+    # Count-like slot: non-integer decimals are hard incompatible.
+    if s.is_count_like and kind == "float":
+        features["count_slot_float_incompatible"] = True
+        return GCG_LOCAL_WEIGHTS["type_incompatible_penalty"], features
+
     if kind != "unknown":
         if (expected == "percent" and kind == "percent") or (expected == "currency" and kind == "currency"):
             score += GCG_LOCAL_WEIGHTS["type_exact_bonus"]
@@ -2763,6 +2845,16 @@ def _gcg_local_score(m: "MentionOptIR", s: "SlotOptIR") -> tuple[float, dict[str
         elif expected == "int" and kind == "float":
             score += GCG_LOCAL_WEIGHTS["type_loose_bonus"]
             features["type_loose"] = True
+
+    # Count-like slot: small-integer cardinality prior and large-value penalty.
+    if s.is_count_like and kind == "int" and m.value is not None:
+        val = m.value
+        if 1 <= val <= GCG_LOCAL_WEIGHTS["count_plausible_max"]:
+            score += GCG_LOCAL_WEIGHTS["count_small_int_prior"]
+            features["count_small_int_prior"] = True
+        elif val > GCG_LOCAL_WEIGHTS["count_large_penalty_threshold"]:
+            score += GCG_LOCAL_WEIGHTS["count_large_int_penalty"]
+            features["count_large_int_penalty"] = True
 
     role_overlap = len(m.role_tags & s.slot_role_tags)
     if role_overlap:
