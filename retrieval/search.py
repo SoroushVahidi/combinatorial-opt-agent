@@ -75,11 +75,23 @@ def _load_catalog() -> list[dict]:
         return json.load(f)
 
 
-def _searchable_text(problem: dict) -> str:
-    """Single string used for embedding: name + aliases + description."""
+def _searchable_text(problem: dict, multi_view: bool = False) -> str:
+    """Single string used for embedding: name + aliases + description.
+
+    When *multi_view=True* (ablation flag), also appends slot vocabulary
+    extracted from the formulation (variable descriptions, constraint descriptions).
+    This gives the embedding model more signal for queries that mention
+    role/slot words (e.g. "shipped amount", "profit coefficient").
+    """
     parts = [problem.get("name", "")]
     parts.extend(problem.get("aliases") or [])
     parts.append(problem.get("description", ""))
+    if multi_view:
+        # Append slot vocabulary without duplicating the full description
+        from retrieval.reranking import _extract_slot_vocabulary
+        slot_words = " ".join(_extract_slot_vocabulary(problem))
+        if slot_words:
+            parts.append(slot_words)
     return " ".join(p for p in parts if p)
 
 
@@ -88,9 +100,14 @@ def _embed(texts: list[str], model) -> np.ndarray:
     return model.encode(texts, show_progress_bar=False, convert_to_numpy=True)
 
 
-def build_index(catalog: list[dict], model) -> np.ndarray:
-    """Build embedding matrix (n_problems, dim) for the catalog."""
-    texts = [_searchable_text(p) for p in catalog]
+def build_index(catalog: list[dict], model, multi_view: bool = False) -> np.ndarray:
+    """Build embedding matrix (n_problems, dim) for the catalog.
+
+    Args:
+        multi_view: if True, include slot vocabulary in each schema's text
+            (ablation flag; see ``_searchable_text``).
+    """
+    texts = [_searchable_text(p, multi_view=multi_view) for p in catalog]
     return _embed(texts, model)
 
 
@@ -102,13 +119,24 @@ def search(
     top_k: int = 3,
     validate: bool = False,
     expand_short_queries: bool = True,
+    rerank: bool = False,
+    rerank_weight: float = 0.3,
+    report_ambiguity: bool = False,
+    verbose_rerank: bool = False,
 ) -> list[tuple[dict, float]]:
     """
     Return top_k (problem, score) pairs for the natural-language query.
     score is cosine similarity in [0, 1] (assuming normalized vectors).
-    If validate=True, each problem dict gets "_validation": {"schema_errors": [...], "formulation_errors": [...]}.
-    If expand_short_queries=True (default), short keyword queries (≤ 5 words) are
-    expanded with domain context before embedding (see expand_short_query()).
+
+    Args:
+        validate: if True, each problem dict gets ``"_validation"`` with schema/formulation errors.
+        expand_short_queries: if True (default), short keyword queries (≤ 5 words) are
+            expanded with domain context before embedding (see ``expand_short_query()``).
+        rerank: if True, apply deterministic lexical reranking on top of first-stage scores
+            (alias overlap, slot-name overlap, role-cue overlap; see ``retrieval.reranking``).
+        rerank_weight: weight for the lexical reranker in the combined score (default 0.3).
+        report_ambiguity: if True, print a warning when top-1 and top-2 scores are very close.
+        verbose_rerank: if True, print per-candidate reranking feature scores.
     """
     if catalog is None:
         catalog = _load_catalog()
@@ -134,9 +162,35 @@ def search(
     q_vec = q_vec / (np.linalg.norm(q_vec) or 1)
     scores = (embeddings_n @ q_vec.T).flatten()
 
-    # Top-k indices
-    idx = np.argsort(scores)[::-1][:top_k]
-    results = [(catalog[i], float(scores[i])) for i in idx]
+    # Retrieve more candidates when reranking so the reranker has a larger pool
+    fetch_k = (top_k * 3) if rerank else top_k
+    idx = np.argsort(scores)[::-1][:fetch_k]
+    results: list[tuple[dict, float]] = [(catalog[i], float(scores[i])) for i in idx]
+
+    # Optional deterministic lexical reranking
+    if rerank:
+        from retrieval.reranking import rerank as _rerank
+        results = _rerank(
+            query,
+            results,
+            retrieval_weight=1.0 - rerank_weight,
+            rerank_weight=rerank_weight,
+            verbose=verbose_rerank,
+        )
+        results = results[:top_k]
+
+    # Optional ambiguity / low-margin detection
+    if report_ambiguity:
+        from retrieval.reranking import detect_ambiguity
+        amb = detect_ambiguity(results)
+        if amb is not None and amb.is_ambiguous:
+            import sys
+            print(
+                f"[retrieval] AMBIGUOUS: top schema '{amb.top_id}' (score={amb.top_score:.3f}) "
+                f"vs '{amb.second_id}' (score={amb.second_score:.3f}), "
+                f"margin={amb.margin:.4f}",
+                file=sys.stderr,
+            )
 
     if validate:
         try:
