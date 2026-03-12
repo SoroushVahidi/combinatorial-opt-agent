@@ -2,11 +2,20 @@
 
 > **Source:** NLP4LP test set (`orig` variant), live grounding pipeline.
 > **Methods:** `tfidf + optimization_role_repair` vs `tfidf + max_weight_matching`.
-> **Gold values:** HF `udell-lab/NLP4LP` test split (cached at `results/eswa_revision/00_env/nlp4lp_gold_cache.json`).
+> **Gold values:** `udell-lab/NLP4LP` test split — loaded from the **local cache** at
+> `results/eswa_revision/00_env/nlp4lp_gold_cache.json` via `_load_hf_gold()`.
+> No HuggingFace token or network access was required; `_load_hf_gold()` checks
+> `NLP4LP_GOLD_CACHE` first and short-circuits before calling `load_dataset`.
 > **All examples have `schema_hit = 1`:** TF-IDF retrieved the correct schema,
 > so every failure here is a pure **grounding failure** (not a retrieval failure).
 > **How produced:** `_run_optimization_role_repair` and `_run_max_weight_matching_grounding`
 > were run on all 331 test instances; predictions were compared to gold (relative error threshold: 5%).
+>
+> **Reproducing without HF access:**
+> ```bash
+> export NLP4LP_GOLD_CACHE=results/eswa_revision/00_env/nlp4lp_gold_cache.json
+> python tools/nlp4lp_downstream_utility.py  # or any script that calls _load_hf_gold()
+> ```
 
 ## Summary
 
