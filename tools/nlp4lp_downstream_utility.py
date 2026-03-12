@@ -79,6 +79,110 @@ def _word_to_number(word: str) -> float | None:
     val = _WORD_TO_NUM.get(word.lower())
     return float(val) if val is not None else None
 
+
+def _parse_word_num_span(toks: list[str], start: int) -> tuple[float | None, int]:
+    """Parse a multi-token English word-number phrase beginning at *start*.
+
+    Handles:
+    - Simple words:           "two", "twenty", "hundred"
+    - Hyphenated compounds:   "twenty-five"  (single token in _WORD_TO_NUM)
+    - Multi-token phrases:    "one hundred", "two hundred fifty",
+                              "one thousand", "three thousand five hundred"
+
+    The grammar followed is::
+
+        number  = [X million] [Y thousand] [Z hundred] base?
+        base    = tens_word ones_word? | ones_word | tens_word
+
+    Multiplier words ("hundred", "thousand", "million") act on the
+    accumulated *chunk* so far; if no chunk precedes them the multiplier
+    itself is treated as 1 × magnitude (e.g. bare "hundred" → 100).
+
+    Stops at any token not in *_WORD_TO_NUM*.
+
+    Returns ``(value, tokens_consumed)`` or ``(None, 0)`` if no match.
+    """
+    n = len(toks)
+    if start >= n:
+        return None, 0
+
+    def _clean(t: str) -> str:
+        return t.lower().strip(".,;:()[]{}\"'")
+
+    # Quick check: the first token must be a recognized word-number.
+    if _WORD_TO_NUM.get(_clean(toks[start])) is None:
+        return None, 0
+
+    total = 0
+    chunk = 0
+    i = start
+
+    while i < n:
+        w = _clean(toks[i])
+        v = _WORD_TO_NUM.get(w)
+        if v is None:
+            break
+        if w == "hundred":
+            chunk = (chunk if chunk > 0 else 1) * 100
+        elif w == "thousand":
+            total += (chunk if chunk > 0 else 1) * 1_000
+            chunk = 0
+        elif w == "million":
+            total += (chunk if chunk > 0 else 1) * 1_000_000
+            chunk = 0
+        else:
+            # ones, tens, or a hyphenated combo already in the dict
+            chunk += v
+        i += 1
+
+    total += chunk
+    consumed = i - start
+    if consumed == 0:
+        return None, 0
+    return float(total), consumed
+
+
+def _classify_word_num_tok(
+    raw_surface: str,
+    wval: float,
+    ctx_set: set[str],
+    toks: list[str],
+    j: int,
+) -> NumTok:
+    """Build a ``NumTok`` for a word-number span with type detection.
+
+    Parameters
+    ----------
+    raw_surface : surface form of the span (e.g. ``"one hundred"``).
+    wval        : numeric value of the span (e.g. ``100.0``).
+    ctx_set     : lowercased context tokens for the span.
+    toks        : full token list of the query.
+    j           : index of the first token *after* the span, used to detect
+                  trailing ``"percent"`` / ``"per cent"``.
+
+    Detection priority: percent > currency (money context) > int/float.
+    """
+    is_pct = False
+    if j < len(toks):
+        next_w = toks[j].lower().strip(".,;:()[]{}\"'")
+        if next_w == "percent":
+            is_pct = True
+        elif (
+            next_w == "per"
+            and j + 1 < len(toks)
+            and toks[j + 1].lower().strip(".,;:()[]{}\"'") == "cent"
+        ):
+            is_pct = True
+    if not is_pct and ("percent" in ctx_set or "percentage" in ctx_set) and wval > 1.0:
+        is_pct = True
+    if is_pct:
+        return NumTok(raw=raw_surface, value=wval / 100.0 if wval > 1.0 else wval, kind="percent")
+    if ctx_set & MONEY_CONTEXT:
+        return NumTok(raw=raw_surface, value=wval, kind="currency")
+    kind = "int" if float(int(wval)) == wval else "float"
+    return NumTok(raw=raw_surface, value=wval, kind=kind)
+
+
 # Cue words and simple operator markers used by constrained assignment.
 CUE_WORDS = {
     "budget",
@@ -303,23 +407,30 @@ def _parse_num_token(tok: str, context_words: set[str]) -> NumTok:
 def _extract_num_tokens(query: str, variant: str) -> list[NumTok]:
     toks = query.split()
     out: list[NumTok] = []
-    for i, w in enumerate(toks):
+    i = 0
+    while i < len(toks):
+        w = toks[i]
         if w == "<num>" and variant in ("noisy", "nonum"):
             out.append(NumTok(raw=w, value=None, kind="unknown"))
+            i += 1
             continue
-        # local context window
+        # local context window (centred on span start)
         ctx = set(x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 3) : i + 4])
-        # Digit-based token
+        # Digit-based token (single token only)
         m = NUM_TOKEN_RE.fullmatch(w.strip())
         if m:
             out.append(_parse_num_token(w, ctx))
+            i += 1
             continue
-        # Written-word number: "two", "twenty-five", etc.
-        clean = w.lower().strip(".,;:()[]{}\"'")
-        wval = _word_to_number(clean)
+        # Written-word number — may span multiple tokens ("one hundred fifty").
+        wval, consumed = _parse_word_num_span(toks, i)
         if wval is not None:
-            kind = "int" if float(int(wval)) == wval else "float"
-            out.append(NumTok(raw=w, value=wval, kind=kind))
+            j = i + consumed  # index of first token after the span
+            raw_surface = " ".join(toks[i:j])
+            out.append(_classify_word_num_tok(raw_surface, wval, ctx, toks, j))
+            i += consumed
+            continue
+        i += 1
     return out
 
 
@@ -361,42 +472,72 @@ def _extract_num_mentions(query: str, variant: str) -> list[MentionRecord]:
     """Extract numeric mentions with richer context for constrained assignment.
 
     In addition to digit-based tokens (e.g. "100", "$5000", "20%"), this also
-    recognises written-word numbers such as "two", "twenty-five", "hundred".
+    recognises written-word numbers such as "two", "twenty-five", "one hundred".
+    Multi-token word-number spans (e.g. "two hundred fifty") are collapsed into
+    a single MentionRecord so that compound values are not split across mentions.
     """
     toks = query.split()
     sent_tokens = [t.lower().strip(".,;:()[]{}") for t in toks]
     mentions: list[MentionRecord] = []
-    for i, w in enumerate(toks):
+    i = 0
+    while i < len(toks):
+        w = toks[i]
         # slightly wider context window for constrained assignment
         ctx_tokens = [
             x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 8) : i + 9]
         ]
         ctx_tokens = [c for c in ctx_tokens if c]
         cue_words = set(ctx_tokens) & CUE_WORDS
+
         if w == "<num>" and variant in ("noisy", "nonum"):
             tok = NumTok(raw=w, value=None, kind="unknown")
-        else:
-            # Digit-based token first
-            m = NUM_TOKEN_RE.fullmatch(w.strip())
-            if m:
-                ctx_set = set(ctx_tokens)
-                tok = _parse_num_token(w, ctx_set)
-            else:
-                clean = w.lower().strip(".,;:()[]{}\"'")
-                wval = _word_to_number(clean)
-                if wval is None:
-                    continue
-                kind = "int" if float(int(wval)) == wval else "float"
-                tok = NumTok(raw=w, value=wval, kind=kind)
-        mentions.append(
-            MentionRecord(
-                index=i,
-                tok=tok,
-                context_tokens=ctx_tokens,
-                sentence_tokens=sent_tokens,
-                cue_words=cue_words,
+            mentions.append(
+                MentionRecord(
+                    index=i,
+                    tok=tok,
+                    context_tokens=ctx_tokens,
+                    sentence_tokens=sent_tokens,
+                    cue_words=cue_words,
+                )
             )
-        )
+            i += 1
+            continue
+
+        # Digit-based token (single token only — no multi-token merging needed).
+        m = NUM_TOKEN_RE.fullmatch(w.strip())
+        if m:
+            tok = _parse_num_token(w, set(ctx_tokens))
+            mentions.append(
+                MentionRecord(
+                    index=i,
+                    tok=tok,
+                    context_tokens=ctx_tokens,
+                    sentence_tokens=sent_tokens,
+                    cue_words=cue_words,
+                )
+            )
+            i += 1
+            continue
+
+        # Written-word number — may span multiple tokens ("one hundred fifty").
+        wval, consumed = _parse_word_num_span(toks, i)
+        if wval is not None:
+            j = i + consumed  # first token after the span
+            raw_surface = " ".join(toks[i:j])
+            tok = _classify_word_num_tok(raw_surface, wval, set(ctx_tokens), toks, j)
+            mentions.append(
+                MentionRecord(
+                    index=i,
+                    tok=tok,
+                    context_tokens=ctx_tokens,
+                    sentence_tokens=sent_tokens,
+                    cue_words=cue_words,
+                )
+            )
+            i += consumed
+            continue
+
+        i += 1
     return mentions
 
 
@@ -1393,23 +1534,48 @@ def _detect_opt_unit_tags(tok: NumTok, context_tokens: list[str]) -> frozenset[s
 
 
 def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
-    """Stage 1: Optimization-aware mention extraction with role tags."""
+    """Stage 1: Optimization-aware mention extraction with role tags.
+
+    Recognises both digit-based tokens (e.g. "100", "$5000", "20%") and
+    written-word numbers (e.g. "two", "twenty-five", "one hundred").
+    Multi-token word-number spans such as "two hundred fifty" are collapsed
+    into a single mention so that compound values are not split.
+    """
     toks = query.split()
     sent_tokens = [t.lower().strip(".,;:()[]{}") for t in toks]
     mentions: list[MentionOptIR] = []
     mention_id = 0
-    for i, w in enumerate(toks):
+    i = 0
+    while i < len(toks):
+        w = toks[i]
+        span_size = 1  # number of tokens consumed by this mention
+
         if w == "<num>" and variant in ("noisy", "nonum"):
             tok = NumTok(raw=w, value=None, kind="unknown")
         else:
+            # ── digit-based token ────────────────────────────────────────────
             m = NUM_TOKEN_RE.fullmatch(w.strip())
-            if not m:
-                continue
-            ctx_tokens = [
-                x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 14) : i + 15]
-            ]
-            ctx_tokens = [c for c in ctx_tokens if c]
-            tok = _parse_num_token(w, set(ctx_tokens))
+            if m:
+                ctx_tokens = [
+                    x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 14) : i + 15]
+                ]
+                ctx_tokens = [c for c in ctx_tokens if c]
+                tok = _parse_num_token(w, set(ctx_tokens))
+            else:
+                # ── written-word number (single or multi-token span) ─────────
+                wval, consumed = _parse_word_num_span(toks, i)
+                if wval is None:
+                    i += 1
+                    continue
+                span_size = consumed
+                j = i + consumed  # first token after the span
+                # Use wider context centred on span start, same window as digit path.
+                ctx_tokens = [
+                    x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 14) : i + 15]
+                ]
+                ctx_tokens = [c for c in ctx_tokens if c]
+                raw_surface = " ".join(toks[i:j])
+                tok = _classify_word_num_tok(raw_surface, wval, set(ctx_tokens), toks, j)
 
         ctx_tokens = [
             x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 14) : i + 15]
@@ -1458,6 +1624,7 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
             )
         )
         mention_id += 1
+        i += span_size
     return mentions
 
 
