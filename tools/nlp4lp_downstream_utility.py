@@ -2918,246 +2918,6 @@ def _run_global_consistency_grounding(
     return filled_values, filled_mentions, diagnostics
 
 
-# ── Exact DP assignment for Global Consistency Grounding ─────────────────────
-# For small instances (≤ GCG_DP_MAX_SLOTS), enumerate ALL valid one-to-one
-# mention-to-slot assignments using bitmask DP (over the slot bitmask).  This
-# guarantees finding the globally optimal assignment under local scores, then
-# applies the global consistency penalty once to the winning assignment.
-#
-# For larger instances the method falls back to a wide-beam variant of
-# _gcg_beam_search so the interface is always the same.
-#
-# Compared to _gcg_beam_search:
-#   - Beam search: approximate (beam_width partial states kept at each step),
-#     local scores guide expansion, global penalty applied at the end.
-#   - DP exact (this):  ALL valid one-to-one partial assignments are considered
-#     during the DP phase; the globally optimal one under local scores is found
-#     exactly, then global penalty is applied once to that single assignment.
-#
-# This implements the "maximum-weight global matching" / "all sensible
-# assignments" requirement: every valid one-to-one assignment is evaluated, and
-# the best overall solution is selected.
-
-GCG_DP_MAX_SLOTS: int = 20   # Maximum number of slots for exact DP
-GCG_DP_FALLBACK_BEAM: int = GCG_BEAM_WIDTH * 6  # beam width when falling back
-
-
-def _gcg_dp_assignment(
-    mentions: list["MentionOptIR"],
-    slots: list["SlotOptIR"],
-    local_scores: list[list[float]],
-    local_features: list[list[dict[str, Any]]],
-    max_exact_slots: int = GCG_DP_MAX_SLOTS,
-    fallback_beam_width: int = GCG_DP_FALLBACK_BEAM,
-) -> tuple[
-    dict[str, "MentionOptIR"],
-    dict[str, float],
-    dict[str, list[dict[str, Any]]],
-    list[dict[str, Any]],
-]:
-    """Exact bitmask DP over ALL valid one-to-one mention-slot assignments.
-
-    For ``s = len(slots) <= max_exact_slots`` this runs in O(m * 2^s) time and
-    guarantees finding the mention-slot assignment with the highest combined
-    (local + global consistency) score.  For larger ``s`` the method falls back
-    to :func:`_gcg_beam_search` with ``fallback_beam_width``.
-
-    Algorithm
-    ---------
-    1. Precompute admissible (mention, slot) pairs (local score > GCG_PRUNE_THRESHOLD).
-    2. Standard bitmask DP: ``dp[i][mask]`` = best sum of local scores after
-       considering the first ``i`` mentions, having committed the set of slots
-       encoded in ``mask``.
-    3. Backtrack to recover the optimal assignment under local scores.
-    4. Apply :func:`_gcg_global_penalty` once to the recovered assignment.
-    5. Return results in the same format as :func:`_gcg_beam_search`.
-
-    Returns
-    -------
-    assignments        : slot_name -> MentionOptIR
-    slot_scores        : slot_name -> local score
-    debug              : slot_name -> sorted candidate list
-    top_assignments    : list with the single best assignment and its scores
-    """
-    s_count = len(slots)
-
-    # Fall back to wide beam search for large instances.
-    if s_count > max_exact_slots:
-        return _gcg_beam_search(
-            mentions, slots, local_scores, local_features,
-            beam_width=fallback_beam_width,
-        )
-
-    if not mentions or not slots:
-        return {}, {}, {}, []
-
-    slots_by_name = {s.name: s for s in slots}
-    m_count = len(mentions)
-
-    # Build per-slot debug info (sorted by local score).
-    debug: dict[str, list[dict[str, Any]]] = {}
-    for j, sr in enumerate(slots):
-        cands = []
-        for i, mr in enumerate(mentions):
-            cands.append({
-                "mention_id": mr.mention_id,
-                "mention_raw": mr.raw_surface,
-                "score": local_scores[i][j],
-                "features": local_features[i][j],
-            })
-        cands.sort(key=lambda x: x["score"], reverse=True)
-        debug[sr.name] = cands
-
-    # Bitmask DP: dp[i][mask] = best local-score sum after considering
-    # mentions 0..i-1 with the slot-bitmask `mask` committed.
-    from math import inf as _inf
-
-    num_states = 1 << s_count
-
-    # We need the full (m+1) x num_states table to backtrack.
-    dp_table: list[list[float]] = [[-_inf] * num_states for _ in range(m_count + 1)]
-    parent_table: list[list[tuple[int, int | None]]] = [
-        [(-1, None)] * num_states for _ in range(m_count + 1)
-    ]
-    dp_table[0][0] = 0.0
-
-    for i in range(m_count):
-        for mask in range(num_states):
-            cur = dp_table[i][mask]
-            if cur == -_inf:
-                continue
-            # Option 1: skip mention i (no assignment).
-            if cur > dp_table[i + 1][mask]:
-                dp_table[i + 1][mask] = cur
-                parent_table[i + 1][mask] = (mask, None)
-            # Option 2: assign mention i to an unused admissible slot j.
-            for j in range(s_count):
-                if (mask >> j) & 1:
-                    continue  # slot j already used
-                sc = local_scores[i][j]
-                if sc <= GCG_PRUNE_THRESHOLD:
-                    continue  # prune implausible pairs
-                new_mask = mask | (1 << j)
-                new_val = cur + sc
-                if new_val > dp_table[i + 1][new_mask]:
-                    dp_table[i + 1][new_mask] = new_val
-                    parent_table[i + 1][new_mask] = (mask, j)
-
-    # Find the mask with the best local-score sum (best value in last row).
-    best_local_mask = max(range(num_states), key=lambda mk: dp_table[m_count][mk])
-    best_local_sum = dp_table[m_count][best_local_mask]
-
-    # Backtrack to recover assignment: slot_j -> mention_i mapping.
-    slot_to_mention: dict[int, int] = {}
-    i, mask = m_count, best_local_mask
-    while i > 0:
-        prev_mask, chosen_j = parent_table[i][mask]
-        if chosen_j is not None:
-            slot_to_mention[chosen_j] = i - 1  # mention index
-        mask = prev_mask
-        i -= 1
-
-    # Build assignment and apply global consistency penalty.
-    assignments: dict[str, "MentionOptIR"] = {}
-    slot_scores: dict[str, float] = {}
-    for j, mi in slot_to_mention.items():
-        slot_name = slots[j].name
-        assignments[slot_name] = mentions[mi]
-        slot_scores[slot_name] = local_scores[mi][j]
-
-    g_delta, reasons = _gcg_global_penalty(assignments, slots_by_name, mentions)
-    total_score = best_local_sum + g_delta
-
-    top_assignments: list[dict[str, Any]] = [
-        {
-            "rank": 0,
-            "total_score": total_score,
-            "local_sum": best_local_sum,
-            "global_delta": g_delta,
-            "active_reasons": reasons,
-            "assignment": {
-                slots[j].name: mentions[mi].raw_surface
-                for j, mi in slot_to_mention.items()
-            },
-        }
-    ]
-
-    return assignments, slot_scores, debug, top_assignments
-
-
-def _run_global_consistency_grounding_exact(
-    query: str,
-    variant: str,
-    expected_scalar: list[str],
-    max_exact_slots: int = GCG_DP_MAX_SLOTS,
-    fallback_beam_width: int = GCG_DP_FALLBACK_BEAM,
-) -> tuple[dict[str, Any], dict[str, "MentionOptIR"], dict[str, Any]]:
-    """Global Consistency Grounding with exhaustive DP (exact for small instances).
-
-    Identical to :func:`_run_global_consistency_grounding` in every stage except
-    that the assignment step uses :func:`_gcg_dp_assignment` (bitmask DP that
-    considers ALL valid one-to-one assignments) instead of beam search.
-
-    For ``len(expected_scalar) <= max_exact_slots`` (default 20) this is
-    provably optimal under the local + global score objective.  For larger
-    instances it transparently falls back to a wide beam search.
-
-    This implements:
-      - **Maximum-weight global matching** — the DP finds the assignment that
-        maximises the total local-score sum (equivalent to Hungarian algorithm
-        for the local-score objective, but handles partial assignments).
-      - **All sensible assignments considered** — every valid one-to-one partial
-        assignment is explored during the DP, not just those reachable within a
-        bounded beam.
-
-    Returns
-    -------
-    filled_values      : slot_name -> numeric value (float or raw string)
-    filled_mentions    : slot_name -> MentionOptIR
-    diagnostics        : dict with top_assignments, per_slot_candidates,
-                         used_exact_dp (bool), n_dp_states (int)
-    """
-    filled_values: dict[str, Any] = {}
-    filled_mentions: dict[str, "MentionOptIR"] = {}
-    diagnostics: dict[str, Any] = {}
-
-    if not expected_scalar:
-        return filled_values, filled_mentions, diagnostics
-
-    mentions = _extract_opt_role_mentions(query, variant)
-    slots = _build_slot_opt_irs(expected_scalar)
-    if not mentions or not slots:
-        return filled_values, filled_mentions, diagnostics
-
-    m_count, s_count = len(mentions), len(slots)
-
-    # Precompute local scores for all (mention, slot) pairs.
-    local_scores: list[list[float]] = [[0.0] * s_count for _ in range(m_count)]
-    local_features: list[list[dict[str, Any]]] = [[{} for _ in range(s_count)] for _ in range(m_count)]
-    for i, mr in enumerate(mentions):
-        for j, sr in enumerate(slots):
-            sc, feats = _gcg_local_score(mr, sr)
-            local_scores[i][j] = sc
-            local_features[i][j] = feats
-
-    used_exact = s_count <= max_exact_slots
-    assignments, slot_scores, debug, top_assignments = _gcg_dp_assignment(
-        mentions, slots, local_scores, local_features,
-        max_exact_slots=max_exact_slots,
-        fallback_beam_width=fallback_beam_width,
-    )
-
-    for slot_name, mr in assignments.items():
-        filled_values[slot_name] = mr.tok.value if mr.tok.value is not None else mr.tok.raw
-        filled_mentions[slot_name] = mr
-
-    diagnostics["top_assignments"] = top_assignments
-    diagnostics["per_slot_candidates"] = debug
-    diagnostics["used_exact_dp"] = used_exact
-    diagnostics["n_dp_states"] = (1 << s_count) if used_exact else None
-    return filled_values, filled_mentions, diagnostics
-
-
 # ── Maximum-Weight Bipartite Matching Grounding ───────────────────────────────
 # Uses the exact Hungarian algorithm (scipy.optimize.linear_sum_assignment) to
 # find the globally optimal one-to-one mention-slot assignment.  Unlike
@@ -3167,8 +2927,8 @@ def _run_global_consistency_grounding_exact(
 #   - Finds the globally optimal assignment (under the local score objective)
 #     in polynomial time — O(min(m,s)^3) via scipy's implementation.
 #
-# Falls back to the DP-based assignment if scipy is unavailable (the
-# _opt_role_global_assignment function already handles this).
+# Falls back to a bitmask-DP assignment if scipy is unavailable
+# (_opt_role_global_assignment already handles this internally).
 
 
 def _run_max_weight_matching_grounding(
@@ -4444,39 +4204,6 @@ def run_setting(
                                 type_exact5_num[btype] += 1
                             if err <= 0.20:
                                 type_exact20_num[btype] += 1
-            elif assignment_mode == "global_consistency_exact" and expected_scalar:
-                # GCG with exact bitmask DP: considers ALL valid one-to-one assignments.
-                filled_values, filled_mentions, _diag = _run_global_consistency_grounding_exact(
-                    query, variant, expected_scalar
-                )
-                for p in expected_scalar:
-                    if p not in filled_values:
-                        continue
-                    m_ir = filled_mentions.get(p)
-                    tok = m_ir.tok if m_ir else None
-                    if tok is None:
-                        continue
-                    n_filled += 1
-                    filled[p] = filled_values[p]
-                    btype = _bucket_type(p)
-                    type_filled_total[btype] += 1
-                    type_filled_q[btype] += 1
-                    et = _expected_type(p)
-                    if _is_type_match(et, tok.kind):
-                        type_matches += 1
-                        type_correct_total[btype] += 1
-                        type_correct_q[btype] += 1
-                    if schema_hit and tok.value is not None and _is_scalar(gold_params.get(p)):
-                        gold_val = float(gold_params[p])
-                        err = _rel_err(float(tok.value), gold_val)
-                        comparable_errs.append(err)
-                        if btype in type_names:
-                            type_exact5_den[btype] += 1
-                            type_exact20_den[btype] += 1
-                            if err <= 0.05:
-                                type_exact5_num[btype] += 1
-                            if err <= 0.20:
-                                type_exact20_num[btype] += 1
             elif assignment_mode == "max_weight_matching" and expected_scalar:
                 # Maximum-weight bipartite matching (Hungarian algorithm / DP fallback).
                 filled_values, filled_mentions, _diag = _run_max_weight_matching_grounding(
@@ -4945,8 +4672,6 @@ def run_single_setting(
         effective_baseline = f"{baseline_arg}_optimization_role_entity_semantic_beam_repair"
     elif assignment_mode == "global_consistency_grounding":
         effective_baseline = f"{baseline_arg}_global_consistency_grounding"
-    elif assignment_mode == "global_consistency_exact":
-        effective_baseline = f"{baseline_arg}_global_consistency_exact"
     elif assignment_mode == "max_weight_matching":
         effective_baseline = f"{baseline_arg}_max_weight_matching"
     elif assignment_mode in ("global_compat_local", "global_compat_pairwise", "global_compat_full"):
@@ -5003,7 +4728,7 @@ def main() -> None:
         choices=(
             "typed", "untyped", "constrained", "semantic_ir_repair",
             "optimization_role_repair", "optimization_role_relation_repair",
-            "global_consistency_grounding", "global_consistency_exact",
+            "global_consistency_grounding",
             "max_weight_matching",
             "global_compat_local", "global_compat_pairwise", "global_compat_full",
             "relation_aware_basic", "relation_aware_ops",
@@ -5084,8 +4809,6 @@ def main() -> None:
         effective_baseline = f"{args.baseline}_optimization_role_entity_semantic_beam_repair"
     elif args.assignment_mode == "global_consistency_grounding":
         effective_baseline = f"{args.baseline}_global_consistency_grounding"
-    elif args.assignment_mode == "global_consistency_exact":
-        effective_baseline = f"{args.baseline}_global_consistency_exact"
     elif args.assignment_mode == "max_weight_matching":
         effective_baseline = f"{args.baseline}_max_weight_matching"
     elif args.assignment_mode in ("global_compat_local", "global_compat_pairwise", "global_compat_full"):
