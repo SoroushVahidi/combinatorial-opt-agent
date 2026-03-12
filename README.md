@@ -209,41 +209,6 @@ sbatch scripts/run_search.slurm
 
 - **Mention–slot scorer** (NLP4LP) — For constrained assignment (NL numeric mentions → schema slots). Generate pairs with `training/generate_mention_slot_pairs.py` and train with `training/train_mention_slot_scorer.py`. See `docs/NLP4LP_CONSTRAINED_ASSIGNMENT_*.md`.
 
-## 📋 Project Phases
-
-### ✅ Phase 1: Data Collection & Processing
-- [x] Define unified data schema
-- [x] Collect NL4Opt dataset (1,101 NL→LP pairs) — public data added via `pipeline/run_collection.py`
-- [x] Collect Gurobi Modeling Examples (40+ notebooks) — `data/sources/gurobi_modeling_examples.json`
-- [x] Collect Gurobi OptiMods (15+ documented mods) — `data/sources/gurobi_optimods.json`
-- [x] Parse all sources into unified JSON format
-- [x] Generate `all_problems.json` — `data/processed/all_problems.json`
-
-### ✅ Phase 2: Expand Dataset
-- [x] Parse GAMS Model Library (400+ models, requires GAMS license) — `data/sources/gams_models.json`
-- [x] Download & parse MIPLIB 2017 instances — `data/sources/miplib.json`
-- [x] Scrape OR-Library problem families — `data/sources/or_library.json`
-- [x] Extract Pyomo example formulations — `data/sources/pyomo_examples.json`
-- [ ] Manual additions from Williams' textbook
-
-### ✅ Phase 3: Problem Recognition Engine
-- [x] Generate embeddings for all problem descriptions (sentence-transformers)
-- [x] Build similarity search index (cosine similarity; FAISS-ready)
-- [x] Train/fine-tune problem classifier — `training/train_retrieval.py`
-- [ ] Implement disambiguation (clarifying questions)
-
-### ✅ Phase 4: Formulation Generation
-- [x] Retrieval pipeline for known problems — `retrieval/search.py`
-- [ ] LLM-based generation for novel problems
-- [x] LaTeX + solver code output formatting — LaTeX via Markdown rendering and solver code in `app.py`
-- [x] Validation against benchmark instances — `formulation/verify.py`, evaluation datasets in `data/processed/`
-
-### ✅ Phase 5: Conversational Agent
-- [x] Conversation flow design
-- [x] Backend API (FastAPI + Uvicorn) — `app.py`
-- [x] Frontend (Gradio web UI) — `app.py`
-- [x] Deployment — Hugging Face Spaces (`deploy_to_hf.py`), HPC (`run_app_wulver.sh`)
-
 ## 🛠️ Tech Stack
 
 | Component | Technology |
