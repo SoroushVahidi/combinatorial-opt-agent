@@ -68,6 +68,119 @@ for tens_word, tens_val in _TENS.items():
         if ones_val > 0:
             _WORD_TO_NUM[f"{tens_word}-{ones_word}"] = tens_val + ones_val
 
+# ── Enumeration-derived count extraction ─────────────────────────────────────
+# Words that are never valid enumeration items (articles, prepositions, …).
+_ENUM_STOP_WORDS: frozenset[str] = frozenset({
+    "a", "an", "the", "of", "in", "on", "at", "for", "to", "is", "are",
+    "be", "been", "was", "were", "has", "have", "had", "do", "does", "did",
+    "with", "by", "from", "into", "through", "each", "per", "any", "all",
+    "both", "either", "it", "its", "this", "that", "their", "which",
+    "can", "could", "should", "would", "may", "might", "must", "shall",
+    "not", "no", "also", "some", "more", "other", "such", "than", "if", "as",
+    "and", "or", "but", "nor", "so", "yet",
+})
+
+# Regex: "NOUN and NOUN" or "NOUN, NOUN, ..., and NOUN" (1-word items only).
+# Using single-word items avoids greedy capture of trailing prepositions/articles.
+# Requires "and" so there are always ≥ 2 items.
+_ENUM_NOUN_LIST_RE = re.compile(
+    r"[A-Za-z][a-zA-Z-]+"                        # first item (1 word, ≥ 2 chars)
+    r"(?:\s*,\s*[A-Za-z][a-zA-Z-]+)*"             # 0+ comma-separated middle items
+    r"\s*,?\s*and\s+[A-Za-z][a-zA-Z-]+",          # "and LAST" (last item, ≥ 2 chars)
+    re.IGNORECASE,
+)
+
+# Regex: "N NOUN, N NOUN, ..., and N NOUN" — quantified noun lists.
+# Requires at least 2 "N NOUN" pairs (the + after the first comma-group).
+_ENUM_QUANT_LIST_RE = re.compile(
+    r"[$]?\d[\d,]*(?:\.\d+)?%?\s+[A-Za-z][a-zA-Z]+"
+    r"(?:\s*,\s*[$]?\d[\d,]*(?:\.\d+)?%?\s+[A-Za-z][a-zA-Z]+)+"
+    r"(?:\s*,?\s*and\s+[$]?\d[\d,]*(?:\.\d+)?%?\s+[A-Za-z][a-zA-Z]+)?",
+    re.IGNORECASE,
+)
+
+
+def _extract_enum_derived_counts(query: str) -> list[tuple[float, str, list[str]]]:
+    """Detect enumeration patterns and return (count, raw_span, context_tokens).
+
+    Two patterns are recognised:
+
+    1. Unquantified noun lists — "phones and laptops" → 2,
+       "apples, bananas, and grapes" → 3, "A, B, and C" → 3.
+       Items are single words; articles, stop words, and written numbers
+       are silently dropped from the count.
+
+    2. Quantified noun lists — "10 apples, 20 bananas, and 80 grapes" → 3
+       (counts the number of distinct item types, not the quantities).
+
+    Conservative guardrails:
+    - Only returns counts in [2, 5].
+    - Items that are stop-words or written numbers are excluded.
+    - Duplicate (count, position) pairs are deduplicated.
+    """
+    results: list[tuple[float, str, list[str]]] = []
+
+    def _head_word(phrase: str) -> str:
+        parts = phrase.strip().lower().split()
+        return parts[-1].strip(".,;:()[]{}\"'") if parts else ""
+
+    def _is_valid_item(phrase: str) -> bool:
+        hw = _head_word(phrase)
+        if not hw or len(hw) < 2:
+            return False
+        if not hw.replace("-", "").isalpha():
+            return False
+        if hw in _ENUM_STOP_WORDS:
+            return False
+        if _WORD_TO_NUM.get(hw) is not None:
+            return False
+        return True
+
+    def _ctx_for(span: str, pos: int) -> list[str]:
+        start = max(0, pos - 50)
+        end = min(len(query), pos + len(span) + 50)
+        return [
+            t.lower().strip(".,;:()[]{}\"'")
+            for t in query[start:end].split()
+            if t.strip(".,;:()[]{}\"'")
+        ]
+
+    seen_spans: set[tuple[float, int]] = set()
+
+    # Pattern 1: unquantified noun lists
+    for m_obj in _ENUM_NOUN_LIST_RE.finditer(query):
+        span = m_obj.group(0)
+        items = re.split(r"\s*,\s*|\s+and\s+", span, flags=re.IGNORECASE)
+        valid = [it for it in items if it.strip() and _is_valid_item(it)]
+        count = len(valid)
+        if 2 <= count <= 5:
+            pos = m_obj.start()
+            key: tuple[float, int] = (float(count), pos)
+            if key not in seen_spans:
+                seen_spans.add(key)
+                results.append((float(count), span, _ctx_for(span, pos)))
+
+    # Pattern 2: quantified noun lists ("10 apples, 20 bananas, and 80 grapes")
+    for m_obj in _ENUM_QUANT_LIST_RE.finditer(query):
+        span = m_obj.group(0)
+        nouns = re.findall(
+            r"[$]?\d[\d,]*(?:\.\d+)?%?\s+([A-Za-z][a-zA-Z]*)", span, re.IGNORECASE
+        )
+        valid = [
+            n for n in nouns
+            if n.lower() not in _ENUM_STOP_WORDS
+            and n.lower().replace("-", "").isalpha()
+        ]
+        count = len(valid)
+        if 2 <= count <= 5:
+            pos = m_obj.start()
+            key = (float(count), pos)
+            if key not in seen_spans:
+                seen_spans.add(key)
+                results.append((float(count), span, _ctx_for(span, pos)))
+
+    return results
+
 _WRITTEN_NUM_RE = re.compile(
     r"\b(" + "|".join(re.escape(k) for k in sorted(_WORD_TO_NUM, key=len, reverse=True)) + r")\b",
     re.IGNORECASE,
@@ -1583,6 +1696,8 @@ GCG_LOCAL_WEIGHTS: dict[str, float] = {
     "count_large_int_penalty": -2.0,     # penalty for int > count_large_penalty_threshold
     "count_plausible_max": 10,           # integers ≤ this get the small-int bonus
     "count_large_penalty_threshold": 50, # integers > this get the large-int penalty
+    # Enumeration-derived count candidates must not fill non-count slots.
+    "derived_count_non_count_penalty": -1e9,
 }
 
 # Global consistency rewards/penalties applied to a full assignment as a whole.
@@ -1839,6 +1954,43 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
         )
         mention_id += 1
         i += span_size
+
+    # ── Enumeration-derived count candidates ─────────────────────────────────
+    # These handle cases where the count is implicit, e.g.:
+    #   "phones and laptops"           → NumProducts = 2
+    #   "apples, bananas, and grapes"  → NumItems    = 3
+    #   "10 apples, 20 bananas, and 80 grapes" → NumItems = 3
+    # Each derived-count mention is tagged as a cardinality candidate and
+    # receives a hard penalty for any non-count-like slot (see _gcg_local_score).
+    _DERIVED_ROLE_TAGS = frozenset({"cardinality_limit", "quantity_limit", "derived_count"})
+    for _ec, _esp, _ectx in _extract_enum_derived_counts(query):
+        _etok = NumTok(
+            raw=f"derived:{int(_ec)} ({_esp})",
+            value=_ec,
+            kind="int",
+        )
+        mentions.append(
+            MentionOptIR(
+                mention_id=mention_id,
+                value=_ec,
+                type_bucket="int",
+                raw_surface=_etok.raw,
+                role_tags=_DERIVED_ROLE_TAGS,
+                operator_tags=frozenset(),
+                unit_tags=frozenset({"count_marker"}),
+                fragment_type="",
+                is_per_unit=False,
+                is_total_like=False,
+                nearby_entity_tokens=frozenset(),
+                nearby_resource_tokens=frozenset(),
+                nearby_product_tokens=frozenset(),
+                context_tokens=_ectx,
+                sentence_tokens=sent_tokens,
+                tok=_etok,
+            )
+        )
+        mention_id += 1
+
     return mentions
 
 
@@ -1869,7 +2021,7 @@ def _slot_opt_role_expansion(param_name: str) -> frozenset[str]:
         tags.update(["penalty", "fixed_cost", "setup_cost"])
     if "time" in n or "hour" in n or "day" in n:
         tags.update(["time_requirement", "resource_consumption"])
-    if "number" in n or "count" in n or "item" in n or "quantity" in n:
+    if "number" in n or "count" in n or "item" in n or "quantity" in n or n.startswith("num"):
         tags.update(["quantity_limit", "cardinality_limit"])
     # Per-unit / coefficient semantics — improves match with "per", "each" context cues
     if any(w in n for w in ("per", "each", "unit", "perunit")):
@@ -1959,6 +2111,11 @@ def _score_mention_slot_opt(m: MentionOptIR, s: SlotOptIR) -> tuple[float, dict[
 
     if _is_type_incompatible(expected, kind):
         features["type_incompatible"] = True
+        return OPT_ROLE_WEIGHTS["type_incompatible_penalty"], features
+
+    # Enumeration-derived counts must not fill non-count-like slots.
+    if "derived_count" in m.role_tags and not s.is_count_like:
+        features["derived_count_non_count"] = True
         return OPT_ROLE_WEIGHTS["type_incompatible_penalty"], features
 
     if kind != "unknown":
@@ -2993,6 +3150,12 @@ def _gcg_local_score(m: "MentionOptIR", s: "SlotOptIR") -> tuple[float, dict[str
     if s.is_count_like and kind == "float":
         features["count_slot_float_incompatible"] = True
         return GCG_LOCAL_WEIGHTS["type_incompatible_penalty"], features
+
+    # Enumeration-derived counts are hard-incompatible with non-count-like slots.
+    # They are cardinality candidates only and must not bleed into numeric slots.
+    if "derived_count" in m.role_tags and not s.is_count_like:
+        features["derived_count_non_count"] = True
+        return GCG_LOCAL_WEIGHTS["derived_count_non_count_penalty"], features
 
     if kind != "unknown":
         if (expected == "percent" and kind == "percent") or (expected == "currency" and kind == "currency"):
