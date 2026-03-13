@@ -1242,6 +1242,37 @@ _TOTAL_PHRASE_PATTERNS: tuple[str, ...] = (
 PERCENT_MARKER_TOKENS = {"%", "percent", "percentage", "pct"}
 CURRENCY_MARKER_TOKENS = {"$", "€", "dollar", "dollars", "usd", "eur", "cost", "price", "budget"}
 
+# ── Group 1 role-family lexicons ─────────────────────────────────────────────
+# Used to compute tight-window role flags on MentionOptIR (is_cost_like, etc.)
+# Each lexicon is checked against the ±2 token window immediately surrounding
+# the numeric mention.  Using a tight window prevents cross-mention bleeding
+# (e.g. "profit" from the previous mention leaking into the current one).
+
+_COST_CONTEXT_WORDS: frozenset[str] = frozenset({
+    "cost", "costs", "expense", "expenses", "price", "prices",
+    "spend", "spending", "expenditure", "expenditures",
+})
+
+_PROFIT_CONTEXT_WORDS: frozenset[str] = frozenset({
+    "profit", "profits", "revenue", "revenues", "return", "returns",
+    "earns", "earn", "gain", "gains", "yield", "yields", "earning", "earnings",
+})
+
+_DEMAND_CONTEXT_WORDS: frozenset[str] = frozenset({
+    "demand", "demands", "required", "needed", "need", "needs",
+    "requirement", "requirements", "consume", "consumes",
+})
+
+_RESOURCE_CONTEXT_WORDS: frozenset[str] = frozenset({
+    "labor", "labour", "material", "materials", "resource", "resources",
+    "worker", "workers", "machine", "machines", "manpower",
+})
+
+_TIME_CONTEXT_WORDS: frozenset[str] = frozenset({
+    "hour", "hours", "time", "day", "days", "minute", "minutes",
+    "week", "weeks", "shift", "shifts",
+})
+
 # Context nouns that signal a count/cardinality interpretation when appearing
 # near a small positive integer (e.g. "three types", "two products").
 # Used by the quantity-role layer to derive is_count_like on MentionOptIR.
@@ -1965,6 +1996,16 @@ class MentionOptIR:
     # tighter window than context_tokens (±14) and stays within clause
     # boundaries, making it suitable for measure-attribute overlap scoring.
     narrow_context_tokens: tuple[str, ...] = ()
+    # ── Group 1 role-family flags (Step 2 structured mention representation) ──
+    # Derived from the ±2 token tight window immediately surrounding the mention.
+    # Using a tight window prevents cross-mention bleeding.  These flags feed:
+    #   - role_family_mismatch distractor suppression (Step 4)
+    #   - transparency / ablation diagnostics
+    is_cost_like: bool = False      # cost/expense/price in tight context
+    is_profit_like: bool = False    # profit/revenue/yield in tight context
+    is_demand_like: bool = False    # demand/required/needed in tight context
+    is_resource_like: bool = False  # labor/material/resource in tight context
+    is_time_like: bool = False      # hour/hours/time/day in tight context
 
 
 @dataclass(frozen=True)
@@ -2336,9 +2377,8 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
             # Only fires after the first token so that units immediately following
             # the current mention (e.g. "3 hours" → right[0]="hours") are included.
             if _k >= 1 and NUM_TOKEN_RE.fullmatch(_tok_clean):
-                # Remove the just-appended numeric token itself; it is not a measure word.
-                if _right_narrow and _right_narrow[-1] == _tok_clean:
-                    _right_narrow.pop()
+                # Remove the just-appended numeric token; it is not a measure word.
+                _right_narrow.pop()
                 break
         _left_set = set(_left_narrow)
         _right_set = set(_right_narrow)
@@ -2391,6 +2431,21 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
         _narrow_ctx_str = " ".join(narrow_ctx_tokens)
         _bound_role = _compute_bound_role(operator_tags, _narrow_ctx_str, _range_anno)
 
+        # ── Group 1: tight ±2-token role-family flags ─────────────────────────
+        # Use a ±2 token window (last 2 left tokens + first 2 right tokens) rather
+        # than the full narrow context to prevent cross-mention bleeding.  For
+        # example, in "yields 12 profit and costs 5", the full narrow context of "5"
+        # would include "profit" from "12"'s territory; the tight window only sees
+        # "and costs" (left) + "dollars to" (right), correctly marking 5 as cost_like.
+        _tight_left = _left_narrow[-2:]
+        _tight_right = _right_narrow[:2]
+        _tight_ctx: frozenset[str] = frozenset(_tight_left + _tight_right)
+        _is_cost_like_flag = bool(_tight_ctx & _COST_CONTEXT_WORDS)
+        _is_profit_like_flag = bool(_tight_ctx & _PROFIT_CONTEXT_WORDS)
+        _is_demand_like_flag = bool(_tight_ctx & _DEMAND_CONTEXT_WORDS)
+        _is_resource_like_flag = bool(_tight_ctx & _RESOURCE_CONTEXT_WORDS)
+        _is_time_like_flag = bool(_tight_ctx & _TIME_CONTEXT_WORDS)
+
         mentions.append(
             MentionOptIR(
                 mention_id=mention_id,
@@ -2416,6 +2471,11 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
                 primary_role=_primary_role,
                 bound_role=_bound_role,
                 narrow_context_tokens=tuple(_left_narrow + _right_narrow),
+                is_cost_like=_is_cost_like_flag,
+                is_profit_like=_is_profit_like_flag,
+                is_demand_like=_is_demand_like_flag,
+                is_resource_like=_is_resource_like_flag,
+                is_time_like=_is_time_like_flag,
             )
         )
         mention_id += 1

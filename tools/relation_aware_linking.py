@@ -126,6 +126,10 @@ RAL_WEIGHTS: dict[str, dict[str, float]] = {
         "narrow_measure_overlap_bonus": 2.0,
         # Stage 4: bound mention → pure objective/coefficient slot mismatch
         "bound_to_objective_mismatch_penalty": -3.5,
+        # Stage 5: competing-measure conflict (mention context better matches another slot)
+        "narrow_measure_conflict_penalty": -1.5,
+        # Stage 6: role-family mismatch (cost cue → profit slot, etc.)
+        "role_family_mismatch_penalty": -3.0,
     },
     "full": {
         "type_exact_bonus": 4.0,
@@ -154,6 +158,10 @@ RAL_WEIGHTS: dict[str, dict[str, float]] = {
         "narrow_measure_overlap_bonus": 2.0,
         # Stage 4: bound mention → pure objective/coefficient slot mismatch
         "bound_to_objective_mismatch_penalty": -3.5,
+        # Stage 5: competing-measure conflict (mention context better matches another slot)
+        "narrow_measure_conflict_penalty": -1.5,
+        # Stage 6: role-family mismatch (cost cue → profit slot, etc.)
+        "role_family_mismatch_penalty": -3.0,
     },
 }
 
@@ -190,6 +198,13 @@ class MentionFeatures:
     # Derived from the directional ±left/right narrow windows used for
     # is_per_unit/is_total_like detection; stays within clause boundaries.
     narrow_context_tokens: tuple[str, ...] = ()
+    # Group 1 role-family flags (propagated from MentionOptIR).
+    # Derived from ±2-token tight window; used for role_family_mismatch (Step 4).
+    is_cost_like: bool = False
+    is_profit_like: bool = False
+    is_demand_like: bool = False
+    is_resource_like: bool = False
+    is_time_like: bool = False
 
 
 @dataclass(frozen=True)
@@ -254,6 +269,19 @@ class MentionSlotLink:
     # operator) should not fill a slot that expects a plain coefficient with no
     # bound character (e.g. "at least 50 units" → ProfitPerUnit is a mismatch).
     bound_to_objective_mismatch: bool = False
+    # Stage 5: competing-measure conflict.
+    # For this (mention, slot) pair, counts how much the mention's narrow context
+    # better matches a COMPETING slot than the current one:
+    #   narrow_measure_conflict = max(0, max_other_slot_overlap - this_slot_overlap)
+    # A positive value means the mention's local cues favour a different slot.
+    # Populated by _post_compute_narrow_measure_conflict() after link building.
+    narrow_measure_conflict: int = 0
+    # Stage 6: role-family mismatch between mention cue and slot role family.
+    # True when tight-context evidence clearly disagrees with the slot's role
+    # (e.g. cost cue → profit slot, profit cue → cost slot, demand/resource cue
+    # → profit slot).  Only fires when the evidence is unambiguous (exactly one
+    # of the opposing role flags is active on the mention).
+    role_family_mismatch: bool = False
     # Cached scores per ablation mode (populated lazily by score functions)
     _scores: dict[str, tuple[float, dict[str, Any]]] = field(default_factory=dict)
 
@@ -314,6 +342,11 @@ def _mention_features_from_ir(m: MentionOptIR) -> MentionFeatures:
         polarity=_mention_polarity(m),
         style=_mention_style(m),
         narrow_context_tokens=m.narrow_context_tokens,
+        is_cost_like=m.is_cost_like,
+        is_profit_like=m.is_profit_like,
+        is_demand_like=m.is_demand_like,
+        is_resource_like=m.is_resource_like,
+        is_time_like=m.is_time_like,
     )
 
 
@@ -456,6 +489,35 @@ def _build_mention_slot_link(
         and not sf.is_bound_like          # slot is NOT a bound slot
     )
 
+    # Stage 6: role-family mismatch (Group 1 distractor suppression).
+    # Penalise mention-slot pairs where tight-context role cues clearly conflict
+    # with the slot's economic role family.  Only fires when the evidence is
+    # unambiguous: exactly one of the opposing role flags is set on the mention.
+    # Example mismatches:
+    #   - cost cue only  → profit slot  (e.g. "costs 5" → ProfitPerUnit)
+    #   - profit cue only → cost slot   (e.g. "yields 12 profit" → CostPerUnit)
+    #   - demand/need cue → profit slot (e.g. "demand of 100" → ProfitPerUnit)
+    #   - resource/time cue → profit slot (e.g. "4 labor hours" → ProfitPerUnit)
+    _sf_is_profit = "unit_profit" in sf.slot_role_tags
+    _sf_is_cost_only = (
+        "unit_cost" in sf.slot_role_tags and "unit_profit" not in sf.slot_role_tags
+    )
+    role_family_mismatch = (
+        # Cost-cued mention → profit slot (unambiguous: no profit cue present)
+        (mf.is_cost_like and not mf.is_profit_like and _sf_is_profit)
+        # Profit-cued mention → cost-only slot (unambiguous: no cost cue present)
+        or (mf.is_profit_like and not mf.is_cost_like and _sf_is_cost_only)
+        # Demand/need-cued mention (no economic cue) → profit slot
+        or (mf.is_demand_like and not mf.is_cost_like and not mf.is_profit_like and _sf_is_profit)
+        # Resource/time-cued mention (no economic cue) → profit slot
+        or (
+            (mf.is_resource_like or mf.is_time_like)
+            and not mf.is_cost_like
+            and not mf.is_profit_like
+            and _sf_is_profit
+        )
+    )
+
     return MentionSlotLink(
         mention_id=mf.mention_id,
         slot_name=sf.name,
@@ -482,7 +544,45 @@ def _build_mention_slot_link(
         role_tag_overlap=role_tag_overlap,
         narrow_measure_overlap=narrow_measure_overlap,
         bound_to_objective_mismatch=bound_to_objective_mismatch,
+        role_family_mismatch=role_family_mismatch,
     )
+
+
+def _post_compute_narrow_measure_conflict(links: list[MentionSlotLink]) -> None:
+    """Post-compute narrow_measure_conflict for each link (Stage 5).
+
+    For each mention, the conflict for a (mention, slot) pair is::
+
+        narrow_measure_conflict = max(0, max_other_slot_overlap - this_slot_overlap)
+
+    where *max_other_slot_overlap* is the highest ``narrow_measure_overlap``
+    among all OTHER slots for the same mention.  A positive conflict means
+    the mention's local context matches a different slot better than this one,
+    which indicates the current assignment is likely a distractor.
+
+    This is computed in a post-processing pass (after all links are built)
+    because it requires global knowledge of all (mention, slot) pairs for each
+    mention.  The MentionSlotLink dataclass is not frozen, so mutation is safe.
+    The ``_scores`` cache is still empty at this point so no stale entries exist.
+    """
+    # Group links by mention_id.
+    by_mention: dict[int, list[MentionSlotLink]] = {}
+    for lnk in links:
+        if lnk.mention_id not in by_mention:
+            by_mention[lnk.mention_id] = []
+        by_mention[lnk.mention_id].append(lnk)
+
+    for m_links in by_mention.values():
+        for lnk in m_links:
+            max_other = max(
+                (
+                    other.narrow_measure_overlap
+                    for other in m_links
+                    if other.slot_name != lnk.slot_name
+                ),
+                default=0,
+            )
+            lnk.narrow_measure_conflict = max(0, max_other - lnk.narrow_measure_overlap)
 
 
 def build_mention_slot_links(
@@ -522,6 +622,10 @@ def build_mention_slot_links(
         for sf in slot_feats:
             lnk = _build_mention_slot_link(mf, sf, has_pct_mention_in_pool)
             links.append(lnk)
+
+    # Stage 5: post-compute competing-measure conflict scores.
+    # Must run after all links are built (requires global view of all slots per mention).
+    _post_compute_narrow_measure_conflict(links)
 
     return links, mentions_ir, slots_ir, mention_feats, slot_feats
 
@@ -711,6 +815,17 @@ def relation_aware_local_score(
         if link.narrow_measure_overlap and "narrow_measure_overlap_bonus" in w:
             score += w["narrow_measure_overlap_bonus"] * link.narrow_measure_overlap
             features["narrow_measure_overlap"] = link.narrow_measure_overlap
+        # Stage 5: competing-measure conflict penalty.
+        # The mention's narrow context matches a DIFFERENT slot better than this one.
+        if link.narrow_measure_conflict and "narrow_measure_conflict_penalty" in w:
+            score += w["narrow_measure_conflict_penalty"] * link.narrow_measure_conflict
+            features["narrow_measure_conflict"] = link.narrow_measure_conflict
+        # Stage 6: role-family mismatch penalty.
+        # Tight-context role cues (cost/profit/demand/resource/time) clearly conflict
+        # with the slot's economic role family (e.g. cost cue → profit slot).
+        if link.role_family_mismatch and "role_family_mismatch_penalty" in w:
+            score += w["role_family_mismatch_penalty"]
+            features["role_family_mismatch"] = True
 
     # ── Entity anchoring + magnitude (full only) ─────────────────────────
     if ablation_mode == "full":
