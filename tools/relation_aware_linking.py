@@ -58,6 +58,8 @@ from tools.nlp4lp_downstream_utility import (
     _is_type_incompatible,
     _normalize_tokens,
     _slot_aliases,
+    _slot_measure_tokens,
+    _split_camel_case,
     _expected_type,
     _mention_semantic_families,
     _slot_semantic_families,

@@ -592,6 +592,50 @@ def _normalize_tokens(text: str) -> list[str]:
     return re.findall(r"\w+", text.lower())
 
 
+def _split_camel_case(name: str) -> list[str]:
+    """Split a CamelCase or underscore-separated identifier into lowercase tokens.
+
+    Examples::
+
+        TotalLaborHours      -> ['total', 'labor', 'hours']
+        LaborHoursPerProduct -> ['labor', 'hours', 'per', 'product']
+        ProteinFeedA         -> ['protein', 'feed', 'a']
+        FatFeedA             -> ['fat', 'feed', 'a']
+        HeatingHours         -> ['heating', 'hours']
+        CoolingHours         -> ['cooling', 'hours']
+    """
+    # Insert a space between a lowercase letter (or digit) followed by an uppercase letter.
+    s = re.sub(r"([a-z\d])([A-Z])", r"\1 \2", name)
+    # Insert a space between a run of uppercase letters and a following CamelCase word.
+    s = re.sub(r"([A-Z]+)([A-Z][a-z])", r"\1 \2", s)
+    # Replace underscores and collapse whitespace, then return lowercase tokens.
+    return [t.lower() for t in re.split(r"[\s_]+", s) if t]
+
+
+def _slot_measure_tokens(name: str) -> list[str]:
+    """Return a de-duplicated list of lowercase tokens for a slot name.
+
+    Includes both the full lowercased identifier (for backward-compatible exact
+    matching) and the individual camel-case-split component tokens (for
+    measure/attribute-aware scoring via narrow_measure_overlap).
+
+    Examples::
+
+        'TotalLaborHours'    -> ['totallaborhours', 'total', 'labor', 'hours']
+        'ProteinFeedA'       -> ['proteinfeeda', 'protein', 'feed', 'a']
+        'HeatingHours'       -> ['heatinghours', 'heating', 'hours']
+    """
+    full = name.lower()
+    parts = _split_camel_case(name)
+    seen: set[str] = {full}
+    result: list[str] = [full]
+    for t in parts:
+        if t not in seen:
+            seen.add(t)
+            result.append(t)
+    return result
+
+
 def _slot_aliases(param_name: str) -> list[str]:
     """Rule-based alias expansion for common optimization slot patterns."""
     n = (param_name or "").lower()
@@ -916,7 +960,7 @@ def _build_slot_records(expected_scalar: list[str]) -> list[SlotRecord]:
         alias_tokens: set[str] = set()
         for a in aliases:
             alias_tokens.update(_normalize_tokens(a))
-        norm_tokens = _normalize_tokens(name)
+        norm_tokens = _slot_measure_tokens(name)
         slots.append(
             SlotRecord(
                 name=name,
@@ -1459,7 +1503,7 @@ def _build_slot_irs(expected_scalar: list[str]) -> list[SlotIR]:
         alias_tokens = set()
         for a in aliases:
             alias_tokens.update(_normalize_tokens(a))
-        norm_tokens = _normalize_tokens(name)
+        norm_tokens = _slot_measure_tokens(name)
         semantic_target_tags = _slot_semantic_expansion(name)
         op_pref: set[str] = set()
         if any(x in name.lower() for x in ("min", "minimum", "atleast")):
@@ -2284,6 +2328,18 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
                 and _right_raw_window[_k + 1].lower().strip() in _CLAUSE_CONJUNCTIONS
             ):
                 break
+            # Numeric-token boundary: stop when a new numeric literal appears in the
+            # right window.  This prevents cross-measure contamination in patterns
+            # like "3 heating hours and 5 cooling hours" where the right context of
+            # "3" would otherwise include both "heating" and "cooling".  Stopping
+            # at the next number keeps each measure cue local to its own number.
+            # Only fires after the first token so that units immediately following
+            # the current mention (e.g. "3 hours" → right[0]="hours") are included.
+            if _k >= 1 and NUM_TOKEN_RE.fullmatch(_tok_clean):
+                # Remove the just-appended numeric token itself; it is not a measure word.
+                if _right_narrow and _right_narrow[-1] == _tok_clean:
+                    _right_narrow.pop()
+                break
         _left_set = set(_left_narrow)
         _right_set = set(_right_narrow)
         _left_str = " ".join(_left_narrow)
@@ -2458,7 +2514,7 @@ def _build_slot_opt_irs(expected_scalar: list[str]) -> list[SlotOptIR]:
         alias_tokens_flat: set[str] = set()
         for a in aliases:
             alias_tokens_flat.update(_normalize_tokens(a))
-        norm_tokens = _normalize_tokens(name)
+        norm_tokens = _slot_measure_tokens(name)
         slot_role_tags = _slot_opt_role_expansion(name)
         op_pref: set[str] = set()
         n_lower_sl = name.lower()
