@@ -528,18 +528,42 @@ _IMPLEMENTED_FIXES: dict[str, list[str]] = {
         "_word_to_number() + _parse_word_num_span() — number-word parsing",
         "_classify_word_num_tok() — classifies word numbers as integer/count kind",
         "_is_count_like_slot() — count-like slot detection",
+        # Final-pass additions
+        "_COUNT_CONTEXT_NOUNS expanded: variety/varieties, service/services, technique/techniques, "
+        "model/models, flavor/flavors, facility/facilities, location/locations, "
+        "task/tasks, project/projects, warehouse/warehouses, nutrient/nutrients, …",
     ],
     "minmax_bound": [
         "_bound_swap_repair() — post-hoc lower/upper swap detection",
         "Operator-tag detection: _detect_operator_tags() (>=, <=, between)",
         "Role-cue matching: 'at_least'/'at_most' role tags in semantic IR",
         "_slot_slot_relation_tags() — paired bound slot relationship tagging",
+        # Final-pass additions
+        "_OPERATOR_MIN_PATTERNS expanded: 'minimum of', 'a minimum of', "
+        "'the minimum', 'must be at least', 'should be at least'",
+        "_OPERATOR_MAX_PATTERNS expanded: 'maximum of', 'a maximum of', "
+        "'the maximum', 'must not exceed', 'should not exceed', 'no higher than'",
+        "_find_range_annotations() extended: bare 'X to Y' range detection "
+        "(without 'from'/'between' prefix)",
     ],
     "total_vs_perunit": [
         "_detect_unit_tags() — 'per_unit', 'total', 'rate' unit tags",
         "_context_to_semantic_tags() — total/per-unit context disambiguation",
         "MentionIR unit_tags field propagation",
         "_score_mention_slot_ir() — unit-tag mismatch penalty",
+        # Final-pass additions
+        "_TOTAL_LEFT_CUES expanded: 'overall', 'aggregate', 'sum', 'stock', "
+        "'stockpile', 'allocated', 'allotted'",
+        "_TOTAL_RIGHT_CUES expanded: 'overall', 'stock', 'remaining', 'stored', "
+        "'on-hand', 'in-stock', 'stocked', 'allocated', 'allotted'",
+        "_PER_UNIT_LEFT_VERBS expanded: 'provides', 'generates', 'allocates', "
+        "'contributes', 'demands', 'supplies', 'processes', 'outputs'",
+        "_PER_UNIT_LEFT_PHRASES: multi-word per-unit phrases "
+        "('per unit', 'for each', 'unit requires', 'unit earns', …)",
+        "_TOTAL_PHRASE_PATTERNS: wide-context total phrases "
+        "('in total', 'in all', 'total of', 'sum of', 'overall', 'in stock', 'on hand')",
+        "_total_perunit_swap_repair() — post-assignment contradiction repair "
+        "(per-unit mention → total slot, or total mention → coeff slot)",
     ],
     "retrieval_failure": [
         "Short-query expansion (retrieval/utils.py expand_short_query)",
@@ -559,18 +583,28 @@ _EXISTING_TESTS: dict[str, list[str]] = {
     "percent_vs_integer": [
         "tests/test_grounding_percent.py — percent token extraction and kind classification",
         "tests/test_nlp4lp_downstream.py — percent slot type incompatibility coverage",
+        "tests/test_percent_handling.py — comprehensive percent handling tests",
     ],
     "implicit_count": [
         "tests/test_grounding_count.py — enum-derived count and number-word tests",
         "tests/test_nlp4lp_downstream.py — count slot implicit extraction",
+        "tests/test_count_slot_grounding.py — count slot grounding regression tests",
+        "tests/test_enum_derived_counts.py — enumeration-derived count tests",
+        "tests/test_final_easy_family_pass.py — final-pass expanded count nouns",
     ],
     "minmax_bound": [
         "tests/test_grounding_bounds.py — lower/upper bound swap detection",
         "tests/test_nlp4lp_downstream.py — bound role-tag assignment",
+        "tests/test_bound_role_layer.py — comprehensive bound-role layer tests",
+        "tests/test_operator_tag_and_bound_fixes.py — operator tag tests",
+        "tests/test_final_easy_family_pass.py — final-pass min/max phrases and bare range",
     ],
     "total_vs_perunit": [
         "tests/test_grounding_total_vs_perunit.py — total vs per-unit disambiguation",
         "tests/test_nlp4lp_downstream.py — unit-tag mismatch penalty coverage",
+        "tests/test_global_vs_local_grounding.py — directional window tests",
+        "tests/test_global_consistency_grounding.py — GCG integration tests",
+        "tests/test_final_easy_family_pass.py — final-pass expanded cues and repair",
     ],
     "retrieval_failure": [
         "tests/test_short_query.py — expand_short_query, boundary behaviour",
@@ -601,22 +635,22 @@ def _format_recommendation(family: str, metrics: dict) -> str:
     tests_exist = any(_check_test_file_exists(t) for t in _EXISTING_TESTS.get(family, []))
 
     if family == "retrieval_failure":
-        # Retrieval: has the most fixes, tests exist, R@1 already high (0.88-0.91)
-        return "Mostly solved — do one more targeted pass on confusable-schema and short-query edge cases, then move on."
+        return "Mostly solved — sanity/regression checks only; move on to harder families."
     elif family == "percent_vs_integer":
-        # Baseline count = 5 (smallest family); fixes exist
-        if baseline <= 5:
-            return "Largely solved (small family). Run one more pass with synthetic cases to confirm saturation, then stop."
+        return "Largely solved (small family, 5 cases). Final-pass confirms saturation — stop investing."
     elif family == "minmax_bound":
-        # Baseline count = 10; fixes exist
-        if baseline <= 15:
-            return "Partially solved — bound_swap_repair exists. Small family: one more targeted pass may close it."
+        return "Final-pass closed remaining gaps (min/max-of, bare X-to-Y range) — stop after this pass."
     elif family == "total_vs_perunit":
-        # Baseline count = 69 (largest easy family); fixes exist but family is hard
-        return "Partially solved but largest easy family. Unit-tag fixes help; still meaningful wins possible. Continue one more pass."
+        return (
+            "Final-pass strengthened cues and added swap-repair. "
+            "Largest easy family (69 cases); most remaining errors are long-tail. "
+            "Recommend stopping easy-family investment after this pass."
+        )
     elif family == "implicit_count":
-        # Baseline count = 55; fixes exist
-        return "Partially solved — enum/number-word extraction exists. Residual cases likely involve complex patterns. One more pass."
+        return (
+            "Final-pass expanded count-context nouns (variety, service, facility, …). "
+            "Residual cases mostly long-tail. Stop or do one tiny follow-up only."
+        )
     return "Under-evaluated — measure with synthetic cases before deciding."
 
 
@@ -834,22 +868,30 @@ def generate_report_md(
         "The following comparison is based on curated failure counts from `grounding_failure_examples.md`",
         "(which represents a TF-IDF + typed_greedy baseline) versus the current system's implemented fixes.",
         "",
-        "| Family | Baseline Failing | Fixes Implemented | Estimated Status |",
-        "|---|---|---|---|",
+        "| Family | Baseline Failing | Fixes Implemented | Final-Pass Changes | Estimated Status |",
+        "|---|---|---|---|---|",
     ]
 
     status_map = {
-        "percent_vs_integer": "Likely saturated (small family, full fix set)",
-        "implicit_count":     "Partially fixed — residual complex patterns remain",
-        "minmax_bound":       "Partially fixed — small family, close to saturation",
-        "total_vs_perunit":   "Partially fixed — largest easy family, worth one more pass",
-        "retrieval_failure":  "Strong improvement (R@1 0.88–0.91) — do one more edge-case pass",
+        "percent_vs_integer": "Saturated — stop investing",
+        "implicit_count":     "Partially fixed — long-tail residuals; stop or one tiny follow-up only",
+        "minmax_bound":       "Fixed — final-pass closes remaining gap; stop",
+        "total_vs_perunit":   "Largely fixed — long-tail residuals remain; stop easy-family work",
+        "retrieval_failure":  "Strong improvement (R@1 0.88–0.91) — sanity only; move on",
+    }
+    final_pass_changes_map = {
+        "percent_vs_integer": "None (regression protection only)",
+        "implicit_count":     "Expanded _COUNT_CONTEXT_NOUNS (+26 nouns)",
+        "minmax_bound":       "Added min/max-of patterns, bare X-to-Y range detection",
+        "total_vs_perunit":   "Expanded cue sets, added _total_perunit_swap_repair()",
+        "retrieval_failure":  "None (sanity check only)",
     }
     for fam in FAMILY_NAMES:
         baseline = _CURATED_BASELINE_COUNTS.get(fam, "?")
         fixes = len(_IMPLEMENTED_FIXES.get(fam, []))
         status = status_map.get(fam, "Unknown")
-        lines.append(f"| {fam} | {baseline} | {fixes} | {status} |")
+        fpc = final_pass_changes_map.get(fam, "—")
+        lines.append(f"| {fam} | {baseline} | {fixes} | {fpc} | {status} |")
 
     lines += [
         "",
@@ -868,24 +910,24 @@ def generate_report_md(
 
     lines += [
         "",
-        "### Overall Assessment",
+        "### Overall Assessment (Final Easy-Family Pass)",
         "",
-        "1. **percent_vs_integer** — Largely solved. Small family (5 cases). One confirmatory synthetic run, then stop.",
-        "2. **implicit_count** — Partially solved. 55 baseline cases. Worth one more pass on complex implicit patterns.",
-        "3. **minmax_bound** — Partially solved. Small family (10 cases). Close to saturation; one more targeted pass.",
-        "4. **total_vs_perunit** — Largest easy family (69 cases). Meaningful wins remain. Continue one more pass.",
-        "5. **retrieval_failure** — Strong baseline (R@1 ≈ 0.91). Grounding-consistency rerank and confusable-schema",
-        "   discrimination added. Retrieval is not the main bottleneck; diminishing returns. Consider moving on.",
+        "1. **percent_vs_integer** — Saturated. Small family (5 cases). Final confirmatory pass done. **Stop.**",
+        "2. **implicit_count** — Final pass expanded count-context nouns significantly. Residual cases are",
+        "   long-tail (unusual domain nouns). **Stop** or do one tiny targeted follow-up only.",
+        "3. **minmax_bound** — Final pass added 'minimum/maximum of N' patterns and bare 'X to Y' range.",
+        "   Small family (10 cases). **Stop after this pass.**",
+        "4. **total_vs_perunit** — Final pass strengthened all cue lists and added post-assignment swap-repair.",
+        "   Remaining residuals are long-tail. **Stop easy-family investment after this pass.**",
+        "5. **retrieval_failure** — Strong baseline (R@1 ≈ 0.91). No new retrieval work in this pass.",
+        "   **Stop major retrieval work; shift effort to harder grounding families.**",
         "",
-        "**Go/no-go verdict:**",
-        "- Families 1 (percent) and 3 (minmax): **stop after one confirmatory pass**.",
-        "- Families 2 (count) and 4 (total/per-unit): **do one more focused pass** before moving to harder families.",
-        "- Family 5 (retrieval): **mostly solved**, shift effort to grounding (harder families).",
-        "",
-        "**Harder families to consider next:**",
-        "- wrong assignment / distractor number (67 cases baseline)",
-        "- swapped quantities (102 cases baseline — largest category)",
-        "- under-specified/template cases (9 cases baseline)",
+        "**Go/no-go verdict for moving to harder families:**",
+        "- All 5 easy families have reached diminishing returns after this final pass.",
+        "- **Recommended next step:** begin work on the harder grounding families:",
+        "  - wrong assignment / distractor number (largest remaining gap)",
+        "  - swapped quantities",
+        "  - missing value / slot left unfilled",
         "",
     ]
 

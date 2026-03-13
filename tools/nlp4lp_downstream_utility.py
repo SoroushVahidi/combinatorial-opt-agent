@@ -1081,6 +1081,10 @@ _OPERATOR_MIN_PATTERNS: tuple[str, ...] = (
     "no fewer than", "not fewer than",
     "at minimum", "at a minimum",
     "greater than or equal to", "greater than or equal",
+    # Additional min patterns for final-pass coverage
+    "minimum of", "a minimum of", "the minimum",
+    "at the minimum", "minimum required",
+    "must be at least", "should be at least",
 )
 _OPERATOR_MAX_PATTERNS: tuple[str, ...] = (
     "at most", "atmost", "at_most",
@@ -1090,6 +1094,11 @@ _OPERATOR_MAX_PATTERNS: tuple[str, ...] = (
     "at maximum", "at a maximum",
     "less than or equal to", "less than or equal",
     "no greater than", "not greater than",
+    # Additional max patterns for final-pass coverage
+    "maximum of", "a maximum of", "the maximum",
+    "at the maximum", "maximum allowed",
+    "must not exceed", "should not exceed",
+    "no higher than", "not higher than",
 )
 # Exclusive lower/upper-bound phrases (strict inequality: > or <).
 # These are checked AFTER the standard patterns with a negation guard
@@ -1135,22 +1144,47 @@ _PER_UNIT_LEFT_VERBS: frozenset[str] = frozenset({
     "needs", "need", "consumes", "consume", "produces", "produce",
     "contains", "contain", "costs", "cost", "earns", "earn",
     "yields", "yield",
+    # Additional per-unit governing verbs for final-pass coverage
+    "provides", "provide", "generates", "generate", "allocates", "allocate",
+    "contributes", "contribute", "demands", "demand", "supplies", "supply",
+    "processes", "process", "outputs", "output",
 })
 # Per-unit determiners: appear left of the governed noun/number.
 # "each X", "per X", "every X", "for each X"
 _PER_UNIT_LEFT_DETERMINERS: frozenset[str] = frozenset({
     "each", "per", "every",
 })
+# Multi-word per-unit phrases checked against the wider left context string.
+# These catch "one unit requires", "a single item uses", "for every product" etc.
+_PER_UNIT_LEFT_PHRASES: tuple[str, ...] = (
+    "per unit", "per item", "for each", "for every",
+    "one unit", "each unit", "per product", "each product",
+    "per item", "each item", "per piece", "each piece",
+    "unit requires", "unit uses", "unit costs", "unit earns",
+    "unit needs", "unit takes", "unit produces",
+)
 # Total/aggregate left cues: "has N", "budget is N", "spend at most N"
 _TOTAL_LEFT_CUES: frozenset[str] = frozenset({
     "total", "budget", "has", "have", "spend", "spent",
+    # Additional total-left cues for final-pass coverage
+    "overall", "aggregate", "sum", "stock", "stockpile",
+    "allocated", "allotted",
 })
 # Total/aggregate right cues: "N available", "N capacity", "N total"
 # Note: "budget" is NOT here — it is a left-side cue ("budget is N", "the budget N"),
 # not a word that typically follows the global amount.
 _TOTAL_RIGHT_CUES: frozenset[str] = frozenset({
     "available", "capacity", "limit", "total", "supply",
+    # Additional total-right cues for final-pass coverage
+    "overall", "stock", "remaining", "stored", "on-hand",
+    "in-stock", "stocked", "allocated", "allotted",
 })
+# Multi-word total-like phrases checked against the wide context string.
+# "in total", "in all", "total of N", "sum of N", "overall N"
+_TOTAL_PHRASE_PATTERNS: tuple[str, ...] = (
+    "in total", "in all", "total of", "sum of", "overall",
+    "in stock", "on hand", "in supply",
+)
 
 # Unit/marker detection.
 PERCENT_MARKER_TOKENS = {"%", "percent", "percentage", "pct"}
@@ -1168,6 +1202,16 @@ _COUNT_CONTEXT_NOUNS: frozenset[str] = frozenset({
     "mode", "modes", "route", "routes", "vehicle", "vehicles", "part", "parts",
     "crop", "crops", "food", "foods", "drug", "drugs", "plant", "plants",
     "class", "classes", "good", "goods", "alloy", "alloys", "fuel", "fuels",
+    # Additional count context nouns for final-pass coverage
+    "variety", "varieties", "service", "services", "technique", "techniques",
+    "method", "methods", "model", "models", "flavor", "flavors", "flavour", "flavours",
+    "size", "sizes", "shape", "shapes", "color", "colors", "colour", "colours",
+    "grade", "grades", "brand", "brands", "supplier", "suppliers", "vendor", "vendors",
+    "department", "departments", "facility", "facilities", "location", "locations",
+    "source", "sources", "destination", "destinations", "project", "projects",
+    "task", "tasks", "job", "jobs", "shift", "shifts", "period", "periods",
+    "warehouse", "warehouses", "depot", "depots", "station", "stations",
+    "nutrient", "nutrients", "vitamin", "vitamins", "mineral", "minerals",
 })
 
 # Weights for semantic IR scoring (interpretable, additive).
@@ -2006,6 +2050,7 @@ def _find_range_annotations(toks: list[str]) -> dict[int, str]:
     Handles:
       - "between X and Y"  →  X: range_low,  Y: range_high
       - "from X to Y"      →  X: range_low,  Y: range_high
+      - "X to Y" (bare)    →  X: range_low,  Y: range_high  (only when X is a number)
 
     Only fires when _ENABLE_BOUND_ROLE_LAYER is True.
     """
@@ -2033,6 +2078,24 @@ def _find_range_annotations(toks: list[str]) -> dict[int, str]:
             if len(nums) == 2:
                 result[nums[0]] = "range_low"
                 result[nums[1]] = "range_high"
+
+    # Bare "X to Y" range: only when the first number token is already known
+    # (via digit recognition) and is immediately followed by "to" and another number.
+    # This avoids false positives on "send to", "up to N" (already handled above).
+    for i in range(n - 2):
+        if i in result:
+            continue  # already annotated
+        if not _is_number_token(i):
+            continue
+        if clean[i + 1] != "to":
+            continue
+        if i + 2 < n and _is_number_token(i + 2) and (i + 2) not in result:
+            # Guard: ensure "to" is not part of a "up to" / "from X to" phrase already handled.
+            if i > 0 and clean[i - 1] in ("up", "upto", "from", "between"):
+                continue
+            result[i] = "range_low"
+            result[i + 2] = "range_high"
+
     return result
 
 
@@ -2186,11 +2249,14 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
         is_per_unit = (
             bool(_left_set & _PER_UNIT_LEFT_VERBS)
             or bool(_left_det_set & _PER_UNIT_LEFT_DETERMINERS)
-            or any(p in _left_str for p in ["per unit", "per item", "for each", "for every"])
+            or any(p in _left_str for p in _PER_UNIT_LEFT_PHRASES)
         )
+        # Wide context string for total-phrase patterns (avoids narrow window issues).
+        _ctx_str_wide = " ".join(ctx_tokens)
         is_total_like = bool(
             _left_set & _TOTAL_LEFT_CUES
             or _right_set & _TOTAL_RIGHT_CUES
+            or any(p in _ctx_str_wide for p in _TOTAL_PHRASE_PATTERNS)
         )
         entity_tokens = frozenset(t for t in ctx_tokens if len(t) > 2 and t in OPT_ROLE_WORDS)
         resource_tokens = frozenset(
@@ -3062,6 +3128,9 @@ def _opt_role_validate_and_repair(
     if _ENABLE_BOUND_ROLE_LAYER:
         _bound_swap_repair(filled, filled_in_repair, slots)
 
+    # ── Total vs per-unit contradiction repair ──────────────────────────────
+    _total_perunit_swap_repair(filled, filled_in_repair, slots, mentions)
+
     return filled, filled_in_repair
 
 
@@ -3101,6 +3170,71 @@ def _bound_swap_repair(
                 filled[s_max.name] = m_min
                 filled_in_repair[s_min.name] = "bound_swap_repair"
                 filled_in_repair[s_max.name] = "bound_swap_repair"
+
+
+def _total_perunit_swap_repair(
+    filled: dict[str, "MentionOptIR"],
+    filled_in_repair: dict[str, str],
+    slots: list["SlotOptIR"],
+    mentions: list["MentionOptIR"],
+) -> None:
+    """Post-assignment repair: correct obvious total↔per-unit confusion.
+
+    Triggered only when there is strong evidence that a total slot received a
+    per-unit mention (or vice versa) AND there is an unused mention that is a
+    better fit.  Conservative by design: only repairs when both evidence
+    conditions are met simultaneously:
+      1. The assigned mention's role contradicts the slot's is_total_like /
+         is_coefficient_like flag (i.e. explicit per-unit mention → total slot,
+         or explicit total mention → coeff slot).
+      2. An unused mention exists that has the correct role for the slot and
+         has a plausible numerical value (magnitude check: total >> per-unit).
+    """
+    used_ids: set[int] = {m.mention_id for m in filled.values()}
+    for s in slots:
+        if s.name not in filled:
+            continue
+        m_curr = filled[s.name]
+        # Check for total-slot assigned a per-unit mention.
+        if s.is_total_like and not s.is_coefficient_like and m_curr.is_per_unit and not m_curr.is_total_like:
+            # Look for an unused total-like mention with a larger value.
+            best: "MentionOptIR | None" = None
+            for m_cand in mentions:
+                if m_cand.mention_id in used_ids:
+                    continue
+                if m_cand.is_per_unit and not m_cand.is_total_like:
+                    continue  # also per-unit, no help
+                if m_cand.value is None or m_curr.value is None:
+                    continue
+                if m_cand.value <= m_curr.value:
+                    continue  # no magnitude evidence that this is the total
+                if best is None or m_cand.value > best.value:
+                    best = m_cand
+            if best is not None:
+                used_ids.discard(m_curr.mention_id)
+                filled[s.name] = best
+                filled_in_repair[s.name] = "total_perunit_swap_repair"
+                used_ids.add(best.mention_id)
+        # Check for coeff-slot assigned a total-like mention.
+        elif s.is_coefficient_like and not s.is_total_like and m_curr.is_total_like and not m_curr.is_per_unit:
+            # Look for an unused per-unit mention with a smaller value.
+            best = None
+            for m_cand in mentions:
+                if m_cand.mention_id in used_ids:
+                    continue
+                if m_cand.is_total_like and not m_cand.is_per_unit:
+                    continue  # also total-like, no help
+                if m_cand.value is None or m_curr.value is None:
+                    continue
+                if m_cand.value >= m_curr.value:
+                    continue  # no magnitude evidence that this is per-unit
+                if best is None or m_cand.value > best.value:  # prefer largest small value
+                    best = m_cand
+            if best is not None:
+                used_ids.discard(m_curr.mention_id)
+                filled[s.name] = best
+                filled_in_repair[s.name] = "total_perunit_swap_repair"
+                used_ids.add(best.mention_id)
 
 
 # --- Relation-aware + incremental admissible (RAT-SQL / PICARD inspired) ---

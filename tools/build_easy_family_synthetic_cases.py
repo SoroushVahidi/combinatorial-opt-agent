@@ -570,12 +570,229 @@ RETRIEVAL_CASES: list[dict] = [
 # Master collection
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# Final-pass additional cases (targeted at residual subpatterns)
+# ---------------------------------------------------------------------------
+
+FINAL_PASS_TOTAL_VS_PERUNIT: list[dict] = [
+    {
+        "id": "fp_tpu_01_overall_budget",
+        "family": "total_vs_perunit",
+        "sub_type": "overall_total_cue",
+        "query": (
+            "The overall budget is 100000. "
+            "Each unit generates a profit of 25."
+        ),
+        "expected_slots": {
+            "TotalBudget": 100000,
+            "ProfitPerUnit": 25,
+        },
+        "expected_schema": "production",
+        "notes": (
+            "'overall budget' uses the new 'overall' total-left cue. "
+            "Grounder must not assign 100000 to ProfitPerUnit."
+        ),
+    },
+    {
+        "id": "fp_tpu_02_in_total_hours",
+        "family": "total_vs_perunit",
+        "sub_type": "in_total_phrase",
+        "query": (
+            "There are 2000 hours in total available. "
+            "Each product requires 5 hours to produce."
+        ),
+        "expected_slots": {
+            "TotalHours": 2000,
+            "HoursPerProduct": 5,
+        },
+        "expected_schema": "production",
+        "notes": (
+            "'in total' phrase triggers total-like on 2000. "
+            "5 is per-unit (requires verb)."
+        ),
+    },
+    {
+        "id": "fp_tpu_03_generates_per_unit",
+        "family": "total_vs_perunit",
+        "sub_type": "generates_per_unit_verb",
+        "query": (
+            "The factory has 5000 units in stock. "
+            "Each machine generates 12 units per hour."
+        ),
+        "expected_slots": {
+            "TotalInventory": 5000,
+            "UnitsPerMachineHour": 12,
+        },
+        "expected_schema": "production",
+        "notes": (
+            "'generates' is a new per-unit verb. 'in stock' is a total-right cue. "
+            "Grounder must not mix these."
+        ),
+    },
+    {
+        "id": "fp_tpu_04_stock_remaining",
+        "family": "total_vs_perunit",
+        "sub_type": "stock_remaining_cues",
+        "query": (
+            "There are 300 units remaining in the warehouse. "
+            "Each order requires 3 units."
+        ),
+        "expected_slots": {
+            "TotalStock": 300,
+            "UnitsPerOrder": 3,
+        },
+        "expected_schema": "inventory",
+        "notes": (
+            "'remaining' is a new total-right cue (final pass). "
+            "Grounder must assign 300 to TotalStock."
+        ),
+    },
+]
+
+FINAL_PASS_IMPLICIT_COUNT: list[dict] = [
+    {
+        "id": "fp_cnt_01_three_varieties",
+        "family": "implicit_count",
+        "sub_type": "variety_count_noun",
+        "query": (
+            "The company offers three varieties of coffee. "
+            "Each variety costs $5 to produce and sells for $12."
+        ),
+        "expected_slots": {
+            "NumVarieties": 3,
+            "CostPerVariety": 5,
+            "PricePerVariety": 12,
+        },
+        "expected_schema": "production",
+        "notes": (
+            "'variety' is a new count-context noun (final pass). "
+            "'three varieties' → NumVarieties=3."
+        ),
+    },
+    {
+        "id": "fp_cnt_02_two_services",
+        "family": "implicit_count",
+        "sub_type": "service_count_noun",
+        "query": (
+            "The firm provides two services: consulting and training. "
+            "Consulting costs $200/hour and training costs $150/hour. "
+            "Total available hours are 500. Maximize revenue."
+        ),
+        "expected_slots": {
+            "NumServices": 2,
+            "CostConsulting": 200,
+            "CostTraining": 150,
+            "TotalHours": 500,
+        },
+        "expected_schema": "production",
+        "notes": (
+            "'two services' uses the new 'service' count-context noun. "
+            "Also has enumeration 'consulting and training' → 2."
+        ),
+    },
+    {
+        "id": "fp_cnt_03_four_facilities",
+        "family": "implicit_count",
+        "sub_type": "facility_count_noun",
+        "query": (
+            "There are four facilities available for production. "
+            "Each facility can produce at most 500 units per week."
+        ),
+        "expected_slots": {
+            "NumFacilities": 4,
+            "CapacityPerFacility": 500,
+        },
+        "expected_schema": "production",
+        "notes": (
+            "'four facilities' uses the new 'facility' count-context noun. "
+        ),
+    },
+]
+
+FINAL_PASS_MINMAX: list[dict] = [
+    {
+        "id": "fp_mm_01_minimum_of",
+        "family": "minmax_bound",
+        "sub_type": "minimum_of_phrase",
+        "query": (
+            "Production must meet a minimum of 100 units per day. "
+            "Output cannot exceed 500 units per day."
+        ),
+        "expected_slots": {
+            "MinProduction": 100,
+            "MaxProduction": 500,
+        },
+        "expected_schema": "production",
+        "notes": (
+            "'minimum of 100' → LowerBound=100 (new pattern). "
+            "'cannot exceed 500' → UpperBound=500 (existing pattern)."
+        ),
+    },
+    {
+        "id": "fp_mm_02_maximum_of",
+        "family": "minmax_bound",
+        "sub_type": "maximum_of_phrase",
+        "query": (
+            "At least 10 workers are required for the project. "
+            "A maximum of 30 workers can be scheduled."
+        ),
+        "expected_slots": {
+            "MinWorkers": 10,
+            "MaxWorkers": 30,
+        },
+        "expected_schema": "scheduling",
+        "notes": (
+            "'a maximum of 30' → UpperBound=30 (new pattern). "
+            "'at least 10' → LowerBound=10 (existing pattern)."
+        ),
+    },
+    {
+        "id": "fp_mm_03_bare_x_to_y",
+        "family": "minmax_bound",
+        "sub_type": "bare_x_to_y_range",
+        "query": (
+            "The factory can produce 5 to 20 units per day. "
+            "Each unit earns $8 profit."
+        ),
+        "expected_slots": {
+            "MinProd": 5,
+            "MaxProd": 20,
+            "ProfitPerUnit": 8,
+        },
+        "expected_schema": "production",
+        "notes": (
+            "Bare 'X to Y' range without 'from' or 'between'. "
+            "New final-pass range detection."
+        ),
+    },
+    {
+        "id": "fp_mm_04_must_not_exceed",
+        "family": "minmax_bound",
+        "sub_type": "must_not_exceed",
+        "query": (
+            "Daily shipments must be at least 50 tons. "
+            "Shipments must not exceed 200 tons per day."
+        ),
+        "expected_slots": {
+            "MinShipment": 50,
+            "MaxShipment": 200,
+        },
+        "expected_schema": "transportation",
+        "notes": (
+            "'must not exceed 200' → UpperBound=200 (new pattern). "
+        ),
+    },
+]
+
 ALL_CASES: list[dict] = (
     PERCENT_CASES
     + COUNT_CASES
     + MINMAX_CASES
     + TOTAL_VS_PERUNIT_CASES
     + RETRIEVAL_CASES
+    + FINAL_PASS_TOTAL_VS_PERUNIT
+    + FINAL_PASS_IMPLICIT_COUNT
+    + FINAL_PASS_MINMAX
 )
 
 _FAMILY_SUMMARY: dict[str, int] = {}
