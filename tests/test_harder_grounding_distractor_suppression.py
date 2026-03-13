@@ -1,6 +1,6 @@
 """Stage 8 regression tests for the harder-grounding distractor-suppression layer.
 
-These tests validate the improvements introduced by three targeted changes:
+These tests validate the improvements introduced by four targeted changes:
 
 1. _ENUM_STOP_WORDS extended with modifier adjectives ("total", "overall", etc.)
    that are never standalone enumeration nouns in optimization contexts — prevents
@@ -14,13 +14,25 @@ These tests validate the improvements introduced by three targeted changes:
    lexical overlap between a mention's narrow context and the slot name tokens,
    providing a strong uncontaminated measure/attribute matching signal.
 
-Test families (matching problem-statement Stage 8 A–F):
+4. Stage 4 distractor suppression:
+   a. "demand" / "supply" removed from _PER_UNIT_LEFT_VERBS — these are noun-form
+      words that should not trigger is_per_unit (e.g. "total demand is 300").
+   b. Sentence-boundary stop on the operator left window — prevents "at least N"
+      from the previous sentence contaminating the operator_tags of a number in the
+      next sentence (e.g. "at least 50 units. The profit is 20 per unit." no longer
+      tags 20 as a lower-bound value).
+   c. bound_to_objective_mismatch penalty — a mention that has a min/max operator
+      tag (lower/upper polarity) should not fill a purely objective/coefficient slot
+      (e.g. ProfitPerUnit) that carries no bound character.
+
+Test families (matching problem-statement Stage 8 A–F + new G):
   A. Distractor-role mismatch
   B. Measure-family mismatch (protein vs fat)
   C. Cost vs profit discrimination
   D. Heating vs cooling discrimination
   E. Early entity-anchor linking (chair vs dresser)
   F. Preserve easy-family behaviour (percent bounds, derived counts, min/max)
+  G. Stage 4 new cases (demand noun fix, operator contamination fix, bound mismatch)
 """
 import pytest
 
@@ -291,4 +303,81 @@ class TestPreserveEasyFamilyBehavior:
         )
         assert result["Budget"] == pytest.approx(3000.0), (
             "3000 (total budget) should fill the capacity slot"
+        )
+
+
+# ---------------------------------------------------------------------------
+# G. Stage 4 new distractor-suppression cases
+# ---------------------------------------------------------------------------
+
+class TestStage4DistractorSuppression:
+    """Stage 4 G — demand-noun fix, operator-contamination fix, bound-to-objective mismatch.
+
+    Three deterministic fixes that prevent cross-sentence and cross-role
+    distractor assignments discovered during Stage 4 auditing.
+    """
+
+    def test_total_demand_not_profit_slot(self):
+        """300 (total demand) must not fill ProfitPerUnit; 15 (profit) must."""
+        q = "Total demand is 300. Profit per unit is 15."
+        result = _ground(q, ["TotalDemand", "ProfitPerUnit"])
+        assert result["TotalDemand"] == pytest.approx(300.0), (
+            "300 is the total demand value and should fill TotalDemand"
+        )
+        assert result["ProfitPerUnit"] == pytest.approx(15.0), (
+            "15 is the per-unit profit and should fill ProfitPerUnit"
+        )
+
+    def test_lower_bound_not_profit_slot(self):
+        """50 (min-production bound) must not fill ProfitPerUnit; 20 (profit) must."""
+        q = "We must produce at least 50 units. The profit is 20 per unit."
+        result = _ground(q, ["MinProduction", "ProfitPerUnit"])
+        assert result["MinProduction"] == pytest.approx(50.0), (
+            "50 has 'at least' → lower-bound polarity; should fill MinProduction"
+        )
+        assert result["ProfitPerUnit"] == pytest.approx(20.0), (
+            "20 has 'profit per unit' context; should fill ProfitPerUnit"
+        )
+
+    def test_demand_noun_not_per_unit_flag(self):
+        """'total demand is 300' must not set is_per_unit=True on 300.
+
+        Previously 'demand' was in _PER_UNIT_LEFT_VERBS, causing is_per_unit=True
+        for the noun usage in 'total demand is N'.  After the fix, 300 should be
+        total-like, not per-unit.
+        """
+        from tools.nlp4lp_downstream_utility import _extract_opt_role_mentions
+        mentions = _extract_opt_role_mentions("Total demand is 300.", "orig")
+        demand_mention = next((m for m in mentions if m.value == 300.0), None)
+        assert demand_mention is not None
+        assert not demand_mention.is_per_unit, (
+            "'demand' is a noun here; the mention should NOT be flagged is_per_unit"
+        )
+
+    def test_operator_not_contaminated_across_sentences(self):
+        """'at least 50 units. The profit is 20 per unit.' — 20 must not get min operator.
+
+        Previously the operator left window crossed the sentence boundary, making
+        'at least' contaminate the operator_tags of 20 in the next sentence.
+        After the fix, 20 should have neutral polarity (no min operator).
+        """
+        from tools.nlp4lp_downstream_utility import _extract_opt_role_mentions
+        mentions = _extract_opt_role_mentions(
+            "We must produce at least 50 units. The profit is 20 per unit.", "orig"
+        )
+        profit_mention = next((m for m in mentions if m.value == 20.0), None)
+        assert profit_mention is not None
+        assert "min" not in profit_mention.operator_tags, (
+            "20 in the second sentence should not inherit 'at least' from the first"
+        )
+
+    def test_upper_bound_not_cost_coefficient_slot(self):
+        """45 (at-most bound) must not fill CostPerUnit; 12 (cost) must."""
+        q = "Production must not exceed 45 units. Each unit costs 12 dollars."
+        result = _ground(q, ["MaxProduction", "CostPerUnit"])
+        assert result["MaxProduction"] == pytest.approx(45.0), (
+            "45 has 'not exceed' → upper-bound polarity; should fill MaxProduction"
+        )
+        assert result["CostPerUnit"] == pytest.approx(12.0), (
+            "12 has 'costs' context and is per-unit; should fill CostPerUnit"
         )

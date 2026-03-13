@@ -98,6 +98,8 @@ RAL_WEIGHTS: dict[str, dict[str, float]] = {
         "operator_match_bonus": 2.0,
         "polarity_match_bonus": 1.5,
         "polarity_conflict_penalty": -2.0,
+        # Stage 4: bound mention → pure objective/coefficient slot mismatch
+        "bound_to_objective_mismatch_penalty": -3.5,
     },
     "semantic": {
         "type_exact_bonus": 4.0,
@@ -120,6 +122,8 @@ RAL_WEIGHTS: dict[str, dict[str, float]] = {
         "fragment_compat_bonus": 1.2,
         # Stage 3: narrow measure/attribute overlap
         "narrow_measure_overlap_bonus": 2.0,
+        # Stage 4: bound mention → pure objective/coefficient slot mismatch
+        "bound_to_objective_mismatch_penalty": -3.5,
     },
     "full": {
         "type_exact_bonus": 4.0,
@@ -146,6 +150,8 @@ RAL_WEIGHTS: dict[str, dict[str, float]] = {
         "role_tag_overlap_bonus": 2.0,
         # Stage 3: narrow measure/attribute overlap
         "narrow_measure_overlap_bonus": 2.0,
+        # Stage 4: bound mention → pure objective/coefficient slot mismatch
+        "bound_to_objective_mismatch_penalty": -3.5,
     },
 }
 
@@ -241,6 +247,11 @@ class MentionSlotLink:
     # Rewards tight lexical co-occurrence (e.g. "labor hours" near 4 → LaborHoursPerProduct)
     # while suppressing cross-clause contamination from the wider ±14 context window.
     narrow_measure_overlap: int = 0
+    # Stage 4: distractor-suppression — lower/upper bound mention filling a
+    # purely objective/coefficient slot.  A number tagged as a bound (min/max
+    # operator) should not fill a slot that expects a plain coefficient with no
+    # bound character (e.g. "at least 50 units" → ProfitPerUnit is a mismatch).
+    bound_to_objective_mismatch: bool = False
     # Cached scores per ablation mode (populated lazily by score functions)
     _scores: dict[str, tuple[float, dict[str, Any]]] = field(default_factory=dict)
 
@@ -431,6 +442,18 @@ def _build_mention_slot_link(
     narrow_set = set(mf.narrow_context_tokens)
     narrow_measure_overlap = len(narrow_set & slot_words) if narrow_set else 0
 
+    # Stage 4: distractor suppression — bound polarity vs. pure objective slot.
+    # A lower/upper bound mention (e.g. "at least 50") should not fill a slot
+    # that is purely a coefficient/objective (e.g. ProfitPerUnit) with no bound
+    # character.  Flag when polarity is non-neutral AND slot is coefficient-like
+    # but NOT bound-like.  This penalises the wrong assignment without blocking
+    # valid cases like "each unit requires at least 4 hours" → MinHoursPerUnit.
+    bound_to_objective_mismatch = (
+        mf.polarity != "neutral"          # has min or max polarity
+        and sf.is_coefficient_like        # slot expects a per-unit coefficient
+        and not sf.is_bound_like          # slot is NOT a bound slot
+    )
+
     return MentionSlotLink(
         mention_id=mf.mention_id,
         slot_name=sf.name,
@@ -456,6 +479,7 @@ def _build_mention_slot_link(
         magnitude_decimal_to_int=magnitude_decimal_to_int,
         role_tag_overlap=role_tag_overlap,
         narrow_measure_overlap=narrow_measure_overlap,
+        bound_to_objective_mismatch=bound_to_objective_mismatch,
     )
 
 
@@ -651,6 +675,12 @@ def relation_aware_local_score(
         if link.polarity_conflict:
             score += w["polarity_conflict_penalty"]
             features["polarity_conflict"] = True
+        # Stage 4: bound mention → pure objective/coefficient slot mismatch penalty.
+        # Suppresses distractor assignment of constrained values (e.g. "at least 50")
+        # to objective/coefficient slots (e.g. ProfitPerUnit) that carry no bound role.
+        if link.bound_to_objective_mismatch and "bound_to_objective_mismatch_penalty" in w:
+            score += w["bound_to_objective_mismatch_penalty"]
+            features["bound_to_objective_mismatch"] = True
 
     # ── Semantic roles (semantic and above) ──────────────────────────────
     if ablation_mode in ("semantic", "full"):

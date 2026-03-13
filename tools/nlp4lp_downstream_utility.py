@@ -1150,8 +1150,12 @@ _PER_UNIT_LEFT_VERBS: frozenset[str] = frozenset({
     "yields", "yield",
     # Additional per-unit governing verbs for final-pass coverage
     "provides", "provide", "generates", "generate", "allocates", "allocate",
-    "contributes", "contribute", "demands", "demand", "supplies", "supply",
+    "contributes", "contribute", "demands", "supplies",
     "processes", "process", "outputs", "output",
+    # Note: "demand" and "supply" are intentionally excluded — they are most
+    # commonly nouns in optimization queries ("total demand is N", "supply is N")
+    # and would falsely flag N as a per-unit coefficient.  Only the unambiguous
+    # third-person-singular verb forms "demands" and "supplies" are kept.
 })
 # Per-unit determiners: appear left of the governed noun/number.
 # "each X", "per X", "every X", "for each X"
@@ -2206,10 +2210,32 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
         ctx_set = set(ctx_tokens)
         ctx_str = " ".join(ctx_tokens)
         role_tags = _context_to_opt_role_tags(ctx_tokens)
-        narrow_ctx_tokens = [
-            x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - _OPERATOR_LEFT_WINDOW) : i + _OPERATOR_NARROW_WINDOW + 1]
+        # Build operator narrow-context tokens with sentence-boundary stop on the
+        # LEFT side to prevent cross-sentence contamination.  For example, in
+        # "at least 50 units. The profit is 20 per unit", the left window of "20"
+        # would otherwise include "at least" from the previous sentence and
+        # incorrectly tag "20" as a lower-bound value.
+        _op_left_raw = toks[max(0, i - _OPERATOR_LEFT_WINDOW) : i]
+        _op_left_cleaned = [x.lower().strip(".,;:()[]{}") for x in _op_left_raw]
+        # Find the rightmost sentence boundary (token ending '.'/'!'/'?' followed by
+        # an uppercase token) and discard everything before it.  Scan in reverse so
+        # we stop at the first (rightmost) boundary we encounter.
+        _op_boundary = 0
+        for _bk in range(len(_op_left_raw) - 2, -1, -1):
+            _braw = _op_left_raw[_bk].rstrip()
+            _braw_next = _op_left_raw[_bk + 1]
+            if (
+                _braw.endswith((".", "!", "?"))
+                and _braw_next[:1].isupper()
+                and _braw_next.strip()
+            ):
+                _op_boundary = _bk + 1
+                break
+        _op_left_cleaned = _op_left_cleaned[_op_boundary:]
+        _op_right_cleaned = [
+            x.lower().strip(".,;:()[]{}") for x in toks[i : i + _OPERATOR_NARROW_WINDOW + 1]
         ]
-        narrow_ctx_tokens = [c for c in narrow_ctx_tokens if c]
+        narrow_ctx_tokens = [c for c in _op_left_cleaned + _op_right_cleaned if c]
         operator_tags = _detect_operator_tags(ctx_tokens, narrow_ctx_tokens)
         unit_tags = _detect_opt_unit_tags(tok, ctx_tokens)
         fragment_type = _classify_fragment_type(ctx_tokens)
