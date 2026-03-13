@@ -567,3 +567,133 @@ class TestAblationMode:
                 )
                 return
         pytest.fail("Could not find the 2.0→ChairWood link")
+
+
+# ---------------------------------------------------------------------------
+# K. Clause-local alignment feature computation
+# ---------------------------------------------------------------------------
+
+
+class TestClauseLocalAlignment:
+    """Group 3: clause_entity_overlap and cross_clause_entity_penalty features."""
+
+    def _get_link(self, query, slots, mention_val, slot_name):
+        links, _, _, _, _ = build_mention_slot_links(query, "orig", slots)
+        for lnk in links:
+            if (
+                abs((lnk.mention_feats.value or -999) - mention_val) < 1e-6
+                and lnk.slot_name == slot_name
+            ):
+                return lnk
+        return None
+
+    def test_clause_entity_overlap_fires_for_correct_clause(self):
+        """Feed A mention (10) should have clause_entity_overlap > 0 for ProteinFeedA."""
+        q = "Feed A contains 10 protein, while Feed B contains 7 protein."
+        lnk = self._get_link(q, ["ProteinFeedA", "ProteinFeedB"], 10.0, "ProteinFeedA")
+        assert lnk is not None
+        assert lnk.clause_entity_overlap >= 1, (
+            "mention 10 in Feed-A clause should overlap with ProteinFeedA entity words"
+        )
+
+    def test_clause_entity_overlap_lower_for_wrong_clause(self):
+        """Feed A mention (10) should have lower/zero clause_entity_overlap for ProteinFeedB."""
+        q = "Feed A contains 10 protein, while Feed B contains 7 protein."
+        lnk_correct = self._get_link(q, ["ProteinFeedA", "ProteinFeedB"], 10.0, "ProteinFeedA")
+        lnk_wrong = self._get_link(q, ["ProteinFeedA", "ProteinFeedB"], 10.0, "ProteinFeedB")
+        assert lnk_correct is not None
+        assert lnk_wrong is not None
+        # Correct slot should have >= entity overlap of wrong slot.
+        assert lnk_correct.clause_entity_overlap >= lnk_wrong.clause_entity_overlap
+
+    def test_cross_clause_penalty_fires_for_wrong_clause(self):
+        """Feed-B mention (7) should have cross_clause_entity_penalty > 0 for ProteinFeedA."""
+        q = "Feed A contains 10 protein, while Feed B contains 7 protein."
+        lnk = self._get_link(q, ["ProteinFeedA", "ProteinFeedB"], 7.0, "ProteinFeedA")
+        assert lnk is not None
+        assert lnk.cross_clause_entity_penalty >= 1, (
+            "mention 7 in Feed-B clause should be penalised for ProteinFeedA "
+            "(best entity match is in Feed-A clause)"
+        )
+
+    def test_cross_clause_penalty_zero_for_correct_clause(self):
+        """Feed-A mention (10) should have cross_clause_penalty = 0 for ProteinFeedA."""
+        q = "Feed A contains 10 protein, while Feed B contains 7 protein."
+        lnk = self._get_link(q, ["ProteinFeedA", "ProteinFeedB"], 10.0, "ProteinFeedA")
+        assert lnk is not None
+        assert lnk.cross_clause_entity_penalty == 0, (
+            "correct clause assignment must not receive a cross-clause penalty"
+        )
+
+    def test_clause_features_neutral_for_single_clause(self):
+        """Single-clause query: all clause alignment fields must stay at 0."""
+        q = "Each table requires 4 labor hours and 6 units of wood."
+        links, _, _, _, _ = build_mention_slot_links(
+            q, "orig", ["LaborHoursPerTable", "WoodUnitsPerTable"]
+        )
+        for lnk in links:
+            assert lnk.clause_entity_overlap == 0, (
+                f"clause_entity_overlap must be 0 for single-clause query, "
+                f"got {lnk.clause_entity_overlap} for {lnk.slot_name}"
+            )
+            assert lnk.cross_clause_entity_penalty == 0, (
+                f"cross_clause_entity_penalty must be 0 for single-clause query"
+            )
+
+    def test_clause_entity_alignment_bonus_appears_in_semantic_mode(self):
+        """clause_entity_overlap should contribute to score in 'semantic' mode."""
+        q = "Feed A contains 10 protein, while Feed B contains 7 protein."
+        lnk = self._get_link(q, ["ProteinFeedA", "ProteinFeedB"], 10.0, "ProteinFeedA")
+        assert lnk is not None
+        if lnk.clause_entity_overlap > 0:
+            _, feats = relation_aware_local_score(lnk, "semantic")
+            assert "clause_entity_overlap" in feats, (
+                "clause_entity_overlap bonus should appear in semantic mode features"
+            )
+
+    def test_clause_entity_alignment_bonus_appears_in_full_mode(self):
+        """clause_entity_overlap should contribute to score in 'full' mode."""
+        q = "Feed A contains 10 protein, while Feed B contains 7 protein."
+        lnk = self._get_link(q, ["ProteinFeedA", "ProteinFeedB"], 10.0, "ProteinFeedA")
+        assert lnk is not None
+        if lnk.clause_entity_overlap > 0:
+            _, feats = relation_aware_local_score(lnk, "full")
+            assert "clause_entity_overlap" in feats, (
+                "clause_entity_overlap bonus should appear in full mode features"
+            )
+
+    def test_clause_features_absent_in_basic_and_ops_modes(self):
+        """Clause features must NOT appear in basic/ops mode features (ablation boundary)."""
+        q = "Feed A contains 10 protein, while Feed B contains 7 protein."
+        lnk = self._get_link(q, ["ProteinFeedA", "ProteinFeedB"], 10.0, "ProteinFeedA")
+        assert lnk is not None
+        for mode in ("basic", "ops"):
+            _, feats = relation_aware_local_score(lnk, mode)
+            assert "clause_entity_overlap" not in feats, (
+                f"clause_entity_overlap must not appear in {mode} mode"
+            )
+            assert "cross_clause_entity_penalty" not in feats, (
+                f"cross_clause_entity_penalty must not appear in {mode} mode"
+            )
+
+    def test_grounding_feed_a_b_two_measures_semantic_mode(self):
+        """Four-slot Feed A/B case must also be correct in semantic mode with clause features."""
+        result, _, _ = run_relation_aware_grounding(
+            "Feed A contains 10 protein and 8 fat, while Feed B contains 7 protein and 15 fat.",
+            "orig",
+            ["ProteinFeedA", "FatFeedA", "ProteinFeedB", "FatFeedB"],
+            ablation_mode="semantic",
+        )
+        assert result.get("ProteinFeedA") == pytest.approx(10.0)
+        assert result.get("FatFeedA") == pytest.approx(8.0)
+        assert result.get("ProteinFeedB") == pytest.approx(7.0)
+        assert result.get("FatFeedB") == pytest.approx(15.0)
+
+    def test_no_cross_clause_penalty_for_single_entity_heating_cooling(self):
+        """Single-entity heating/cooling must not fire any cross-clause penalty."""
+        q = "Regular glass requires 3 heating hours and 5 cooling hours."
+        links, _, _, _, _ = build_mention_slot_links(q, "orig", ["HeatingHours", "CoolingHours"])
+        for lnk in links:
+            assert lnk.cross_clause_entity_penalty == 0, (
+                "No cross-clause penalty should fire for single-clause queries"
+            )

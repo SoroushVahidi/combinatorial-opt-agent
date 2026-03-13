@@ -167,6 +167,12 @@ RAL_WEIGHTS: dict[str, dict[str, float]] = {
         "narrow_measure_conflict_penalty": -1.5,
         # Stage 6: role-family mismatch (cost cue → profit slot, etc.)
         "role_family_mismatch_penalty": -3.0,
+        # Group 3: clause-local entity alignment (same weights as full).
+        # Note: left_entity_anchor_bonus is intentionally absent in semantic mode
+        # (it is only active in full mode) to maintain the ablation boundary between
+        # semantic-role scoring and directional entity-anchor scoring.
+        "clause_entity_alignment_bonus": 1.2,
+        "cross_clause_entity_penalty_weight": -1.2,
     },
     "full": {
         "type_exact_bonus": 4.0,
@@ -205,6 +211,14 @@ RAL_WEIGHTS: dict[str, dict[str, float]] = {
         # Examples: "Product B requires 7" → left={"product","b","requires"} matches
         # LaborHoursB={"labor","hours","b"} better than LaborHoursA={"labor","hours","a"}.
         "left_entity_anchor_bonus": 2.5,
+        # Group 3: clause-local entity alignment bonus + cross-clause penalty.
+        # clause_entity_alignment_bonus: rewards a mention whose clause's entity cue
+        #   tokens match the slot's entity-discriminating words.  Fires only when the
+        #   query has ≥2 clauses; stays neutral (0) for single-clause queries.
+        # cross_clause_entity_penalty_weight: penalises assignments where the slot's
+        #   best entity evidence lives in a DIFFERENT clause than the mention.
+        "clause_entity_alignment_bonus": 1.2,
+        "cross_clause_entity_penalty_weight": -1.2,
     },
 }
 
@@ -340,6 +354,27 @@ class MentionSlotLink:
     # resolves sibling-entity ambiguity that the bidirectional narrow_context
     # cannot distinguish.  Applied in "full" ablation mode only.
     left_entity_anchor_overlap: int = 0
+    # Group 3: clause-local alignment features.
+    # Populated by _post_compute_clause_alignment() after all links are built.
+    # All three fields stay at 0 when the query has only one clause (neutral),
+    # preserving existing behavior for single-clause / single-entity queries.
+    #
+    # clause_entity_overlap:
+    #   Count of entity-cue tokens in the mention's clause that match the slot's
+    #   entity-discriminating words (slot norm tokens minus measure/unit words).
+    #   E.g. for mention in Feed-A clause and slot ProteinFeedA, overlap = 2 ("feed","a").
+    # clause_measure_overlap:
+    #   Count of measure-cue tokens in the mention's clause that match the slot's
+    #   norm tokens.  Diagnostic field; not currently in scoring (symmetric across
+    #   parallel clauses), but available for inspection and future ablations.
+    # cross_clause_entity_penalty:
+    #   Positive integer when the slot's strongest entity evidence lives in a
+    #   DIFFERENT clause than this mention.  Value = (best clause overlap) − (this
+    #   clause overlap).  Used as a penalty coefficient: multiplied by
+    #   cross_clause_entity_penalty_weight in scoring.
+    clause_entity_overlap: int = 0
+    clause_measure_overlap: int = 0
+    cross_clause_entity_penalty: int = 0
     # Cached scores per ablation mode (populated lazily by score functions)
     _scores: dict[str, tuple[float, dict[str, Any]]] = field(default_factory=dict)
 
@@ -667,6 +702,118 @@ def _post_compute_narrow_measure_conflict(links: list[MentionSlotLink]) -> None:
             lnk.narrow_measure_conflict = max(0, max_other - lnk.narrow_measure_overlap)
 
 
+def _post_compute_clause_alignment(
+    links: list[MentionSlotLink],
+    mentions_ir: list["MentionOptIR"],
+    query: str,
+) -> None:
+    """Post-compute clause-local alignment features for each link (Group 3).
+
+    Adds three soft features to every ``MentionSlotLink``:
+
+    ``clause_entity_overlap``
+        Count of entity-cue tokens from the mention's clause that match the
+        slot's entity-discriminating words (slot norm tokens minus measure/unit
+        words, same filter as ``left_entity_anchor_overlap``).  Rewards an
+        assignment where the mention's clause clearly names the slot's entity.
+
+    ``clause_measure_overlap``
+        Count of measure-cue tokens from the mention's clause that match the
+        slot's norm tokens.  Diagnostic / reserved — not used in scoring by
+        default (symmetric across parallel clauses), but exposed for inspection
+        and future ablations.
+
+    ``cross_clause_entity_penalty``
+        Positive integer when the slot's strongest entity-cue match lives in a
+        *different* clause than the mention.  Value equals
+        ``best_other_overlap − this_clause_overlap``.  Used as a coefficient
+        for ``cross_clause_entity_penalty_weight`` in scoring.
+
+    All three fields remain at 0 when the query has only one clause, fully
+    preserving single-clause / single-entity query behavior (neutral).
+
+    Uses a lazy import from ``clause_aware_linking`` to avoid circular imports.
+    """
+    # Lazy import to avoid circular dependency (clause_aware_linking imports
+    # from relation_aware_linking).
+    from tools.clause_aware_linking import (  # noqa: PLC0415
+        split_into_clauses,
+        build_clause_summaries,
+        _assign_mentions_to_clauses,
+    )
+
+    clauses = split_into_clauses(query)
+    if len(clauses) <= 1:
+        # Single-clause query: all clause alignment fields stay at 0 (neutral).
+        return
+
+    summaries = build_clause_summaries(clauses, mentions_ir)
+    if not summaries:
+        return
+
+    mention_to_clause: dict[int, int] = _assign_mentions_to_clauses(mentions_ir, clauses)
+    summary_by_idx = {s.clause_idx: s for s in summaries}
+
+    # Build per-slot token sets once (avoid recomputing for each link).
+    # slot_entity_words: slot tokens that are entity-discriminating (measure/unit
+    #   words filtered out, same logic as left_entity_anchor_overlap).
+    # slot_all_words: full set of slot tokens (for clause_measure_overlap).
+    slot_entity_map: dict[str, frozenset[str]] = {}
+    slot_words_map: dict[str, frozenset[str]] = {}
+    for lnk in links:
+        sn = lnk.slot_name
+        if sn not in slot_entity_map:
+            sw: frozenset[str] = frozenset(lnk.slot_feats.norm_tokens) | lnk.slot_feats.alias_tokens
+            slot_entity_map[sn] = sw - _LEFT_ANCHOR_MEASURE_EXCLUDE - {sn.lower()}
+            slot_words_map[sn] = sw
+
+    # For each slot, determine which clause has the best entity-cue overlap.
+    # best_clause_for_slot[slot_name] = (best_clause_idx, best_overlap_count)
+    best_clause_for_slot: dict[str, tuple[int, int]] = {}
+    for sn, ent_words in slot_entity_map.items():
+        best_idx, best_ov = 0, 0
+        for summary in summaries:
+            clause_ent = frozenset(
+                t.lower().strip(".,;:()[]{}\"'") for t in summary.entity_cue_tokens
+            )
+            ov = len(clause_ent & ent_words) if ent_words else 0
+            if ov > best_ov:
+                best_ov = ov
+                best_idx = summary.clause_idx
+        best_clause_for_slot[sn] = (best_idx, best_ov)
+
+    # Update each link with the three clause-local alignment values.
+    for lnk in links:
+        m_clause_idx = mention_to_clause.get(lnk.mention_id, 0)
+        m_summary = summary_by_idx.get(m_clause_idx)
+        if m_summary is None:
+            continue
+
+        sn = lnk.slot_name
+        ent_words = slot_entity_map.get(sn, frozenset())
+        meas_words = slot_words_map.get(sn, frozenset())
+
+        # A. clause_entity_overlap
+        clause_ent = frozenset(
+            t.lower().strip(".,;:()[]{}\"'") for t in m_summary.entity_cue_tokens
+        )
+        lnk.clause_entity_overlap = len(clause_ent & ent_words) if ent_words else 0
+
+        # B. clause_measure_overlap (diagnostic; not in scoring)
+        lnk.clause_measure_overlap = len(m_summary.measure_cue_tokens & meas_words)
+
+        # C. cross_clause_entity_penalty
+        # If the slot's best entity clause is a different clause, the penalty
+        # equals how much better that other clause is than this one.
+        best_idx, best_ov = best_clause_for_slot.get(sn, (0, 0))
+        if best_ov > 0 and best_idx != m_clause_idx:
+            lnk.cross_clause_entity_penalty = max(
+                0, best_ov - lnk.clause_entity_overlap
+            )
+        else:
+            lnk.cross_clause_entity_penalty = 0
+
+
 def build_mention_slot_links(
     query: str,
     variant: str,
@@ -708,6 +855,11 @@ def build_mention_slot_links(
     # Stage 5: post-compute competing-measure conflict scores.
     # Must run after all links are built (requires global view of all slots per mention).
     _post_compute_narrow_measure_conflict(links)
+
+    # Group 3: post-compute clause-local alignment features.
+    # Must run after all links are built (requires global view of all clauses and mentions).
+    # Stays neutral (0) for single-clause queries; only enriches multi-clause patterns.
+    _post_compute_clause_alignment(links, mentions_ir, query)
 
     return links, mentions_ir, slots_ir, mention_feats, slot_feats
 
@@ -908,6 +1060,17 @@ def relation_aware_local_score(
         if link.role_family_mismatch and "role_family_mismatch_penalty" in w:
             score += w["role_family_mismatch_penalty"]
             features["role_family_mismatch"] = True
+        # Group 3: clause-local entity alignment.
+        # clause_entity_overlap: mention's clause entity cues match slot entity words.
+        # Only fires in multi-clause queries (single-clause overlap stays 0).
+        if link.clause_entity_overlap and "clause_entity_alignment_bonus" in w:
+            score += w["clause_entity_alignment_bonus"] * link.clause_entity_overlap
+            features["clause_entity_overlap"] = link.clause_entity_overlap
+        # Group 3: cross-clause entity penalty.
+        # The slot's best entity evidence lives in a different clause from the mention.
+        if link.cross_clause_entity_penalty and "cross_clause_entity_penalty_weight" in w:
+            score += w["cross_clause_entity_penalty_weight"] * link.cross_clause_entity_penalty
+            features["cross_clause_entity_penalty"] = link.cross_clause_entity_penalty
 
     # ── Entity anchoring + magnitude (full only) ─────────────────────────
     if ablation_mode == "full":
