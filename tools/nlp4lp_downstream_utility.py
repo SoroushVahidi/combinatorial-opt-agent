@@ -595,6 +595,11 @@ def _normalize_tokens(text: str) -> list[str]:
 def _split_camel_case(name: str) -> list[str]:
     """Split a CamelCase or underscore-separated identifier into lowercase tokens.
 
+    Also splits at letter–digit and digit–letter boundaries so that numeric
+    suffixes like "Product1" or "Type2" produce separate tokens ("product","1"),
+    enabling left-entity-anchor overlap to match "Product 1" in query text
+    against the "1" component of slot "LaborProduct1".
+
     Examples::
 
         TotalLaborHours      -> ['total', 'labor', 'hours']
@@ -603,11 +608,17 @@ def _split_camel_case(name: str) -> list[str]:
         FatFeedA             -> ['fat', 'feed', 'a']
         HeatingHours         -> ['heating', 'hours']
         CoolingHours         -> ['cooling', 'hours']
+        LaborProduct1        -> ['labor', 'product', '1']
+        LaborProduct2        -> ['labor', 'product', '2']
     """
     # Insert a space between a lowercase letter (or digit) followed by an uppercase letter.
     s = re.sub(r"([a-z\d])([A-Z])", r"\1 \2", name)
     # Insert a space between a run of uppercase letters and a following CamelCase word.
     s = re.sub(r"([A-Z]+)([A-Z][a-z])", r"\1 \2", s)
+    # Insert a space at letter–digit and digit–letter transitions (Group 3).
+    # This splits suffixes like "product1" → "product 1" and "2type" → "2 type".
+    s = re.sub(r"([a-zA-Z])(\d)", r"\1 \2", s)
+    s = re.sub(r"(\d)([a-zA-Z])", r"\1 \2", s)
     # Replace underscores and collapse whitespace, then return lowercase tokens.
     return [t.lower() for t in re.split(r"[\s_]+", s) if t]
 
@@ -1996,6 +2007,16 @@ class MentionOptIR:
     # tighter window than context_tokens (±14) and stays within clause
     # boundaries, making it suitable for measure-attribute overlap scoring.
     narrow_context_tokens: tuple[str, ...] = ()
+    # ── Group 3: directional left-anchor tokens ───────────────────────────────
+    # Only the LEFT portion of the narrow window (tokens to the LEFT of this
+    # mention, up to _LOCALITY_LEFT_WINDOW=4).  Keeping left and right separate
+    # prevents the right context of one mention from leaking entity cues from
+    # the following sibling clause into the entity alignment score.
+    # Example: "Product B requires 7 … and product A requires 3"
+    #   - narrow_left_tokens of 7 = ("product", "b", "requires")
+    #   - narrow_left_tokens of 3 = ("and", "product", "a", "requires")
+    # This lets left_entity_anchor_overlap discriminate slot B vs slot A.
+    narrow_left_tokens: tuple[str, ...] = ()
     # ── Group 1 role-family flags (Step 2 structured mention representation) ──
     # Derived from the ±2 token tight window immediately surrounding the mention.
     # Using a tight window prevents cross-mention bleeding.  These flags feed:
@@ -2471,6 +2492,7 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
                 primary_role=_primary_role,
                 bound_role=_bound_role,
                 narrow_context_tokens=tuple(_left_narrow + _right_narrow),
+                narrow_left_tokens=tuple(_left_narrow),
                 is_cost_like=_is_cost_like_flag,
                 is_profit_like=_is_profit_like_flag,
                 is_demand_like=_is_demand_like_flag,
