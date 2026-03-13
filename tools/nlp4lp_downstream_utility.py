@@ -592,6 +592,180 @@ def _normalize_tokens(text: str) -> list[str]:
     return re.findall(r"\w+", text.lower())
 
 
+# ── Second hard-family pass: slot name decomposition ─────────────────────────
+# Known measure/attribute tokens: describe WHAT is being measured.
+# Used to distinguish measure tokens from entity tokens in slot names.
+_SLOT_MEASURE_TOKENS: frozenset[str] = frozenset({
+    # Nutrition / food science (Feed A protein, fat, etc.)
+    "protein", "fat", "carbohydrate", "fiber", "calorie", "calories",
+    "vitamin", "mineral", "nutrient", "sodium", "sugar", "cholesterol",
+    # Manufacturing / materials (wood, glue, glass, etc.)
+    "labor", "wood", "glue", "material", "component", "glass", "steel",
+    "metal", "plastic", "lumber", "fabric", "paint", "dye",
+    # Time (hours, days, etc.)
+    "hour", "hours", "day", "days", "week", "weeks", "time", "minute", "minutes",
+    # Energy / HVAC (heating, cooling — key for regular vs tempered)
+    "heating", "cooling", "energy", "power", "electricity", "fuel", "heat", "cool",
+    # Finance (profit, cost, etc.)
+    "profit", "cost", "revenue", "price", "budget", "expense", "salary",
+    "wage", "return", "earning", "income", "fee", "royalty",
+    # Capacity / logistics
+    "capacity", "supply", "demand", "resource", "storage", "space", "land",
+    # Generic quantity descriptors (what is being measured; "score"/"value" included
+    # because they often appear as measure labels in schema slot names like ScoreA)
+    "quantity", "amount", "weight", "mass", "length", "width", "height",
+    "volume", "size", "area", "rate", "score", "value",
+    # Common unit nouns
+    "unit", "units", "item", "items", "piece", "pieces",
+})
+
+# Known role/structural tokens: describe the ROLE or TYPE of the slot.
+# These are structural words that don't identify the measured quantity or the entity.
+_SLOT_ROLE_TOKENS: frozenset[str] = frozenset({
+    "min", "max", "minimum", "maximum", "atleast", "atmost",
+    "least", "most", "lower", "upper", "bound",
+    "total", "overall", "aggregate", "sum",
+    "per", "each",
+    "required", "available", "limit", "ratio",
+    "fraction", "percent", "percentage", "share", "pct",
+    "objective", "constraint",
+    # short structural particles
+    "of", "for", "by", "in", "at", "to", "is", "are",
+    "num", "no", "number",
+})
+
+
+def _split_slot_name(slot_name: str) -> list[str]:
+    """Split a slot name (CamelCase / underscore / alphanumeric) into lowercase sub-tokens.
+
+    Examples::
+
+        'HeatingRegular'        → ['heating', 'regular']
+        'ProteinFeedA'          → ['protein', 'feed', 'a']
+        'WoodPerChair'          → ['wood', 'per', 'chair']
+        'TotalBudget'           → ['total', 'budget']
+        'LaborHoursPerProduct'  → ['labor', 'hours', 'per', 'product']
+    """
+    # Insert separator before uppercase that follows lowercase (e.g. aB → a_B)
+    s = re.sub(r"([a-z])([A-Z])", r"\1_\2", slot_name)
+    # Handle consecutive uppercase followed by uppercase+lowercase (ABCDef → ABC_Def)
+    s = re.sub(r"([A-Z]+)([A-Z][a-z])", r"\1_\2", s)
+    parts = re.split(r"[_\W]+", s)
+    return [p.lower() for p in parts if p]
+
+
+def slot_entity_tokens(slot_name: str) -> frozenset[str]:
+    """Extract entity-identifying tokens from a slot name.
+
+    Entity tokens are sub-tokens that are NOT known measure or role tokens.
+    They identify *which* entity/product/variant the slot belongs to.
+
+    Examples::
+
+        'WoodRequiredChair'  → frozenset({'chair'})
+        'ProteinFeedA'       → frozenset({'feed', 'a'})
+        'HeatingRegular'     → frozenset({'regular'})
+        'HeatingTempered'    → frozenset({'tempered'})
+        'LaborHoursSmall'    → frozenset({'small'})
+    """
+    parts = _split_slot_name(slot_name)
+    return frozenset(
+        p for p in parts
+        if p
+        and p not in _SLOT_MEASURE_TOKENS
+        and p not in _SLOT_ROLE_TOKENS
+    )
+
+
+def slot_measure_tokens(slot_name: str) -> frozenset[str]:
+    """Extract measure/attribute tokens from a slot name.
+
+    Measure tokens are known measurement-domain sub-tokens.
+
+    Examples::
+
+        'WoodRequiredChair'    → frozenset({'wood'})
+        'ProteinFeedA'         → frozenset({'protein'})
+        'HeatingRegular'       → frozenset({'heating'})
+        'LaborHoursPerProduct' → frozenset({'labor', 'hours'})
+    """
+    parts = _split_slot_name(slot_name)
+    return frozenset(p for p in parts if p in _SLOT_MEASURE_TOKENS)
+
+
+def slot_role_tokens(slot_name: str) -> frozenset[str]:
+    """Extract role/type tokens from a slot name.
+
+    Role tokens describe the structural role of the slot (min/max/total/per etc.)
+
+    Examples::
+
+        'WoodRequiredChair'    → frozenset({'required'})
+        'MinLaborHours'        → frozenset({'min'})
+        'TotalBudget'          → frozenset({'total'})
+        'LaborHoursPerProduct' → frozenset({'per'})
+    """
+    parts = _split_slot_name(slot_name)
+    return frozenset(p for p in parts if p in _SLOT_ROLE_TOKENS)
+
+
+def sibling_slot_groups(slots: "list[SlotOptIR]") -> "list[list[SlotOptIR]]":
+    """Group slots into sibling sets: share at least one measure token, differ in entity tokens.
+
+    Two slots are siblings when they measure the same thing (shared measure token)
+    but belong to different entities/variants (different entity tokens).
+
+    Returns groups with ≥ 2 members only (singletons are not siblings).
+
+    Examples::
+
+        [HeatingRegular, HeatingTempered]  → siblings (shared: heating)
+        [ProteinFeedA, ProteinFeedB]       → siblings (shared: protein)
+        [WoodPerChair, WoodPerDresser]     → siblings (shared: wood)
+    """
+    # Compute measure and entity tokens for each slot
+    slot_measure: dict[str, frozenset[str]] = {
+        s.name: slot_measure_tokens(s.name) for s in slots
+    }
+    slot_entity: dict[str, frozenset[str]] = {
+        s.name: slot_entity_tokens(s.name) for s in slots
+    }
+
+    # Group slots that share at least one measure token
+    # Use a union-find-like approach: build groups by measure overlap
+    from collections import defaultdict
+    groups_by_measure: dict[str, list[SlotOptIR]] = defaultdict(list)
+    for s in slots:
+        for tok in slot_measure[s.name]:
+            groups_by_measure[tok].append(s)
+
+    # For each measure group, keep only where entity tokens differ
+    seen: set[frozenset[str]] = set()
+    result: list[list[SlotOptIR]] = []
+    for measure_tok, group in groups_by_measure.items():
+        if len(group) < 2:
+            continue
+        # Deduplicate (a slot may appear in multiple measure groups)
+        unique_names = []
+        unique_slots = []
+        for s in group:
+            if s.name not in unique_names:
+                unique_names.append(s.name)
+                unique_slots.append(s)
+        if len(unique_slots) < 2:
+            continue
+        key = frozenset(s.name for s in unique_slots)
+        if key in seen:
+            continue
+        # Check: at least two members have different entity tokens
+        all_entities = [slot_entity[s.name] for s in unique_slots]
+        if len({frozenset(e) for e in all_entities}) > 1:
+            seen.add(key)
+            result.append(unique_slots)
+
+    return result
+
+
 def _slot_aliases(param_name: str) -> list[str]:
     """Rule-based alias expansion for common optimization slot patterns."""
     n = (param_name or "").lower()
@@ -1921,6 +2095,13 @@ class MentionOptIR:
     # tighter window than context_tokens (±14) and stays within clause
     # boundaries, making it suitable for measure-attribute overlap scoring.
     narrow_context_tokens: tuple[str, ...] = ()
+    # ── Immediate positional context (Stage 6 second hard-family pass) ───────
+    # Tokens within ±2 positions of the numeric token (not including the number
+    # itself).  Provides the strongest positional signal for measure
+    # disambiguation when multiple measure tokens appear in the narrow context.
+    # E.g. for "10 protein and 8 fat", immediate context of "10" is
+    # ["contains", "protein", "and"], making "protein" the proximate measure.
+    immediate_context_tokens: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -1939,6 +2120,11 @@ class SlotOptIR:
     is_total_like: bool
     is_coefficient_like: bool
     is_count_like: bool = False
+    # ── Second hard-family pass: structured slot token decomposition ──────────
+    # CamelCase / underscore split of the slot name into individual sub-tokens.
+    # E.g. "HeatingRegular" → frozenset({"heating", "regular"}).
+    # Used for entity/measure/role token extraction and sibling-slot grouping.
+    split_name_tokens: frozenset[str] = frozenset()
 
 
 def _context_to_opt_role_tags(context_tokens: list[str]) -> frozenset[str]:
@@ -2360,6 +2546,13 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
                 primary_role=_primary_role,
                 bound_role=_bound_role,
                 narrow_context_tokens=tuple(_left_narrow + _right_narrow),
+                # Immediate context: ±2 tokens around the number for proximate
+                # measure matching (distinguishes "10 protein and 8 fat" → protein vs fat)
+                immediate_context_tokens=tuple(
+                    x.lower().strip(".,;:()[]{}") for x in
+                    toks[max(0, i - 2) : i] + toks[i + span_size : i + span_size + 2]
+                    if x.strip(".,;:()[]{}").strip()
+                ),
             )
         )
         mention_id += 1
@@ -2519,6 +2712,7 @@ def _build_slot_opt_irs(expected_scalar: list[str]) -> list[SlotOptIR]:
                 is_total_like=is_total,
                 is_coefficient_like=is_coeff,
                 is_count_like=_is_count_like_slot(name),
+                split_name_tokens=frozenset(_split_slot_name(name)),
             )
         )
     return slot_irs
