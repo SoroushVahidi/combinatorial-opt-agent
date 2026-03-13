@@ -37,6 +37,16 @@ jobs:
       - name: Install huggingface_hub
         run: pip install -q huggingface_hub
 
+      - name: Check HF_TOKEN presence
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          if [ -n "$HF_TOKEN" ]; then
+            echo "HF_TOKEN: present"
+          else
+            echo "HF_TOKEN: NOT SET — add HF_TOKEN as a repository secret (Settings → Secrets → Actions)"
+          fi
+
       - name: Verify HF token and dataset access
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}

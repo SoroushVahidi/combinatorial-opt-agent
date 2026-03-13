@@ -136,9 +136,9 @@ def run_evaluation_tfidf(
     acc = [correct_at_k[k] / n if n else 0 for k in range(1, top_k_max + 1)]
     return {
         "n": n,
-        "accuracy_at_1": acc[0],
-        "accuracy_at_3": acc[2],
-        "accuracy_at_5": acc[4],
+        "accuracy_at_1": acc[0] if len(acc) >= 1 else 0.0,
+        "accuracy_at_3": acc[2] if len(acc) >= 3 else acc[-1] if acc else 0.0,
+        "accuracy_at_5": acc[4] if len(acc) >= 5 else acc[-1] if acc else 0.0,
         "accuracy_at_k": acc,
         "mrr": mrr_sum / n if n else 0,
         "model": "TF-IDF (fallback)",
@@ -150,8 +150,21 @@ def run_evaluation(
     instances: list[tuple[str, str]],
     top_k_max: int = 5,
     use_tfidf_fallback: bool = False,
+    expand_short_queries: bool = True,
+    rerank: bool = False,
+    rerank_weight: float = 0.3,
+    grounding_rerank: bool = False,
+    grounding_lambda: float = 0.15,
 ):
-    """Load model, run search for each instance, return metrics."""
+    """Load model, run search for each instance, return metrics.
+
+    Args:
+        expand_short_queries: toggle short-query expansion (ablation flag).
+        rerank: toggle deterministic lexical reranking (ablation flag).
+        rerank_weight: weight for reranker term when rerank=True.
+        grounding_rerank: toggle grounding-consistency second-stage rerank (ablation flag).
+        grounding_lambda: weight for grounding term when grounding_rerank=True.
+    """
     if use_tfidf_fallback:
         return run_evaluation_tfidf(catalog, instances, top_k_max)
 
@@ -180,6 +193,11 @@ def run_evaluation(
             embeddings=embeddings,
             model=model,
             top_k=top_k_max,
+            expand_short_queries=expand_short_queries,
+            rerank=rerank,
+            rerank_weight=rerank_weight,
+            grounding_rerank=grounding_rerank,
+            grounding_lambda=grounding_lambda,
         )
         retrieved_ids = [p.get("id") or "" for p, _ in results]
 
@@ -209,6 +227,65 @@ def run_evaluation(
     }
 
 
+def run_ablation(
+    catalog: list[dict],
+    instances: list[tuple[str, str]],
+    top_k_max: int = 5,
+    use_tfidf_fallback: bool = False,
+) -> list[dict]:
+    """Run all ablation variants and return a list of result dicts.
+
+    Variants (in order of increasing features):
+      1. baseline  — no expansion, no rerank, no grounding
+      2. +expansion — short-query expansion only
+      3. +rerank    — expansion + lexical reranking
+      4. +grounding — expansion + lexical reranking + grounding-consistency rerank
+
+    Each result dict has ``"variant"`` plus all keys from ``run_evaluation``.
+    """
+    variants = [
+        {
+            "variant": "baseline",
+            "expand_short_queries": False,
+            "rerank": False,
+            "grounding_rerank": False,
+        },
+        {
+            "variant": "+expansion",
+            "expand_short_queries": True,
+            "rerank": False,
+            "grounding_rerank": False,
+        },
+        {
+            "variant": "+rerank",
+            "expand_short_queries": True,
+            "rerank": True,
+            "grounding_rerank": False,
+        },
+        {
+            "variant": "+grounding",
+            "expand_short_queries": True,
+            "rerank": True,
+            "grounding_rerank": True,
+        },
+    ]
+    results = []
+    for v in variants:
+        print(f"\n  Running ablation variant: {v['variant']}", flush=True)
+        m = run_evaluation(
+            catalog,
+            instances,
+            top_k_max=top_k_max,
+            use_tfidf_fallback=use_tfidf_fallback,
+            expand_short_queries=v["expand_short_queries"],
+            rerank=v["rerank"],
+            grounding_rerank=v["grounding_rerank"],
+        )
+        m["variant"] = v["variant"]
+        results.append(m)
+    return results
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate retrieval precision on 500 instances")
     parser.add_argument("--num-instances", type=int, default=500, help="Number of test instances")
@@ -227,6 +304,29 @@ def main() -> None:
         default="",
         metavar="PATH",
         help="Load instances from JSON (list of {query, expected_id}); overrides --num-instances",
+    )
+    parser.add_argument(
+        "--ablation",
+        action="store_true",
+        help=(
+            "Run ablation: evaluate all feature variants "
+            "(baseline / +expansion / +rerank / +grounding) and print a comparison table."
+        ),
+    )
+    parser.add_argument(
+        "--rerank",
+        action="store_true",
+        help="Enable deterministic lexical reranking (default: off).",
+    )
+    parser.add_argument(
+        "--grounding-rerank",
+        action="store_true",
+        help="Enable grounding-consistency second-stage rerank (default: off).",
+    )
+    parser.add_argument(
+        "--no-expand",
+        action="store_true",
+        help="Disable short-query expansion (for ablation).",
     )
     args = parser.parse_args()
 
@@ -257,8 +357,37 @@ def main() -> None:
             json.dump(data, f, ensure_ascii=False, indent=2)
         print(f"  Saved instances to {out_path}")
 
+    if args.ablation:
+        print("\nRunning ablation comparison across all feature variants...")
+        ablation_results = run_ablation(catalog, instances, top_k_max=args.top_k)
+        print("\n" + "=" * 70)
+        print("RETRIEVAL ABLATION RESULTS")
+        print("=" * 70)
+        header = f"{'Variant':<20} {'R@1':>6} {'R@3':>6} {'R@5':>6} {'MRR':>7} {'N':>5}"
+        print(header)
+        print("-" * 70)
+        for m in ablation_results:
+            row = (
+                f"{m['variant']:<20} "
+                f"{m['accuracy_at_1']:>6.3f} "
+                f"{m['accuracy_at_3']:>6.3f} "
+                f"{m['accuracy_at_5']:>6.3f} "
+                f"{m['mrr']:>7.4f} "
+                f"{m['n']:>5}"
+            )
+            print(row)
+        print("=" * 70)
+        return None
+
     print("Loading model and building index...")
-    metrics = run_evaluation(catalog, instances, top_k_max=args.top_k)
+    metrics = run_evaluation(
+        catalog,
+        instances,
+        top_k_max=args.top_k,
+        expand_short_queries=not args.no_expand,
+        rerank=args.rerank,
+        grounding_rerank=args.grounding_rerank,
+    )
 
     model_label = metrics.get("model", "retrieval")
     print("\n" + "=" * 50)

@@ -68,15 +68,33 @@ jobs:
           pip install -r requirements.txt
 
       # ------------------------------------------------------------------ preflight
+      - name: Check HF_TOKEN presence
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          if [ -n "$HF_TOKEN" ]; then
+            echo "HF_TOKEN: present"
+          else
+            echo "HF_TOKEN: NOT SET — add HF_TOKEN as a repository secret (Settings → Secrets → Actions)"
+          fi
+
       - name: Verify HF token and dataset access
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: python training/external/verify_hf_access.py
 
       # ------------------------------------------------------------------ benchmark
+      - name: Build NLP4LP eval sets
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          python training/external/build_nlp4lp_benchmark.py \
+            --variants orig,noisy,short
+
       - name: Run full downstream benchmark (all methods × all variants)
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          NLP4LP_GOLD_CACHE: results/eswa_revision/00_env/nlp4lp_gold_cache.json
           GITHUB_RUN_ID: ${{ github.run_id }}
           GITHUB_REF_NAME: ${{ github.ref_name }}
           GITHUB_SHA: ${{ github.sha }}
