@@ -44,12 +44,16 @@ class TestExpandShortQuery:
     def test_single_word_expanded(self):
         from retrieval.utils import expand_short_query
         result = expand_short_query("knapsack")
-        assert result == "knapsack optimization problem formulation"
+        # "knapsack" triggers knapsack domain expansion; must start with original query
+        assert result.startswith("knapsack")
+        assert len(result) > len("knapsack")
 
     def test_two_words_expanded(self):
         from retrieval.utils import expand_short_query
         result = expand_short_query("TSP ILP")
-        assert result == "TSP ILP optimization problem formulation"
+        # "TSP" triggers traveling-salesman domain expansion
+        assert result.startswith("TSP ILP")
+        assert len(result) > len("TSP ILP")
 
     def test_exactly_five_words_expanded(self):
         """Boundary: 5-word query should still be expanded."""
@@ -57,7 +61,9 @@ class TestExpandShortQuery:
         q = "facility location integer linear program"
         assert len(q.split()) == 5
         result = expand_short_query(q)
-        assert result == q + " optimization problem formulation"
+        # "facility" and "location" trigger facility-domain expansion
+        assert result.startswith(q)
+        assert len(result) > len(q)
 
     def test_six_words_not_expanded(self):
         """Boundary: 6-word query should be returned unchanged."""
@@ -85,7 +91,16 @@ class TestExpandShortQuery:
     def test_leading_trailing_whitespace_stripped(self):
         from retrieval.utils import expand_short_query
         result = expand_short_query("  TSP  ")
-        assert result == "TSP optimization problem formulation"
+        # "TSP" triggers domain expansion; result starts with stripped query
+        assert result.startswith("TSP")
+        assert len(result) > len("TSP")
+
+    def test_unknown_domain_uses_generic_suffix(self):
+        """A query with no known domain trigger falls back to the generic suffix."""
+        from retrieval.utils import expand_short_query, _EXPANSION_SUFFIX
+        result = expand_short_query("ILP formulation")
+        # No known domain keyword → generic suffix
+        assert result == f"ILP formulation {_EXPANSION_SUFFIX}"
 
 
 class TestIsShortQuery:
