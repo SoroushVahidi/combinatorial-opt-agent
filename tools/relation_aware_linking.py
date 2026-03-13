@@ -118,6 +118,8 @@ RAL_WEIGHTS: dict[str, dict[str, float]] = {
         "percent_mismatch_penalty": -3.0,
         "unit_match_bonus": 1.5,
         "fragment_compat_bonus": 1.2,
+        # Stage 3: narrow measure/attribute overlap
+        "narrow_measure_overlap_bonus": 2.0,
     },
     "full": {
         "type_exact_bonus": 4.0,
@@ -142,6 +144,8 @@ RAL_WEIGHTS: dict[str, dict[str, float]] = {
         "magnitude_pct_gt100_penalty": -2.0,
         "magnitude_decimal_to_int_penalty": -0.5,
         "role_tag_overlap_bonus": 2.0,
+        # Stage 3: narrow measure/attribute overlap
+        "narrow_measure_overlap_bonus": 2.0,
     },
 }
 
@@ -174,6 +178,10 @@ class MentionFeatures:
     semantic_families: frozenset[str]
     polarity: str                     # lower / upper / neutral
     style: str                        # total / per_unit / percent / scalar
+    # Narrow local context for measure/attribute-aware linking (Stage 3).
+    # Derived from the directional ±left/right narrow windows used for
+    # is_per_unit/is_total_like detection; stays within clause boundaries.
+    narrow_context_tokens: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -228,6 +236,11 @@ class MentionSlotLink:
     magnitude_pct_suspicious: bool    # percent > 100
     magnitude_decimal_to_int: bool    # decimal mention to integer-only slot
     role_tag_overlap: int
+    # Stage 3: narrow measure/attribute-aware overlap.
+    # Overlap between mention's narrow clause-local context and slot name tokens.
+    # Rewards tight lexical co-occurrence (e.g. "labor hours" near 4 → LaborHoursPerProduct)
+    # while suppressing cross-clause contamination from the wider ±14 context window.
+    narrow_measure_overlap: int = 0
     # Cached scores per ablation mode (populated lazily by score functions)
     _scores: dict[str, tuple[float, dict[str, Any]]] = field(default_factory=dict)
 
@@ -287,6 +300,7 @@ def _mention_features_from_ir(m: MentionOptIR) -> MentionFeatures:
         semantic_families=_mention_semantic_families(m),
         polarity=_mention_polarity(m),
         style=_mention_style(m),
+        narrow_context_tokens=m.narrow_context_tokens,
     )
 
 
@@ -408,6 +422,15 @@ def _build_mention_slot_link(
 
     role_tag_overlap = len(mf.role_tags & sf.slot_role_tags)
 
+    # Stage 3: narrow measure/attribute-aware overlap.
+    # Use the mention's narrow clause-local context (not the full ±14 window) to
+    # compute overlap with slot name tokens.  A tight local match (e.g. "labor
+    # hours" immediately surrounding "4" matching slot "LaborHoursPerProduct") is a
+    # strong signal that this is the correct slot, while preventing spurious matches
+    # from cross-clause tokens like "total budget" appearing in the wide context.
+    narrow_set = set(mf.narrow_context_tokens)
+    narrow_measure_overlap = len(narrow_set & slot_words) if narrow_set else 0
+
     return MentionSlotLink(
         mention_id=mf.mention_id,
         slot_name=sf.name,
@@ -432,6 +455,7 @@ def _build_mention_slot_link(
         magnitude_pct_suspicious=magnitude_pct_suspicious,
         magnitude_decimal_to_int=magnitude_decimal_to_int,
         role_tag_overlap=role_tag_overlap,
+        narrow_measure_overlap=narrow_measure_overlap,
     )
 
 
@@ -651,6 +675,10 @@ def relation_aware_local_score(
         if link.fragment_compat:
             score += w["fragment_compat_bonus"]
             features["fragment_compat"] = True
+        # Stage 3: narrow measure/attribute-aware overlap bonus
+        if link.narrow_measure_overlap and "narrow_measure_overlap_bonus" in w:
+            score += w["narrow_measure_overlap_bonus"] * link.narrow_measure_overlap
+            features["narrow_measure_overlap"] = link.narrow_measure_overlap
 
     # ── Entity anchoring + magnitude (full only) ─────────────────────────
     if ablation_mode == "full":

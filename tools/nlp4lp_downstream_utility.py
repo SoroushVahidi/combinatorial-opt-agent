@@ -96,6 +96,10 @@ _ENUM_STOP_WORDS: frozenset[str] = frozenset({
     "can", "could", "should", "would", "may", "might", "must", "shall",
     "not", "no", "also", "some", "more", "other", "such", "than", "if", "as",
     "and", "or", "but", "nor", "so", "yet",
+    # Modifier adjectives/determiners never used as standalone enumeration nouns
+    # in optimization contexts (e.g. "labor hours, and total budget" should not
+    # yield a 2-item enumeration with "hours" and "total").
+    "total", "overall", "aggregate", "average", "general",
 })
 
 # Regex: "NOUN and NOUN" or "NOUN, NOUN, ..., and NOUN" (1-word items only).
@@ -1907,6 +1911,12 @@ class MentionOptIR:
     # Values: lower_inclusive | lower_exclusive | upper_inclusive | upper_exclusive
     #         range_low | range_high | unknown
     bound_role: str = "unknown"
+    # ── Narrow local context (Stage 3 measure/attribute-aware linking) ───────
+    # Tokens from the directional narrow windows (±left + ±right) already
+    # computed for is_per_unit / is_total_like detection.  This is a MUCH
+    # tighter window than context_tokens (±14) and stays within clause
+    # boundaries, making it suitable for measure-attribute overlap scoring.
+    narrow_context_tokens: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -2216,22 +2226,36 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
         # This prevents cues in a following sentence (e.g. "available" in
         # "2 hours. There are 2000 hours available.") from contaminating the right
         # context of a per-unit coefficient that belongs to the preceding sentence.
+        # Also stop at comma + coordinating conjunction (", and" / ", or" / ", but"
+        # etc.) which marks a clause boundary within a single sentence.  This
+        # prevents "4 labor hours, and total budget is 5000" from making the "4"
+        # appear total-like because "total" leaks into its right window.
         _right_narrow: list[str] = []
         _right_raw_window = toks[i + span_size : i + span_size + _LOCALITY_RIGHT_WINDOW]
+        _CLAUSE_CONJUNCTIONS: frozenset[str] = frozenset({"and", "or", "but", "nor", "while", "whereas"})
         for _k, _tok_raw in enumerate(_right_raw_window):
             _tok_clean = _tok_raw.lower().strip(".,;:()[]{}").strip()
             if _tok_clean:
                 _right_narrow.append(_tok_clean)
+            _stripped_raw = _tok_raw.rstrip()
             # Sentence boundary: period / ! / ? at end of token AND next token is
             # capitalised (new sentence starts).  Abbreviations like "sq." or "ft."
             # are typically followed by lowercase, so they do not trigger a break.
-            _stripped_raw = _tok_raw.rstrip()
             if (
                 _stripped_raw.endswith((".", "!", "?"))
                 and _k + 1 < len(_right_raw_window)
                 and _right_raw_window[_k + 1][:1].isupper()
                 # Guard against an empty next token producing no uppercase char
                 and bool(_right_raw_window[_k + 1].strip())
+            ):
+                break
+            # Clause boundary: comma at the end of the current token AND the next
+            # token is a coordinating conjunction.  Stops "total" in "4 hours, and
+            # total budget is 5000" from contaminating the right context of "4".
+            if (
+                _stripped_raw.endswith(",")
+                and _k + 1 < len(_right_raw_window)
+                and _right_raw_window[_k + 1].lower().strip() in _CLAUSE_CONJUNCTIONS
             ):
                 break
         _left_set = set(_left_narrow)
@@ -2309,6 +2333,7 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
                 is_percent_like=_is_pct,
                 primary_role=_primary_role,
                 bound_role=_bound_role,
+                narrow_context_tokens=tuple(_left_narrow + _right_narrow),
             )
         )
         mention_id += 1
