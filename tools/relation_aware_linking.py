@@ -69,11 +69,21 @@ from tools.nlp4lp_downstream_utility import (
     OPT_UNIT_CURRENCY,
     OPT_UNIT_COUNT,
     OPT_UNIT_TIME,
+    # Second hard-family pass: structured slot token decomposition
+    slot_entity_tokens,
+    slot_measure_tokens,
+    slot_role_tokens,
+    sibling_slot_groups,
+    _split_slot_name,
 )
 
 # ---------------------------------------------------------------------------
 # Ablation mode weights
 # ---------------------------------------------------------------------------
+
+# Maximum number of better-aligned siblings used to scale the sibling mismatch penalty.
+# Prevents exponential explosion when many sibling slots exist.
+_MAX_SIBLING_PENALTY_SCALE: int = 2
 
 # Weights for all four ablation levels.  Each level extends the previous.
 RAL_WEIGHTS: dict[str, dict[str, float]] = {
@@ -153,9 +163,52 @@ RAL_WEIGHTS: dict[str, dict[str, float]] = {
         # Stage 4: bound mention → pure objective/coefficient slot mismatch
         "bound_to_objective_mismatch_penalty": -3.5,
     },
+    # ── Second hard-family pass: sibling-aware structured linking ─────────────
+    # Extends "full" with:
+    #   1. Structured slot token overlap (split-camelcase entity/measure alignment)
+    #   2. Sibling-entity mismatch penalty (competing sibling has better entity match)
+    #   3. Sibling-entity match bonus (this slot has the best entity match)
+    #   4. Clause-local entity coherence bonus
+    "sibling_aware": {
+        "type_exact_bonus": 4.0,
+        "type_loose_bonus": 1.5,
+        "type_incompatible_penalty": -1e9,
+        "lex_context_overlap": 0.7,
+        "lex_sentence_overlap": 0.3,
+        "schema_prior_bonus": 0.4,
+        "weak_match_penalty": -0.8,
+        "operator_match_bonus": 2.0,
+        "polarity_match_bonus": 1.5,
+        "polarity_conflict_penalty": -2.0,
+        "semantic_family_match_bonus": 2.5,
+        "total_match_bonus": 1.5,
+        "coeff_match_bonus": 1.5,
+        "percent_match_bonus": 2.0,
+        "percent_mismatch_penalty": -3.0,
+        "unit_match_bonus": 1.5,
+        "fragment_compat_bonus": 1.2,
+        "entity_anchor_overlap_bonus": 1.8,
+        "magnitude_pct_gt100_penalty": -2.0,
+        "magnitude_decimal_to_int_penalty": -0.5,
+        "role_tag_overlap_bonus": 2.0,
+        "narrow_measure_overlap_bonus": 2.0,
+        "bound_to_objective_mismatch_penalty": -3.5,
+        # Structured slot token overlap (split-camelcase match vs narrow context)
+        "split_entity_overlap_bonus": 3.0,
+        "split_measure_overlap_bonus": 2.5,
+        # Sibling-entity discrimination:
+        #   penalty when a sibling slot has a better entity match for this mention
+        "sibling_entity_mismatch_penalty": -3.0,
+        #   bonus when this slot has the best entity match among siblings
+        "sibling_entity_best_match_bonus": 2.0,
+        # Clause-local entity coherence: bonus when mention's clause entity aligns with slot entity
+        "clause_entity_match_bonus": 2.5,
+        # Clause-local entity anti-match: penalty when mention's clause entity aligns with SIBLING
+        "clause_entity_mismatch_penalty": -2.0,
+    },
 }
 
-ABLATION_MODES = ("basic", "ops", "semantic", "full")
+ABLATION_MODES = ("basic", "ops", "semantic", "full", "sibling_aware")
 
 # ---------------------------------------------------------------------------
 # Feature dataclasses
@@ -188,6 +241,9 @@ class MentionFeatures:
     # Derived from the directional ±left/right narrow windows used for
     # is_per_unit/is_total_like detection; stays within clause boundaries.
     narrow_context_tokens: tuple[str, ...] = ()
+    # Immediate context (±2 tokens) for proximate measure matching (Stage 6).
+    # More precise than narrow_context_tokens for same-entity different-measure cases.
+    immediate_context_tokens: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -212,6 +268,15 @@ class SlotFeatures:
     is_count_like: bool
     is_min_like: bool
     is_max_like: bool
+    # ── Second hard-family pass: structured slot token decomposition ──────────
+    # Entity tokens identify which variant/entity the slot belongs to.
+    # E.g. 'HeatingRegular' → slot_entity_toks = frozenset({'regular'})
+    slot_entity_toks: frozenset[str] = frozenset()
+    # Measure tokens identify what quantity is being measured.
+    # E.g. 'HeatingRegular' → slot_measure_toks = frozenset({'heating'})
+    slot_measure_toks: frozenset[str] = frozenset()
+    # All split sub-tokens (union of entity + measure + role from camelCase split)
+    slot_split_toks: frozenset[str] = frozenset()
 
 
 @dataclass
@@ -252,6 +317,24 @@ class MentionSlotLink:
     # operator) should not fill a slot that expects a plain coefficient with no
     # bound character (e.g. "at least 50 units" → ProfitPerUnit is a mismatch).
     bound_to_objective_mismatch: bool = False
+    # ── Second hard-family pass: structured sibling-entity linking ────────────
+    # Overlap between mention's narrow context and slot's split-camelcase ENTITY tokens.
+    # E.g. narrow_context has "regular" and slot is HeatingRegular → overlap=1.
+    split_entity_overlap: int = 0
+    # Overlap between mention's narrow context and slot's split-camelcase MEASURE tokens.
+    split_measure_overlap: int = 0
+    # Sibling-entity mismatch: True when a sibling slot has higher entity match than this slot.
+    # Penalises assigning this mention to this slot when local context strongly points elsewhere.
+    sibling_entity_mismatch: bool = False
+    # Sibling-entity best match: True when this slot has the HIGHEST entity overlap among siblings.
+    # Bonuses for assigning this mention to the most entity-aligned slot in the sibling group.
+    sibling_entity_best_match: bool = False
+    # Number of competing sibling slots that have strictly better entity overlap.
+    sibling_better_count: int = 0
+    # Clause-local entity match: narrow context entity tokens overlap with THIS slot's entity tokens.
+    clause_entity_match: int = 0
+    # Clause-local entity mismatch: narrow context entity tokens overlap with a SIBLING's entity tokens.
+    clause_entity_sibling_match: int = 0
     # Cached scores per ablation mode (populated lazily by score functions)
     _scores: dict[str, tuple[float, dict[str, Any]]] = field(default_factory=dict)
 
@@ -312,6 +395,7 @@ def _mention_features_from_ir(m: MentionOptIR) -> MentionFeatures:
         polarity=_mention_polarity(m),
         style=_mention_style(m),
         narrow_context_tokens=m.narrow_context_tokens,
+        immediate_context_tokens=m.immediate_context_tokens,
     )
 
 
@@ -326,6 +410,10 @@ def _slot_features_from_ir(s: SlotOptIR) -> SlotFeatures:
     )
     is_min_like = any(w in n for w in ("min", "minimum", "atleast", "least", "lower"))
     is_max_like = any(w in n for w in ("max", "maximum", "atmost", "most", "upper"))
+    # Second hard-family pass: structured slot token decomposition
+    s_entity = slot_entity_tokens(s.name)
+    s_measure = slot_measure_tokens(s.name)
+    s_split = frozenset(_split_slot_name(s.name))
     return SlotFeatures(
         name=s.name,
         norm_tokens=list(s.norm_tokens),
@@ -344,6 +432,9 @@ def _slot_features_from_ir(s: SlotOptIR) -> SlotFeatures:
         is_count_like=is_count_like,
         is_min_like=is_min_like,
         is_max_like=is_max_like,
+        slot_entity_toks=s_entity,
+        slot_measure_toks=s_measure,
+        slot_split_toks=s_split,
     )
 
 
@@ -440,7 +531,11 @@ def _build_mention_slot_link(
     # strong signal that this is the correct slot, while preventing spurious matches
     # from cross-clause tokens like "total budget" appearing in the wide context.
     narrow_set = set(mf.narrow_context_tokens)
-    narrow_measure_overlap = len(narrow_set & slot_words) if narrow_set else 0
+    # Use split slot name tokens (camelCase decomposed) for narrow overlap instead of
+    # the flat norm_tokens, so "HeatingRegular" → {"heating", "regular"} matches
+    # context tokens like "heating" or "regular" properly.
+    narrow_slot_words = sf.slot_split_toks if sf.slot_split_toks else slot_words
+    narrow_measure_overlap = len(narrow_set & narrow_slot_words) if narrow_set else 0
 
     # Stage 4: distractor suppression — bound polarity vs. pure objective slot.
     # A lower/upper bound mention (e.g. "at least 50") should not fill a slot
@@ -453,6 +548,27 @@ def _build_mention_slot_link(
         and sf.is_coefficient_like        # slot expects a per-unit coefficient
         and not sf.is_bound_like          # slot is NOT a bound slot
     )
+
+    # ── Second hard-family pass: structured slot token overlap ────────────────
+    # Direct overlap between mention's narrow context and slot's entity/measure tokens
+    # (derived from camelCase decomposition).  These compute the raw overlap needed
+    # for sibling discrimination; sibling_entity_mismatch is set later by
+    # _annotate_sibling_features once all links in a sibling group are available.
+    split_entity_overlap = (
+        len(narrow_set & sf.slot_entity_toks) if narrow_set and sf.slot_entity_toks else 0
+    )
+    # For measure overlap, use IMMEDIATE context (±2 tokens) for precision:
+    # this distinguishes "10 protein and 8 fat" → protein vs fat by proximity.
+    # Fall back to narrow context if no immediate overlap or no immediate context.
+    imm_set = set(mf.immediate_context_tokens)
+    if sf.slot_measure_toks:
+        # Prefer immediate context for precision; fall back to narrow if no immediate hit
+        imm_overlap = len(imm_set & sf.slot_measure_toks) if imm_set else 0
+        split_measure_overlap = imm_overlap or (len(narrow_set & sf.slot_measure_toks) if narrow_set else 0)
+    else:
+        split_measure_overlap = 0
+    # Clause entity match: entity tokens from narrow context that agree with this slot's entity
+    clause_entity_match = split_entity_overlap  # populated the same way; refined by annotation
 
     return MentionSlotLink(
         mention_id=mf.mention_id,
@@ -480,6 +596,9 @@ def _build_mention_slot_link(
         role_tag_overlap=role_tag_overlap,
         narrow_measure_overlap=narrow_measure_overlap,
         bound_to_objective_mismatch=bound_to_objective_mismatch,
+        split_entity_overlap=split_entity_overlap,
+        split_measure_overlap=split_measure_overlap,
+        clause_entity_match=clause_entity_match,
     )
 
 
@@ -521,7 +640,149 @@ def build_mention_slot_links(
             lnk = _build_mention_slot_link(mf, sf, has_pct_mention_in_pool)
             links.append(lnk)
 
+    # Second hard-family pass: annotate sibling-entity features on all links.
+    _annotate_sibling_features(links, slots_ir)
+
     return links, mentions_ir, slots_ir, mention_feats, slot_feats
+
+
+# ── Second hard-family pass: sibling-entity annotation ───────────────────────
+
+def _annotate_sibling_features(
+    links: "list[MentionSlotLink]",
+    slots_ir: "list[SlotOptIR]",
+) -> None:
+    """Annotate sibling-entity discrimination features on all links (in place).
+
+    For each sibling slot group (same measure, different entity), and for each
+    mention, compare entity overlaps across the group members and flag:
+    - ``sibling_entity_mismatch``   : a sibling has strictly better entity overlap
+    - ``sibling_entity_best_match`` : this slot has the best entity overlap in its group
+    - ``sibling_better_count``      : how many siblings have strictly better entity overlap
+    - ``clause_entity_sibling_match``: max entity overlap of competing siblings
+
+    Additionally handles same-entity different-measure discrimination using
+    ``split_measure_overlap`` (computed from immediate context tokens) to
+    distinguish e.g. ProteinFeedA vs FatFeedA for the mention "10 protein".
+
+    This provides the discriminating signal needed for cases like:
+    "Regular glass requires 3 heating …" → HeatingRegular not HeatingTempered.
+    "Feed A contains 10 protein and 8 fat" → ProteinFeedA=10, FatFeedA=8.
+    """
+    groups = sibling_slot_groups(slots_ir)
+    if not groups:
+        return
+
+    # Build an index: (mention_id, slot_name) → MentionSlotLink
+    link_index: dict[tuple[int, str], MentionSlotLink] = {
+        (lnk.mention_id, lnk.slot_name): lnk for lnk in links
+    }
+
+    # Process each sibling group (entity-level: same measure, different entity)
+    for group in groups:
+        group_names = [s.name for s in group]
+        # Collect all unique mention IDs that have links to any slot in this group
+        mention_ids: set[int] = set()
+        for lnk in links:
+            if lnk.slot_name in group_names:
+                mention_ids.add(lnk.mention_id)
+
+        for mid in mention_ids:
+            # Gather the split_entity_overlap for each sibling slot for this mention
+            overlaps: dict[str, int] = {}
+            for sname in group_names:
+                lnk = link_index.get((mid, sname))
+                if lnk is not None:
+                    overlaps[sname] = lnk.split_entity_overlap
+
+            if not overlaps:
+                continue
+
+            max_overlap = max(overlaps.values())
+            # Only annotate when there's at least one non-zero entity overlap
+            # (if all overlaps are 0, the signal is absent — don't penalise)
+            if max_overlap == 0:
+                continue
+
+            for sname, ov in overlaps.items():
+                lnk = link_index.get((mid, sname))
+                if lnk is None:
+                    continue
+                better_siblings = sum(1 for o in overlaps.values() if o > ov)
+                best_match = (ov == max_overlap)
+                sibling_better_count = better_siblings
+                # Best entity match in sibling group → bonus
+                lnk.sibling_entity_best_match = best_match
+                # A competing sibling has strictly higher entity overlap → mismatch
+                lnk.sibling_entity_mismatch = better_siblings > 0
+                lnk.sibling_better_count = sibling_better_count
+                # Max entity overlap among competing siblings (for clause anti-match)
+                competing_max = max(
+                    (o for sn, o in overlaps.items() if sn != sname),
+                    default=0,
+                )
+                lnk.clause_entity_sibling_match = competing_max
+                # Invalidate any cached scores since features changed
+                lnk._scores.clear()
+
+    # Also handle same-entity different-measure discrimination.
+    # Group slots sharing an entity token but differing in measure token.
+    # E.g. ProteinFeedA and FatFeedA: same entity {'a', 'feed'}, different measure.
+    # Use split_measure_overlap (from immediate context) to discriminate.
+    from collections import defaultdict as _defaultdict
+    slots_by_entity: dict[frozenset, list[SlotOptIR]] = _defaultdict(list)
+    for s in slots_ir:
+        e_toks = slot_entity_tokens(s.name)
+        if e_toks:
+            slots_by_entity[e_toks].append(s)
+
+    for entity_key, entity_group in slots_by_entity.items():
+        if len(entity_group) < 2:
+            continue
+        # Only consider groups where slots differ in measure (same entity but different measure)
+        all_measures = [slot_measure_tokens(s.name) for s in entity_group]
+        if len({frozenset(m) for m in all_measures}) < 2:
+            continue  # all same measure → skip (handled by entity discrimination)
+
+        group_names = [s.name for s in entity_group]
+        mention_ids = set()
+        for lnk in links:
+            if lnk.slot_name in group_names:
+                mention_ids.add(lnk.mention_id)
+
+        for mid in mention_ids:
+            m_overlaps: dict[str, int] = {}
+            for sname in group_names:
+                lnk = link_index.get((mid, sname))
+                if lnk is not None:
+                    m_overlaps[sname] = lnk.split_measure_overlap
+
+            if not m_overlaps:
+                continue
+
+            max_m_overlap = max(m_overlaps.values())
+            if max_m_overlap == 0:
+                continue  # no signal
+
+            for sname, mo in m_overlaps.items():
+                lnk = link_index.get((mid, sname))
+                if lnk is None:
+                    continue
+                better_measure_siblings = sum(1 for o in m_overlaps.values() if o > mo)
+                # Compound the mismatch: if already flagged by entity discrimination,
+                # also flag if measure discrimination says a different slot is better.
+                if better_measure_siblings > 0:
+                    # Only flag mismatch when this slot doesn't already have the best entity match
+                    # (avoid double-penalising when entity and measure agree)
+                    if not lnk.sibling_entity_best_match:
+                        lnk.sibling_entity_mismatch = True
+                        lnk.sibling_better_count = max(lnk.sibling_better_count, better_measure_siblings)
+                        lnk._scores.clear()
+                elif mo == max_m_overlap:
+                    # This slot has the best measure overlap → reinforce best-match flag
+                    if not lnk.sibling_entity_mismatch:
+                        lnk.sibling_entity_best_match = True
+                        lnk._scores.clear()
 
 
 def build_mention_mention_relations(
@@ -665,7 +926,7 @@ def relation_aware_local_score(
     score += w["schema_prior_bonus"]
 
     # ── Operator / bound cues (ops and above) ────────────────────────────
-    if ablation_mode in ("ops", "semantic", "full"):
+    if ablation_mode in ("ops", "semantic", "full", "sibling_aware"):
         if link.operator_compat:
             score += w["operator_match_bonus"]
             features["operator_match"] = True
@@ -683,7 +944,7 @@ def relation_aware_local_score(
             features["bound_to_objective_mismatch"] = True
 
     # ── Semantic roles (semantic and above) ──────────────────────────────
-    if ablation_mode in ("semantic", "full"):
+    if ablation_mode in ("semantic", "full", "sibling_aware"):
         if link.semantic_family_match:
             score += w["semantic_family_match_bonus"] * link.semantic_family_match
             features["semantic_family_match"] = link.semantic_family_match
@@ -711,7 +972,7 @@ def relation_aware_local_score(
             features["narrow_measure_overlap"] = link.narrow_measure_overlap
 
     # ── Entity anchoring + magnitude (full only) ─────────────────────────
-    if ablation_mode == "full":
+    if ablation_mode in ("full", "sibling_aware"):
         if link.entity_anchor_overlap:
             score += w["entity_anchor_overlap_bonus"] * link.entity_anchor_overlap
             features["entity_anchor_overlap"] = link.entity_anchor_overlap
@@ -724,6 +985,34 @@ def relation_aware_local_score(
         if link.role_tag_overlap:
             score += w["role_tag_overlap_bonus"] * link.role_tag_overlap
             features["role_tag_overlap"] = link.role_tag_overlap
+
+    # ── Second hard-family pass: sibling-aware structured linking ─────────
+    if ablation_mode == "sibling_aware":
+        # Structured slot token overlap (split-camelcase entity/measure)
+        if link.split_entity_overlap and "split_entity_overlap_bonus" in w:
+            score += w["split_entity_overlap_bonus"] * link.split_entity_overlap
+            features["split_entity_overlap"] = link.split_entity_overlap
+        if link.split_measure_overlap and "split_measure_overlap_bonus" in w:
+            score += w["split_measure_overlap_bonus"] * link.split_measure_overlap
+            features["split_measure_overlap"] = link.split_measure_overlap
+        # Sibling-entity best match bonus (this slot has the best entity alignment)
+        if link.sibling_entity_best_match and "sibling_entity_best_match_bonus" in w:
+            score += w["sibling_entity_best_match_bonus"]
+            features["sibling_entity_best_match"] = True
+        # Sibling-entity mismatch penalty (a competing sibling has better entity alignment)
+        if link.sibling_entity_mismatch and "sibling_entity_mismatch_penalty" in w:
+            # Scale penalty by number of better-aligned siblings (capped to avoid explosion)
+            penalty_scale = min(link.sibling_better_count, _MAX_SIBLING_PENALTY_SCALE)
+            score += w["sibling_entity_mismatch_penalty"] * penalty_scale
+            features["sibling_entity_mismatch"] = link.sibling_better_count
+        # Clause-local entity coherence: bonus when narrow context entity matches slot entity
+        if link.clause_entity_match and "clause_entity_match_bonus" in w:
+            score += w["clause_entity_match_bonus"] * link.clause_entity_match
+            features["clause_entity_match"] = link.clause_entity_match
+        # Clause-local entity anti-match: penalty when narrow context entity matches a SIBLING
+        if link.clause_entity_sibling_match and "clause_entity_mismatch_penalty" in w:
+            score += w["clause_entity_mismatch_penalty"] * link.clause_entity_sibling_match
+            features["clause_entity_sibling_match"] = link.clause_entity_sibling_match
 
     # Weak match penalty
     if score <= 0.0:
@@ -822,7 +1111,7 @@ def run_relation_aware_grounding(
     query         : raw query text
     variant       : 'orig' | 'noisy' | 'short'
     expected_scalar : list of scalar slot parameter names
-    ablation_mode : 'basic' | 'ops' | 'semantic' | 'full'
+    ablation_mode : 'basic' | 'ops' | 'semantic' | 'full' | 'sibling_aware'
 
     Returns
     -------

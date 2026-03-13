@@ -462,7 +462,7 @@ class TestRelationTables:
 
 class TestConstants:
     def test_ablation_modes_set(self):
-        assert set(ABLATION_MODES) == {"basic", "ops", "semantic", "full"}
+        assert set(ABLATION_MODES) == {"basic", "ops", "semantic", "full", "sibling_aware"}
 
     def test_ral_weights_keys_for_all_modes(self):
         for mode in ABLATION_MODES:
