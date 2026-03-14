@@ -107,6 +107,7 @@ class LSABaseline(RetrievalBaseline):
     def fit(self, catalog: list[dict]) -> RetrievalBaseline:
         from sklearn.feature_extraction.text import TfidfVectorizer
         from sklearn.decomposition import TruncatedSVD
+        import warnings
         import numpy as np
         texts = [_searchable_text(p) for p in catalog]
         self._problem_ids = [p.get("id", "") for p in catalog]
@@ -116,7 +117,14 @@ class LSABaseline(RetrievalBaseline):
         if n_comp < 1:
             n_comp = 1
         self._svd = TruncatedSVD(n_components=n_comp, random_state=42)
-        self._matrix = self._svd.fit_transform(X)
+        # TruncatedSVD emits a RuntimeWarning ("invalid value encountered in
+        # divide") when computing explained_variance_ratio_ on very small corpora
+        # because the total variance is effectively zero.  The decomposition
+        # result itself is correct; only the ratio statistic is undefined.
+        # Suppress it so callers (and the test suite) are not cluttered.
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", RuntimeWarning)
+            self._matrix = self._svd.fit_transform(X)
         norms = np.linalg.norm(self._matrix, axis=1, keepdims=True)
         norms = np.where(norms == 0, 1, norms)
         self._matrix = self._matrix / norms

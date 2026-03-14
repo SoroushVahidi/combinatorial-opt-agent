@@ -98,9 +98,57 @@ class TestExpandShortQuery:
     def test_unknown_domain_uses_generic_suffix(self):
         """A query with no known domain trigger falls back to the generic suffix."""
         from retrieval.utils import expand_short_query, _EXPANSION_SUFFIX
-        result = expand_short_query("ILP formulation")
+        result = expand_short_query("lagrangian dual")
         # No known domain keyword → generic suffix
-        assert result == f"ILP formulation {_EXPANSION_SUFFIX}"
+        assert result == f"lagrangian dual {_EXPANSION_SUFFIX}"
+
+    def test_lp_keyword_triggers_lp_expansion(self):
+        """'lp' is a known domain keyword → LP/MIP expansion."""
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("lp")
+        assert result.startswith("lp")
+        assert "linear" in result.lower() or "integer" in result.lower()
+
+    def test_ilp_keyword_triggers_lp_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("ILP")
+        assert result.startswith("ILP")
+        assert len(result) > len("ILP")
+
+    def test_ilp_formulation_triggers_lp_expansion_not_generic(self):
+        """'ILP formulation' contains the LP-domain trigger 'formulation'; must NOT fall
+        back to the generic suffix."""
+        from retrieval.utils import expand_short_query, _EXPANSION_SUFFIX
+        result = expand_short_query("ILP formulation")
+        # must NOT be just the query + generic suffix
+        assert result != f"ILP formulation {_EXPANSION_SUFFIX}", (
+            "'ILP formulation' should match the LP/MIP domain, not the generic fallback"
+        )
+        assert len(result) > len("ILP formulation")
+
+    def test_portfolio_keyword_triggers_finance_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("portfolio")
+        assert result.startswith("portfolio")
+        assert "risk" in result.lower() or "invest" in result.lower()
+
+    def test_matching_keyword_triggers_matching_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("matching")
+        assert result.startswith("matching")
+        assert "bipartite" in result.lower() or "assignment" in result.lower()
+
+    def test_inventory_keyword_triggers_resource_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("inventory")
+        assert result.startswith("inventory")
+        assert "planning" in result.lower() or "demand" in result.lower()
+
+    def test_qp_keyword_triggers_qp_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("qp")
+        assert result.startswith("qp")
+        assert "quadratic" in result.lower() or "convex" in result.lower()
 
 
 class TestIsShortQuery:
