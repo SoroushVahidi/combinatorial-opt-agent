@@ -70,11 +70,26 @@ The vast majority of numeric parameters in NLP4LP are floats.
    `expected == "currency" and kind in {"int","float"}` branch, so plain-integer
    monetary values were silently ignored during assignment scoring.  **Fixed.**
 
-**Status:** ✅ Fixed — the three coding-level root causes above are resolved.
+5. `_parse_num_token` classified **any value ≥ 1000** as `kind="currency"` via a
+   size-based heuristic (`abs(val) >= 1000`), regardless of monetary context.
+   This was a direct regression with fix 2 above: once `TimeLimit`, `MaxCapacity`,
+   `MaximumDemand`, etc. were correctly typed as `"float"` by `_expected_type`,
+   large non-monetary values like `5000` (hours) or `2000` (units) still got
+   `kind="currency"` from the heuristic — and `_is_type_match("float", "currency")`
+   is `False`, causing a systematic type-match failure for all large non-monetary
+   parameters.  **Fixed:** the `abs(val) >= 1000` branch was removed.  Currency
+   classification now requires an explicit `$` prefix or a MONEY_CONTEXT word
+   (budget, cost, price, profit, revenue, dollar, dollars, $, €, usd, eur).
+   18 new tests in `tests/test_float_type_match.py::TestLargeNumberNotCurrency`
+   cover the regression and all boundary cases.  One existing test in
+   `tests/test_global_vs_local_grounding.py` that relied on the size heuristic
+   to make a type mismatch was corrected to use a properly-classified
+   coefficient-like slot (`HoursPerProduct`).
+
+**Status:** ✅ Fixed — all five coding-level root causes above are resolved.
 The end-to-end TypeMatch improvement requires a downstream re-evaluation run
 (needs HF dataset access), but the algorithmic fixes are in place and verified
-by 25 new targeted tests in `tests/test_float_type_match.py` (classes
-`TestQuantityConstraintSlotTypes` and `TestCurrencySlotPlainNumericTokens`).
+by 43 targeted tests in `tests/test_float_type_match.py`.
 
 ---
 

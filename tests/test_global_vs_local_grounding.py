@@ -167,20 +167,31 @@ class TestLocalScorePenalties:
         assert feats_2.get("coeff_to_total_penalty") or score_2 < score_2000
 
     def test_total_mention_penalised_for_coefficient_slot(self):
-        """A total mention should score lower for a per-unit slot than a per-unit mention."""
+        """A total mention should score lower for a per-unit slot than a per-unit mention.
+
+        Uses HoursPerProduct which is correctly classified as coefficient-like
+        (has resource_consumption + unit_cost tags).  LaborRequired is NOT
+        coefficient-like (only demand_requirement tags) so the
+        total_to_coeff_local_penalty would not fire there.
+        """
         query = "Each phone requires 2 hours. There are 2000 hours available."
         mentions = _extract_opt_role_mentions(query, "orig")
         m2 = next(m for m in mentions if m.value == 2.0)
         m2000 = next(m for m in mentions if m.value == 2000.0)
-        slot_irs = _build_slot_opt_irs(["LaborRequired"])
+        slot_irs = _build_slot_opt_irs(["HoursPerProduct"])
         s_lr = slot_irs[0]
+
+        assert s_lr.is_coefficient_like, "HoursPerProduct must be coefficient-like for this test to be meaningful"
 
         score_2, _ = _gcg_local_score(m2, s_lr)
         score_2000, feats_2000 = _gcg_local_score(m2000, s_lr)
 
         assert score_2 > score_2000, (
             f"Per-unit mention (2, score={score_2:.2f}) should beat "
-            f"total mention (2000, score={score_2000:.2f}) for LaborRequired"
+            f"total mention (2000, score={score_2000:.2f}) for HoursPerProduct"
+        )
+        assert feats_2000.get("total_to_coeff_penalty"), (
+            "total_to_coeff_penalty feature must fire for a total mention on a coefficient slot"
         )
 
 

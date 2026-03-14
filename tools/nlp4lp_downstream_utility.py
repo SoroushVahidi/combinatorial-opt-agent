@@ -541,8 +541,7 @@ def _parse_num_token(tok: str, context_words: set[str]) -> NumTok:
     if 0.0 < val <= 1.0 and (context_words & PERCENT_CONTEXT):
         return NumTok(raw=t, value=val, kind="percent")
 
-    if has_dollar or (context_words & MONEY_CONTEXT) or abs(val) >= 1000:
-        # Heuristic: treat large numbers as amounts in many optimization word problems.
+    if has_dollar or (context_words & MONEY_CONTEXT):
         return NumTok(raw=t, value=val, kind="currency")
 
     # Integer vs float

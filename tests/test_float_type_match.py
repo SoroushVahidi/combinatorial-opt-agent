@@ -594,3 +594,135 @@ class TestChooseTokenCurrencySlot:
         tok = self._num_tok("foo", None, "unknown")
         result = self._choose(tok)
         assert result.kind == "unknown"
+
+
+# ---------------------------------------------------------------------------
+# _parse_num_token: large-number currency misclassification fix
+# ---------------------------------------------------------------------------
+
+class TestLargeNumberNotCurrency:
+    """Values >= 1000 without monetary context must NOT be classified as currency.
+
+    Root cause of the bug: _parse_num_token contained `or abs(val) >= 1000` in
+    the currency-detection branch.  This caused large non-monetary quantities
+    (e.g. TimeLimit=5000, MaxCapacity=2000) to be tagged `kind="currency"`.
+    Combined with `_expected_type` correctly typing those slots as "float", and
+    `_is_type_match("float", "currency") == False`, this produced systematic
+    type-match failures for any large parameter value.
+
+    Fix: the size-based heuristic was removed.  Only explicit monetary signals
+    ($ prefix, MONEY_CONTEXT words) now produce kind="currency".
+    """
+
+    def _tok(self, raw: str, ctx: set[str] | None = None) -> NumTok:
+        return _parse_num_token(raw, ctx or set())
+
+    # -- Previously broken: large values without monetary context ──────────
+
+    def test_large_int_no_context_is_int(self):
+        """1200 with no monetary context must be kind=int, not currency."""
+        tok = self._tok("1200")
+        assert tok.kind == "int", f"Expected int but got {tok.kind}"
+        assert tok.value == 1200.0
+
+    def test_5000_no_context_is_int(self):
+        """5000 without monetary context must be kind=int."""
+        tok = self._tok("5000")
+        assert tok.kind == "int", f"Expected int but got {tok.kind}"
+
+    def test_large_float_no_context_is_float(self):
+        """1000.5 without monetary context must be kind=float."""
+        tok = self._tok("1000.5")
+        assert tok.kind == "float", f"Expected float but got {tok.kind}"
+        assert tok.value == 1000.5
+
+    def test_time_limit_5000_is_int(self):
+        """TimeLimit slot context: 5000 with {time, limit} context → int."""
+        tok = self._tok("5000", {"time", "limit", "hours"})
+        assert tok.kind == "int", f"Expected int but got {tok.kind}"
+
+    def test_max_capacity_2000_is_int(self):
+        """MaxCapacity context: 2000 with {capacity} → int."""
+        tok = self._tok("2000", {"capacity", "maximum"})
+        assert tok.kind == "int", f"Expected int but got {tok.kind}"
+
+    def test_min_demand_1500_is_int(self):
+        """MinDemand context: 1500 with {demand} → int."""
+        tok = self._tok("1500", {"demand", "minimum"})
+        assert tok.kind == "int", f"Expected int but got {tok.kind}"
+
+    def test_9999_no_context_is_int(self):
+        """9999 with no monetary context must be int, not currency."""
+        tok = self._tok("9999")
+        assert tok.kind == "int"
+
+    def test_large_int_type_match_float_slot(self):
+        """5000 (now kind=int) must be a full type-match for a float slot."""
+        assert _is_type_match("float", "int") is True
+
+    def test_large_int_type_match_int_slot(self):
+        """5000 (now kind=int) must be a full type-match for an int slot."""
+        assert _is_type_match("int", "int") is True
+
+    # -- Monetary context still produces currency ──────────────────────────
+
+    def test_dollar_prefix_still_currency(self):
+        """$5000 must still be kind=currency (explicit $ prefix)."""
+        tok = self._tok("$5000")
+        assert tok.kind == "currency", f"Expected currency but got {tok.kind}"
+
+    def test_budget_context_still_currency(self):
+        """500 with 'budget' in context must still be kind=currency."""
+        tok = self._tok("500", {"budget"})
+        assert tok.kind == "currency", f"Expected currency but got {tok.kind}"
+
+    def test_cost_context_still_currency(self):
+        """200 with 'cost' in context must still be kind=currency."""
+        tok = self._tok("200", {"cost"})
+        assert tok.kind == "currency", f"Expected currency but got {tok.kind}"
+
+    def test_price_context_still_currency(self):
+        """150 with 'price' in context must still be kind=currency."""
+        tok = self._tok("150", {"price"})
+        assert tok.kind == "currency", f"Expected currency but got {tok.kind}"
+
+    def test_large_budget_with_budget_context_still_currency(self):
+        """5000 with 'budget' context must still be kind=currency."""
+        tok = self._tok("5000", {"budget"})
+        assert tok.kind == "currency", f"Expected currency but got {tok.kind}"
+
+    # -- Boundary: just below 1000 was never affected ──────────────────────
+
+    def test_999_no_context_is_int(self):
+        """999 (below old threshold) was always int — must still be int."""
+        tok = self._tok("999")
+        assert tok.kind == "int"
+
+    def test_1000_no_context_is_int_now(self):
+        """1000 without monetary context must now be int (was currency before fix)."""
+        tok = self._tok("1000")
+        assert tok.kind == "int", f"Expected int but got {tok.kind}"
+
+    # -- End-to-end: type_match via _score_mention_slot ────────────────────
+
+    def test_time_limit_5000_type_match_end_to_end(self):
+        """TimeLimit slot + '5000 hours' → type_match True end-to-end."""
+        m = _make_mention("5000", ["time", "limit", "hours"])
+        s = _make_slot("TimeLimit")
+        assert s.expected_type == "float"
+        assert m.tok.kind == "int"
+        _, feats = _score_mention_slot(m, s)
+        assert feats.get("type_match") is True, (
+            f"Expected type_match=True for TimeLimit+5000, got {feats}"
+        )
+
+    def test_max_capacity_2000_type_match_end_to_end(self):
+        """MaxCapacity slot + '2000 units' → type_match True end-to-end."""
+        m = _make_mention("2000", ["capacity", "maximum", "units"])
+        s = _make_slot("MaximumCapacity")
+        assert s.expected_type == "float"
+        assert m.tok.kind == "int"
+        _, feats = _score_mention_slot(m, s)
+        assert feats.get("type_match") is True, (
+            f"Expected type_match=True for MaximumCapacity+2000, got {feats}"
+        )
