@@ -40,19 +40,41 @@ pip install -r requirements.txt
 
 **Symptom:** Overall `type_match ≈ 0.226`, but broken down by numeric type:
 
-| Numeric type | type_match |
+| Numeric type | type_match (before fixes) |
 |---|---|
 | Float | ≈ 0.029 |
 | Integer | ≈ 0.991 |
 
 The vast majority of numeric parameters in NLP4LP are floats.
 
-**Impact:** The grounding pipeline cannot reliably distinguish float parameters from
-integer/currency/percent values.  This is the single largest quality gap in downstream
-parameter instantiation.
+**Root causes identified and fixed:**
 
-**Status:** ⚠️ Open research problem.  No fix in the current codebase; documented in
-[`docs/JOURNAL_READINESS_AUDIT.md`](docs/JOURNAL_READINESS_AUDIT.md) section 5.
+1. `_is_type_match("float", "int")` previously returned `False` — integer tokens
+   (the most common representation in NL for coefficients like `RequiredEggs = 2`)
+   were never counted as matches for float slots.  **Fixed** in a prior session.
+
+2. `_expected_type` misclassified `demand`, `capacity`, `minimum`, `maximum`, and
+   `limit` as `"currency"` — these are quantity constraints, not monetary values.
+   For a `MinimumDemand = 100` slot, the token `"100"` (kind=`int`) received no type
+   bonus and a weak-match penalty (-1.0) instead of the full `type_match_bonus` (+3.0).
+   **Fixed:** those five keywords removed from the currency list; they now correctly
+   fall through to `"float"`.
+
+3. `_is_type_match("currency", "int/float")` returned `False` — monetary slots
+   (budget, cost, price, …) whose values appear without an explicit `$` prefix in NL
+   were never credited as type matches.  **Fixed:** both `int` and `float` are now
+   treated as full matches for `currency` slots.
+
+4. All four scoring functions (`_score_mention_slot`, `_score_mention_slot_ir`,
+   `_score_mention_slot_opt`, `_gcg_local_score`) were missing the
+   `expected == "currency" and kind in {"int","float"}` branch, so plain-integer
+   monetary values were silently ignored during assignment scoring.  **Fixed.**
+
+**Status:** ✅ Fixed — the three coding-level root causes above are resolved.
+The end-to-end TypeMatch improvement requires a downstream re-evaluation run
+(needs HF dataset access), but the algorithmic fixes are in place and verified
+by 25 new targeted tests in `tests/test_float_type_match.py` (classes
+`TestQuantityConstraintSlotTypes` and `TestCurrencySlotPlainNumericTokens`).
 
 ---
 

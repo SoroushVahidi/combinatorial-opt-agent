@@ -392,3 +392,123 @@ class TestIntSlotIntegrity:
         assert not feats.get("type_match"), (
             "Plain integer '30' must not be a full type_match for a percent slot"
         )
+
+
+# ---------------------------------------------------------------------------
+# E. Quantity-constraint slots are no longer misclassified as 'currency'
+# ---------------------------------------------------------------------------
+
+class TestQuantityConstraintSlotTypes:
+    """demand / capacity / minimum / maximum / limit are quantity constraints,
+    not monetary values.  They should be typed 'float' so that plain integer
+    tokens (the most common representation in NL) receive a full type_match."""
+
+    def test_demand_slot_is_float(self):
+        assert _expected_type("Demand") == "float"
+
+    def test_minimum_demand_slot_is_float(self):
+        assert _expected_type("MinimumDemand") == "float"
+
+    def test_max_demand_slot_is_float(self):
+        assert _expected_type("MaxDemand") == "float"
+
+    def test_capacity_slot_is_float(self):
+        assert _expected_type("Capacity") == "float"
+
+    def test_max_capacity_slot_is_float(self):
+        assert _expected_type("MaxCapacity") == "float"
+
+    def test_min_capacity_slot_is_float(self):
+        assert _expected_type("MinCapacity") == "float"
+
+    def test_minimum_slot_is_float(self):
+        assert _expected_type("Minimum") == "float"
+
+    def test_maximum_slot_is_float(self):
+        assert _expected_type("Maximum") == "float"
+
+    def test_limit_slot_is_float(self):
+        assert _expected_type("Limit") == "float"
+
+    def test_time_limit_slot_is_float(self):
+        assert _expected_type("TimeLimit") == "float"
+
+    def test_maximum_capacity_slot_is_float(self):
+        assert _expected_type("MaximumCapacity") == "float"
+
+    def test_minimum_production_slot_is_float(self):
+        assert _expected_type("MinimumProduction") == "float"
+
+    # BudgetLimit / CostCapacity: monetary keyword is checked first → still 'currency'
+    def test_budget_limit_stays_currency(self):
+        """'BudgetLimit' contains 'budget' → must remain 'currency'."""
+        assert _expected_type("BudgetLimit") == "currency"
+
+    def test_profit_limit_stays_currency(self):
+        """'ProfitLimit' contains 'profit' → must remain 'currency'."""
+        assert _expected_type("ProfitLimit") == "currency"
+
+    # Scoring consequence: int token on a formerly-currency, now-float slot must
+    # now get a FULL type_match (not the old weak-match penalty of -1.0).
+    def test_int_token_on_minimum_demand_slot_type_match(self):
+        """`MinimumDemand` + integer '100' must yield type_match=True, score ≥ 3.0."""
+        m = _make_mention("100")
+        s = _make_slot("MinimumDemand")
+        score, feats = _score_mention_slot(m, s)
+        assert feats.get("type_match") is True, (
+            "Integer token on MinimumDemand (float) should be a full type_match"
+        )
+        assert score >= 3.0, (
+            f"Expected score ≥ 3.0 (type_match_bonus), got {score}"
+        )
+
+    def test_int_token_on_max_capacity_slot_type_match(self):
+        m = _make_mention("500")
+        s = _make_slot("MaxCapacity")
+        score, feats = _score_mention_slot(m, s)
+        assert feats.get("type_match") is True
+        assert score >= 3.0
+
+
+# ---------------------------------------------------------------------------
+# F. Currency slots accept plain integer/float tokens (no '$' sign)
+# ---------------------------------------------------------------------------
+
+class TestCurrencySlotPlainNumericTokens:
+    """Monetary slot values often appear without an explicit '$' in NL text.
+    A plain integer or float token IS a valid monetary assignment and must be
+    counted as a full type_match."""
+
+    def test_is_type_match_currency_int(self):
+        """_is_type_match('currency', 'int') must be True."""
+        assert _is_type_match("currency", "int") is True
+
+    def test_is_type_match_currency_float(self):
+        """_is_type_match('currency', 'float') must be True."""
+        assert _is_type_match("currency", "float") is True
+
+    def test_int_token_on_unit_cost_slot_type_match(self):
+        """'UnitCost' (currency) + small int '50' → type_match=True, score ≥ 3.0."""
+        m = _make_mention("50")          # kind=int (below 1000, no $ prefix)
+        s = _make_slot("UnitCost")
+        score, feats = _score_mention_slot(m, s)
+        assert feats.get("type_match") is True, (
+            "Plain integer on a currency slot should be a full type_match"
+        )
+        assert score >= 3.0
+
+    def test_float_token_on_price_slot_type_match(self):
+        """'Price' (currency) + decimal '4.99' → type_match=True."""
+        m = _make_mention("4.99")        # kind=float
+        s = _make_slot("Price")
+        _, feats = _score_mention_slot(m, s)
+        assert feats.get("type_match") is True, (
+            "Decimal token on a currency slot should be a full type_match"
+        )
+
+    def test_currency_token_on_currency_slot_still_type_match(self):
+        """Explicit '$' token on currency slot must still give type_match=True."""
+        m = _make_mention("$5000")
+        s = _make_slot("TotalBudget")
+        _, feats = _score_mention_slot(m, s)
+        assert feats.get("type_match") is True

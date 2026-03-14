@@ -772,7 +772,12 @@ def _expected_type(param_name: str) -> str:
     # Primary integer indicators (checked before currency to preserve existing behaviour)
     if any(s in n for s in ("num", "count", "types", "items", "ingredients", "nodes", "edges")):
         return "int"
-    # Currency / monetary quantities
+    # Currency / monetary quantities (strictly monetary keywords only).
+    # Note: "demand", "capacity", "minimum", "maximum", and "limit" were
+    # previously in this list but are NOT monetary — they represent quantity
+    # constraints and bounds (e.g. MinimumDemand=100, MaxCapacity=500,
+    # TimeLimit=10).  Those slots fall through to "float" so that plain
+    # integer tokens (the common case in NL) receive a full type_match.
     if any(
         s in n
         for s in (
@@ -783,11 +788,6 @@ def _expected_type(param_name: str) -> str:
             "profit",
             "penalty",
             "investment",
-            "demand",
-            "capacity",
-            "minimum",
-            "maximum",
-            "limit",
         )
     ):
         return "currency"
@@ -876,15 +876,23 @@ def _is_type_match(expected: str, kind: str) -> bool:
 
     Rules:
     - same kind always matches
-    - int  → float   = full match  (integer IS a real number)
-    - int  → int     = full match
-    - pct  → percent = full match
-    - ccy  → currency= full match
-    - anything else  = no match (handled by loose-match or incompatibility logic)
+    - int  → float    = full match  (integer IS a real number)
+    - int  → int      = full match
+    - pct  → percent  = full match
+    - ccy  → currency = full match
+    - int  → currency = full match  (monetary values commonly appear as plain
+                                     integers in NL, e.g. "budget is 5000")
+    - float → currency= full match  (decimal monetary values, e.g. "price is 4.99")
+    - anything else   = no match (handled by loose-match or incompatibility logic)
     """
     if expected == kind:
         return True
     if expected == "float" and kind == "int":
+        return True
+    # Monetary slots (budget, cost, price, …) are often described with plain
+    # integers or decimals in NL — no explicit "$" prefix — so int/float tokens
+    # ARE valid currency assignments.
+    if expected == "currency" and kind in {"int", "float"}:
         return True
     return False
 
@@ -1024,6 +1032,12 @@ def _score_mention_slot(m: MentionRecord, s: SlotRecord) -> tuple[float, dict[st
         elif expected == "float" and kind == "currency":
             score += ASSIGN_WEIGHTS["type_match_bonus"] * 0.5
             features["type_loose_match"] = True
+        elif expected == "currency" and kind in {"float", "int"}:
+            # Monetary values (budget, cost, price, …) often appear as plain
+            # integers or decimals without an explicit "$" prefix.  An int/float
+            # token IS a valid monetary assignment.
+            score += ASSIGN_WEIGHTS["type_match_bonus"]
+            features["type_match"] = True
 
     # Count-like slot: small-integer cardinality prior and large-value penalty.
     if s.is_count_like and kind == "int" and m.tok.value is not None:
@@ -1603,6 +1617,11 @@ def _score_mention_slot_ir(m: MentionIR, s: SlotIR) -> tuple[float, dict[str, An
         elif expected == "int" and kind == "float":
             score += SEMANTIC_IR_WEIGHTS["type_loose_bonus"]
             features["type_loose"] = True
+        elif expected == "currency" and kind in {"float", "int"}:
+            # Monetary slots filled with a plain integer/float token (no "$" sign)
+            # are a full exact match — the value IS a valid monetary quantity.
+            score += SEMANTIC_IR_WEIGHTS["type_exact_bonus"]
+            features["type_exact"] = True
 
     semantic_overlap = len(m.semantic_role_tags & s.semantic_target_tags)
     if semantic_overlap:
@@ -2719,6 +2738,11 @@ def _score_mention_slot_opt(m: MentionOptIR, s: SlotOptIR) -> tuple[float, dict[
         elif expected == "int" and kind == "float":
             score += OPT_ROLE_WEIGHTS["type_loose_bonus"]
             features["type_loose"] = True
+        elif expected == "currency" and kind in {"float", "int"}:
+            # Monetary slots filled with a plain integer/float token (no "$" sign)
+            # are a full exact match — the value IS a valid monetary quantity.
+            score += OPT_ROLE_WEIGHTS["type_exact_bonus"]
+            features["type_exact"] = True
 
     role_overlap = len(m.role_tags & s.slot_role_tags)
     if role_overlap:
@@ -3894,6 +3918,11 @@ def _gcg_local_score(m: "MentionOptIR", s: "SlotOptIR") -> tuple[float, dict[str
         elif expected == "int" and kind == "float":
             score += GCG_LOCAL_WEIGHTS["type_loose_bonus"]
             features["type_loose"] = True
+        elif expected == "currency" and kind in {"float", "int"}:
+            # Monetary slots filled with a plain integer/float token (no "$" sign)
+            # are a full exact match — the value IS a valid monetary quantity.
+            score += GCG_LOCAL_WEIGHTS["type_exact_bonus"]
+            features["type_exact"] = True
 
     # Count-like slot: small-integer cardinality prior and large-value penalty.
     if s.is_count_like and kind == "int" and m.value is not None:
