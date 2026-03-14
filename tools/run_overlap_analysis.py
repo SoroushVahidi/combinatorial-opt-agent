@@ -289,12 +289,17 @@ def _run_retrieval_ablation(
 
         # --- LSA (TF-IDF + TruncatedSVD) ---
         try:
+            import warnings
             from sklearn.decomposition import TruncatedSVD
             vec2 = TfidfVectorizer(ngram_range=(1, 2), min_df=1)
             X = vec2.fit_transform(schema_texts_san)
             n_comp = min(100, X.shape[1], X.shape[0] - 1)
             svd = TruncatedSVD(n_components=max(1, n_comp), random_state=42)
-            emb = svd.fit_transform(X)
+            # Suppress the RuntimeWarning that TruncatedSVD emits when computing
+            # explained_variance_ratio_ on a very small / low-variance corpus.
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore", RuntimeWarning)
+                emb = svd.fit_transform(X)
             norms = np.linalg.norm(emb, axis=1, keepdims=True)
             norms[norms == 0] = 1
             emb = emb / norms

@@ -123,11 +123,15 @@ async def answer(query: str, top_k: int, validate: bool = False) -> str:
         out.append(format_problem_and_ip(problem, score=None))
         if validate and problem.get("_validation"):
             v = problem["_validation"]
-            errs = (v.get("schema_errors") or []) + (v.get("formulation_errors") or [])
+            errs = (
+                (v.get("schema_errors") or [])
+                + (v.get("formulation_errors") or [])
+                + (v.get("lp_consistency_errors") or [])
+            )
             if errs:
                 out.append(f"**Validation:** ⚠ {len(errs)} issue(s): " + "; ".join(errs[:3]) + (" ..." if len(errs) > 3 else ""))
             else:
-                out.append("**Validation:** ✓ Schema and formulation OK")
+                out.append("**Validation:** ✓ Schema, formulation, and LP consistency OK")
         out.append("---")
     return "\n".join(out)
 

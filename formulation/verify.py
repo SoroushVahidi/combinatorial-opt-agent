@@ -1,11 +1,16 @@
 """
-Lightweight validation for problem schema, formulation structure, and Python code syntax.
+Lightweight validation for problem schema, formulation structure, Python code
+syntax, and LP/ILP logical consistency.
+
 Robust to missing optional fields; never raises — returns list of error strings.
 """
 from __future__ import annotations
 
 import ast
 from typing import Any
+
+# Valid optimization directions for the objective.
+_VALID_SENSES = frozenset({"minimize", "maximize", "min", "max"})
 
 
 def verify_problem_schema(problem: dict) -> list[str]:
@@ -79,6 +84,79 @@ def verify_formulation_structure(problem: dict) -> list[str]:
     return errors
 
 
+def verify_lp_consistency(problem: dict) -> list[str]:
+    """Check LP/ILP logical consistency of a well-structured formulation.
+
+    Assumes ``verify_formulation_structure`` already passes (i.e. the required
+    keys are present and have the right types).  Checks:
+
+    * Objective sense is one of the accepted direction words (``minimize``,
+      ``maximize``, ``min``, ``max``).
+    * Every variable entry (if a list of dicts) has a non-empty ``symbol``
+      field.
+    * No two variables share the same ``symbol`` (duplicate-variable check).
+    * Every constraint entry (if a list of dicts) has a non-empty
+      ``expression`` field.
+
+    Returns a list of error strings; empty list = all checks pass.
+    Never raises.
+    """
+    errors: list[str] = []
+    if not isinstance(problem, dict):
+        return ["problem must be a dict"]
+    try:
+        form = problem.get("formulation")
+        if not isinstance(form, dict):
+            return []  # structural check not passed — skip LP consistency
+
+        # --- objective sense ---
+        obj = form.get("objective")
+        if isinstance(obj, dict):
+            sense = obj.get("sense", "")
+            if isinstance(sense, str) and sense.strip().lower() not in _VALID_SENSES:
+                errors.append(
+                    f"formulation.objective.sense '{sense}' is not a recognised "
+                    f"direction; expected one of {sorted(_VALID_SENSES)}"
+                )
+
+        # --- variables ---
+        variables = form.get("variables")
+        if isinstance(variables, list):
+            symbols_seen: set[str] = set()
+            for idx, var in enumerate(variables):
+                if not isinstance(var, dict):
+                    continue
+                symbol = var.get("symbol", "")
+                if not isinstance(symbol, str) or not symbol.strip():
+                    errors.append(
+                        f"formulation.variables[{idx}] has a missing or empty 'symbol'"
+                    )
+                else:
+                    key = symbol.strip()
+                    if key in symbols_seen:
+                        errors.append(
+                            f"formulation.variables: duplicate variable symbol '{key}'"
+                        )
+                    else:
+                        symbols_seen.add(key)
+
+        # --- constraints ---
+        constraints = form.get("constraints")
+        if isinstance(constraints, list):
+            for idx, con in enumerate(constraints):
+                if not isinstance(con, dict):
+                    continue
+                expr = con.get("expression", "")
+                if not isinstance(expr, str) or not expr.strip():
+                    errors.append(
+                        f"formulation.constraints[{idx}] has a missing or empty "
+                        f"'expression'"
+                    )
+    except Exception as exc:
+        errors.append(f"verify_lp_consistency: unexpected error: {exc}")
+    return errors
+
+
 def verify_python_syntax(code: str) -> list[str]:
     """
     Check Python code for syntax errors using ast.parse.
@@ -106,12 +184,20 @@ def verify_python_syntax(code: str) -> list[str]:
 
 
 def run_all_problem_checks(problem: dict) -> dict[str, list[str]]:
-    """
-    Run schema + formulation checks; return dict with keys schema_errors, formulation_errors.
-    Convenience for search() integration.
+    """Run schema, formulation-structure, and LP-consistency checks.
+
+    Returns a dict with keys:
+    * ``schema_errors`` — required-field and type checks.
+    * ``formulation_errors`` — structural checks (variables/objective/constraints present).
+    * ``lp_consistency_errors`` — LP/ILP logical consistency (valid sense, no duplicate
+      variables, non-empty constraint expressions).
+
+    Convenience for ``search()`` integration — the ``validate`` flag in
+    ``answer()`` surfaces these errors directly to the user.
     """
     schema_errors: list[str] = []
     formulation_errors: list[str] = []
+    lp_consistency_errors: list[str] = []
     try:
         schema_errors = verify_problem_schema(problem)
     except Exception:
@@ -120,4 +206,14 @@ def run_all_problem_checks(problem: dict) -> dict[str, list[str]]:
         formulation_errors = verify_formulation_structure(problem)
     except Exception:
         formulation_errors = ["verify_formulation_structure raised an exception"]
-    return {"schema_errors": schema_errors, "formulation_errors": formulation_errors}
+    try:
+        lp_consistency_errors = verify_lp_consistency(problem)
+    except Exception:
+        lp_consistency_errors = ["verify_lp_consistency raised an exception"]
+    return {
+        "schema_errors": schema_errors,
+        "formulation_errors": formulation_errors,
+        "lp_consistency_errors": lp_consistency_errors,
+    }
+
+

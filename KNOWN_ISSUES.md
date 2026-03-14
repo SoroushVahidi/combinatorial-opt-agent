@@ -105,8 +105,16 @@ type accuracy but leaves more slots empty.  Both fail the joint threshold.
 - Short-query downstream coverage ≈ 0.03 — effectively zero numeric grounding because short
   queries contain almost no numeric information.
 
-**Status:** ⚠️ Partially mitigated.  Short-query expansion (`retrieval/utils.py:expand_short_query`)
-improves the retrieval gap; downstream coverage remains an open problem.
+**Fixes applied:**
+- `retrieval/utils.py` — `_DOMAIN_EXPANSION_MAP` extended with six new problem families
+  that were not previously handled: LP/MIP/ILP formulations, quadratic/convex programs (QP),
+  portfolio/finance optimisation, bipartite matching, resource/inventory capacity planning,
+  and cutting/layout/strip packing.  Short queries like `"lp"`, `"portfolio"`, `"matching"`,
+  `"inventory"`, `"qp"`, `"ilp"` now receive rich domain-specific expansion phrases instead
+  of the generic fallback.  This improves retrieval R@1 for these families.
+
+**Status:** ✅ Domain-expansion coverage improved.  Downstream grounding for short queries
+(which carry almost no numeric information) remains an open problem.
 
 ---
 
@@ -142,12 +150,29 @@ setup instructions.
 
 **Symptom:** The `validate` flag in `answer()` is wired into the UI but no solver
 (Pyomo, Gurobi, PuLP, OR-Tools) is installed or invoked in the current codebase.
-Validation therefore has no effect at runtime.
+Full feasibility/optimality checking therefore cannot be performed.
 
-**Impact:** Solver feasibility/optimality of generated formulations cannot be confirmed
-automatically.
+**Fixes applied:**
+- `formulation/verify.py` — new `verify_lp_consistency` function that catches
+  LP/ILP structural inconsistencies that do not require a solver:
+  - Invalid objective sense (anything other than `minimize`, `maximize`, `min`, `max`).
+  - Variables with missing or empty `symbol` fields.
+  - Duplicate variable symbols within the same formulation.
+  - Constraints with missing or empty `expression` fields.
+- `run_all_problem_checks` now calls `verify_lp_consistency` and returns a third key
+  `lp_consistency_errors` alongside the existing `schema_errors` and `formulation_errors`.
+- `app.py` — the validation output block surfaces `lp_consistency_errors` to the user
+  and updates the all-clear message to
+  "✓ Schema, formulation, and LP consistency OK".
+- 16 new tests in `tests/test_verify.py` (`TestVerifyLpConsistency`) exercise all
+  new checks, including the integration path through `run_all_problem_checks`.
 
-**Status:** ⚠️ Planned feature.  Skeleton present; no solver integration implemented.
+**Impact:** The validate checkbox now catches a meaningful class of formulation authoring
+errors at structure-check time, without requiring a solver installation.  Full
+feasibility/optimality verification still requires an external solver.
+
+**Status:** ✅ LP structural consistency checks implemented.  Full solver-based
+feasibility/optimality validation remains future work.
 
 ---
 
@@ -155,9 +180,19 @@ automatically.
 
 ### 3.1 `RuntimeWarning: invalid value encountered in divide` in LSA decomposition
 
-**Symptom:** `sklearn`'s `TruncatedSVD` occasionally emits a `RuntimeWarning` about division
+**Symptom:** `sklearn`'s `TruncatedSVD` emits a `RuntimeWarning` about division
 by zero during `explained_variance_ratio_` calculation when the corpus is very small.
 
-**Impact:** Cosmetic only — the LSA baseline still produces correct rankings.
+**Fix applied:** Both call sites that invoke `TruncatedSVD.fit_transform` on
+potentially small corpora now wrap the call with a
+`warnings.catch_warnings() / warnings.simplefilter("ignore", RuntimeWarning)` context:
 
-**Status:** ℹ️ Benign warning; suppressed in the test suite where applicable.
+* `retrieval/baselines.py` — `LSABaseline.fit()`
+* `tools/run_overlap_analysis.py` — LSA section of the overlap-analysis runner
+
+The full test suite now passes with `-W error::RuntimeWarning` (zero warnings).
+
+**Impact:** None — the decomposition result is correct; only the explained-variance
+ratio statistic (not used at run-time) is undefined on tiny corpora.
+
+**Status:** ✅ Fixed.

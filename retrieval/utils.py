@@ -79,6 +79,40 @@ _DOMAIN_EXPANSION_MAP: list[tuple[frozenset[str], str]] = [
         frozenset({"bin", "bins", "cutting", "stock", "container"}),
         "bin packing cutting stock container size optimization",
     ),
+    # ── LP / MIP / QP formulation families ───────────────────────────────────
+    (
+        frozenset({"lp", "linear", "ilp", "mip", "milp", "integer",
+                   "formulate", "formulation"}),
+        "linear program integer programming formulation optimization variables constraints",
+    ),
+    (
+        frozenset({"qp", "quadratic", "socp", "convex", "nonlinear", "nlp"}),
+        "quadratic convex nonlinear programming optimization objective constraints",
+    ),
+    # ── Portfolio / finance ───────────────────────────────────────────────────
+    (
+        frozenset({"portfolio", "invest", "investment", "stock", "asset",
+                   "return", "risk", "markowitz", "sharpe", "frontier"}),
+        "portfolio optimization investment return risk asset allocation Markowitz",
+    ),
+    # ── Matching / bipartite ──────────────────────────────────────────────────
+    (
+        frozenset({"match", "matching", "bipartite", "marriage", "stable",
+                   "allocation", "allocate"}),
+        "matching bipartite assignment allocation worker job optimization",
+    ),
+    # ── Resource / capacity planning ─────────────────────────────────────────
+    (
+        frozenset({"resource", "capacity", "planning", "demand", "supply",
+                   "inventory", "stock", "lot", "sizing"}),
+        "resource capacity planning demand supply inventory lot sizing optimization",
+    ),
+    # ── Cutting / layout / strip packing ─────────────────────────────────────
+    (
+        frozenset({"cut", "trim", "strip", "layout", "nesting", "2d", "3d",
+                   "rectangle", "sheet"}),
+        "cutting layout strip packing rectangle nesting optimization",
+    ),
 ]
 
 
