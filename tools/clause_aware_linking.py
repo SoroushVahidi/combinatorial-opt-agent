@@ -397,11 +397,117 @@ def _find_link(
     return None
 
 
+def _slot_entity_words_from_link(lnk: MentionSlotLink) -> frozenset[str]:
+    """Return entity-discriminating tokens for *lnk*'s slot.
+
+    Mirrors the filter used for ``left_entity_anchor_overlap``: takes the
+    slot's full norm_token set, removes measure/unit words (via the same
+    exclude-list used in ``relation_aware_linking``), and removes the full
+    lower-cased slot name (which duplicates the component tokens).
+    """
+    from tools.relation_aware_linking import _LEFT_ANCHOR_MEASURE_EXCLUDE  # noqa: PLC0415
+    sw = frozenset(lnk.slot_feats.norm_tokens) | lnk.slot_feats.alias_tokens
+    return (sw - _LEFT_ANCHOR_MEASURE_EXCLUDE) - {lnk.slot_name.lower()}
+
+
+def _clause_entity_consistency_gain(
+    sn_i: str,
+    sn_j: str,
+    m_i: MentionOptIR,
+    m_j: MentionOptIR,
+    links: list[MentionSlotLink],
+    mentions_in_assignment: list[MentionOptIR],
+    clauses: list["ClauseSpan"],
+) -> int:
+    """Return the change in clause-entity consistency from swapping sn_i↔sn_j.
+
+    For each of the two slots being considered for a swap, we look at the
+    OTHER slots that are assigned to the same clause as the mention.  A
+    consistent clause-entity assignment is one where the slot's entity words
+    overlap with the entity cue tokens found in that clause.
+
+    Positive return value → swap improves clause-entity consistency.
+    Negative return value → swap hurts consistency (do NOT swap).
+    Zero → neutral (no clause evidence; leave decision to caller).
+
+    This is ONLY called when left-anchor scores are tied (conservative guard).
+
+    Parameters
+    ----------
+    sn_i, sn_j      : Names of the two candidate-swap slots.
+    m_i, m_j        : Current mention assigned to sn_i, sn_j respectively.
+    links           : Full link table from build_mention_slot_links.
+    mentions_in_assignment : All mentions currently assigned (values of
+                       filled_mentions dict).
+    clauses         : Clause spans for the query.
+    """
+    if not clauses:
+        return 0
+
+    mention_to_clause = _assign_mentions_to_clauses(mentions_in_assignment, clauses)
+
+    # Build per-clause entity-cue sets (lowercase, stripped).
+    summaries = build_clause_summaries(clauses, mentions_in_assignment)
+    clause_ent_map: dict[int, frozenset[str]] = {}
+    for s in summaries:
+        raw = frozenset(t.lower().strip(".,;:()[]{}\"'") for t in s.entity_cue_tokens)
+        # Expand compound tokens ('Type1' → {'type1','type','1'}).
+        clause_ent_map[s.clause_idx] = frozenset(_expand_compound_tokens(set(raw)))
+
+    # Entity words for each candidate slot.
+    lnk_ii = _find_link(links, m_i.mention_id, sn_i)
+    lnk_jj = _find_link(links, m_j.mention_id, sn_j)
+    lnk_ij = _find_link(links, m_i.mention_id, sn_j)
+    lnk_ji = _find_link(links, m_j.mention_id, sn_i)
+    if not all([lnk_ii, lnk_jj, lnk_ij, lnk_ji]):
+        return 0
+
+    ent_i = _slot_entity_words_from_link(lnk_ii)   # type: ignore[arg-type]
+    ent_j = _slot_entity_words_from_link(lnk_jj)   # type: ignore[arg-type]
+
+    ci = mention_to_clause.get(m_i.mention_id, 0)
+    cj = mention_to_clause.get(m_j.mention_id, 0)
+
+    if ci == cj:
+        # Same clause: clause evidence does not discriminate.
+        return 0
+
+    clause_ent_i = clause_ent_map.get(ci, frozenset())
+    clause_ent_j = clause_ent_map.get(cj, frozenset())
+
+    # Current consistency: m_i→sn_i in clause ci, m_j→sn_j in clause cj.
+    curr = len(clause_ent_i & ent_i) + len(clause_ent_j & ent_j)
+    # Swapped consistency: m_i→sn_j in clause ci, m_j→sn_i in clause cj.
+    swap = len(clause_ent_i & ent_j) + len(clause_ent_j & ent_i)
+
+    return swap - curr
+
+
+def _expand_compound_tokens(tokens: set[str]) -> set[str]:
+    """Expand alphanum compound tokens (e.g. 'type1' → {'type1','type','1'}).
+
+    Thin wrapper that re-uses the logic from ``relation_aware_linking``;
+    defined here to avoid an import cycle (clause_aware_linking already
+    imports from relation_aware_linking).
+    """
+    import re as _re_local  # noqa: PLC0415
+    _compound = _re_local.compile(r"([a-zA-Z]+)(\d+)$")
+    expanded = set(tokens)
+    for tok in tokens:
+        m = _compound.fullmatch(tok)
+        if m:
+            expanded.add(m.group(1))
+            expanded.add(m.group(2))
+    return expanded
+
+
 def detect_and_repair_parallel_swaps(
     filled_values: dict[str, Any],
     filled_mentions: dict[str, MentionOptIR],
     links: list[MentionSlotLink],
     ablation_mode: str = "full",
+    query: str = "",
+    all_mentions: list[MentionOptIR] | None = None,
 ) -> tuple[dict[str, Any], dict[str, MentionOptIR], list[str]]:
     """Detect and repair parallel sibling-slot swap errors.
 
@@ -412,12 +518,13 @@ def detect_and_repair_parallel_swaps(
     1. Both slots share at least one common ``norm_token`` (same measure family)
        but have at least one differing token (different entity component).
     2. The swap strictly improves the total ``left_entity_anchor_overlap`` for
-       the two-slot pair (i.e. the swapped assignment has a higher combined
-       left-anchor overlap than the current one).
+       the two-slot pair **or**, when anchor scores are exactly tied, the swap
+       strictly improves clause-entity consistency or narrow-measure-overlap
+       (the conservative tiebreakers).
 
-    This is conservative: only clearly beneficial swaps are performed.  The
-    function runs a single pass over all candidate pairs (no iterative
-    re-checking) to avoid cascading changes.
+    After the swap pass, an optional "derived-occupant rescue" pass looks for
+    any slot filled by a low-quality derived mention (nm_ov = 0) that could be
+    replaced by an unassigned real mention with better evidence.
 
     Parameters
     ----------
@@ -430,6 +537,13 @@ def detect_and_repair_parallel_swaps(
     ablation_mode   : str
         Ablation mode (used only for logging; swap logic uses left_entity_anchor_overlap
         which is mode-independent at the link level).
+    query           : str
+        Original query string.  When non-empty, enables the clause-entity
+        consistency tiebreaker for anchor-tied swap candidates.
+    all_mentions    : list[MentionOptIR] | None
+        Complete list of all extracted mentions (not just the greedy-assigned
+        subset).  When provided, enables the derived-occupant rescue pass that
+        replaces low-quality derived occupants with better unassigned mentions.
 
     Returns
     -------
@@ -458,6 +572,9 @@ def detect_and_repair_parallel_swaps(
         sn = lnk.slot_name
         if sn not in slot_to_norm:
             slot_to_norm[sn] = frozenset(lnk.slot_feats.norm_tokens)
+
+    # Pre-compute clause spans once (used by the clause-entity tiebreaker).
+    clauses = split_into_clauses(query) if query else []
 
     # Track which slots have already been swapped in this pass to avoid
     # double-swapping the same pair.
@@ -503,7 +620,42 @@ def detect_and_repair_parallel_swaps(
                 + lnk_ji.left_entity_anchor_overlap  # type: ignore[union-attr]
             )
 
-            if swapped_anchor > current_anchor:
+            should_swap = swapped_anchor > current_anchor
+
+            # Clause-entity tiebreaker: when anchor scores are tied, check
+            # whether swapping improves clause-entity consistency.  Only
+            # active when a query string is available (conservative guard).
+            if not should_swap and swapped_anchor == current_anchor and clauses:
+                consistency_gain = _clause_entity_consistency_gain(
+                    sn_i, sn_j, m_i, m_j, links,
+                    list(new_mentions.values()), clauses,
+                )
+                if consistency_gain > 0:
+                    should_swap = True
+
+            # Narrow-measure-overlap tiebreaker: when both anchor and
+            # clause-entity scores are tied, check whether swapping improves
+            # the combined narrow_measure_overlap for the two-slot pair.
+            # This fires when the greedy placed a mention in a slot whose
+            # measure tokens have LESS local support than the alternative
+            # (e.g. "5 labor hours and earns … profit" where '5' scores
+            # higher for ProfitB due to the 'earns' role tag, but its narrow
+            # context overlaps more strongly with LaborB).
+            # Conservative guard: only fires on an exact anchor tie AND when
+            # the nm_gain is strictly positive.
+            if not should_swap and swapped_anchor == current_anchor:
+                current_nm = (
+                    lnk_ii.narrow_measure_overlap  # type: ignore[union-attr]
+                    + lnk_jj.narrow_measure_overlap  # type: ignore[union-attr]
+                )
+                swapped_nm = (
+                    lnk_ij.narrow_measure_overlap  # type: ignore[union-attr]
+                    + lnk_ji.narrow_measure_overlap  # type: ignore[union-attr]
+                )
+                if swapped_nm > current_nm:
+                    should_swap = True
+
+            if should_swap:
                 # Capture original values before modifying so the log is accurate.
                 orig_val_i = new_values.get(sn_i)
                 orig_val_j = new_values.get(sn_j)
@@ -520,5 +672,77 @@ def detect_and_repair_parallel_swaps(
                     f" [anchor {current_anchor}→{swapped_anchor}]"
                 )
                 break  # move to next i after a swap
+
+    # -----------------------------------------------------------------------
+    # Derived-occupant rescue pass.
+    # After the swap pass, look for slots occupied by low-quality "derived"
+    # mentions (empty narrow_left, nm_ov = 0) when there is an unassigned
+    # non-derived mention that has actual narrow-measure evidence for that
+    # slot.  Such situations arise when the greedy crowded out the real
+    # mention because a different mention greedily took the best slot first.
+    #
+    # Why opt-in via `all_mentions`:
+    #   The rescue pass needs the COMPLETE pool of extracted mentions to find
+    #   unassigned candidates.  The greedy only passes back the assigned subset
+    #   (filled_mentions), so the complete list must be supplied separately.
+    #   Callers that do not supply all_mentions (e.g. unit tests that manually
+    #   build partial states) are unaffected.
+    #
+    # What qualifies as "derived":
+    #   A mention whose raw_surface starts with "derived:" — these are synthetic
+    #   counts extracted by the enumeration-cue detector (e.g. "derived:2
+    #   (hours and earns)").  They are valid when no real numeric token is
+    #   available but are poor-quality placeholders when a real mention exists.
+    #
+    # Why nm_ov = 0 as the threshold:
+    #   A derived mention with zero narrow-measure overlap means its local
+    #   context provides no measure-word evidence for the slot it occupies.
+    #   This is a reliable indicator that it won the slot only by default
+    #   (all stronger candidates were already taken).  We only replace it when
+    #   a strictly better (nm_ov > 0) real candidate exists, keeping this
+    #   pass conservative.
+    # -----------------------------------------------------------------------
+    if all_mentions is not None:
+        assigned_mids: set[int] = {m.mention_id for m in new_mentions.values()}
+        unassigned = [m for m in all_mentions if m.mention_id not in assigned_mids]
+
+        if unassigned:
+            rescue_log: list[str] = []
+            for sn, occupant in list(new_mentions.items()):
+                # Only consider slots where the current occupant is derived
+                # and has zero narrow-measure overlap (no local evidence).
+                occ_link = _find_link(links, occupant.mention_id, sn)
+                if occ_link is None:
+                    continue
+                occupant_nm = occ_link.narrow_measure_overlap
+                # "derived" mentions have a raw_surface prefixed "derived:".
+                if not (
+                    occupant.raw_surface.startswith("derived:")
+                    and occupant_nm == 0
+                ):
+                    continue
+
+                # Find the best unassigned replacement (highest nm_ov > 0).
+                best_nm, best_mention, best_lnk = 0, None, None
+                for cand in unassigned:
+                    cand_lnk = _find_link(links, cand.mention_id, sn)
+                    if cand_lnk is not None and cand_lnk.narrow_measure_overlap > best_nm:
+                        best_nm = cand_lnk.narrow_measure_overlap
+                        best_mention = cand
+                        best_lnk = cand_lnk
+
+                if best_mention is not None and best_nm > 0:
+                    # Replace the derived occupant with the real candidate.
+                    old_val = new_values.get(sn)
+                    new_mentions[sn] = best_mention
+                    new_values[sn] = best_mention.value
+                    unassigned.remove(best_mention)
+                    assigned_mids.add(best_mention.mention_id)
+                    rescue_log.append(
+                        f"rescue: {sn}({old_val}→{best_mention.value})"
+                        f" [derived→m{best_mention.mention_id} nm_ov={best_nm}]"
+                    )
+            if rescue_log:
+                swap_log.extend(rescue_log)
 
     return new_values, new_mentions, swap_log

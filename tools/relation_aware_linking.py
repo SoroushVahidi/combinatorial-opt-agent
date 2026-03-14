@@ -110,6 +110,48 @@ _LEFT_ANCHOR_MEASURE_EXCLUDE: frozenset[str] = frozenset({
     "weight", "volume", "area", "length", "distance", "energy",
 })
 
+
+import re as _re  # noqa: E402 — used by _expand_compound_tokens only
+
+_COMPOUND_SPLIT_RE = _re.compile(r"([a-zA-Z]+)(\d+)$")
+
+
+def _expand_compound_tokens(tokens: set[str]) -> set[str]:
+    """Expand alphanum compound tokens such as 'product2' → {'product2', 'product', '2'}.
+
+    Many entity names in parallel-clause patterns have the form
+    ``<word><digit(s)>`` (e.g. 'type1', 'product2', 'machine3').  These
+    compound surface forms are not split by ``_normalize_tokens``; they arrive
+    in the left-anchor context as a single token.  Without expansion, the
+    overlap with slot tokens like 'type' and '1' (from 'Type1') is zero, so
+    the left-entity-anchor cannot discriminate 'Type1' from 'Type2'.
+
+    The expansion adds both the alpha prefix and the digit suffix alongside
+    the original token, enabling overlap with the split slot norm_tokens
+    (e.g. LaborType1 → ['labortype1', 'labor', 'type', '1']).
+
+    Only the pattern ``alpha+ digit+`` is expanded — other tokens are kept
+    unchanged.  The original compound form is always retained so that exact
+    slot-name matches remain valid.
+
+    Parameters
+    ----------
+    tokens : set[str]
+        Lowercase token set (e.g. from narrow_left_tokens).
+
+    Returns
+    -------
+    set[str]
+        Expanded token set (superset of *tokens*).
+    """
+    expanded = set(tokens)
+    for tok in tokens:
+        m = _COMPOUND_SPLIT_RE.fullmatch(tok)
+        if m:
+            expanded.add(m.group(1))   # alpha prefix  (e.g. 'product')
+            expanded.add(m.group(2))   # digit suffix  (e.g. '2')
+    return expanded
+
 # ---------------------------------------------------------------------------
 # Ablation mode weights
 # ---------------------------------------------------------------------------
@@ -586,6 +628,13 @@ def _build_mention_slot_link(
     # from the previous number's context), spuriously boosting HeatingHours for 5.
     # Excluding "heating" from the slot's entity anchor words prevents this.
     left_set = set(mf.narrow_left_tokens)
+    # Expand compound alphanum tokens in the left anchor (e.g. 'product2' →
+    # {'product2', 'product', '2'}) so they can match the split components of
+    # slot norm_tokens such as ['laborproduct2', 'labor', 'product', '2'].
+    # Without expansion, 'product2' never overlaps with slot token '2' or
+    # 'product' individually, causing numeric-suffix entities to receive zero
+    # left-anchor scores and fail to discriminate sibling slots.
+    left_set = _expand_compound_tokens(left_set)
     # Slot entity-discriminating tokens: remove measure/unit words and the full
     # lower-cased slot name (which is always a duplicate of the component tokens).
     slot_entity_words = (slot_words - _LEFT_ANCHOR_MEASURE_EXCLUDE) - {sf.name.lower()}
@@ -773,9 +822,12 @@ def _post_compute_clause_alignment(
     for sn, ent_words in slot_entity_map.items():
         best_idx, best_ov = 0, 0
         for summary in summaries:
-            clause_ent = frozenset(
+            clause_ent: frozenset[str] = frozenset(
                 t.lower().strip(".,;:()[]{}\"'") for t in summary.entity_cue_tokens
             )
+            # Expand compound tokens (e.g. 'Type1' → {'type1','type','1'}) so
+            # they can match the split components of slot norm_tokens.
+            clause_ent = frozenset(_expand_compound_tokens(set(clause_ent)))
             ov = len(clause_ent & ent_words) if ent_words else 0
             if ov > best_ov:
                 best_ov = ov
@@ -793,10 +845,12 @@ def _post_compute_clause_alignment(
         ent_words = slot_entity_map.get(sn, frozenset())
         meas_words = slot_words_map.get(sn, frozenset())
 
-        # A. clause_entity_overlap
+        # A. clause_entity_overlap — expand compound tokens so 'Type1' matches
+        # slot tokens ['type','1'] from LaborType1, etc.
         clause_ent = frozenset(
             t.lower().strip(".,;:()[]{}\"'") for t in m_summary.entity_cue_tokens
         )
+        clause_ent = frozenset(_expand_compound_tokens(set(clause_ent)))
         lnk.clause_entity_overlap = len(clause_ent & ent_words) if ent_words else 0
 
         # B. clause_measure_overlap (diagnostic; not in scoring)
@@ -1223,7 +1277,8 @@ def run_relation_aware_grounding(
     if ablation_mode == "full" and len(filled_mentions) >= 2:
         from tools.clause_aware_linking import detect_and_repair_parallel_swaps
         filled_values, filled_mentions, swap_log = detect_and_repair_parallel_swaps(
-            filled_values, filled_mentions, links, ablation_mode
+            filled_values, filled_mentions, links, ablation_mode,
+            query=query, all_mentions=mentions_ir,
         )
         if swap_log:
             diagnostics["group3_swap_repairs"] = swap_log

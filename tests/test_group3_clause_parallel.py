@@ -697,3 +697,186 @@ class TestClauseLocalAlignment:
             assert lnk.cross_clause_entity_penalty == 0, (
                 "No cross-clause penalty should fire for single-clause queries"
             )
+
+
+# ---------------------------------------------------------------------------
+# L. Residual swap-tail patterns (Group 3 final pass)
+#    These tests target the specific patterns identified in the final audit:
+#    - multi-clause parallel with same entity family + multiple measures
+#    - nm_ov tiebreaker swap repair
+#    - derived-occupant rescue pass
+#    - negative cases where repair should NOT fire
+# ---------------------------------------------------------------------------
+
+
+class TestResidualSwapTail:
+    """Targeted tests for the residual swap-tail cluster from the final audit."""
+
+    # -- Positive tests (repair SHOULD help) --------------------------------
+
+    def test_nm_ov_tiebreaker_fires_when_anchor_tied(self):
+        """Swap repair's nm_ov tiebreaker should fire when anchor scores are tied
+        but swapping increases combined narrow_measure_overlap.
+
+        Pattern: 'X requires N1 measure1 and earns N2 measure2' — the 'earns'
+        right-context cue contaminates N1's role_tags, causing it to score
+        higher for the profit slot.  The nm_ov tiebreaker should recover this.
+        """
+        query = (
+            "Total budget is 12000. "
+            "Product A requires 3 labor hours and earns 7 profit. "
+            "Product B requires 5 labor hours and earns 11 profit."
+        )
+        slots = ["LaborA", "LaborB", "ProfitA", "ProfitB", "TotalBudget"]
+        result, _, diag = run_relation_aware_grounding(query, "orig", slots, "full")
+        assert result.get("LaborA") == pytest.approx(3.0), "LaborA must be 3"
+        assert result.get("LaborB") == pytest.approx(5.0), "LaborB must be 5"
+        assert result.get("ProfitA") == pytest.approx(7.0), "ProfitA must be 7"
+        assert result.get("ProfitB") == pytest.approx(11.0), "ProfitB must be 11"
+        assert result.get("TotalBudget") == pytest.approx(12000.0), "TotalBudget must be 12000"
+
+    def test_derived_occupant_rescue_replaces_low_quality_derived(self):
+        """After nm_ov swap, a derived occupant with nm_ov=0 should be replaced
+        by an unassigned real mention with nm_ov > 0.
+
+        This validates the rescue pass introduced in the final narrow pass.
+        """
+        query = (
+            "Total budget is 12000. "
+            "Product A requires 3 labor hours and earns 7 profit. "
+            "Product B requires 5 labor hours and earns 11 profit."
+        )
+        slots = ["LaborA", "LaborB", "ProfitA", "ProfitB", "TotalBudget"]
+        result, mentions, diag = run_relation_aware_grounding(query, "orig", slots, "full")
+        # After the rescue pass, ProfitB must hold the real value 11, not a derived count.
+        profit_b_mention = mentions.get("ProfitB")
+        assert profit_b_mention is not None
+        assert not profit_b_mention.raw_surface.startswith("derived:"), (
+            "ProfitB must be assigned a real mention after the rescue pass, "
+            f"got: {profit_b_mention.raw_surface!r}"
+        )
+        assert result.get("ProfitB") == pytest.approx(11.0), (
+            f"ProfitB must equal 11 after rescue; got {result.get('ProfitB')}"
+        )
+
+    def test_numeric_suffix_entities_multi_measure_correct_assignment(self):
+        """Numeric-suffix entity names (Type1/Type2) with two measures should be
+        correctly assigned even when the right context contains a conflicting cue.
+
+        Pattern: 'TypeN requires M1 labor and costs M2' — previously Type1's
+        labor value could drift to the cost slot due to 'costs' in right context.
+        """
+        query = (
+            "Type1 product requires 4 labor hours and costs 3 per unit. "
+            "Type2 product requires 7 labor hours and costs 9 per unit."
+        )
+        slots = ["CostType1", "CostType2", "LaborType1", "LaborType2"]
+        result, _, _ = run_relation_aware_grounding(query, "orig", slots, "full")
+        assert result.get("LaborType1") == pytest.approx(4.0), "LaborType1 must be 4"
+        assert result.get("CostType1") == pytest.approx(3.0), "CostType1 must be 3"
+        assert result.get("LaborType2") == pytest.approx(7.0), "LaborType2 must be 7"
+        assert result.get("CostType2") == pytest.approx(9.0), "CostType2 must be 9"
+
+    def test_reversed_parallel_clauses_nm_suffix_machines(self):
+        """Product1/Product2 with labor+machine measures must be correctly assigned
+        when sentence order could confuse the greedy.
+
+        Validates compound token expansion ensures '1'/'2' discriminate correctly.
+        """
+        query = (
+            "Product1 needs 3 labor hours and 4 machine hours. "
+            "Product2 needs 6 labor hours and 1 machine hour."
+        )
+        slots = ["LaborProduct1", "LaborProduct2", "MachineProduct1", "MachineProduct2"]
+        result, _, _ = run_relation_aware_grounding(query, "orig", slots, "full")
+        assert result.get("LaborProduct1") == pytest.approx(3.0)
+        assert result.get("LaborProduct2") == pytest.approx(6.0)
+        assert result.get("MachineProduct1") == pytest.approx(4.0)
+        assert result.get("MachineProduct2") == pytest.approx(1.0)
+
+    # -- Negative tests (repair should NOT fire / should remain conservative) -
+
+    def test_repair_does_not_fire_for_already_correct_single_measure(self):
+        """Single-measure parallel case that greedy already gets right:
+        swap repair must NOT fire (no spurious swap when anchor is clearly correct).
+        """
+        query = "Feed A contains 10 protein. Feed B contains 7 protein."
+        slots = ["ProteinFeedA", "ProteinFeedB"]
+        result, _, diag = run_relation_aware_grounding(query, "orig", slots, "full")
+        assert result.get("ProteinFeedA") == pytest.approx(10.0)
+        assert result.get("ProteinFeedB") == pytest.approx(7.0)
+        swaps = diag.get("group3_swap_repairs", [])
+        assert len(swaps) == 0, (
+            f"No swap should be logged for an already-correct assignment; got: {swaps}"
+        )
+
+    def test_repair_does_not_fire_for_single_clause_no_parallel_structure(self):
+        """Completely single-clause query with no parallel entities:
+        repair must remain neutral (no spurious rescue or swap).
+        """
+        query = "Each table requires 4 labor hours and 6 units of wood."
+        slots = ["LaborHoursPerTable", "WoodUnitsPerTable"]
+        result, _, diag = run_relation_aware_grounding(query, "orig", slots, "full")
+        assert result.get("LaborHoursPerTable") == pytest.approx(4.0)
+        assert result.get("WoodUnitsPerTable") == pytest.approx(6.0)
+        swaps = diag.get("group3_swap_repairs", [])
+        assert len(swaps) == 0, (
+            f"No swap/rescue should occur for single-clause query; got: {swaps}"
+        )
+
+    def test_nm_ov_tiebreaker_not_active_in_basic_mode(self):
+        """Swap repair (and its tiebreakers) must NOT fire in 'basic' mode
+        (ablation boundary preserved).
+        """
+        query = (
+            "Total budget is 12000. "
+            "Product A requires 3 labor hours and earns 7 profit. "
+            "Product B requires 5 labor hours and earns 11 profit."
+        )
+        slots = ["LaborA", "LaborB", "ProfitA", "ProfitB", "TotalBudget"]
+        # In basic mode, the swap repair is not active, so no guarantee of
+        # correctness — we only check that diagnostics do NOT show swap repairs.
+        _, _, diag = run_relation_aware_grounding(query, "orig", slots, "basic")
+        assert "group3_swap_repairs" not in diag, (
+            "Swap repair must be disabled in 'basic' mode"
+        )
+
+    def test_derived_rescue_does_not_fire_when_no_better_candidate(self):
+        """Rescue pass must NOT replace a derived occupant when there is no
+        real unassigned mention with nm_ov > 0 for that slot.
+
+        Verifies the conservative guard: rescue only fires on strict improvement.
+        """
+        from tools.clause_aware_linking import detect_and_repair_parallel_swaps
+        from tools.nlp4lp_downstream_utility import MentionOptIR
+        from tools.relation_aware_linking import build_mention_slot_links, relation_aware_local_score
+
+        query = "A chair requires 3 labor hours."
+        slots = ["LaborChair"]
+        links, mentions, _, _, _ = build_mention_slot_links(query, "orig", slots)
+        for lnk in links:
+            relation_aware_local_score(lnk, "full")
+
+        # Manually build a state where the derived mention occupies LaborChair
+        # but there is no unassigned real mention with nm_ov > 0.
+        real_m = next(m for m in mentions if not m.raw_surface.startswith("derived:"))
+        # Build a fake derived mention with nm_ov = 0.
+        import dataclasses, re
+        derived = dataclasses.replace(
+            real_m,
+            mention_id=9999,
+            raw_surface="derived:1 (fake)",
+        )
+        filled_v = {"LaborChair": 1.0}
+        filled_m = {"LaborChair": derived}
+        # No unassigned real mention has nm_ov > 0 after the derived is placed;
+        # all real mentions are passed as all_mentions but have no links.
+        _, new_m, rescue_log = detect_and_repair_parallel_swaps(
+            filled_v, filled_m, links,
+            all_mentions=[],  # no unassigned candidates at all
+        )
+        # No rescue should have fired.
+        rescue_entries = [e for e in rescue_log if "rescue" in e]
+        assert len(rescue_entries) == 0, (
+            f"Rescue must not fire when there are no unassigned candidates; got: {rescue_entries}"
+        )

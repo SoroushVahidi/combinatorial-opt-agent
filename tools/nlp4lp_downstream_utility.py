@@ -2348,8 +2348,32 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
         # Use directional narrow windows to detect per-unit vs total-like role,
         # preventing cross-contamination when both cue types appear in the same
         # wide context window (e.g. "2000 hours available" and "each requires 2").
+        #
+        # Left context: collect up to _LOCALITY_LEFT_WINDOW tokens but discard
+        # everything before the most recent sentence boundary (a token ending
+        # '.'/'!'/'?' followed by an uppercase token).  This mirrors the
+        # sentence-boundary trimming already applied to the right window and
+        # prevents tokens from the preceding sentence from contaminating the
+        # left anchor (e.g. "hours. Product B requires 5" — "hours" should
+        # NOT appear in the left context of "5").
+        _left_raw_window = toks[max(0, i - _LOCALITY_LEFT_WINDOW) : i]
+        # Find the last sentence boundary inside the left window.
+        # A boundary is at position k when _left_raw_window[k] ends with
+        # '.'/'!'/'?' AND _left_raw_window[k+1] starts with an uppercase letter.
+        _left_start = 0
+        for _k in range(len(_left_raw_window) - 1):
+            _lw_tok = _left_raw_window[_k].rstrip()
+            _lw_next = _left_raw_window[_k + 1]
+            if (
+                _lw_tok.endswith((".", "!", "?"))
+                and _lw_next[:1].isupper()
+                and bool(_lw_next.strip())
+            ):
+                # Discard everything up to and including this boundary token;
+                # keep only tokens from _k+1 onward.
+                _left_start = _k + 1
         _left_narrow = [
-            x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - _LOCALITY_LEFT_WINDOW) : i]
+            x.lower().strip(".,;:()[]{}") for x in _left_raw_window[_left_start:]
             if x.strip(".,;:()[]{}").strip()
         ]
         # Right context: collect up to _LOCALITY_RIGHT_WINDOW tokens but stop at
