@@ -7,6 +7,8 @@ the program handles them correctly:
   - format_problem_and_ip produces well-structured output
   - Short-query expansion activates for set-cover keyword queries
   - Text baselines can rank set-cover descriptions above unrelated problems
+  - TestSetCoverProgramOutput records the actual rendered output the program
+    produces for each instance (the "result" of running the program on them)
 """
 from __future__ import annotations
 
@@ -306,7 +308,7 @@ class TestSetCoverFormatOutput:
     def test_format_with_score_includes_relevance(self):
         from retrieval.search import format_problem_and_ip
         output = format_problem_and_ip(_make_minimum_set_cover(), score=0.87)
-        assert "0.87" in output or "relevance" in output.lower()
+        assert "0.87" in output and "relevance" in output.lower()
 
     def test_format_includes_variables_section(self):
         from retrieval.search import format_problem_and_ip
@@ -451,3 +453,185 @@ class TestSetCoverBaselineRetrieval:
         assert "set_cover" in ids, (
             f"{cls_name}: 'set_cover' not in top-2 for descriptive query; got {ids}"
         )
+
+
+# ---------------------------------------------------------------------------
+# 6. Program output snapshots — the actual "result" for each instance
+#
+# These tests record exactly what format_problem_and_ip renders for each
+# concrete set cover instance.  They answer the question "What was the
+# result?" by asserting on the full structure of the rendered output:
+#   • header with instance name
+#   • collapsible Variables / Objective / Constraints sections
+#   • correct objective sense and expression
+#   • each covering constraint with its human-readable description
+#   • LaTeX block (where present)
+#   • complexity footer
+# ---------------------------------------------------------------------------
+
+class TestSetCoverProgramOutput:
+    """Snapshot the actual program output for every set cover instance."""
+
+    # ------------------------------------------------------------------
+    # Minimum Set Cover
+    # ------------------------------------------------------------------
+
+    def test_minimum_output_header(self):
+        """Output starts with the instance name as a Markdown heading."""
+        from retrieval.search import format_problem_and_ip
+        out = format_problem_and_ip(_make_minimum_set_cover())
+        assert "## Minimum Set Cover Instance" in out
+
+    def test_minimum_output_variables_section(self):
+        """Variables section lists the binary decision variable x_S."""
+        from retrieval.search import format_problem_and_ip
+        out = format_problem_and_ip(_make_minimum_set_cover())
+        assert "<details><summary><strong>Variables</strong></summary>" in out
+        assert "x_S" in out
+        assert "1 if subset S is selected, 0 otherwise" in out
+
+    def test_minimum_output_objective(self):
+        """Objective section shows 'minimize' and the summed expression."""
+        from retrieval.search import format_problem_and_ip
+        out = format_problem_and_ip(_make_minimum_set_cover())
+        assert "**Sense:** minimize" in out
+        assert "x_S1 + x_S2 + x_S3" in out
+
+    def test_minimum_output_all_five_constraints(self):
+        """All five covering constraints appear with their descriptions."""
+        from retrieval.search import format_problem_and_ip
+        out = format_problem_and_ip(_make_minimum_set_cover())
+        assert "x_S1 >= 1" in out
+        assert "Element 1 must be covered" in out
+        assert "x_S1 + x_S2 >= 1" in out
+        assert "Element 2 must be covered" in out
+        assert "x_S1 + x_S3 >= 1" in out
+        assert "Element 3 must be covered" in out
+        assert "x_S2 + x_S3 >= 1" in out
+        assert "Element 4 must be covered" in out
+        assert "x_S3 >= 1" in out
+        assert "Element 5 must be covered" in out
+
+    def test_minimum_output_complexity_footer(self):
+        """Complexity footer is rendered for the minimum set cover instance."""
+        from retrieval.search import format_problem_and_ip
+        out = format_problem_and_ip(_make_minimum_set_cover())
+        assert "*Complexity: NP-hard*" in out
+
+    def test_minimum_output_no_latex_block(self):
+        """Minimum set cover has no formulation_latex so no LaTeX block is shown."""
+        from retrieval.search import format_problem_and_ip
+        out = format_problem_and_ip(_make_minimum_set_cover())
+        assert "LaTeX" not in out
+
+    # ------------------------------------------------------------------
+    # Weighted Set Cover
+    # ------------------------------------------------------------------
+
+    def test_weighted_output_header(self):
+        """Output starts with the weighted instance name as a Markdown heading."""
+        from retrieval.search import format_problem_and_ip
+        out = format_problem_and_ip(_make_weighted_set_cover())
+        assert "## Weighted Set Cover Instance" in out
+
+    def test_weighted_output_objective_expression(self):
+        """Objective expression includes the four cost coefficients."""
+        from retrieval.search import format_problem_and_ip
+        out = format_problem_and_ip(_make_weighted_set_cover())
+        assert "3 x_S1 + 2 x_S2 + 4 x_S3 + 5 x_S4" in out
+
+    def test_weighted_output_all_four_constraints(self):
+        """All four element-covering constraints appear with descriptions."""
+        from retrieval.search import format_problem_and_ip
+        out = format_problem_and_ip(_make_weighted_set_cover())
+        assert "x_S1 + x_S4 >= 1" in out
+        assert "Element a must be covered" in out
+        assert "x_S1 + x_S2 >= 1" in out
+        assert "Element b must be covered" in out
+        assert "x_S2 + x_S3 >= 1" in out
+        assert "Element c must be covered" in out
+        assert "x_S3 + x_S4 >= 1" in out
+        assert "Element d must be covered" in out
+
+    def test_weighted_output_latex_block(self):
+        """LaTeX block is rendered for the weighted instance."""
+        from retrieval.search import format_problem_and_ip
+        out = format_problem_and_ip(_make_weighted_set_cover())
+        assert "<details><summary><strong>LaTeX (rendered)</strong></summary>" in out
+        assert "$$" in out
+        assert "3x_{S1}" in out
+
+    def test_weighted_output_complexity_footer(self):
+        """Complexity footer is rendered for the weighted set cover instance."""
+        from retrieval.search import format_problem_and_ip
+        out = format_problem_and_ip(_make_weighted_set_cover())
+        assert "*Complexity: NP-hard*" in out
+
+    # ------------------------------------------------------------------
+    # Hospital Coverage
+    # ------------------------------------------------------------------
+
+    def test_hospital_output_header(self):
+        """Output starts with the hospital coverage instance name."""
+        from retrieval.search import format_problem_and_ip
+        out = format_problem_and_ip(_make_hospital_coverage())
+        assert "## Hospital Coverage Instance" in out
+
+    def test_hospital_output_variables_section(self):
+        """Variables section lists the binary decision variable y_h."""
+        from retrieval.search import format_problem_and_ip
+        out = format_problem_and_ip(_make_hospital_coverage())
+        assert "y_h" in out
+        assert "1 if hospital h is opened, 0 otherwise" in out
+
+    def test_hospital_output_objective(self):
+        """Objective section shows minimize over opened hospital count."""
+        from retrieval.search import format_problem_and_ip
+        out = format_problem_and_ip(_make_hospital_coverage())
+        assert "**Sense:** minimize" in out
+        assert "y_H1 + y_H2 + y_H3" in out
+
+    def test_hospital_output_all_six_constraints(self):
+        """All six city-covering constraints appear with their descriptions."""
+        from retrieval.search import format_problem_and_ip
+        out = format_problem_and_ip(_make_hospital_coverage())
+        assert "y_H1 >= 1" in out
+        assert "City C1 must be covered" in out
+        assert "y_H1 + y_H2 >= 1" in out
+        assert "City C2 must be covered" in out
+        assert "y_H1 + y_H3 >= 1" in out
+        assert "City C3 must be covered" in out
+        assert "y_H2 >= 1" in out
+        assert "City C4 must be covered" in out
+        assert "y_H2 + y_H3 >= 1" in out
+        assert "City C5 must be covered" in out
+        assert "y_H3 >= 1" in out
+        assert "City C6 must be covered" in out
+
+    def test_hospital_output_complexity_footer(self):
+        """Complexity footer is rendered for the hospital coverage instance."""
+        from retrieval.search import format_problem_and_ip
+        out = format_problem_and_ip(_make_hospital_coverage())
+        assert "*Complexity: NP-hard*" in out
+
+    # ------------------------------------------------------------------
+    # Cross-instance output shape
+    # ------------------------------------------------------------------
+
+    @pytest.mark.parametrize("instance", ALL_INSTANCES, ids=[p["id"] for p in ALL_INSTANCES])
+    def test_all_instances_have_collapsible_sections(self, instance):
+        """Every instance output has all three collapsible HTML sections."""
+        from retrieval.search import format_problem_and_ip
+        out = format_problem_and_ip(instance)
+        assert "<details>" in out
+        assert "</details>" in out
+        assert "<summary><strong>Variables</strong></summary>" in out
+        assert "<summary><strong>Objective</strong></summary>" in out
+        assert "<summary><strong>Constraints</strong></summary>" in out
+
+    @pytest.mark.parametrize("instance", ALL_INSTANCES, ids=[p["id"] for p in ALL_INSTANCES])
+    def test_all_instances_output_with_score(self, instance):
+        """Output with score=0.95 includes a relevance line at the top."""
+        from retrieval.search import format_problem_and_ip
+        out = format_problem_and_ip(instance, score=0.95)
+        assert "(relevance: 0.950)" in out or "0.95" in out
