@@ -592,6 +592,61 @@ def _normalize_tokens(text: str) -> list[str]:
     return re.findall(r"\w+", text.lower())
 
 
+def _split_camel_case(name: str) -> list[str]:
+    """Split a CamelCase or underscore-separated identifier into lowercase tokens.
+
+    Also splits at letter–digit and digit–letter boundaries so that numeric
+    suffixes like "Product1" or "Type2" produce separate tokens ("product","1"),
+    enabling left-entity-anchor overlap to match "Product 1" in query text
+    against the "1" component of slot "LaborProduct1".
+
+    Examples::
+
+        TotalLaborHours      -> ['total', 'labor', 'hours']
+        LaborHoursPerProduct -> ['labor', 'hours', 'per', 'product']
+        ProteinFeedA         -> ['protein', 'feed', 'a']
+        FatFeedA             -> ['fat', 'feed', 'a']
+        HeatingHours         -> ['heating', 'hours']
+        CoolingHours         -> ['cooling', 'hours']
+        LaborProduct1        -> ['labor', 'product', '1']
+        LaborProduct2        -> ['labor', 'product', '2']
+    """
+    # Insert a space between a lowercase letter (or digit) followed by an uppercase letter.
+    s = re.sub(r"([a-z\d])([A-Z])", r"\1 \2", name)
+    # Insert a space between a run of uppercase letters and a following CamelCase word.
+    s = re.sub(r"([A-Z]+)([A-Z][a-z])", r"\1 \2", s)
+    # Insert a space at letter–digit and digit–letter transitions (Group 3).
+    # This splits suffixes like "product1" → "product 1" and "2type" → "2 type".
+    s = re.sub(r"([a-zA-Z])(\d)", r"\1 \2", s)
+    s = re.sub(r"(\d)([a-zA-Z])", r"\1 \2", s)
+    # Replace underscores and collapse whitespace, then return lowercase tokens.
+    return [t.lower() for t in re.split(r"[\s_]+", s) if t]
+
+
+def _slot_measure_tokens(name: str) -> list[str]:
+    """Return a de-duplicated list of lowercase tokens for a slot name.
+
+    Includes both the full lowercased identifier (for backward-compatible exact
+    matching) and the individual camel-case-split component tokens (for
+    measure/attribute-aware scoring via narrow_measure_overlap).
+
+    Examples::
+
+        'TotalLaborHours'    -> ['totallaborhours', 'total', 'labor', 'hours']
+        'ProteinFeedA'       -> ['proteinfeeda', 'protein', 'feed', 'a']
+        'HeatingHours'       -> ['heatinghours', 'heating', 'hours']
+    """
+    full = name.lower()
+    parts = _split_camel_case(name)
+    seen: set[str] = {full}
+    result: list[str] = [full]
+    for t in parts:
+        if t not in seen:
+            seen.add(t)
+            result.append(t)
+    return result
+
+
 def _slot_aliases(param_name: str) -> list[str]:
     """Rule-based alias expansion for common optimization slot patterns."""
     n = (param_name or "").lower()
@@ -916,7 +971,7 @@ def _build_slot_records(expected_scalar: list[str]) -> list[SlotRecord]:
         alias_tokens: set[str] = set()
         for a in aliases:
             alias_tokens.update(_normalize_tokens(a))
-        norm_tokens = _normalize_tokens(name)
+        norm_tokens = _slot_measure_tokens(name)
         slots.append(
             SlotRecord(
                 name=name,
@@ -1198,6 +1253,37 @@ _TOTAL_PHRASE_PATTERNS: tuple[str, ...] = (
 PERCENT_MARKER_TOKENS = {"%", "percent", "percentage", "pct"}
 CURRENCY_MARKER_TOKENS = {"$", "€", "dollar", "dollars", "usd", "eur", "cost", "price", "budget"}
 
+# ── Group 1 role-family lexicons ─────────────────────────────────────────────
+# Used to compute tight-window role flags on MentionOptIR (is_cost_like, etc.)
+# Each lexicon is checked against the ±2 token window immediately surrounding
+# the numeric mention.  Using a tight window prevents cross-mention bleeding
+# (e.g. "profit" from the previous mention leaking into the current one).
+
+_COST_CONTEXT_WORDS: frozenset[str] = frozenset({
+    "cost", "costs", "expense", "expenses", "price", "prices",
+    "spend", "spending", "expenditure", "expenditures",
+})
+
+_PROFIT_CONTEXT_WORDS: frozenset[str] = frozenset({
+    "profit", "profits", "revenue", "revenues", "return", "returns",
+    "earns", "earn", "gain", "gains", "yield", "yields", "earning", "earnings",
+})
+
+_DEMAND_CONTEXT_WORDS: frozenset[str] = frozenset({
+    "demand", "demands", "required", "needed", "need", "needs",
+    "requirement", "requirements", "consume", "consumes",
+})
+
+_RESOURCE_CONTEXT_WORDS: frozenset[str] = frozenset({
+    "labor", "labour", "material", "materials", "resource", "resources",
+    "worker", "workers", "machine", "machines", "manpower",
+})
+
+_TIME_CONTEXT_WORDS: frozenset[str] = frozenset({
+    "hour", "hours", "time", "day", "days", "minute", "minutes",
+    "week", "weeks", "shift", "shifts",
+})
+
 # Context nouns that signal a count/cardinality interpretation when appearing
 # near a small positive integer (e.g. "three types", "two products").
 # Used by the quantity-role layer to derive is_count_like on MentionOptIR.
@@ -1459,7 +1545,7 @@ def _build_slot_irs(expected_scalar: list[str]) -> list[SlotIR]:
         alias_tokens = set()
         for a in aliases:
             alias_tokens.update(_normalize_tokens(a))
-        norm_tokens = _normalize_tokens(name)
+        norm_tokens = _slot_measure_tokens(name)
         semantic_target_tags = _slot_semantic_expansion(name)
         op_pref: set[str] = set()
         if any(x in name.lower() for x in ("min", "minimum", "atleast")):
@@ -1921,6 +2007,26 @@ class MentionOptIR:
     # tighter window than context_tokens (±14) and stays within clause
     # boundaries, making it suitable for measure-attribute overlap scoring.
     narrow_context_tokens: tuple[str, ...] = ()
+    # ── Group 3: directional left-anchor tokens ───────────────────────────────
+    # Only the LEFT portion of the narrow window (tokens to the LEFT of this
+    # mention, up to _LOCALITY_LEFT_WINDOW=4).  Keeping left and right separate
+    # prevents the right context of one mention from leaking entity cues from
+    # the following sibling clause into the entity alignment score.
+    # Example: "Product B requires 7 … and product A requires 3"
+    #   - narrow_left_tokens of 7 = ("product", "b", "requires")
+    #   - narrow_left_tokens of 3 = ("and", "product", "a", "requires")
+    # This lets left_entity_anchor_overlap discriminate slot B vs slot A.
+    narrow_left_tokens: tuple[str, ...] = ()
+    # ── Group 1 role-family flags (Step 2 structured mention representation) ──
+    # Derived from the ±2 token tight window immediately surrounding the mention.
+    # Using a tight window prevents cross-mention bleeding.  These flags feed:
+    #   - role_family_mismatch distractor suppression (Step 4)
+    #   - transparency / ablation diagnostics
+    is_cost_like: bool = False      # cost/expense/price in tight context
+    is_profit_like: bool = False    # profit/revenue/yield in tight context
+    is_demand_like: bool = False    # demand/required/needed in tight context
+    is_resource_like: bool = False  # labor/material/resource in tight context
+    is_time_like: bool = False      # hour/hours/time/day in tight context
 
 
 @dataclass(frozen=True)
@@ -2242,8 +2348,32 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
         # Use directional narrow windows to detect per-unit vs total-like role,
         # preventing cross-contamination when both cue types appear in the same
         # wide context window (e.g. "2000 hours available" and "each requires 2").
+        #
+        # Left context: collect up to _LOCALITY_LEFT_WINDOW tokens but discard
+        # everything before the most recent sentence boundary (a token ending
+        # '.'/'!'/'?' followed by an uppercase token).  This mirrors the
+        # sentence-boundary trimming already applied to the right window and
+        # prevents tokens from the preceding sentence from contaminating the
+        # left anchor (e.g. "hours. Product B requires 5" — "hours" should
+        # NOT appear in the left context of "5").
+        _left_raw_window = toks[max(0, i - _LOCALITY_LEFT_WINDOW) : i]
+        # Find the last sentence boundary inside the left window.
+        # A boundary is at position k when _left_raw_window[k] ends with
+        # '.'/'!'/'?' AND _left_raw_window[k+1] starts with an uppercase letter.
+        _left_start = 0
+        for _k in range(len(_left_raw_window) - 1):
+            _lw_tok = _left_raw_window[_k].rstrip()
+            _lw_next = _left_raw_window[_k + 1]
+            if (
+                _lw_tok.endswith((".", "!", "?"))
+                and _lw_next[:1].isupper()
+                and bool(_lw_next.strip())
+            ):
+                # Discard everything up to and including this boundary token;
+                # keep only tokens from _k+1 onward.
+                _left_start = _k + 1
         _left_narrow = [
-            x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - _LOCALITY_LEFT_WINDOW) : i]
+            x.lower().strip(".,;:()[]{}") for x in _left_raw_window[_left_start:]
             if x.strip(".,;:()[]{}").strip()
         ]
         # Right context: collect up to _LOCALITY_RIGHT_WINDOW tokens but stop at
@@ -2283,6 +2413,17 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
                 and _k + 1 < len(_right_raw_window)
                 and _right_raw_window[_k + 1].lower().strip() in _CLAUSE_CONJUNCTIONS
             ):
+                break
+            # Numeric-token boundary: stop when a new numeric literal appears in the
+            # right window.  This prevents cross-measure contamination in patterns
+            # like "3 heating hours and 5 cooling hours" where the right context of
+            # "3" would otherwise include both "heating" and "cooling".  Stopping
+            # at the next number keeps each measure cue local to its own number.
+            # Only fires after the first token so that units immediately following
+            # the current mention (e.g. "3 hours" → right[0]="hours") are included.
+            if _k >= 1 and NUM_TOKEN_RE.fullmatch(_tok_clean):
+                # Remove the just-appended numeric token; it is not a measure word.
+                _right_narrow.pop()
                 break
         _left_set = set(_left_narrow)
         _right_set = set(_right_narrow)
@@ -2335,6 +2476,21 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
         _narrow_ctx_str = " ".join(narrow_ctx_tokens)
         _bound_role = _compute_bound_role(operator_tags, _narrow_ctx_str, _range_anno)
 
+        # ── Group 1: tight ±2-token role-family flags ─────────────────────────
+        # Use a ±2 token window (last 2 left tokens + first 2 right tokens) rather
+        # than the full narrow context to prevent cross-mention bleeding.  For
+        # example, in "yields 12 profit and costs 5", the full narrow context of "5"
+        # would include "profit" from "12"'s territory; the tight window only sees
+        # "and costs" (left) + "dollars to" (right), correctly marking 5 as cost_like.
+        _tight_left = _left_narrow[-2:]
+        _tight_right = _right_narrow[:2]
+        _tight_ctx: frozenset[str] = frozenset(_tight_left + _tight_right)
+        _is_cost_like_flag = bool(_tight_ctx & _COST_CONTEXT_WORDS)
+        _is_profit_like_flag = bool(_tight_ctx & _PROFIT_CONTEXT_WORDS)
+        _is_demand_like_flag = bool(_tight_ctx & _DEMAND_CONTEXT_WORDS)
+        _is_resource_like_flag = bool(_tight_ctx & _RESOURCE_CONTEXT_WORDS)
+        _is_time_like_flag = bool(_tight_ctx & _TIME_CONTEXT_WORDS)
+
         mentions.append(
             MentionOptIR(
                 mention_id=mention_id,
@@ -2360,6 +2516,12 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
                 primary_role=_primary_role,
                 bound_role=_bound_role,
                 narrow_context_tokens=tuple(_left_narrow + _right_narrow),
+                narrow_left_tokens=tuple(_left_narrow),
+                is_cost_like=_is_cost_like_flag,
+                is_profit_like=_is_profit_like_flag,
+                is_demand_like=_is_demand_like_flag,
+                is_resource_like=_is_resource_like_flag,
+                is_time_like=_is_time_like_flag,
             )
         )
         mention_id += 1
@@ -2458,7 +2620,7 @@ def _build_slot_opt_irs(expected_scalar: list[str]) -> list[SlotOptIR]:
         alias_tokens_flat: set[str] = set()
         for a in aliases:
             alias_tokens_flat.update(_normalize_tokens(a))
-        norm_tokens = _normalize_tokens(name)
+        norm_tokens = _slot_measure_tokens(name)
         slot_role_tags = _slot_opt_role_expansion(name)
         op_pref: set[str] = set()
         n_lower_sl = name.lower()
