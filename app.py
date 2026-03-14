@@ -20,13 +20,24 @@ os.environ["HF_HUB_DISABLE_XET"] = "1"
 
 # On Wulver, FastAPI/Starlette run sync route handlers in a thread pool -> "can't start new thread".
 # Patch run_in_threadpool to run in the current thread instead (no new threads).
-import starlette.concurrency as _starlette_concurrency
-_orig_run_in_threadpool = _starlette_concurrency.run_in_threadpool
-async def _run_in_threadpool_same_thread(func, *args, **kwargs):
-    return func(*args, **kwargs)  # run in event-loop thread; blocks during request
-_starlette_concurrency.run_in_threadpool = _run_in_threadpool_same_thread
+# Guarded so app.py can be imported in environments where starlette is not installed
+# (e.g. lightweight test environments).
+try:
+    import starlette.concurrency as _starlette_concurrency
+    async def _run_in_threadpool_same_thread(func, *args, **kwargs):
+        return func(*args, **kwargs)  # run in event-loop thread; blocks during request
+    _starlette_concurrency.run_in_threadpool = _run_in_threadpool_same_thread
+except ImportError:
+    pass  # starlette not installed; HPC thread-pool patch skipped
 
-import gradio as gr
+# gradio is required to run the web UI (main()), but the core logic functions
+# (_log_user_query, get_model, answer, search helpers) work without it.
+# Guard the import so that app.py can be imported in lightweight test environments
+# where gradio is not installed.
+try:
+    import gradio as gr
+except ImportError:
+    gr = None  # type: ignore[assignment]  # UI will not be available
 
 # Add project root so imports work when run as python app.py
 import sys

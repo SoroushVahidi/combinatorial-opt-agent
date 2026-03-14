@@ -7,6 +7,8 @@ import sys
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
+import pytest
+
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from retrieval.pdf_utils import extract_text_from_pdf
@@ -26,6 +28,7 @@ def test_whitespace_collapsing():
     """Regression: extract_text_from_pdf must collapse whitespace (tabs, newlines, multiple
     spaces) down to a single space.  A bug where r'\\\\s+' was used instead of r'\\s+'
     caused the collapsing to silently do nothing."""
+    pytest.importorskip("pypdf", reason="pypdf required to patch PdfReader for this test")
     # Build a fake PDF whose pages contain multi-whitespace text.
     page1 = MagicMock()
     page1.extract_text.return_value = "hello\t\tworld"
