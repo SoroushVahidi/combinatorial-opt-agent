@@ -914,7 +914,17 @@ def _choose_token(expected: str, candidates: list[NumTok]) -> tuple[int | None, 
             pref = 2 if tok.kind == "int" else (1 if tok.value is not None and float(int(val)) == val else 0)
             return (pref, absval, tok.raw)
         if expected == "currency":
-            pref = 2 if tok.kind == "currency" else 0
+            # All four scoring functions give int/float tokens the same
+            # type_exact_bonus as a currency token for currency slots.
+            # True currency tokens (with explicit "$" / "dollar" context) also
+            # earn a unit_currency_bonus on top, so they are ranked highest.
+            # int/float tokens are valid type-matches and must beat unknown tokens.
+            if tok.kind == "currency":
+                pref = 2
+            elif tok.kind in {"int", "float"}:
+                pref = 1
+            else:
+                pref = 0
             return (pref, absval, tok.raw)
         # float: integer-valued and decimal-valued tokens are equally preferred;
         # both are valid real-number assignments for float-typed slots.

@@ -231,7 +231,7 @@ class TestSetCoverInstanceSchema:
         for inst in ALL_INSTANCES:
             for var in inst["formulation"]["variables"]:
                 domain = var.get("domain", "")
-                assert "{0,1}" in domain or "0,1" in domain, (
+                assert "{0,1}" in domain, (
                     f"Instance '{inst['id']}' variable '{var['symbol']}' "
                     f"does not declare binary domain: {domain!r}"
                 )

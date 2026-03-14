@@ -115,6 +115,17 @@ class TestExpandShortQuery:
         assert result.startswith("ILP")
         assert len(result) > len("ILP")
 
+    def test_ilp_formulation_triggers_lp_expansion_not_generic(self):
+        """'ILP formulation' contains the LP-domain trigger 'formulation'; must NOT fall
+        back to the generic suffix."""
+        from retrieval.utils import expand_short_query, _EXPANSION_SUFFIX
+        result = expand_short_query("ILP formulation")
+        # must NOT be just the query + generic suffix
+        assert result != f"ILP formulation {_EXPANSION_SUFFIX}", (
+            "'ILP formulation' should match the LP/MIP domain, not the generic fallback"
+        )
+        assert len(result) > len("ILP formulation")
+
     def test_portfolio_keyword_triggers_finance_expansion(self):
         from retrieval.utils import expand_short_query
         result = expand_short_query("portfolio")

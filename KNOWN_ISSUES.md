@@ -93,7 +93,24 @@ type_match ≥ 0.8) is ≤ 0.082 for all evaluated assignment methods.
 more slots (high coverage) but misidentifies float types; constrained assignment improves
 type accuracy but leaves more slots empty.  Both fail the joint threshold.
 
-**Status:** ⚠️ Open research problem.  Primary bottleneck for downstream usability.
+**Code-level fix applied (contributing improvement):**
+
+`_choose_token` in `tools/nlp4lp_downstream_utility.py` had a scoring inconsistency
+for `currency` slots.  The four scoring functions
+(`_score_mention_slot`, `_score_mention_slot_ir`, `_score_mention_slot_opt`,
+`_gcg_local_score`) all give `int`/`float` tokens a full `type_exact_bonus` for
+`currency` slots, but `_choose_token` gave them `pref=0` — identical to `unknown`
+tokens.  This meant a plain-integer budget value ("100") could lose the value-selection
+tiebreaker to an unclassified token with a larger absolute value ("9999_unknown").
+
+**Fix:** `_choose_token` now assigns `pref=1` to `int`/`float` tokens for currency
+slots (below `pref=2` for explicit currency tokens, above `pref=0` for others).
+9 new tests in `tests/test_float_type_match.py::TestChooseTokenCurrencySlot` verify
+all ranking cases including the regression.
+
+**Status:** ⚠️ Open research problem.  The primary bottleneck (joint coverage+type
+threshold) remains unresolved, but the `_choose_token` scoring inconsistency is now
+fixed.
 
 ---
 

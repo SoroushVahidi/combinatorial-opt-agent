@@ -512,3 +512,85 @@ class TestCurrencySlotPlainNumericTokens:
         s = _make_slot("TotalBudget")
         _, feats = _score_mention_slot(m, s)
         assert feats.get("type_match") is True
+
+
+# ---------------------------------------------------------------------------
+# _choose_token: currency slot scoring
+# ---------------------------------------------------------------------------
+
+class TestChooseTokenCurrencySlot:
+    """_choose_token must prefer int/float over unknown tokens for currency slots.
+
+    Root cause of the bug: the previous implementation gave pref=0 to both
+    int/float AND unknown tokens.  Because the tiebreaker is absval, an unknown
+    token with a higher value would be selected over a perfectly valid int token.
+    Fix: int/float tokens receive pref=1 for currency slots; unknown stays pref=0.
+    """
+
+    def _num_tok(self, raw: str, value, kind: str):
+        from tools.nlp4lp_downstream_utility import NumTok
+        return NumTok(raw=raw, value=value, kind=kind)
+
+    def _choose(self, *toks):
+        from tools.nlp4lp_downstream_utility import _choose_token
+        _, tok = _choose_token("currency", list(toks))
+        return tok
+
+    def test_int_beats_unknown_same_value(self):
+        """int token beats unknown at the same abs value."""
+        int_tok = self._num_tok("100", 100.0, "int")
+        unk_tok = self._num_tok("100_unk", 100.0, "unknown")
+        result = self._choose(unk_tok, int_tok)
+        assert result.kind == "int", f"Expected int but got {result.kind}"
+
+    def test_int_beats_higher_value_unknown(self):
+        """int token beats an unknown token with a larger absolute value."""
+        int_tok = self._num_tok("100", 100.0, "int")
+        unk_tok = self._num_tok("9999", 9999.0, "unknown")
+        result = self._choose(unk_tok, int_tok)
+        assert result.kind == "int", f"Expected int but got {result.kind}"
+
+    def test_float_beats_unknown(self):
+        """float token beats unknown regardless of abs value."""
+        float_tok = self._num_tok("4.99", 4.99, "float")
+        unk_tok = self._num_tok("9999", 9999.0, "unknown")
+        result = self._choose(unk_tok, float_tok)
+        assert result.kind == "float", f"Expected float but got {result.kind}"
+
+    def test_currency_token_beats_int(self):
+        """Explicit currency token (pref=2) beats plain int token (pref=1)."""
+        cur_tok = self._num_tok("$50", 50.0, "currency")
+        int_tok = self._num_tok("100", 100.0, "int")
+        result = self._choose(int_tok, cur_tok)
+        assert result.kind == "currency", f"Expected currency but got {result.kind}"
+
+    def test_currency_token_beats_float(self):
+        """Explicit currency token (pref=2) beats plain float token (pref=1)."""
+        cur_tok = self._num_tok("$4.99", 4.99, "currency")
+        float_tok = self._num_tok("9.99", 9.99, "float")
+        result = self._choose(float_tok, cur_tok)
+        assert result.kind == "currency", f"Expected currency but got {result.kind}"
+
+    def test_two_int_tokens_higher_value_wins(self):
+        """When two int tokens compete, the higher abs value wins (tiebreak)."""
+        small = self._num_tok("10", 10.0, "int")
+        large = self._num_tok("500", 500.0, "int")
+        result = self._choose(small, large)
+        assert result.raw == "500", f"Expected '500' but got {result.raw}"
+
+    def test_no_candidates_returns_none(self):
+        from tools.nlp4lp_downstream_utility import _choose_token
+        idx, tok = _choose_token("currency", [])
+        assert idx is None and tok is None
+
+    def test_single_int_candidate_returned(self):
+        """With a single int candidate for a currency slot it is always returned."""
+        tok = self._num_tok("50", 50.0, "int")
+        result = self._choose(tok)
+        assert result.kind == "int"
+
+    def test_single_unknown_candidate_returned(self):
+        """With a single unknown candidate it is still returned (only option)."""
+        tok = self._num_tok("foo", None, "unknown")
+        result = self._choose(tok)
+        assert result.kind == "unknown"
