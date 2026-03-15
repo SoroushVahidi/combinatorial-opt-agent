@@ -392,3 +392,337 @@ class TestIntSlotIntegrity:
         assert not feats.get("type_match"), (
             "Plain integer '30' must not be a full type_match for a percent slot"
         )
+
+
+# ---------------------------------------------------------------------------
+# E. Quantity-constraint slots are no longer misclassified as 'currency'
+# ---------------------------------------------------------------------------
+
+class TestQuantityConstraintSlotTypes:
+    """demand / capacity / minimum / maximum / limit are quantity constraints,
+    not monetary values.  They should be typed 'float' so that plain integer
+    tokens (the most common representation in NL) receive a full type_match."""
+
+    def test_demand_slot_is_float(self):
+        assert _expected_type("Demand") == "float"
+
+    def test_minimum_demand_slot_is_float(self):
+        assert _expected_type("MinimumDemand") == "float"
+
+    def test_max_demand_slot_is_float(self):
+        assert _expected_type("MaxDemand") == "float"
+
+    def test_capacity_slot_is_float(self):
+        assert _expected_type("Capacity") == "float"
+
+    def test_max_capacity_slot_is_float(self):
+        assert _expected_type("MaxCapacity") == "float"
+
+    def test_min_capacity_slot_is_float(self):
+        assert _expected_type("MinCapacity") == "float"
+
+    def test_minimum_slot_is_float(self):
+        assert _expected_type("Minimum") == "float"
+
+    def test_maximum_slot_is_float(self):
+        assert _expected_type("Maximum") == "float"
+
+    def test_limit_slot_is_float(self):
+        assert _expected_type("Limit") == "float"
+
+    def test_time_limit_slot_is_float(self):
+        assert _expected_type("TimeLimit") == "float"
+
+    def test_maximum_capacity_slot_is_float(self):
+        assert _expected_type("MaximumCapacity") == "float"
+
+    def test_minimum_production_slot_is_float(self):
+        assert _expected_type("MinimumProduction") == "float"
+
+    # BudgetLimit / CostCapacity: monetary keyword is checked first → still 'currency'
+    def test_budget_limit_stays_currency(self):
+        """'BudgetLimit' contains 'budget' → must remain 'currency'."""
+        assert _expected_type("BudgetLimit") == "currency"
+
+    def test_profit_limit_stays_currency(self):
+        """'ProfitLimit' contains 'profit' → must remain 'currency'."""
+        assert _expected_type("ProfitLimit") == "currency"
+
+    # Scoring consequence: int token on a formerly-currency, now-float slot must
+    # now get a FULL type_match (not the old weak-match penalty of -1.0).
+    def test_int_token_on_minimum_demand_slot_type_match(self):
+        """`MinimumDemand` + integer '100' must yield type_match=True, score ≥ 3.0."""
+        m = _make_mention("100")
+        s = _make_slot("MinimumDemand")
+        score, feats = _score_mention_slot(m, s)
+        assert feats.get("type_match") is True, (
+            "Integer token on MinimumDemand (float) should be a full type_match"
+        )
+        assert score >= 3.0, (
+            f"Expected score ≥ 3.0 (type_match_bonus), got {score}"
+        )
+
+    def test_int_token_on_max_capacity_slot_type_match(self):
+        m = _make_mention("500")
+        s = _make_slot("MaxCapacity")
+        score, feats = _score_mention_slot(m, s)
+        assert feats.get("type_match") is True
+        assert score >= 3.0
+
+
+# ---------------------------------------------------------------------------
+# F. Currency slots accept plain integer/float tokens (no '$' sign)
+# ---------------------------------------------------------------------------
+
+class TestCurrencySlotPlainNumericTokens:
+    """Monetary slot values often appear without an explicit '$' in NL text.
+    A plain integer or float token IS a valid monetary assignment and must be
+    counted as a full type_match."""
+
+    def test_is_type_match_currency_int(self):
+        """_is_type_match('currency', 'int') must be True."""
+        assert _is_type_match("currency", "int") is True
+
+    def test_is_type_match_currency_float(self):
+        """_is_type_match('currency', 'float') must be True."""
+        assert _is_type_match("currency", "float") is True
+
+    def test_int_token_on_unit_cost_slot_type_match(self):
+        """'UnitCost' (currency) + small int '50' → type_match=True, score ≥ 3.0."""
+        m = _make_mention("50")          # kind=int (below 1000, no $ prefix)
+        s = _make_slot("UnitCost")
+        score, feats = _score_mention_slot(m, s)
+        assert feats.get("type_match") is True, (
+            "Plain integer on a currency slot should be a full type_match"
+        )
+        assert score >= 3.0
+
+    def test_float_token_on_price_slot_type_match(self):
+        """'Price' (currency) + decimal '4.99' → type_match=True."""
+        m = _make_mention("4.99")        # kind=float
+        s = _make_slot("Price")
+        _, feats = _score_mention_slot(m, s)
+        assert feats.get("type_match") is True, (
+            "Decimal token on a currency slot should be a full type_match"
+        )
+
+    def test_currency_token_on_currency_slot_still_type_match(self):
+        """Explicit '$' token on currency slot must still give type_match=True."""
+        m = _make_mention("$5000")
+        s = _make_slot("TotalBudget")
+        _, feats = _score_mention_slot(m, s)
+        assert feats.get("type_match") is True
+
+
+# ---------------------------------------------------------------------------
+# _choose_token: currency slot scoring
+# ---------------------------------------------------------------------------
+
+class TestChooseTokenCurrencySlot:
+    """_choose_token must prefer int/float over unknown tokens for currency slots.
+
+    Root cause of the bug: the previous implementation gave pref=0 to both
+    int/float AND unknown tokens.  Because the tiebreaker is absval, an unknown
+    token with a higher value would be selected over a perfectly valid int token.
+    Fix: int/float tokens receive pref=1 for currency slots; unknown stays pref=0.
+    """
+
+    def _num_tok(self, raw: str, value, kind: str):
+        from tools.nlp4lp_downstream_utility import NumTok
+        return NumTok(raw=raw, value=value, kind=kind)
+
+    def _choose(self, *toks):
+        from tools.nlp4lp_downstream_utility import _choose_token
+        _, tok = _choose_token("currency", list(toks))
+        return tok
+
+    def test_int_beats_unknown_same_value(self):
+        """int token beats unknown at the same abs value."""
+        int_tok = self._num_tok("100", 100.0, "int")
+        unk_tok = self._num_tok("100_unk", 100.0, "unknown")
+        result = self._choose(unk_tok, int_tok)
+        assert result.kind == "int", f"Expected int but got {result.kind}"
+
+    def test_int_beats_higher_value_unknown(self):
+        """int token beats an unknown token with a larger absolute value."""
+        int_tok = self._num_tok("100", 100.0, "int")
+        unk_tok = self._num_tok("9999", 9999.0, "unknown")
+        result = self._choose(unk_tok, int_tok)
+        assert result.kind == "int", f"Expected int but got {result.kind}"
+
+    def test_float_beats_unknown(self):
+        """float token beats unknown regardless of abs value."""
+        float_tok = self._num_tok("4.99", 4.99, "float")
+        unk_tok = self._num_tok("9999", 9999.0, "unknown")
+        result = self._choose(unk_tok, float_tok)
+        assert result.kind == "float", f"Expected float but got {result.kind}"
+
+    def test_currency_token_beats_int(self):
+        """Explicit currency token (pref=2) beats plain int token (pref=1)."""
+        cur_tok = self._num_tok("$50", 50.0, "currency")
+        int_tok = self._num_tok("100", 100.0, "int")
+        result = self._choose(int_tok, cur_tok)
+        assert result.kind == "currency", f"Expected currency but got {result.kind}"
+
+    def test_currency_token_beats_float(self):
+        """Explicit currency token (pref=2) beats plain float token (pref=1)."""
+        cur_tok = self._num_tok("$4.99", 4.99, "currency")
+        float_tok = self._num_tok("9.99", 9.99, "float")
+        result = self._choose(float_tok, cur_tok)
+        assert result.kind == "currency", f"Expected currency but got {result.kind}"
+
+    def test_two_int_tokens_higher_value_wins(self):
+        """When two int tokens compete, the higher abs value wins (tiebreak)."""
+        small = self._num_tok("10", 10.0, "int")
+        large = self._num_tok("500", 500.0, "int")
+        result = self._choose(small, large)
+        assert result.raw == "500", f"Expected '500' but got {result.raw}"
+
+    def test_no_candidates_returns_none(self):
+        from tools.nlp4lp_downstream_utility import _choose_token
+        idx, tok = _choose_token("currency", [])
+        assert idx is None and tok is None
+
+    def test_single_int_candidate_returned(self):
+        """With a single int candidate for a currency slot it is always returned."""
+        tok = self._num_tok("50", 50.0, "int")
+        result = self._choose(tok)
+        assert result.kind == "int"
+
+    def test_single_unknown_candidate_returned(self):
+        """With a single unknown candidate it is still returned (only option)."""
+        tok = self._num_tok("foo", None, "unknown")
+        result = self._choose(tok)
+        assert result.kind == "unknown"
+
+
+# ---------------------------------------------------------------------------
+# _parse_num_token: large-number currency misclassification fix
+# ---------------------------------------------------------------------------
+
+class TestLargeNumberNotCurrency:
+    """Values >= 1000 without monetary context must NOT be classified as currency.
+
+    Root cause of the bug: _parse_num_token contained `or abs(val) >= 1000` in
+    the currency-detection branch.  This caused large non-monetary quantities
+    (e.g. TimeLimit=5000, MaxCapacity=2000) to be tagged `kind="currency"`.
+    Combined with `_expected_type` correctly typing those slots as "float", and
+    `_is_type_match("float", "currency") == False`, this produced systematic
+    type-match failures for any large parameter value.
+
+    Fix: the size-based heuristic was removed.  Only explicit monetary signals
+    ($ prefix, MONEY_CONTEXT words) now produce kind="currency".
+    """
+
+    def _tok(self, raw: str, ctx: set[str] | None = None) -> NumTok:
+        return _parse_num_token(raw, ctx or set())
+
+    # -- Previously broken: large values without monetary context ──────────
+
+    def test_large_int_no_context_is_int(self):
+        """1200 with no monetary context must be kind=int, not currency."""
+        tok = self._tok("1200")
+        assert tok.kind == "int", f"Expected int but got {tok.kind}"
+        assert tok.value == 1200.0
+
+    def test_5000_no_context_is_int(self):
+        """5000 without monetary context must be kind=int."""
+        tok = self._tok("5000")
+        assert tok.kind == "int", f"Expected int but got {tok.kind}"
+
+    def test_large_float_no_context_is_float(self):
+        """1000.5 without monetary context must be kind=float."""
+        tok = self._tok("1000.5")
+        assert tok.kind == "float", f"Expected float but got {tok.kind}"
+        assert tok.value == 1000.5
+
+    def test_time_limit_5000_is_int(self):
+        """TimeLimit slot context: 5000 with {time, limit} context → int."""
+        tok = self._tok("5000", {"time", "limit", "hours"})
+        assert tok.kind == "int", f"Expected int but got {tok.kind}"
+
+    def test_max_capacity_2000_is_int(self):
+        """MaxCapacity context: 2000 with {capacity} → int."""
+        tok = self._tok("2000", {"capacity", "maximum"})
+        assert tok.kind == "int", f"Expected int but got {tok.kind}"
+
+    def test_min_demand_1500_is_int(self):
+        """MinDemand context: 1500 with {demand} → int."""
+        tok = self._tok("1500", {"demand", "minimum"})
+        assert tok.kind == "int", f"Expected int but got {tok.kind}"
+
+    def test_9999_no_context_is_int(self):
+        """9999 with no monetary context must be int, not currency."""
+        tok = self._tok("9999")
+        assert tok.kind == "int"
+
+    def test_large_int_type_match_float_slot(self):
+        """5000 (now kind=int) must be a full type-match for a float slot."""
+        assert _is_type_match("float", "int") is True
+
+    def test_large_int_type_match_int_slot(self):
+        """5000 (now kind=int) must be a full type-match for an int slot."""
+        assert _is_type_match("int", "int") is True
+
+    # -- Monetary context still produces currency ──────────────────────────
+
+    def test_dollar_prefix_still_currency(self):
+        """$5000 must still be kind=currency (explicit $ prefix)."""
+        tok = self._tok("$5000")
+        assert tok.kind == "currency", f"Expected currency but got {tok.kind}"
+
+    def test_budget_context_still_currency(self):
+        """500 with 'budget' in context must still be kind=currency."""
+        tok = self._tok("500", {"budget"})
+        assert tok.kind == "currency", f"Expected currency but got {tok.kind}"
+
+    def test_cost_context_still_currency(self):
+        """200 with 'cost' in context must still be kind=currency."""
+        tok = self._tok("200", {"cost"})
+        assert tok.kind == "currency", f"Expected currency but got {tok.kind}"
+
+    def test_price_context_still_currency(self):
+        """150 with 'price' in context must still be kind=currency."""
+        tok = self._tok("150", {"price"})
+        assert tok.kind == "currency", f"Expected currency but got {tok.kind}"
+
+    def test_large_budget_with_budget_context_still_currency(self):
+        """5000 with 'budget' context must still be kind=currency."""
+        tok = self._tok("5000", {"budget"})
+        assert tok.kind == "currency", f"Expected currency but got {tok.kind}"
+
+    # -- Boundary: just below 1000 was never affected ──────────────────────
+
+    def test_999_no_context_is_int(self):
+        """999 (below old threshold) was always int — must still be int."""
+        tok = self._tok("999")
+        assert tok.kind == "int"
+
+    def test_1000_no_context_is_int_now(self):
+        """1000 without monetary context must now be int (was currency before fix)."""
+        tok = self._tok("1000")
+        assert tok.kind == "int", f"Expected int but got {tok.kind}"
+
+    # -- End-to-end: type_match via _score_mention_slot ────────────────────
+
+    def test_time_limit_5000_type_match_end_to_end(self):
+        """TimeLimit slot + '5000 hours' → type_match True end-to-end."""
+        m = _make_mention("5000", ["time", "limit", "hours"])
+        s = _make_slot("TimeLimit")
+        assert s.expected_type == "float"
+        assert m.tok.kind == "int"
+        _, feats = _score_mention_slot(m, s)
+        assert feats.get("type_match") is True, (
+            f"Expected type_match=True for TimeLimit+5000, got {feats}"
+        )
+
+    def test_max_capacity_2000_type_match_end_to_end(self):
+        """MaxCapacity slot + '2000 units' → type_match True end-to-end."""
+        m = _make_mention("2000", ["capacity", "maximum", "units"])
+        s = _make_slot("MaximumCapacity")
+        assert s.expected_type == "float"
+        assert m.tok.kind == "int"
+        _, feats = _score_mention_slot(m, s)
+        assert feats.get("type_match") is True, (
+            f"Expected type_match=True for MaximumCapacity+2000, got {feats}"
+        )

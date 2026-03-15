@@ -541,8 +541,7 @@ def _parse_num_token(tok: str, context_words: set[str]) -> NumTok:
     if 0.0 < val <= 1.0 and (context_words & PERCENT_CONTEXT):
         return NumTok(raw=t, value=val, kind="percent")
 
-    if has_dollar or (context_words & MONEY_CONTEXT) or abs(val) >= 1000:
-        # Heuristic: treat large numbers as amounts in many optimization word problems.
+    if has_dollar or (context_words & MONEY_CONTEXT):
         return NumTok(raw=t, value=val, kind="currency")
 
     # Integer vs float
@@ -767,12 +766,23 @@ def _expected_type(param_name: str) -> str:
     token as a full type-match for a float slot.
     """
     n = (param_name or "").lower()
-    if any(s in n for s in ("percent", "percentage", "rate", "fraction", "pct", "ratio", "proportion", "share")):
+    if any(s in n for s in ("percent", "percentage", "fraction", "pct", "ratio", "proportion", "share", "utilisation", "utilization")):
+        return "percent"
+    # "rate" is percent only when it is the final segment of the name (e.g. DiscountRate,
+    # TaxRate, InterestRate).  When "rate" appears as a *prefix* followed by an entity
+    # identifier (e.g. RateMachine1, Rate1), the slot holds a processing/production rate
+    # (units per hour) which is a plain float, not a percentage.
+    if "rate" in n and n.endswith("rate"):
         return "percent"
     # Primary integer indicators (checked before currency to preserve existing behaviour)
     if any(s in n for s in ("num", "count", "types", "items", "ingredients", "nodes", "edges")):
         return "int"
-    # Currency / monetary quantities
+    # Currency / monetary quantities (strictly monetary keywords only).
+    # Note: "demand", "capacity", "minimum", "maximum", and "limit" were
+    # previously in this list but are NOT monetary — they represent quantity
+    # constraints and bounds (e.g. MinimumDemand=100, MaxCapacity=500,
+    # TimeLimit=10).  Those slots fall through to "float" so that plain
+    # integer tokens (the common case in NL) receive a full type_match.
     if any(
         s in n
         for s in (
@@ -783,11 +793,6 @@ def _expected_type(param_name: str) -> str:
             "profit",
             "penalty",
             "investment",
-            "demand",
-            "capacity",
-            "minimum",
-            "maximum",
-            "limit",
         )
     ):
         return "currency"
@@ -876,15 +881,23 @@ def _is_type_match(expected: str, kind: str) -> bool:
 
     Rules:
     - same kind always matches
-    - int  → float   = full match  (integer IS a real number)
-    - int  → int     = full match
-    - pct  → percent = full match
-    - ccy  → currency= full match
-    - anything else  = no match (handled by loose-match or incompatibility logic)
+    - int  → float    = full match  (integer IS a real number)
+    - int  → int      = full match
+    - pct  → percent  = full match
+    - ccy  → currency = full match
+    - int  → currency = full match  (monetary values commonly appear as plain
+                                     integers in NL, e.g. "budget is 5000")
+    - float → currency= full match  (decimal monetary values, e.g. "price is 4.99")
+    - anything else   = no match (handled by loose-match or incompatibility logic)
     """
     if expected == kind:
         return True
     if expected == "float" and kind == "int":
+        return True
+    # Monetary slots (budget, cost, price, …) are often described with plain
+    # integers or decimals in NL — no explicit "$" prefix — so int/float tokens
+    # ARE valid currency assignments.
+    if expected == "currency" and kind in {"int", "float"}:
         return True
     return False
 
@@ -906,7 +919,17 @@ def _choose_token(expected: str, candidates: list[NumTok]) -> tuple[int | None, 
             pref = 2 if tok.kind == "int" else (1 if tok.value is not None and float(int(val)) == val else 0)
             return (pref, absval, tok.raw)
         if expected == "currency":
-            pref = 2 if tok.kind == "currency" else 0
+            # All four scoring functions give int/float tokens the same
+            # type_exact_bonus as a currency token for currency slots.
+            # True currency tokens (with explicit "$" / "dollar" context) also
+            # earn a unit_currency_bonus on top, so they are ranked highest.
+            # int/float tokens are valid type-matches and must beat unknown tokens.
+            if tok.kind == "currency":
+                pref = 2
+            elif tok.kind in {"int", "float"}:
+                pref = 1
+            else:
+                pref = 0
             return (pref, absval, tok.raw)
         # float: integer-valued and decimal-valued tokens are equally preferred;
         # both are valid real-number assignments for float-typed slots.
@@ -1024,6 +1047,12 @@ def _score_mention_slot(m: MentionRecord, s: SlotRecord) -> tuple[float, dict[st
         elif expected == "float" and kind == "currency":
             score += ASSIGN_WEIGHTS["type_match_bonus"] * 0.5
             features["type_loose_match"] = True
+        elif expected == "currency" and kind in {"float", "int"}:
+            # Monetary values (budget, cost, price, …) often appear as plain
+            # integers or decimals without an explicit "$" prefix.  An int/float
+            # token IS a valid monetary assignment.
+            score += ASSIGN_WEIGHTS["type_match_bonus"]
+            features["type_match"] = True
 
     # Count-like slot: small-integer cardinality prior and large-value penalty.
     if s.is_count_like and kind == "int" and m.tok.value is not None:
@@ -1603,6 +1632,11 @@ def _score_mention_slot_ir(m: MentionIR, s: SlotIR) -> tuple[float, dict[str, An
         elif expected == "int" and kind == "float":
             score += SEMANTIC_IR_WEIGHTS["type_loose_bonus"]
             features["type_loose"] = True
+        elif expected == "currency" and kind in {"float", "int"}:
+            # Monetary slots filled with a plain integer/float token (no "$" sign)
+            # are a full exact match — the value IS a valid monetary quantity.
+            score += SEMANTIC_IR_WEIGHTS["type_exact_bonus"]
+            features["type_exact"] = True
 
     semantic_overlap = len(m.semantic_role_tags & s.semantic_target_tags)
     if semantic_overlap:
@@ -1947,6 +1981,21 @@ GCG_LOCAL_WEIGHTS: dict[str, float] = {
     "bound_direction_bonus": 1.5,            # lower-bound mention → min slot; upper → max
     "bound_direction_penalty": -3.0,         # lower-bound mention → max-only slot (or vice versa)
     "count_mention_non_count_penalty": -1.5, # count-context mention → non-count slot
+    # Narrow-left entity anchor: tight 3-4-token left-window overlap with slot name/aliases.
+    # This is a stronger signal than lex_context_overlap (0.5) because the narrow window is
+    # entity-discriminating — e.g. narrow_left=("product","a","requires") only overlaps with
+    # ProductA slots, not ProductB slots, even when the full context contains both entities.
+    "narrow_left_overlap": 2.0,
+    # Tight-context cost/profit semantic hints.
+    # Fires only when the mention is UNambiguously cost-like (not also profit-like) or
+    # profit-like (not also cost-like).  The tight ±2-token window is less prone to cross-
+    # mention bleeding than wider contexts, so this flag reliably indicates semantic domain.
+    # Example: "profit is 8 and cost is 4" → val=4 has is_cost_like=True, is_profit_like=False
+    # → bonus for cost-containing slots, penalty for profit-containing slots.
+    "tight_cost_match_bonus": 2.0,
+    "tight_cost_mismatch_penalty": -2.5,
+    "tight_profit_match_bonus": 2.0,
+    "tight_profit_mismatch_penalty": -2.5,
 }
 
 # Global consistency rewards/penalties applied to a full assignment as a whole.
@@ -1960,6 +2009,12 @@ GCG_GLOBAL_WEIGHTS: dict[str, float] = {
     "bound_flip_penalty": -2.5,          # min mention → max slot or vice versa
     "duplicate_mention_penalty": -5.0,   # same mention used for two slots (one-to-one violation)
     "plausibility_coverage_bonus": 1.0,  # bonus if ≥ 80 % of slots are filled
+    # Entity coherence: when a mention has no direct entity letter anchor in its
+    # narrow_left, it should be assigned to the same entity as the immediately
+    # preceding mention.  This repairs "Feed B 7 protein AND 15 fat" where fat
+    # carries no explicit entity marker but must follow the B-anchored protein.
+    "entity_coherence_reward": 1.5,      # unanchored mention → same entity as preceding
+    "entity_coherence_penalty": -2.0,    # unanchored mention → different entity than preceding
 }
 
 # Candidate pruning: pairs with local score below this are removed from consideration.
@@ -2719,6 +2774,11 @@ def _score_mention_slot_opt(m: MentionOptIR, s: SlotOptIR) -> tuple[float, dict[
         elif expected == "int" and kind == "float":
             score += OPT_ROLE_WEIGHTS["type_loose_bonus"]
             features["type_loose"] = True
+        elif expected == "currency" and kind in {"float", "int"}:
+            # Monetary slots filled with a plain integer/float token (no "$" sign)
+            # are a full exact match — the value IS a valid monetary quantity.
+            score += OPT_ROLE_WEIGHTS["type_exact_bonus"]
+            features["type_exact"] = True
 
     role_overlap = len(m.role_tags & s.slot_role_tags)
     if role_overlap:
@@ -3452,6 +3512,43 @@ def _total_perunit_swap_repair(
 
 # --- Relation-aware + incremental admissible (RAT-SQL / PICARD inspired) ---
 
+# Ordered longest-first so that "minimum" is stripped before "min", etc.
+_BOUND_AFFIXES: tuple[str, ...] = (
+    "minimum", "maximum", "lower", "upper", "min", "max", "lb", "ub",
+)
+
+
+def _slot_stem(name: str) -> str:
+    """Return the *quantity stem* of a bound-slot name.
+
+    Strips leading and trailing min/max/lower/upper affixes so that paired
+    slots such as ``MinDemand``/``MaxDemand`` or ``LowerBound``/``UpperBound``
+    both reduce to the same stem (``"demand"`` and ``"bound"`` respectively).
+    Used by ``_is_partial_admissible`` to decide which min/max pairs should
+    have their numeric ordering enforced.
+
+    Examples::
+
+        _slot_stem("MinDemand")       == "demand"
+        _slot_stem("MaxDemand")       == "demand"
+        _slot_stem("LowerBound")      == "bound"
+        _slot_stem("UpperBound")      == "bound"
+        _slot_stem("MinimumCapacity") == "capacity"
+        _slot_stem("MaximumCapacity") == "capacity"
+        _slot_stem("DemandMin")       == "demand"
+        _slot_stem("DemandMax")       == "demand"
+        _slot_stem("MinHours")        == "hours"
+        _slot_stem("MaxHours")        == "hours"
+    """
+    n = name.lower()
+    for affix in _BOUND_AFFIXES:
+        if n.startswith(affix) and len(n) > len(affix):
+            return n[len(affix):].lstrip("_ ")
+        if n.endswith(affix) and len(n) > len(affix):
+            return n[: -len(affix)].rstrip("_ ")
+    return n
+
+
 def _slot_slot_relation_tags(s1: SlotOptIR, s2: SlotOptIR) -> frozenset[str]:
     """Relation tags between two slots for relation-aware scoring."""
     out: set[str] = set()
@@ -3533,6 +3630,23 @@ def _is_partial_admissible(
         m = partial.get(s.name)
         if m and "min" in m.operator_tags and "max" not in m.operator_tags:
             return False
+    # Enforce numeric ordering for paired bound slots that share the same
+    # quantity stem (e.g. MinDemand/MaxDemand, LowerBound/UpperBound).
+    # This rejects partial assignments where the value placed in the min slot
+    # is strictly greater than the value in the max slot, preventing the
+    # lower_vs_upper_bound failure family without touching other logic.
+    for s_min in min_slots:
+        m_min = partial[s_min.name]
+        if m_min.value is None:
+            continue
+        for s_max in max_slots:
+            m_max = partial[s_max.name]
+            if m_max.value is None:
+                continue
+            if _slot_stem(s_min.name) != _slot_stem(s_max.name):
+                continue
+            if m_min.value > m_max.value:
+                return False
     return True
 
 
@@ -3894,6 +4008,11 @@ def _gcg_local_score(m: "MentionOptIR", s: "SlotOptIR") -> tuple[float, dict[str
         elif expected == "int" and kind == "float":
             score += GCG_LOCAL_WEIGHTS["type_loose_bonus"]
             features["type_loose"] = True
+        elif expected == "currency" and kind in {"float", "int"}:
+            # Monetary slots filled with a plain integer/float token (no "$" sign)
+            # are a full exact match — the value IS a valid monetary quantity.
+            score += GCG_LOCAL_WEIGHTS["type_exact_bonus"]
+            features["type_exact"] = True
 
     # Count-like slot: small-integer cardinality prior and large-value penalty.
     if s.is_count_like and kind == "int" and m.value is not None:
@@ -3951,6 +4070,40 @@ def _gcg_local_score(m: "MentionOptIR", s: "SlotOptIR") -> tuple[float, dict[str
     if entity_resource:
         score += GCG_LOCAL_WEIGHTS["entity_resource_overlap"] * float(entity_resource)
         features["entity_resource_overlap"] = entity_resource
+
+    # Narrow-left entity anchor: use ONLY single-character tokens from the tight
+    # left-context window.  Single letters (e.g. 'b' from "Feed B contains") and
+    # single digits (e.g. '1' from "Machine 1 processes") are entity-identifier
+    # suffixes that uniquely discriminate FeedB vs FeedA slots or Machine1 vs
+    # Machine2 slots.  Longer tokens (semantic-domain words such as 'labor' in
+    # "3 labor hours AND 5 board feet") are excluded because they appear in the
+    # narrow_left of the *second* list value due to the preceding clause, and
+    # would cause false cross-attribute matches within the same entity.
+    _nl_id_tokens = {t for t in m.narrow_left_tokens if len(t) == 1}
+    narrow_left_overlap = len(_nl_id_tokens & slot_words)
+    if narrow_left_overlap:
+        score += GCG_LOCAL_WEIGHTS["narrow_left_overlap"] * float(narrow_left_overlap)
+        features["narrow_left_overlap"] = narrow_left_overlap
+
+    # Tight-context cost / profit semantic hints.
+    # Only fires when the mention is UNambiguously cost-like (not also profit-like)
+    # or profit-like (not also cost-like).  When BOTH flags are set the tight window
+    # is too contaminated to be a reliable signal (e.g. right-context of "profit is 8"
+    # spills "cost" into its tight window), so we skip the rule.
+    if m.is_cost_like and not m.is_profit_like:
+        if slot_words & _COST_CONTEXT_WORDS:
+            score += GCG_LOCAL_WEIGHTS["tight_cost_match_bonus"]
+            features["tight_cost_match"] = True
+        elif slot_words & _PROFIT_CONTEXT_WORDS:
+            score += GCG_LOCAL_WEIGHTS["tight_cost_mismatch_penalty"]
+            features["tight_cost_mismatch"] = True
+    if m.is_profit_like and not m.is_cost_like:
+        if slot_words & _PROFIT_CONTEXT_WORDS:
+            score += GCG_LOCAL_WEIGHTS["tight_profit_match_bonus"]
+            features["tight_profit_match"] = True
+        elif slot_words & _COST_CONTEXT_WORDS:
+            score += GCG_LOCAL_WEIGHTS["tight_profit_mismatch_penalty"]
+            features["tight_profit_mismatch"] = True
 
     if s.is_total_like and m.is_total_like:
         score += GCG_LOCAL_WEIGHTS["coefficient_vs_total_bonus"]
@@ -4074,6 +4227,43 @@ def _gcg_global_penalty(
     if slots_by_name and len(assignment) / max(1, len(slots_by_name)) >= 0.8:
         delta += w["plausibility_coverage_bonus"]
         reasons.append("plausibility_coverage_bonus")
+
+    # ── Entity-coherence among consecutive-mention pairs ─────────────────────
+    # When mention M_{i+1} has no entity-letter anchor in its narrow_left, it
+    # should be assigned to the same entity as the preceding mention M_i.
+    # This repairs cases like "Feed B contains 7 protein AND 15 fat" where the
+    # fat value (15) carries no explicit entity marker in its narrow_left but
+    # must follow the Feed-B-anchored protein assignment.
+    # Only fires when BOTH the preceding and current slot names contain
+    # single-char entity identifiers (preventing spurious penalties for
+    # attribute-only slot names such as "TotalBudget").
+    _mid_to_slot: dict[int, "SlotOptIR"] = {}
+    for _sn, _m in assignment.items():
+        _s = slots_by_name.get(_sn)
+        if _s is not None:
+            _mid_to_slot[_m.mention_id] = _s
+    for _sn, _m in assignment.items():
+        _prev_mid = _m.mention_id - 1
+        if _prev_mid not in _mid_to_slot:
+            continue
+        # Skip if this mention already has a direct entity-letter anchor.
+        _cur_entity_letters = {t for t in _m.narrow_left_tokens if len(t) == 1 and t.isalpha()}
+        if _cur_entity_letters:
+            continue
+        _prev_slot = _mid_to_slot[_prev_mid]
+        _cur_slot = slots_by_name.get(_sn)
+        if _cur_slot is None:
+            continue
+        # Extract single-char entity identifiers from both slot names.
+        _prev_eids = {t for t in _prev_slot.norm_tokens if len(t) == 1}
+        _cur_eids = {t for t in _cur_slot.norm_tokens if len(t) == 1}
+        if _prev_eids and _cur_eids:
+            if _prev_eids & _cur_eids:
+                delta += w["entity_coherence_reward"]
+                reasons.append(f"entity_coherent:{_sn}")
+            else:
+                delta += w["entity_coherence_penalty"]
+                reasons.append(f"entity_incoherent:{_sn}")
 
     return delta, reasons
 
