@@ -766,7 +766,13 @@ def _expected_type(param_name: str) -> str:
     token as a full type-match for a float slot.
     """
     n = (param_name or "").lower()
-    if any(s in n for s in ("percent", "percentage", "rate", "fraction", "pct", "ratio", "proportion", "share")):
+    if any(s in n for s in ("percent", "percentage", "fraction", "pct", "ratio", "proportion", "share", "utilisation", "utilization")):
+        return "percent"
+    # "rate" is percent only when it is the final segment of the name (e.g. DiscountRate,
+    # TaxRate, InterestRate).  When "rate" appears as a *prefix* followed by an entity
+    # identifier (e.g. RateMachine1, Rate1), the slot holds a processing/production rate
+    # (units per hour) which is a plain float, not a percentage.
+    if "rate" in n and n.endswith("rate"):
         return "percent"
     # Primary integer indicators (checked before currency to preserve existing behaviour)
     if any(s in n for s in ("num", "count", "types", "items", "ingredients", "nodes", "edges")):
@@ -1975,6 +1981,21 @@ GCG_LOCAL_WEIGHTS: dict[str, float] = {
     "bound_direction_bonus": 1.5,            # lower-bound mention → min slot; upper → max
     "bound_direction_penalty": -3.0,         # lower-bound mention → max-only slot (or vice versa)
     "count_mention_non_count_penalty": -1.5, # count-context mention → non-count slot
+    # Narrow-left entity anchor: tight 3-4-token left-window overlap with slot name/aliases.
+    # This is a stronger signal than lex_context_overlap (0.5) because the narrow window is
+    # entity-discriminating — e.g. narrow_left=("product","a","requires") only overlaps with
+    # ProductA slots, not ProductB slots, even when the full context contains both entities.
+    "narrow_left_overlap": 2.0,
+    # Tight-context cost/profit semantic hints.
+    # Fires only when the mention is UNambiguously cost-like (not also profit-like) or
+    # profit-like (not also cost-like).  The tight ±2-token window is less prone to cross-
+    # mention bleeding than wider contexts, so this flag reliably indicates semantic domain.
+    # Example: "profit is 8 and cost is 4" → val=4 has is_cost_like=True, is_profit_like=False
+    # → bonus for cost-containing slots, penalty for profit-containing slots.
+    "tight_cost_match_bonus": 2.0,
+    "tight_cost_mismatch_penalty": -2.5,
+    "tight_profit_match_bonus": 2.0,
+    "tight_profit_mismatch_penalty": -2.5,
 }
 
 # Global consistency rewards/penalties applied to a full assignment as a whole.
@@ -1988,6 +2009,12 @@ GCG_GLOBAL_WEIGHTS: dict[str, float] = {
     "bound_flip_penalty": -2.5,          # min mention → max slot or vice versa
     "duplicate_mention_penalty": -5.0,   # same mention used for two slots (one-to-one violation)
     "plausibility_coverage_bonus": 1.0,  # bonus if ≥ 80 % of slots are filled
+    # Entity coherence: when a mention has no direct entity letter anchor in its
+    # narrow_left, it should be assigned to the same entity as the immediately
+    # preceding mention.  This repairs "Feed B 7 protein AND 15 fat" where fat
+    # carries no explicit entity marker but must follow the B-anchored protein.
+    "entity_coherence_reward": 1.5,      # unanchored mention → same entity as preceding
+    "entity_coherence_penalty": -2.0,    # unanchored mention → different entity than preceding
 }
 
 # Candidate pruning: pairs with local score below this are removed from consideration.
@@ -3990,6 +4017,40 @@ def _gcg_local_score(m: "MentionOptIR", s: "SlotOptIR") -> tuple[float, dict[str
         score += GCG_LOCAL_WEIGHTS["entity_resource_overlap"] * float(entity_resource)
         features["entity_resource_overlap"] = entity_resource
 
+    # Narrow-left entity anchor: use ONLY single-character tokens from the tight
+    # left-context window.  Single letters (e.g. 'b' from "Feed B contains") and
+    # single digits (e.g. '1' from "Machine 1 processes") are entity-identifier
+    # suffixes that uniquely discriminate FeedB vs FeedA slots or Machine1 vs
+    # Machine2 slots.  Longer tokens (semantic-domain words such as 'labor' in
+    # "3 labor hours AND 5 board feet") are excluded because they appear in the
+    # narrow_left of the *second* list value due to the preceding clause, and
+    # would cause false cross-attribute matches within the same entity.
+    _nl_id_tokens = {t for t in m.narrow_left_tokens if len(t) == 1}
+    narrow_left_overlap = len(_nl_id_tokens & slot_words)
+    if narrow_left_overlap:
+        score += GCG_LOCAL_WEIGHTS["narrow_left_overlap"] * float(narrow_left_overlap)
+        features["narrow_left_overlap"] = narrow_left_overlap
+
+    # Tight-context cost / profit semantic hints.
+    # Only fires when the mention is UNambiguously cost-like (not also profit-like)
+    # or profit-like (not also cost-like).  When BOTH flags are set the tight window
+    # is too contaminated to be a reliable signal (e.g. right-context of "profit is 8"
+    # spills "cost" into its tight window), so we skip the rule.
+    if m.is_cost_like and not m.is_profit_like:
+        if slot_words & _COST_CONTEXT_WORDS:
+            score += GCG_LOCAL_WEIGHTS["tight_cost_match_bonus"]
+            features["tight_cost_match"] = True
+        elif slot_words & _PROFIT_CONTEXT_WORDS:
+            score += GCG_LOCAL_WEIGHTS["tight_cost_mismatch_penalty"]
+            features["tight_cost_mismatch"] = True
+    if m.is_profit_like and not m.is_cost_like:
+        if slot_words & _PROFIT_CONTEXT_WORDS:
+            score += GCG_LOCAL_WEIGHTS["tight_profit_match_bonus"]
+            features["tight_profit_match"] = True
+        elif slot_words & _COST_CONTEXT_WORDS:
+            score += GCG_LOCAL_WEIGHTS["tight_profit_mismatch_penalty"]
+            features["tight_profit_mismatch"] = True
+
     if s.is_total_like and m.is_total_like:
         score += GCG_LOCAL_WEIGHTS["coefficient_vs_total_bonus"]
         features["total_match"] = True
@@ -4112,6 +4173,43 @@ def _gcg_global_penalty(
     if slots_by_name and len(assignment) / max(1, len(slots_by_name)) >= 0.8:
         delta += w["plausibility_coverage_bonus"]
         reasons.append("plausibility_coverage_bonus")
+
+    # ── Entity-coherence among consecutive-mention pairs ─────────────────────
+    # When mention M_{i+1} has no entity-letter anchor in its narrow_left, it
+    # should be assigned to the same entity as the preceding mention M_i.
+    # This repairs cases like "Feed B contains 7 protein AND 15 fat" where the
+    # fat value (15) carries no explicit entity marker in its narrow_left but
+    # must follow the Feed-B-anchored protein assignment.
+    # Only fires when BOTH the preceding and current slot names contain
+    # single-char entity identifiers (preventing spurious penalties for
+    # attribute-only slot names such as "TotalBudget").
+    _mid_to_slot: dict[int, "SlotOptIR"] = {}
+    for _sn, _m in assignment.items():
+        _s = slots_by_name.get(_sn)
+        if _s is not None:
+            _mid_to_slot[_m.mention_id] = _s
+    for _sn, _m in assignment.items():
+        _prev_mid = _m.mention_id - 1
+        if _prev_mid not in _mid_to_slot:
+            continue
+        # Skip if this mention already has a direct entity-letter anchor.
+        _cur_entity_letters = {t for t in _m.narrow_left_tokens if len(t) == 1 and t.isalpha()}
+        if _cur_entity_letters:
+            continue
+        _prev_slot = _mid_to_slot[_prev_mid]
+        _cur_slot = slots_by_name.get(_sn)
+        if _cur_slot is None:
+            continue
+        # Extract single-char entity identifiers from both slot names.
+        _prev_eids = {t for t in _prev_slot.norm_tokens if len(t) == 1}
+        _cur_eids = {t for t in _cur_slot.norm_tokens if len(t) == 1}
+        if _prev_eids and _cur_eids:
+            if _prev_eids & _cur_eids:
+                delta += w["entity_coherence_reward"]
+                reasons.append(f"entity_coherent:{_sn}")
+            else:
+                delta += w["entity_coherence_penalty"]
+                reasons.append(f"entity_incoherent:{_sn}")
 
     return delta, reasons
 
