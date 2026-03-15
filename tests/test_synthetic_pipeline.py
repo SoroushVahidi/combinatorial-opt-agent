@@ -9,6 +9,8 @@ Covers:
 - step_build_splits: returns disjoint splits covering all catalog IDs
 - step_generate_pairs: output JSONL is valid and uses only train problems
 - main() CLI: end-to-end invocation with --skip-train
+- GPU / device detection helpers: _detect_device, _print_gpu_info
+- fp16 and dataloader_workers flags propagate correctly to step_train dry-run
 """
 from __future__ import annotations
 
@@ -351,3 +353,97 @@ class TestMainCLI:
             "--skip-splits must not overwrite the existing splits.json"
         )
         assert pairs_path.exists(), "Pairs must still be generated"
+
+
+# ---------------------------------------------------------------------------
+# GPU / device detection
+# ---------------------------------------------------------------------------
+
+class TestDeviceDetection:
+    def test_detect_device_returns_string(self):
+        """_detect_device must return 'cuda' or 'cpu' without raising."""
+        from training.run_pipeline import _detect_device
+        device = _detect_device()
+        assert device in ("cuda", "cpu")
+
+    def test_print_gpu_info_returns_string(self, capsys):
+        """_print_gpu_info must return a device string and print something."""
+        from training.run_pipeline import _print_gpu_info
+        device = _print_gpu_info()
+        assert device in ("cuda", "cpu")
+        out = capsys.readouterr().out
+        assert "[device]" in out
+
+    def test_no_fp16_flag_is_honoured(self, tmp_path, capsys):
+        """--no-fp16 dry-run output must show fp16=False regardless of hardware."""
+        import training.splits as splits_mod
+        from training.run_pipeline import main
+
+        orig = splits_mod.load_catalog
+        splits_mod.load_catalog = lambda *a, **kw: _tiny_catalog()
+        splits_path = tmp_path / "splits.json"
+        pairs_path = tmp_path / "pairs.jsonl"
+        model_out = tmp_path / "model"
+        try:
+            main([
+                "--dry-run",
+                "--no-fp16",
+                "--splits-out", str(splits_path),
+                "--pairs-out", str(pairs_path),
+                "--model-out", str(model_out),
+                "--instances-per-problem", "2",
+            ])
+        finally:
+            splits_mod.load_catalog = orig
+
+        out = capsys.readouterr().out
+        # The dry-run step_train message must report fp16=False
+        assert "fp16=False" in out
+
+    def test_fp16_flag_is_honoured(self, tmp_path, capsys):
+        """--fp16 dry-run output must show fp16=True regardless of hardware."""
+        import training.splits as splits_mod
+        from training.run_pipeline import main
+
+        orig = splits_mod.load_catalog
+        splits_mod.load_catalog = lambda *a, **kw: _tiny_catalog()
+        splits_path = tmp_path / "splits.json"
+        pairs_path = tmp_path / "pairs.jsonl"
+        model_out = tmp_path / "model"
+        try:
+            main([
+                "--dry-run",
+                "--fp16",
+                "--splits-out", str(splits_path),
+                "--pairs-out", str(pairs_path),
+                "--model-out", str(model_out),
+                "--instances-per-problem", "2",
+            ])
+        finally:
+            splits_mod.load_catalog = orig
+
+        out = capsys.readouterr().out
+        assert "fp16=True" in out
+
+    def test_dataloader_workers_flag_appears_in_dry_run(self, tmp_path, capsys):
+        """--dataloader-workers is accepted and flows into the pipeline without error."""
+        import training.splits as splits_mod
+        from training.run_pipeline import main
+
+        orig = splits_mod.load_catalog
+        splits_mod.load_catalog = lambda *a, **kw: _tiny_catalog()
+        splits_path = tmp_path / "splits.json"
+        pairs_path = tmp_path / "pairs.jsonl"
+        model_out = tmp_path / "model"
+        try:
+            # Should not raise; dry-run so no actual training happens
+            main([
+                "--dry-run",
+                "--dataloader-workers", "2",
+                "--splits-out", str(splits_path),
+                "--pairs-out", str(pairs_path),
+                "--model-out", str(model_out),
+                "--instances-per-problem", "2",
+            ])
+        finally:
+            splits_mod.load_catalog = orig

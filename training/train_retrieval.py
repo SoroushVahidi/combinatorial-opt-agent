@@ -1,6 +1,7 @@
 """
 Fine-tune a sentence-transformers model on (query, passage) pairs for better retrieval.
-Uses MultipleNegativesRankingLoss. Run on GPU for speed.
+Uses MultipleNegativesRankingLoss.  When a CUDA GPU is present training runs in
+mixed-precision (fp16) automatically, giving ~2× throughput at half the memory cost.
 """
 from __future__ import annotations
 
@@ -18,6 +19,23 @@ from sentence_transformers.training_args import (
     BatchSamplers,
     SentenceTransformerTrainingArguments,
 )
+
+
+def _detect_device() -> str:
+    """Return ``'cuda'`` when a CUDA GPU is available, otherwise ``'cpu'``."""
+    return "cuda" if torch.cuda.is_available() else "cpu"
+
+
+def _print_device_info() -> str:
+    """Log the device that will be used for training and return its name."""
+    device = _detect_device()
+    if device == "cuda":
+        n = torch.cuda.device_count()
+        names = ", ".join(torch.cuda.get_device_name(i) for i in range(n))
+        print(f"[device] GPU ({n}×): {names} — fp16 mixed-precision enabled")
+    else:
+        print("[device] No GPU found — training on CPU (slower; consider a GPU)")
+    return device
 
 
 def _project_root() -> Path:
@@ -86,7 +104,34 @@ def main() -> None:
     p.add_argument("--weight-decay", type=float, default=0.01, help="Weight decay for regularization (reduce overfitting)")
     p.add_argument("--warmup-ratio", type=float, default=0.1, help="Fraction of steps for LR warmup")
     p.add_argument("--val-ratio", type=float, default=0.1, help="Fraction of data for validation (by problem, not by pair)")
+    fp16_group = p.add_mutually_exclusive_group()
+    fp16_group.add_argument(
+        "--fp16",
+        dest="fp16",
+        action="store_true",
+        default=None,
+        help="Force fp16 mixed-precision training (default: auto — enabled on CUDA)",
+    )
+    fp16_group.add_argument(
+        "--no-fp16",
+        dest="fp16",
+        action="store_false",
+        help="Disable fp16 mixed-precision training",
+    )
+    p.add_argument(
+        "--dataloader-workers",
+        type=int,
+        default=None,
+        help="DataLoader worker processes for GPU overlap (default: 4 on GPU, 0 on CPU)",
+    )
     args = p.parse_args()
+
+    # ── Device detection ──────────────────────────────────────────────────────
+    device = _print_device_info()
+    fp16 = args.fp16 if args.fp16 is not None else (device == "cuda")
+    num_workers = args.dataloader_workers if args.dataloader_workers is not None else (
+        4 if device == "cuda" else 0
+    )
 
     root = _project_root()
     data_path = args.data or root / "data" / "processed" / "training_pairs.jsonl"
@@ -105,7 +150,8 @@ def main() -> None:
     train_dataset = pairs_to_dataset(train_pairs)
     eval_dataset = pairs_to_dataset(val_pairs) if val_pairs else None
 
-    model = SentenceTransformer(args.base_model)
+    # Load model onto the detected device so embeddings stay on GPU throughout training
+    model = SentenceTransformer(args.base_model, device=device)
     loss = MultipleNegativesRankingLoss(model)
 
     training_kw: dict = {
@@ -120,6 +166,10 @@ def main() -> None:
         "save_total_limit": 2,
         "weight_decay": args.weight_decay,
         "warmup_ratio": args.warmup_ratio,
+        # GPU acceleration: mixed-precision halves memory and roughly doubles throughput
+        "fp16": fp16,
+        # Overlap data loading with GPU compute to avoid the GPU sitting idle
+        "dataloader_num_workers": num_workers,
     }
     if eval_dataset is not None:
         training_kw["eval_strategy"] = "steps"

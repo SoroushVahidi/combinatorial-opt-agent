@@ -46,6 +46,33 @@ def _project_root() -> Path:
     return ROOT
 
 
+def _detect_device() -> str:
+    """Return ``'cuda'`` when a CUDA GPU is available, otherwise ``'cpu'``."""
+    try:
+        import torch
+        return "cuda" if torch.cuda.is_available() else "cpu"
+    except ImportError:
+        return "cpu"
+
+
+def _print_gpu_info() -> str:
+    """Log GPU availability and return the device string (``'cuda'`` or ``'cpu'``)."""
+    try:
+        import torch
+    except ImportError:
+        print("[device] torch not installed — device detection skipped")
+        return "cpu"
+
+    if torch.cuda.is_available():
+        n = torch.cuda.device_count()
+        names = ", ".join(torch.cuda.get_device_name(i) for i in range(n))
+        print(f"[device] GPU ({n}×): {names} — fp16 mixed-precision will be used")
+        return "cuda"
+    else:
+        print("[device] No GPU found — training on CPU (consider a CUDA-enabled machine)")
+        return "cpu"
+
+
 def step_build_splits(
     splits_path: Path,
     seed: int,
@@ -132,13 +159,21 @@ def step_train(
     val_ratio: float,
     max_steps: int,
     dry_run: bool,
+    fp16: bool = False,
+    dataloader_workers: int = 0,
 ) -> None:
-    """Step 3 – fine-tune the retrieval model on the generated pairs."""
+    """Step 3 – fine-tune the retrieval model on the generated pairs.
+
+    Args:
+        fp16: Enable fp16 mixed-precision training (auto-enabled on CUDA).
+        dataloader_workers: Background workers to overlap data loading with GPU
+            compute (auto-set to 4 on CUDA, 0 on CPU).
+    """
     if dry_run:
         print(
             f"[dry-run] Would fine-tune '{base_model}' on {pairs_path}"
             f" for up to {epochs} epochs"
-            f" (batch={batch_size}, lr={lr}) → {output_dir}"
+            f" (batch={batch_size}, lr={lr}, fp16={fp16}) → {output_dir}"
         )
         return
 
@@ -155,7 +190,7 @@ def step_train(
         sys.exit(1)
 
     # train_retrieval applies the PyTorch 2.2 get_default_device patch at import time
-    from training.train_retrieval import load_pairs, pairs_to_dataset, train_val_split
+    from training.train_retrieval import load_pairs, pairs_to_dataset, train_val_split, _detect_device
 
     import torch
     from sentence_transformers import SentenceTransformer, SentenceTransformerTrainer
@@ -165,6 +200,7 @@ def step_train(
         SentenceTransformerTrainingArguments,
     )
 
+    device = _detect_device()
     pairs = load_pairs(pairs_path)
     print(f"[train] Loaded {len(pairs)} pairs; splitting {int(val_ratio*100)}% by problem for val…")
     train_pairs, val_pairs = train_val_split(pairs, val_ratio=val_ratio, seed=42)
@@ -173,7 +209,8 @@ def step_train(
     train_dataset = pairs_to_dataset(train_pairs)
     eval_dataset = pairs_to_dataset(val_pairs) if val_pairs else None
 
-    model = SentenceTransformer(base_model)
+    # Explicitly place model on the detected device so embeddings stay on GPU
+    model = SentenceTransformer(base_model, device=device)
     loss = MultipleNegativesRankingLoss(model)
 
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -189,6 +226,10 @@ def step_train(
         "save_total_limit": 2,
         "weight_decay": weight_decay,
         "warmup_ratio": warmup_ratio,
+        # GPU acceleration: mixed-precision halves memory and roughly doubles throughput
+        "fp16": fp16,
+        # Overlap data loading with GPU compute to avoid the GPU sitting idle
+        "dataloader_num_workers": dataloader_workers,
     }
     if eval_dataset is not None:
         training_kw["eval_strategy"] = "steps"
@@ -295,6 +336,27 @@ def main(argv: list[str] | None = None) -> None:
         default=0.1,
         help="Fraction of training pairs (by problem) held out for validation",
     )
+    # GPU / precision flags
+    fp16_group = p.add_mutually_exclusive_group()
+    fp16_group.add_argument(
+        "--fp16",
+        dest="fp16",
+        action="store_true",
+        default=None,
+        help="Force fp16 mixed-precision training (default: auto — enabled on CUDA)",
+    )
+    fp16_group.add_argument(
+        "--no-fp16",
+        dest="fp16",
+        action="store_false",
+        help="Disable fp16 mixed-precision training even on CUDA",
+    )
+    p.add_argument(
+        "--dataloader-workers",
+        type=int,
+        default=None,
+        help="DataLoader worker processes for GPU compute overlap (default: 4 on GPU, 0 on CPU)",
+    )
     # Pipeline control
     p.add_argument(
         "--skip-train",
@@ -319,6 +381,13 @@ def main(argv: list[str] | None = None) -> None:
     model_out = args.model_out or (root / "data" / "models" / "retrieval_finetuned")
 
     print("=== Synthetic data generation + retrieval training pipeline ===")
+
+    # ── Device detection ──────────────────────────────────────────────────────
+    device = _print_gpu_info()
+    fp16 = args.fp16 if args.fp16 is not None else (device == "cuda")
+    dataloader_workers = args.dataloader_workers if args.dataloader_workers is not None else (
+        4 if device == "cuda" else 0
+    )
 
     # ── Step 1: splits ────────────────────────────────────────────────────────
     if args.skip_splits and splits_path.exists():
@@ -362,6 +431,8 @@ def main(argv: list[str] | None = None) -> None:
             val_ratio=args.val_ratio,
             max_steps=args.max_steps,
             dry_run=args.dry_run,
+            fp16=fp16,
+            dataloader_workers=dataloader_workers,
         )
 
     if args.dry_run:

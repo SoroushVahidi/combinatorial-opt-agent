@@ -153,7 +153,12 @@ def search(
             raise ImportError(
                 "Install sentence-transformers: pip install sentence-transformers"
             ) from None
-        model = SentenceTransformer(_default_model_path())
+        try:
+            import torch
+            _device = "cuda" if torch.cuda.is_available() else "cpu"
+        except ImportError:
+            _device = "cpu"
+        model = SentenceTransformer(_default_model_path(), device=_device)
 
     if embeddings is None:
         embeddings = build_index(catalog, model)
@@ -315,7 +320,12 @@ def main() -> None:
         print("Installing sentence-transformers is required: pip install sentence-transformers")
         sys.exit(1)
 
-    model = SentenceTransformer(_default_model_path())
+    try:
+        import torch
+        _device = "cuda" if torch.cuda.is_available() else "cpu"
+    except ImportError:
+        _device = "cpu"
+    model = SentenceTransformer(_default_model_path(), device=_device)
     results = search(query, catalog=catalog, model=model, top_k=top_k)
 
     print(f"Query: \"{query}\"\n")
