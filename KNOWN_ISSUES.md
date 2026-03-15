@@ -240,3 +240,54 @@ The full test suite now passes with `-W error::RuntimeWarning` (zero warnings).
 ratio statistic (not used at run-time) is undefined on tiny corpora.
 
 **Status:** ✅ Fixed.
+
+---
+
+## 4. Main Weakpoint: Missing Error Handling and Input Validation in `answer()`
+
+**Symptom (before fix):** The `answer()` function — the single entry point for all user
+queries — had **no error handling** around its main processing pipeline and **no query
+length validation**.
+
+* If any step in the pipeline raised an exception (e.g. model download failure,
+  malformed catalog entry, unexpected token in the grounding layer), the exception
+  propagated unhandled all the way back to the Gradio / FastAPI layer.  Users would see
+  a generic 500-style error with no actionable guidance.
+
+* There was no upper bound on query length.  A user who accidentally pasted an entire
+  paper or document into the query box would trigger slow embedding computation and
+  potentially a grounding-layer crash, again with no helpful feedback.
+
+**Root cause:** The `answer()` function was written with the happy-path in mind.
+The two existing guard clauses (empty query → placeholder; no results → warning) did
+not cover failure modes outside the normal flow (malformed input, infrastructure
+errors, unexpected exceptions).
+
+**Fixes applied:**
+
+1. **Query length cap** — `_MAX_QUERY_LEN = 5_000` (characters) constant added in
+   `app.py`.  `answer()` now checks `len(query) > _MAX_QUERY_LEN` **before**
+   calling `get_model()` and returns a styled warning card that reports the actual
+   character count and tells the user to shorten the input.  No model inference
+   is performed for over-long queries.
+
+2. **Pipeline try/except** — The entire pipeline body of `answer()` (model loading,
+   `search()`, result formatting) is now wrapped in a `try/except Exception` block.
+   Any unexpected exception is caught and returned to the user as a styled warning
+   card that shows the exception message, preventing a silent 500 response.
+   The logging call (`_log_user_query`) already had its own guard and is unaffected.
+
+**Tests added:**
+
+* `tests/test_app_validation_toggle.py` — 5 new tests alongside the existing
+  signature test:
+  - `test_answer_empty_query_returns_placeholder` — blank input → empty-state card.
+  - `test_answer_whitespace_only_returns_placeholder` — whitespace-only → same.
+  - `test_answer_query_too_long_returns_warning` — over-length query → warning card
+    with character count and no pipeline call.
+  - `test_answer_pipeline_error_returns_warning` — mocked `get_model` raises
+    `RuntimeError` → warning card with error details (no unhandled exception).
+  - `test_max_query_len_is_positive_int` — constant sanity check.
+
+**Status:** ✅ Fixed.
+

@@ -62,6 +62,12 @@ EMBEDDINGS = None
 COLLECTED_QUERIES_DIR = Path(__file__).resolve().parent / "data" / "collected_queries"
 USER_QUERIES_FILE = COLLECTED_QUERIES_DIR / "user_queries.jsonl"
 
+# Maximum number of characters accepted in a single query.  Queries longer
+# than this are almost certainly copy-paste accidents (e.g. an entire paper
+# pasted without trimming) and would cause slow embedding + grounding with no
+# quality benefit.  Users are shown a clear message and asked to shorten.
+_MAX_QUERY_LEN = 5_000
+
 
 def _log_user_query(query: str, top_k: int, results: list) -> None:
     """Append one JSONL record so you can use it for training. Safe for concurrent appends."""
@@ -239,35 +245,55 @@ async def answer(query: str, top_k: int, validate: bool = False) -> str:
             "<p style='font-size:0.9rem;opacity:0.7'>Example: <em>minimize cost of opening warehouses and assigning customers</em></p>"
             "</div>"
         )
-    model = get_model()
-    k = max(1, min(10, top_k))
-    results = search(
-        query.strip(),
-        catalog=CATALOG,
-        embeddings=EMBEDDINGS,
-        model=model,
-        top_k=k,
-        validate=validate,
-    )
-    _log_user_query(query.strip(), k, results)
-    if not results:
+
+    if len(query) > _MAX_QUERY_LEN:
         return (
             '<div class="coa-empty-state coa-empty-warn">'
-            "⚠ No matching problems found — try rephrasing your description."
+            f"⚠ Query is too long ({len(query):,} characters). "
+            f"Please shorten it to {_MAX_QUERY_LEN:,} characters or fewer — "
+            "paste only the problem description, not an entire document."
             "</div>"
         )
-    cards = []
-    for i, (problem, score) in enumerate(results, 1):
-        val = problem.get("_validation") if validate else None
-        cards.append(_format_result_html(problem, score, i, validation=val))
 
-    header = (
-        f'<p class="coa-result-summary">'
-        f"Found <strong>{len(results)}</strong> result{'s' if len(results) != 1 else ''} "
-        f"— ordered by semantic similarity to your query."
-        f"</p>"
-    )
-    return header + "\n".join(cards)
+    try:
+        model = get_model()
+        k = max(1, min(10, top_k))
+        results = search(
+            query.strip(),
+            catalog=CATALOG,
+            embeddings=EMBEDDINGS,
+            model=model,
+            top_k=k,
+            validate=validate,
+        )
+        _log_user_query(query.strip(), k, results)
+        if not results:
+            return (
+                '<div class="coa-empty-state coa-empty-warn">'
+                "⚠ No matching problems found — try rephrasing your description."
+                "</div>"
+            )
+        cards = []
+        for i, (problem, score) in enumerate(results, 1):
+            val = problem.get("_validation") if validate else None
+            cards.append(_format_result_html(problem, score, i, validation=val))
+
+        header = (
+            f'<p class="coa-result-summary">'
+            f"Found <strong>{len(results)}</strong> result{'s' if len(results) != 1 else ''} "
+            f"— ordered by semantic similarity to your query."
+            f"</p>"
+        )
+        return header + "\n".join(cards)
+    except (SystemExit, KeyboardInterrupt):
+        raise
+    except Exception as exc:  # noqa: BLE001
+        return (
+            '<div class="coa-empty-state coa-empty-warn">'
+            "⚠ An unexpected error occurred while processing your query. "
+            f"Details: {_html.escape(str(exc))}"
+            "</div>"
+        )
 
 
 def handle_pdf_upload(file_path: str) -> tuple[str, str]:
