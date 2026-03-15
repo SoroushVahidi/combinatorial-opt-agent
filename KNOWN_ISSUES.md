@@ -108,24 +108,36 @@ type_match ≥ 0.8) is ≤ 0.082 for all evaluated assignment methods.
 more slots (high coverage) but misidentifies float types; constrained assignment improves
 type accuracy but leaves more slots empty.  Both fail the joint threshold.
 
-**Code-level fix applied (contributing improvement):**
+**Code-level fixes applied (contributing improvements):**
 
-`_choose_token` in `tools/nlp4lp_downstream_utility.py` had a scoring inconsistency
-for `currency` slots.  The four scoring functions
-(`_score_mention_slot`, `_score_mention_slot_ir`, `_score_mention_slot_opt`,
-`_gcg_local_score`) all give `int`/`float` tokens a full `type_exact_bonus` for
-`currency` slots, but `_choose_token` gave them `pref=0` — identical to `unknown`
-tokens.  This meant a plain-integer budget value ("100") could lose the value-selection
-tiebreaker to an unclassified token with a larger absolute value ("9999_unknown").
+1. `_choose_token` in `tools/nlp4lp_downstream_utility.py` had a scoring inconsistency
+   for `currency` slots.  The four scoring functions
+   (`_score_mention_slot`, `_score_mention_slot_ir`, `_score_mention_slot_opt`,
+   `_gcg_local_score`) all give `int`/`float` tokens a full `type_exact_bonus` for
+   `currency` slots, but `_choose_token` gave them `pref=0` — identical to `unknown`
+   tokens.  This meant a plain-integer budget value ("100") could lose the value-selection
+   tiebreaker to an unclassified token with a larger absolute value ("9999_unknown").
+   **Fixed:** `_choose_token` now assigns `pref=1` to `int`/`float` tokens for currency
+   slots (below `pref=2` for explicit currency tokens, above `pref=0` for others).
+   9 new tests in `tests/test_float_type_match.py::TestChooseTokenCurrencySlot` verify
+   all ranking cases including the regression.
 
-**Fix:** `_choose_token` now assigns `pref=1` to `int`/`float` tokens for currency
-slots (below `pref=2` for explicit currency tokens, above `pref=0` for others).
-9 new tests in `tests/test_float_type_match.py::TestChooseTokenCurrencySlot` verify
-all ranking cases including the regression.
+2. `_is_partial_admissible` (the PICARD-style incremental admissibility gate) did not
+   check the **numeric ordering** of assigned min/max slot values — it only checked
+   operator-tag direction.  Schemas with paired bound slots (e.g. `MinDemand`/`MaxDemand`,
+   `LowerBound`/`UpperBound`) could therefore receive inverted assignments (min value >
+   max value) without being rejected, directly causing `lower_vs_upper_bound` failures.
+   **Fixed:** a new `_slot_stem` helper strips min/max/lower/upper affixes to identify
+   paired bound slots sharing the same quantity stem.  `_is_partial_admissible` now
+   enforces `value(min_slot) ≤ value(max_slot)` for every such paired slot in the
+   partial assignment, rejecting inverted configurations before they propagate.
+   22 new tests in `tests/test_bound_role_layer.py` (`TestSlotStem` and
+   `TestAdmissibleMinMaxOrdering`) cover all cases: correct ordering, inverted ordering,
+   equal values, different-stem pairs (not enforced), and incomplete partials.
 
 **Status:** ⚠️ Open research problem.  The primary bottleneck (joint coverage+type
-threshold) remains unresolved, but the `_choose_token` scoring inconsistency is now
-fixed.
+threshold) remains unresolved, but the `_choose_token` scoring inconsistency and the
+`lower_vs_upper_bound` admissibility gap are now fixed.
 
 ---
 

@@ -3512,6 +3512,43 @@ def _total_perunit_swap_repair(
 
 # --- Relation-aware + incremental admissible (RAT-SQL / PICARD inspired) ---
 
+# Ordered longest-first so that "minimum" is stripped before "min", etc.
+_BOUND_AFFIXES: tuple[str, ...] = (
+    "minimum", "maximum", "lower", "upper", "min", "max", "lb", "ub",
+)
+
+
+def _slot_stem(name: str) -> str:
+    """Return the *quantity stem* of a bound-slot name.
+
+    Strips leading and trailing min/max/lower/upper affixes so that paired
+    slots such as ``MinDemand``/``MaxDemand`` or ``LowerBound``/``UpperBound``
+    both reduce to the same stem (``"demand"`` and ``"bound"`` respectively).
+    Used by ``_is_partial_admissible`` to decide which min/max pairs should
+    have their numeric ordering enforced.
+
+    Examples::
+
+        _slot_stem("MinDemand")       == "demand"
+        _slot_stem("MaxDemand")       == "demand"
+        _slot_stem("LowerBound")      == "bound"
+        _slot_stem("UpperBound")      == "bound"
+        _slot_stem("MinimumCapacity") == "capacity"
+        _slot_stem("MaximumCapacity") == "capacity"
+        _slot_stem("DemandMin")       == "demand"
+        _slot_stem("DemandMax")       == "demand"
+        _slot_stem("MinHours")        == "hours"
+        _slot_stem("MaxHours")        == "hours"
+    """
+    n = name.lower()
+    for affix in _BOUND_AFFIXES:
+        if n.startswith(affix) and len(n) > len(affix):
+            return n[len(affix):].lstrip("_ ")
+        if n.endswith(affix) and len(n) > len(affix):
+            return n[: -len(affix)].rstrip("_ ")
+    return n
+
+
 def _slot_slot_relation_tags(s1: SlotOptIR, s2: SlotOptIR) -> frozenset[str]:
     """Relation tags between two slots for relation-aware scoring."""
     out: set[str] = set()
@@ -3593,6 +3630,23 @@ def _is_partial_admissible(
         m = partial.get(s.name)
         if m and "min" in m.operator_tags and "max" not in m.operator_tags:
             return False
+    # Enforce numeric ordering for paired bound slots that share the same
+    # quantity stem (e.g. MinDemand/MaxDemand, LowerBound/UpperBound).
+    # This rejects partial assignments where the value placed in the min slot
+    # is strictly greater than the value in the max slot, preventing the
+    # lower_vs_upper_bound failure family without touching other logic.
+    for s_min in min_slots:
+        m_min = partial[s_min.name]
+        if m_min.value is None:
+            continue
+        for s_max in max_slots:
+            m_max = partial[s_max.name]
+            if m_max.value is None:
+                continue
+            if _slot_stem(s_min.name) != _slot_stem(s_max.name):
+                continue
+            if m_min.value > m_max.value:
+                return False
     return True
 
 
