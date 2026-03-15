@@ -115,7 +115,7 @@ def verify_lp_consistency(problem: dict) -> list[str]:
             sense = obj.get("sense", "")
             if isinstance(sense, str) and sense.strip().lower() not in _VALID_SENSES:
                 errors.append(
-                    f"formulation.objective.sense '{sense}' is not a recognised "
+                    f"formulation.objective.sense '{sense}' is not a recognized "
                     f"direction; expected one of {sorted(_VALID_SENSES)}"
                 )
 

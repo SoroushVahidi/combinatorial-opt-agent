@@ -1,33 +1,99 @@
 # Combinatorial Optimization AI Agent
 
-An **AI-powered agent** for **natural-language optimization**: describe a problem in plain English and get problem recognition, formulations, and solver-ready code.
+An **AI-powered agent** that translates plain-English optimization problem descriptions into
+structured ILP/LP formulations and solver-ready code.  It combines a **retrieval pipeline**
+(query → problem schema) with a **downstream grounding pipeline** (NL numeric mentions →
+parameter slots) so that the generated formulation is both syntactically correct and
+numerically instantiated from the user's own problem data.
 
-**Capabilities:**
+**Core capabilities:**
 
-- **Problem recognition** — Match queries to a catalog of known combinatorial optimization problems (facility location, knapsack, scheduling, etc.).
-- **Formulation retrieval** — Return ILP/LP formulations (variables, objective, constraints) for matched problems.
-- **NLP4LP pipeline** — Schema retrieval, acceptance-aware reranking, constrained assignment (mention→slot), and optimization-role extraction for NL-to-optimization workflows.
-- **GAMSPy integration** — Local GAMSPy/GAMS example collection and catalog for problem-family grouping and evaluation (see [GAMSPy docs](#documentation)).
-- **Solver-ready code** — Pyomo, Gurobi, PuLP, and GAMSPy when applicable.
+| Capability | What it does |
+|---|---|
+| **Problem recognition** | TF-IDF / dense retrieval matches queries to 90+ known problem types (facility location, knapsack, scheduling, …) at **Schema R@1 = 0.906** |
+| **Formulation retrieval** | Returns the ILP/LP formulation (variables, objective, constraints) for the matched schema |
+| **Downstream grounding** | Assigns numeric mentions from the NL query to schema parameter slots; best method: **Optimization-Role Repair** (Coverage 0.822 · TypeMatch 0.243 · Exact20 0.277) |
+| **GAMSPy integration** | Local GAMSPy/GAMS example collection, catalog grouping, and evaluation |
+| **Solver-ready code** | Pyomo, Gurobi, PuLP, and GAMSPy output when applicable |
 
 ## Project vision
 
-You describe a problem in plain English; the agent identifies the problem type (e.g. Uncapacitated Facility Location), returns the ILP/LP formulation, and can generate code you run with standard solvers. The project also supports research on **NL-to-optimization** (NLP4LP): schema acceptance, parameter instantiation, and optimization-role extraction.
+You describe a problem in plain English; the agent identifies the problem type (e.g.
+Uncapacitated Facility Location), extracts the numeric parameters from your description,
+and returns both the ILP/LP formulation and solver code ready to run.  The project also
+advances research on **NL-to-optimization** (NLP4LP): schema acceptance, parameter
+instantiation, optimization-role extraction, and incremental admissibility-constrained
+decoding.
 
 ## Current evidence-based status
 
-- **Problem recognition / retrieval** — Strong; embeddings + catalog match queries to known problem types.
-- **Downstream grounding** (NL mentions → schema slots for instantiation) — Main bottleneck; active research.
-- **Deterministic methods** (rule-based scoring, typed greedy assignment) — Currently the main trusted, reproducible results for grounding.
-- **Learning** — Infrastructure exists (benchmark-safe train/dev/test splits, split-integrity checks, pairwise ranker training and evaluation). A real-data-only benchmark run showed the current learned formulation did not outperform the deterministic rule baseline; learning is documented as future work. See [docs/learning_runs/](docs/learning_runs/README.md).
+| Component | Status | Key metric |
+|---|---|---|
+| Problem retrieval (TF-IDF, orig queries) | ✅ Strong | Schema R@1 = **0.906** |
+| Problem retrieval (short / first-sentence queries) | ⚠️ Degraded | Schema R@1 = 0.786 |
+| Downstream grounding — typed greedy (primary baseline) | ✅ Reproducible | Coverage 0.822, TypeMatch 0.226, InstReady 0.076 |
+| Downstream grounding — optimization-role repair (recommended) | ✅ Best deterministic | Coverage 0.822, TypeMatch 0.243, Exact20 0.277 |
+| Downstream grounding — global consistency grounding (GCG) | 🔬 Experimental | Unit-tested; full-run needs HF gold data |
+| Learned retrieval fine-tuning | ⚠️ Future work | Real-data run did not beat rule baseline |
+| Solver-based output validation | ⚠️ Partial | Structural consistency checks only; no LP solver |
 
-## Architecture (high level)
+**Downstream grounding is the active research frontier** — all five assignment methods
+(typed greedy, constrained, semantic IR repair, optimization-role repair, GCG) are
+implemented and benchmarked; see [EXPERIMENTS.md](EXPERIMENTS.md) for full tables.
 
-- **Natural language** → entity and constraint extraction.
-- **Problem classifier** (embeddings + LLM) matches against a **database of known problems** (90+ types).
-- For **known problems:** retrieve formulation from the DB.
-- For **unknown problems:** generate formulation via LLM and verify.
-- **Output:** ILP formulation, LP relaxation, solver code (Pyomo/Gurobi/PuLP), and complexity class when applicable.
+## Recent improvements
+
+- **Min/max ordering enforcement** — `_is_partial_admissible` now rejects partial
+  assignments where the value placed in a min-slot exceeds the paired max-slot value
+  (e.g. `MinDemand > MaxDemand`), directly eliminating the `lower_vs_upper_bound`
+  failure family.  A new `_slot_stem()` helper pairs bound slots by quantity stem
+  (`MinDemand`/`MaxDemand` → `"demand"`, `LowerBound`/`UpperBound` → `"bound"`).
+- **Float type-match fixes** — Five root causes of near-zero float TypeMatch were
+  resolved: `_is_type_match("float","int")` now returns `True`; `_expected_type`
+  no longer misclassifies quantity-constraint keywords as currency; large non-monetary
+  numbers are no longer mis-tagged as currency; `_choose_token` gives integer/float
+  tokens correct priority for currency slots.  Verified by 43 targeted tests.
+- **Short-query retrieval** — `_DOMAIN_EXPANSION_MAP` extended with six new problem
+  families (LP/MIP/ILP, QP, portfolio, bipartite matching, inventory, cutting/packing).
+- **LP structural consistency checks** — `formulation/verify.py` catches invalid
+  objective sense and missing variable symbols without requiring a solver.
+- **Bound-role annotation layer** — Deterministic min/max operator-phrase recognition,
+  fine-grained `bound_role` field on `MentionOptIR`, range-expression detection
+  (`between X and Y`), wrong-direction penalties, and bound-flip swap repair.
+
+## Architecture
+
+```
+Natural-language query
+        │
+        ▼
+┌───────────────────┐
+│  Schema Retrieval │  TF-IDF / BM25 / LSA / SBERT / E5 / BGE
+│  (retrieval/)     │  → top-1 schema ID  (Schema R@1 = 0.906)
+└────────┬──────────┘
+         │  predicted schema (slot names + types)
+         ▼
+┌───────────────────┐
+│  Numeric Mention  │  regex tokenisation, type tagging (int/float/
+│  Extraction       │  currency/percent), operator-cue detection,
+│  (tools/nlp4lp…) │  bound-role annotation, range expressions
+└────────┬──────────┘
+         │  MentionOptIR list
+         ▼
+┌───────────────────┐
+│  Slot Assignment  │  typed greedy │ constrained DP │ semantic IR
+│  + Repair         │  repair │ optimization-role repair │ GCG
+└────────┬──────────┘
+         │  slot → value mapping
+         ▼
+┌───────────────────┐
+│  Output           │  ILP/LP formulation, LP relaxation,
+│                   │  solver code (Pyomo / Gurobi / PuLP / GAMSPy)
+└───────────────────┘
+```
+
+For **known problems** the formulation is fetched from the catalog; for **unknown
+problems** it is generated via LLM and structurally verified.
 
 ## Quick start (use the bot)
 
@@ -214,17 +280,15 @@ sbatch scripts/run_search.slurm
 | Component | Technology |
 |-----------|-----------|
 | Language | Python 3.10+ |
-| Data Processing | pandas, json, BeautifulSoup |
-| Embeddings | Sentence-Transformers / OpenAI |
-| Vector Search | FAISS / ChromaDB |
-| LLM | GPT-4 / Claude / LLaMA (fine-tuned on Wulver) |
-| Optimization Solvers | Gurobi, Pyomo, PuLP, OR-Tools |
-| Math Rendering | LaTeX / KaTeX |
-| Backend | FastAPI |
-| Frontend | Streamlit / Gradio |
+| Data processing | pandas, json, BeautifulSoup |
+| Retrieval | TF-IDF (scikit-learn), BM25 (rank-bm25), LSA, Sentence-Transformers, E5, BGE |
+| NLP / extraction | Regex-based numeric tokenisation, operator-cue detection, bound-role annotation |
+| Assignment | Typed greedy, constrained DP, semantic IR repair, optimization-role repair, GCG |
+| Optimization solvers | Gurobi, Pyomo, PuLP, GAMSPy (output only; no live solver in CI) |
+| Web UI | Gradio |
 | HPC | NJIT Wulver (SLURM) |
 | CI/CD | GitHub Actions |
-| Dev Environment | GitHub Codespaces |
+| Dev environment | GitHub Codespaces |
 
 ## 📄 License
 
@@ -249,4 +313,4 @@ This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for t
 ---
 
 **Repository description** (for GitHub **Settings → General → Description**; update manually if needed):  
-*NL-to-optimization agent: problem recognition, formulation retrieval, NLP4LP grounding (deterministic methods primary), and solver code generation.*
+*NL-to-optimization agent: plain-English → ILP/LP formulation + solver code. Schema retrieval (R@1 0.906), deterministic grounding (typed greedy, optimization-role repair, GCG), and bound-role annotation pipeline.*
