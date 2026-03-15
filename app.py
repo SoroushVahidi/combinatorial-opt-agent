@@ -531,7 +531,129 @@ _CUSTOM_CSS = """
   padding-top: 0.5rem;
   border-top: 1px solid #f1f5f9;
 }
+
+/* ── Mobile / iPhone responsive ──────────────────────────────────────────── */
+@media (max-width: 640px) {
+  /* Respect iPhone notch and home-bar safe areas */
+  body {
+    padding-left:  env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+  .gradio-container { padding: 0.5rem !important; }
+
+  /* Stack the input row vertically on small screens */
+  .gr-row { flex-direction: column !important; }
+
+  /* Larger touch targets for buttons */
+  .coa-card-header { padding: 0.9rem 0.85rem 0.5rem; }
+  .coa-section summary { padding: 0.7rem 0.85rem; font-size: 0.92rem; }
+  .coa-description { font-size: 0.94rem; margin: 0.7rem 0.85rem 0.5rem; }
+  .coa-constraint-list { padding-left: 1.2rem; }
+  .coa-var-table td, .coa-var-table th { padding: 5px 8px; }
+
+  /* Hero banner — smaller on mobile */
+  .coa-hero { padding: 1rem 1rem 0.9rem; }
+  .coa-hero h1 { font-size: 1.3rem; }
+  .coa-hero p  { font-size: 0.88rem; }
+
+  /* Buttons: full-width on mobile */
+  button { min-height: 44px; }
+}
+
+/* ── PWA standalone mode tweaks ─────────────────────────────────────────── */
+@media (display-mode: standalone) {
+  /* Add top padding so content clears the iOS status bar */
+  body { padding-top: env(safe-area-inset-top); }
+  .coa-hero { border-radius: 0 0 12px 12px; }
+}
 """
+
+
+# ── PWA: <head> tags injected into every Gradio page ────────────────────────
+# These turn the web app into a Progressive Web App that iPhone users can
+# "Add to Home Screen" from Safari — it then runs fullscreen with an icon and
+# splash screen, indistinguishable from a native app.
+_PWA_HEAD = """
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1e3a5f">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Opt Bot">
+<meta name="description" content="Match your optimization problem to a structured integer program from a catalog of 1600+ classical formulations.">
+
+<!-- PWA manifest (Android + iOS Safari install prompt) -->
+<link rel="manifest" href="/manifest.json">
+
+<!-- iOS home-screen icons (Safari ignores manifest icons) -->
+<link rel="apple-touch-icon"              href="/static/icons/icon-180.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/static/icons/icon-120.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/static/icons/icon-152.png">
+<link rel="apple-touch-icon" sizes="167x167" href="/static/icons/icon-167.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/static/icons/icon-180.png">
+
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+<!-- Service-worker registration (enables offline + install prompt) -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('/sw.js', { scope: '/' })
+        .catch(function (err) {
+          console.warn('SW registration failed:', err);
+        });
+    });
+  }
+</script>
+"""
+
+# Minimal offline fallback page served by the service worker when the network
+# is unavailable and no cached version of the page exists.
+_OFFLINE_HTML = """<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1e3a5f">
+  <title>Combinatorial Optimization Bot — Offline</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #1e3a5f;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+      text-align: center;
+    }
+    .icon { font-size: 4rem; margin-bottom: 1rem; }
+    h1 { font-size: 1.5rem; margin: 0 0 0.5rem; }
+    p  { font-size: 0.95rem; opacity: 0.8; max-width: 320px; line-height: 1.5; }
+    button {
+      margin-top: 1.5rem;
+      background: #fff;
+      color: #1e3a5f;
+      border: none;
+      border-radius: 8px;
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      min-height: 44px;
+    }
+  </style>
+</head>
+<body>
+  <div class="icon">🔢</div>
+  <h1>You're offline</h1>
+  <p>The Combinatorial Optimization Bot needs an internet connection to run the search model.</p>
+  <button onclick="window.location.reload()">Try again</button>
+</body>
+</html>"""
 
 
 def main():
@@ -688,10 +810,52 @@ def main():
     # On HPC (Wulver) Gradio's launch() uses a thread for the server -> "can't start new thread".
     # Run via FastAPI + uvicorn in the main thread instead (no extra threads).
     # Access from laptop: ssh -L 7860:localhost:7860 USER@wulver.njit.edu then open http://127.0.0.1:7860
-    from fastapi import FastAPI
+    from fastapi import FastAPI, Response
+    from fastapi.responses import HTMLResponse, FileResponse
+    from fastapi.staticfiles import StaticFiles
     import uvicorn
+
+    _STATIC_DIR = Path(__file__).resolve().parent / "static"
     app = FastAPI()
-    gr.mount_gradio_app(app, iface, path="/", theme=theme, css=_CUSTOM_CSS)
+
+    # ── PWA asset routes ───────────────────────────────────────────────────────
+    # Mount static files directory (icons, etc.)
+    app.mount("/static", StaticFiles(directory=str(_STATIC_DIR)), name="static")
+
+    @app.get("/manifest.json", include_in_schema=False)
+    async def pwa_manifest() -> Response:
+        return FileResponse(
+            str(_STATIC_DIR / "manifest.json"),
+            media_type="application/manifest+json",
+            headers={"Cache-Control": "public, max-age=86400"},
+        )
+
+    @app.get("/sw.js", include_in_schema=False)
+    async def service_worker() -> Response:
+        return FileResponse(
+            str(_STATIC_DIR / "sw.js"),
+            media_type="application/javascript",
+            # Service workers must be served from the root scope;
+            # Service-Worker-Allowed header grants scope "/" even when SW is at /sw.js.
+            headers={
+                "Service-Worker-Allowed": "/",
+                "Cache-Control": "no-cache",
+            },
+        )
+
+    @app.get("/favicon.ico", include_in_schema=False)
+    async def favicon() -> Response:
+        ico = _STATIC_DIR / "favicon.ico"
+        if ico.exists():
+            return FileResponse(str(ico), media_type="image/x-icon")
+        return Response(status_code=404)
+
+    @app.get("/offline", include_in_schema=False)
+    async def offline_page() -> HTMLResponse:
+        return HTMLResponse(_OFFLINE_HTML, status_code=200)
+
+    # ── Mount Gradio with PWA head tags injected ───────────────────────────────
+    gr.mount_gradio_app(app, iface, path="/", theme=theme, css=_CUSTOM_CSS, head=_PWA_HEAD)
     uvicorn.run(app, host="0.0.0.0", port=7860)
 
 
