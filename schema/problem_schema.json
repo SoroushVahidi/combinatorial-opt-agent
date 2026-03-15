@@ -70,6 +70,37 @@
     "source": {
       "type": "string",
       "description": "Reference or dataset origin"
+    },
+    "references": {
+      "type": "array",
+      "description": "Canonical academic papers that introduce or study this problem",
+      "items": {
+        "type": "object",
+        "required": ["title", "authors", "year"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Full paper or book-chapter title"
+          },
+          "authors": {
+            "type": "string",
+            "description": "Semicolon-separated author names (Last, First I.)"
+          },
+          "year": {
+            "type": "integer",
+            "description": "Publication year"
+          },
+          "venue": {
+            "type": "string",
+            "description": "Journal, conference, or book with volume/pages"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Stable link to the paper (DOI preferred)"
+          }
+        }
+      }
     }
   }
 }

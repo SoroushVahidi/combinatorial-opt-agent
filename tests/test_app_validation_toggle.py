@@ -60,8 +60,9 @@ def test_answer_pipeline_error_returns_warning():
     with patch("app.get_model", side_effect=_boom):
         result = asyncio.run(answer("minimize cost", 3))
 
+    result_lower = result.lower()
     assert "coa-empty-warn" in result
-    assert "unexpected error" in result.lower() or "injected test failure" in result.lower()
+    assert "unexpected error" in result_lower or "injected test failure" in result_lower
 
 
 def test_max_query_len_is_positive_int():

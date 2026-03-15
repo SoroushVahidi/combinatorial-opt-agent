@@ -41,6 +41,14 @@ def _load_catalog() -> list[dict]:
         python build_extended_catalog.py
 
     from the project root.
+
+    References sidecar
+    ------------------
+    After loading, ``problem_references.json`` (in the same directory as the
+    catalog files) is merged in.  Any problem whose ``id`` appears as a key in
+    that file receives a ``"references"`` list field.  Problems without an entry
+    in the sidecar are unaffected.  This keeps the large base catalog clean
+    while still making paper links available in the UI and text output.
     """
     root = _project_root()
     extended = root / "data" / "processed" / "all_problems_extended.json"
@@ -64,15 +72,28 @@ def _load_catalog() -> list[dict]:
                 # developer to investigate.
                 stacklevel=2,
             )
-            return base_catalog
-        return ext_catalog
+            catalog = base_catalog
+        else:
+            catalog = ext_catalog
+    else:
+        path = extended if extended.exists() else base
+        if not path.exists():
+            raise FileNotFoundError(f"Catalog not found: {path}")
+        with open(path, encoding="utf-8") as f:
+            catalog = json.load(f)
 
-    path = extended if extended.exists() else base
-    if not path.exists():
-        raise FileNotFoundError(f"Catalog not found: {path}")
+    # Merge paper references sidecar (problem_references.json).
+    # Each key is a problem id; the value is a list of reference dicts.
+    refs_path = root / "data" / "processed" / "problem_references.json"
+    if refs_path.exists():
+        with open(refs_path, encoding="utf-8") as f:
+            refs_map: dict[str, list[dict]] = json.load(f)
+        for problem in catalog:
+            pid = problem.get("id", "")
+            if pid in refs_map:
+                problem["references"] = refs_map[pid]
 
-    with open(path, encoding="utf-8") as f:
-        return json.load(f)
+    return catalog
 
 
 def _searchable_text(problem: dict, multi_view: bool = False) -> str:
@@ -300,6 +321,35 @@ def format_problem_and_ip(problem: dict, score: float | None = None) -> str:
         )
     if problem.get("complexity"):
         lines.extend(["", f"*Complexity: {problem['complexity']}*", ""])
+    references = problem.get("references") or []
+    if references:
+        lines.extend(
+            [
+                "",
+                "<details><summary><strong>📚 Papers</strong></summary>",
+                "",
+            ]
+        )
+        for ref in references:
+            title = ref.get("title", "")
+            authors = ref.get("authors", "")
+            year = ref.get("year", "")
+            venue = ref.get("venue", "")
+            url = ref.get("url", "")
+            # Build a compact citation line; hyperlink the title if a URL is available.
+            # Escape Markdown link-text characters so brackets in the title don't
+            # break the [text](url) syntax.
+            safe_title = title.replace("[", r"\[").replace("]", r"\]")
+            title_part = f"[{safe_title}]({url})" if url else title
+            parts = [title_part]
+            if authors:
+                parts.append(authors)
+            if year:
+                parts.append(f"({year})")
+            if venue:
+                parts.append(f"*{venue}*")
+            lines.append("- " + " — ".join(parts))
+        lines.extend(["", "</details>", ""])
     if score is not None:
         lines.insert(0, f"(relevance: {score:.3f})\n")
     return "\n".join(lines)

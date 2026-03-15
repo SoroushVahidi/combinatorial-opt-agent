@@ -209,6 +209,40 @@ def _format_result_html(problem: dict, score: float, index: int, validation: dic
     ⚠ Formulation not yet available — the description above may still help.
   </div>"""
 
+    # ── Papers / References (optional) ───────────────────────────────────────
+    references = problem.get("references") or []
+    if references:
+        ref_items = ""
+        for ref in references:
+            title = _html.escape(ref.get("title", ""))
+            authors = _html.escape(ref.get("authors", ""))
+            year = _html.escape(str(ref.get("year", "")))
+            venue = _html.escape(ref.get("venue", ""))
+            url = _html.escape(ref.get("url", ""))
+            title_part = (
+                f'<a href="{url}" target="_blank" rel="noopener noreferrer">{title}</a>'
+                if url
+                else title
+            )
+            meta_parts = []
+            if authors:
+                meta_parts.append(f'<span class="coa-ref-authors">{authors}</span>')
+            if year:
+                meta_parts.append(f'<span class="coa-ref-year">({year})</span>')
+            if venue:
+                meta_parts.append(f'<span class="coa-ref-venue">{venue}</span>')
+            meta = " — ".join(meta_parts) if meta_parts else ""
+            ref_items += (
+                f"<li><span class='coa-ref-title'>{title_part}</span>"
+                + (f"<br><span class='coa-ref-meta'>{meta}</span>" if meta else "")
+                + "</li>"
+            )
+        card += f"""
+  <details class="coa-section">
+    <summary>📚 Papers <span class="coa-count">({len(references)})</span></summary>
+    <ul class="coa-ref-list">{ref_items}</ul>
+  </details>"""
+
     # ── Validation banner (optional) ──────────────────────────────────────────
     if validation is not None:
         errs = (
@@ -513,6 +547,25 @@ _CUSTOM_CSS = """
   line-height: 1.5;
 }
 .coa-cdesc { color: #6b7280; }
+
+/* Papers / references list */
+.coa-ref-list {
+  padding: 0.4rem 1rem 0.65rem 1.5rem;
+  margin: 0;
+  list-style: disc;
+}
+.coa-ref-list li {
+  margin-bottom: 0.55rem;
+  font-size: 0.85rem;
+  color: #374151;
+  line-height: 1.5;
+}
+.coa-ref-title a { color: #0369a1; text-decoration: none; }
+.coa-ref-title a:hover { text-decoration: underline; }
+.coa-ref-meta { font-size: 0.8rem; color: #6b7280; }
+.coa-ref-authors { font-style: normal; }
+.coa-ref-year { font-weight: 500; }
+.coa-ref-venue { font-style: italic; }
 
 /* Missing formulation notice */
 .coa-no-formulation {
