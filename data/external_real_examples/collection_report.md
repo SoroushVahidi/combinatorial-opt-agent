@@ -1,10 +1,10 @@
 # Real/Public Optimization Examples — Collection Report
 
-*Generated: 2026-03-12 20:40 UTC*
+*Generated: 2026-03-16 13:24 UTC*
 
 ## Overview
 
-- **Total examples collected:** 410
+- **Total examples collected:** 1460
 - **Sources considered:** 16
 - **Sources with data collected:** 4
 
@@ -12,51 +12,55 @@
 
 | Source | Count |
 |---|---|
+| NL4Opt Competition | 1101 |
 | OptMATH Benchmark | 166 |
-| NL4Opt Competition | 120 |
-| ORQA (OR Question Answering) | 100 |
-| Gurobi Modeling Examples | 24 |
+| ORQA (OR Question Answering) | 143 |
+| Gurobi Modeling Examples | 50 |
 
 ## Examples by Optimization Family
 
 | Family | Count |
 |---|---|
-| general_or | 100 |
+| general_lp | 406 |
+| production_planning | 232 |
+| retail_sales | 165 |
+| general_or | 143 |
+| transportation | 95 |
+| diet_nutrition | 66 |
+| portfolio_finance | 64 |
 | general_lp_milp | 62 |
-| general_lp | 41 |
+| workforce | 40 |
 | job_shop_scheduling | 38 |
-| production_planning | 30 |
-| transportation | 26 |
-| retail_sales | 19 |
-| scheduling | 18 |
-| portfolio_finance | 14 |
-| assignment | 10 |
+| agricultural | 32 |
+| scheduling | 20 |
+| assignment | 12 |
+| healthcare | 12 |
 | vehicle_routing | 9 |
 | set_cover | 9 |
+| travel_tourism | 9 |
+| education | 8 |
 | traveling_salesman | 7 |
-| facility_location | 3 |
+| facility_location | 6 |
+| general_milp | 6 |
+| energy_power | 4 |
 | workforce_scheduling | 3 |
-| diet_nutrition | 3 |
-| agricultural | 3 |
-| energy_power | 2 |
 | supply_chain | 2 |
-| workforce | 2 |
-| travel_tourism | 2 |
 | portfolio | 2 |
-| resource_extraction | 1 |
-| blending_diet | 1 |
+| resource_extraction | 2 |
+| blending_diet | 2 |
 | economic_planning | 1 |
 | revenue_management | 1 |
 | fleet_management | 1 |
+| cutting_stock | 1 |
 
 ## Sources Considered
 
 | Source | Outcome | Notes |
 |---|---|---|
 | OptMATH Benchmark | `collected` | 166 NL optimization problem descriptions with numeric parameters; diverse famili |
-| NL4Opt Competition | `collected` | NL + structured LP formulations. train/dev/test splits. Representative sample (4 |
-| ORQA (OR Question Answering) | `collected` | OR question-answering dataset with scenario context + typed questions. Sampled 5 |
-| Gurobi Modeling Examples | `collected` | README NL descriptions only; no numeric parameters. Full notebooks require Gurob |
+| NL4Opt Competition | `collected` | NL + structured LP formulations. train/dev/test splits. Full dataset collected ( |
+| ORQA (OR Question Answering) | `collected` | OR question-answering dataset. All unique problem contexts collected (one entry  |
+| Gurobi Modeling Examples | `collected` | README NL descriptions from all available examples. No numeric parameters. Descr |
 | DCP-Bench-Open (sample_test.jsonl) | `accessible_not_useful` | sample_test.jsonl only contains 5 items that are solver code (CPMPy models), not |
 | MAMO (FreedomIntelligence/Mamo) | `inaccessible` | HTTP 404 for expected data path benchmark/MathBench.json. Repository structure m |
 | NEOS Guide Case Studies | `inaccessible` | DNS resolution failed for neos-guide.org in this environment (no address associa |

@@ -184,8 +184,15 @@ def _nl4opt_family(text: str) -> str:
     return "general_lp"
 
 
-def collect_nl4opt(out_dir: Path, max_per_split: int = 40) -> list[dict[str, Any]]:
-    """Download NL4Opt generation_data and return representative examples."""
+def collect_nl4opt(
+    out_dir: Path, max_per_split: int | None = None
+) -> list[dict[str, Any]]:
+    """Download NL4Opt generation_data and return all unique examples.
+
+    Args:
+        max_per_split: Maximum items per split; ``None`` (default) means no limit
+            and collects the full split.
+    """
     examples = []
     for split, url in NL4OPT_FILES.items():
         print(f"  Fetching NL4Opt {split} …")
@@ -238,9 +245,9 @@ def collect_nl4opt(out_dir: Path, max_per_split: int = 40) -> list[dict[str, Any
                     }
                 )
                 count += 1
-                if count >= max_per_split:
+                if max_per_split is not None and count >= max_per_split:
                     break
-            if count >= max_per_split:
+            if max_per_split is not None and count >= max_per_split:
                 break
         print(f"  NL4Opt {split}: {count} examples")
         time.sleep(0.3)
@@ -267,8 +274,23 @@ _ORQA_QTYPES: dict[str, str] = {
 }
 
 
-def collect_orqa(out_dir: Path, max_per_qtype: int = 5) -> list[dict[str, Any]]:
-    """Download ORQA and select diverse examples by question type."""
+def collect_orqa(
+    out_dir: Path, seen_contexts: set[str] | None = None
+) -> list[dict[str, Any]]:
+    """Download ORQA and collect one entry per unique problem context.
+
+    Each unique *CONTEXT* (the optimization problem description) is stored
+    exactly once.  The first question encountered for that context is used to
+    populate the ``notes`` field.  This maximises the number of distinct
+    problem scenarios while avoiding redundancy from the 10+ questions that
+    share the same scenario.
+
+    Args:
+        seen_contexts: Optional pre-populated set of already-seen context keys
+            (first-80-chars) used to avoid cross-split duplicates.
+    """
+    if seen_contexts is None:
+        seen_contexts = set()
     examples = []
     for split, url in ORQA_URLS.items():
         print(f"  Fetching ORQA {split} …")
@@ -277,47 +299,47 @@ def collect_orqa(out_dir: Path, max_per_qtype: int = 5) -> list[dict[str, Any]]:
             print(f"  SKIP: ORQA {split} — fetch failed")
             continue
         lines = [l for l in raw.decode("utf-8").strip().split("\n") if l.strip()]
-        by_qtype: dict[str, list[dict]] = {}
-        for l in lines:
-            item = json.loads(l)
-            qt = item.get("QUESTION_TYPE", "unknown")
-            by_qtype.setdefault(qt, []).append(item)
+        items = [json.loads(l) for l in lines]
 
         count = 0
-        for qt, items in sorted(by_qtype.items()):
-            for item in items[:max_per_qtype]:
-                ctx: str = item.get("CONTEXT", "").strip()
-                question: str = item.get("QUESTION", "").strip()
-                answer = item.get("TARGET_ANSWER", "")
-                if not ctx or len(ctx) < 40:
-                    continue
-                ex_id = f"orqa_{split}_{qt}_{count}"
-                examples.append(
-                    {
-                        "example_id": ex_id,
-                        "title": _first_n_words(ctx, 10),
-                        "raw_problem_text": ctx,
-                        "short_problem_summary": _first_n_words(ctx, 20),
-                        "source_name": "ORQA (OR Question Answering)",
-                        "source_url": "https://github.com/nl4opt/ORQA",
-                        "source_type": "qa_benchmark",
-                        "license_status": "public (research use; see repo)",
-                        "access_status": "collected",
-                        "optimization_family": "general_or",
-                        "problem_style": "unknown",
-                        "is_real_public_open": True,
-                        "has_nl_statement": True,
-                        "has_numeric_detail": bool(re.search(r"\d", ctx)),
-                        "usable_as_benchmark_input": True,
-                        "notes": (
-                            f"split={split}; question_type={qt} "
-                            f"({_ORQA_QTYPES.get(qt, 'unknown')}); "
-                            f"question={question[:80]}; answer={answer}"
-                        ),
-                    }
-                )
-                count += 1
-        print(f"  ORQA {split}: {count} examples")
+        for item in items:
+            ctx: str = item.get("CONTEXT", "").strip()
+            if not ctx or len(ctx) < 40:
+                continue
+            ctx_key = ctx[:80]
+            if ctx_key in seen_contexts:
+                continue
+            seen_contexts.add(ctx_key)
+            qt: str = item.get("QUESTION_TYPE", "unknown")
+            question: str = item.get("QUESTION", "").strip()
+            answer = item.get("TARGET_ANSWER", "")
+            ex_id = f"orqa_{split}_{count}"
+            examples.append(
+                {
+                    "example_id": ex_id,
+                    "title": _first_n_words(ctx, 10),
+                    "raw_problem_text": ctx,
+                    "short_problem_summary": _first_n_words(ctx, 20),
+                    "source_name": "ORQA (OR Question Answering)",
+                    "source_url": "https://github.com/nl4opt/ORQA",
+                    "source_type": "qa_benchmark",
+                    "license_status": "public (research use; see repo)",
+                    "access_status": "collected",
+                    "optimization_family": "general_or",
+                    "problem_style": "unknown",
+                    "is_real_public_open": True,
+                    "has_nl_statement": True,
+                    "has_numeric_detail": bool(re.search(r"\d", ctx)),
+                    "usable_as_benchmark_input": True,
+                    "notes": (
+                        f"split={split}; question_type={qt} "
+                        f"({_ORQA_QTYPES.get(qt, 'unknown')}); "
+                        f"question={question[:80]}; answer={answer}"
+                    ),
+                }
+            )
+            count += 1
+        print(f"  ORQA {split}: {count} new unique contexts")
         time.sleep(0.3)
     return examples
 
@@ -351,6 +373,33 @@ GUROBI_EXAMPLES = [
     ("car_rental", "car_rental", "fleet_management"),
     ("cell_tower_coverage", "cell_tower_coverage", "set_cover"),
     ("factory_planning", "factory_planning", "production_planning"),
+    # Additional examples
+    ("3d_tic_tac_toe", "3d_tic_tac_toe", "general_milp"),
+    ("agricultural_pricing", "agricultural_pricing", "agricultural"),
+    ("aviation_planning", "aviation_planning", "scheduling"),
+    ("battery_scheduling", "battery_scheduling", "energy_power"),
+    ("burrito_optimization_game", "burrito_optimization_game", "general_lp"),
+    ("colgen-cutting_stock", "colgen_cutting_stock", "cutting_stock"),
+    ("constraint_optimization", "constraint_optimization", "general_milp"),
+    ("covid19_facility_location", "covid19_facility_location", "facility_location"),
+    ("curve_fitting", "curve_fitting", "general_lp"),
+    ("decentralization_planning", "decentralization_planning", "facility_location"),
+    ("drone_network", "drone_network", "facility_location"),
+    ("efficiency_analysis", "efficiency_analysis", "general_lp"),
+    ("electrical_power_generation", "electrical_power_generation", "energy_power"),
+    ("fantasy_basketball", "fantasy_basketball", "assignment"),
+    ("linear_regression", "linear_regression", "general_lp"),
+    ("logical_design", "logical_design", "general_milp"),
+    ("marketing_campaign_optimization", "marketing_campaign_optimization", "general_lp"),
+    ("milp_tutorial", "milp_tutorial", "general_milp"),
+    ("music_recommendation", "music_recommendation", "assignment"),
+    ("opencast_mining", "opencast_mining", "resource_extraction"),
+    ("pooling", "pooling", "blending_diet"),
+    ("price_optimization", "price_optimization", "general_lp"),
+    ("protein_comparison", "protein_comparison", "general_milp"),
+    ("protein_folding", "protein_folding", "general_milp"),
+    ("railway_dispatching", "railway_dispatching", "scheduling"),
+    ("text_dissimilarity", "text_dissimilarity", "general_lp"),
 ]
 
 GUROBI_RAW_BASE = (
@@ -450,7 +499,7 @@ SOURCE_MANIFEST: list[dict[str, str]] = [
         "outcome": "collected",
         "items_collected": "",
         "notes": "NL + structured LP formulations. train/dev/test splits. "
-        "Representative sample (40 per split) collected.",
+        "Full dataset collected (train: 713, dev: 99, test: 289).",
     },
     {
         "source_name": "ORQA (OR Question Answering)",
@@ -459,8 +508,8 @@ SOURCE_MANIFEST: list[dict[str, str]] = [
         "license_status": "public (research use; see repo)",
         "outcome": "collected",
         "items_collected": "",
-        "notes": "OR question-answering dataset with scenario context + typed questions. "
-        "Sampled 5 per question type from test and validation splits.",
+        "notes": "OR question-answering dataset. "
+        "All unique problem contexts collected (one entry per distinct scenario).",
     },
     {
         "source_name": "Gurobi Modeling Examples",
@@ -469,9 +518,8 @@ SOURCE_MANIFEST: list[dict[str, str]] = [
         "license_status": "Apache-2.0",
         "outcome": "collected",
         "items_collected": "",
-        "notes": "README NL descriptions only; no numeric parameters. "
-        "Full notebooks require Gurobi license to run. "
-        "Descriptions collected as concept-level problem statements.",
+        "notes": "README NL descriptions from all available examples. "
+        "No numeric parameters. Descriptions collected as concept-level problem statements.",
     },
     {
         "source_name": "DCP-Bench-Open (sample_test.jsonl)",
@@ -779,11 +827,11 @@ def main() -> None:
     all_examples.extend(optmath)
 
     # Source 2: NL4Opt
-    nl4opt = collect_nl4opt(out_dir, max_per_split=40)
+    nl4opt = collect_nl4opt(out_dir)
     all_examples.extend(nl4opt)
 
     # Source 3: ORQA
-    orqa = collect_orqa(out_dir, max_per_qtype=5)
+    orqa = collect_orqa(out_dir)
     all_examples.extend(orqa)
 
     # Source 4: Gurobi READMEs
