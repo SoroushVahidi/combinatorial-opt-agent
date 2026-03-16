@@ -321,6 +321,42 @@ python run_search.py "minimize cost of opening warehouses"
 sbatch scripts/run_search.slurm
 ```
 
+## Testing on iPhone (or any phone / tablet)
+
+The web app is a full **Progressive Web App (PWA)** — it works in Safari on iOS just like a native app, including an "Add to Home Screen" icon, fullscreen mode, and offline fallback.
+
+### Steps
+
+1. **Start the server on your laptop/desktop** (the server and iPhone must be on the same Wi-Fi):
+   ```bash
+   python app.py
+   ```
+   The startup output now prints two URLs, for example:
+   ```
+     Local:   http://127.0.0.1:7860
+     Network: http://192.168.1.42:7860  ← open this on your iPhone/phone
+   ```
+
+2. **On your iPhone, open Safari** and navigate to the **Network URL** shown (e.g. `http://192.168.1.42:7860`).  
+   *(Other browsers such as Chrome or Firefox for iOS also work, but Safari is required for the "Add to Home Screen" feature.)*
+
+3. **Use the app** — type an optimization problem in the text box and tap **Search**.
+
+4. **Optional — install as a home-screen app:**
+   - Tap the **Share** icon (the box with an arrow pointing up) at the bottom of Safari.
+   - Scroll down and tap **Add to Home Screen**.
+   - Give it a name (or keep "Opt Bot") and tap **Add**.
+   - The app icon appears on your home screen and opens fullscreen, just like a native app.
+
+### Troubleshooting
+
+| Symptom | Fix |
+|---|---|
+| iPhone can't reach the URL | Make sure your laptop and iPhone are on the **same Wi-Fi network**. Check that no firewall blocks port 7860: on Linux run `sudo ufw allow 7860`; on Windows add an inbound rule in Windows Firewall; on macOS go to **System Settings → Network → Firewall → Options** and allow incoming connections for Python. |
+| No "Network" URL printed at startup | The LAN IP detection may fail (e.g., no default gateway). Run `ipconfig` (Windows) or `ifconfig` / `ip addr` (macOS/Linux) to find your machine's local IP, then open `http://<your-ip>:7860` on the iPhone. |
+| Page loads but search hangs | First-time startup downloads the embedding model (~90 MB). Wait until the terminal says *"Model ready"* before running queries. |
+| "Add to Home Screen" not in Share sheet | The option only appears in **Safari** (not Chrome or Firefox on iOS). |
+
 ## Training
 
 - **Retrieval model** — Fine-tune the sentence-transformers model so it better matches NL queries to problems in the catalog.  

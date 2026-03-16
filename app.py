@@ -17,6 +17,7 @@ from pathlib import Path
 import html as _html
 import json
 import os
+import socket as _socket
 from datetime import datetime, timezone
 
 import telemetry as _telemetry
@@ -916,6 +917,30 @@ def main():
     # On HPC (Wulver) Gradio's launch() uses a thread for the server -> "can't start new thread".
     # Run via FastAPI + uvicorn in the main thread instead (no extra threads).
     # Access from laptop: ssh -L 7860:localhost:7860 USER@wulver.njit.edu then open http://127.0.0.1:7860
+    _port = 7860
+    try:
+        # Resolve the outbound LAN IP (does not open a real connection).
+        with _socket.socket(_socket.AF_INET, _socket.SOCK_DGRAM) as _s:
+            _s.connect(("8.8.8.8", 80))
+            _lan_ip = _s.getsockname()[0]
+    except Exception:
+        _lan_ip = None
+
+    print(f"\n  Local:   http://127.0.0.1:{_port}", flush=True)
+    if _lan_ip and not _lan_ip.startswith("127."):
+        print(f"  Network: http://{_lan_ip}:{_port}  ← open this on your iPhone/phone\n", flush=True)
+        print(
+            "  iPhone tip: open the Network URL above in Safari, then tap\n"
+            "  Share → Add to Home Screen to install as an app icon.\n",
+            flush=True,
+        )
+    else:
+        print(
+            "  (Could not detect LAN IP — find your machine's IP and open"
+            f" http://<your-ip>:{_port} on your iPhone)\n",
+            flush=True,
+        )
+
     from fastapi import FastAPI, Response
     from fastapi.responses import HTMLResponse, FileResponse
     from fastapi.staticfiles import StaticFiles
