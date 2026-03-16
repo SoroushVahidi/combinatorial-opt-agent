@@ -92,6 +92,18 @@ class HybridRetriever:
 _NUM_RE = re.compile(r"^\$?-?[\d]+(?:\.\d+)?%?$")
 _SENTENCE_BREAKS = frozenset({".", "!", "?", ";"})
 
+# English word-numbers that should be treated as numeric tokens during
+# slot-to-value matching.  This allows phrases such as "at least a half"
+# (ratio = 0.5), "two different milk teas" (count = 2), etc. to be matched
+# to appropriate slots without requiring explicit digit tokens in the text.
+_WORD_NUMS: dict[str, float] = {
+    "half": 0.5,
+    "zero": 0.0, "one": 1.0, "two": 2.0, "three": 3.0, "four": 4.0,
+    "five": 5.0, "six": 6.0, "seven": 7.0, "eight": 8.0, "nine": 9.0,
+    "ten": 10.0, "eleven": 11.0, "twelve": 12.0, "fifteen": 15.0,
+    "twenty": 20.0, "thirty": 30.0, "forty": 40.0, "fifty": 50.0,
+}
+
 # Synonyms for common slot-name keyword components.  When scoring the fit
 # between a slot and a nearby number, a synonym match earns SYNONYM_WEIGHT
 # of the positional weight; a prefix/stem match earns PREFIX_WEIGHT.
@@ -99,8 +111,8 @@ _SLOT_SYNONYMS: dict[str, frozenset[str]] = {
     "min":      frozenset({"min", "least", "minimum", "demand", "require", "requires", "need"}),
     "max":      frozenset({"max", "maximum", "exceed", "most"}),
     "total":    frozenset({"total", "most", "all", "available", "capacity"}),
-    "cost":     frozenset({"cost", "costs", "price", "charge"}),
-    "profit":   frozenset({"profit", "earn", "earns", "revenue"}),
+    "cost":     frozenset({"cost", "costs", "price", "charge", "sold", "sell", "selling"}),
+    "profit":   frozenset({"profit", "earn", "earns", "revenue", "sold", "gain"}),
     "labor":    frozenset({"labor", "labour", "work"}),
     "return":   frozenset({"return", "yield", "yields"}),
     "fraction": frozenset({"fraction", "percent", "percentage", "ratio", "rate", "portion"}),
@@ -109,6 +121,9 @@ _SLOT_SYNONYMS: dict[str, frozenset[str]] = {
     "supply":   frozenset({"supply", "supplies", "provides", "can"}),
     "demand":   frozenset({"demand", "demands", "require", "requires", "need", "needs"}),
     "investment": frozenset({"investment", "invest", "invested", "total"}),
+    "price":    frozenset({"price", "prices", "cost", "costs", "sold", "sell", "selling", "charge"}),
+    "num":      frozenset({"num", "number", "count", "types", "type", "kinds", "different",
+                           "two", "three", "four", "five", "six"}),
 }
 
 
@@ -142,12 +157,22 @@ def slot_aware_extraction(query: str, slots: list[str]) -> dict[str, float]:
     tokens) the slot's CamelCase-split keyword tokens are to that number.
     Sentence-boundary punctuation is preserved so that context from a different
     sentence cannot contaminate a number's score.  A greedy best-first assignment
-    (no slot or value reuse) produces the final mapping.
+    (no slot reuse, no text-position reuse) produces the final mapping.
+
+    Value reuse policy: the same numeric *value* may be assigned to multiple
+    slots when those values appear at distinct text positions (e.g. "10 mg of
+    gold … at least 10 long cables" → GoldPerLong=10 AND MinLongCables=10).
+    Each text position is used at most once, so a single token occurrence
+    cannot be claimed by two different slots.
 
     Scoring weights:
       - Exact token match:   positional weight  = (WINDOW − distance) / WINDOW
       - Synonym match:       positional weight  × SYNONYM_WEIGHT (0.70)
       - Prefix/stem match:   positional weight  × PREFIX_WEIGHT  (0.50)
+
+    Word-numbers ("half", "two", "three", …) are included in the candidate
+    pool as if they were digit tokens, enabling extraction of counts and
+    fractions expressed in prose (e.g. "at least a half" → 0.5).
     """
     WINDOW         = 7    # tokens either side of the number to consider
     SYNONYM_WEIGHT = 0.70
@@ -158,7 +183,9 @@ def slot_aware_extraction(query: str, slots: list[str]) -> dict[str, float]:
     raw = re.sub(r"\s+", " ", query.lower().replace(",", ""))
     tokens: list[str] = re.findall(r"\$?-?[\d]+(?:\.\d+)?%?|[.!?;]|\w+", raw)
 
-    # Locate numeric tokens and parse their float values
+    # Locate numeric tokens and parse their float values.
+    # Word-numbers (e.g. "two" → 2.0, "half" → 0.5) are included alongside
+    # ordinary digit tokens so that prose counts and fractions are reachable.
     nums: list[tuple[float, int]] = []
     for idx, tok in enumerate(tokens):
         if tok in _SENTENCE_BREAKS:
@@ -173,6 +200,8 @@ def slot_aware_extraction(query: str, slots: list[str]) -> dict[str, float]:
                 nums.append((v, idx))
             except ValueError:
                 pass
+        elif tok in _WORD_NUMS:
+            nums.append((_WORD_NUMS[tok], idx))
 
     if not nums or not slots:
         return {}
@@ -216,8 +245,11 @@ def slot_aware_extraction(query: str, slots: list[str]) -> dict[str, float]:
 
     slot_kws = {s: _split_camel(s) for s in slots}
 
-    # Build (score, slot, value) triples for all viable pairings
-    candidates: list[tuple[float, str, float]] = []
+    # Build (score, slot, value, text_position) tuples for all viable pairings.
+    # Tracking the text position (rather than only the float value) allows the
+    # same numeric value that appears at multiple points in the text (e.g. two
+    # occurrences of "10") to be assigned to two different slots.
+    candidates: list[tuple[float, str, float, int]] = []
     for slot in slots:
         kws = slot_kws[slot]
         if not kws:
@@ -225,18 +257,32 @@ def slot_aware_extraction(query: str, slots: list[str]) -> dict[str, float]:
         for val, pos in nums:
             sc = context_score(pos, kws)
             if sc > 0:
-                candidates.append((sc, slot, val))
+                candidates.append((sc, slot, val, pos))
 
-    # Greedy assignment: highest-scoring pair first, no reuse of slot or value
+    # Greedy assignment: highest-scoring pair first.
+    # Constraints: each slot is used at most once; each text position is used
+    # at most once.  The same float value CAN appear in two assignments when
+    # it occurs at distinct positions in the text.
     candidates.sort(key=lambda x: x[0], reverse=True)
-    used_slots: set[str] = set()
-    used_vals:  set[float] = set()
+    used_slots:     set[str] = set()
+    used_positions: set[int] = set()
     result: dict[str, float] = {}
-    for sc, slot, val in candidates:
-        if slot not in used_slots and val not in used_vals:
+    for sc, slot, val, pos in candidates:
+        if slot not in used_slots and pos not in used_positions:
             result[slot] = val
             used_slots.add(slot)
-            used_vals.add(val)
+            used_positions.add(pos)
+
+    # Fallback sharing: for any slot that was not assigned above, allow it to
+    # share an already-used text position if its score there is strong enough.
+    # This handles cases where two related slots map to the same numeric value
+    # (e.g. "TotalGold" and "There" both wanting 1000) without allowing
+    # low-quality matches to contaminate the assignment.
+    SHARING_THRESHOLD = 0.40
+    for sc, slot, val, pos in candidates:
+        if slot not in used_slots and sc >= SHARING_THRESHOLD:
+            result[slot] = val
+            used_slots.add(slot)
 
     return result
 
@@ -266,6 +312,46 @@ def infer_objective(schema_text: str, query: str) -> str:
 
 # ── Main runner ────────────────────────────────────────────────────────────────
 
+def _augment_catalog(catalog: list[dict]) -> list[dict]:
+    """Expand CamelCase identifiers in catalog descriptions to natural-language tokens.
+
+    Many NLP4LP schema descriptions consist of LP formulation expressions with
+    CamelCase slot names like ``SeniorWage``, ``NumberOfSeniorCitizens``.  BM25
+    and TF-IDF tokenize these as single opaque tokens and therefore fail to match
+    natural-language query words such as "senior", "wage", "workers".
+
+    This function appends word-split expansions for every CamelCase identifier
+    found in the description so that, e.g., "SeniorWage" contributes the extra
+    tokens "senior" and "wage" to the searchable text without changing the
+    original description.
+    """
+    _NOISE = frozenset({"of", "the", "a", "an", "and", "or", "in", "is", "at",
+                        "by", "to", "on", "for", "per", "with"})
+
+    def _camel_to_words(name: str) -> list[str]:
+        parts = re.findall(r"[A-Z][a-z0-9]*", name)
+        return [p.lower() for p in parts if p.lower() not in _NOISE and len(p) > 1]
+
+    result = []
+    for entry in catalog:
+        desc = entry.get("description", "")
+        camel_ids = re.findall(r"\b[A-Z][A-Za-z][A-Za-z0-9]*\b", desc)
+        extra: list[str] = []
+        seen: set[str] = set()
+        for cid in camel_ids:
+            for w in _camel_to_words(cid):
+                if w not in seen:
+                    extra.append(w)
+                    seen.add(w)
+        if extra:
+            augmented = dict(entry)
+            augmented["description"] = desc + " " + " ".join(extra)
+            result.append(augmented)
+        else:
+            result.append(entry)
+    return result
+
+
 def run() -> None:
     from tools.nlp4lp_downstream_utility import (
         _load_catalog_as_problems,
@@ -275,8 +361,12 @@ def run() -> None:
     # Load catalog
     catalog, id_to_text = _load_catalog_as_problems(CATALOG)
 
-    # Step 5: use hybrid BM25 + TF-IDF retriever for all cases
-    retriever = HybridRetriever().fit(catalog)
+    # Step 5: use hybrid BM25 + TF-IDF retriever for all cases.
+    # The catalog descriptions are augmented with CamelCase-split words so that
+    # LP formula identifiers (e.g. "SeniorWage") can be matched by natural-language
+    # query terms ("senior", "wage").
+    augmented_catalog = _augment_catalog(catalog)
+    retriever = HybridRetriever().fit(augmented_catalog)
 
     # Load benchmark
     cases = [json.loads(l) for l in BENCH_FILE.open()]

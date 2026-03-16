@@ -41,6 +41,14 @@ def _load_catalog() -> list[dict]:
         python build_extended_catalog.py
 
     from the project root.
+
+    References sidecar
+    ------------------
+    After loading, ``problem_references.json`` (in the same directory as the
+    catalog files) is merged in.  Any problem whose ``id`` appears as a key in
+    that file receives a ``"references"`` list field.  Problems without an entry
+    in the sidecar are unaffected.  This keeps the large base catalog clean
+    while still making paper links available in the UI and text output.
     """
     root = _project_root()
     extended = root / "data" / "processed" / "all_problems_extended.json"
@@ -64,15 +72,28 @@ def _load_catalog() -> list[dict]:
                 # developer to investigate.
                 stacklevel=2,
             )
-            return base_catalog
-        return ext_catalog
+            catalog = base_catalog
+        else:
+            catalog = ext_catalog
+    else:
+        path = extended if extended.exists() else base
+        if not path.exists():
+            raise FileNotFoundError(f"Catalog not found: {path}")
+        with open(path, encoding="utf-8") as f:
+            catalog = json.load(f)
 
-    path = extended if extended.exists() else base
-    if not path.exists():
-        raise FileNotFoundError(f"Catalog not found: {path}")
+    # Merge paper references sidecar (problem_references.json).
+    # Each key is a problem id; the value is a list of reference dicts.
+    refs_path = root / "data" / "processed" / "problem_references.json"
+    if refs_path.exists():
+        with open(refs_path, encoding="utf-8") as f:
+            refs_map: dict[str, list[dict]] = json.load(f)
+        for problem in catalog:
+            pid = problem.get("id", "")
+            if pid in refs_map:
+                problem["references"] = refs_map[pid]
 
-    with open(path, encoding="utf-8") as f:
-        return json.load(f)
+    return catalog
 
 
 def _searchable_text(problem: dict, multi_view: bool = False) -> str:
@@ -111,6 +132,26 @@ def build_index(catalog: list[dict], model, multi_view: bool = False) -> np.ndar
     return _embed(texts, model)
 
 
+# Small score bonus applied to problems that carry a complete structured
+# formulation (variables + objective + constraints).  The bonus only affects
+# tie-breaking: it promotes a complete problem over an incomplete stub when
+# their cosine-similarity scores are within this margin.  It does NOT override
+# a clearly more-relevant incomplete problem (gap > COMPLETENESS_BONUS).
+_COMPLETENESS_BONUS: float = 0.02
+
+
+def _formulation_complete(problem: dict) -> bool:
+    """Return True when the problem has all three formulation components.
+
+    A *complete* formulation requires at least one declared variable, a
+    non-empty objective, and at least one constraint.  Problems that only carry
+    a natural-language description (e.g. optmath_bench, gams, or_library) are
+    considered *incomplete* and receive no bonus during retrieval.
+    """
+    f = problem.get("formulation") or {}
+    return bool(f.get("variables") and f.get("objective") and f.get("constraints"))
+
+
 def search(
     query: str,
     catalog: list[dict] | None = None,
@@ -125,6 +166,7 @@ def search(
     grounding_lambda: float = 0.15,
     report_ambiguity: bool = False,
     verbose_rerank: bool = False,
+    prefer_complete: bool = True,
 ) -> list[tuple[dict, float]]:
     """
     Return top_k (problem, score) pairs for the natural-language query.
@@ -143,6 +185,10 @@ def search(
         grounding_lambda: weight for the grounding-consistency term (default 0.15).
         report_ambiguity: if True, print a warning when top-1 and top-2 scores are very close.
         verbose_rerank: if True, print per-candidate reranking feature scores.
+        prefer_complete: if True (default), add a small score bonus (``_COMPLETENESS_BONUS``)
+            to problems that have a full structured formulation (variables + objective +
+            constraints).  This breaks ties in favour of actionable results without
+            discarding a clearly more-relevant incomplete problem.
     """
     if catalog is None:
         catalog = _load_catalog()
@@ -172,6 +218,13 @@ def search(
     q_vec = _embed([effective_query], model)
     q_vec = q_vec / (np.linalg.norm(q_vec) or 1)
     scores = (embeddings_n @ q_vec.T).flatten()
+
+    # Completeness preference: add a small bonus to problems that have a full
+    # structured formulation so they float above stub entries with similar scores.
+    if prefer_complete:
+        for i, problem in enumerate(catalog):
+            if _formulation_complete(problem):
+                scores[i] += _COMPLETENESS_BONUS
 
     # Retrieve more candidates when reranking so the reranker has a larger pool
     fetch_k = (top_k * 3) if rerank else top_k
@@ -300,6 +353,35 @@ def format_problem_and_ip(problem: dict, score: float | None = None) -> str:
         )
     if problem.get("complexity"):
         lines.extend(["", f"*Complexity: {problem['complexity']}*", ""])
+    references = problem.get("references") or []
+    if references:
+        lines.extend(
+            [
+                "",
+                "<details><summary><strong>📚 Papers</strong></summary>",
+                "",
+            ]
+        )
+        for ref in references:
+            title = ref.get("title", "")
+            authors = ref.get("authors", "")
+            year = ref.get("year", "")
+            venue = ref.get("venue", "")
+            url = ref.get("url", "")
+            # Build a compact citation line; hyperlink the title if a URL is available.
+            # Escape Markdown link-text characters so brackets in the title don't
+            # break the [text](url) syntax.
+            safe_title = title.replace("[", r"\[").replace("]", r"\]")
+            title_part = f"[{safe_title}]({url})" if url else title
+            parts = [title_part]
+            if authors:
+                parts.append(authors)
+            if year:
+                parts.append(f"({year})")
+            if venue:
+                parts.append(f"*{venue}*")
+            lines.append("- " + " — ".join(parts))
+        lines.extend(["", "</details>", ""])
     if score is not None:
         lines.insert(0, f"(relevance: {score:.3f})\n")
     return "\n".join(lines)

@@ -37,8 +37,8 @@ _DOMAIN_EXPANSION_MAP: list[tuple[frozenset[str], str]] = [
     ),
     (
         frozenset({"assign", "assignment", "worker", "task", "job", "employee",
-                   "schedule", "scheduling", "shift"}),
-        "assignment scheduling worker task job bipartite matching optimization",
+                   "schedule", "scheduling", "shift", "crew", "rostering", "pairing"}),
+        "assignment scheduling worker task job crew rostering shift optimization",
     ),
     (
         frozenset({"facility", "location", "depot", "warehouse", "open", "opening",
@@ -62,6 +62,13 @@ _DOMAIN_EXPANSION_MAP: list[tuple[frozenset[str], str]] = [
                    "chromatic", "independent"}),
         "graph vertex edge node integer programming optimization",
     ),
+    # ── Spanning tree / Steiner tree ─────────────────────────────────────────
+    # Must appear before the generic network-flow entry so that "spanning tree"
+    # or "Steiner" queries do not collapse into the flow/path expansion.
+    (
+        frozenset({"spanning", "steiner", "mst", "arborescence", "tree"}),
+        "minimum spanning tree Steiner tree graph network connectivity optimization",
+    ),
     (
         frozenset({"production", "produce", "product", "manufacture", "manufacturing",
                    "factory", "output", "profit"}),
@@ -70,6 +77,14 @@ _DOMAIN_EXPANSION_MAP: list[tuple[frozenset[str], str]] = [
     (
         frozenset({"tsp", "salesman", "traveling", "travelling", "tour"}),
         "traveling salesman problem TSP tour shortest circuit optimization",
+    ),
+    # ── Flow shop / job shop sequencing / makespan ────────────────────────────
+    # Must appear BEFORE the network-flow entry: "flow shop" contains the token
+    # "flow" which would otherwise incorrectly trigger the network-flow expansion.
+    (
+        frozenset({"flowshop", "makespan", "sequencing", "tardiness",
+                   "permutation", "jobshop"}),
+        "flow shop job shop scheduling sequencing makespan minimization integer programming",
     ),
     (
         frozenset({"flow", "network", "path", "shortest"}),
@@ -94,6 +109,11 @@ _DOMAIN_EXPANSION_MAP: list[tuple[frozenset[str], str]] = [
         frozenset({"portfolio", "invest", "investment", "stock", "asset",
                    "return", "risk", "markowitz", "sharpe", "frontier"}),
         "portfolio optimization investment return risk asset allocation Markowitz",
+    ),
+    # ── Auction / procurement ─────────────────────────────────────────────────
+    (
+        frozenset({"auction", "bid", "bidding", "procurement", "winner"}),
+        "auction combinatorial bidding winner determination procurement allocation integer programming",
     ),
     # ── Matching / bipartite ──────────────────────────────────────────────────
     (

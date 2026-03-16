@@ -150,6 +150,90 @@ class TestExpandShortQuery:
         assert result.startswith("qp")
         assert "quadratic" in result.lower() or "convex" in result.lower()
 
+    # ── New domain triggers added in the "improve weakest point" iteration ──
+
+    def test_flowshop_keyword_triggers_scheduling_not_flow(self):
+        """'flowshop' (single token) must expand to scheduling context, NOT
+        to network-flow context, even though 'flow' appears in its expansion."""
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("flowshop")
+        assert result.startswith("flowshop")
+        # Scheduling-family keywords must be present
+        assert any(kw in result.lower() for kw in ("scheduling", "makespan", "sequencing", "job shop")), (
+            "'flowshop' must trigger the flow-shop/scheduling domain expansion"
+        )
+        # Must NOT be the bare network-flow expansion (which mentions 'arc' or 'path' only)
+        assert "shortest path" not in result.lower(), (
+            "'flowshop' must not map to the network-flow expansion"
+        )
+
+    def test_makespan_keyword_triggers_scheduling_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("makespan")
+        assert result.startswith("makespan")
+        assert any(kw in result.lower() for kw in ("scheduling", "makespan", "sequencing"))
+
+    def test_sequencing_keyword_triggers_scheduling_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("sequencing")
+        assert result.startswith("sequencing")
+        assert any(kw in result.lower() for kw in ("scheduling", "sequencing", "job shop"))
+
+    def test_spanning_keyword_triggers_tree_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("spanning")
+        assert result.startswith("spanning")
+        assert any(kw in result.lower() for kw in ("spanning", "steiner", "tree"))
+
+    def test_steiner_keyword_triggers_tree_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("steiner")
+        assert result.startswith("steiner")
+        assert any(kw in result.lower() for kw in ("steiner", "spanning", "tree"))
+
+    def test_mst_keyword_triggers_tree_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("mst")
+        assert result.startswith("mst")
+        assert any(kw in result.lower() for kw in ("spanning", "tree"))
+
+    def test_auction_keyword_triggers_auction_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("auction")
+        assert result.startswith("auction")
+        assert any(kw in result.lower() for kw in ("auction", "bidding", "winner"))
+
+    def test_bidding_keyword_triggers_auction_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("bidding")
+        assert result.startswith("bidding")
+        assert any(kw in result.lower() for kw in ("auction", "winner", "procurement"))
+
+    def test_procurement_keyword_triggers_auction_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("procurement")
+        assert result.startswith("procurement")
+        assert any(kw in result.lower() for kw in ("auction", "bidding", "procurement"))
+
+    def test_crew_keyword_triggers_scheduling_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("crew")
+        assert result.startswith("crew")
+        assert any(kw in result.lower() for kw in ("scheduling", "crew", "rostering", "assignment"))
+
+    def test_rostering_keyword_triggers_scheduling_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("rostering")
+        assert result.startswith("rostering")
+        assert any(kw in result.lower() for kw in ("rostering", "scheduling", "crew"))
+
+    def test_domain_count_at_least_21(self):
+        """Regression guard: the domain map must not shrink below 21 entries."""
+        from retrieval.utils import _DOMAIN_EXPANSION_MAP
+        assert len(_DOMAIN_EXPANSION_MAP) >= 21, (
+            f"Expected ≥ 21 domain expansion entries, got {len(_DOMAIN_EXPANSION_MAP)}"
+        )
+
 
 class TestIsShortQuery:
     def test_one_word_is_short(self):

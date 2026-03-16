@@ -27,18 +27,28 @@ from typing import NamedTuple
 _CAPACITY_CUES = frozenset({
     "capacity", "budget", "limit", "availability", "available", "stock", "supply",
     "resource", "quota", "demand", "inventory",
+    # network / flow capacity
+    "bandwidth", "throughput",
+    # discrete resource slots
+    "seat", "slot", "slots",
 })
 
 # Words that signal per-unit / rate / profit / cost
 _PER_UNIT_CUES = frozenset({
     "profit", "cost", "price", "revenue", "rate", "per", "unit", "margin",
     "value", "weight", "coefficient",
+    # finance / returns
+    "return", "gain", "yield",
+    # labour / penalty
+    "penalty", "wage", "salary",
 })
 
 # Words that signal min/max / bound
 _BOUND_CUES = frozenset({
     "min", "max", "minimum", "maximum", "lower", "upper", "bound", "threshold",
     "floor", "ceiling", "atleast", "atmost",
+    # natural-language bound phrases: "at least", "at most", "no more"
+    "least", "most",
 })
 
 # Words that signal percent / share / fraction
@@ -182,6 +192,56 @@ _CONFUSABLE_DISCRIMINATION: dict[str, dict[str, frozenset]] = {
                                 "hub", "cluster"}),
         "negative": frozenset({"open", "opening", "fixed", "charge"}),
     },
+    # routing (VRP) vs transportation (TP): routing visits customers on tours;
+    # transportation ships bulk goods between supply/demand nodes
+    "routing": {
+        "positive": frozenset({"vehicle", "tour", "depot", "vrp", "capacitated",
+                                "visit", "circuit", "cvrp"}),
+        "negative": frozenset({"supply", "demand", "ship", "shipping",
+                                "source", "destination"}),
+    },
+    "transportation": {
+        "positive": frozenset({"supply", "demand", "ship", "shipping",
+                                "source", "destination", "distribution"}),
+        "negative": frozenset({"vehicle", "tour", "depot", "vrp",
+                                "visit", "circuit"}),
+    },
+    # scheduling (job shop / flow shop) vs production planning:
+    # scheduling minimises makespan / tardiness; production maximises profit / meets demand
+    "scheduling": {
+        "positive": frozenset({"machine", "makespan", "deadline", "tardiness",
+                                "sequence", "flowshop", "jobshop", "release",
+                                "preemption", "processing"}),
+        "negative": frozenset({"product", "manufacturing", "profit", "assembly",
+                                "labor", "labour"}),
+    },
+    "production": {
+        "positive": frozenset({"product", "manufacturing", "profit", "assembly",
+                                "labor", "labour", "factory", "output"}),
+        "negative": frozenset({"makespan", "deadline", "tardiness", "sequence",
+                                "flowshop", "jobshop"}),
+    },
+    # network_flow (min-cost flow / shortest path) vs transportation (TP):
+    # network_flow is path/arc-based; transportation is supply/demand-based
+    "network_flow": {
+        "positive": frozenset({"path", "shortest", "sink", "arc", "maximum",
+                                "minimum", "cut", "augmenting"}),
+        "negative": frozenset({"supply", "demand", "ship", "route",
+                                "distribution"}),
+    },
+    # covering (set cover / vertex cover) vs graph (coloring / clique / independent set):
+    # covering selects subsets; general graph problems deal with vertex/edge properties
+    "covering": {
+        "positive": frozenset({"set", "element", "subset", "universe",
+                                "cover", "dominate"}),
+        "negative": frozenset({"color", "coloring", "chromatic", "clique",
+                                "independent"}),
+    },
+    "graph": {
+        "positive": frozenset({"color", "coloring", "chromatic", "clique",
+                                "independent", "bipartite", "cycle", "tree"}),
+        "negative": frozenset({"subset", "universe", "element", "cover"}),
+    },
 }
 
 
@@ -229,6 +289,10 @@ _QTY_BUDGET_CUES = frozenset({
 _QTY_CAPACITY_CUES = frozenset({
     "capacity", "supply", "availability", "available", "stock", "inventory",
     "resource", "quota", "limit", "limitation",
+    # network / flow capacity
+    "bandwidth", "throughput",
+    # discrete resource slots
+    "seat", "slot",
 })
 _QTY_BOUND_CUES = frozenset({
     "minimum", "maximum", "min", "max", "least", "most", "lower", "upper",

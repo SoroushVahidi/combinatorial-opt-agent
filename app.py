@@ -4,6 +4,11 @@ get the best-matching problem(s) and their integer programs.
 Run: python app.py  then open the URL in your browser.
 User queries are logged to data/collected_queries/user_queries.jsonl for training.
 
+Data collection: every search query and its top-k results are also pushed to a
+private GitHub repository for training purposes when TELEMETRY_REPO and
+TELEMETRY_TOKEN are set.  No personally identifiable information is collected.
+See the project README §"Data Collection" for full details.
+
 PDF support: you can also upload a PDF file (e.g. a paper or problem spec).
 Its text will be extracted and placed in the query box so you can edit it
 before running the search.
@@ -13,6 +18,8 @@ import html as _html
 import json
 import os
 from datetime import datetime, timezone
+
+import telemetry as _telemetry
 
 # Disable Gradio analytics to avoid extra thread (fixes "can't start new thread" on HPC)
 os.environ["GRADIO_ANALYTICS_ENABLED"] = "False"
@@ -62,26 +69,46 @@ EMBEDDINGS = None
 COLLECTED_QUERIES_DIR = Path(__file__).resolve().parent / "data" / "collected_queries"
 USER_QUERIES_FILE = COLLECTED_QUERIES_DIR / "user_queries.jsonl"
 
+# Maximum number of characters accepted in a single query.  Queries longer
+# than this are almost certainly copy-paste accidents (e.g. an entire paper
+# pasted without trimming) and would cause slow embedding + grounding with no
+# quality benefit.  Users are shown a clear message and asked to shorten.
+_MAX_QUERY_LEN = 5_000
+
 
 def _log_user_query(query: str, top_k: int, results: list) -> None:
-    """Append one JSONL record so you can use it for training. Safe for concurrent appends."""
+    """Append one JSONL record so you can use it for training. Safe for concurrent appends.
+
+    Each record is written both locally (data/collected_queries/user_queries.jsonl)
+    and, when TELEMETRY_REPO + TELEMETRY_TOKEN are configured, pushed to the
+    private training repository via telemetry.push_record().
+
+    The two destinations are handled independently: a failure in the local write
+    does not prevent the remote push and vice versa.
+    """
     if not query or not query.strip():
         return
+
+    record = {
+        "ts": datetime.now(tz=timezone.utc).isoformat(),
+        "query": query.strip(),
+        "top_k": int(top_k),
+        "results": [
+            {"id": p.get("id", ""), "name": p.get("name", ""), "score": float(s)}
+            for p, s in results
+        ],
+    }
+
+    # Local write (always attempted).
     try:
         COLLECTED_QUERIES_DIR.mkdir(parents=True, exist_ok=True)
-        record = {
-            "ts": datetime.now(tz=timezone.utc).isoformat(),
-            "query": query.strip(),
-            "top_k": int(top_k),
-            "results": [
-                {"id": p.get("id", ""), "name": p.get("name", ""), "score": float(s)}
-                for p, s in results
-            ],
-        }
         with open(USER_QUERIES_FILE, "a", encoding="utf-8") as f:
             f.write(json.dumps(record, ensure_ascii=False) + "\n")
     except Exception:
-        pass  # don't break the app if logging fails
+        pass  # don't break the app if local logging fails
+
+    # Remote push (no-op when env vars not set).
+    _telemetry.push_record(record)
 
 
 def get_model():
@@ -203,6 +230,40 @@ def _format_result_html(problem: dict, score: float, index: int, validation: dic
     ⚠ Formulation not yet available — the description above may still help.
   </div>"""
 
+    # ── Papers / References (optional) ───────────────────────────────────────
+    references = problem.get("references") or []
+    if references:
+        ref_items = ""
+        for ref in references:
+            title = _html.escape(ref.get("title", ""))
+            authors = _html.escape(ref.get("authors", ""))
+            year = _html.escape(str(ref.get("year", "")))
+            venue = _html.escape(ref.get("venue", ""))
+            url = _html.escape(ref.get("url", ""))
+            title_part = (
+                f'<a href="{url}" target="_blank" rel="noopener noreferrer">{title}</a>'
+                if url
+                else title
+            )
+            meta_parts = []
+            if authors:
+                meta_parts.append(f'<span class="coa-ref-authors">{authors}</span>')
+            if year:
+                meta_parts.append(f'<span class="coa-ref-year">({year})</span>')
+            if venue:
+                meta_parts.append(f'<span class="coa-ref-venue">{venue}</span>')
+            meta = " — ".join(meta_parts) if meta_parts else ""
+            ref_items += (
+                f"<li><span class='coa-ref-title'>{title_part}</span>"
+                + (f"<br><span class='coa-ref-meta'>{meta}</span>" if meta else "")
+                + "</li>"
+            )
+        card += f"""
+  <details class="coa-section">
+    <summary>📚 Papers <span class="coa-count">({len(references)})</span></summary>
+    <ul class="coa-ref-list">{ref_items}</ul>
+  </details>"""
+
     # ── Validation banner (optional) ──────────────────────────────────────────
     if validation is not None:
         errs = (
@@ -239,35 +300,55 @@ async def answer(query: str, top_k: int, validate: bool = False) -> str:
             "<p style='font-size:0.9rem;opacity:0.7'>Example: <em>minimize cost of opening warehouses and assigning customers</em></p>"
             "</div>"
         )
-    model = get_model()
-    k = max(1, min(10, top_k))
-    results = search(
-        query.strip(),
-        catalog=CATALOG,
-        embeddings=EMBEDDINGS,
-        model=model,
-        top_k=k,
-        validate=validate,
-    )
-    _log_user_query(query.strip(), k, results)
-    if not results:
+
+    if len(query) > _MAX_QUERY_LEN:
         return (
             '<div class="coa-empty-state coa-empty-warn">'
-            "⚠ No matching problems found — try rephrasing your description."
+            f"⚠ Query is too long ({len(query):,} characters). "
+            f"Please shorten it to {_MAX_QUERY_LEN:,} characters or fewer — "
+            "paste only the problem description, not an entire document."
             "</div>"
         )
-    cards = []
-    for i, (problem, score) in enumerate(results, 1):
-        val = problem.get("_validation") if validate else None
-        cards.append(_format_result_html(problem, score, i, validation=val))
 
-    header = (
-        f'<p class="coa-result-summary">'
-        f"Found <strong>{len(results)}</strong> result{'s' if len(results) != 1 else ''} "
-        f"— ordered by semantic similarity to your query."
-        f"</p>"
-    )
-    return header + "\n".join(cards)
+    try:
+        model = get_model()
+        k = max(1, min(10, top_k))
+        results = search(
+            query.strip(),
+            catalog=CATALOG,
+            embeddings=EMBEDDINGS,
+            model=model,
+            top_k=k,
+            validate=validate,
+        )
+        _log_user_query(query.strip(), k, results)
+        if not results:
+            return (
+                '<div class="coa-empty-state coa-empty-warn">'
+                "⚠ No matching problems found — try rephrasing your description."
+                "</div>"
+            )
+        cards = []
+        for i, (problem, score) in enumerate(results, 1):
+            val = problem.get("_validation") if validate else None
+            cards.append(_format_result_html(problem, score, i, validation=val))
+
+        header = (
+            f'<p class="coa-result-summary">'
+            f"Found <strong>{len(results)}</strong> result{'s' if len(results) != 1 else ''} "
+            f"— ordered by semantic similarity to your query."
+            f"</p>"
+        )
+        return header + "\n".join(cards)
+    except (SystemExit, KeyboardInterrupt):
+        raise
+    except Exception as exc:  # noqa: BLE001
+        return (
+            '<div class="coa-empty-state coa-empty-warn">'
+            "⚠ An unexpected error occurred while processing your query. "
+            f"Details: {_html.escape(str(exc))}"
+            "</div>"
+        )
 
 
 def handle_pdf_upload(file_path: str) -> tuple[str, str]:
@@ -487,6 +568,25 @@ _CUSTOM_CSS = """
   line-height: 1.5;
 }
 .coa-cdesc { color: #6b7280; }
+
+/* Papers / references list */
+.coa-ref-list {
+  padding: 0.4rem 1rem 0.65rem 1.5rem;
+  margin: 0;
+  list-style: disc;
+}
+.coa-ref-list li {
+  margin-bottom: 0.55rem;
+  font-size: 0.85rem;
+  color: #374151;
+  line-height: 1.5;
+}
+.coa-ref-title a { color: #0369a1; text-decoration: none; }
+.coa-ref-title a:hover { text-decoration: underline; }
+.coa-ref-meta { font-size: 0.8rem; color: #6b7280; }
+.coa-ref-authors { font-style: normal; }
+.coa-ref-year { font-weight: 500; }
+.coa-ref-venue { font-style: italic; }
 
 /* Missing formulation notice */
 .coa-no-formulation {
@@ -792,11 +892,17 @@ def main():
         )
 
         # ── Footer ────────────────────────────────────────────────────────────
+        _telemetry_note = (
+            " · Queries are also pushed to a <strong>private GitHub repository</strong> for training"
+            if _telemetry.is_enabled()
+            else ""
+        )
         gr.HTML(
             f'<div class="coa-footer">'
             f"Catalog: <strong>{n_problems}</strong> problems · "
             "Press <kbd>Enter</kbd> in the text box or click Search · "
             "Queries are logged locally for training"
+            f"{_telemetry_note}"
             "</div>"
         )
 

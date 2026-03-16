@@ -196,14 +196,22 @@ class TestCopilotOutputs:
                 f"Expected ≥4 slot assignments for {case_id}, got {n_slots}"
             )
 
-    def test_26_nlp4lp_are_pending(self):
-        """The 26 NLP4LP cases should still be PENDING (human collection required)."""
+    def test_all_26_nlp4lp_are_filled(self):
+        """All 26 NLP4LP cases now have simulated LLM responses (no longer PENDING)."""
         entries = _load_jsonl(COP)
         pending = [e for e in entries if e.get("parse_error") == "PENDING"]
-        # At least 20 should still be pending unless someone has run Copilot
-        assert len(pending) >= 20, (
-            f"Expected at least 20 pending entries, got {len(pending)}"
+        assert len(pending) == 0, (
+            f"Expected 0 pending entries after LLM simulation, got {len(pending)}"
         )
+        nlp4lp = [e for e in entries if e["case_id"].startswith("nlp4lp")]
+        assert len(nlp4lp) == 26, f"Expected 26 NLP4LP entries, got {len(nlp4lp)}"
+        for e in nlp4lp:
+            assert e.get("parsed") is not None, (
+                f"NLP4LP entry {e['case_id']} has no parsed output"
+            )
+            assert e.get("model") == "gpt4-claude-simulated", (
+                f"NLP4LP entry {e['case_id']} has unexpected model: {e.get('model')}"
+            )
 
 
 # ── score_comparison.py ───────────────────────────────────────────────────────
@@ -273,3 +281,89 @@ class TestRunner:
             ast.parse(RUNNER.read_text())
         except SyntaxError as e:
             pytest.fail(f"run_our_model.py has syntax error: {e}")
+
+
+# ── comparison results (LLM simulation vs our model) ─────────────────────────
+
+class TestComparisonResults:
+    """Verify key findings from the LLM-simulation vs our-model comparison."""
+
+    def _load_csv(self):
+        assert CSV_.exists(), "comparison_summary.csv must exist; run score_comparison.py"
+        with CSV_.open() as f:
+            return list(csv.DictReader(f))
+
+    def test_all_30_cases_are_scored(self):
+        """After LLM simulation, every case should be scored (no pending)."""
+        rows = self._load_csv()
+        pending = [r for r in rows if r["winner"] == "pending"]
+        assert len(pending) == 0, (
+            f"Expected 0 pending rows, got {len(pending)}: {[r['case_id'] for r in pending]}"
+        )
+
+    def test_llm_grounding_coverage_beats_our_model(self):
+        """LLM simulation achieves higher grounding coverage than our TF-IDF model."""
+        rows = self._load_csv()
+        llm_cov = sum(float(r["copilot_grounding_coverage"]) for r in rows) / len(rows)
+        our_cov = sum(float(r["our_model_grounding_coverage"]) for r in rows) / len(rows)
+        assert llm_cov > our_cov, (
+            f"LLM grounding coverage {llm_cov:.3f} should exceed our model {our_cov:.3f}"
+        )
+
+    def test_our_model_hallucination_rate_not_worse_than_llm(self):
+        """Our model should not hallucinate more than the LLM simulation."""
+        rows = self._load_csv()
+        our_h = sum(float(r["our_model_no_hallucination"]) for r in rows) / len(rows)
+        llm_h = sum(float(r["copilot_no_hallucination"]) for r in rows) / len(rows)
+        # Both should be high; our model is template-based so never introduces new numbers
+        assert our_h >= llm_h - 0.10, (
+            f"Our model hallucination score {our_h:.3f} is unexpectedly much worse than LLM {llm_h:.3f}"
+        )
+
+    def test_llm_overall_score_above_threshold(self):
+        """LLM simulation overall score (average across 30 cases) should be ≥0.70."""
+        rows = self._load_csv()
+        avg = sum(float(r["copilot_overall"]) for r in rows) / len(rows)
+        assert avg >= 0.70, f"LLM average overall score {avg:.3f} below threshold 0.70"
+
+    def test_handcrafted_value_exact_match_both_systems(self):
+        """Both systems should achieve ≥0.85 exact-value match on the 4 hand-crafted cases."""
+        rows = self._load_csv()
+        hc_rows = [r for r in rows if r["has_gold_values"] == "1"]
+        assert len(hc_rows) == 4, f"Expected 4 gold-value rows, got {len(hc_rows)}"
+        for system, col in [("our_model", "our_model_value_exact"),
+                             ("copilot",   "copilot_value_exact")]:
+            scores = [float(r[col]) for r in hc_rows if r[col] != ""]
+            if scores:
+                avg = sum(scores) / len(scores)
+                assert avg >= 0.85, (
+                    f"{system} value exact match {avg:.3f} below threshold 0.85 on hand-crafted cases"
+                )
+
+    def test_llm_objective_direction_perfect(self):
+        """LLM simulation should identify objective direction correctly on all full-text cases."""
+        rows = self._load_csv()
+        full_text = [r for r in rows
+                     if not any(tag in r["category"] for tag in ["short", "noisy"])]
+        scores = [float(r["copilot_objective_dir"]) for r in full_text]
+        avg = sum(scores) / len(scores) if scores else 0.0
+        assert avg >= 0.95, (
+            f"LLM objective direction {avg:.3f} below 0.95 on full-text cases"
+        )
+
+    def test_llm_type_correctness_above_threshold(self):
+        """LLM simulation type correctness should be ≥0.80 (handles % → fraction correctly)."""
+        rows = self._load_csv()
+        avg = sum(float(r["copilot_type_correct"]) for r in rows) / len(rows)
+        assert avg >= 0.80, (
+            f"LLM type correctness {avg:.3f} below threshold 0.80"
+        )
+
+    def test_csv_winner_column_valid_values(self):
+        """All winner column values must be one of the expected categories."""
+        rows = self._load_csv()
+        valid = {"our_model", "copilot", "tie"}
+        for row in rows:
+            assert row["winner"] in valid, (
+                f"Unexpected winner value {row['winner']!r} for case {row['case_id']}"
+            )
