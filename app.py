@@ -4,6 +4,11 @@ get the best-matching problem(s) and their integer programs.
 Run: python app.py  then open the URL in your browser.
 User queries are logged to data/collected_queries/user_queries.jsonl for training.
 
+Data collection: every search query and its top-k results are also pushed to a
+private GitHub repository for training purposes when TELEMETRY_REPO and
+TELEMETRY_TOKEN are set.  No personally identifiable information is collected.
+See the project README §"Data Collection" for full details.
+
 PDF support: you can also upload a PDF file (e.g. a paper or problem spec).
 Its text will be extracted and placed in the query box so you can edit it
 before running the search.
@@ -13,6 +18,8 @@ import html as _html
 import json
 import os
 from datetime import datetime, timezone
+
+import telemetry as _telemetry
 
 # Disable Gradio analytics to avoid extra thread (fixes "can't start new thread" on HPC)
 os.environ["GRADIO_ANALYTICS_ENABLED"] = "False"
@@ -70,24 +77,38 @@ _MAX_QUERY_LEN = 5_000
 
 
 def _log_user_query(query: str, top_k: int, results: list) -> None:
-    """Append one JSONL record so you can use it for training. Safe for concurrent appends."""
+    """Append one JSONL record so you can use it for training. Safe for concurrent appends.
+
+    Each record is written both locally (data/collected_queries/user_queries.jsonl)
+    and, when TELEMETRY_REPO + TELEMETRY_TOKEN are configured, pushed to the
+    private training repository via telemetry.push_record().
+
+    The two destinations are handled independently: a failure in the local write
+    does not prevent the remote push and vice versa.
+    """
     if not query or not query.strip():
         return
+
+    record = {
+        "ts": datetime.now(tz=timezone.utc).isoformat(),
+        "query": query.strip(),
+        "top_k": int(top_k),
+        "results": [
+            {"id": p.get("id", ""), "name": p.get("name", ""), "score": float(s)}
+            for p, s in results
+        ],
+    }
+
+    # Local write (always attempted).
     try:
         COLLECTED_QUERIES_DIR.mkdir(parents=True, exist_ok=True)
-        record = {
-            "ts": datetime.now(tz=timezone.utc).isoformat(),
-            "query": query.strip(),
-            "top_k": int(top_k),
-            "results": [
-                {"id": p.get("id", ""), "name": p.get("name", ""), "score": float(s)}
-                for p, s in results
-            ],
-        }
         with open(USER_QUERIES_FILE, "a", encoding="utf-8") as f:
             f.write(json.dumps(record, ensure_ascii=False) + "\n")
     except Exception:
-        pass  # don't break the app if logging fails
+        pass  # don't break the app if local logging fails
+
+    # Remote push (no-op when env vars not set).
+    _telemetry.push_record(record)
 
 
 def get_model():
@@ -871,11 +892,17 @@ def main():
         )
 
         # ── Footer ────────────────────────────────────────────────────────────
+        _telemetry_note = (
+            " · Queries are also pushed to a <strong>private GitHub repository</strong> for training"
+            if _telemetry.is_enabled()
+            else ""
+        )
         gr.HTML(
             f'<div class="coa-footer">'
             f"Catalog: <strong>{n_problems}</strong> problems · "
             "Press <kbd>Enter</kbd> in the text box or click Search · "
             "Queries are logged locally for training"
+            f"{_telemetry_note}"
             "</div>"
         )
 

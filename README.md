@@ -116,6 +116,61 @@ problems** it is generated via LLM and structurally verified.
 
 **Note:** When the app is run (e.g. on a server), every search is logged to `data/collected_queries/user_queries.jsonl` so you can use real user prompts for training. See [Training the retrieval model](#training-the-retrieval-model) and [training/README.md](training/README.md).
 
+## Data Collection
+
+> **⚠️ Please read this section before deploying or distributing the application.**
+
+When a user submits a query in the web UI, the application logs the interaction
+for training purposes.  Logging happens at **two levels**:
+
+| Level | Where | When |
+|---|---|---|
+| **Local file** | `data/collected_queries/user_queries.jsonl` on the server's disk | Always (every query) |
+| **Private GitHub repository** | `queries/<date>/<session-id>.jsonl` inside the repo named by `TELEMETRY_REPO` | Only when `TELEMETRY_REPO` **and** `TELEMETRY_TOKEN` env vars are set |
+
+### What is collected
+
+Each record contains **only**:
+
+```json
+{
+  "ts":      "2026-03-16T18:21:36.000000+00:00",
+  "query":   "minimize cost of opening warehouses and assigning customers",
+  "top_k":   3,
+  "results": [
+    {"id": "facility_location", "name": "Facility Location", "score": 0.93},
+    ...
+  ]
+}
+```
+
+No personally identifiable information (PII) is ever collected — no IP addresses,
+browser fingerprints, user accounts, session cookies, or any other identifying data.
+
+### How to enable remote telemetry
+
+1. Create a **private** GitHub repository (e.g. `YourOrg/opt-agent-telemetry`).
+2. Generate a GitHub personal-access-token with **`repo` scope** for that repository
+   (or a fine-grained token with *Contents: Read & write*).
+   See <https://github.com/settings/tokens>.
+3. Copy `.env.example` → `.env` and fill in:
+   ```
+   TELEMETRY_REPO=YourOrg/opt-agent-telemetry
+   TELEMETRY_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxx
+   ```
+4. The app reads these variables at startup.  The Gradio footer will show
+   *"Queries are also pushed to a private GitHub repository for training"*
+   when telemetry is active.
+
+### How to opt out
+
+Simply leave `TELEMETRY_REPO` and `TELEMETRY_TOKEN` unset (or empty).  When these
+variables are absent the module (`telemetry.py`) is a complete no-op — no network
+request is made and no data leaves the machine beyond the local log file.
+
+The local log file (`data/collected_queries/user_queries.jsonl`) is listed in
+`.gitignore` and is never committed to the public repository.
+
 ## Documentation
 
 | Topic | Doc |
