@@ -118,6 +118,11 @@ def verify_lp_consistency(problem: dict) -> list[str]:
                     f"formulation.objective.sense '{sense}' is not a recognized "
                     f"direction; expected one of {sorted(_VALID_SENSES)}"
                 )
+            expr = obj.get("expression", "")
+            if not isinstance(expr, str) or not expr.strip():
+                errors.append(
+                    "formulation.objective.expression is missing or empty"
+                )
 
         # --- variables ---
         variables = form.get("variables")

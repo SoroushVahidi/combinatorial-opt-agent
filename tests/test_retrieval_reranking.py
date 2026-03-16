@@ -707,3 +707,299 @@ class TestAblationEvaluation:
             assert "accuracy_at_1" in r
             assert "mrr" in r
             assert "n" in r
+
+
+# ---------------------------------------------------------------------------
+# New tests: missing confusable discrimination pairs (routing, scheduling,
+# network_flow, covering, graph, transportation/production expansion)
+# ---------------------------------------------------------------------------
+
+class TestNewConfusableDiscriminationPairs:
+    """Test the four new confusable discrimination pairs added:
+    routing↔transportation, scheduling↔production,
+    network_flow↔transportation, covering↔graph.
+    """
+
+    # ── routing ──────────────────────────────────────────────────────────────
+
+    def test_vrp_positive_cues_boost_routing_schema(self):
+        from retrieval.reranking import _confusable_discrimination_score, _tokenize
+        problem = {"id": "vrp", "name": "Vehicle Routing Problem", "tags": []}
+        # "vehicle", "tour", "depot" are positive cues for routing
+        q = _tokenize("minimize vehicle tour depot capacitated vrp")
+        score = _confusable_discrimination_score(q, problem)
+        assert score > 0.0, f"VRP problem + VRP cues should give positive score, got {score}"
+
+    def test_transport_cues_penalise_routing_schema(self):
+        from retrieval.reranking import _confusable_discrimination_score, _tokenize
+        problem = {"id": "vrp", "name": "Vehicle Routing Problem", "tags": []}
+        # supply/demand/shipping are negative cues for routing (they belong to TP)
+        q = _tokenize("supply demand shipping source destination distribution")
+        score = _confusable_discrimination_score(q, problem)
+        assert score <= 0.0, f"TP cues on a routing schema should give non-positive score, got {score}"
+
+    # ── transportation (extended — now has negative cues for VRP) ────────────
+
+    def test_transport_positive_cues_boost_transport_schema(self):
+        from retrieval.reranking import _confusable_discrimination_score, _tokenize
+        problem = {"id": "tp", "name": "Transportation Problem", "tags": []}
+        q = _tokenize("supply demand ship shipping source destination distribution")
+        score = _confusable_discrimination_score(q, problem)
+        assert score > 0.0, f"TP cues on transportation schema should give positive score, got {score}"
+
+    def test_vrp_cues_penalise_transport_schema(self):
+        from retrieval.reranking import _confusable_discrimination_score, _tokenize
+        problem = {"id": "tp", "name": "Transportation Problem", "tags": []}
+        q = _tokenize("vehicle tour depot vrp capacitated visit circuit")
+        score = _confusable_discrimination_score(q, problem)
+        assert score <= 0.0, f"VRP cues on transportation schema should give non-positive score, got {score}"
+
+    # ── scheduling ───────────────────────────────────────────────────────────
+
+    def test_scheduling_positive_cues_boost_scheduling_schema(self):
+        from retrieval.reranking import _confusable_discrimination_score, _tokenize
+        problem = {"id": "js", "name": "Job Shop Scheduling", "tags": []}
+        q = _tokenize("machine makespan deadline tardiness sequence flowshop processing")
+        score = _confusable_discrimination_score(q, problem)
+        assert score > 0.0, f"Scheduling cues on scheduling schema should give positive score, got {score}"
+
+    def test_production_cues_penalise_scheduling_schema(self):
+        from retrieval.reranking import _confusable_discrimination_score, _tokenize
+        problem = {"id": "js", "name": "Job Shop Scheduling", "tags": []}
+        q = _tokenize("product manufacturing profit assembly labor labour factory")
+        score = _confusable_discrimination_score(q, problem)
+        assert score <= 0.0, f"Production cues on scheduling schema should give non-positive score, got {score}"
+
+    # ── production (extended — now has negative cues for scheduling) ─────────
+
+    def test_production_positive_cues_boost_production_schema(self):
+        from retrieval.reranking import _confusable_discrimination_score, _tokenize
+        problem = {"id": "pp", "name": "Production Planning", "tags": []}
+        q = _tokenize("product manufacturing profit assembly labor factory output")
+        score = _confusable_discrimination_score(q, problem)
+        assert score > 0.0, f"Production cues on production schema should give positive score, got {score}"
+
+    def test_scheduling_cues_penalise_production_schema(self):
+        from retrieval.reranking import _confusable_discrimination_score, _tokenize
+        problem = {"id": "pp", "name": "Production Planning", "tags": []}
+        q = _tokenize("makespan deadline tardiness sequence flowshop jobshop")
+        score = _confusable_discrimination_score(q, problem)
+        assert score <= 0.0, f"Scheduling cues on production schema should give non-positive score, got {score}"
+
+    # ── network_flow ─────────────────────────────────────────────────────────
+
+    def test_flow_positive_cues_boost_network_flow_schema(self):
+        from retrieval.reranking import _confusable_discrimination_score, _tokenize
+        # "network_flow" key has underscore; name heuristic won't match "network flow"
+        # (space), so provide the tag explicitly.
+        problem = {"id": "nf", "name": "Min-Cost Network Flow", "tags": ["network_flow"]}
+        q = _tokenize("path shortest sink arc maximum minimum cut augmenting")
+        score = _confusable_discrimination_score(q, problem)
+        assert score > 0.0, f"Flow cues on network_flow schema should give positive score, got {score}"
+
+    def test_tp_cues_penalise_network_flow_schema(self):
+        from retrieval.reranking import _confusable_discrimination_score, _tokenize
+        problem = {"id": "nf", "name": "Min-Cost Network Flow", "tags": ["network_flow"]}
+        q = _tokenize("supply demand ship route distribution")
+        score = _confusable_discrimination_score(q, problem)
+        assert score <= 0.0, f"TP cues on network_flow schema should give non-positive score, got {score}"
+
+    # ── covering ─────────────────────────────────────────────────────────────
+
+    def test_cover_positive_cues_boost_covering_schema(self):
+        from retrieval.reranking import _confusable_discrimination_score, _tokenize
+        # "covering" key won't match "set cover" by substring (different word);
+        # use the tag directly so the discrimination entry is found.
+        problem = {"id": "sc", "name": "Set Cover Problem", "tags": ["covering"]}
+        q = _tokenize("set element subset universe cover dominate")
+        score = _confusable_discrimination_score(q, problem)
+        assert score > 0.0, f"Cover cues on covering schema should give positive score, got {score}"
+
+    def test_graph_cues_penalise_covering_schema(self):
+        from retrieval.reranking import _confusable_discrimination_score, _tokenize
+        problem = {"id": "sc", "name": "Set Cover Problem", "tags": ["covering"]}
+        q = _tokenize("color coloring chromatic clique independent")
+        score = _confusable_discrimination_score(q, problem)
+        assert score <= 0.0, f"Graph cues on covering schema should give non-positive score, got {score}"
+
+    # ── graph ─────────────────────────────────────────────────────────────────
+
+    def test_graph_positive_cues_boost_graph_schema(self):
+        from retrieval.reranking import _confusable_discrimination_score, _tokenize
+        problem = {"id": "gc", "name": "Graph Coloring Problem", "tags": []}
+        q = _tokenize("color coloring chromatic clique independent bipartite")
+        score = _confusable_discrimination_score(q, problem)
+        assert score > 0.0, f"Graph cues on graph schema should give positive score, got {score}"
+
+    def test_cover_cues_penalise_graph_schema(self):
+        from retrieval.reranking import _confusable_discrimination_score, _tokenize
+        problem = {"id": "gc", "name": "Graph Coloring Problem", "tags": []}
+        q = _tokenize("subset universe element cover")
+        score = _confusable_discrimination_score(q, problem)
+        assert score <= 0.0, f"Cover cues on graph schema should give non-positive score, got {score}"
+
+    def test_score_bounded_for_all_new_pairs(self):
+        """All new discrimination scores stay in [-0.1, 0.1]."""
+        from retrieval.reranking import _confusable_discrimination_score, _tokenize
+        q = _tokenize("vehicle tour depot makespan machine cover element color chromatic")
+        for name in [
+            "Vehicle Routing Problem", "Transportation Problem",
+            "Job Shop Scheduling", "Production Planning",
+            "Min-Cost Network Flow", "Set Cover Problem", "Graph Coloring",
+        ]:
+            problem = {"id": "x", "name": name, "tags": []}
+            score = _confusable_discrimination_score(q, problem)
+            assert -0.1 <= score <= 0.1, (
+                f"Score out of bounds for '{name}': {score}"
+            )
+
+    def test_all_new_keys_present_in_discrimination_map(self):
+        from retrieval.reranking import _CONFUSABLE_DISCRIMINATION
+        for key in ("routing", "transportation", "scheduling", "production",
+                    "network_flow", "covering", "graph"):
+            assert key in _CONFUSABLE_DISCRIMINATION, (
+                f"Expected '{key}' in _CONFUSABLE_DISCRIMINATION"
+            )
+
+    def test_total_discrimination_pairs_at_least_12(self):
+        """Regression guard: map must not shrink below 12 entries (was 8 originally,
+        expanded to 13 by adding routing/transportation/scheduling/production/
+        network_flow/covering/graph pairs)."""
+        from retrieval.reranking import _CONFUSABLE_DISCRIMINATION
+        assert len(_CONFUSABLE_DISCRIMINATION) >= 13, (
+            f"Expected ≥ 13 entries in _CONFUSABLE_DISCRIMINATION, "
+            f"got {len(_CONFUSABLE_DISCRIMINATION)}"
+        )
+
+
+# ---------------------------------------------------------------------------
+# New tests: role-cue vocabulary additions
+# ---------------------------------------------------------------------------
+
+class TestRoleCueVocabularyAdditions:
+    """Test the new words added to _CAPACITY_CUES, _PER_UNIT_CUES, _BOUND_CUES."""
+
+    def test_bandwidth_is_capacity_cue(self):
+        from retrieval.reranking import _CAPACITY_CUES
+        assert "bandwidth" in _CAPACITY_CUES, "bandwidth should be a capacity cue"
+
+    def test_throughput_is_capacity_cue(self):
+        from retrieval.reranking import _CAPACITY_CUES
+        assert "throughput" in _CAPACITY_CUES, "throughput should be a capacity cue"
+
+    def test_seat_is_capacity_cue(self):
+        from retrieval.reranking import _CAPACITY_CUES
+        assert "seat" in _CAPACITY_CUES, "seat should be a capacity cue"
+
+    def test_slot_is_capacity_cue(self):
+        from retrieval.reranking import _CAPACITY_CUES
+        assert "slot" in _CAPACITY_CUES, "slot should be a capacity cue"
+
+    def test_penalty_is_per_unit_cue(self):
+        from retrieval.reranking import _PER_UNIT_CUES
+        assert "penalty" in _PER_UNIT_CUES, "penalty should be a per-unit cue"
+
+    def test_wage_is_per_unit_cue(self):
+        from retrieval.reranking import _PER_UNIT_CUES
+        assert "wage" in _PER_UNIT_CUES, "wage should be a per-unit cue"
+
+    def test_salary_is_per_unit_cue(self):
+        from retrieval.reranking import _PER_UNIT_CUES
+        assert "salary" in _PER_UNIT_CUES, "salary should be a per-unit cue"
+
+    def test_return_is_per_unit_cue(self):
+        from retrieval.reranking import _PER_UNIT_CUES
+        assert "return" in _PER_UNIT_CUES, "return should be a per-unit cue"
+
+    def test_gain_is_per_unit_cue(self):
+        from retrieval.reranking import _PER_UNIT_CUES
+        assert "gain" in _PER_UNIT_CUES, "gain should be a per-unit cue"
+
+    def test_yield_is_per_unit_cue(self):
+        from retrieval.reranking import _PER_UNIT_CUES
+        assert "yield" in _PER_UNIT_CUES, "yield should be a per-unit cue"
+
+    def test_least_is_bound_cue(self):
+        """'least' captures the 'at least' phrase pattern in user queries."""
+        from retrieval.reranking import _BOUND_CUES
+        assert "least" in _BOUND_CUES, "least (from 'at least') should be a bound cue"
+
+    def test_most_is_bound_cue(self):
+        """'most' captures the 'at most' phrase pattern in user queries."""
+        from retrieval.reranking import _BOUND_CUES
+        assert "most" in _BOUND_CUES, "most (from 'at most') should be a bound cue"
+
+    def test_new_capacity_cues_in_all_role_cues(self):
+        """New capacity cues must be propagated to _ALL_ROLE_CUES."""
+        from retrieval.reranking import _ALL_ROLE_CUES
+        for word in ("bandwidth", "throughput", "seat", "slot"):
+            assert word in _ALL_ROLE_CUES, f"'{word}' should be in _ALL_ROLE_CUES"
+
+    def test_new_per_unit_cues_in_all_role_cues(self):
+        from retrieval.reranking import _ALL_ROLE_CUES
+        for word in ("penalty", "wage", "salary", "return", "gain", "yield"):
+            assert word in _ALL_ROLE_CUES, f"'{word}' should be in _ALL_ROLE_CUES"
+
+    def test_new_bound_cues_in_all_role_cues(self):
+        from retrieval.reranking import _ALL_ROLE_CUES
+        for word in ("least", "most"):
+            assert word in _ALL_ROLE_CUES, f"'{word}' should be in _ALL_ROLE_CUES"
+
+    def test_bandwidth_query_triggers_capacity_overlap(self):
+        """bandwidth is now in _QTY_CAPACITY_CUES, so a bandwidth query matches a
+        capacity-slot schema via grounding_consistency_score (family-level check)."""
+        from retrieval.reranking import grounding_consistency_score, _QTY_CAPACITY_CUES
+        # Verify the new word is in the right family set
+        assert "bandwidth" in _QTY_CAPACITY_CUES
+        # A query that mentions bandwidth should register as having a capacity signal
+        query = "maximize bandwidth through the network"
+        # Schema whose slot vocabulary includes a standard capacity cue ("capacity")
+        schema = {
+            "id": "nf",
+            "name": "Max-Flow Network Problem",
+            "aliases": [],
+            "description": "Maximise flow through a network respecting arc capacity limits.",
+            "formulation": {
+                "variables": [{"symbol": "f_ij", "description": "flow on arc ij"}],
+                "objective": {"sense": "maximize", "expression": "sum f_ij"},
+                "constraints": [
+                    {"expression": "f_ij <= capacity_ij", "description": "arc capacity limit"},
+                ],
+            },
+        }
+        gc = grounding_consistency_score(query, schema)
+        # Both query (bandwidth) and schema (capacity) signal the capacity family →
+        # grounding_consistency_score should be > 0.5 (better than neutral)
+        assert gc > 0.5, (
+            f"bandwidth query vs capacity-slot schema: grounding_consistency should be > 0.5, got {gc}"
+        )
+
+    def test_at_least_phrase_triggers_bound_overlap(self):
+        """'at least N' phrase: tokenised to 'at', 'least' → 'least' now in BOUND_CUES.
+        Role-cue overlap fires when the schema also uses 'least' in its slot vocabulary."""
+        from retrieval.reranking import _rerank_score, _tokenize
+        query_tokens = _tokenize("produce at least 100 units per day")
+        # Schema whose constraint description uses 'least' so s_role contains it
+        schema = {
+            "id": "pp",
+            "name": "Production Planning",
+            "aliases": [],
+            "description": "Plan production to meet demand constraints.",
+            "formulation": {
+                "variables": [{"symbol": "x_p", "description": "units produced of product p"}],
+                "objective": {"sense": "maximize", "expression": "sum profit_p x_p"},
+                "constraints": [
+                    {
+                        "expression": "x_p >= demand_p",
+                        "description": "produce at least the minimum demand for each product",
+                    },
+                ],
+            },
+        }
+        features = _rerank_score(query_tokens, schema)
+        # 'least' appears in both query tokens AND schema constraint description →
+        # role_cue_overlap > 0 now that 'least' is in BOUND_CUES
+        assert features.role_cue_overlap > 0.0, (
+            "'at least' phrase should now contribute to role_cue_overlap via 'least' bound cue; "
+            f"got role_cue_overlap={features.role_cue_overlap}"
+        )

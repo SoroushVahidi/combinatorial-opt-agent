@@ -194,3 +194,78 @@ class TestVerifyLpConsistency:
         assert out["formulation_errors"] == []
         assert out["lp_consistency_errors"] == []
 
+
+# ---------------------------------------------------------------------------
+# New tests: objective expression emptiness check
+# ---------------------------------------------------------------------------
+
+class TestObjectiveExpressionCheck:
+    """verify_lp_consistency now also checks that objective.expression is non-empty."""
+
+    def _make(self, expression) -> dict:
+        return {
+            "id": "t",
+            "formulation": {
+                "variables": [{"symbol": "x"}],
+                "objective": {"sense": "minimize", "expression": expression},
+                "constraints": [],
+            },
+        }
+
+    def test_empty_string_expression_flagged(self):
+        from formulation.verify import verify_lp_consistency
+        errs = verify_lp_consistency(self._make(""))
+        assert any("expression" in e and "objective" in e for e in errs), (
+            f"Expected objective.expression error; got: {errs}"
+        )
+
+    def test_whitespace_only_expression_flagged(self):
+        from formulation.verify import verify_lp_consistency
+        errs = verify_lp_consistency(self._make("   "))
+        assert any("expression" in e and "objective" in e for e in errs)
+
+    def test_none_expression_flagged(self):
+        from formulation.verify import verify_lp_consistency
+        errs = verify_lp_consistency(self._make(None))
+        assert any("expression" in e and "objective" in e for e in errs)
+
+    def test_valid_expression_passes(self):
+        from formulation.verify import verify_lp_consistency
+        assert verify_lp_consistency(self._make("x + y")) == []
+
+    def test_run_all_checks_surfaces_empty_expression(self):
+        from formulation.verify import run_all_problem_checks
+        out = run_all_problem_checks(self._make(""))
+        lp_errs = out.get("lp_consistency_errors", [])
+        assert any("expression" in e and "objective" in e for e in lp_errs), (
+            f"run_all_problem_checks should surface objective.expression error; got: {out}"
+        )
+
+    def test_optmath_bench_stub_pattern_flagged(self):
+        """Reproduces the optmath_bench stub pattern: sense present but expression empty."""
+        from formulation.verify import verify_lp_consistency
+        p = {
+            "id": "optmath_bench_001",
+            "formulation": {
+                "variables": [],
+                "objective": {
+                    "sense": "minimize",
+                    "expression": "",
+                },
+                "constraints": [],
+            },
+        }
+        errs = verify_lp_consistency(p)
+        # Empty expression must be flagged
+        assert any("expression" in e for e in errs)
+
+    def test_case_insensitive_sense_still_passes(self):
+        """MINIMIZE and MAXIMIZE are normalised to lowercase before checking."""
+        from formulation.verify import verify_lp_consistency
+        p = self._make("3*x + 2*y")
+        p["formulation"]["objective"]["sense"] = "MINIMIZE"
+        errs = verify_lp_consistency(p)
+        # Sense is case-insensitively valid and expression is present → no errors
+        assert errs == []
+
+
