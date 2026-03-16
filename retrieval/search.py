@@ -132,6 +132,26 @@ def build_index(catalog: list[dict], model, multi_view: bool = False) -> np.ndar
     return _embed(texts, model)
 
 
+# Small score bonus applied to problems that carry a complete structured
+# formulation (variables + objective + constraints).  The bonus only affects
+# tie-breaking: it promotes a complete problem over an incomplete stub when
+# their cosine-similarity scores are within this margin.  It does NOT override
+# a clearly more-relevant incomplete problem (gap > COMPLETENESS_BONUS).
+_COMPLETENESS_BONUS: float = 0.02
+
+
+def _formulation_complete(problem: dict) -> bool:
+    """Return True when the problem has all three formulation components.
+
+    A *complete* formulation requires at least one declared variable, a
+    non-empty objective, and at least one constraint.  Problems that only carry
+    a natural-language description (e.g. optmath_bench, gams, or_library) are
+    considered *incomplete* and receive no bonus during retrieval.
+    """
+    f = problem.get("formulation") or {}
+    return bool(f.get("variables") and f.get("objective") and f.get("constraints"))
+
+
 def search(
     query: str,
     catalog: list[dict] | None = None,
@@ -146,6 +166,7 @@ def search(
     grounding_lambda: float = 0.15,
     report_ambiguity: bool = False,
     verbose_rerank: bool = False,
+    prefer_complete: bool = True,
 ) -> list[tuple[dict, float]]:
     """
     Return top_k (problem, score) pairs for the natural-language query.
@@ -164,6 +185,10 @@ def search(
         grounding_lambda: weight for the grounding-consistency term (default 0.15).
         report_ambiguity: if True, print a warning when top-1 and top-2 scores are very close.
         verbose_rerank: if True, print per-candidate reranking feature scores.
+        prefer_complete: if True (default), add a small score bonus (``_COMPLETENESS_BONUS``)
+            to problems that have a full structured formulation (variables + objective +
+            constraints).  This breaks ties in favour of actionable results without
+            discarding a clearly more-relevant incomplete problem.
     """
     if catalog is None:
         catalog = _load_catalog()
@@ -193,6 +218,13 @@ def search(
     q_vec = _embed([effective_query], model)
     q_vec = q_vec / (np.linalg.norm(q_vec) or 1)
     scores = (embeddings_n @ q_vec.T).flatten()
+
+    # Completeness preference: add a small bonus to problems that have a full
+    # structured formulation so they float above stub entries with similar scores.
+    if prefer_complete:
+        for i, problem in enumerate(catalog):
+            if _formulation_complete(problem):
+                scores[i] += _COMPLETENESS_BONUS
 
     # Retrieve more candidates when reranking so the reranker has a larger pool
     fetch_k = (top_k * 3) if rerank else top_k
