@@ -190,8 +190,13 @@ def search(
             constraints).  This breaks ties in favour of actionable results without
             discarding a clearly more-relevant incomplete problem.
     """
+    if top_k <= 0:
+        return []
+
     if catalog is None:
         catalog = _load_catalog()
+    if not catalog:
+        return []
     if model is None:
         try:
             from sentence_transformers import SentenceTransformer

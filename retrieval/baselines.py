@@ -57,6 +57,8 @@ class BM25Baseline(RetrievalBaseline):
         return self
 
     def rank(self, query: str, top_k: int) -> list[tuple[str, float]]:
+        if top_k <= 0:
+            return []
         if self._index is None:
             raise RuntimeError("Call fit(catalog) first")
         import numpy as np
@@ -84,6 +86,8 @@ class TfidfBaseline(RetrievalBaseline):
         return self
 
     def rank(self, query: str, top_k: int) -> list[tuple[str, float]]:
+        if top_k <= 0:
+            return []
         if self._matrix is None or self._vectorizer is None:
             raise RuntimeError("Call fit(catalog) first")
         from sklearn.metrics.pairwise import cosine_similarity
@@ -131,6 +135,8 @@ class LSABaseline(RetrievalBaseline):
         return self
 
     def rank(self, query: str, top_k: int) -> list[tuple[str, float]]:
+        if top_k <= 0:
+            return []
         if self._matrix is None or self._vectorizer is None or self._svd is None:
             raise RuntimeError("Call fit(catalog) first")
         import numpy as np
@@ -169,6 +175,8 @@ class SBERTBaseline(RetrievalBaseline):
         return self
 
     def rank(self, query: str, top_k: int) -> list[tuple[str, float]]:
+        if top_k <= 0:
+            return []
         if self._embeddings is None or self._model is None:
             raise RuntimeError("Call fit(catalog) first")
         import numpy as np
@@ -215,6 +223,8 @@ class E5Baseline(RetrievalBaseline):
         return self
 
     def rank(self, query: str, top_k: int) -> list[tuple[str, float]]:
+        if top_k <= 0:
+            return []
         if self._embeddings is None or self._model is None:
             raise RuntimeError("Call fit(catalog) first")
         import numpy as np
@@ -259,6 +269,8 @@ class BGEBaseline(RetrievalBaseline):
         return self
 
     def rank(self, query: str, top_k: int) -> list[tuple[str, float]]:
+        if top_k <= 0:
+            return []
         if self._embeddings is None or self._model is None:
             raise RuntimeError("Call fit(catalog) first")
         import numpy as np
