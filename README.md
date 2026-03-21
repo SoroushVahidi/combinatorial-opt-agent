@@ -116,6 +116,41 @@ problems** it is generated via LLM and structurally verified.
 
 **Note:** When the app is run (e.g. on a server), every search is logged to `data/collected_queries/user_queries.jsonl` so you can use real user prompts for training. See [Training the retrieval model](#training-the-retrieval-model) and [training/README.md](training/README.md).
 
+## Connect Codex to another repository
+
+If you want to run Codex against a different project folder/repository, use one of the
+workflows below.
+
+### Option A: Open Codex in a new local clone
+
+```bash
+git clone https://github.com/<owner>/<repo>.git
+cd <repo>
+codex
+```
+
+### Option B: Add a second remote to the current repository
+
+```bash
+git remote add upstream https://github.com/<owner>/<repo>.git
+git fetch upstream
+git remote -v
+```
+
+### Option C: Worktree for side-by-side repositories/branches
+
+```bash
+git worktree add ../<repo>-alt <branch-or-ref>
+cd ../<repo>-alt
+codex
+```
+
+### Authentication notes
+
+- For private repositories, authenticate first via your Git provider CLI (for example,
+  `gh auth login`) or SSH keys.
+- Confirm access with `git ls-remote <repo-url>` before launching Codex.
+
 ## Data Collection
 
 > **⚠️ Please read this section before deploying or distributing the application.**
