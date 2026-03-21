@@ -112,23 +112,20 @@ def _check_split(split: str, rows: list[dict]) -> dict:
     # Feature sparsity / constant features
     feature_stats: dict[str, dict] = {}
     for feat in EXPECTED_NUMERIC_FEATURES:
-        values = [r[feat] for r in rows if feat in r]
-        if not values:
+        feature_rows = [r for r in rows if feat in r]
+        if not feature_rows:
             feature_stats[feat] = {"present": False}
             continue
-        non_null = [v for v in values if v is not None]
-        mean_pos = (
-            sum(v for r, v in zip(rows, values) if int(r.get("label", -1)) == 1) /
-            max(sum(1 for r in rows if int(r.get("label", -1)) == 1 and feat in r), 1)
-        )
-        mean_neg = (
-            sum(v for r, v in zip(rows, values) if int(r.get("label", -1)) == 0) /
-            max(sum(1 for r in rows if int(r.get("label", -1)) == 0 and feat in r), 1)
-        )
-        unique_vals = set(non_null)
+
+        non_null_values = [r[feat] for r in feature_rows if r[feat] is not None]
+        pos_values = [r[feat] for r in feature_rows if int(r.get("label", -1)) == 1 and r[feat] is not None]
+        neg_values = [r[feat] for r in feature_rows if int(r.get("label", -1)) == 0 and r[feat] is not None]
+        mean_pos = sum(pos_values) / max(len(pos_values), 1)
+        mean_neg = sum(neg_values) / max(len(neg_values), 1)
+        unique_vals = set(non_null_values)
         feature_stats[feat] = {
             "present": True,
-            "coverage": round(len(non_null) / max(n, 1), 4),
+            "coverage": round(len(non_null_values) / max(n, 1), 4),
             "is_constant": len(unique_vals) <= 1,
             "mean_on_positive": round(mean_pos, 4),
             "mean_on_negative": round(mean_neg, 4),
