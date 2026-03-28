@@ -1,0 +1,16 @@
+case_id,is_correct,failure_type,old_flagged,repaired_flagged,old_correct,repaired_correct
+correct_01,True,,True,False,False,True
+correct_02,True,,True,False,False,True
+correct_03,True,,False,True,True,False
+correct_04,True,,True,False,False,True
+correct_05,True,,True,False,False,True
+correct_06,True,,True,False,False,True
+correct_07,True,,True,False,False,True
+wrong_intermediate_01,False,intermediate_as_final,False,True,False,True
+wrong_intermediate_02,False,intermediate_as_final,False,True,False,True
+wrong_intermediate_03,False,intermediate_as_final,False,False,False,False
+wrong_intermediate_04,False,intermediate_as_final,False,True,False,True
+wrong_target_01,False,wrong_target_quantity,False,False,False,False
+wrong_target_02,False,wrong_target_quantity,False,False,False,False
+wrong_target_03,False,wrong_target_quantity,False,True,False,True
+wrong_target_04,False,wrong_target_quantity,False,True,False,True

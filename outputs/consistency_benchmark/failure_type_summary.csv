@@ -1,0 +1,4 @@
+failure_type,total,old_correct,repaired_correct
+correct,7,1,6
+intermediate_as_final,4,0,3
+wrong_target_quantity,4,0,2
