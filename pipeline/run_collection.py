@@ -357,6 +357,15 @@ def main() -> None:
         logger.warning("The following collectors failed: %s", failed)
         sys.exit(1)
 
+    # Always rebuild the extended catalog so the search service sees the full
+    # catalog.  Without this step, all_problems_extended.json can become stale
+    # and silently restrict search to a tiny subset of the catalog.
+    print("Rebuilding all_problems_extended.json (merging base + custom + enrichment)...")
+    from build_extended_catalog import build_extended_catalog
+    out = build_extended_catalog(enrich=args.enrich, verbose=True)
+    print(f"Extended catalog written to: {out}")
+
 
 if __name__ == "__main__":
     main()
+

@@ -1,0 +1,53 @@
+{
+  "n_items": 331,
+  "features": {
+    "type_match": {
+      "definition": "Whether the mention's inferred type matches the slot's expected type (1/0).",
+      "data_source": "corpus_proxy",
+      "note": "Requires slot type annotations; not computable from eval corpus alone."
+    },
+    "operator_cue_match": {
+      "definition": "Whether operator cues (\u2264/\u2265/=) near the mention match the slot role.",
+      "data_source": "corpus_proxy",
+      "corpus_frequency": 0.0242,
+      "note": "Fraction of eval queries containing operator cues."
+    },
+    "lower_cue_present": {
+      "definition": "Whether lower-bound language ('at least', 'minimum') precedes the mention.",
+      "data_source": "corpus_proxy",
+      "corpus_frequency": 0.6616,
+      "note": "Fraction of eval queries containing lower-bound cues."
+    },
+    "upper_cue_present": {
+      "definition": "Whether upper-bound language ('at most', 'maximum') precedes the mention.",
+      "data_source": "corpus_proxy",
+      "corpus_frequency": 0.4622,
+      "note": "Fraction of eval queries containing upper-bound cues."
+    },
+    "slot_mention_overlap": {
+      "definition": "Lexical overlap (Jaccard) between slot name tokens and mention context.",
+      "data_source": "corpus_proxy",
+      "note": "Requires slot names; not computable from eval corpus alone."
+    },
+    "entity_match": {
+      "definition": "Whether an entity/name near the mention matches entity cues in the slot name.",
+      "data_source": "corpus_proxy",
+      "corpus_frequency": 0.9789,
+      "note": "Fraction of eval queries containing entity/name cues."
+    },
+    "sentence_proximity": {
+      "definition": "How close (in sentences) the mention is to the slot's description sentence.",
+      "data_source": "corpus_proxy",
+      "note": "Requires slot-sentence alignment; not computable from eval corpus alone."
+    }
+  },
+  "corpus_stats": {
+    "avg_numeric_mentions_per_query": 7.5589,
+    "fraction_with_lower_cue": 0.6616,
+    "fraction_with_upper_cue": 0.4622,
+    "fraction_with_both_cues": 0.3021,
+    "fraction_with_entity_cue": 0.9789,
+    "fraction_with_multi_numeric": 0.8701
+  },
+  "analysis_mode": "corpus_proxy"
+}

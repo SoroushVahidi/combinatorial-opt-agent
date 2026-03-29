@@ -167,18 +167,41 @@
   {
     "id": "hamiltonian_path",
     "name": "Hamiltonian Path Problem",
-    "aliases": ["Hamiltonian path", "path visiting every vertex once"],
+    "aliases": [
+      "Hamiltonian path",
+      "path visiting every vertex once"
+    ],
     "description": "Given a graph, find a path that visits each vertex exactly once, or determine that no such path exists. The optimization variant seeks a minimum-cost such path when edge costs are given.",
     "formulation": {
       "variables": [
-        {"symbol": "x_ij", "description": "1 if edge (i,j) is on the path, 0 otherwise", "domain": "x_ij ∈ {0,1}"},
-        {"symbol": "π_iv", "description": "1 if vertex v is at position i in the path, 0 otherwise", "domain": "π_iv ∈ {0,1}"}
+        {
+          "symbol": "x_ij",
+          "description": "1 if edge (i,j) is on the path, 0 otherwise",
+          "domain": "x_ij ∈ {0,1}"
+        },
+        {
+          "symbol": "π_iv",
+          "description": "1 if vertex v is at position i in the path, 0 otherwise",
+          "domain": "π_iv ∈ {0,1}"
+        }
       ],
-      "objective": {"sense": "minimize", "expression": "Σ_{i,j} c_ij x_ij (total path cost)"},
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_{i,j} c_ij x_ij (total path cost)"
+      },
       "constraints": [
-        {"expression": "Σ_v π_iv = 1 for each position i", "description": "Each position has exactly one vertex"},
-        {"expression": "Σ_i π_iv = 1 for each vertex v", "description": "Each vertex appears exactly once"},
-        {"expression": "Adjacent positions must be connected by an edge", "description": "Path connectivity"}
+        {
+          "expression": "Σ_v π_iv = 1 for each position i",
+          "description": "Each position has exactly one vertex"
+        },
+        {
+          "expression": "Σ_i π_iv = 1 for each vertex v",
+          "description": "Each vertex appears exactly once"
+        },
+        {
+          "expression": "Adjacent positions must be connected by an edge",
+          "description": "Path connectivity"
+        }
       ]
     },
     "formulation_latex": "\\min \\sum_{i,j} c_{ij} x_{ij} \\quad \\text{s.t.} \\quad \\text{each vertex once, path connectivity},\\quad x_{ij},\\pi_{iv} \\in \\{0,1\\}.",
@@ -188,16 +211,33 @@
   {
     "id": "chinese_postman",
     "name": "Chinese Postman Problem",
-    "aliases": ["route inspection problem", "postman tour", "edge covering tour"],
+    "aliases": [
+      "route inspection problem",
+      "postman tour",
+      "edge covering tour"
+    ],
     "description": "Given a connected undirected graph with edge weights, find a shortest closed walk that traverses every edge at least once. Equivalent to minimizing total cost of duplicating edges so the graph becomes Eulerian.",
     "formulation": {
       "variables": [
-        {"symbol": "x_e", "description": "number of times edge e is traversed (or duplicated)", "domain": "x_e ≥ 1 integer for each edge e"}
+        {
+          "symbol": "x_e",
+          "description": "number of times edge e is traversed (or duplicated)",
+          "domain": "x_e ≥ 1 integer for each edge e"
+        }
       ],
-      "objective": {"sense": "minimize", "expression": "Σ_e w_e x_e (total edge cost)"},
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_e w_e x_e (total edge cost)"
+      },
       "constraints": [
-        {"expression": "x_e ≥ 1 for each edge e", "description": "Each edge covered at least once"},
-        {"expression": "For each vertex v: sum of x_e over edges incident to v is even", "description": "Degree parity for closed walk (Eulerian)"}
+        {
+          "expression": "x_e ≥ 1 for each edge e",
+          "description": "Each edge covered at least once"
+        },
+        {
+          "expression": "For each vertex v: sum of x_e over edges incident to v is even",
+          "description": "Degree parity for closed walk (Eulerian)"
+        }
       ]
     },
     "formulation_latex": "\\min \\sum_{e \\in E} w_e x_e \\quad \\text{s.t.} \\quad x_e \\ge 1 \\; \\forall e, \\quad \\text{even degree } \\forall v.",
@@ -207,15 +247,29 @@
   {
     "id": "hitting_set",
     "name": "Hitting Set Problem",
-    "aliases": ["hitting set", "set hitting", "transversal"],
+    "aliases": [
+      "hitting set",
+      "set hitting",
+      "transversal"
+    ],
     "description": "Given a universe of elements with costs and a family of subsets, choose a minimum-cost set of elements such that every subset in the family is hit (contains at least one chosen element). Dual of set cover.",
     "formulation": {
       "variables": [
-        {"symbol": "x_e", "description": "1 if element e is chosen, 0 otherwise", "domain": "x_e ∈ {0,1}"}
+        {
+          "symbol": "x_e",
+          "description": "1 if element e is chosen, 0 otherwise",
+          "domain": "x_e ∈ {0,1}"
+        }
       ],
-      "objective": {"sense": "minimize", "expression": "Σ_e c_e x_e"},
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_e c_e x_e"
+      },
       "constraints": [
-        {"expression": "Σ_{e ∈ S} x_e ≥ 1 for each subset S in the family", "description": "Each set must be hit by at least one chosen element"}
+        {
+          "expression": "Σ_{e ∈ S} x_e ≥ 1 for each subset S in the family",
+          "description": "Each set must be hit by at least one chosen element"
+        }
       ]
     },
     "formulation_latex": "\\min \\sum_e c_e x_e \\quad \\text{s.t.} \\quad \\sum_{e \\in S} x_e \\ge 1 \\; \\forall S, \\quad x_e \\in \\{0,1\\}.",
@@ -225,17 +279,38 @@
   {
     "id": "cutting_stock",
     "name": "Cutting Stock Problem",
-    "aliases": ["one-dimensional cutting stock", "trim loss", "roll cutting"],
+    "aliases": [
+      "one-dimensional cutting stock",
+      "trim loss",
+      "roll cutting"
+    ],
     "description": "Given stock pieces of length L and demands for smaller items of given lengths, determine how to cut the minimum number of stock pieces to satisfy demand. Often formulated via column generation (patterns).",
     "formulation": {
       "variables": [
-        {"symbol": "x_p", "description": "number of times cutting pattern p is used", "domain": "x_p ≥ 0 integer"},
-        {"symbol": "a_ip", "description": "number of items of type i in pattern p", "domain": "defined by pattern"}
+        {
+          "symbol": "x_p",
+          "description": "number of times cutting pattern p is used",
+          "domain": "x_p ≥ 0 integer"
+        },
+        {
+          "symbol": "a_ip",
+          "description": "number of items of type i in pattern p",
+          "domain": "defined by pattern"
+        }
       ],
-      "objective": {"sense": "minimize", "expression": "Σ_p x_p (number of stock pieces used)"},
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_p x_p (number of stock pieces used)"
+      },
       "constraints": [
-        {"expression": "Σ_p a_ip x_p ≥ d_i for each item type i", "description": "Demand d_i for each item must be met"},
-        {"expression": "Σ_i ℓ_i a_ip ≤ L for each pattern p", "description": "Pattern fits in stock length L"}
+        {
+          "expression": "Σ_p a_ip x_p ≥ d_i for each item type i",
+          "description": "Demand d_i for each item must be met"
+        },
+        {
+          "expression": "Σ_i ℓ_i a_ip ≤ L for each pattern p",
+          "description": "Pattern fits in stock length L"
+        }
       ]
     },
     "formulation_latex": "\\min \\sum_p x_p \\quad \\text{s.t.} \\quad \\sum_p a_{ip} x_p \\ge d_i \\; \\forall i, \\quad x_p \\in \\mathbb{Z}_+.",
@@ -245,16 +320,33 @@
   {
     "id": "capacitated_minimum_spanning_tree",
     "name": "Capacitated Minimum Spanning Tree",
-    "aliases": ["CMST", "capacitated MST", "rooted capacitated spanning tree"],
+    "aliases": [
+      "CMST",
+      "capacitated MST",
+      "rooted capacitated spanning tree"
+    ],
     "description": "Given a graph with edge costs, a root node, and vertex demands, find a minimum-cost spanning tree rooted at the root such that the total demand in any subtree (connected component when root is removed) does not exceed a given capacity Q.",
     "formulation": {
       "variables": [
-        {"symbol": "x_e", "description": "1 if edge e is in the tree, 0 otherwise", "domain": "x_e ∈ {0,1}"}
+        {
+          "symbol": "x_e",
+          "description": "1 if edge e is in the tree, 0 otherwise",
+          "domain": "x_e ∈ {0,1}"
+        }
       ],
-      "objective": {"sense": "minimize", "expression": "Σ_e c_e x_e"},
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_e c_e x_e"
+      },
       "constraints": [
-        {"expression": "Spanning tree: n-1 edges, connectivity", "description": "Tree structure"},
-        {"expression": "For every subtree not containing root: Σ_{v in subtree} d_v ≤ Q", "description": "Capacity on subtree demand"}
+        {
+          "expression": "Spanning tree: n-1 edges, connectivity",
+          "description": "Tree structure"
+        },
+        {
+          "expression": "For every subtree not containing root: Σ_{v in subtree} d_v ≤ Q",
+          "description": "Capacity on subtree demand"
+        }
       ]
     },
     "formulation_latex": "\\min \\sum_{e \\in E} c_e x_e \\quad \\text{s.t.} \\quad \\text{spanning tree}, \\quad \\text{subtree demand } \\le Q.",
@@ -264,17 +356,37 @@
   {
     "id": "degree_constrained_spanning_tree",
     "name": "Degree-Constrained Minimum Spanning Tree",
-    "aliases": ["DCMST", "degree bounded MST", "bounded degree spanning tree"],
+    "aliases": [
+      "DCMST",
+      "degree bounded MST",
+      "bounded degree spanning tree"
+    ],
     "description": "Given a graph with edge costs and an upper bound B on vertex degree, find a minimum-cost spanning tree in which every vertex has degree at most B.",
     "formulation": {
       "variables": [
-        {"symbol": "x_e", "description": "1 if edge e is in the tree, 0 otherwise", "domain": "x_e ∈ {0,1}"}
+        {
+          "symbol": "x_e",
+          "description": "1 if edge e is in the tree, 0 otherwise",
+          "domain": "x_e ∈ {0,1}"
+        }
       ],
-      "objective": {"sense": "minimize", "expression": "Σ_e c_e x_e"},
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_e c_e x_e"
+      },
       "constraints": [
-        {"expression": "Σ_e x_e = n − 1", "description": "Exactly n-1 edges"},
-        {"expression": "For each vertex v: Σ_{e ∋ v} x_e ≤ B", "description": "Degree at most B"},
-        {"expression": "Subtour elimination or connectivity", "description": "Tree is connected"}
+        {
+          "expression": "Σ_e x_e = n − 1",
+          "description": "Exactly n-1 edges"
+        },
+        {
+          "expression": "For each vertex v: Σ_{e ∋ v} x_e ≤ B",
+          "description": "Degree at most B"
+        },
+        {
+          "expression": "Subtour elimination or connectivity",
+          "description": "Tree is connected"
+        }
       ]
     },
     "formulation_latex": "\\min \\sum_e c_e x_e \\quad \\text{s.t.} \\quad \\sum_e x_e = n-1, \\; \\sum_{e \\ni v} x_e \\le B \\; \\forall v, \\quad x_e \\in \\{0,1\\}.",
@@ -284,17 +396,38 @@
   {
     "id": "clique_cover",
     "name": "Clique Cover Problem",
-    "aliases": ["partition into cliques", "minimum clique cover", "clique partition"],
+    "aliases": [
+      "partition into cliques",
+      "minimum clique cover",
+      "clique partition"
+    ],
     "description": "Given an undirected graph, partition the vertices into a minimum number of cliques (sets of pairwise adjacent vertices). Equivalently, cover all vertices with the fewest cliques.",
     "formulation": {
       "variables": [
-        {"symbol": "y_k", "description": "1 if clique k is used, 0 otherwise", "domain": "y_k ∈ {0,1}"},
-        {"symbol": "x_vk", "description": "1 if vertex v is in clique k, 0 otherwise", "domain": "x_vk ∈ {0,1}"}
+        {
+          "symbol": "y_k",
+          "description": "1 if clique k is used, 0 otherwise",
+          "domain": "y_k ∈ {0,1}"
+        },
+        {
+          "symbol": "x_vk",
+          "description": "1 if vertex v is in clique k, 0 otherwise",
+          "domain": "x_vk ∈ {0,1}"
+        }
       ],
-      "objective": {"sense": "minimize", "expression": "Σ_k y_k (number of cliques)"},
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_k y_k (number of cliques)"
+      },
       "constraints": [
-        {"expression": "Σ_k x_vk = 1 for each vertex v", "description": "Each vertex in exactly one clique"},
-        {"expression": "For each clique k: if x_uk = x_vk = 1 and (u,v) not an edge then y_k = 0", "description": "Selected sets must be cliques"}
+        {
+          "expression": "Σ_k x_vk = 1 for each vertex v",
+          "description": "Each vertex in exactly one clique"
+        },
+        {
+          "expression": "For each clique k: if x_uk = x_vk = 1 and (u,v) not an edge then y_k = 0",
+          "description": "Selected sets must be cliques"
+        }
       ]
     },
     "formulation_latex": "\\min \\sum_k y_k \\quad \\text{s.t.} \\quad \\sum_k x_{vk}=1 \\; \\forall v, \\quad \\text{clique constraints}, \\quad x_{vk}, y_k \\in \\{0,1\\}.",
@@ -304,16 +437,33 @@
   {
     "id": "minimum_spanning_tree",
     "name": "Minimum Spanning Tree",
-    "aliases": ["MST", "minimum weight spanning tree", "shortest spanning tree"],
+    "aliases": [
+      "MST",
+      "minimum weight spanning tree",
+      "shortest spanning tree"
+    ],
     "description": "Given a connected undirected graph with edge costs, find a spanning tree of minimum total edge cost. A tree that connects all vertices with minimum sum of edge weights.",
     "formulation": {
       "variables": [
-        {"symbol": "x_e", "description": "1 if edge e is in the tree, 0 otherwise", "domain": "x_e ∈ {0,1}"}
+        {
+          "symbol": "x_e",
+          "description": "1 if edge e is in the tree, 0 otherwise",
+          "domain": "x_e ∈ {0,1}"
+        }
       ],
-      "objective": {"sense": "minimize", "expression": "Σ_e c_e x_e"},
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_e c_e x_e"
+      },
       "constraints": [
-        {"expression": "Σ_e x_e = n − 1", "description": "Exactly n-1 edges"},
-        {"expression": "Σ_{e ∈ δ(S)} x_e ≥ 1 for each proper subset S of vertices", "description": "Connectivity (no disconnected component)"}
+        {
+          "expression": "Σ_e x_e = n − 1",
+          "description": "Exactly n-1 edges"
+        },
+        {
+          "expression": "Σ_{e ∈ δ(S)} x_e ≥ 1 for each proper subset S of vertices",
+          "description": "Connectivity (no disconnected component)"
+        }
       ]
     },
     "formulation_latex": "\\min \\sum_{e \\in E} c_e x_e \\quad \\text{s.t.} \\quad \\sum_e x_e = n-1, \\; \\sum_{e \\in \\delta(S)} x_e \\ge 1 \\; \\forall \\emptyset \\subset S \\subset V, \\quad x_e \\in \\{0,1\\}.",
@@ -323,17 +473,38 @@
   {
     "id": "graph_bisection",
     "name": "Minimum Bisection",
-    "aliases": ["graph bisection", "minimum cut bisection", "balanced cut"],
+    "aliases": [
+      "graph bisection",
+      "minimum cut bisection",
+      "balanced cut"
+    ],
     "description": "Partition the vertices of a graph into two sets of equal (or nearly equal) size so that the number (or weight) of edges between the two sets is minimized.",
     "formulation": {
       "variables": [
-        {"symbol": "x_v", "description": "1 if vertex v is in one side, 0 for the other", "domain": "x_v ∈ {0,1}"},
-        {"symbol": "y_uv", "description": "1 if edge (u,v) is in the cut", "domain": "y_uv ∈ {0,1}"}
+        {
+          "symbol": "x_v",
+          "description": "1 if vertex v is in one side, 0 for the other",
+          "domain": "x_v ∈ {0,1}"
+        },
+        {
+          "symbol": "y_uv",
+          "description": "1 if edge (u,v) is in the cut",
+          "domain": "y_uv ∈ {0,1}"
+        }
       ],
-      "objective": {"sense": "minimize", "expression": "Σ_{(u,v) ∈ E} w_uv y_uv"},
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_{(u,v) ∈ E} w_uv y_uv"
+      },
       "constraints": [
-        {"expression": "Σ_v x_v = n/2 (or floor/ceil)", "description": "Equal (or balanced) partition size"},
-        {"expression": "y_uv ≥ x_u − x_v and y_uv ≥ x_v − x_u", "description": "Edge in cut iff endpoints on different sides"}
+        {
+          "expression": "Σ_v x_v = n/2 (or floor/ceil)",
+          "description": "Equal (or balanced) partition size"
+        },
+        {
+          "expression": "y_uv ≥ x_u − x_v and y_uv ≥ x_v − x_u",
+          "description": "Edge in cut iff endpoints on different sides"
+        }
       ]
     },
     "formulation_latex": "\\min \\sum_{(u,v) \\in E} w_{uv} y_{uv} \\quad \\text{s.t.} \\quad \\sum_v x_v = n/2, \\quad y_{uv} \\ge |x_u - x_v|, \\quad x_v, y_{uv} \\in \\{0,1\\}.",
@@ -343,16 +514,34 @@
   {
     "id": "prize_collecting_steiner_tree",
     "name": "Prize-Collecting Steiner Tree",
-    "aliases": ["PCST", "node-weighted Steiner tree", "Steiner tree with prizes"],
+    "aliases": [
+      "PCST",
+      "node-weighted Steiner tree",
+      "Steiner tree with prizes"
+    ],
     "description": "Given a graph with edge costs and vertex prizes (or penalties for not including), find a subtree that minimizes total edge cost plus the sum of penalties of vertices not in the subtree (or maximizes profit of included vertices minus edge cost).",
     "formulation": {
       "variables": [
-        {"symbol": "x_e", "description": "1 if edge e is in the tree, 0 otherwise", "domain": "x_e ∈ {0,1}"},
-        {"symbol": "z_v", "description": "1 if vertex v is in the subtree, 0 otherwise", "domain": "z_v ∈ {0,1}"}
+        {
+          "symbol": "x_e",
+          "description": "1 if edge e is in the tree, 0 otherwise",
+          "domain": "x_e ∈ {0,1}"
+        },
+        {
+          "symbol": "z_v",
+          "description": "1 if vertex v is in the subtree, 0 otherwise",
+          "domain": "z_v ∈ {0,1}"
+        }
       ],
-      "objective": {"sense": "minimize", "expression": "Σ_e c_e x_e + Σ_v π_v (1 − z_v) (edge cost plus penalties for excluded vertices)"},
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_e c_e x_e + Σ_v π_v (1 − z_v) (edge cost plus penalties for excluded vertices)"
+      },
       "constraints": [
-        {"expression": "Selected edges form a tree; z_v = 1 if v is in the tree", "description": "Tree connectivity and linking z to edges"}
+        {
+          "expression": "Selected edges form a tree; z_v = 1 if v is in the tree",
+          "description": "Tree connectivity and linking z to edges"
+        }
       ]
     },
     "formulation_latex": "\\min \\sum_e c_e x_e + \\sum_v \\pi_v(1-z_v) \\quad \\text{s.t.} \\quad \\text{tree}, \\quad x_e, z_v \\in \\{0,1\\}.",
@@ -362,17 +551,38 @@
   {
     "id": "single_machine_weighted_completion_time",
     "name": "Single Machine Weighted Completion Time",
-    "aliases": ["1| |Σ w_j C_j", "weighted completion time scheduling", "single machine scheduling"],
+    "aliases": [
+      "1| |Σ w_j C_j",
+      "weighted completion time scheduling",
+      "single machine scheduling"
+    ],
     "description": "Schedule n jobs on a single machine; each job has a processing time and a weight. Minimize the total weighted completion time. Solvable in polynomial time by Smith's rule (WSPT).",
     "formulation": {
       "variables": [
-        {"symbol": "C_j", "description": "completion time of job j", "domain": "C_j ≥ 0"},
-        {"symbol": "x_jk", "description": "1 if job j is in position k", "domain": "x_jk ∈ {0,1}"}
+        {
+          "symbol": "C_j",
+          "description": "completion time of job j",
+          "domain": "C_j ≥ 0"
+        },
+        {
+          "symbol": "x_jk",
+          "description": "1 if job j is in position k",
+          "domain": "x_jk ∈ {0,1}"
+        }
       ],
-      "objective": {"sense": "minimize", "expression": "Σ_j w_j C_j"},
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_j w_j C_j"
+      },
       "constraints": [
-        {"expression": "Σ_k x_jk = 1 for each j, Σ_j x_jk = 1 for each k", "description": "Each job in one position, each position one job"},
-        {"expression": "C_j = Σ_k (Σ_{ℓ≤k} p_{[ℓ]}) x_jk (completion time by position)", "description": "Completion time definition"}
+        {
+          "expression": "Σ_k x_jk = 1 for each j, Σ_j x_jk = 1 for each k",
+          "description": "Each job in one position, each position one job"
+        },
+        {
+          "expression": "C_j = Σ_k (Σ_{ℓ≤k} p_{[ℓ]}) x_jk (completion time by position)",
+          "description": "Completion time definition"
+        }
       ]
     },
     "formulation_latex": "\\min \\sum_j w_j C_j \\quad \\text{s.t.} \\quad \\text{permutation of jobs},\\quad C_j \\text{ completion time}.",
@@ -382,17 +592,38 @@
   {
     "id": "parallel_machine_makespan",
     "name": "Parallel Machine Makespan",
-    "aliases": ["Pm| |C_max", "identical parallel machines", "minimum makespan"],
+    "aliases": [
+      "Pm| |C_max",
+      "identical parallel machines",
+      "minimum makespan"
+    ],
     "description": "Schedule n jobs on m identical parallel machines; each job has a processing time. Minimize the makespan (maximum completion time over all machines).",
     "formulation": {
       "variables": [
-        {"symbol": "x_ij", "description": "1 if job j is assigned to machine i", "domain": "x_ij ∈ {0,1}"},
-        {"symbol": "C_max", "description": "makespan", "domain": "C_max ≥ 0"}
+        {
+          "symbol": "x_ij",
+          "description": "1 if job j is assigned to machine i",
+          "domain": "x_ij ∈ {0,1}"
+        },
+        {
+          "symbol": "C_max",
+          "description": "makespan",
+          "domain": "C_max ≥ 0"
+        }
       ],
-      "objective": {"sense": "minimize", "expression": "C_max"},
+      "objective": {
+        "sense": "minimize",
+        "expression": "C_max"
+      },
       "constraints": [
-        {"expression": "Σ_i x_ij = 1 for each job j", "description": "Each job assigned to one machine"},
-        {"expression": "Σ_j p_j x_ij ≤ C_max for each machine i", "description": "Machine load does not exceed makespan"}
+        {
+          "expression": "Σ_i x_ij = 1 for each job j",
+          "description": "Each job assigned to one machine"
+        },
+        {
+          "expression": "Σ_j p_j x_ij ≤ C_max for each machine i",
+          "description": "Machine load does not exceed makespan"
+        }
       ]
     },
     "formulation_latex": "\\min C_{\\max} \\quad \\text{s.t.} \\quad \\sum_i x_{ij}=1 \\; \\forall j, \\; \\sum_j p_j x_{ij} \\le C_{\\max} \\; \\forall i, \\quad x_{ij} \\in \\{0,1\\}.",
@@ -402,15 +633,28 @@
   {
     "id": "weighted_set_cover",
     "name": "Weighted Set Cover",
-    "aliases": ["set cover with costs", "minimum cost set cover"],
+    "aliases": [
+      "set cover with costs",
+      "minimum cost set cover"
+    ],
     "description": "Given a universe, a family of subsets each with a cost, choose a collection of subsets of minimum total cost that covers every element of the universe (each element in at least one chosen set).",
     "formulation": {
       "variables": [
-        {"symbol": "x_S", "description": "1 if subset S is chosen, 0 otherwise", "domain": "x_S ∈ {0,1}"}
+        {
+          "symbol": "x_S",
+          "description": "1 if subset S is chosen, 0 otherwise",
+          "domain": "x_S ∈ {0,1}"
+        }
       ],
-      "objective": {"sense": "minimize", "expression": "Σ_S c_S x_S"},
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_S c_S x_S"
+      },
       "constraints": [
-        {"expression": "Σ_{S : e ∈ S} x_S ≥ 1 for each element e", "description": "Every element covered"}
+        {
+          "expression": "Σ_{S : e ∈ S} x_S ≥ 1 for each element e",
+          "description": "Every element covered"
+        }
       ]
     },
     "formulation_latex": "\\min \\sum_S c_S x_S \\quad \\text{s.t.} \\quad \\sum_{S : e \\in S} x_S \\ge 1 \\; \\forall e, \\quad x_S \\in \\{0,1\\}.",
@@ -420,16 +664,34 @@
   {
     "id": "maximum_acyclic_subgraph",
     "name": "Maximum Acyclic Subgraph",
-    "aliases": ["maximum acyclic subgraph", "feedback arc set (dual)", "ordering problem"],
+    "aliases": [
+      "maximum acyclic subgraph",
+      "feedback arc set (dual)",
+      "ordering problem"
+    ],
     "description": "Given a directed graph with edge weights, find a maximum-weight subset of edges that forms an acyclic subgraph. Equivalently, order the vertices and keep only edges going forward; maximize total weight of such edges.",
     "formulation": {
       "variables": [
-        {"symbol": "π_v", "description": "position (rank) of vertex v in the ordering", "domain": "π_v ∈ {1,...,n}"},
-        {"symbol": "y_uv", "description": "1 if edge (u,v) is in the subgraph (u before v)", "domain": "y_uv ∈ {0,1}"}
+        {
+          "symbol": "π_v",
+          "description": "position (rank) of vertex v in the ordering",
+          "domain": "π_v ∈ {1,...,n}"
+        },
+        {
+          "symbol": "y_uv",
+          "description": "1 if edge (u,v) is in the subgraph (u before v)",
+          "domain": "y_uv ∈ {0,1}"
+        }
       ],
-      "objective": {"sense": "maximize", "expression": "Σ_{(u,v)} w_uv y_uv"},
+      "objective": {
+        "sense": "maximize",
+        "expression": "Σ_{(u,v)} w_uv y_uv"
+      },
       "constraints": [
-        {"expression": "y_uv = 1 iff π_u < π_v", "description": "Edge kept only if tail precedes head in ordering"}
+        {
+          "expression": "y_uv = 1 iff π_u < π_v",
+          "description": "Edge kept only if tail precedes head in ordering"
+        }
       ]
     },
     "formulation_latex": "\\max \\sum_{(u,v) \\in A} w_{uv} y_{uv} \\quad \\text{s.t.} \\quad y_{uv} = 1 \\Leftrightarrow \\pi_u < \\pi_v, \\quad \\pi \\text{ permutation}.",
@@ -439,17 +701,38 @@
   {
     "id": "open_vehicle_routing",
     "name": "Open Vehicle Routing Problem",
-    "aliases": ["OVRP", "open VRP", "routes that do not return to depot"],
+    "aliases": [
+      "OVRP",
+      "open VRP",
+      "routes that do not return to depot"
+    ],
     "description": "Like the capacitated VRP but routes do not return to the depot; each route starts at the depot, visits a subset of customers, and ends at the last customer. Minimize total travel cost.",
     "formulation": {
       "variables": [
-        {"symbol": "x_ij^k", "description": "1 if arc (i,j) is traversed by vehicle k", "domain": "x_ij^k ∈ {0,1}"},
-        {"symbol": "y_i^k", "description": "1 if customer i is served by vehicle k", "domain": "y_i^k ∈ {0,1}"}
+        {
+          "symbol": "x_ij^k",
+          "description": "1 if arc (i,j) is traversed by vehicle k",
+          "domain": "x_ij^k ∈ {0,1}"
+        },
+        {
+          "symbol": "y_i^k",
+          "description": "1 if customer i is served by vehicle k",
+          "domain": "y_i^k ∈ {0,1}"
+        }
       ],
-      "objective": {"sense": "minimize", "expression": "Σ_k Σ_{i,j} c_ij x_ij^k"},
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_k Σ_{i,j} c_ij x_ij^k"
+      },
       "constraints": [
-        {"expression": "Each customer visited exactly once; flow conservation; capacity per vehicle", "description": "Feasible routes"},
-        {"expression": "Route starts at depot, ends at a customer (no return)", "description": "Open routes"}
+        {
+          "expression": "Each customer visited exactly once; flow conservation; capacity per vehicle",
+          "description": "Feasible routes"
+        },
+        {
+          "expression": "Route starts at depot, ends at a customer (no return)",
+          "description": "Open routes"
+        }
       ]
     },
     "formulation_latex": "\\min \\sum_k \\sum_{i,j} c_{ij} x_{ij}^k \\quad \\text{s.t.} \\quad \\text{open routes, capacity, visit once}.",
@@ -459,16 +742,34 @@
   {
     "id": "capacitated_arc_routing",
     "name": "Capacitated Arc Routing Problem",
-    "aliases": ["CARP", "arc routing", "rural postman with demand"],
+    "aliases": [
+      "CARP",
+      "arc routing",
+      "rural postman with demand"
+    ],
     "description": "Given a graph with required edges (tasks) with demands and a depot, find a set of vehicle routes that service all required edges (each at least once) subject to vehicle capacity, minimizing total cost. Servicing an edge means traversing it and adding its demand to the load.",
     "formulation": {
       "variables": [
-        {"symbol": "x_ij^k", "description": "1 if arc (i,j) is traversed by vehicle k", "domain": "x_ij^k ∈ {0,1}"},
-        {"symbol": "y_e^k", "description": "1 if required edge e is serviced by vehicle k", "domain": "y_e^k ∈ {0,1}"}
+        {
+          "symbol": "x_ij^k",
+          "description": "1 if arc (i,j) is traversed by vehicle k",
+          "domain": "x_ij^k ∈ {0,1}"
+        },
+        {
+          "symbol": "y_e^k",
+          "description": "1 if required edge e is serviced by vehicle k",
+          "domain": "y_e^k ∈ {0,1}"
+        }
       ],
-      "objective": {"sense": "minimize", "expression": "Σ_k Σ_{(i,j)} c_ij x_ij^k"},
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_k Σ_{(i,j)} c_ij x_ij^k"
+      },
       "constraints": [
-        {"expression": "Each required edge serviced exactly once; vehicle capacity; routes start/end at depot", "description": "Feasible arc routes"}
+        {
+          "expression": "Each required edge serviced exactly once; vehicle capacity; routes start/end at depot",
+          "description": "Feasible arc routes"
+        }
       ]
     },
     "formulation_latex": "\\min \\sum_k \\sum_{(i,j)} c_{ij} x_{ij}^k \\quad \\text{s.t.} \\quad \\text{service all required edges, capacity, depot}.",
@@ -478,18 +779,43 @@
   {
     "id": "multilevel_lot_sizing",
     "name": "Multilevel Lot-Sizing Problem",
-    "aliases": ["multi-level lot sizing", "MLULSP", "dependent demand lot sizing"],
+    "aliases": [
+      "multi-level lot sizing",
+      "MLULSP",
+      "dependent demand lot sizing"
+    ],
     "description": "Production system with a bill-of-materials (BOM): items at different levels have demands (external or derived from parent). Decide when to produce how much at each level to minimize setup and holding costs while meeting demand.",
     "formulation": {
       "variables": [
-        {"symbol": "x_it", "description": "production quantity of item i in period t", "domain": "x_it ≥ 0"},
-        {"symbol": "y_it", "description": "1 if item i is produced in period t (setup)", "domain": "y_it ∈ {0,1}"},
-        {"symbol": "I_it", "description": "inventory of item i at end of period t", "domain": "I_it ≥ 0"}
+        {
+          "symbol": "x_it",
+          "description": "production quantity of item i in period t",
+          "domain": "x_it ≥ 0"
+        },
+        {
+          "symbol": "y_it",
+          "description": "1 if item i is produced in period t (setup)",
+          "domain": "y_it ∈ {0,1}"
+        },
+        {
+          "symbol": "I_it",
+          "description": "inventory of item i at end of period t",
+          "domain": "I_it ≥ 0"
+        }
       ],
-      "objective": {"sense": "minimize", "expression": "Σ_i Σ_t (s_it y_it + h_it I_it) (setups + holding)"},
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_i Σ_t (s_it y_it + h_it I_it) (setups + holding)"
+      },
       "constraints": [
-        {"expression": "I_{i,t-1} + x_it = d_it + Σ_j r_ij x_jt + I_it for each i,t", "description": "Balance: demand and BOM usage"},
-        {"expression": "x_it ≤ M y_it", "description": "Setup forcing"}
+        {
+          "expression": "I_{i,t-1} + x_it = d_it + Σ_j r_ij x_jt + I_it for each i,t",
+          "description": "Balance: demand and BOM usage"
+        },
+        {
+          "expression": "x_it ≤ M y_it",
+          "description": "Setup forcing"
+        }
       ]
     },
     "formulation_latex": "\\min \\sum_{i,t} (s_{it} y_{it} + h_{it} I_{it}) \\quad \\text{s.t.} \\quad \\text{balance, BOM}, \\quad x_{it} \\le M y_{it}.",
@@ -499,17 +825,38 @@
   {
     "id": "team_orienteering",
     "name": "Team Orienteering Problem",
-    "aliases": ["TOP", "orienteering with multiple vehicles", "multi-vehicle orienteering"],
+    "aliases": [
+      "TOP",
+      "orienteering with multiple vehicles",
+      "multi-vehicle orienteering"
+    ],
     "description": "Given a set of nodes with scores (prizes), a depot, and a time limit, find a set of routes for a fixed number of vehicles starting and ending at the depot such that each node is visited at most once and total collected score is maximized while each route respects the time limit.",
     "formulation": {
       "variables": [
-        {"symbol": "x_ij^k", "description": "1 if vehicle k travels from i to j", "domain": "x_ij^k ∈ {0,1}"},
-        {"symbol": "z_i", "description": "1 if node i is visited by some vehicle", "domain": "z_i ∈ {0,1}"}
+        {
+          "symbol": "x_ij^k",
+          "description": "1 if vehicle k travels from i to j",
+          "domain": "x_ij^k ∈ {0,1}"
+        },
+        {
+          "symbol": "z_i",
+          "description": "1 if node i is visited by some vehicle",
+          "domain": "z_i ∈ {0,1}"
+        }
       ],
-      "objective": {"sense": "maximize", "expression": "Σ_i s_i z_i (total score collected)"},
+      "objective": {
+        "sense": "maximize",
+        "expression": "Σ_i s_i z_i (total score collected)"
+      },
       "constraints": [
-        {"expression": "Flow conservation; each route starts/ends at depot; time limit per route", "description": "Feasible routes"},
-        {"expression": "z_i ≤ 1; z_i = 1 if i visited", "description": "At most one visit per node"}
+        {
+          "expression": "Flow conservation; each route starts/ends at depot; time limit per route",
+          "description": "Feasible routes"
+        },
+        {
+          "expression": "z_i ≤ 1; z_i = 1 if i visited",
+          "description": "At most one visit per node"
+        }
       ]
     },
     "formulation_latex": "\\max \\sum_i s_i z_i \\quad \\text{s.t.} \\quad \\text{routes from depot, time limit}, \\quad z_i \\in \\{0,1\\}.",
@@ -519,16 +866,34 @@
   {
     "id": "minimum_feedback_arc_set",
     "name": "Minimum Feedback Arc Set",
-    "aliases": ["minimum FAS", "feedback arc set", "acyclicity by arc deletion"],
+    "aliases": [
+      "minimum FAS",
+      "feedback arc set",
+      "acyclicity by arc deletion"
+    ],
     "description": "Given a directed graph with arc weights, find a minimum-weight set of arcs whose removal makes the graph acyclic. Equivalent to ordering vertices so that the total weight of backward edges is minimized.",
     "formulation": {
       "variables": [
-        {"symbol": "π_v", "description": "position of vertex v in linear ordering", "domain": "π_v ∈ {1,...,n}"},
-        {"symbol": "y_uv", "description": "1 if (u,v) is a backward edge (removed)", "domain": "y_uv ∈ {0,1}"}
+        {
+          "symbol": "π_v",
+          "description": "position of vertex v in linear ordering",
+          "domain": "π_v ∈ {1,...,n}"
+        },
+        {
+          "symbol": "y_uv",
+          "description": "1 if (u,v) is a backward edge (removed)",
+          "domain": "y_uv ∈ {0,1}"
+        }
       ],
-      "objective": {"sense": "minimize", "expression": "Σ_{(u,v)} w_uv y_uv"},
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_{(u,v)} w_uv y_uv"
+      },
       "constraints": [
-        {"expression": "y_uv = 1 iff π_v < π_u (v before u)", "description": "Backward edges are those going from higher to lower rank"}
+        {
+          "expression": "y_uv = 1 iff π_v < π_u (v before u)",
+          "description": "Backward edges are those going from higher to lower rank"
+        }
       ]
     },
     "formulation_latex": "\\min \\sum_{(u,v)} w_{uv} y_{uv} \\quad \\text{s.t.} \\quad \\pi \\text{ ordering}, \\; y_{uv} = 1 \\Leftrightarrow \\pi_v < \\pi_u.",
@@ -538,21 +903,638 @@
   {
     "id": "stable_marriage",
     "name": "Stable Marriage Problem",
-    "aliases": ["Gale–Shapley", "stable matching", "college admissions"],
+    "aliases": [
+      "Gale–Shapley",
+      "stable matching",
+      "college admissions"
+    ],
     "description": "Given n men and n women each with a strict preference order over the other set, find a perfect matching such that no unmatched pair (man, woman) both prefer each other to their current partners. Optimization variants minimize regret or maximize stability.",
     "formulation": {
       "variables": [
-        {"symbol": "x_ij", "description": "1 if man i is matched to woman j", "domain": "x_ij ∈ {0,1}"}
+        {
+          "symbol": "x_ij",
+          "description": "1 if man i is matched to woman j",
+          "domain": "x_ij ∈ {0,1}"
+        }
       ],
-      "objective": {"sense": "maximize or minimize", "expression": "e.g. sum of ranks (regret) or number of stable pairs"},
+      "objective": {
+        "sense": "minimize",
+        "expression": "Total rank-sum of assigned partners: Σ_{(m,w) ∈ M} (rank_m(w) + rank_w(m))"
+      },
       "constraints": [
-        {"expression": "Σ_j x_ij = 1 for each i, Σ_i x_ij = 1 for each j", "description": "Perfect matching"},
-        {"expression": "No blocking pair: for no (i,j) do both prefer each other to current match", "description": "Stability"}
+        {
+          "expression": "Σ_j x_ij = 1 for each i, Σ_i x_ij = 1 for each j",
+          "description": "Perfect matching"
+        },
+        {
+          "expression": "No blocking pair: for no (i,j) do both prefer each other to current match",
+          "description": "Stability"
+        }
       ]
     },
     "formulation_latex": "\\text{Perfect matching} \\quad \\sum_j x_{ij}=\\sum_i x_{ij}=1, \\quad \\text{no blocking pair}.",
     "complexity": "P (Gale–Shapley algorithm); some optimization variants NP-hard",
     "source": "classic (Gale–Shapley)"
+  },
+  {
+    "id": "gurobi_optimods_bipartite_matching",
+    "name": "Bipartite Matching",
+    "aliases": [
+      "bipartite matching",
+      "maximum bipartite matching",
+      "maximum matching"
+    ],
+    "description": "Given a bipartite graph G = (U ∪ V, E), find a maximum-cardinality matching: a subset of edges M ⊆ E such that every vertex in U ∪ V is incident to at most one edge in M, and |M| is maximised.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_{uv}",
+          "description": "1 if edge (u,v) is in the matching, 0 otherwise",
+          "domain": "x_{uv} ∈ {0,1} for each edge (u,v) ∈ E"
+        }
+      ],
+      "objective": {
+        "sense": "maximize",
+        "expression": "Σ_{(u,v) ∈ E} x_{uv}"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_{v:(u,v) ∈ E} x_{uv} ≤ 1  ∀u ∈ U",
+          "description": "Each vertex in U is matched at most once"
+        },
+        {
+          "expression": "Σ_{u:(u,v) ∈ E} x_{uv} ≤ 1  ∀v ∈ V",
+          "description": "Each vertex in V is matched at most once"
+        }
+      ]
+    },
+    "complexity": "Polynomial (solvable in polynomial time via network flow or augmenting paths)",
+    "source": "gurobi_optimods"
+  },
+  {
+    "id": "gurobi_optimods_max_flow",
+    "name": "Max Flow",
+    "aliases": [
+      "maximum flow",
+      "max-flow",
+      "network max flow"
+    ],
+    "description": "Given a directed graph with arc capacities and designated source s and sink t, find the maximum total flow from s to t that does not exceed arc capacities.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "f_{ij}",
+          "description": "flow on arc (i,j)",
+          "domain": "0 ≤ f_{ij} ≤ u_{ij} for each arc (i,j)"
+        }
+      ],
+      "objective": {
+        "sense": "maximize",
+        "expression": "Σ_{(s,j)} f_{sj}  (total flow out of source)"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_{j:(i,j) ∈ A} f_{ij} − Σ_{j:(j,i) ∈ A} f_{ji} = 0  ∀i ∈ V \\ {s,t}",
+          "description": "Flow conservation at every intermediate node"
+        },
+        {
+          "expression": "0 ≤ f_{ij} ≤ u_{ij}  ∀(i,j) ∈ A",
+          "description": "Capacity constraints on each arc"
+        }
+      ]
+    },
+    "complexity": "Polynomial (e.g., push-relabel runs in O(V²√E))",
+    "source": "gurobi_optimods"
+  },
+  {
+    "id": "gurobi_optimods_min_cost_flow",
+    "name": "Min Cost Flow",
+    "aliases": [
+      "minimum cost flow",
+      "min-cost flow",
+      "MCF"
+    ],
+    "description": "Route flow through a directed network from sources to sinks at minimum total cost while satisfying supply/demand requirements and arc capacity limits.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "f_{ij}",
+          "description": "flow on arc (i,j)",
+          "domain": "0 ≤ f_{ij} ≤ u_{ij} for each arc (i,j)"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_{(i,j) ∈ A} c_{ij} · f_{ij}"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_{j:(i,j) ∈ A} f_{ij} − Σ_{j:(j,i) ∈ A} f_{ji} = b_i  ∀i ∈ V",
+          "description": "Flow conservation with supply b_i (positive = supply, negative = demand, zero = transshipment)"
+        },
+        {
+          "expression": "0 ≤ f_{ij} ≤ u_{ij}  ∀(i,j) ∈ A",
+          "description": "Arc capacity constraints"
+        }
+      ]
+    },
+    "complexity": "Polynomial (strongly polynomial algorithms exist)",
+    "source": "gurobi_optimods"
+  },
+  {
+    "id": "gurobi_optimods_min_cut",
+    "name": "Min Cut",
+    "aliases": [
+      "minimum cut",
+      "s-t min cut",
+      "global minimum cut"
+    ],
+    "description": "Given a directed graph, find a minimum-capacity s-t cut: a partition of vertices into sets S (containing s) and T (containing t) that minimises the total capacity of arcs from S to T.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_{ij}",
+          "description": "1 if arc (i,j) is in the cut, 0 otherwise",
+          "domain": "x_{ij} ∈ {0,1} for each arc (i,j)"
+        },
+        {
+          "symbol": "y_i",
+          "description": "1 if vertex i belongs to the source side S, 0 otherwise",
+          "domain": "y_i ∈ {0,1} for each vertex i"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_{(i,j) ∈ A} u_{ij} · x_{ij}"
+      },
+      "constraints": [
+        {
+          "expression": "y_s = 1",
+          "description": "Source s is in the source side"
+        },
+        {
+          "expression": "y_t = 0",
+          "description": "Sink t is in the sink side"
+        },
+        {
+          "expression": "x_{ij} ≥ y_i − y_j  ∀(i,j) ∈ A",
+          "description": "Arc (i,j) must be cut if i ∈ S and j ∈ T"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_{(i,j)} u_{ij} x_{ij} \\quad \\text{s.t.} \\quad x_{ij} \\ge y_i - y_j, \\; y_s=1, y_t=0, \\; x,y \\in \\{0,1\\}.",
+    "complexity": "Polynomial (equals max-flow by max-flow min-cut theorem)",
+    "source": "gurobi_optimods"
+  },
+  {
+    "id": "gurobi_optimods_portfolio",
+    "name": "Portfolio Optimization",
+    "aliases": [
+      "portfolio optimization",
+      "Markowitz portfolio",
+      "mean-variance portfolio"
+    ],
+    "description": "Select asset weights to maximise expected return for a given risk level (variance), or minimise portfolio variance for a target return. The classic Markowitz mean-variance model.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "w_i",
+          "description": "weight of asset i in the portfolio",
+          "domain": "w_i ≥ 0 for each asset i"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "w^T Σ w  (portfolio variance, where Σ is the covariance matrix)"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_i w_i = 1",
+          "description": "Weights must sum to 1 (fully invested)"
+        },
+        {
+          "expression": "Σ_i μ_i w_i ≥ R_min",
+          "description": "Expected return meets minimum target R_min"
+        },
+        {
+          "expression": "w_i ≥ 0  ∀i",
+          "description": "No short selling (non-negative weights)"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\mathbf{w}^\\top \\Sigma \\mathbf{w} \\quad \\text{s.t.} \\quad \\sum_i w_i = 1,\\; \\sum_i \\mu_i w_i \\ge R_{\\min},\\; w_i \\ge 0.",
+    "complexity": "Polynomial (convex QP)",
+    "source": "gurobi_optimods"
+  },
+  {
+    "id": "gurobi_optimods_workforce",
+    "name": "Workforce Scheduling",
+    "aliases": [
+      "workforce scheduling",
+      "shift scheduling",
+      "staff scheduling",
+      "nurse scheduling"
+    ],
+    "description": "Assign workers to shifts over a planning horizon to satisfy minimum staffing requirements per shift at minimum total cost, subject to worker availability and consecutive-shift limits.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_{wt}",
+          "description": "1 if worker w is assigned to shift t, 0 otherwise",
+          "domain": "x_{wt} ∈ {0,1} for each worker w and shift t"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_w Σ_t c_{wt} · x_{wt}"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_w x_{wt} ≥ d_t  ∀t",
+          "description": "Minimum number of workers d_t required per shift t"
+        },
+        {
+          "expression": "Σ_t x_{wt} ≤ M_w  ∀w",
+          "description": "Each worker works at most M_w shifts"
+        },
+        {
+          "expression": "x_{wt} ≤ a_{wt}  ∀w,t",
+          "description": "Worker w is only assigned to shift t if available (a_{wt}=1)"
+        }
+      ]
+    },
+    "complexity": "NP-hard in general; polynomial in special cases",
+    "source": "gurobi_optimods"
+  },
+  {
+    "id": "gurobi_optimods_mwis",
+    "name": "Maximum Weight Independent Set",
+    "aliases": [
+      "maximum weight independent set",
+      "MWIS",
+      "weighted independent set"
+    ],
+    "description": "Given an undirected graph with vertex weights, find an independent set (no two vertices share an edge) of maximum total weight.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_v",
+          "description": "1 if vertex v is in the independent set, 0 otherwise",
+          "domain": "x_v ∈ {0,1} for each vertex v"
+        }
+      ],
+      "objective": {
+        "sense": "maximize",
+        "expression": "Σ_v w_v · x_v"
+      },
+      "constraints": [
+        {
+          "expression": "x_u + x_v ≤ 1  ∀(u,v) ∈ E",
+          "description": "No two adjacent vertices can both be in the independent set"
+        }
+      ]
+    },
+    "formulation_latex": "\\max \\sum_v w_v x_v \\quad \\text{s.t.} \\quad x_u + x_v \\le 1 \\; \\forall (u,v) \\in E, \\quad x_v \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "gurobi_optimods"
+  },
+  {
+    "id": "or_lib_assignment",
+    "name": "Assignment Problem",
+    "aliases": [
+      "assignment problem",
+      "linear assignment",
+      "LAP",
+      "one-to-one assignment"
+    ],
+    "description": "Assign n agents to n tasks one-to-one to minimise total cost, where c_{ij} is the cost of assigning agent i to task j.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_{ij}",
+          "description": "1 if agent i is assigned to task j, 0 otherwise",
+          "domain": "x_{ij} ∈ {0,1} for each agent i and task j"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_i Σ_j c_{ij} · x_{ij}"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_j x_{ij} = 1  ∀i",
+          "description": "Each agent is assigned to exactly one task"
+        },
+        {
+          "expression": "Σ_i x_{ij} = 1  ∀j",
+          "description": "Each task is assigned to exactly one agent"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_i \\sum_j c_{ij} x_{ij} \\quad \\text{s.t.} \\quad \\sum_j x_{ij} = 1 \\; \\forall i, \\quad \\sum_i x_{ij} = 1 \\; \\forall j, \\quad x_{ij} \\in \\{0,1\\}.",
+    "complexity": "Polynomial (Hungarian algorithm, O(n³))",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_bin_packing_1d",
+    "name": "1D Bin Packing",
+    "aliases": [
+      "bin packing",
+      "1D bin packing",
+      "one-dimensional bin packing"
+    ],
+    "description": "Pack n items with sizes s_1,...,s_n into the minimum number of bins, each of capacity C.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "y_j",
+          "description": "1 if bin j is used, 0 otherwise",
+          "domain": "y_j ∈ {0,1}"
+        },
+        {
+          "symbol": "x_{ij}",
+          "description": "1 if item i is placed in bin j, 0 otherwise",
+          "domain": "x_{ij} ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_j y_j  (number of bins used)"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_j x_{ij} = 1  ∀i",
+          "description": "Each item is placed in exactly one bin"
+        },
+        {
+          "expression": "Σ_i s_i · x_{ij} ≤ C · y_j  ∀j",
+          "description": "Total size in bin j does not exceed capacity C (and bin must be open)"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_j y_j \\quad \\text{s.t.} \\quad \\sum_j x_{ij} = 1 \\; \\forall i, \\quad \\sum_i s_i x_{ij} \\le C y_j \\; \\forall j, \\quad x,y \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_generalised_assignment",
+    "name": "Generalised Assignment Problem",
+    "aliases": [
+      "generalised assignment",
+      "generalized assignment",
+      "GAP"
+    ],
+    "description": "Assign m tasks to n agents to maximise total profit, where each agent has a capacity constraint: the total resource consumption of its assigned tasks must not exceed its capacity.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_{ij}",
+          "description": "1 if task j is assigned to agent i, 0 otherwise",
+          "domain": "x_{ij} ∈ {0,1} for each agent i and task j"
+        }
+      ],
+      "objective": {
+        "sense": "maximize",
+        "expression": "Σ_i Σ_j p_{ij} · x_{ij}"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_j r_{ij} · x_{ij} ≤ b_i  ∀i",
+          "description": "Resource consumption of tasks assigned to agent i does not exceed capacity b_i"
+        },
+        {
+          "expression": "Σ_i x_{ij} = 1  ∀j",
+          "description": "Each task is assigned to exactly one agent"
+        }
+      ]
+    },
+    "formulation_latex": "\\max \\sum_{i,j} p_{ij} x_{ij} \\quad \\text{s.t.} \\quad \\sum_j r_{ij} x_{ij} \\le b_i \\; \\forall i, \\quad \\sum_i x_{ij} = 1 \\; \\forall j, \\quad x_{ij} \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_graph_colouring",
+    "name": "Graph Colouring",
+    "aliases": [
+      "graph colouring",
+      "graph coloring",
+      "chromatic number",
+      "k-coloring"
+    ],
+    "description": "Assign colours to the vertices of a graph so that no two adjacent vertices share the same colour, using the minimum number of colours (chromatic number χ(G)).",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_{vc}",
+          "description": "1 if vertex v is assigned colour c, 0 otherwise",
+          "domain": "x_{vc} ∈ {0,1}"
+        },
+        {
+          "symbol": "y_c",
+          "description": "1 if colour c is used by at least one vertex, 0 otherwise",
+          "domain": "y_c ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_c y_c  (number of colours used)"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_c x_{vc} = 1  ∀v",
+          "description": "Each vertex is assigned exactly one colour"
+        },
+        {
+          "expression": "x_{uc} + x_{vc} ≤ y_c  ∀(u,v) ∈ E, ∀c",
+          "description": "Adjacent vertices cannot share the same colour; colour c must be open if used"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_c y_c \\quad \\text{s.t.} \\quad \\sum_c x_{vc}=1 \\; \\forall v, \\quad x_{uc}+x_{vc} \\le y_c \\; \\forall (u,v)\\in E,\\;\\forall c, \\quad x,y\\in\\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "or_library"
+  },
+  {
+    "id": "or_lib_crew_scheduling",
+    "name": "Crew Scheduling",
+    "aliases": [
+      "crew scheduling",
+      "crew pairing",
+      "duty scheduling"
+    ],
+    "description": "Cover all required flights (or duties) using a minimum-cost set of feasible crew pairings (sequences of duties for one crew), where each duty must be covered exactly once.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_p",
+          "description": "1 if pairing p is selected, 0 otherwise",
+          "domain": "x_p ∈ {0,1} for each pairing p in the set P of feasible pairings"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_{p ∈ P} c_p · x_p"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_{p: i ∈ p} x_p = 1  ∀i",
+          "description": "Each duty i is covered by exactly one selected pairing"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_p c_p x_p \\quad \\text{s.t.} \\quad \\sum_{p \\ni i} x_p = 1 \\; \\forall i, \\quad x_p \\in \\{0,1\\}.",
+    "complexity": "NP-hard; solved in practice by column generation",
+    "source": "or_library"
+  },
+  {
+    "id": "gurobi_ex_cell_tower_coverage",
+    "name": "Cell Tower Coverage",
+    "aliases": [
+      "cell tower coverage",
+      "tower coverage",
+      "wireless coverage",
+      "covering location"
+    ],
+    "description": "Select a subset of candidate cell tower locations to build, maximising the total population covered, subject to a budget constraint on the number of towers (or total cost).",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "y_j",
+          "description": "1 if tower j is built, 0 otherwise",
+          "domain": "y_j ∈ {0,1} for each candidate location j"
+        },
+        {
+          "symbol": "z_i",
+          "description": "1 if region i is covered by at least one selected tower, 0 otherwise",
+          "domain": "z_i ∈ {0,1} for each region i"
+        }
+      ],
+      "objective": {
+        "sense": "maximize",
+        "expression": "Σ_i pop_i · z_i  (total covered population)"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_j y_j ≤ B",
+          "description": "At most B towers can be built (budget)"
+        },
+        {
+          "expression": "z_i ≤ Σ_{j: covers(j,i)} y_j  ∀i",
+          "description": "Region i is only considered covered if at least one tower covering it is selected"
+        }
+      ]
+    },
+    "complexity": "NP-hard",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "gurobi_ex_customer_assignment",
+    "name": "Customer Assignment",
+    "aliases": [
+      "customer assignment",
+      "customer-to-facility assignment",
+      "facility assignment"
+    ],
+    "description": "Assign each customer to one of several open facilities to minimise total assignment (service) cost, subject to facility capacity constraints.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_{ij}",
+          "description": "1 if customer j is assigned to facility i, 0 otherwise",
+          "domain": "x_{ij} ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_i Σ_j c_{ij} · x_{ij}"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_i x_{ij} = 1  ∀j",
+          "description": "Each customer is assigned to exactly one facility"
+        },
+        {
+          "expression": "Σ_j x_{ij} ≤ cap_i  ∀i",
+          "description": "Facility i's total assigned customers cannot exceed capacity cap_i"
+        }
+      ]
+    },
+    "complexity": "NP-hard in general (bin-packing reduction)",
+    "source": "gurobi_modeling_examples"
+  },
+  {
+    "id": "pyomo_diet",
+    "name": "Diet Problem",
+    "aliases": [
+      "diet problem",
+      "diet optimization",
+      "Stigler diet",
+      "nutrition optimization"
+    ],
+    "description": "Choose food quantities to minimise total cost while meeting minimum nutritional requirements (calories, protein, vitamins, etc.).",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_j",
+          "description": "amount of food j to consume (servings per day)",
+          "domain": "x_j ≥ 0 for each food j"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_j c_j · x_j  (total cost)"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_j a_{ij} · x_j ≥ n_i  ∀i",
+          "description": "Nutrient i intake meets minimum requirement n_i (a_{ij} = nutrient i content per serving of food j)"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_j c_j x_j \\quad \\text{s.t.} \\quad \\sum_j a_{ij} x_j \\ge n_i \\; \\forall i, \\quad x_j \\ge 0.",
+    "complexity": "Polynomial (LP)",
+    "source": "pyomo"
+  },
+  {
+    "id": "pyomo_facility_location",
+    "name": "Uncapacitated Facility Location",
+    "aliases": [
+      "facility location",
+      "uncapacitated facility location",
+      "UFL",
+      "simple plant location"
+    ],
+    "description": "Choose which facilities to open and assign each customer to one open facility to minimise total opening plus assignment cost, without capacity constraints.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "y_i",
+          "description": "1 if facility i is opened, 0 otherwise",
+          "domain": "y_i ∈ {0,1} for each facility i"
+        },
+        {
+          "symbol": "x_{ij}",
+          "description": "1 if customer j is assigned to facility i, 0 otherwise",
+          "domain": "x_{ij} ∈ {0,1} for each facility i and customer j"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_i f_i · y_i + Σ_i Σ_j c_{ij} · x_{ij}"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_i x_{ij} = 1  ∀j",
+          "description": "Each customer is assigned to exactly one facility"
+        },
+        {
+          "expression": "x_{ij} ≤ y_i  ∀i,j",
+          "description": "Customers can only be assigned to open facilities"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_i f_i y_i + \\sum_{ij} c_{ij} x_{ij} \\quad \\text{s.t.} \\quad \\sum_i x_{ij}=1 \\; \\forall j, \\quad x_{ij} \\le y_i, \\quad x,y \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
+    "source": "pyomo"
   }
 ]
-

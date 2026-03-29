@@ -47813,7 +47813,36 @@
   {
     "id": "gurobi_optimods_bipartite_matching",
     "name": "Bipartite Matching",
-    "description": "Gurobi OptiMods: Bipartite Matching. See https://github.com/Gurobi/gurobi-optimods.",
+    "aliases": [
+      "bipartite matching",
+      "maximum bipartite matching",
+      "maximum matching"
+    ],
+    "description": "Given a bipartite graph G = (U ∪ V, E), find a maximum-cardinality matching: a subset of edges M ⊆ E such that every vertex in U ∪ V is incident to at most one edge in M, and |M| is maximised.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_{uv}",
+          "description": "1 if edge (u,v) is in the matching, 0 otherwise",
+          "domain": "x_{uv} ∈ {0,1} for each edge (u,v) ∈ E"
+        }
+      ],
+      "objective": {
+        "sense": "maximize",
+        "expression": "Σ_{(u,v) ∈ E} x_{uv}"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_{v:(u,v) ∈ E} x_{uv} ≤ 1  ∀u ∈ U",
+          "description": "Each vertex in U is matched at most once"
+        },
+        {
+          "expression": "Σ_{u:(u,v) ∈ E} x_{uv} ≤ 1  ∀v ∈ V",
+          "description": "Each vertex in V is matched at most once"
+        }
+      ]
+    },
+    "complexity": "Polynomial (solvable in polynomial time via network flow or augmenting paths)",
     "source": "gurobi_optimods"
   },
   {
@@ -47831,7 +47860,36 @@
   {
     "id": "gurobi_optimods_max_flow",
     "name": "Max Flow",
-    "description": "Gurobi OptiMods: Max Flow. See https://github.com/Gurobi/gurobi-optimods.",
+    "aliases": [
+      "maximum flow",
+      "max-flow",
+      "network max flow"
+    ],
+    "description": "Given a directed graph with arc capacities and designated source s and sink t, find the maximum total flow from s to t that does not exceed arc capacities.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "f_{ij}",
+          "description": "flow on arc (i,j)",
+          "domain": "0 ≤ f_{ij} ≤ u_{ij} for each arc (i,j)"
+        }
+      ],
+      "objective": {
+        "sense": "maximize",
+        "expression": "Σ_{(s,j)} f_{sj}  (total flow out of source)"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_{j:(i,j) ∈ A} f_{ij} − Σ_{j:(j,i) ∈ A} f_{ji} = 0  ∀i ∈ V \\ {s,t}",
+          "description": "Flow conservation at every intermediate node"
+        },
+        {
+          "expression": "0 ≤ f_{ij} ≤ u_{ij}  ∀(i,j) ∈ A",
+          "description": "Capacity constraints on each arc"
+        }
+      ]
+    },
+    "complexity": "Polynomial (e.g., push-relabel runs in O(V²√E))",
     "source": "gurobi_optimods"
   },
   {
@@ -47843,19 +47901,113 @@
   {
     "id": "gurobi_optimods_min_cost_flow",
     "name": "Min Cost Flow",
-    "description": "Gurobi OptiMods: Min Cost Flow. See https://github.com/Gurobi/gurobi-optimods.",
+    "aliases": [
+      "minimum cost flow",
+      "min-cost flow",
+      "MCF"
+    ],
+    "description": "Route flow through a directed network from sources to sinks at minimum total cost while satisfying supply/demand requirements and arc capacity limits.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "f_{ij}",
+          "description": "flow on arc (i,j)",
+          "domain": "0 ≤ f_{ij} ≤ u_{ij} for each arc (i,j)"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_{(i,j) ∈ A} c_{ij} · f_{ij}"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_{j:(i,j) ∈ A} f_{ij} − Σ_{j:(j,i) ∈ A} f_{ji} = b_i  ∀i ∈ V",
+          "description": "Flow conservation with supply b_i (positive = supply, negative = demand, zero = transshipment)"
+        },
+        {
+          "expression": "0 ≤ f_{ij} ≤ u_{ij}  ∀(i,j) ∈ A",
+          "description": "Arc capacity constraints"
+        }
+      ]
+    },
+    "complexity": "Polynomial (strongly polynomial algorithms exist)",
     "source": "gurobi_optimods"
   },
   {
     "id": "gurobi_optimods_min_cut",
     "name": "Min Cut",
-    "description": "Gurobi OptiMods: Min Cut. See https://github.com/Gurobi/gurobi-optimods.",
+    "aliases": [
+      "minimum cut",
+      "s-t min cut",
+      "global minimum cut"
+    ],
+    "description": "Given a directed graph, find a minimum-capacity s-t cut: a partition of vertices into sets S (containing s) and T (containing t) that minimises the total capacity of arcs from S to T.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_{ij}",
+          "description": "1 if arc (i,j) is in the cut, 0 otherwise",
+          "domain": "x_{ij} ∈ {0,1} for each arc (i,j)"
+        },
+        {
+          "symbol": "y_i",
+          "description": "1 if vertex i belongs to the source side S, 0 otherwise",
+          "domain": "y_i ∈ {0,1} for each vertex i"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_{(i,j) ∈ A} u_{ij} · x_{ij}"
+      },
+      "constraints": [
+        {
+          "expression": "y_s = 1",
+          "description": "Source s is in the source side"
+        },
+        {
+          "expression": "y_t = 0",
+          "description": "Sink t is in the sink side"
+        },
+        {
+          "expression": "x_{ij} ≥ y_i − y_j  ∀(i,j) ∈ A",
+          "description": "Arc (i,j) must be cut if i ∈ S and j ∈ T"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_{(i,j)} u_{ij} x_{ij} \\quad \\text{s.t.} \\quad x_{ij} \\ge y_i - y_j, \\; y_s=1, y_t=0, \\; x,y \\in \\{0,1\\}.",
+    "complexity": "Polynomial (equals max-flow by max-flow min-cut theorem)",
     "source": "gurobi_optimods"
   },
   {
     "id": "gurobi_optimods_mwis",
-    "name": "Mwis",
-    "description": "Gurobi OptiMods: Mwis. See https://github.com/Gurobi/gurobi-optimods.",
+    "name": "Maximum Weight Independent Set",
+    "aliases": [
+      "maximum weight independent set",
+      "MWIS",
+      "weighted independent set"
+    ],
+    "description": "Given an undirected graph with vertex weights, find an independent set (no two vertices share an edge) of maximum total weight.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_v",
+          "description": "1 if vertex v is in the independent set, 0 otherwise",
+          "domain": "x_v ∈ {0,1} for each vertex v"
+        }
+      ],
+      "objective": {
+        "sense": "maximize",
+        "expression": "Σ_v w_v · x_v"
+      },
+      "constraints": [
+        {
+          "expression": "x_u + x_v ≤ 1  ∀(u,v) ∈ E",
+          "description": "No two adjacent vertices can both be in the independent set"
+        }
+      ]
+    },
+    "formulation_latex": "\\max \\sum_v w_v x_v \\quad \\text{s.t.} \\quad x_u + x_v \\le 1 \\; \\forall (u,v) \\in E, \\quad x_v \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
     "source": "gurobi_optimods"
   },
   {
@@ -47866,8 +48018,42 @@
   },
   {
     "id": "gurobi_optimods_portfolio",
-    "name": "Portfolio",
-    "description": "Gurobi OptiMods: Portfolio. See https://github.com/Gurobi/gurobi-optimods.",
+    "name": "Portfolio Optimization",
+    "aliases": [
+      "portfolio optimization",
+      "Markowitz portfolio",
+      "mean-variance portfolio"
+    ],
+    "description": "Select asset weights to maximise expected return for a given risk level (variance), or minimise portfolio variance for a target return. The classic Markowitz mean-variance model.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "w_i",
+          "description": "weight of asset i in the portfolio",
+          "domain": "w_i ≥ 0 for each asset i"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "w^T Σ w  (portfolio variance, where Σ is the covariance matrix)"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_i w_i = 1",
+          "description": "Weights must sum to 1 (fully invested)"
+        },
+        {
+          "expression": "Σ_i μ_i w_i ≥ R_min",
+          "description": "Expected return meets minimum target R_min"
+        },
+        {
+          "expression": "w_i ≥ 0  ∀i",
+          "description": "No short selling (non-negative weights)"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\mathbf{w}^\\top \\Sigma \\mathbf{w} \\quad \\text{s.t.} \\quad \\sum_i w_i = 1,\\; \\sum_i \\mu_i w_i \\ge R_{\\min},\\; w_i \\ge 0.",
+    "complexity": "Polynomial (convex QP)",
     "source": "gurobi_optimods"
   },
   {
@@ -47890,8 +48076,42 @@
   },
   {
     "id": "gurobi_optimods_workforce",
-    "name": "Workforce",
-    "description": "Gurobi OptiMods: Workforce. See https://github.com/Gurobi/gurobi-optimods.",
+    "name": "Workforce Scheduling",
+    "aliases": [
+      "workforce scheduling",
+      "shift scheduling",
+      "staff scheduling",
+      "nurse scheduling"
+    ],
+    "description": "Assign workers to shifts over a planning horizon to satisfy minimum staffing requirements per shift at minimum total cost, subject to worker availability and consecutive-shift limits.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_{wt}",
+          "description": "1 if worker w is assigned to shift t, 0 otherwise",
+          "domain": "x_{wt} ∈ {0,1} for each worker w and shift t"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_w Σ_t c_{wt} · x_{wt}"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_w x_{wt} ≥ d_t  ∀t",
+          "description": "Minimum number of workers d_t required per shift t"
+        },
+        {
+          "expression": "Σ_t x_{wt} ≤ M_w  ∀w",
+          "description": "Each worker works at most M_w shifts"
+        },
+        {
+          "expression": "x_{wt} ≤ a_{wt}  ∀w,t",
+          "description": "Worker w is only assigned to shift t if available (a_{wt}=1)"
+        }
+      ]
+    },
+    "complexity": "NP-hard in general; polynomial in special cases",
     "source": "gurobi_optimods"
   },
   {
@@ -47933,7 +48153,42 @@
   {
     "id": "gurobi_ex_cell_tower_coverage",
     "name": "Cell Tower Coverage",
-    "description": "Gurobi modeling example: Cell Tower Coverage. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "aliases": [
+      "cell tower coverage",
+      "tower coverage",
+      "wireless coverage",
+      "covering location"
+    ],
+    "description": "Select a subset of candidate cell tower locations to build, maximising the total population covered, subject to a budget constraint on the number of towers (or total cost).",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "y_j",
+          "description": "1 if tower j is built, 0 otherwise",
+          "domain": "y_j ∈ {0,1} for each candidate location j"
+        },
+        {
+          "symbol": "z_i",
+          "description": "1 if region i is covered by at least one selected tower, 0 otherwise",
+          "domain": "z_i ∈ {0,1} for each region i"
+        }
+      ],
+      "objective": {
+        "sense": "maximize",
+        "expression": "Σ_i pop_i · z_i  (total covered population)"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_j y_j ≤ B",
+          "description": "At most B towers can be built (budget)"
+        },
+        {
+          "expression": "z_i ≤ Σ_{j: covers(j,i)} y_j  ∀i",
+          "description": "Region i is only considered covered if at least one tower covering it is selected"
+        }
+      ]
+    },
+    "complexity": "NP-hard",
     "source": "gurobi_modeling_examples"
   },
   {
@@ -47963,7 +48218,36 @@
   {
     "id": "gurobi_ex_customer_assignment",
     "name": "Customer Assignment",
-    "description": "Gurobi modeling example: Customer Assignment. Jupyter notebook and formulation from https://github.com/Gurobi/modeling-examples.",
+    "aliases": [
+      "customer assignment",
+      "customer-to-facility assignment",
+      "facility assignment"
+    ],
+    "description": "Assign each customer to one of several open facilities to minimise total assignment (service) cost, subject to facility capacity constraints.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_{ij}",
+          "description": "1 if customer j is assigned to facility i, 0 otherwise",
+          "domain": "x_{ij} ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_i Σ_j c_{ij} · x_{ij}"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_i x_{ij} = 1  ∀j",
+          "description": "Each customer is assigned to exactly one facility"
+        },
+        {
+          "expression": "Σ_j x_{ij} ≤ cap_i  ∀i",
+          "description": "Facility i's total assigned customers cannot exceed capacity cap_i"
+        }
+      ]
+    },
+    "complexity": "NP-hard in general (bin-packing reduction)",
     "source": "gurobi_modeling_examples"
   },
   {
@@ -48232,14 +48516,80 @@
   },
   {
     "id": "or_lib_assignment",
-    "name": "Assignment",
-    "description": "OR-Library (J.E. Beasley): Assignment. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "name": "Assignment Problem",
+    "aliases": [
+      "assignment problem",
+      "linear assignment",
+      "LAP",
+      "one-to-one assignment"
+    ],
+    "description": "Assign n agents to n tasks one-to-one to minimise total cost, where c_{ij} is the cost of assigning agent i to task j.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_{ij}",
+          "description": "1 if agent i is assigned to task j, 0 otherwise",
+          "domain": "x_{ij} ∈ {0,1} for each agent i and task j"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_i Σ_j c_{ij} · x_{ij}"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_j x_{ij} = 1  ∀i",
+          "description": "Each agent is assigned to exactly one task"
+        },
+        {
+          "expression": "Σ_i x_{ij} = 1  ∀j",
+          "description": "Each task is assigned to exactly one agent"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_i \\sum_j c_{ij} x_{ij} \\quad \\text{s.t.} \\quad \\sum_j x_{ij} = 1 \\; \\forall i, \\quad \\sum_i x_{ij} = 1 \\; \\forall j, \\quad x_{ij} \\in \\{0,1\\}.",
+    "complexity": "Polynomial (Hungarian algorithm, O(n³))",
     "source": "or_library"
   },
   {
     "id": "or_lib_bin_packing_1d",
-    "name": "Bin Packing 1D",
-    "description": "OR-Library (J.E. Beasley): Bin Packing 1D. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "name": "1D Bin Packing",
+    "aliases": [
+      "bin packing",
+      "1D bin packing",
+      "one-dimensional bin packing"
+    ],
+    "description": "Pack n items with sizes s_1,...,s_n into the minimum number of bins, each of capacity C.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "y_j",
+          "description": "1 if bin j is used, 0 otherwise",
+          "domain": "y_j ∈ {0,1}"
+        },
+        {
+          "symbol": "x_{ij}",
+          "description": "1 if item i is placed in bin j, 0 otherwise",
+          "domain": "x_{ij} ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_j y_j  (number of bins used)"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_j x_{ij} = 1  ∀i",
+          "description": "Each item is placed in exactly one bin"
+        },
+        {
+          "expression": "Σ_i s_i · x_{ij} ≤ C · y_j  ∀j",
+          "description": "Total size in bin j does not exceed capacity C (and bin must be open)"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_j y_j \\quad \\text{s.t.} \\quad \\sum_j x_{ij} = 1 \\; \\forall i, \\quad \\sum_i s_i x_{ij} \\le C y_j \\; \\forall j, \\quad x,y \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
     "source": "or_library"
   },
   {
@@ -48257,7 +48607,33 @@
   {
     "id": "or_lib_crew_scheduling",
     "name": "Crew Scheduling",
-    "description": "OR-Library (J.E. Beasley): Crew Scheduling. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "aliases": [
+      "crew scheduling",
+      "crew pairing",
+      "duty scheduling"
+    ],
+    "description": "Cover all required flights (or duties) using a minimum-cost set of feasible crew pairings (sequences of duties for one crew), where each duty must be covered exactly once.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_p",
+          "description": "1 if pairing p is selected, 0 otherwise",
+          "domain": "x_p ∈ {0,1} for each pairing p in the set P of feasible pairings"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_{p ∈ P} c_p · x_p"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_{p: i ∈ p} x_p = 1  ∀i",
+          "description": "Each duty i is covered by exactly one selected pairing"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_p c_p x_p \\quad \\text{s.t.} \\quad \\sum_{p \\ni i} x_p = 1 \\; \\forall i, \\quad x_p \\in \\{0,1\\}.",
+    "complexity": "NP-hard; solved in practice by column generation",
     "source": "or_library"
   },
   {
@@ -48286,14 +48662,80 @@
   },
   {
     "id": "or_lib_generalised_assignment",
-    "name": "Generalised Assignment",
-    "description": "OR-Library (J.E. Beasley): Generalised Assignment. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "name": "Generalised Assignment Problem",
+    "aliases": [
+      "generalised assignment",
+      "generalized assignment",
+      "GAP"
+    ],
+    "description": "Assign m tasks to n agents to maximise total profit, where each agent has a capacity constraint: the total resource consumption of its assigned tasks must not exceed its capacity.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_{ij}",
+          "description": "1 if task j is assigned to agent i, 0 otherwise",
+          "domain": "x_{ij} ∈ {0,1} for each agent i and task j"
+        }
+      ],
+      "objective": {
+        "sense": "maximize",
+        "expression": "Σ_i Σ_j p_{ij} · x_{ij}"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_j r_{ij} · x_{ij} ≤ b_i  ∀i",
+          "description": "Resource consumption of tasks assigned to agent i does not exceed capacity b_i"
+        },
+        {
+          "expression": "Σ_i x_{ij} = 1  ∀j",
+          "description": "Each task is assigned to exactly one agent"
+        }
+      ]
+    },
+    "formulation_latex": "\\max \\sum_{i,j} p_{ij} x_{ij} \\quad \\text{s.t.} \\quad \\sum_j r_{ij} x_{ij} \\le b_i \\; \\forall i, \\quad \\sum_i x_{ij} = 1 \\; \\forall j, \\quad x_{ij} \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
     "source": "or_library"
   },
   {
     "id": "or_lib_graph_colouring",
     "name": "Graph Colouring",
-    "description": "OR-Library (J.E. Beasley): Graph Colouring. Test instances and problem family. http://people.brunel.ac.uk/~mastjjb/jeb/info.html.",
+    "aliases": [
+      "graph colouring",
+      "graph coloring",
+      "chromatic number",
+      "k-coloring"
+    ],
+    "description": "Assign colours to the vertices of a graph so that no two adjacent vertices share the same colour, using the minimum number of colours (chromatic number χ(G)).",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_{vc}",
+          "description": "1 if vertex v is assigned colour c, 0 otherwise",
+          "domain": "x_{vc} ∈ {0,1}"
+        },
+        {
+          "symbol": "y_c",
+          "description": "1 if colour c is used by at least one vertex, 0 otherwise",
+          "domain": "y_c ∈ {0,1}"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_c y_c  (number of colours used)"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_c x_{vc} = 1  ∀v",
+          "description": "Each vertex is assigned exactly one colour"
+        },
+        {
+          "expression": "x_{uc} + x_{vc} ≤ y_c  ∀(u,v) ∈ E, ∀c",
+          "description": "Adjacent vertices cannot share the same colour; colour c must be open if used"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_c y_c \\quad \\text{s.t.} \\quad \\sum_c x_{vc}=1 \\; \\forall v, \\quad x_{uc}+x_{vc} \\le y_c \\; \\forall (u,v)\\in E,\\;\\forall c, \\quad x,y\\in\\{0,1\\}.",
+    "complexity": "NP-hard",
     "source": "or_library"
   },
   {
@@ -49497,8 +49939,35 @@
   },
   {
     "id": "pyomo_diet",
-    "name": "Diet",
-    "description": "Pyomo example: Diet. Open-source optimization model from https://github.com/Pyomo/pyomo.",
+    "name": "Diet Problem",
+    "aliases": [
+      "diet problem",
+      "diet optimization",
+      "Stigler diet",
+      "nutrition optimization"
+    ],
+    "description": "Choose food quantities to minimise total cost while meeting minimum nutritional requirements (calories, protein, vitamins, etc.).",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "x_j",
+          "description": "amount of food j to consume (servings per day)",
+          "domain": "x_j ≥ 0 for each food j"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_j c_j · x_j  (total cost)"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_j a_{ij} · x_j ≥ n_i  ∀i",
+          "description": "Nutrient i intake meets minimum requirement n_i (a_{ij} = nutrient i content per serving of food j)"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_j c_j x_j \\quad \\text{s.t.} \\quad \\sum_j a_{ij} x_j \\ge n_i \\; \\forall i, \\quad x_j \\ge 0.",
+    "complexity": "Polynomial (LP)",
     "source": "pyomo"
   },
   {
@@ -49515,8 +49984,44 @@
   },
   {
     "id": "pyomo_facility_location",
-    "name": "Facility Location",
-    "description": "Pyomo example: Facility Location. Open-source optimization model from https://github.com/Pyomo/pyomo.",
+    "name": "Uncapacitated Facility Location",
+    "aliases": [
+      "facility location",
+      "uncapacitated facility location",
+      "UFL",
+      "simple plant location"
+    ],
+    "description": "Choose which facilities to open and assign each customer to one open facility to minimise total opening plus assignment cost, without capacity constraints.",
+    "formulation": {
+      "variables": [
+        {
+          "symbol": "y_i",
+          "description": "1 if facility i is opened, 0 otherwise",
+          "domain": "y_i ∈ {0,1} for each facility i"
+        },
+        {
+          "symbol": "x_{ij}",
+          "description": "1 if customer j is assigned to facility i, 0 otherwise",
+          "domain": "x_{ij} ∈ {0,1} for each facility i and customer j"
+        }
+      ],
+      "objective": {
+        "sense": "minimize",
+        "expression": "Σ_i f_i · y_i + Σ_i Σ_j c_{ij} · x_{ij}"
+      },
+      "constraints": [
+        {
+          "expression": "Σ_i x_{ij} = 1  ∀j",
+          "description": "Each customer is assigned to exactly one facility"
+        },
+        {
+          "expression": "x_{ij} ≤ y_i  ∀i,j",
+          "description": "Customers can only be assigned to open facilities"
+        }
+      ]
+    },
+    "formulation_latex": "\\min \\sum_i f_i y_i + \\sum_{ij} c_{ij} x_{ij} \\quad \\text{s.t.} \\quad \\sum_i x_{ij}=1 \\; \\forall j, \\quad x_{ij} \\le y_i, \\quad x,y \\in \\{0,1\\}.",
+    "complexity": "NP-hard",
     "source": "pyomo"
   },
   {
