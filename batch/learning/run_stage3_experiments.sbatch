@@ -1,142 +1,92 @@
 #!/bin/bash
-#SBATCH --job-name=stage3_experiments
-#SBATCH --output=%x_%j.out
-#SBATCH --error=%x_%j.err
+#SBATCH --job-name=stage3_exp
+#SBATCH --output=logs/learning/run_stage3_experiments_%j.out
+#SBATCH --error=logs/learning/run_stage3_experiments_%j.err
+#SBATCH --time=08:00:00
+#SBATCH --mem=24G
+#SBATCH --cpus-per-task=4
 #SBATCH --partition=gpu
-#SBATCH --qos=low
-#SBATCH --account=ikoutis
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=8
-#SBATCH --mem=32G
-#SBATCH --gres=gpu:a100_40g:1
-#SBATCH --time=8:00:00
-
-# run_stage3_experiments.sbatch — Orchestrate the full Stage-3 experiment matrix.
-#
-# Reads configs/learning/experiment_matrix_stage3.json and runs each listed
-# experiment (pairwise ranker variants + multitask grounder variants).
-#
-# Submit from repo root:
-#   sbatch batch/learning/run_stage3_experiments.sbatch
-#
-# To run only specific experiments, set a comma-separated filter:
-#   EXPERIMENTS=nlp4lp_pairwise_text_only sbatch batch/learning/run_stage3_experiments.sbatch
-
+#SBATCH --gres=gpu:1
+# Wulver requires an explicit QoS (see scripts/wulver_qos_queries.sh). Override: sbatch --qos=low ...
+#SBATCH --qos=standard
 set -euo pipefail
 
-# ---------------------------------------------------------------------------
-# 1. Paths
-# ---------------------------------------------------------------------------
-REPO_ROOT="${SLURM_SUBMIT_DIR:-$(pwd)}"
-OUTPUT_BASE="${OUTPUT_BASE:-${REPO_ROOT}/artifacts/runs}"
-EXPERIMENT_MATRIX="${REPO_ROOT}/configs/learning/experiment_matrix_stage3.json"
-EXPERIMENT_FILTER="${EXPERIMENTS:-}"   # comma-separated; empty = run all
+# Run full Stage 3 experiment round (corpus/ranker/aux if needed, train all runs, eval, bottleneck slices).
+# Example: sbatch batch/learning/run_stage3_experiments.sbatch
+# Force rerun: FORCE=1 sbatch batch/learning/run_stage3_experiments.sbatch
+# On clusters where repo/home is read-only on compute nodes, the script uses SCRATCH or TMPDIR for logs/artifacts.
+# To get logs on shared storage, set OUTPUT_BASE before submitting: OUTPUT_BASE=$SCRATCH/yourproject sbatch ...
 
-mkdir -p "${OUTPUT_BASE}"
-LOG_DIR="${REPO_ROOT}/logs/learning"
-mkdir -p "${LOG_DIR}"
+# Use submit dir so we're in the repo even when $0 is relative on the compute node
+REPO_ROOT="${SLURM_SUBMIT_DIR:-${REPO_ROOT:-$(cd "$(dirname "$0")/../.." && pwd)}}"
+cd "$REPO_ROOT" || { echo "Cannot cd to REPO_ROOT=$REPO_ROOT"; exit 1; }
 
-echo "========================================"
-echo "SLURM job:          ${SLURM_JOB_ID:-local}"
-echo "Node:               $(hostname)"
-echo "Repo root:          ${REPO_ROOT}"
-echo "Output base:        ${OUTPUT_BASE}"
-echo "Experiment matrix:  ${EXPERIMENT_MATRIX}"
-echo "Filter:             ${EXPERIMENT_FILTER:-<all>}"
-echo "========================================"
-
-cd "${REPO_ROOT}"
-
-# ---------------------------------------------------------------------------
-# 2. Environment activation
-# ---------------------------------------------------------------------------
-echo ""
-echo "--- Activating environment ---"
-
-_activate_conda() {
-    local env_name="$1"
-    if conda env list 2>/dev/null | grep -q "^${env_name} "; then
-        eval "$(conda shell.bash hook 2>/dev/null)" || true
-        conda activate "${env_name}" && echo "Activated conda env: ${env_name}" && return 0
-    fi
-    return 1
-}
-
-ENV_ACTIVATED=0
-
-if [ -n "${CONDA_ENV:-}" ]; then
-    _activate_conda "${CONDA_ENV}" && ENV_ACTIVATED=1 || true
-fi
-
-if [ "${ENV_ACTIVATED}" -eq 0 ]; then
-    for env in combinatorial-train pt pytorch; do
-        _activate_conda "${env}" && ENV_ACTIVATED=1 && break || true
-    done
-fi
-
-if [ "${ENV_ACTIVATED}" -eq 0 ] && [ -d "${REPO_ROOT}/venv" ]; then
-    source "${REPO_ROOT}/venv/bin/activate" && echo "Activated project venv" && ENV_ACTIVATED=1
-fi
-
-if [ "${ENV_ACTIVATED}" -eq 0 ]; then
-    module load python/3.10 2>/dev/null && echo "Loaded module python/3.10" || true
-fi
-
-# ---------------------------------------------------------------------------
-# 3. Fail early if required packages are missing
-# ---------------------------------------------------------------------------
-echo ""
-echo "--- Pre-flight checks ---"
-echo "which python: $(which python)"
-python --version
-
-python -c "import torch; print('torch:', torch.__version__)" \
-    || { echo "ERROR: torch not importable. Activate an env with torch."; exit 1; }
-python -c "import transformers; print('transformers:', transformers.__version__)" \
-    || { echo "ERROR: transformers not importable."; exit 1; }
-python -c "import torch; print('cuda available:', torch.cuda.is_available())"
-
-# ---------------------------------------------------------------------------
-# 4. Confirm experiment matrix exists
-# ---------------------------------------------------------------------------
-echo ""
-echo "--- Experiment matrix ---"
-if [ ! -f "${EXPERIMENT_MATRIX}" ]; then
-    echo "ERROR: Experiment matrix not found: ${EXPERIMENT_MATRIX}"
-    exit 1
-fi
-echo "Matrix: ${EXPERIMENT_MATRIX}"
-python -c "
-import json, sys
-with open('${EXPERIMENT_MATRIX}') as f:
-    m = json.load(f)
-exps = m.get('experiments', [])
-print(f'  Total experiments: {len(exps)}')
-for e in exps:
-    print(f'    - {e[\"name\"]} (type={e.get(\"type\",\"?\")})')
-"
-
-# ---------------------------------------------------------------------------
-# 5. Run experiment matrix
-# ---------------------------------------------------------------------------
-echo ""
-echo "--- Running experiments ---"
-FILTER_ARG=""
-if [ -n "${EXPERIMENT_FILTER}" ]; then
-    FILTER_ARG="--filter ${EXPERIMENT_FILTER}"
-fi
-bash scripts/learning/run_stage3_experiments.sh \
-    --matrix "${EXPERIMENT_MATRIX}" \
-    --output-base "${OUTPUT_BASE}" \
-    ${FILTER_ARG} \
-    2>&1 | tee "${LOG_DIR}/stage3_${SLURM_JOB_ID:-local}.log"
-STAGE3_EXIT="${PIPESTATUS[0]}"
-
-echo ""
-if [ "${STAGE3_EXIT}" -eq 0 ]; then
-    echo "Stage-3 experiments COMPLETED. Outputs: ${OUTPUT_BASE}"
+# Use writable base for logs and artifacts (repo may be read-only on compute nodes, e.g. Wulver).
+OUTPUT_BASE="${OUTPUT_BASE:-}"
+if [[ -n "$OUTPUT_BASE" ]]; then
+  WRITABLE_BASE="$OUTPUT_BASE"
+  mkdir -p "$WRITABLE_BASE/logs/learning" "$WRITABLE_BASE/artifacts"
+elif mkdir -p logs/learning artifacts/learning_runs 2>/dev/null; then
+  WRITABLE_BASE="$REPO_ROOT"
 else
-    echo "Stage-3 experiments FAILED (exit ${STAGE3_EXIT}). See logs."
+  WRITABLE_BASE="${SCRATCH:-${TMPDIR:-/tmp}}/stage3_${SLURM_JOB_ID:-$$}"
+  mkdir -p "$WRITABLE_BASE/logs/learning" "$WRITABLE_BASE/artifacts" || { echo "Cannot create $WRITABLE_BASE"; exit 1; }
+  touch "$WRITABLE_BASE/logs/learning/.write_test" && rm -f "$WRITABLE_BASE/logs/learning/.write_test" || { echo "Cannot write to $WRITABLE_BASE"; exit 1; }
 fi
-exit "${STAGE3_EXIT}"
+# Redirect stdout/stderr to writable location when not using repo (so logs are in SCRATCH/TMPDIR)
+if [[ "$WRITABLE_BASE" != "$REPO_ROOT" ]]; then
+  echo "Using writable base: $WRITABLE_BASE (logs and artifacts here)"
+  echo "SCRATCH=${SCRATCH:-<unset>} TMPDIR=${TMPDIR:-<unset>}"
+  LOGFILE="$WRITABLE_BASE/logs/learning/run_stage3_experiments_${SLURM_JOB_ID:-$$}.out"
+  exec >"$LOGFILE" 2>&1
+fi
+
+CONFIG="${CONFIG:-$REPO_ROOT/configs/learning/experiment_matrix_stage3.json}"
+FORCE="${FORCE:-0}"
+
+# Activate env with torch (repo venv first, else conda) so launcher and subprocesses use same Python
+if [[ -x "$REPO_ROOT/venv/bin/python" ]] && "$REPO_ROOT/venv/bin/python" -c 'import torch' 2>/dev/null; then
+  export PATH="$REPO_ROOT/venv/bin:${PATH}"
+  echo "Using repo venv: $REPO_ROOT/venv"
+elif ! python -c 'import torch' 2>/dev/null; then
+  CONDA_BASE="$(conda info --base 2>/dev/null)" || true
+  if [[ -n "${CONDA_BASE:-}" && -f "${CONDA_BASE}/etc/profile.d/conda.sh" ]]; then
+    source "${CONDA_BASE}/etc/profile.d/conda.sh"
+    for env in ${CONDA_ENV:-pt pytorch base}; do
+      if conda activate "$env" 2>/dev/null && python -c 'import torch' 2>/dev/null; then
+        echo "Using conda env: $env"
+        break
+      fi
+    done
+  fi
+fi
+
+echo "=== Environment diagnostics ==="
+echo "which python: $(which python 2>/dev/null || true)"
+python --version 2>/dev/null || true
+python -c 'import torch; print("torch:", torch.__version__)' 2>/dev/null || echo "torch: FAILED TO IMPORT"
+python -c 'import transformers; print("transformers:", transformers.__version__)' 2>/dev/null || echo "transformers: FAILED TO IMPORT"
+python -c 'import torch; print("torch.cuda.is_available():", torch.cuda.is_available())' 2>/dev/null || true
+echo "=== End diagnostics ==="
+
+if ! python -c 'import torch' 2>/dev/null; then
+  echo "ERROR: torch required for Stage 3 training. Activate repo venv or a conda env with torch and resubmit."
+  exit 1
+fi
+if ! python -c 'import transformers' 2>/dev/null; then
+  echo "ERROR: transformers required for Stage 3 training. Activate an env with transformers and resubmit."
+  exit 1
+fi
+
+OPTS="--config $CONFIG --mode local --artifacts_base $WRITABLE_BASE/artifacts"
+[[ "$FORCE" = "1" ]] && OPTS="$OPTS --force"
+
+set +e
+python -m src.learning.run_stage3_experiments $OPTS
+R=$?
+echo "Python exit code: $R"
+# Try to copy log back to repo so it's visible from login node (if repo is writable)
+if [[ "$WRITABLE_BASE" != "$REPO_ROOT" && -n "${LOGFILE:-}" && -f "$LOGFILE" ]]; then
+  mkdir -p "$REPO_ROOT/logs/learning" 2>/dev/null && cp -f "$LOGFILE" "$REPO_ROOT/logs/learning/" 2>/dev/null || true
+fi
+exit $R

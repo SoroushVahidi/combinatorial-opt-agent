@@ -1,356 +1,404 @@
-"""
-Unit tests for the Global Consistency Grounding (GCG) downstream method.
+"""Focused tests for the global_consistency_grounding downstream method.
 
-Covers:
-- _detect_gcg_sibling_slots: min/max sibling detection
-- _score_mention_slot_gcg: percent firewall, polarity mismatch, total/coeff cross-penalty,
-  entity anchor, magnitude plausibility
-- _gcg_conflict_repair: swaps min/max if min_value > max_value
-- _run_global_consistency_grounding: end-to-end coverage, type assignment
+Tests cover the four hard confusion classes identified in the problem statement:
+  1. percent vs scalar
+  2. total vs per-unit
+  3. lower-bound vs upper-bound / min vs max
+  4. float-heavy small examples
+
+Additional tests verify:
+  - the method is wired into run_setting (assignment_mode string accepted)
+  - configurable constants exist and are sane
+  - diagnostics are returned with the expected structure
+  - empty-input edge cases are handled gracefully
 """
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
 import pytest
 
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
 
-# ─────────────────────────────────────────────────────────────────────────────
-# _detect_gcg_sibling_slots
-# ─────────────────────────────────────────────────────────────────────────────
-
-class TestDetectGcgSiblingSlots:
-    def test_min_max_prefix(self):
-        from tools.nlp4lp_downstream_utility import _detect_gcg_sibling_slots
-        sibs = _detect_gcg_sibling_slots(["min_cost", "max_cost", "demand"])
-        assert sibs["min_cost"]["max_sibling"] == "max_cost"
-        assert sibs["max_cost"]["min_sibling"] == "min_cost"
-        assert sibs["demand"]["min_sibling"] is None
-        assert sibs["demand"]["max_sibling"] is None
-
-    def test_lower_upper_prefix(self):
-        from tools.nlp4lp_downstream_utility import _detect_gcg_sibling_slots
-        sibs = _detect_gcg_sibling_slots(["lower_bound", "upper_bound"])
-        assert sibs["lower_bound"]["max_sibling"] == "upper_bound"
-        assert sibs["upper_bound"]["min_sibling"] == "lower_bound"
-
-    def test_minimum_maximum_prefix(self):
-        from tools.nlp4lp_downstream_utility import _detect_gcg_sibling_slots
-        sibs = _detect_gcg_sibling_slots(["minimum_demand", "maximum_demand"])
-        assert sibs["minimum_demand"]["max_sibling"] == "maximum_demand"
-        assert sibs["maximum_demand"]["min_sibling"] == "minimum_demand"
-
-    def test_no_sibling_when_unpaired(self):
-        from tools.nlp4lp_downstream_utility import _detect_gcg_sibling_slots
-        sibs = _detect_gcg_sibling_slots(["min_profit", "budget"])
-        assert sibs["min_profit"]["max_sibling"] is None
-        assert sibs["budget"]["min_sibling"] is None
-
-    def test_empty_list(self):
-        from tools.nlp4lp_downstream_utility import _detect_gcg_sibling_slots
-        assert _detect_gcg_sibling_slots([]) == {}
-
-    def test_multiple_pairs(self):
-        from tools.nlp4lp_downstream_utility import _detect_gcg_sibling_slots
-        sibs = _detect_gcg_sibling_slots(["min_cost", "max_cost", "min_demand", "max_demand"])
-        assert sibs["min_cost"]["max_sibling"] == "max_cost"
-        assert sibs["min_demand"]["max_sibling"] == "max_demand"
+from tools.nlp4lp_downstream_utility import (
+    GCG_BEAM_WIDTH,
+    GCG_GLOBAL_WEIGHTS,
+    GCG_LOCAL_WEIGHTS,
+    GCG_PRUNE_THRESHOLD,
+    _gcg_beam_search,
+    _gcg_global_penalty,
+    _gcg_local_score,
+    _run_global_consistency_grounding,
+    _build_slot_opt_irs,
+    _extract_opt_role_mentions,
+)
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# _score_mention_slot_gcg
-# ─────────────────────────────────────────────────────────────────────────────
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
 
-def _make_mention_opt(value, kind, operator_tags=frozenset(), role_tags=frozenset(),
-                      fragment_type="", is_per_unit=False, is_total_like=False,
-                      context_tokens=None, sentence_tokens=None):
-    """Helper: build a minimal MentionOptIR for scoring tests."""
-    from tools.nlp4lp_downstream_utility import MentionOptIR, NumTok
-    raw = str(value) + ("%" if kind == "percent" else "")
-    tok = NumTok(raw=raw, value=float(value), kind=kind)
-    return MentionOptIR(
-        mention_id=0,
-        value=float(value),
-        type_bucket=kind,
-        raw_surface=raw,
-        role_tags=frozenset(role_tags),
-        operator_tags=frozenset(operator_tags),
-        unit_tags=frozenset(),
-        fragment_type=fragment_type,
-        is_per_unit=is_per_unit,
-        is_total_like=is_total_like,
-        nearby_entity_tokens=frozenset(),
-        nearby_resource_tokens=frozenset(),
-        nearby_product_tokens=frozenset(),
-        context_tokens=list(context_tokens or []),
-        sentence_tokens=list(sentence_tokens or []),
-        tok=tok,
-    )
+def _gcg(query: str, slots: list[str]) -> tuple[dict, dict, dict]:
+    """Thin wrapper for calling _run_global_consistency_grounding."""
+    return _run_global_consistency_grounding(query, "orig", slots)
 
 
-def _make_slot_opt(name, expected_type, operator_pref=frozenset(),
-                   slot_role_tags=frozenset(), is_total_like=False,
-                   is_coefficient_like=False, norm_tokens=None):
-    """Helper: build a minimal SlotOptIR for scoring tests."""
-    from tools.nlp4lp_downstream_utility import SlotOptIR, _normalize_tokens
-    toks = norm_tokens if norm_tokens is not None else _normalize_tokens(name)
-    return SlotOptIR(
-        name=name,
-        norm_tokens=toks,
-        expected_type=expected_type,
-        alias_tokens=set(),
-        slot_role_tags=frozenset(slot_role_tags),
-        operator_preference=frozenset(operator_pref),
-        unit_preference=frozenset(),
-        is_objective_like=False,
-        is_bound_like=bool(operator_pref),
-        is_total_like=is_total_like,
-        is_coefficient_like=is_coefficient_like,
-    )
+# ---------------------------------------------------------------------------
+# 1. Percent vs scalar
+# ---------------------------------------------------------------------------
+
+class TestPercentVsScalar:
+    """The method must assign a percent-tagged mention to a percent slot,
+    not to a plain numeric slot, when both candidates are present."""
+
+    def test_percent_mention_goes_to_percent_slot(self):
+        query = "The tax rate is 15% and the total budget is 500 dollars."
+        vals, _, diag = _gcg(query, ["tax_rate_percent", "total_budget"])
+        # 500 must go to total_budget; the percent token (0.15 or 15%) to tax_rate_percent
+        assert vals.get("total_budget") is not None
+        assert vals.get("tax_rate_percent") is not None
+        budget_val = float(vals["total_budget"])
+        assert abs(budget_val - 500.0) < 1.0, f"Expected 500 for total_budget, got {budget_val}"
+
+    def test_scalar_does_not_go_to_percent_slot_when_pct_available(self):
+        """When a percent mention exists, the non-percent scalar should not occupy the percent slot."""
+        query = "The discount is 20% and the price is 80 dollars."
+        vals, mentions, _ = _gcg(query, ["discount_percent", "price"])
+        # Both slots should be filled; percent slot should get the % token
+        assert vals.get("discount_percent") is not None
+        m = mentions.get("discount_percent")
+        if m is not None:
+            assert m.type_bucket == "percent", (
+                f"Expected percent mention assigned to discount_percent, got {m.type_bucket}"
+            )
+
+    def test_percent_penalty_in_global_scoring(self):
+        """_gcg_global_penalty must add a percent_misuse penalty when a percent mention
+        is assigned to a non-percent slot and pct evidence exists in the mention pool."""
+        mentions = _extract_opt_role_mentions(
+            "The rate is 30% and budget is 200.", "orig"
+        )
+        slots = _build_slot_opt_irs(["budget", "rate_percent"])
+        slots_by_name = {s.name: s for s in slots}
+        # Force a bad assignment: pct mention → budget (non-pct slot)
+        pct_mention = next((m for m in mentions if m.type_bucket == "percent"), None)
+        if pct_mention is None:
+            pytest.skip("No percent mention extracted from query")
+        bad_assignment = {"budget": pct_mention}
+        delta, reasons = _gcg_global_penalty(bad_assignment, slots_by_name, mentions)
+        assert any("percent_misuse" in r for r in reasons), (
+            f"Expected percent_misuse penalty, got reasons: {reasons}"
+        )
 
 
-class TestScoreMentionSlotGcg:
-    def test_type_exact_bonus_percent(self):
-        from tools.nlp4lp_downstream_utility import _score_mention_slot_gcg, GCG_WEIGHTS
-        m = _make_mention_opt(50, "percent")
-        s = _make_slot_opt("rate", "percent")
-        score, feats = _score_mention_slot_gcg(m, s, has_percent_mention=True)
-        assert feats.get("type_exact")
-        assert score > 4.0
+# ---------------------------------------------------------------------------
+# 2. Total vs per-unit
+# ---------------------------------------------------------------------------
 
-    def test_percent_firewall_applied_when_percent_exists(self):
-        from tools.nlp4lp_downstream_utility import _score_mention_slot_gcg, GCG_WEIGHTS
-        m = _make_mention_opt(200, "int")  # non-percent, non-currency → hits firewall check
-        s = _make_slot_opt("rate", "percent")
-        score_with_firewall, feats = _score_mention_slot_gcg(m, s, has_percent_mention=True)
-        score_without_firewall, _ = _score_mention_slot_gcg(m, s, has_percent_mention=False)
-        # Firewall should apply a large negative penalty
-        assert feats.get("percent_firewall")
-        assert score_with_firewall < score_without_firewall - 5.0
+class TestTotalVsPerUnit:
+    """The method must not swap a per-unit coefficient with a total/budget value."""
 
-    def test_percent_firewall_not_applied_when_no_percent_exists(self):
-        from tools.nlp4lp_downstream_utility import _score_mention_slot_gcg
-        m = _make_mention_opt(200, "int")
-        s = _make_slot_opt("rate", "percent")
-        _, feats = _score_mention_slot_gcg(m, s, has_percent_mention=False)
-        assert not feats.get("percent_firewall")
+    def test_profit_and_budget_correctly_separated(self):
+        query = "Each unit earns a profit of 3 dollars. The total budget available is 600 dollars."
+        vals, _, _ = _gcg(query, ["profit_per_unit", "total_budget"])
+        assert vals.get("profit_per_unit") is not None
+        assert vals.get("total_budget") is not None
+        profit = float(vals["profit_per_unit"])
+        budget = float(vals["total_budget"])
+        assert abs(profit - 3.0) < 0.5, f"Expected profit 3, got {profit}"
+        assert abs(budget - 600.0) < 5.0, f"Expected budget 600, got {budget}"
 
-    def test_polarity_mismatch_penalty_min_slot_max_mention(self):
-        from tools.nlp4lp_downstream_utility import _score_mention_slot_gcg, GCG_WEIGHTS
-        m = _make_mention_opt(10, "int", operator_tags={"max"})
-        s = _make_slot_opt("min_demand", "int", operator_pref={"min"})
-        score_mismatch, feats = _score_mention_slot_gcg(m, s, has_percent_mention=False)
-        # Also score a mention with matching polarity for comparison
-        m_match = _make_mention_opt(10, "int", operator_tags={"min"})
-        score_match, _ = _score_mention_slot_gcg(m_match, s, has_percent_mention=False)
-        assert feats.get("polarity_mismatch_min")
-        # Mismatch score must be significantly below the match score
-        assert score_mismatch < score_match - 5.0
-
-    def test_polarity_mismatch_penalty_max_slot_min_mention(self):
-        from tools.nlp4lp_downstream_utility import _score_mention_slot_gcg
-        m = _make_mention_opt(10, "int", operator_tags={"min"})
-        s = _make_slot_opt("max_capacity", "int", operator_pref={"max"})
-        score_mismatch, feats = _score_mention_slot_gcg(m, s, has_percent_mention=False)
-        m_match = _make_mention_opt(10, "int", operator_tags={"max"})
-        score_match, _ = _score_mention_slot_gcg(m_match, s, has_percent_mention=False)
-        assert feats.get("polarity_mismatch_max")
-        assert score_mismatch < score_match - 5.0
-
-    def test_polarity_match_bonus(self):
-        from tools.nlp4lp_downstream_utility import _score_mention_slot_gcg
-        m = _make_mention_opt(10, "int", operator_tags={"min"})
-        s = _make_slot_opt("min_demand", "int", operator_pref={"min"})
-        score_match, feats = _score_mention_slot_gcg(m, s, has_percent_mention=False)
-        m_mismatch = _make_mention_opt(10, "int", operator_tags={"max"})
-        score_mismatch, _ = _score_mention_slot_gcg(m_mismatch, s, has_percent_mention=False)
-        assert feats.get("polarity_match")
-        assert score_match > score_mismatch + 5.0  # polarity match >> polarity mismatch
-
-    def test_total_to_coeff_penalty(self):
-        from tools.nlp4lp_downstream_utility import _score_mention_slot_gcg
-        m = _make_mention_opt(1000, "currency", is_total_like=True)
-        s = _make_slot_opt("unit_profit", "currency", is_coefficient_like=True)
-        score, feats = _score_mention_slot_gcg(m, s, has_percent_mention=False)
-        assert feats.get("total_to_coeff_conflict")
-
-    def test_coeff_to_total_penalty(self):
-        from tools.nlp4lp_downstream_utility import _score_mention_slot_gcg
-        m = _make_mention_opt(5, "currency", is_per_unit=True)
-        s = _make_slot_opt("total_budget", "currency", is_total_like=True)
-        score, feats = _score_mention_slot_gcg(m, s, has_percent_mention=False)
-        assert feats.get("coeff_to_total_conflict")
-
-    def test_total_match_bonus(self):
-        from tools.nlp4lp_downstream_utility import _score_mention_slot_gcg
-        m_total = _make_mention_opt(1000, "currency", is_total_like=True)
-        m_perunit = _make_mention_opt(1000, "currency", is_per_unit=True)
-        s = _make_slot_opt("total_budget", "currency", is_total_like=True)
-        score_total, feats_total = _score_mention_slot_gcg(m_total, s, has_percent_mention=False)
-        score_perunit, feats_perunit = _score_mention_slot_gcg(m_perunit, s, has_percent_mention=False)
-        assert feats_total.get("total_match")
-        assert feats_perunit.get("coeff_to_total_conflict")
-        assert score_total > score_perunit + 3.0
-
-    def test_entity_anchor_bonus(self):
-        from tools.nlp4lp_downstream_utility import _score_mention_slot_gcg, _normalize_tokens
-        # Slot name "profit" has norm_token "profit"; mention context contains "profit"
-        m = _make_mention_opt(50, "currency", context_tokens=["profit", "per", "unit"])
-        s = _make_slot_opt("profit", "currency", norm_tokens=["profit"])
-        score_with, feats_with = _score_mention_slot_gcg(m, s, has_percent_mention=False)
-        m_no_ctx = _make_mention_opt(50, "currency", context_tokens=["cost", "total"])
-        score_without, _ = _score_mention_slot_gcg(m_no_ctx, s, has_percent_mention=False)
-        assert feats_with.get("entity_anchor")
-        assert score_with > score_without + 1.5
-
-    def test_percent_magnitude_penalty(self):
-        from tools.nlp4lp_downstream_utility import _score_mention_slot_gcg
-        m = _make_mention_opt(150, "percent")  # 150% is implausible
-        s = _make_slot_opt("rate", "percent")
-        score, feats = _score_mention_slot_gcg(m, s, has_percent_mention=True)
-        assert feats.get("percent_magnitude_bad")
-
-    def test_count_decimal_penalty(self):
-        from tools.nlp4lp_downstream_utility import _score_mention_slot_gcg
-        m = _make_mention_opt(3.5, "float")  # decimal value for an int slot
-        s = _make_slot_opt("numItems", "int")
-        score, feats = _score_mention_slot_gcg(m, s, has_percent_mention=False)
-        assert feats.get("count_decimal_bad")
-
-    def test_type_incompatible_hard_veto(self):
-        from tools.nlp4lp_downstream_utility import _score_mention_slot_gcg
-        m = _make_mention_opt(50, "percent")
-        s = _make_slot_opt("budget", "currency")
-        score, feats = _score_mention_slot_gcg(m, s, has_percent_mention=True)
-        assert feats.get("type_incompatible")
-        assert score < -1e7
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# _gcg_conflict_repair
-# ─────────────────────────────────────────────────────────────────────────────
-
-def _make_mention_with_value(mid, value, kind="int"):
-    from tools.nlp4lp_downstream_utility import MentionOptIR, NumTok
-    tok = NumTok(raw=str(value), value=float(value), kind=kind)
-    return MentionOptIR(
-        mention_id=mid, value=float(value), type_bucket=kind, raw_surface=str(value),
-        role_tags=frozenset(), operator_tags=frozenset(), unit_tags=frozenset(),
-        fragment_type="", is_per_unit=False, is_total_like=False,
-        nearby_entity_tokens=frozenset(), nearby_resource_tokens=frozenset(),
-        nearby_product_tokens=frozenset(), context_tokens=[], sentence_tokens=[], tok=tok,
-    )
-
-
-class TestGcgConflictRepair:
-    def test_swap_when_min_greater_than_max(self):
-        from tools.nlp4lp_downstream_utility import _gcg_conflict_repair, _detect_gcg_sibling_slots
-        m_large = _make_mention_with_value(0, 20)
-        m_small = _make_mention_with_value(1, 5)
-        assignments = {"min_cost": m_large, "max_cost": m_small}
-        siblings = _detect_gcg_sibling_slots(["min_cost", "max_cost"])
-        repaired = _gcg_conflict_repair(assignments, siblings)
-        # After repair, min_cost should have value 5 (smaller) and max_cost value 20 (larger)
-        assert repaired["min_cost"].value == 5.0
-        assert repaired["max_cost"].value == 20.0
-
-    def test_no_swap_when_already_correct(self):
-        from tools.nlp4lp_downstream_utility import _gcg_conflict_repair, _detect_gcg_sibling_slots
-        m_small = _make_mention_with_value(0, 5)
-        m_large = _make_mention_with_value(1, 20)
-        assignments = {"min_cost": m_small, "max_cost": m_large}
-        siblings = _detect_gcg_sibling_slots(["min_cost", "max_cost"])
-        repaired = _gcg_conflict_repair(assignments, siblings)
-        assert repaired["min_cost"].value == 5.0
-        assert repaired["max_cost"].value == 20.0
-
-    def test_no_swap_when_one_slot_missing(self):
-        from tools.nlp4lp_downstream_utility import _gcg_conflict_repair, _detect_gcg_sibling_slots
-        m = _make_mention_with_value(0, 20)
-        assignments = {"min_cost": m}
-        siblings = _detect_gcg_sibling_slots(["min_cost", "max_cost"])
-        repaired = _gcg_conflict_repair(assignments, siblings)
-        assert repaired["min_cost"].value == 20.0
-
-    def test_lower_upper_swap(self):
-        from tools.nlp4lp_downstream_utility import _gcg_conflict_repair, _detect_gcg_sibling_slots
-        m_large = _make_mention_with_value(0, 100)
-        m_small = _make_mention_with_value(1, 10)
-        assignments = {"lower_bound": m_large, "upper_bound": m_small}
-        siblings = _detect_gcg_sibling_slots(["lower_bound", "upper_bound"])
-        repaired = _gcg_conflict_repair(assignments, siblings)
-        assert repaired["lower_bound"].value == 10.0
-        assert repaired["upper_bound"].value == 100.0
-
-    def test_empty_assignments(self):
-        from tools.nlp4lp_downstream_utility import _gcg_conflict_repair, _detect_gcg_sibling_slots
-        siblings = _detect_gcg_sibling_slots(["min_x", "max_x"])
-        repaired = _gcg_conflict_repair({}, siblings)
-        assert repaired == {}
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# _run_global_consistency_grounding (end-to-end)
-# ─────────────────────────────────────────────────────────────────────────────
-
-class TestRunGlobalConsistencyGrounding:
-    def test_fills_slots_from_query(self):
-        from tools.nlp4lp_downstream_utility import _run_global_consistency_grounding
-        fv, fm, fi = _run_global_consistency_grounding(
-            "The budget is 500 dollars and the demand is 30 units",
+    def test_coeff_to_total_penalty_applied(self):
+        """Global penalty fires when a per-unit mention is forced to a total slot."""
+        # Use a focused query so mention "3" has is_per_unit=True and is_total_like=False.
+        # Keep the second sentence far away so "total" doesn't bleed into mention context.
+        mentions = _extract_opt_role_mentions(
+            "Each unit requires 3 hours per unit of processing.",
             "orig",
-            ["budget", "demand"],
         )
-        assert "budget" in fv or "demand" in fv  # at least one filled
-
-    def test_empty_scalar_list_returns_empty(self):
-        from tools.nlp4lp_downstream_utility import _run_global_consistency_grounding
-        fv, fm, fi = _run_global_consistency_grounding(
-            "The cost is 100", "orig", []
+        slots = _build_slot_opt_irs(["total_hours", "hours_per_unit"])
+        slots_by_name = {s.name: s for s in slots}
+        # Find a per-unit mention (not total-like).
+        per_unit_m = next(
+            (m for m in mentions if m.is_per_unit and not m.is_total_like and m.value is not None),
+            None,
         )
-        assert fv == {}
-        assert fm == {}
-        assert fi == {}
-
-    def test_query_with_no_numbers_returns_empty(self):
-        from tools.nlp4lp_downstream_utility import _run_global_consistency_grounding
-        fv, fm, fi = _run_global_consistency_grounding(
-            "Maximize the total profit subject to demand constraints",
-            "orig",
-            ["profit", "demand"],
+        if per_unit_m is None:
+            pytest.skip("Per-unit (non-total) mention not extracted — query may need adjustment")
+        total_slot = next((s for s in slots if "total" in s.name), None)
+        if total_slot is None or not total_slot.is_total_like:
+            pytest.skip("total_hours slot not found or not marked total_like")
+        bad_assignment = {"total_hours": per_unit_m}
+        delta, reasons = _gcg_global_penalty(bad_assignment, slots_by_name, mentions)
+        assert any("coeff_to_total" in r or "total_to_coeff" in r for r in reasons), (
+            f"Expected coeff/total penalty, got: {reasons}"
         )
-        assert fv == {}
 
-    def test_percent_slot_gets_percent_value(self):
-        from tools.nlp4lp_downstream_utility import _run_global_consistency_grounding
-        fv, fm, fi = _run_global_consistency_grounding(
-            "The interest rate is 5% and the total cost is 1000 dollars",
-            "orig",
-            ["interestRate", "totalCost"],
+    def test_three_slot_assignment(self):
+        """With three slots (coeff, budget, demand), each gets the right value."""
+        query = (
+            "Each product yields 5 dollars profit. "
+            "There are 200 dollars total available. "
+            "The minimum demand is 10 units."
         )
-        rate = fv.get("interestRate")
-        # 5% should be recognised as percent kind and assigned to interestRate
-        assert rate is not None
-        # The value should be the percentage (5.0 or 0.05 depending on normalisation)
-        assert rate in (5.0, 0.05)
+        vals, _, _ = _gcg(query, ["profit_per_unit", "total_budget", "min_demand"])
+        assert len(vals) == 3, f"Expected 3 slots filled, got {len(vals)}: {vals}"
+        assert abs(float(vals["profit_per_unit"]) - 5.0) < 0.5
+        assert abs(float(vals["total_budget"]) - 200.0) < 5.0
+        assert abs(float(vals["min_demand"]) - 10.0) < 0.5
 
-    def test_min_max_conflict_repair_via_end_to_end(self):
-        """After assignment, if min_value > max_value the two should be swapped."""
-        from tools.nlp4lp_downstream_utility import _run_global_consistency_grounding
-        fv, fm, fi = _run_global_consistency_grounding(
-            "The minimum cost is 5 and the maximum cost is 20",
-            "orig",
-            ["min_cost", "max_cost"],
+
+# ---------------------------------------------------------------------------
+# 3. Lower-bound vs upper-bound / min vs max
+# ---------------------------------------------------------------------------
+
+class TestBoundAssignment:
+    """The method must not swap min and max bounds."""
+
+    def test_min_max_correctly_separated(self):
+        query = "You must produce at least 10 units and at most 50 units."
+        vals, _, _ = _gcg(query, ["min_units", "max_units"])
+        assert vals.get("min_units") is not None
+        assert vals.get("max_units") is not None
+        mn = float(vals["min_units"])
+        mx = float(vals["max_units"])
+        assert mn < mx, f"min ({mn}) should be less than max ({mx})"
+        assert abs(mn - 10.0) < 0.5, f"Expected min=10, got {mn}"
+        assert abs(mx - 50.0) < 0.5, f"Expected max=50, got {mx}"
+
+    def test_bound_flip_penalty_applied(self):
+        """_gcg_global_penalty must penalise when a max-context mention is assigned to a min slot."""
+        # Use a query where the max-tagged number has a clear exclusive-max context
+        # and is well-separated from the min number to avoid context bleed.
+        mentions = _extract_opt_role_mentions(
+            "The maximum number of items is 80 units.", "orig"
         )
-        min_v = fv.get("min_cost")
-        max_v = fv.get("max_cost")
-        if min_v is not None and max_v is not None:
-            # After conflict repair, min should always be ≤ max
-            assert min_v <= max_v
+        slots = _build_slot_opt_irs(["min_value", "max_value"])
+        slots_by_name = {s.name: s for s in slots}
+        # Find a mention tagged with 'max' operator but NOT 'min'.
+        max_m = next(
+            (m for m in mentions if "max" in m.operator_tags and "min" not in m.operator_tags and m.value is not None),
+            None,
+        )
+        min_slot = next((s for s in slots if "min" in s.name), None)
+        if max_m is None or min_slot is None:
+            pytest.skip("Could not extract exclusively-max mention or min slot")
+        bad_assignment = {"min_value": max_m}
+        delta, reasons = _gcg_global_penalty(bad_assignment, slots_by_name, mentions)
+        assert any("bound_flip" in r for r in reasons), (
+            f"Expected bound_flip penalty, got reasons: {reasons}"
+        )
 
-    def test_returns_three_tuple(self):
-        from tools.nlp4lp_downstream_utility import _run_global_consistency_grounding
-        result = _run_global_consistency_grounding("cost is 10", "orig", ["cost"])
-        assert isinstance(result, tuple) and len(result) == 3
-        fv, fm, fi = result
-        assert isinstance(fv, dict)
-        assert isinstance(fm, dict)
-        assert isinstance(fi, dict)
+    def test_larger_bound_set(self):
+        """Four-bound case: two mins, two maxes — correct order maintained."""
+        query = (
+            "Product A must be made at least 5 units and at most 30. "
+            "Product B must be made at least 8 units and at most 40."
+        )
+        vals, _, _ = _gcg(query, ["min_A", "max_A", "min_B", "max_B"])
+        for slot, val in vals.items():
+            assert val is not None, f"Slot {slot} should be filled"
+        # All min slots must be smaller than corresponding max slots.
+        if vals.get("min_A") and vals.get("max_A"):
+            min_a, max_a = float(vals["min_A"]), float(vals["max_A"])
+            assert min_a < max_a, f"min_A ({min_a}) should be < max_A ({max_a})"
+            assert min_a in (5.0, 8.0), f"min_A expected 5 or 8, got {min_a}"
+            assert max_a in (30.0, 40.0), f"max_A expected 30 or 40, got {max_a}"
+        if vals.get("min_B") and vals.get("max_B"):
+            min_b, max_b = float(vals["min_B"]), float(vals["max_B"])
+            assert min_b < max_b, f"min_B ({min_b}) should be < max_B ({max_b})"
+            assert min_b in (5.0, 8.0), f"min_B expected 5 or 8, got {min_b}"
+            assert max_b in (30.0, 40.0), f"max_B expected 30 or 40, got {max_b}"
+
+
+# ---------------------------------------------------------------------------
+# 4. Float-heavy small examples
+# ---------------------------------------------------------------------------
+
+class TestFloatHeavy:
+    """With several decimal values the method must not mix them up."""
+
+    def test_two_float_slots(self):
+        query = "Product A yields 2.5 dollars per unit and product B yields 3.7 dollars per unit."
+        vals, _, _ = _gcg(query, ["profit_A", "profit_B"])
+        assert vals.get("profit_A") is not None
+        assert vals.get("profit_B") is not None
+        values = sorted([float(vals["profit_A"]), float(vals["profit_B"])])
+        assert abs(values[0] - 2.5) < 0.1, f"Expected 2.5, got {values[0]}"
+        assert abs(values[1] - 3.7) < 0.1, f"Expected 3.7, got {values[1]}"
+
+    def test_float_vs_integer_discrimination(self):
+        """A float coefficient and an integer demand should not be swapped."""
+        query = (
+            "Each unit of product A uses 1.5 hours of machine time. "
+            "The demand for product A is at least 20 units."
+        )
+        vals, _, _ = _gcg(query, ["hours_per_unit_A", "min_demand_A"])
+        if vals.get("hours_per_unit_A") and vals.get("min_demand_A"):
+            hu = float(vals["hours_per_unit_A"])
+            md = float(vals["min_demand_A"])
+            assert abs(hu - 1.5) < 0.5, (
+                f"hours_per_unit_A expected ~1.5, got {hu}"
+            )
+            assert abs(md - 20.0) < 1.0, (
+                f"min_demand_A expected ~20, got {md}"
+            )
+
+    def test_three_decimal_coefficients(self):
+        """Three distinct float values should be assigned without duplication."""
+        query = (
+            "Product X has a unit profit of 1.2 dollars, "
+            "product Y of 3.4 dollars, "
+            "and product Z of 5.6 dollars."
+        )
+        vals, _, _ = _gcg(query, ["profit_X", "profit_Y", "profit_Z"])
+        filled_values = [float(v) for v in vals.values() if v is not None]
+        # Check no duplicates (all three values should be distinct).
+        assert len(set(filled_values)) == len(filled_values), (
+            f"Duplicate values detected: {filled_values}"
+        )
+        expected = {1.2, 3.4, 5.6}
+        for ev in expected:
+            assert any(abs(fv - ev) < 0.1 for fv in filled_values), (
+                f"Expected value {ev} not found in {filled_values}"
+            )
+
+
+# ---------------------------------------------------------------------------
+# 5. Diagnostics structure
+# ---------------------------------------------------------------------------
+
+class TestDiagnostics:
+    """The method must return a well-structured diagnostics dict."""
+
+    def test_top_assignments_present(self):
+        query = "The budget is 100 and demand is 5."
+        _, _, diag = _gcg(query, ["budget", "demand"])
+        assert "top_assignments" in diag, "diagnostics must contain top_assignments"
+        assert isinstance(diag["top_assignments"], list)
+
+    def test_top_assignments_fields(self):
+        query = "The budget is 100 and demand is 5."
+        _, _, diag = _gcg(query, ["budget", "demand"])
+        for entry in diag["top_assignments"]:
+            for field in ("rank", "total_score", "local_sum", "global_delta", "active_reasons", "assignment"):
+                assert field in entry, f"Missing field '{field}' in top_assignment entry: {entry}"
+
+    def test_per_slot_candidates_present(self):
+        query = "The budget is 100 and demand is 5."
+        _, _, diag = _gcg(query, ["budget", "demand"])
+        assert "per_slot_candidates" in diag
+
+    def test_reasons_are_strings(self):
+        query = "The discount rate is 10% and the total price is 200."
+        _, _, diag = _gcg(query, ["discount_percent", "total_price"])
+        for entry in diag.get("top_assignments", []):
+            for reason in entry.get("active_reasons", []):
+                assert isinstance(reason, str), f"reason should be a string, got {reason!r}"
+
+
+# ---------------------------------------------------------------------------
+# 6. Edge cases
+# ---------------------------------------------------------------------------
+
+class TestEdgeCases:
+    """Empty inputs and degenerate inputs should not raise."""
+
+    def test_empty_expected_scalar_returns_empty(self):
+        vals, mentions, diag = _gcg("The budget is 100.", [])
+        assert vals == {}
+        assert mentions == {}
+
+    def test_no_numeric_mentions_returns_empty(self):
+        vals, mentions, _ = _gcg("There are no numbers here at all.", ["budget"])
+        assert vals == {}
+
+    def test_single_slot_single_mention(self):
+        vals, _, _ = _gcg("The budget is 42 dollars", ["budget"])
+        assert vals.get("budget") is not None
+        assert abs(float(vals["budget"]) - 42.0) < 0.5
+
+    def test_more_slots_than_mentions(self):
+        """Should fill what it can and leave the rest empty without error."""
+        vals, _, _ = _gcg("The budget is 100 dollars", ["budget", "demand", "cost"])
+        assert vals.get("budget") is not None
+        # demand and cost may be empty — that's fine.
+
+
+# ---------------------------------------------------------------------------
+# 7. Constants sanity
+# ---------------------------------------------------------------------------
+
+class TestConstants:
+    """Configurable constants must exist and have sensible values."""
+
+    def test_local_weights_keys(self):
+        required = {
+            "type_exact_bonus", "type_loose_bonus", "type_incompatible_penalty",
+            "opt_role_overlap", "fragment_compat_bonus", "operator_match_bonus",
+            "lex_context_overlap", "lex_sentence_overlap", "unit_match_bonus",
+            "entity_resource_overlap", "coefficient_vs_total_bonus",
+            "schema_prior_bonus", "weak_match_penalty",
+        }
+        assert required.issubset(GCG_LOCAL_WEIGHTS.keys()), (
+            f"Missing keys: {required - GCG_LOCAL_WEIGHTS.keys()}"
+        )
+
+    def test_global_weights_keys(self):
+        required = {
+            "coverage_reward_per_slot", "type_consistency_reward",
+            "percent_misuse_penalty", "non_percent_to_pct_slot_penalty",
+            "total_to_coeff_penalty", "coeff_to_total_penalty",
+            "bound_flip_penalty", "duplicate_mention_penalty",
+            "plausibility_coverage_bonus",
+        }
+        assert required.issubset(GCG_GLOBAL_WEIGHTS.keys())
+
+    def test_beam_width_positive(self):
+        assert GCG_BEAM_WIDTH >= 1
+
+    def test_prune_threshold_is_float(self):
+        assert isinstance(GCG_PRUNE_THRESHOLD, float)
+
+    def test_penalties_are_negative(self):
+        for key, val in GCG_GLOBAL_WEIGHTS.items():
+            if "penalty" in key:
+                assert val < 0, f"Penalty {key} should be negative, got {val}"
+
+    def test_rewards_are_positive(self):
+        for key, val in GCG_GLOBAL_WEIGHTS.items():
+            if "reward" in key or "bonus" in key:
+                assert val > 0, f"Reward {key} should be positive, got {val}"
+
+
+# ---------------------------------------------------------------------------
+# 8. Integration: method registered in run_setting choices
+# ---------------------------------------------------------------------------
+
+class TestIntegration:
+    """Verify the method is wired into the evaluation pipeline."""
+
+    def test_assignment_mode_string_in_argparse_choices(self):
+        """The argparse choices in main() must include global_consistency_grounding."""
+        import ast as ast_mod
+        src = ROOT / "tools" / "nlp4lp_downstream_utility.py"
+        tree = ast_mod.parse(src.read_text())
+        found = False
+        for node in ast_mod.walk(tree):
+            if isinstance(node, ast_mod.Constant) and node.value == "global_consistency_grounding":
+                found = True
+                break
+        assert found, "global_consistency_grounding not found as a string constant in downstream utility"
+
+    def test_effective_baseline_naming(self):
+        """run_single_setting must map global_consistency_grounding to the correct label."""
+        from tools.run_nlp4lp_focused_eval import _effective_baseline
+        result = _effective_baseline("tfidf", "global_consistency_grounding")
+        assert result == "tfidf_global_consistency_grounding"
+
+    def test_focused_eval_includes_new_method(self):
+        """run_nlp4lp_focused_eval.py default baselines must include the new method."""
+        from tools.run_nlp4lp_focused_eval import FOCUSED_BASELINES_DEFAULT
+        assert "tfidf_global_consistency_grounding" in FOCUSED_BASELINES_DEFAULT

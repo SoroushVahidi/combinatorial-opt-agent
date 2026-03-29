@@ -24,37 +24,187 @@ MONEY_CONTEXT = {"budget", "cost", "price", "profit", "revenue", "dollar", "doll
 PERCENT_CONTEXT = {"percent", "percentage", "rate", "fraction"}
 
 # ── Written-word number recognition ──────────────────────────────────────────
-# NLP4LP queries frequently express numeric values as English words
-# ("two facilities", "twenty percent", "three types of products").
-# These are invisible to NUM_TOKEN_RE which only matches digit strings.
-# The lookup and composition rules below let us extract them as NumToks,
-# closing the ~18% Coverage gap caused by unrecognised written mentions.
-
 _ONES: dict[str, int] = {
-    "zero": 0, "one": 1, "two": 2, "three": 3, "four": 4,
-    "five": 5, "six": 6, "seven": 7, "eight": 8, "nine": 9,
-    "ten": 10, "eleven": 11, "twelve": 12, "thirteen": 13, "fourteen": 14,
-    "fifteen": 15, "sixteen": 16, "seventeen": 17, "eighteen": 18,
+    "zero": 0,
+    "one": 1,
+    "two": 2,
+    "three": 3,
+    "four": 4,
+    "five": 5,
+    "six": 6,
+    "seven": 7,
+    "eight": 8,
+    "nine": 9,
+    "ten": 10,
+    "eleven": 11,
+    "twelve": 12,
+    "thirteen": 13,
+    "fourteen": 14,
+    "fifteen": 15,
+    "sixteen": 16,
+    "seventeen": 17,
+    "eighteen": 18,
     "nineteen": 19,
 }
 _TENS: dict[str, int] = {
-    "twenty": 20, "thirty": 30, "forty": 40, "fifty": 50,
-    "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90,
+    "twenty": 20,
+    "thirty": 30,
+    "forty": 40,
+    "fifty": 50,
+    "sixty": 60,
+    "seventy": 70,
+    "eighty": 80,
+    "ninety": 90,
 }
 _LARGE: dict[str, int] = {
-    "hundred": 100, "thousand": 1_000, "million": 1_000_000,
+    "hundred": 100,
+    "thousand": 1_000,
+    "million": 1_000_000,
 }
 
-# Combined word → value mapping (single-word forms only).
 _WORD_TO_NUM: dict[str, int] = {**_ONES, **_TENS, **_LARGE}
+for tens_word, tens_val in _TENS.items():
+    for ones_word, ones_val in _ONES.items():
+        if ones_val > 0:
+            _WORD_TO_NUM[f"{tens_word}-{ones_word}"] = tens_val + ones_val
 
-# Hyphenated compound tens, e.g. "twenty-three" → 23.
-for _tens_word, _tens_val in _TENS.items():
-    for _ones_word, _ones_val in _ONES.items():
-        if _ones_val > 0:
-            _WORD_TO_NUM[f"{_tens_word}-{_ones_word}"] = _tens_val + _ones_val
+# ── Fraction word recognition ─────────────────────────────────────────────────
+# Maps English fraction/rate words to their decimal values (in [0, 1]).
+# These produce NumTok(kind="percent") because they represent fractional quantities.
+# Keep this table conservative: only unambiguous fraction words.
+_WORD_FRACTIONS: dict[str, float] = {
+    "half":           0.5,
+    "halves":         0.5,
+    "third":          1.0 / 3.0,
+    "thirds":         1.0 / 3.0,
+    "quarter":        0.25,
+    "quarters":       0.25,
+    "one-half":       0.5,
+    "one-third":      1.0 / 3.0,
+    "one-quarter":    0.25,
+    "two-thirds":     2.0 / 3.0,
+    "three-quarters": 0.75,
+}
 
-# Single regex that matches any recognised written-number word/compound.
+# ── Enumeration-derived count extraction ─────────────────────────────────────
+# Words that are never valid enumeration items (articles, prepositions, …).
+_ENUM_STOP_WORDS: frozenset[str] = frozenset({
+    "a", "an", "the", "of", "in", "on", "at", "for", "to", "is", "are",
+    "be", "been", "was", "were", "has", "have", "had", "do", "does", "did",
+    "with", "by", "from", "into", "through", "each", "per", "any", "all",
+    "both", "either", "it", "its", "this", "that", "their", "which",
+    "can", "could", "should", "would", "may", "might", "must", "shall",
+    "not", "no", "also", "some", "more", "other", "such", "than", "if", "as",
+    "and", "or", "but", "nor", "so", "yet",
+    # Modifier adjectives/determiners never used as standalone enumeration nouns
+    # in optimization contexts (e.g. "labor hours, and total budget" should not
+    # yield a 2-item enumeration with "hours" and "total").
+    "total", "overall", "aggregate", "average", "general",
+})
+
+# Regex: "NOUN and NOUN" or "NOUN, NOUN, ..., and NOUN" (1-word items only).
+# Using single-word items avoids greedy capture of trailing prepositions/articles.
+# Requires "and" so there are always ≥ 2 items.
+_ENUM_NOUN_LIST_RE = re.compile(
+    r"[A-Za-z][a-zA-Z-]+"                        # first item (1 word, ≥ 2 chars)
+    r"(?:\s*,\s*[A-Za-z][a-zA-Z-]+)*"             # 0+ comma-separated middle items
+    r"\s*,?\s*and\s+[A-Za-z][a-zA-Z-]+",          # "and LAST" (last item, ≥ 2 chars)
+    re.IGNORECASE,
+)
+
+# Regex: "N NOUN, N NOUN, ..., and N NOUN" — quantified noun lists.
+# Requires at least 2 "N NOUN" pairs (the + after the first comma-group).
+_ENUM_QUANT_LIST_RE = re.compile(
+    r"[$]?\d[\d,]*(?:\.\d+)?%?\s+[A-Za-z][a-zA-Z]+"
+    r"(?:\s*,\s*[$]?\d[\d,]*(?:\.\d+)?%?\s+[A-Za-z][a-zA-Z]+)+"
+    r"(?:\s*,?\s*and\s+[$]?\d[\d,]*(?:\.\d+)?%?\s+[A-Za-z][a-zA-Z]+)?",
+    re.IGNORECASE,
+)
+
+
+def _extract_enum_derived_counts(query: str) -> list[tuple[float, str, list[str]]]:
+    """Detect enumeration patterns and return (count, raw_span, context_tokens).
+
+    Two patterns are recognised:
+
+    1. Unquantified noun lists — "phones and laptops" → 2,
+       "apples, bananas, and grapes" → 3, "A, B, and C" → 3.
+       Items are single words; articles, stop words, and written numbers
+       are silently dropped from the count.
+
+    2. Quantified noun lists — "10 apples, 20 bananas, and 80 grapes" → 3
+       (counts the number of distinct item types, not the quantities).
+
+    Conservative guardrails:
+    - Only returns counts in [2, 5].
+    - Items that are stop-words or written numbers are excluded.
+    - Duplicate (count, position) pairs are deduplicated.
+    """
+    results: list[tuple[float, str, list[str]]] = []
+
+    def _head_word(phrase: str) -> str:
+        parts = phrase.strip().lower().split()
+        return parts[-1].strip(".,;:()[]{}\"'") if parts else ""
+
+    def _is_valid_item(phrase: str) -> bool:
+        hw = _head_word(phrase)
+        if not hw or len(hw) < 2:
+            return False
+        if not hw.replace("-", "").isalpha():
+            return False
+        if hw in _ENUM_STOP_WORDS:
+            return False
+        if _WORD_TO_NUM.get(hw) is not None:
+            return False
+        if hw in _WORD_FRACTIONS:
+            return False
+        return True
+
+    def _ctx_for(span: str, pos: int) -> list[str]:
+        start = max(0, pos - 50)
+        end = min(len(query), pos + len(span) + 50)
+        return [
+            t.lower().strip(".,;:()[]{}\"'")
+            for t in query[start:end].split()
+            if t.strip(".,;:()[]{}\"'")
+        ]
+
+    seen_spans: set[tuple[float, int]] = set()
+
+    # Pattern 1: unquantified noun lists
+    for m_obj in _ENUM_NOUN_LIST_RE.finditer(query):
+        span = m_obj.group(0)
+        items = re.split(r"\s*,\s*|\s+and\s+", span, flags=re.IGNORECASE)
+        valid = [it for it in items if it.strip() and _is_valid_item(it)]
+        count = len(valid)
+        if 2 <= count <= 5:
+            pos = m_obj.start()
+            key: tuple[float, int] = (float(count), pos)
+            if key not in seen_spans:
+                seen_spans.add(key)
+                results.append((float(count), span, _ctx_for(span, pos)))
+
+    # Pattern 2: quantified noun lists ("10 apples, 20 bananas, and 80 grapes")
+    for m_obj in _ENUM_QUANT_LIST_RE.finditer(query):
+        span = m_obj.group(0)
+        nouns = re.findall(
+            r"[$]?\d[\d,]*(?:\.\d+)?%?\s+([A-Za-z][a-zA-Z]*)", span, re.IGNORECASE
+        )
+        valid = [
+            n for n in nouns
+            if n.lower() not in _ENUM_STOP_WORDS
+            and n.lower().replace("-", "").isalpha()
+        ]
+        count = len(valid)
+        if 2 <= count <= 5:
+            pos = m_obj.start()
+            key = (float(count), pos)
+            if key not in seen_spans:
+                seen_spans.add(key)
+                results.append((float(count), span, _ctx_for(span, pos)))
+
+    return results
+
 _WRITTEN_NUM_RE = re.compile(
     r"\b(" + "|".join(re.escape(k) for k in sorted(_WORD_TO_NUM, key=len, reverse=True)) + r")\b",
     re.IGNORECASE,
@@ -62,24 +212,113 @@ _WRITTEN_NUM_RE = re.compile(
 
 
 def _word_to_number(word: str) -> float | None:
-    """Return the numeric value of a written English number word, or None.
-
-    Handles single words ("five" → 5.0, "forty" → 40.0, "hundred" → 100.0)
-    and hyphenated compounds ("twenty-three" → 23.0).  Case-insensitive.
-
-    Examples::
-
-        >>> _word_to_number("two")
-        2.0
-        >>> _word_to_number("twenty-five")
-        25.0
-        >>> _word_to_number("hundred")
-        100.0
-        >>> _word_to_number("unknown") is None
-        True
-    """
+    """Return the numeric value of a written English number word, or None."""
     val = _WORD_TO_NUM.get(word.lower())
     return float(val) if val is not None else None
+
+
+def _parse_word_num_span(toks: list[str], start: int) -> tuple[float | None, int]:
+    """Parse a multi-token English word-number phrase beginning at *start*.
+
+    Handles:
+    - Simple words:           "two", "twenty", "hundred"
+    - Hyphenated compounds:   "twenty-five"  (single token in _WORD_TO_NUM)
+    - Multi-token phrases:    "one hundred", "two hundred fifty",
+                              "one thousand", "three thousand five hundred"
+
+    The grammar followed is::
+
+        number  = [X million] [Y thousand] [Z hundred] base?
+        base    = tens_word ones_word? | ones_word | tens_word
+
+    Multiplier words ("hundred", "thousand", "million") act on the
+    accumulated *chunk* so far; if no chunk precedes them the multiplier
+    itself is treated as 1 × magnitude (e.g. bare "hundred" → 100).
+
+    Stops at any token not in *_WORD_TO_NUM*.
+
+    Returns ``(value, tokens_consumed)`` or ``(None, 0)`` if no match.
+    """
+    n = len(toks)
+    if start >= n:
+        return None, 0
+
+    def _clean(t: str) -> str:
+        return t.lower().strip(".,;:()[]{}\"'")
+
+    # Quick check: the first token must be a recognized word-number.
+    if _WORD_TO_NUM.get(_clean(toks[start])) is None:
+        return None, 0
+
+    total = 0
+    chunk = 0
+    i = start
+
+    while i < n:
+        w = _clean(toks[i])
+        v = _WORD_TO_NUM.get(w)
+        if v is None:
+            break
+        if w == "hundred":
+            chunk = (chunk if chunk > 0 else 1) * 100
+        elif w == "thousand":
+            total += (chunk if chunk > 0 else 1) * 1_000
+            chunk = 0
+        elif w == "million":
+            total += (chunk if chunk > 0 else 1) * 1_000_000
+            chunk = 0
+        else:
+            # ones, tens, or a hyphenated combo already in the dict
+            chunk += v
+        i += 1
+
+    total += chunk
+    consumed = i - start
+    if consumed == 0:
+        return None, 0
+    return float(total), consumed
+
+
+def _classify_word_num_tok(
+    raw_surface: str,
+    wval: float,
+    ctx_set: set[str],
+    toks: list[str],
+    j: int,
+) -> NumTok:
+    """Build a ``NumTok`` for a word-number span with type detection.
+
+    Parameters
+    ----------
+    raw_surface : surface form of the span (e.g. ``"one hundred"``).
+    wval        : numeric value of the span (e.g. ``100.0``).
+    ctx_set     : lowercased context tokens for the span.
+    toks        : full token list of the query.
+    j           : index of the first token *after* the span, used to detect
+                  trailing ``"percent"`` / ``"per cent"``.
+
+    Detection priority: percent > currency (money context) > int/float.
+    """
+    is_pct = False
+    if j < len(toks):
+        next_w = toks[j].lower().strip(".,;:()[]{}\"'")
+        if next_w == "percent":
+            is_pct = True
+        elif (
+            next_w == "per"
+            and j + 1 < len(toks)
+            and toks[j + 1].lower().strip(".,;:()[]{}\"'") == "cent"
+        ):
+            is_pct = True
+    if not is_pct and ("percent" in ctx_set or "percentage" in ctx_set) and wval > 1.0:
+        is_pct = True
+    if is_pct:
+        return NumTok(raw=raw_surface, value=wval / 100.0 if wval > 1.0 else wval, kind="percent")
+    if ctx_set & MONEY_CONTEXT:
+        return NumTok(raw=raw_surface, value=wval, kind="currency")
+    kind = "int" if float(int(wval)) == wval else "float"
+    return NumTok(raw=raw_surface, value=wval, kind=kind)
+
 
 # Cue words and simple operator markers used by constrained assignment.
 CUE_WORDS = {
@@ -122,6 +361,11 @@ ASSIGN_WEIGHTS = {
     "unit_percent_bonus": 2.0,
     "unit_currency_bonus": 2.0,
     "weak_match_penalty": -1.0,
+    # Count-like slot priors: favour small cardinalities, penalise large values.
+    "count_small_int_prior": 2.0,        # bonus for int in [1, count_plausible_max]
+    "count_large_int_penalty": -2.0,     # penalty for int > count_large_penalty_threshold
+    "count_plausible_max": 10,           # integers ≤ this get the small-int bonus
+    "count_large_penalty_threshold": 50, # integers > this get the large-int penalty
 }
 
 
@@ -268,10 +512,15 @@ class SlotRecord:
     expected_type: str
     aliases: list[str]
     alias_tokens: set[str]
+    is_count_like: bool = False
 
 
 def _parse_num_token(tok: str, context_words: set[str]) -> NumTok:
-    t = tok.strip()
+    # Strip whitespace, then strip trailing punctuation characters so that
+    # end-of-sentence numbers like "5000." are recognised correctly.
+    # We intentionally strip a broad set of punctuation (not just sentence-ending
+    # '.!?') because tokens can have any trailing bracket, comma, or colon.
+    t = tok.strip().rstrip(".,;:()[]{}")
     if t == "<num>":
         return NumTok(raw=t, value=None, kind="unknown")
     has_dollar = "$" in t
@@ -292,8 +541,7 @@ def _parse_num_token(tok: str, context_words: set[str]) -> NumTok:
     if 0.0 < val <= 1.0 and (context_words & PERCENT_CONTEXT):
         return NumTok(raw=t, value=val, kind="percent")
 
-    if has_dollar or (context_words & MONEY_CONTEXT) or abs(val) >= 1000:
-        # Heuristic: treat large numbers as amounts in many optimization word problems.
+    if has_dollar or (context_words & MONEY_CONTEXT):
         return NumTok(raw=t, value=val, kind="currency")
 
     # Integer vs float
@@ -305,27 +553,97 @@ def _parse_num_token(tok: str, context_words: set[str]) -> NumTok:
 def _extract_num_tokens(query: str, variant: str) -> list[NumTok]:
     toks = query.split()
     out: list[NumTok] = []
-    for i, w in enumerate(toks):
+    i = 0
+    while i < len(toks):
+        w = toks[i]
         if w == "<num>" and variant in ("noisy", "nonum"):
             out.append(NumTok(raw=w, value=None, kind="unknown"))
+            i += 1
             continue
+        # local context window (centred on span start)
         ctx = set(x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 3) : i + 4])
-        # Digit-based token.
-        m = NUM_TOKEN_RE.fullmatch(w.strip())
+        # Digit-based token (single token only)
+        m = NUM_TOKEN_RE.fullmatch(w.strip().rstrip(",;:()[]{}").rstrip("."))
         if m:
             out.append(_parse_num_token(w, ctx))
-        else:
-            # Written-word number: "two", "twenty-five", etc.
-            clean = w.lower().strip(".,;:()[]{}\"'")
-            wval = _word_to_number(clean)
-            if wval is not None:
-                kind = "int" if float(int(wval)) == wval else "float"
-                out.append(NumTok(raw=w, value=wval, kind=kind))
+            i += 1
+            continue
+        # Written-word number — may span multiple tokens ("one hundred fifty").
+        wval, consumed = _parse_word_num_span(toks, i)
+        if wval is not None:
+            j = i + consumed  # index of first token after the span
+            raw_surface = " ".join(toks[i:j])
+            out.append(_classify_word_num_tok(raw_surface, wval, ctx, toks, j))
+            i += consumed
+            continue
+        # Fraction word (half, one-third, quarter, …) → kind="percent"
+        _w_clean = w.lower().strip(".,;:()[]{}\"'")
+        _frac_val = _WORD_FRACTIONS.get(_w_clean)
+        if _frac_val is not None:
+            out.append(NumTok(raw=_w_clean, value=_frac_val, kind="percent"))
+            i += 1
+            continue
+        i += 1
     return out
 
 
 def _normalize_tokens(text: str) -> list[str]:
     return re.findall(r"\w+", text.lower())
+
+
+def _split_camel_case(name: str) -> list[str]:
+    """Split a CamelCase or underscore-separated identifier into lowercase tokens.
+
+    Also splits at letter–digit and digit–letter boundaries so that numeric
+    suffixes like "Product1" or "Type2" produce separate tokens ("product","1"),
+    enabling left-entity-anchor overlap to match "Product 1" in query text
+    against the "1" component of slot "LaborProduct1".
+
+    Examples::
+
+        TotalLaborHours      -> ['total', 'labor', 'hours']
+        LaborHoursPerProduct -> ['labor', 'hours', 'per', 'product']
+        ProteinFeedA         -> ['protein', 'feed', 'a']
+        FatFeedA             -> ['fat', 'feed', 'a']
+        HeatingHours         -> ['heating', 'hours']
+        CoolingHours         -> ['cooling', 'hours']
+        LaborProduct1        -> ['labor', 'product', '1']
+        LaborProduct2        -> ['labor', 'product', '2']
+    """
+    # Insert a space between a lowercase letter (or digit) followed by an uppercase letter.
+    s = re.sub(r"([a-z\d])([A-Z])", r"\1 \2", name)
+    # Insert a space between a run of uppercase letters and a following CamelCase word.
+    s = re.sub(r"([A-Z]+)([A-Z][a-z])", r"\1 \2", s)
+    # Insert a space at letter–digit and digit–letter transitions (Group 3).
+    # This splits suffixes like "product1" → "product 1" and "2type" → "2 type".
+    s = re.sub(r"([a-zA-Z])(\d)", r"\1 \2", s)
+    s = re.sub(r"(\d)([a-zA-Z])", r"\1 \2", s)
+    # Replace underscores and collapse whitespace, then return lowercase tokens.
+    return [t.lower() for t in re.split(r"[\s_]+", s) if t]
+
+
+def _slot_measure_tokens(name: str) -> list[str]:
+    """Return a de-duplicated list of lowercase tokens for a slot name.
+
+    Includes both the full lowercased identifier (for backward-compatible exact
+    matching) and the individual camel-case-split component tokens (for
+    measure/attribute-aware scoring via narrow_measure_overlap).
+
+    Examples::
+
+        'TotalLaborHours'    -> ['totallaborhours', 'total', 'labor', 'hours']
+        'ProteinFeedA'       -> ['proteinfeeda', 'protein', 'feed', 'a']
+        'HeatingHours'       -> ['heatinghours', 'heating', 'hours']
+    """
+    full = name.lower()
+    parts = _split_camel_case(name)
+    seen: set[str] = {full}
+    result: list[str] = [full]
+    for t in parts:
+        if t not in seen:
+            seen.add(t)
+            result.append(t)
+    return result
 
 
 def _slot_aliases(param_name: str) -> list[str]:
@@ -362,67 +680,226 @@ def _extract_num_mentions(query: str, variant: str) -> list[MentionRecord]:
     """Extract numeric mentions with richer context for constrained assignment.
 
     In addition to digit-based tokens (e.g. "100", "$5000", "20%"), this also
-    recognises written-word numbers such as "two", "twenty-five", "hundred".
-    This closes the Coverage gap on queries that spell out numeric values.
+    recognises written-word numbers such as "two", "twenty-five", "one hundred".
+    Multi-token word-number spans (e.g. "two hundred fifty") are collapsed into
+    a single MentionRecord so that compound values are not split across mentions.
     """
     toks = query.split()
     sent_tokens = [t.lower().strip(".,;:()[]{}") for t in toks]
     mentions: list[MentionRecord] = []
-    for i, w in enumerate(toks):
-        # Build context tokens once; reused for both _parse_num_token and MentionRecord.
-        ctx_tokens = [x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 8) : i + 9]]
+    i = 0
+    while i < len(toks):
+        w = toks[i]
+        # slightly wider context window for constrained assignment
+        ctx_tokens = [
+            x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 8) : i + 9]
+        ]
         ctx_tokens = [c for c in ctx_tokens if c]
+        cue_words = set(ctx_tokens) & CUE_WORDS
+
         if w == "<num>" and variant in ("noisy", "nonum"):
             tok = NumTok(raw=w, value=None, kind="unknown")
-        else:
-            # Digit-based token first.
-            m = NUM_TOKEN_RE.fullmatch(w.strip())
-            if m:
-                tok = _parse_num_token(w, set(ctx_tokens))
-            else:
-                # Written-word number: "two", "forty", "twenty-five", etc.
-                clean = w.lower().strip(".,;:()[]{}\"'")
-                wval = _word_to_number(clean)
-                if wval is None:
-                    continue
-                kind = "int" if float(int(wval)) == wval else "float"
-                tok = NumTok(raw=w, value=wval, kind=kind)
-        cue_words = set(ctx_tokens) & CUE_WORDS
-        mentions.append(
-            MentionRecord(
-                index=i,
-                tok=tok,
-                context_tokens=ctx_tokens,
-                sentence_tokens=sent_tokens,
-                cue_words=cue_words,
+            mentions.append(
+                MentionRecord(
+                    index=i,
+                    tok=tok,
+                    context_tokens=ctx_tokens,
+                    sentence_tokens=sent_tokens,
+                    cue_words=cue_words,
+                )
             )
-        )
+            i += 1
+            continue
+
+        # Digit-based token (single token only — no multi-token merging needed).
+        m = NUM_TOKEN_RE.fullmatch(w.strip().rstrip(",;:()[]{}").rstrip("."))
+        if m:
+            tok = _parse_num_token(w, set(ctx_tokens))
+            mentions.append(
+                MentionRecord(
+                    index=i,
+                    tok=tok,
+                    context_tokens=ctx_tokens,
+                    sentence_tokens=sent_tokens,
+                    cue_words=cue_words,
+                )
+            )
+            i += 1
+            continue
+
+        # Written-word number — may span multiple tokens ("one hundred fifty").
+        wval, consumed = _parse_word_num_span(toks, i)
+        if wval is not None:
+            j = i + consumed  # first token after the span
+            raw_surface = " ".join(toks[i:j])
+            tok = _classify_word_num_tok(raw_surface, wval, set(ctx_tokens), toks, j)
+            mentions.append(
+                MentionRecord(
+                    index=i,
+                    tok=tok,
+                    context_tokens=ctx_tokens,
+                    sentence_tokens=sent_tokens,
+                    cue_words=cue_words,
+                )
+            )
+            i += consumed
+            continue
+
+        i += 1
     return mentions
 
 
 def _expected_type(param_name: str) -> str:
+    """Infer the expected scalar type of an optimization parameter from its name.
+
+    Type hierarchy (checked in order):
+    1. percent  — clearly represents a rate/fraction/percentage
+    2. int      — primary discrete patterns (num, count, items, …)
+    3. currency — monetary / budget-like quantities
+    4. int      — extended discrete patterns (number-of workers, days, shifts, …)
+                  checked *after* currency so "TotalBudget" still → currency
+    5. float    — catch-all for continuous real-valued parameters
+
+    Note on float/int: many optimization coefficients (e.g. RequiredEggsPerSandwich=2)
+    appear as integer text in queries but are conceptually continuous.  The
+    _is_type_match() helper is the authoritative arbiter: it counts an integer
+    token as a full type-match for a float slot.
+    """
     n = (param_name or "").lower()
-    # Percent/ratio slots — must come before "currency" since some slot names
-    # contain both "rate" and "cost" (e.g. "interestRate"); prefer "percent".
-    if any(s in n for s in ("percent", "percentage", "rate", "fraction", "ratio", "share", "proportion")):
+    if any(s in n for s in ("percent", "percentage", "fraction", "pct", "ratio", "proportion", "share", "utilisation", "utilization")):
         return "percent"
-    # Integer-count slots: discrete cardinality values.
-    if any(s in n for s in (
-        "num", "count", "types", "items", "ingredients", "nodes", "edges",
-        "machines", "workers", "shifts", "trucks", "vehicles", "servers",
-        "periods", "stages", "levels", "rounds", "trips", "routes",
-        "facilities", "warehouses", "plants", "suppliers",
-    )):
+    # "rate" is percent only when it is the final segment of the name (e.g. DiscountRate,
+    # TaxRate, InterestRate).  When "rate" appears as a *prefix* followed by an entity
+    # identifier (e.g. RateMachine1, Rate1), the slot holds a processing/production rate
+    # (units per hour) which is a plain float, not a percentage.
+    if "rate" in n and n.endswith("rate"):
+        return "percent"
+    # Primary integer indicators (checked before currency to preserve existing behaviour)
+    if any(s in n for s in ("num", "count", "types", "items", "ingredients", "nodes", "edges")):
         return "int"
-    # Monetary / large-value slots.
-    if any(s in n for s in (
-        "budget", "cost", "price", "revenue", "profit", "penalty",
-        "investment", "demand", "capacity", "minimum", "maximum", "limit",
-        "amount", "total", "value", "supply", "allocation", "threshold",
-        "salary", "wage", "fee", "tax", "income", "expense",
-    )):
+    # Currency / monetary quantities (strictly monetary keywords only).
+    # Note: "demand", "capacity", "minimum", "maximum", and "limit" were
+    # previously in this list but are NOT monetary — they represent quantity
+    # constraints and bounds (e.g. MinimumDemand=100, MaxCapacity=500,
+    # TimeLimit=10).  Those slots fall through to "float" so that plain
+    # integer tokens (the common case in NL) receive a full type_match.
+    if any(
+        s in n
+        for s in (
+            "budget",
+            "cost",
+            "price",
+            "revenue",
+            "profit",
+            "penalty",
+            "investment",
+        )
+    ):
         return "currency"
+    # Extended integer indicators — discrete/countable quantities.
+    # Placed *after* currency so "TotalBudget" is not accidentally reclassified.
+    _EXT_INT_PATTERNS = (
+        "number",    # NumberOfShifts, NumberOfWorkers, NumberOfDays, …
+        "workers",   # TotalWorkers
+        "employee",  # NumberOfEmployees
+        "shifts",    # TotalShifts
+        "batches",   # NumberOfBatches
+        "rounds",    # NumberOfRounds
+        "days",      # NumberOfDays, TotalDays
+        "weeks",     # NumberOfWeeks
+        "months",    # NumberOfMonths
+        "trips",     # NumberOfTrips
+        "persons",   # NumberOfPersons
+        "patients",  # NumberOfPatients
+        "tasks",     # NumberOfTasks
+        "machines",  # NumberOfMachines (distinct from cost-related names like MachineCost)
+        "factories", # NumberOfFactories
+        "farms",     # NumberOfFarms
+        "vehicles",  # NumberOfVehicles
+        "trucks",    # NumberOfTrucks
+        "buses",     # NumberOfBuses
+    )
+    if any(s in n for s in _EXT_INT_PATTERNS):
+        return "int"
     return "float"
+
+
+# Count-like slot name fragments that indicate a cardinality/count parameter.
+# These slots hold the NUMBER OF distinct entities (products, resources, types…),
+# which is always a non-negative integer, and typically a small one (2–20).
+_COUNT_LIKE_PATTERNS = (
+    "num",        # NumProducts, NumTypes, NumItems, NumMixes, …
+    "count",      # CountProducts, ProductCount, …
+    "types",      # NumCandyTypes, JarTypes, …
+    "items",      # NumItems, …
+    "ingredients",
+    "nodes",
+    "edges",
+    "number",     # NumberOfProducts, NumberOfResources, …
+    "workers",
+    "employee",
+    "shifts",
+    "batches",
+    "rounds",
+    "machines",
+    "factories",
+    "farms",
+    "vehicles",
+    "trucks",
+    "buses",
+    "tasks",
+    "resources",  # NumResources, …
+    "products",   # NumProducts, …
+    "mixes",      # NumMixes, …
+    "materials",  # NumMaterials, …
+    "components",
+    "categories",
+)
+
+
+def _is_count_like_slot(param_name: str) -> bool:
+    """Return True if *param_name* represents a count/cardinality slot.
+
+    Count-like slots hold the number of distinct entities (e.g. NumProducts,
+    NumResources, NumberOfMachines).  They always take non-negative integer
+    values, and in realistic optimization problems are usually small (2–20).
+
+    The detection is purely name-based so it is fast and explainable.
+    """
+    n = (param_name or "").lower()
+    return any(p in n for p in _COUNT_LIKE_PATTERNS)
+
+
+def _is_type_match(expected: str, kind: str) -> bool:
+    """Return True when *kind* is a full type-match for *expected*.
+
+    Key rule: an integer token is a valid assignment for a float slot.
+    Optimization model coefficients (e.g. RequiredEggsPerSandwich = 2.0)
+    commonly appear as whole numbers in natural-language descriptions.
+    Treating int-as-float as a strict mismatch was the root cause of
+    TypeMatch ≈ 0.03 for float-typed parameters.
+
+    Rules:
+    - same kind always matches
+    - int  → float    = full match  (integer IS a real number)
+    - int  → int      = full match
+    - pct  → percent  = full match
+    - ccy  → currency = full match
+    - int  → currency = full match  (monetary values commonly appear as plain
+                                     integers in NL, e.g. "budget is 5000")
+    - float → currency= full match  (decimal monetary values, e.g. "price is 4.99")
+    - anything else   = no match (handled by loose-match or incompatibility logic)
+    """
+    if expected == kind:
+        return True
+    if expected == "float" and kind == "int":
+        return True
+    # Monetary slots (budget, cost, price, …) are often described with plain
+    # integers or decimals in NL — no explicit "$" prefix — so int/float tokens
+    # ARE valid currency assignments.
+    if expected == "currency" and kind in {"int", "float"}:
+        return True
+    return False
 
 
 def _choose_token(expected: str, candidates: list[NumTok]) -> tuple[int | None, NumTok | None]:
@@ -442,10 +919,26 @@ def _choose_token(expected: str, candidates: list[NumTok]) -> tuple[int | None, 
             pref = 2 if tok.kind == "int" else (1 if tok.value is not None and float(int(val)) == val else 0)
             return (pref, absval, tok.raw)
         if expected == "currency":
-            pref = 2 if tok.kind == "currency" else 0
+            # All four scoring functions give int/float tokens the same
+            # type_exact_bonus as a currency token for currency slots.
+            # True currency tokens (with explicit "$" / "dollar" context) also
+            # earn a unit_currency_bonus on top, so they are ranked highest.
+            # int/float tokens are valid type-matches and must beat unknown tokens.
+            if tok.kind == "currency":
+                pref = 2
+            elif tok.kind in {"int", "float"}:
+                pref = 1
+            else:
+                pref = 0
             return (pref, absval, tok.raw)
-        # float
-        pref = 2 if tok.kind == "float" and has_decimal else (1 if tok.kind in ("float", "int", "currency") else 0)
+        # float: integer-valued and decimal-valued tokens are equally preferred;
+        # both are valid real-number assignments for float-typed slots.
+        if tok.kind in {"float", "int"}:
+            pref = 2
+        elif tok.kind == "currency":
+            pref = 1
+        else:
+            pref = 0
         return (pref, absval, tok.raw)
 
     best_i = 0
@@ -463,10 +956,32 @@ def _is_scalar(x: Any) -> bool:
 
 
 def _is_type_incompatible(expected: str, kind: str) -> bool:
-    """Hard incompatibilities between expected slot type and mention kind."""
-    if expected == "percent" and kind in {"currency"}:
+    """Hard incompatibilities between expected slot type and mention kind.
+
+    Rules (extended for type-consistent assignment):
+    - percent <-> currency:  hard incompatible (already enforced)
+    - int/float -> percent:  hard incompatible (a bare integer/decimal is NOT a
+      percentage value; percent tokens are produced by context-aware extraction
+      so this would only fire when the token truly lacks a percent signal)
+    - percent -> int:        hard incompatible (a percentage fraction is NOT a
+      discrete integer count)
+    - percent -> float:      hard incompatible (a percent mention cannot fill a
+      generic float slot; percent slots are always typed "percent" by _expected_type)
+    - float → count-like slot: handled separately in _score_mention_slot and
+      _gcg_local_score (non-integer decimals cannot be cardinality counts)
+    All other cross-type pairs (e.g. currency <-> int/float) are handled via
+    soft scoring (loose-match bonus/penalty).
+    """
+    if expected == "percent" and kind in {"currency", "int", "float"}:
         return True
     if expected == "currency" and kind in {"percent"}:
+        return True
+    if expected == "int" and kind == "percent":
+        return True
+    # A percent mention cannot fill a float slot unless the slot is typed percent.
+    # Percent slots always have expected == "percent" (via _expected_type), so this
+    # rule fires only for genuinely float-typed slots receiving a percent mention.
+    if expected == "float" and kind == "percent":
         return True
     return False
 
@@ -479,7 +994,7 @@ def _build_slot_records(expected_scalar: list[str]) -> list[SlotRecord]:
         alias_tokens: set[str] = set()
         for a in aliases:
             alias_tokens.update(_normalize_tokens(a))
-        norm_tokens = _normalize_tokens(name)
+        norm_tokens = _slot_measure_tokens(name)
         slots.append(
             SlotRecord(
                 name=name,
@@ -487,6 +1002,7 @@ def _build_slot_records(expected_scalar: list[str]) -> list[SlotRecord]:
                 expected_type=et,
                 aliases=aliases,
                 alias_tokens=alias_tokens,
+                is_count_like=_is_count_like_slot(name),
             )
         )
     return slots
@@ -504,6 +1020,11 @@ def _score_mention_slot(m: MentionRecord, s: SlotRecord) -> tuple[float, dict[st
         features["type_incompatible"] = True
         return -1e9, features
 
+    # Count-like slot: non-integer decimals and percent values are hard incompatible.
+    if s.is_count_like and kind == "float":
+        features["count_slot_float_incompatible"] = True
+        return -1e9, features
+
     # Type compatibility.
     if kind != "unknown":
         if (expected == "percent" and kind == "percent") or (
@@ -511,12 +1032,37 @@ def _score_mention_slot(m: MentionRecord, s: SlotRecord) -> tuple[float, dict[st
         ):
             score += ASSIGN_WEIGHTS["type_match_bonus"]
             features["type_match"] = True
-        elif expected == "int" and kind in {"int", "currency", "float"}:
+        elif expected == "float" and kind in {"float", "int"}:
+            # Integer-valued tokens are valid for float slots.  Optimization
+            # coefficients (e.g. RequiredEggsPerSandwich = 2) appear as whole
+            # numbers in text but are continuous parameters in the model.
+            score += ASSIGN_WEIGHTS["type_match_bonus"]
+            features["type_match"] = True
+        elif expected == "int" and kind == "int":
+            score += ASSIGN_WEIGHTS["type_match_bonus"]
+            features["type_match"] = True
+        elif expected == "int" and kind in {"currency", "float"}:
             score += ASSIGN_WEIGHTS["type_match_bonus"] * 0.5
             features["type_loose_match"] = True
-        elif expected == "float" and kind in {"float", "int", "currency"}:
+        elif expected == "float" and kind == "currency":
             score += ASSIGN_WEIGHTS["type_match_bonus"] * 0.5
             features["type_loose_match"] = True
+        elif expected == "currency" and kind in {"float", "int"}:
+            # Monetary values (budget, cost, price, …) often appear as plain
+            # integers or decimals without an explicit "$" prefix.  An int/float
+            # token IS a valid monetary assignment.
+            score += ASSIGN_WEIGHTS["type_match_bonus"]
+            features["type_match"] = True
+
+    # Count-like slot: small-integer cardinality prior and large-value penalty.
+    if s.is_count_like and kind == "int" and m.tok.value is not None:
+        val = m.tok.value
+        if 1 <= val <= ASSIGN_WEIGHTS["count_plausible_max"]:
+            score += ASSIGN_WEIGHTS["count_small_int_prior"]
+            features["count_small_int_prior"] = True
+        elif val > ASSIGN_WEIGHTS["count_large_penalty_threshold"]:
+            score += ASSIGN_WEIGHTS["count_large_int_penalty"]
+            features["count_large_int_penalty"] = True
 
     # Lexical overlap: context vs slot name/aliases.
     ctx_set = set(m.context_tokens)
@@ -611,13 +1157,185 @@ for tag, words in [
     for w in words:
         SEMANTIC_ROLE_WORDS[w.lower()] = tag
 
-# Operator phrase tokens (min/max).
-OPERATOR_MIN_PHRASES = {"at", "least", "minimum", "min", "no", "less", "than", "lower"}
-OPERATOR_MAX_PHRASES = {"at", "most", "maximum", "max", "no", "more", "than", "upper", "up", "to"}
+# Phrase-level operator patterns for min/max detection.
+# Using individual-word sets that include "at", "no", "than", "to" caused both
+# min and max tags to fire for almost every mention (e.g. "to" from "wants to
+# maximize" would trigger max; "at" from "at least" would trigger both).
+# These phrase-level tuples are matched against a narrow context string so that
+# "at most 30 vans" does not contaminate the operator tag of "at least 5000".
+_OPERATOR_MIN_PATTERNS: tuple[str, ...] = (
+    "at least", "atleast", "at_least",
+    "no less than", "not less than",
+    "no fewer than", "not fewer than",
+    "at minimum", "at a minimum",
+    "greater than or equal to", "greater than or equal",
+    # Additional min patterns for final-pass coverage
+    "minimum of", "a minimum of", "the minimum",
+    "at the minimum", "minimum required",
+    "must be at least", "should be at least",
+)
+_OPERATOR_MAX_PATTERNS: tuple[str, ...] = (
+    "at most", "atmost", "at_most",
+    "no more than", "not more than",
+    "cannot exceed", "not to exceed",
+    "up to", "upto", "limited to",
+    "at maximum", "at a maximum",
+    "less than or equal to", "less than or equal",
+    "no greater than", "not greater than",
+    # Additional max patterns for final-pass coverage
+    "maximum of", "a maximum of", "the maximum",
+    "at the maximum", "maximum allowed",
+    "must not exceed", "should not exceed",
+    "no higher than", "not higher than",
+)
+# Exclusive lower/upper-bound phrases (strict inequality: > or <).
+# These are checked AFTER the standard patterns with a negation guard
+# so that "no more than" (already an upper-bound pattern) is not
+# re-tagged as a lower bound via the substring "more than".
+_OPERATOR_MIN_EXCL_PATTERNS: tuple[str, ...] = (
+    "more than",
+    "greater than",
+)
+_OPERATOR_MAX_EXCL_PATTERNS: tuple[str, ...] = (
+    "fewer than",
+    "less than",
+)
+# Toggle to enable the full bound-role layer (bound_role field, wrong-direction
+# penalties, range detection, and swap repair).  Set to False to ablate.
+_ENABLE_BOUND_ROLE_LAYER: bool = True
+# Narrow context window (tokens each side) for operator-phrase detection.
+# A window of 3 keeps operator cues tight to the governing number; this is
+# enough to capture "at least NUMBER" (distance 2) and "minimum of NUMBER"
+# (distance 2–3) while preventing cross-constraint contamination when two
+# "at least"/"at most" clauses appear within the same 14-token span.
+_OPERATOR_NARROW_WINDOW: int = 3
+# Left-side operator window is wider than the right-side window because operator
+# phrases always precede the governed number.  A window of 6 is enough to capture
+# the longest standard phrase "greater than or equal to" (5 tokens) while still
+# preventing cross-contamination from the NEXT constraint's "at most" / "at least"
+# phrase when it appears 7+ tokens to the right of the current number.
+_OPERATOR_LEFT_WINDOW: int = 6
+
+# Directional narrow windows for is_per_unit / is_total_like detection.
+# The wide ±14 token context is too broad: in short optimization queries,
+# a global-total cue ("available") and a per-unit cue ("each") can appear
+# within the same window, causing every mention to be flagged as both.
+# Using LEFT ±4 for verbs/determiners and RIGHT ±7 for trailing modifiers
+# keeps each cue tied to the specific mention it governs.
+_LOCALITY_LEFT_WINDOW: int = 4
+_LOCALITY_RIGHT_WINDOW: int = 7
+
+# Per-unit governing verbs: appear as the verb immediately before a coefficient.
+# "requires 2 hours", "uses 3 liters", "costs $12 per unit"
+_PER_UNIT_LEFT_VERBS: frozenset[str] = frozenset({
+    "requires", "require", "needed", "takes", "take", "uses", "use",
+    "needs", "need", "consumes", "consume", "produces", "produce",
+    "contains", "contain", "costs", "cost", "earns", "earn",
+    "yields", "yield",
+    # Additional per-unit governing verbs for final-pass coverage
+    "provides", "provide", "generates", "generate", "allocates", "allocate",
+    "contributes", "contribute", "demands", "supplies",
+    "processes", "process", "outputs", "output",
+    # Note: "demand" and "supply" are intentionally excluded — they are most
+    # commonly nouns in optimization queries ("total demand is N", "supply is N")
+    # and would falsely flag N as a per-unit coefficient.  Only the unambiguous
+    # third-person-singular verb forms "demands" and "supplies" are kept.
+})
+# Per-unit determiners: appear left of the governed noun/number.
+# "each X", "per X", "every X", "for each X"
+_PER_UNIT_LEFT_DETERMINERS: frozenset[str] = frozenset({
+    "each", "per", "every",
+})
+# Multi-word per-unit phrases checked against the wider left context string.
+# These catch "one unit requires", "a single item uses", "for every product" etc.
+_PER_UNIT_LEFT_PHRASES: tuple[str, ...] = (
+    "per unit", "per item", "for each", "for every",
+    "one unit", "each unit", "per product", "each product",
+    "per item", "each item", "per piece", "each piece",
+    "unit requires", "unit uses", "unit costs", "unit earns",
+    "unit needs", "unit takes", "unit produces",
+)
+# Total/aggregate left cues: "has N", "budget is N", "spend at most N"
+_TOTAL_LEFT_CUES: frozenset[str] = frozenset({
+    "total", "budget", "has", "have", "spend", "spent",
+    # Additional total-left cues for final-pass coverage
+    "overall", "aggregate", "sum", "stock", "stockpile",
+    "allocated", "allotted",
+})
+# Total/aggregate right cues: "N available", "N capacity", "N total"
+# Note: "budget" is NOT here — it is a left-side cue ("budget is N", "the budget N"),
+# not a word that typically follows the global amount.
+_TOTAL_RIGHT_CUES: frozenset[str] = frozenset({
+    "available", "capacity", "limit", "total", "supply",
+    # Additional total-right cues for final-pass coverage
+    "overall", "stock", "remaining", "stored", "on-hand",
+    "in-stock", "stocked", "allocated", "allotted",
+})
+# Multi-word total-like phrases checked against the wide context string.
+# "in total", "in all", "total of N", "sum of N", "overall N"
+_TOTAL_PHRASE_PATTERNS: tuple[str, ...] = (
+    "in total", "in all", "total of", "sum of", "overall",
+    "in stock", "on hand", "in supply",
+)
 
 # Unit/marker detection.
 PERCENT_MARKER_TOKENS = {"%", "percent", "percentage", "pct"}
 CURRENCY_MARKER_TOKENS = {"$", "€", "dollar", "dollars", "usd", "eur", "cost", "price", "budget"}
+
+# ── Group 1 role-family lexicons ─────────────────────────────────────────────
+# Used to compute tight-window role flags on MentionOptIR (is_cost_like, etc.)
+# Each lexicon is checked against the ±2 token window immediately surrounding
+# the numeric mention.  Using a tight window prevents cross-mention bleeding
+# (e.g. "profit" from the previous mention leaking into the current one).
+
+_COST_CONTEXT_WORDS: frozenset[str] = frozenset({
+    "cost", "costs", "expense", "expenses", "price", "prices",
+    "spend", "spending", "expenditure", "expenditures",
+})
+
+_PROFIT_CONTEXT_WORDS: frozenset[str] = frozenset({
+    "profit", "profits", "revenue", "revenues", "return", "returns",
+    "earns", "earn", "gain", "gains", "yield", "yields", "earning", "earnings",
+})
+
+_DEMAND_CONTEXT_WORDS: frozenset[str] = frozenset({
+    "demand", "demands", "required", "needed", "need", "needs",
+    "requirement", "requirements", "consume", "consumes",
+})
+
+_RESOURCE_CONTEXT_WORDS: frozenset[str] = frozenset({
+    "labor", "labour", "material", "materials", "resource", "resources",
+    "worker", "workers", "machine", "machines", "manpower",
+})
+
+_TIME_CONTEXT_WORDS: frozenset[str] = frozenset({
+    "hour", "hours", "time", "day", "days", "minute", "minutes",
+    "week", "weeks", "shift", "shifts",
+})
+
+# Context nouns that signal a count/cardinality interpretation when appearing
+# near a small positive integer (e.g. "three types", "two products").
+# Used by the quantity-role layer to derive is_count_like on MentionOptIR.
+_COUNT_CONTEXT_NOUNS: frozenset[str] = frozenset({
+    "type", "types", "kind", "kinds", "product", "products", "item", "items",
+    "resource", "resources", "material", "materials", "ingredient", "ingredients",
+    "machine", "machines", "worker", "workers", "factory", "factories",
+    "category", "categories", "option", "options", "group", "groups",
+    "variant", "variants", "component", "components", "mix", "mixes", "blend", "blends",
+    "mode", "modes", "route", "routes", "vehicle", "vehicles", "part", "parts",
+    "crop", "crops", "food", "foods", "drug", "drugs", "plant", "plants",
+    "class", "classes", "good", "goods", "alloy", "alloys", "fuel", "fuels",
+    # Additional count context nouns for final-pass coverage
+    "variety", "varieties", "service", "services", "technique", "techniques",
+    "method", "methods", "model", "models", "flavor", "flavors", "flavour", "flavours",
+    "size", "sizes", "shape", "shapes", "color", "colors", "colour", "colours",
+    "grade", "grades", "brand", "brands", "supplier", "suppliers", "vendor", "vendors",
+    "department", "departments", "facility", "facilities", "location", "locations",
+    "source", "sources", "destination", "destinations", "project", "projects",
+    "task", "tasks", "job", "jobs", "shift", "shifts", "period", "periods",
+    "warehouse", "warehouses", "depot", "depots", "station", "stations",
+    "nutrient", "nutrients", "vitamin", "vitamins", "mineral", "minerals",
+})
 
 # Weights for semantic IR scoring (interpretable, additive).
 SEMANTIC_IR_WEIGHTS = {
@@ -684,13 +1402,65 @@ def _context_to_semantic_tags(context_tokens: list[str]) -> frozenset[str]:
     return frozenset(tags)
 
 
-def _detect_operator_tags(context_tokens: list[str]) -> frozenset[str]:
+def _detect_operator_tags(
+    context_tokens: list[str],
+    narrow_context_tokens: list[str] | None = None,
+) -> frozenset[str]:
+    """Detect min/max operator cues using phrase-level patterns.
+
+    When *narrow_context_tokens* is supplied (recommended), phrase matching is
+    performed on that asymmetric window around the governed number:
+      - LEFT  : _OPERATOR_LEFT_WINDOW  (=6) tokens, to capture long phrases like
+                "greater than or equal to" (5 tokens) that precede the number
+      - RIGHT : _OPERATOR_NARROW_WINDOW (=3) tokens, kept tight to prevent
+                contamination from the next constraint's operator phrases
+
+    Single unambiguous words ("minimum", "maximum", "least", "most", "min",
+    "max", "lower", "upper") are also checked using the same window.
+
+    Exclusive lower-bound phrases ("more than", "greater than") and exclusive
+    upper-bound phrases ("fewer than", "less than") are checked after the
+    standard patterns and only when not negated (e.g. "no more than" → max,
+    NOT additionally min via "more than").
+    """
+    ctx = narrow_context_tokens if narrow_context_tokens is not None else context_tokens
+    ctx_str = " ".join(ctx)
+    ctx_set = set(t.lower() for t in ctx if t)
     out: set[str] = set()
-    ctx = set(t.lower() for t in context_tokens if t)
-    if ctx & OPERATOR_MIN_PHRASES or "atleast" in ctx or "at_least" in ctx:
+
+    # Standard inclusive lower-bound patterns.
+    if (
+        any(p in ctx_str for p in _OPERATOR_MIN_PATTERNS)
+        or ctx_set & {"least", "min", "minimum", "lower"}
+    ):
         out.add("min")
-    if ctx & OPERATOR_MAX_PHRASES or "atmost" in ctx or "at_most" in ctx or "upto" in ctx:
+
+    # Standard inclusive upper-bound patterns.
+    if (
+        any(p in ctx_str for p in _OPERATOR_MAX_PATTERNS)
+        or ctx_set & {"most", "max", "maximum", "upper"}
+    ):
         out.add("max")
+
+    if _ENABLE_BOUND_ROLE_LAYER:
+        # Exclusive lower-bound phrases: "more than", "greater than".
+        # Guard: skip if negated ("no more than" / "not more than" → already max).
+        if "min" not in out:
+            for p in _OPERATOR_MIN_EXCL_PATTERNS:
+                if p in ctx_str:
+                    if not any(f"{neg} {p}" in ctx_str for neg in ("no", "not")):
+                        out.add("min")
+                        break
+
+        # Exclusive upper-bound phrases: "fewer than", "less than".
+        # Guard: skip if negated ("no fewer than" / "not less than" → already min).
+        if "max" not in out:
+            for p in _OPERATOR_MAX_EXCL_PATTERNS:
+                if p in ctx_str:
+                    if not any(f"{neg} {p}" in ctx_str for neg in ("no", "not")):
+                        out.add("max")
+                        break
+
     return frozenset(out)
 
 
@@ -718,7 +1488,7 @@ def _extract_enriched_mentions(query: str, variant: str) -> list[MentionIR]:
         if w == "<num>" and variant in ("noisy", "nonum"):
             tok = NumTok(raw=w, value=None, kind="unknown")
         else:
-            m = NUM_TOKEN_RE.fullmatch(w.strip())
+            m = NUM_TOKEN_RE.fullmatch(w.strip().rstrip(",;:()[]{}").rstrip("."))
             if not m:
                 continue
             ctx_tokens = [
@@ -733,7 +1503,11 @@ def _extract_enriched_mentions(query: str, variant: str) -> list[MentionIR]:
         ]
         ctx_tokens = [c for c in ctx_tokens if c]
         semantic_role_tags = _context_to_semantic_tags(ctx_tokens)
-        operator_tags = _detect_operator_tags(ctx_tokens)
+        narrow_ctx_tokens = [
+            x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - _OPERATOR_LEFT_WINDOW) : i + _OPERATOR_NARROW_WINDOW + 1]
+        ]
+        narrow_ctx_tokens = [c for c in narrow_ctx_tokens if c]
+        operator_tags = _detect_operator_tags(ctx_tokens, narrow_ctx_tokens)
         unit_tags = _detect_unit_tags(tok, ctx_tokens)
         polarity = "min" if "min" in operator_tags else ("max" if "max" in operator_tags else "")
         target_entity_tokens = frozenset(
@@ -761,7 +1535,7 @@ def _extract_enriched_mentions(query: str, variant: str) -> list[MentionIR]:
 
 
 def _slot_semantic_expansion(param_name: str) -> frozenset[str]:
-    """Rule-based slot semantic target tags."""
+    """Rule-based slot semantic target tags (enriched with per-unit / total semantics)."""
     n = (param_name or "").lower()
     tags: set[str] = set()
     if "budget" in n:
@@ -778,8 +1552,14 @@ def _slot_semantic_expansion(param_name: str) -> frozenset[str]:
         tags.update(["minimum", "at_least", "lower_bound"])
     if "max" in n or "maximum" in n or "atmost" in n:
         tags.update(["maximum", "at_most", "upper_bound"])
-    if any(w in n for w in ("percent", "percentage", "rate", "fraction", "ratio", "share")):
+    if any(w in n for w in ("percent", "percentage", "rate", "fraction", "ratio", "share", "pct", "proportion")):
         tags.update(["percentage", "ratio", "share", "rate", "proportion"])
+    # Per-unit / coefficient semantics — helps score against "per", "each" cues
+    if any(w in n for w in ("per", "each", "unit", "perunit")):
+        tags.update(["per_unit", "coefficient", "unit_rate"])
+    # Total / aggregate semantics
+    if "total" in n or "available" in n or "aggregate" in n:
+        tags.update(["total", "aggregate", "available"])
     if not tags:
         tags.add("quantity")
     return frozenset(tags)
@@ -794,7 +1574,7 @@ def _build_slot_irs(expected_scalar: list[str]) -> list[SlotIR]:
         alias_tokens = set()
         for a in aliases:
             alias_tokens.update(_normalize_tokens(a))
-        norm_tokens = _normalize_tokens(name)
+        norm_tokens = _slot_measure_tokens(name)
         semantic_target_tags = _slot_semantic_expansion(name)
         op_pref: set[str] = set()
         if any(x in name.lower() for x in ("min", "minimum", "atleast")):
@@ -839,9 +1619,24 @@ def _score_mention_slot_ir(m: MentionIR, s: SlotIR) -> tuple[float, dict[str, An
         ):
             score += SEMANTIC_IR_WEIGHTS["type_exact_bonus"]
             features["type_exact"] = True
-        elif expected in ("int", "float") and kind in {"int", "currency", "float"}:
+        elif expected == "float" and kind in {"float", "int"}:
+            # float+float = exact; integer-valued tokens are valid for float slots
+            score += SEMANTIC_IR_WEIGHTS["type_exact_bonus"]
+            features["type_exact"] = True
+        elif expected == "int" and kind == "int":
+            score += SEMANTIC_IR_WEIGHTS["type_exact_bonus"]
+            features["type_exact"] = True
+        elif expected in ("int", "float") and kind in {"currency"}:
             score += SEMANTIC_IR_WEIGHTS["type_loose_bonus"]
             features["type_loose"] = True
+        elif expected == "int" and kind == "float":
+            score += SEMANTIC_IR_WEIGHTS["type_loose_bonus"]
+            features["type_loose"] = True
+        elif expected == "currency" and kind in {"float", "int"}:
+            # Monetary slots filled with a plain integer/float token (no "$" sign)
+            # are a full exact match — the value IS a valid monetary quantity.
+            score += SEMANTIC_IR_WEIGHTS["type_exact_bonus"]
+            features["type_exact"] = True
 
     semantic_overlap = len(m.semantic_role_tags & s.semantic_target_tags)
     if semantic_overlap:
@@ -1136,8 +1931,15 @@ OPT_ROLE_WEIGHTS = {
     "unit_match_bonus": 2.0,
     "entity_resource_overlap": 0.8,
     "coefficient_vs_total_bonus": 1.2,
+    "coeff_to_total_local_penalty": -2.0,  # per-unit mention → total-like slot
+    "total_to_coeff_local_penalty": -2.0,  # total mention → coefficient-like slot
     "weak_match_penalty": -1.0,
     "schema_prior_bonus": 0.5,
+    # Quantity-role layer bonuses / penalties (added by explicit primary_role field).
+    "count_mention_count_slot_bonus": 2.5,   # is_count_like mention → count-like slot
+    "bound_direction_bonus": 1.5,            # lower-bound mention → min slot; upper → max
+    "bound_direction_penalty": -3.0,         # lower-bound mention → max-only slot (or vice versa)
+    "count_mention_non_count_penalty": -1.5, # count-context mention → non-count slot
 }
 OPT_REPAIR_WEIGHTS = {
     "role_plausibility_bonus": 0.6,
@@ -1146,6 +1948,80 @@ OPT_REPAIR_WEIGHTS = {
     "coverage_repair_bonus": 1.2,
     "min_role_support": 0.4,
 }
+
+# ── Global Consistency Grounding (global_consistency_grounding) ──────────────
+# Configurable weights / thresholds for the new global-assignment method.
+
+# Local scoring weights (reuse OPT_ROLE_WEIGHTS signals but tuneable separately).
+GCG_LOCAL_WEIGHTS: dict[str, float] = {
+    "type_exact_bonus": 4.0,
+    "type_loose_bonus": 1.5,
+    "type_incompatible_penalty": -1e9,
+    "opt_role_overlap": 3.0,
+    "fragment_compat_bonus": 1.5,
+    "operator_match_bonus": 1.2,
+    "lex_context_overlap": 0.5,
+    "lex_sentence_overlap": 0.2,
+    "unit_match_bonus": 2.0,
+    "entity_resource_overlap": 0.8,
+    "coefficient_vs_total_bonus": 1.2,
+    "coeff_to_total_local_penalty": -2.0,  # per-unit mention → total-like slot
+    "total_to_coeff_local_penalty": -2.0,  # total mention → coefficient-like slot
+    "schema_prior_bonus": 0.5,
+    "weak_match_penalty": -1.0,
+    # Count-like slot priors: favour small cardinalities, penalise large values.
+    "count_small_int_prior": 2.0,        # bonus for int in [1, count_plausible_max]
+    "count_large_int_penalty": -2.0,     # penalty for int > count_large_penalty_threshold
+    "count_plausible_max": 10,           # integers ≤ this get the small-int bonus
+    "count_large_penalty_threshold": 50, # integers > this get the large-int penalty
+    # Enumeration-derived count candidates must not fill non-count slots.
+    "derived_count_non_count_penalty": -1e9,
+    # Quantity-role layer bonuses / penalties (added by explicit primary_role field).
+    "count_mention_count_slot_bonus": 2.5,   # is_count_like mention → count-like slot
+    "bound_direction_bonus": 1.5,            # lower-bound mention → min slot; upper → max
+    "bound_direction_penalty": -3.0,         # lower-bound mention → max-only slot (or vice versa)
+    "count_mention_non_count_penalty": -1.5, # count-context mention → non-count slot
+    # Narrow-left entity anchor: tight 3-4-token left-window overlap with slot name/aliases.
+    # This is a stronger signal than lex_context_overlap (0.5) because the narrow window is
+    # entity-discriminating — e.g. narrow_left=("product","a","requires") only overlaps with
+    # ProductA slots, not ProductB slots, even when the full context contains both entities.
+    "narrow_left_overlap": 2.0,
+    # Tight-context cost/profit semantic hints.
+    # Fires only when the mention is UNambiguously cost-like (not also profit-like) or
+    # profit-like (not also cost-like).  The tight ±2-token window is less prone to cross-
+    # mention bleeding than wider contexts, so this flag reliably indicates semantic domain.
+    # Example: "profit is 8 and cost is 4" → val=4 has is_cost_like=True, is_profit_like=False
+    # → bonus for cost-containing slots, penalty for profit-containing slots.
+    "tight_cost_match_bonus": 2.0,
+    "tight_cost_mismatch_penalty": -2.5,
+    "tight_profit_match_bonus": 2.0,
+    "tight_profit_mismatch_penalty": -2.5,
+}
+
+# Global consistency rewards/penalties applied to a full assignment as a whole.
+GCG_GLOBAL_WEIGHTS: dict[str, float] = {
+    "coverage_reward_per_slot": 0.8,     # reward per slot that is filled
+    "type_consistency_reward": 0.5,      # reward per slot whose mention type matches expected
+    "percent_misuse_penalty": -3.0,      # percent mention → non-percent slot (when pct exists)
+    "non_percent_to_pct_slot_penalty": -3.0,  # non-percent mention → percent slot
+    "total_to_coeff_penalty": -2.0,      # total-looking mention → per-unit (coeff) slot
+    "coeff_to_total_penalty": -2.0,      # per-unit-looking mention → total slot
+    "bound_flip_penalty": -2.5,          # min mention → max slot or vice versa
+    "duplicate_mention_penalty": -5.0,   # same mention used for two slots (one-to-one violation)
+    "plausibility_coverage_bonus": 1.0,  # bonus if ≥ 80 % of slots are filled
+    # Entity coherence: when a mention has no direct entity letter anchor in its
+    # narrow_left, it should be assigned to the same entity as the immediately
+    # preceding mention.  This repairs "Feed B 7 protein AND 15 fat" where fat
+    # carries no explicit entity marker but must follow the B-anchored protein.
+    "entity_coherence_reward": 1.5,      # unanchored mention → same entity as preceding
+    "entity_coherence_penalty": -2.0,    # unanchored mention → different entity than preceding
+}
+
+# Candidate pruning: pairs with local score below this are removed from consideration.
+GCG_PRUNE_THRESHOLD: float = -0.5
+
+# Beam width for beam search over partial assignments.
+GCG_BEAM_WIDTH: int = 8
 
 
 @dataclass(frozen=True)
@@ -1168,6 +2044,44 @@ class MentionOptIR:
     context_tokens: list[str]
     sentence_tokens: list[str]
     tok: NumTok
+    # ── Quantity-role layer (explicit primary-role signals) ──────────────────
+    # These are derived from type_bucket, operator_tags, role_tags, and context
+    # and provide clean boolean access for role-aware scoring without extra lookups.
+    is_count_like: bool = False          # small int with count-context nouns nearby, or derived_count
+    is_lower_bound_like: bool = False    # operator_tags contains "min"
+    is_upper_bound_like: bool = False    # operator_tags contains "max"
+    is_percent_like: bool = False        # type_bucket == "percent"
+    primary_role: str = "generic"        # dominant role: count | total | coefficient | lower_bound | upper_bound | percent | generic
+    # Fine-grained bound role (requires _ENABLE_BOUND_ROLE_LAYER=True).
+    # Values: lower_inclusive | lower_exclusive | upper_inclusive | upper_exclusive
+    #         range_low | range_high | unknown
+    bound_role: str = "unknown"
+    # ── Narrow local context (Stage 3 measure/attribute-aware linking) ───────
+    # Tokens from the directional narrow windows (±left + ±right) already
+    # computed for is_per_unit / is_total_like detection.  This is a MUCH
+    # tighter window than context_tokens (±14) and stays within clause
+    # boundaries, making it suitable for measure-attribute overlap scoring.
+    narrow_context_tokens: tuple[str, ...] = ()
+    # ── Group 3: directional left-anchor tokens ───────────────────────────────
+    # Only the LEFT portion of the narrow window (tokens to the LEFT of this
+    # mention, up to _LOCALITY_LEFT_WINDOW=4).  Keeping left and right separate
+    # prevents the right context of one mention from leaking entity cues from
+    # the following sibling clause into the entity alignment score.
+    # Example: "Product B requires 7 … and product A requires 3"
+    #   - narrow_left_tokens of 7 = ("product", "b", "requires")
+    #   - narrow_left_tokens of 3 = ("and", "product", "a", "requires")
+    # This lets left_entity_anchor_overlap discriminate slot B vs slot A.
+    narrow_left_tokens: tuple[str, ...] = ()
+    # ── Group 1 role-family flags (Step 2 structured mention representation) ──
+    # Derived from the ±2 token tight window immediately surrounding the mention.
+    # Using a tight window prevents cross-mention bleeding.  These flags feed:
+    #   - role_family_mismatch distractor suppression (Step 4)
+    #   - transparency / ablation diagnostics
+    is_cost_like: bool = False      # cost/expense/price in tight context
+    is_profit_like: bool = False    # profit/revenue/yield in tight context
+    is_demand_like: bool = False    # demand/required/needed in tight context
+    is_resource_like: bool = False  # labor/material/resource in tight context
+    is_time_like: bool = False      # hour/hours/time/day in tight context
 
 
 @dataclass(frozen=True)
@@ -1185,6 +2099,7 @@ class SlotOptIR:
     is_bound_like: bool
     is_total_like: bool
     is_coefficient_like: bool
+    is_count_like: bool = False
 
 
 def _context_to_opt_role_tags(context_tokens: list[str]) -> frozenset[str]:
@@ -1241,24 +2156,213 @@ def _detect_opt_unit_tags(tok: NumTok, context_tokens: list[str]) -> frozenset[s
     return frozenset(out)
 
 
+def _compute_is_count_like_mention(
+    tok: NumTok,
+    role_tags: frozenset[str],
+    context_tokens: list[str],
+) -> bool:
+    """Return True when this mention is likely a count/cardinality value.
+
+    Criteria (any one is sufficient):
+    - Marked as a derived-count from enumeration analysis (reliable signal).
+    - Small positive integer (value in [1, 20], int-valued) AND at least one
+      count-context noun appears in the nearby context tokens (e.g. "three types").
+
+    Importantly, ``cardinality_limit`` in role_tags is NOT sufficient on its own
+    because it can fire for "units" in "100 units must be produced" (a production
+    target, not a cardinality count).  Only explicit ``derived_count`` tagging or
+    the small-int + count-noun rule produces a reliable count signal.
+    """
+    if "derived_count" in role_tags:
+        return True
+    val = tok.value
+    if val is None:
+        return False
+    if not (1 <= val <= 20 and float(int(val)) == val):
+        return False
+    ctx_set = set(t.lower().strip(".,;:()[]{}") for t in context_tokens if t)
+    return bool(ctx_set & _COUNT_CONTEXT_NOUNS)
+
+
+def _compute_primary_role(
+    tok: NumTok,
+    is_count_like: bool,
+    is_lower_bound_like: bool,
+    is_upper_bound_like: bool,
+    is_percent_like: bool,
+    is_total_like: bool,
+    is_per_unit: bool,
+) -> str:
+    """Synthesize a single primary-role string from the binary role signals.
+
+    Priority order (from most to least specific):
+      1. count           – explicit cardinality
+      2. percent         – fractional/rate value
+      3. lower_bound     – min/at-least constraint
+      4. upper_bound     – max/at-most constraint
+      5. coefficient     – per-unit coefficient
+      6. total           – global total/capacity/budget
+      7. generic         – fallback
+    """
+    if is_count_like:
+        return "count"
+    if is_percent_like:
+        return "percent"
+    if is_lower_bound_like and not is_upper_bound_like:
+        return "lower_bound"
+    if is_upper_bound_like and not is_lower_bound_like:
+        return "upper_bound"
+    if is_per_unit and not is_total_like:
+        return "coefficient"
+    if is_total_like and not is_per_unit:
+        return "total"
+    return "generic"
+
+
+def _find_range_annotations(toks: list[str]) -> dict[int, str]:
+    """Detect range expressions and return a map from token index → bound role.
+
+    Handles:
+      - "between X and Y"  →  X: range_low,  Y: range_high
+      - "from X to Y"      →  X: range_low,  Y: range_high
+      - "X to Y" (bare)    →  X: range_low,  Y: range_high  (only when X is a number)
+
+    Only fires when _ENABLE_BOUND_ROLE_LAYER is True.
+    """
+    if not _ENABLE_BOUND_ROLE_LAYER:
+        return {}
+    result: dict[int, str] = {}
+    clean = [t.lower().strip(".,;:()[]{}") for t in toks]
+    n = len(clean)
+
+    def _is_number_token(idx: int) -> bool:
+        raw = toks[idx].strip().rstrip(",;:()[]{}").rstrip(".")
+        return bool(NUM_TOKEN_RE.fullmatch(raw)) or clean[idx] in _WORD_FRACTIONS
+
+    for i, tok in enumerate(clean):
+        if tok in ("between", "from"):
+            bridge_words = {"and", "to", "-"} if tok == "between" else {"to"}
+            nums: list[int] = []
+            j = i + 1
+            while j < n and len(nums) < 2:
+                if _is_number_token(j):
+                    nums.append(j)
+                elif clean[j] not in bridge_words:
+                    break
+                j += 1
+            if len(nums) == 2:
+                result[nums[0]] = "range_low"
+                result[nums[1]] = "range_high"
+
+    # Bare "X to Y" range: only when the first number token is already known
+    # (via digit recognition) and is immediately followed by "to" and another number.
+    # This avoids false positives on "send to", "up to N" (already handled above).
+    for i in range(n - 2):
+        if i in result:
+            continue  # already annotated
+        if not _is_number_token(i):
+            continue
+        if clean[i + 1] != "to":
+            continue
+        if i + 2 < n and _is_number_token(i + 2) and (i + 2) not in result:
+            # Guard: ensure "to" is not part of a "up to" / "from X to" phrase already handled.
+            if i > 0 and clean[i - 1] in ("up", "upto", "from", "between"):
+                continue
+            result[i] = "range_low"
+            result[i + 2] = "range_high"
+
+    return result
+
+
+def _compute_bound_role(
+    operator_tags: frozenset[str],
+    ctx_str: str,
+    range_annotation: str = "",
+) -> str:
+    """Compute fine-grained bound role.
+
+    Returns one of:
+      lower_inclusive  – at least, no fewer than, ≥
+      lower_exclusive  – more than, greater than, >
+      upper_inclusive  – at most, no more than, ≤
+      upper_exclusive  – fewer than, less than, <
+      range_low        – lower end of "between X and Y"
+      range_high       – upper end of "between X and Y"
+      unknown          – no operator cue detected
+    """
+    if not _ENABLE_BOUND_ROLE_LAYER:
+        return "unknown"
+    if range_annotation in ("range_low", "range_high"):
+        return range_annotation
+    if "min" in operator_tags and "max" not in operator_tags:
+        # If an inclusive standard pattern matched (e.g. "greater than or equal to"),
+        # do NOT also fire exclusive via the "greater than" sub-phrase.
+        _has_inclusive = any(p in ctx_str for p in _OPERATOR_MIN_PATTERNS)
+        if not _has_inclusive and any(p in ctx_str for p in _OPERATOR_MIN_EXCL_PATTERNS):
+            return "lower_exclusive"
+        return "lower_inclusive"
+    if "max" in operator_tags and "min" not in operator_tags:
+        _has_inclusive = any(p in ctx_str for p in _OPERATOR_MAX_PATTERNS)
+        if not _has_inclusive and any(p in ctx_str for p in _OPERATOR_MAX_EXCL_PATTERNS):
+            return "upper_exclusive"
+        return "upper_inclusive"
+    return "unknown"
+
+
 def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
-    """Stage 1: Optimization-aware mention extraction with role tags."""
+    """Stage 1: Optimization-aware mention extraction with role tags.
+
+    Recognises both digit-based tokens (e.g. "100", "$5000", "20%") and
+    written-word numbers (e.g. "two", "twenty-five", "one hundred").
+    Multi-token word-number spans such as "two hundred fifty" are collapsed
+    into a single mention so that compound values are not split.
+    """
     toks = query.split()
     sent_tokens = [t.lower().strip(".,;:()[]{}") for t in toks]
+    # Pre-compute range annotations ("between X and Y", "from X to Y").
+    range_annotations = _find_range_annotations(toks)
     mentions: list[MentionOptIR] = []
     mention_id = 0
-    for i, w in enumerate(toks):
+    i = 0
+    while i < len(toks):
+        w = toks[i]
+        span_size = 1  # number of tokens consumed by this mention
+
         if w == "<num>" and variant in ("noisy", "nonum"):
             tok = NumTok(raw=w, value=None, kind="unknown")
         else:
-            m = NUM_TOKEN_RE.fullmatch(w.strip())
-            if not m:
-                continue
-            ctx_tokens = [
-                x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 14) : i + 15]
-            ]
-            ctx_tokens = [c for c in ctx_tokens if c]
-            tok = _parse_num_token(w, set(ctx_tokens))
+            # ── digit-based token ────────────────────────────────────────────
+            m = NUM_TOKEN_RE.fullmatch(w.strip().rstrip(",;:()[]{}").rstrip("."))
+            if m:
+                ctx_tokens = [
+                    x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 14) : i + 15]
+                ]
+                ctx_tokens = [c for c in ctx_tokens if c]
+                tok = _parse_num_token(w, set(ctx_tokens))
+            else:
+                # ── fraction word (half, one-third, quarter, …) ─────────────
+                # Try the multi-token fraction form first (e.g. "one-half"),
+                # then fall back to single-token forms (e.g. "half").
+                _w_clean = w.lower().strip(".,;:()[]{}\"'")
+                _frac_val = _WORD_FRACTIONS.get(_w_clean)
+                if _frac_val is not None:
+                    tok = NumTok(raw=_w_clean, value=_frac_val, kind="percent")
+                    # span_size stays 1 (single-token fraction word)
+                else:
+                    # ── written-word number (single or multi-token span) ─────────
+                    wval, consumed = _parse_word_num_span(toks, i)
+                    if wval is None:
+                        i += 1
+                        continue
+                    span_size = consumed
+                    j = i + consumed  # first token after the span
+                    # Use wider context centred on span start, same window as digit path.
+                    ctx_tokens = [
+                        x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 14) : i + 15]
+                    ]
+                    ctx_tokens = [c for c in ctx_tokens if c]
+                    raw_surface = " ".join(toks[i:j])
+                    tok = _classify_word_num_tok(raw_surface, wval, set(ctx_tokens), toks, j)
 
         ctx_tokens = [
             x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 14) : i + 15]
@@ -1267,16 +2371,138 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
         ctx_set = set(ctx_tokens)
         ctx_str = " ".join(ctx_tokens)
         role_tags = _context_to_opt_role_tags(ctx_tokens)
-        operator_tags = _detect_operator_tags(ctx_tokens)
+        # Build operator narrow-context tokens with sentence-boundary stop on the
+        # LEFT side to prevent cross-sentence contamination.  For example, in
+        # "at least 50 units. The profit is 20 per unit", the left window of "20"
+        # would otherwise include "at least" from the previous sentence and
+        # incorrectly tag "20" as a lower-bound value.
+        _op_left_raw = toks[max(0, i - _OPERATOR_LEFT_WINDOW) : i]
+        _op_left_cleaned = [x.lower().strip(".,;:()[]{}") for x in _op_left_raw]
+        # Find the rightmost sentence boundary (token ending '.'/'!'/'?' followed by
+        # an uppercase token) and discard everything before it.  Scan in reverse so
+        # we stop at the first (rightmost) boundary we encounter.
+        _op_boundary = 0
+        for _bk in range(len(_op_left_raw) - 2, -1, -1):
+            _braw = _op_left_raw[_bk].rstrip()
+            _braw_next = _op_left_raw[_bk + 1]
+            if (
+                _braw.endswith((".", "!", "?"))
+                and _braw_next[:1].isupper()
+                and _braw_next.strip()
+            ):
+                _op_boundary = _bk + 1
+                break
+        _op_left_cleaned = _op_left_cleaned[_op_boundary:]
+        _op_right_cleaned = [
+            x.lower().strip(".,;:()[]{}") for x in toks[i : i + _OPERATOR_NARROW_WINDOW + 1]
+        ]
+        narrow_ctx_tokens = [c for c in _op_left_cleaned + _op_right_cleaned if c]
+        operator_tags = _detect_operator_tags(ctx_tokens, narrow_ctx_tokens)
         unit_tags = _detect_opt_unit_tags(tok, ctx_tokens)
         fragment_type = _classify_fragment_type(ctx_tokens)
-        is_per_unit = any(
-            p.replace(" ", "") in ctx_str.replace(" ", "") or p in ctx_str
-            for p in ["each", "per unit", "per item", "for each", "per"]
+        # Use directional narrow windows to detect per-unit vs total-like role,
+        # preventing cross-contamination when both cue types appear in the same
+        # wide context window (e.g. "2000 hours available" and "each requires 2").
+        #
+        # Left context: collect up to _LOCALITY_LEFT_WINDOW tokens but discard
+        # everything before the most recent sentence boundary (a token ending
+        # '.'/'!'/'?' followed by an uppercase token).  This mirrors the
+        # sentence-boundary trimming already applied to the right window and
+        # prevents tokens from the preceding sentence from contaminating the
+        # left anchor (e.g. "hours. Product B requires 5" — "hours" should
+        # NOT appear in the left context of "5").
+        _left_raw_window = toks[max(0, i - _LOCALITY_LEFT_WINDOW) : i]
+        # Find the last sentence boundary inside the left window.
+        # A boundary is at position k when _left_raw_window[k] ends with
+        # '.'/'!'/'?' AND _left_raw_window[k+1] starts with an uppercase letter.
+        _left_start = 0
+        for _k in range(len(_left_raw_window) - 1):
+            _lw_tok = _left_raw_window[_k].rstrip()
+            _lw_next = _left_raw_window[_k + 1]
+            if (
+                _lw_tok.endswith((".", "!", "?"))
+                and _lw_next[:1].isupper()
+                and bool(_lw_next.strip())
+            ):
+                # Discard everything up to and including this boundary token;
+                # keep only tokens from _k+1 onward.
+                _left_start = _k + 1
+        _left_narrow = [
+            x.lower().strip(".,;:()[]{}") for x in _left_raw_window[_left_start:]
+            if x.strip(".,;:()[]{}").strip()
+        ]
+        # Right context: collect up to _LOCALITY_RIGHT_WINDOW tokens but stop at
+        # sentence boundaries.  A sentence boundary is detected when a token ends
+        # with '.' / '!' / '?' AND the *next* token starts with an uppercase letter.
+        # This prevents cues in a following sentence (e.g. "available" in
+        # "2 hours. There are 2000 hours available.") from contaminating the right
+        # context of a per-unit coefficient that belongs to the preceding sentence.
+        # Also stop at comma + coordinating conjunction (", and" / ", or" / ", but"
+        # etc.) which marks a clause boundary within a single sentence.  This
+        # prevents "4 labor hours, and total budget is 5000" from making the "4"
+        # appear total-like because "total" leaks into its right window.
+        _right_narrow: list[str] = []
+        _right_raw_window = toks[i + span_size : i + span_size + _LOCALITY_RIGHT_WINDOW]
+        _CLAUSE_CONJUNCTIONS: frozenset[str] = frozenset({"and", "or", "but", "nor", "while", "whereas"})
+        for _k, _tok_raw in enumerate(_right_raw_window):
+            _tok_clean = _tok_raw.lower().strip(".,;:()[]{}").strip()
+            if _tok_clean:
+                _right_narrow.append(_tok_clean)
+            _stripped_raw = _tok_raw.rstrip()
+            # Sentence boundary: period / ! / ? at end of token AND next token is
+            # capitalised (new sentence starts).  Abbreviations like "sq." or "ft."
+            # are typically followed by lowercase, so they do not trigger a break.
+            if (
+                _stripped_raw.endswith((".", "!", "?"))
+                and _k + 1 < len(_right_raw_window)
+                and _right_raw_window[_k + 1][:1].isupper()
+                # Guard against an empty next token producing no uppercase char
+                and bool(_right_raw_window[_k + 1].strip())
+            ):
+                break
+            # Clause boundary: comma at the end of the current token AND the next
+            # token is a coordinating conjunction.  Stops "total" in "4 hours, and
+            # total budget is 5000" from contaminating the right context of "4".
+            if (
+                _stripped_raw.endswith(",")
+                and _k + 1 < len(_right_raw_window)
+                and _right_raw_window[_k + 1].lower().strip() in _CLAUSE_CONJUNCTIONS
+            ):
+                break
+            # Numeric-token boundary: stop when a new numeric literal appears in the
+            # right window.  This prevents cross-measure contamination in patterns
+            # like "3 heating hours and 5 cooling hours" where the right context of
+            # "3" would otherwise include both "heating" and "cooling".  Stopping
+            # at the next number keeps each measure cue local to its own number.
+            # Only fires after the first token so that units immediately following
+            # the current mention (e.g. "3 hours" → right[0]="hours") are included.
+            if _k >= 1 and NUM_TOKEN_RE.fullmatch(_tok_clean):
+                # Remove the just-appended numeric token; it is not a measure word.
+                _right_narrow.pop()
+                break
+        _left_set = set(_left_narrow)
+        _right_set = set(_right_narrow)
+        _left_str = " ".join(_left_narrow)
+        # Per-unit determiner window is narrower (±2) than the verb window (±4).
+        # Governing verbs like "requires" appear immediately before the number (-1 to -2),
+        # but determiners like "each" can appear further back (-3 to -4) in "each X requires N".
+        # The narrow determiner window prevents cross-sentence contamination where "each"
+        # ends one clause and the next clause starts with a global total.
+        _left_det_set = set(
+            x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 2) : i]
+            if x.strip(".,;:()[]{}").strip()
         )
+        is_per_unit = (
+            bool(_left_set & _PER_UNIT_LEFT_VERBS)
+            or bool(_left_det_set & _PER_UNIT_LEFT_DETERMINERS)
+            or any(p in _left_str for p in _PER_UNIT_LEFT_PHRASES)
+        )
+        # Wide context string for total-phrase patterns (avoids narrow window issues).
+        _ctx_str_wide = " ".join(ctx_tokens)
         is_total_like = bool(
-            ctx_set & {"total", "budget", "available", "capacity", "limit", "amount"}
-            or "total " in ctx_str or "available " in ctx_str
+            _left_set & _TOTAL_LEFT_CUES
+            or _right_set & _TOTAL_RIGHT_CUES
+            or any(p in _ctx_str_wide for p in _TOTAL_PHRASE_PATTERNS)
         )
         entity_tokens = frozenset(t for t in ctx_tokens if len(t) > 2 and t in OPT_ROLE_WORDS)
         resource_tokens = frozenset(
@@ -1285,6 +2511,40 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
         product_tokens = frozenset(
             t for t in ctx_tokens if t in {"item", "product", "unit", "each", "demand", "quantity"}
         )
+
+        # ── Quantity-role layer: derive explicit boolean role fields ──────────
+        _is_count_like = _compute_is_count_like_mention(tok, role_tags, ctx_tokens)
+        # Range annotations override operator_tags for "between X and Y" / "from X to Y".
+        _range_anno = range_annotations.get(i, "")
+        if _range_anno == "range_low":
+            operator_tags = frozenset(operator_tags | {"min"})
+        elif _range_anno == "range_high":
+            operator_tags = frozenset(operator_tags | {"max"})
+        _is_lower_bound = "min" in operator_tags
+        _is_upper_bound = "max" in operator_tags
+        _is_pct = tok.kind == "percent"
+        _primary_role = _compute_primary_role(
+            tok, _is_count_like, _is_lower_bound, _is_upper_bound, _is_pct, is_total_like, is_per_unit
+        )
+        # Use the narrow (left-biased) context for bound_role to keep disambiguation
+        # tight to the governing operator phrase.
+        _narrow_ctx_str = " ".join(narrow_ctx_tokens)
+        _bound_role = _compute_bound_role(operator_tags, _narrow_ctx_str, _range_anno)
+
+        # ── Group 1: tight ±2-token role-family flags ─────────────────────────
+        # Use a ±2 token window (last 2 left tokens + first 2 right tokens) rather
+        # than the full narrow context to prevent cross-mention bleeding.  For
+        # example, in "yields 12 profit and costs 5", the full narrow context of "5"
+        # would include "profit" from "12"'s territory; the tight window only sees
+        # "and costs" (left) + "dollars to" (right), correctly marking 5 as cost_like.
+        _tight_left = _left_narrow[-2:]
+        _tight_right = _right_narrow[:2]
+        _tight_ctx: frozenset[str] = frozenset(_tight_left + _tight_right)
+        _is_cost_like_flag = bool(_tight_ctx & _COST_CONTEXT_WORDS)
+        _is_profit_like_flag = bool(_tight_ctx & _PROFIT_CONTEXT_WORDS)
+        _is_demand_like_flag = bool(_tight_ctx & _DEMAND_CONTEXT_WORDS)
+        _is_resource_like_flag = bool(_tight_ctx & _RESOURCE_CONTEXT_WORDS)
+        _is_time_like_flag = bool(_tight_ctx & _TIME_CONTEXT_WORDS)
 
         mentions.append(
             MentionOptIR(
@@ -1304,14 +2564,70 @@ def _extract_opt_role_mentions(query: str, variant: str) -> list[MentionOptIR]:
                 context_tokens=ctx_tokens,
                 sentence_tokens=sent_tokens,
                 tok=tok,
+                is_count_like=_is_count_like,
+                is_lower_bound_like=_is_lower_bound,
+                is_upper_bound_like=_is_upper_bound,
+                is_percent_like=_is_pct,
+                primary_role=_primary_role,
+                bound_role=_bound_role,
+                narrow_context_tokens=tuple(_left_narrow + _right_narrow),
+                narrow_left_tokens=tuple(_left_narrow),
+                is_cost_like=_is_cost_like_flag,
+                is_profit_like=_is_profit_like_flag,
+                is_demand_like=_is_demand_like_flag,
+                is_resource_like=_is_resource_like_flag,
+                is_time_like=_is_time_like_flag,
             )
         )
         mention_id += 1
+        i += span_size
+
+    # ── Enumeration-derived count candidates ─────────────────────────────────
+    # These handle cases where the count is implicit, e.g.:
+    #   "phones and laptops"           → NumProducts = 2
+    #   "apples, bananas, and grapes"  → NumItems    = 3
+    #   "10 apples, 20 bananas, and 80 grapes" → NumItems = 3
+    # Each derived-count mention is tagged as a cardinality candidate and
+    # receives a hard penalty for any non-count-like slot (see _gcg_local_score).
+    _DERIVED_ROLE_TAGS = frozenset({"cardinality_limit", "quantity_limit", "derived_count"})
+    for _ec, _esp, _ectx in _extract_enum_derived_counts(query):
+        _etok = NumTok(
+            raw=f"derived:{int(_ec)} ({_esp})",
+            value=_ec,
+            kind="int",
+        )
+        mentions.append(
+            MentionOptIR(
+                mention_id=mention_id,
+                value=_ec,
+                type_bucket="int",
+                raw_surface=_etok.raw,
+                role_tags=_DERIVED_ROLE_TAGS,
+                operator_tags=frozenset(),
+                unit_tags=frozenset({"count_marker"}),
+                fragment_type="",
+                is_per_unit=False,
+                is_total_like=False,
+                nearby_entity_tokens=frozenset(),
+                nearby_resource_tokens=frozenset(),
+                nearby_product_tokens=frozenset(),
+                context_tokens=_ectx,
+                sentence_tokens=sent_tokens,
+                tok=_etok,
+                is_count_like=True,
+                is_lower_bound_like=False,
+                is_upper_bound_like=False,
+                is_percent_like=False,
+                primary_role="count",
+            )
+        )
+        mention_id += 1
+
     return mentions
 
 
 def _slot_opt_role_expansion(param_name: str) -> frozenset[str]:
-    """Slot name -> optimization-role tags (schema-side priors)."""
+    """Slot name -> optimization-role tags (schema-side priors, enriched with per-unit/total)."""
     n = (param_name or "").lower()
     tags: set[str] = set()
     if "budget" in n:
@@ -1327,7 +2643,7 @@ def _slot_opt_role_expansion(param_name: str) -> frozenset[str]:
             tags.update(["total_budget", "unit_cost"])
         else:
             tags.update(["unit_cost", "objective_coeff"])
-    if "percent" in n or "ratio" in n or "fraction" in n or "share" in n or "rate" in n:
+    if "percent" in n or "ratio" in n or "fraction" in n or "share" in n or "rate" in n or "pct" in n or "proportion" in n:
         tags.update(["ratio_constraint", "percentage_constraint", "share_constraint"])
     if "min" in n or "minimum" in n or "atleast" in n:
         tags.update(["lower_bound", "minimum_requirement", "demand_requirement"])
@@ -1337,8 +2653,14 @@ def _slot_opt_role_expansion(param_name: str) -> frozenset[str]:
         tags.update(["penalty", "fixed_cost", "setup_cost"])
     if "time" in n or "hour" in n or "day" in n:
         tags.update(["time_requirement", "resource_consumption"])
-    if "number" in n or "count" in n or "item" in n or "quantity" in n:
+    if "number" in n or "count" in n or "item" in n or "quantity" in n or n.startswith("num"):
         tags.update(["quantity_limit", "cardinality_limit"])
+    # Per-unit / coefficient semantics — improves match with "per", "each" context cues
+    if any(w in n for w in ("per", "each", "unit", "perunit")):
+        tags.update(["unit_cost", "objective_coeff", "resource_consumption"])
+    # Total / aggregate semantics
+    if "total" in n or "available" in n or "aggregate" in n:
+        tags.update(["total_available", "capacity_limit"])
     if not tags:
         tags.add("quantity_limit")
     return frozenset(tags)
@@ -1353,13 +2675,20 @@ def _build_slot_opt_irs(expected_scalar: list[str]) -> list[SlotOptIR]:
         alias_tokens_flat: set[str] = set()
         for a in aliases:
             alias_tokens_flat.update(_normalize_tokens(a))
-        norm_tokens = _normalize_tokens(name)
+        norm_tokens = _slot_measure_tokens(name)
         slot_role_tags = _slot_opt_role_expansion(name)
         op_pref: set[str] = set()
-        if any(x in name.lower() for x in ("min", "minimum", "atleast")):
+        n_lower_sl = name.lower()
+        if any(x in n_lower_sl for x in ("min", "minimum", "atleast")):
             op_pref.add("min")
-        if any(x in name.lower() for x in ("max", "maximum", "atmost")):
+        if any(x in n_lower_sl for x in ("max", "maximum", "atmost")):
             op_pref.add("max")
+        # Extended slot-name cues for bound direction (lower/upper/lowerbound/upperbound).
+        if _ENABLE_BOUND_ROLE_LAYER:
+            if any(x in n_lower_sl for x in ("lower", "lowerbound", "lower_bound")):
+                op_pref.add("min")
+            if any(x in n_lower_sl for x in ("upper", "upperbound", "upper_bound")):
+                op_pref.add("max")
         unit_pref: set[str] = set()
         if et == "percent":
             unit_pref.add("percent_marker")
@@ -1369,8 +2698,29 @@ def _build_slot_opt_irs(expected_scalar: list[str]) -> list[SlotOptIR]:
             unit_pref.add("count_marker")
         is_objective = bool(slot_role_tags & {"objective_coeff", "unit_profit", "unit_revenue", "unit_return", "unit_cost"})
         is_bound = bool(slot_role_tags & {"lower_bound", "upper_bound", "capacity_limit", "demand_requirement", "minimum_requirement", "maximum_allowance"})
-        is_total = bool(slot_role_tags & {"total_budget", "total_available"}) or "budget" in name.lower() or "total" in name.lower()
-        is_coeff = bool(slot_role_tags & {"unit_cost", "unit_profit", "unit_revenue", "resource_consumption"})
+        # Widen is_total detection to cover aggregate capacity/availability slots
+        # such as MaxWater, WaterAvailability, PowderedPillAvailability that have
+        # "capacity_limit" in their role tags or "available"/"capacity" in their name
+        # but lack "budget" or "total" keywords.
+        n_lower = name.lower()
+        is_total = (
+            bool(slot_role_tags & {"total_budget", "total_available", "capacity_limit"})
+            or "budget" in n_lower
+            or "total" in n_lower
+            or "available" in n_lower
+            or "availability" in n_lower
+            or "capacity" in n_lower
+        )
+        # A slot is coefficient-like when it holds a per-unit value such as cost/profit per item
+        # or resource consumption per unit (e.g. HoursPerProduct, CostPerUnit).
+        # However, if the slot is already total-like (e.g. LaborHoursAvailable), the
+        # resource_consumption tag reflects the domain topic, not the per-unit role.
+        # Exclude total-like slots from coefficient classification to prevent a total-capacity
+        # slot from attracting per-unit mentions via coefficient_vs_total_bonus.
+        is_coeff = (
+            bool(slot_role_tags & {"unit_cost", "unit_profit", "unit_revenue", "resource_consumption"})
+            and not is_total
+        )
 
         slot_irs.append(
             SlotOptIR(
@@ -1385,6 +2735,7 @@ def _build_slot_opt_irs(expected_scalar: list[str]) -> list[SlotOptIR]:
                 is_bound_like=is_bound,
                 is_total_like=is_total,
                 is_coefficient_like=is_coeff,
+                is_count_like=_is_count_like_slot(name),
             )
         )
     return slot_irs
@@ -1401,13 +2752,33 @@ def _score_mention_slot_opt(m: MentionOptIR, s: SlotOptIR) -> tuple[float, dict[
         features["type_incompatible"] = True
         return OPT_ROLE_WEIGHTS["type_incompatible_penalty"], features
 
+    # Enumeration-derived counts must not fill non-count-like slots.
+    if "derived_count" in m.role_tags and not s.is_count_like:
+        features["derived_count_non_count"] = True
+        return OPT_ROLE_WEIGHTS["type_incompatible_penalty"], features
+
     if kind != "unknown":
         if (expected == "percent" and kind == "percent") or (expected == "currency" and kind == "currency"):
             score += OPT_ROLE_WEIGHTS["type_exact_bonus"]
             features["type_exact"] = True
-        elif expected in ("int", "float") and kind in {"int", "currency", "float"}:
+        elif expected == "float" and kind in {"float", "int"}:
+            # float+float = exact; integer-valued tokens are valid for float slots
+            score += OPT_ROLE_WEIGHTS["type_exact_bonus"]
+            features["type_exact"] = True
+        elif expected == "int" and kind == "int":
+            score += OPT_ROLE_WEIGHTS["type_exact_bonus"]
+            features["type_exact"] = True
+        elif expected in ("int", "float") and kind in {"currency"}:
             score += OPT_ROLE_WEIGHTS["type_loose_bonus"]
             features["type_loose"] = True
+        elif expected == "int" and kind == "float":
+            score += OPT_ROLE_WEIGHTS["type_loose_bonus"]
+            features["type_loose"] = True
+        elif expected == "currency" and kind in {"float", "int"}:
+            # Monetary slots filled with a plain integer/float token (no "$" sign)
+            # are a full exact match — the value IS a valid monetary quantity.
+            score += OPT_ROLE_WEIGHTS["type_exact_bonus"]
+            features["type_exact"] = True
 
     role_overlap = len(m.role_tags & s.slot_role_tags)
     if role_overlap:
@@ -1460,6 +2831,39 @@ def _score_mention_slot_opt(m: MentionOptIR, s: SlotOptIR) -> tuple[float, dict[
     if s.is_coefficient_like and m.is_per_unit:
         score += OPT_ROLE_WEIGHTS["coefficient_vs_total_bonus"]
         features["coefficient_match"] = True
+    # Local mismatch penalties: per-unit mention → total slot, or total mention → coeff slot.
+    if s.is_total_like and not s.is_coefficient_like and m.is_per_unit and not m.is_total_like:
+        score += OPT_ROLE_WEIGHTS["coeff_to_total_local_penalty"]
+        features["coeff_to_total_penalty"] = True
+    if s.is_coefficient_like and not s.is_total_like and m.is_total_like and not m.is_per_unit:
+        score += OPT_ROLE_WEIGHTS["total_to_coeff_local_penalty"]
+        features["total_to_coeff_penalty"] = True
+
+    # ── Quantity-role layer: primary_role bonuses / penalties ─────────────────
+    # count-like mention + count-like slot → strong bonus
+    if m.is_count_like and s.is_count_like:
+        score += OPT_ROLE_WEIGHTS["count_mention_count_slot_bonus"]
+        features["count_role_match"] = True
+    # count-context mention (not a percent/currency/derived) → non-count slot: soft penalty
+    if m.is_count_like and not s.is_count_like and not m.is_percent_like:
+        score += OPT_ROLE_WEIGHTS["count_mention_non_count_penalty"]
+        features["count_to_non_count_penalty"] = True
+    # lower-bound mention → slot that expects a minimum
+    if m.is_lower_bound_like and "min" in s.operator_preference:
+        score += OPT_ROLE_WEIGHTS["bound_direction_bonus"]
+        features["lower_bound_match"] = True
+    # upper-bound mention → slot that expects a maximum
+    if m.is_upper_bound_like and "max" in s.operator_preference:
+        score += OPT_ROLE_WEIGHTS["bound_direction_bonus"]
+        features["upper_bound_match"] = True
+    # Wrong-direction bound penalty: strong discouragement for cross-direction assignments.
+    if _ENABLE_BOUND_ROLE_LAYER:
+        if m.is_lower_bound_like and "max" in s.operator_preference and "min" not in s.operator_preference:
+            score += OPT_ROLE_WEIGHTS["bound_direction_penalty"]
+            features["bound_direction_wrong"] = True
+        elif m.is_upper_bound_like and "min" in s.operator_preference and "max" not in s.operator_preference:
+            score += OPT_ROLE_WEIGHTS["bound_direction_penalty"]
+            features["bound_direction_wrong"] = True
 
     score += OPT_ROLE_WEIGHTS["schema_prior_bonus"]
     features["schema_prior"] = True
@@ -1993,10 +3397,157 @@ def _opt_role_validate_and_repair(
                 used_mention_ids.add(mr.mention_id)
                 break
 
+    # ── Bound-flip swap repair ──────────────────────────────────────────────
+    if _ENABLE_BOUND_ROLE_LAYER:
+        _bound_swap_repair(filled, filled_in_repair, slots)
+
+    # ── Total vs per-unit contradiction repair ──────────────────────────────
+    _total_perunit_swap_repair(filled, filled_in_repair, slots, mentions)
+
     return filled, filled_in_repair
 
 
+def _bound_swap_repair(
+    filled: dict[str, "MentionOptIR"],
+    filled_in_repair: dict[str, str],
+    slots: list["SlotOptIR"],
+) -> None:
+    """Post-assignment repair: swap min/max slot values when the assignment is inverted.
+
+    Triggered only when there is explicit operator evidence that the assignment is
+    wrong-direction (the mention assigned to the min slot has a "max" operator tag,
+    or the mention assigned to the max slot has a "min" operator tag) AND the
+    numerical values are inverted (assigned-min-value > assigned-max-value).
+
+    Conservative by design: if there is no operator evidence, no swap is made even
+    when the values look inverted, to avoid inadvertently altering legitimate cases
+    where min=max or where ordering is domain-specific.
+    """
+    min_slots = [s for s in slots if "min" in s.operator_preference and s.name in filled]
+    max_slots = [s for s in slots if "max" in s.operator_preference and s.name in filled]
+    for s_min in min_slots:
+        for s_max in max_slots:
+            m_min = filled.get(s_min.name)
+            m_max = filled.get(s_max.name)
+            if m_min is None or m_max is None:
+                continue
+            if m_min.value is None or m_max.value is None:
+                continue
+            if m_min.value <= m_max.value:
+                continue  # ordering is already correct
+            # Values are inverted (min > max).  Only swap when operator evidence confirms it.
+            min_m_has_max_cue = "max" in m_min.operator_tags
+            max_m_has_min_cue = "min" in m_max.operator_tags
+            if min_m_has_max_cue or max_m_has_min_cue:
+                filled[s_min.name] = m_max
+                filled[s_max.name] = m_min
+                filled_in_repair[s_min.name] = "bound_swap_repair"
+                filled_in_repair[s_max.name] = "bound_swap_repair"
+
+
+def _total_perunit_swap_repair(
+    filled: dict[str, "MentionOptIR"],
+    filled_in_repair: dict[str, str],
+    slots: list["SlotOptIR"],
+    mentions: list["MentionOptIR"],
+) -> None:
+    """Post-assignment repair: correct obvious total↔per-unit confusion.
+
+    Triggered only when there is strong evidence that a total slot received a
+    per-unit mention (or vice versa) AND there is an unused mention that is a
+    better fit.  Conservative by design: only repairs when both evidence
+    conditions are met simultaneously:
+      1. The assigned mention's role contradicts the slot's is_total_like /
+         is_coefficient_like flag (i.e. explicit per-unit mention → total slot,
+         or explicit total mention → coeff slot).
+      2. An unused mention exists that has the correct role for the slot and
+         has a plausible numerical value (magnitude check: total >> per-unit).
+    """
+    used_ids: set[int] = {m.mention_id for m in filled.values()}
+    for s in slots:
+        if s.name not in filled:
+            continue
+        m_curr = filled[s.name]
+        # Check for total-slot assigned a per-unit mention.
+        if s.is_total_like and not s.is_coefficient_like and m_curr.is_per_unit and not m_curr.is_total_like:
+            # Look for an unused total-like mention with a larger value.
+            best: "MentionOptIR | None" = None
+            for m_cand in mentions:
+                if m_cand.mention_id in used_ids:
+                    continue
+                if m_cand.is_per_unit and not m_cand.is_total_like:
+                    continue  # also per-unit, no help
+                if m_cand.value is None or m_curr.value is None:
+                    continue
+                if m_cand.value <= m_curr.value:
+                    continue  # no magnitude evidence that this is the total
+                if best is None or m_cand.value > best.value:
+                    best = m_cand
+            if best is not None:
+                used_ids.discard(m_curr.mention_id)
+                filled[s.name] = best
+                filled_in_repair[s.name] = "total_perunit_swap_repair"
+                used_ids.add(best.mention_id)
+        # Check for coeff-slot assigned a total-like mention.
+        elif s.is_coefficient_like and not s.is_total_like and m_curr.is_total_like and not m_curr.is_per_unit:
+            # Look for an unused per-unit mention with a smaller value.
+            best = None
+            for m_cand in mentions:
+                if m_cand.mention_id in used_ids:
+                    continue
+                if m_cand.is_total_like and not m_cand.is_per_unit:
+                    continue  # also total-like, no help
+                if m_cand.value is None or m_curr.value is None:
+                    continue
+                if m_cand.value >= m_curr.value:
+                    continue  # no magnitude evidence that this is per-unit
+                if best is None or m_cand.value > best.value:  # prefer largest small value
+                    best = m_cand
+            if best is not None:
+                used_ids.discard(m_curr.mention_id)
+                filled[s.name] = best
+                filled_in_repair[s.name] = "total_perunit_swap_repair"
+                used_ids.add(best.mention_id)
+
+
 # --- Relation-aware + incremental admissible (RAT-SQL / PICARD inspired) ---
+
+# Ordered longest-first so that "minimum" is stripped before "min", etc.
+_BOUND_AFFIXES: tuple[str, ...] = (
+    "minimum", "maximum", "lower", "upper", "min", "max", "lb", "ub",
+)
+
+
+def _slot_stem(name: str) -> str:
+    """Return the *quantity stem* of a bound-slot name.
+
+    Strips leading and trailing min/max/lower/upper affixes so that paired
+    slots such as ``MinDemand``/``MaxDemand`` or ``LowerBound``/``UpperBound``
+    both reduce to the same stem (``"demand"`` and ``"bound"`` respectively).
+    Used by ``_is_partial_admissible`` to decide which min/max pairs should
+    have their numeric ordering enforced.
+
+    Examples::
+
+        _slot_stem("MinDemand")       == "demand"
+        _slot_stem("MaxDemand")       == "demand"
+        _slot_stem("LowerBound")      == "bound"
+        _slot_stem("UpperBound")      == "bound"
+        _slot_stem("MinimumCapacity") == "capacity"
+        _slot_stem("MaximumCapacity") == "capacity"
+        _slot_stem("DemandMin")       == "demand"
+        _slot_stem("DemandMax")       == "demand"
+        _slot_stem("MinHours")        == "hours"
+        _slot_stem("MaxHours")        == "hours"
+    """
+    n = name.lower()
+    for affix in _BOUND_AFFIXES:
+        if n.startswith(affix) and len(n) > len(affix):
+            return n[len(affix):].lstrip("_ ")
+        if n.endswith(affix) and len(n) > len(affix):
+            return n[: -len(affix)].rstrip("_ ")
+    return n
+
 
 def _slot_slot_relation_tags(s1: SlotOptIR, s2: SlotOptIR) -> frozenset[str]:
     """Relation tags between two slots for relation-aware scoring."""
@@ -2079,6 +3630,23 @@ def _is_partial_admissible(
         m = partial.get(s.name)
         if m and "min" in m.operator_tags and "max" not in m.operator_tags:
             return False
+    # Enforce numeric ordering for paired bound slots that share the same
+    # quantity stem (e.g. MinDemand/MaxDemand, LowerBound/UpperBound).
+    # This rejects partial assignments where the value placed in the min slot
+    # is strictly greater than the value in the max slot, preventing the
+    # lower_vs_upper_bound failure family without touching other logic.
+    for s_min in min_slots:
+        m_min = partial[s_min.name]
+        if m_min.value is None:
+            continue
+        for s_max in max_slots:
+            m_max = partial[s_max.name]
+            if m_max.value is None:
+                continue
+            if _slot_stem(s_min.name) != _slot_stem(s_max.name):
+                continue
+            if m_min.value > m_max.value:
+                return False
     return True
 
 
@@ -2250,527 +3818,6 @@ def _run_optimization_role_repair(
     return filled_values, filled_mentions, filled_in_repair
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# Global Consistency Grounding (GCG)
-# Stronger deterministic downstream method with six new signals:
-#  1. Polarity mismatch penalty (min↔max operator direction)
-#  2. Percent firewall (block non-percent to percent slot when percent exists)
-#  3. Total vs coefficient cross-penalty (explicit, not just match bonus)
-#  4. Entity anchor bonus (slot-name tokens directly in mention context)
-#  5. Magnitude plausibility (percent>100; int+decimal)
-#  6. Post-assignment min/max conflict repair (swap if min_value > max_value)
-# ═══════════════════════════════════════════════════════════════════════════════
-
-GCG_WEIGHTS: dict[str, float] = {
-    "type_exact_bonus": 5.0,
-    "type_loose_bonus": 1.5,
-    "type_incompatible_penalty": -1e9,
-    "percent_firewall_penalty": -6.0,   # non-percent → percent slot when percent mention exists
-    "percent_magnitude_penalty": -1.5,  # percent slot but value > 100
-    "count_decimal_penalty": -1.5,      # int slot but value has decimal part
-    "opt_role_overlap": 3.0,
-    "fragment_compat_bonus": 1.5,
-    "polarity_match_bonus": 2.0,        # min mention → min slot (or max↔max)
-    "polarity_mismatch_penalty": -4.0,  # min mention → max slot (or max↔min)
-    "operator_match_bonus": 1.2,        # generic operator match when no polarity determined
-    "total_match_bonus": 1.8,           # total-like mention → total-like slot
-    "coeff_match_bonus": 1.8,           # per-unit mention → coefficient slot
-    "total_to_coeff_penalty": -3.0,     # total-like mention → coefficient slot
-    "coeff_to_total_penalty": -3.0,     # per-unit mention → total-like slot
-    "entity_anchor_bonus": 2.0,         # slot-name token found in mention context
-    "lex_context_overlap": 0.5,
-    "lex_sentence_overlap": 0.2,
-    "unit_match_bonus": 2.0,
-    "entity_resource_overlap": 0.8,
-    "weak_match_penalty": -1.0,
-    "schema_prior_bonus": 0.5,
-}
-
-GCG_REPAIR_WEIGHTS: dict[str, float] = {
-    "role_plausibility_bonus": 0.6,
-    "total_vs_coeff_penalty": -1.5,
-    "bound_plausibility_bonus": 0.5,
-    "coverage_repair_bonus": 1.2,
-    "min_role_support": 0.4,
-}
-
-# Function-word tokens that should NOT be treated as entity anchors.
-_GCG_FUNCTION_WORDS = frozenset({
-    "the", "and", "for", "with", "that", "this", "from", "each", "unit",
-    "type", "value", "have", "will", "can", "not", "are", "per", "all",
-    "more", "than", "less", "most", "least", "only", "some", "any", "its",
-    "their", "our", "number", "amount", "total", "variable", "param",
-})
-
-
-def _detect_gcg_sibling_slots(
-    expected_scalar: list[str],
-) -> dict[str, dict[str, str | None]]:
-    """Detect min/max sibling slot pairs for conflict repair.
-
-    Returns dict mapping slot_name -> {"min_sibling": name|None, "max_sibling": name|None}.
-    Two slots are siblings when stripping their bound prefix/suffix produces the same base.
-    E.g. ``["min_cost", "max_cost"]`` → min_cost has max_sibling=max_cost; max_cost has min_sibling=min_cost.
-    """
-    siblings: dict[str, dict[str, str | None]] = {
-        s: {"min_sibling": None, "max_sibling": None} for s in expected_scalar
-    }
-
-    _BOUND_PREFIX_RE = re.compile(
-        r"^(min_?|max_?|lower_?|upper_?|minimum_?|maximum_?)", re.IGNORECASE
-    )
-    _BOUND_SUFFIX_RE = re.compile(
-        r"(_min|_max|_lower|_upper|_minimum|_maximum)$", re.IGNORECASE
-    )
-    _MIN_MARKERS = re.compile(r"(min|lower|minimum)", re.IGNORECASE)
-    _MAX_MARKERS = re.compile(r"(max|upper|maximum)", re.IGNORECASE)
-
-    def _polarity_and_base(name: str) -> tuple[str, str]:
-        """Return ('min'|'max'|'', stripped_base)."""
-        n = name.lower()
-        # Try prefix first
-        pm = _BOUND_PREFIX_RE.match(n)
-        if pm:
-            prefix = pm.group(1)
-            base = n[pm.end():].strip("_")
-            if not base:
-                return "", n
-            pol = "min" if _MIN_MARKERS.search(prefix) else "max"
-            return pol, base
-        # Try suffix
-        sm = _BOUND_SUFFIX_RE.search(n)
-        if sm:
-            suffix = sm.group(1)
-            base = n[: sm.start()].strip("_")
-            if not base:
-                return "", n
-            pol = "min" if _MIN_MARKERS.search(suffix) else "max"
-            return pol, base
-        return "", n
-
-    # Build index: base → list of (slot_name, polarity)
-    base_index: dict[str, list[tuple[str, str]]] = {}
-    for s in expected_scalar:
-        pol, base = _polarity_and_base(s)
-        if pol and base:
-            base_index.setdefault(base, []).append((s, pol))
-
-    for base, entries in base_index.items():
-        min_slots = [s for s, p in entries if p == "min"]
-        max_slots = [s for s, p in entries if p == "max"]
-        for ms in min_slots:
-            if max_slots:
-                siblings[ms]["max_sibling"] = max_slots[0]
-        for ms in max_slots:
-            if min_slots:
-                siblings[ms]["min_sibling"] = min_slots[0]
-
-    return siblings
-
-
-def _score_mention_slot_gcg(
-    m: MentionOptIR,
-    s: SlotOptIR,
-    has_percent_mention: bool,
-) -> tuple[float, dict[str, Any]]:
-    """GCG scoring: optimization_role_repair signals plus six new consistency signals."""
-    features: dict[str, Any] = {}
-    score = 0.0
-    kind = m.type_bucket
-    expected = s.expected_type
-
-    # Hard type incompatibility.
-    if _is_type_incompatible(expected, kind):
-        features["type_incompatible"] = True
-        return GCG_WEIGHTS["type_incompatible_penalty"], features
-
-    # Type compatibility.
-    if kind != "unknown":
-        if (expected == "percent" and kind == "percent") or (
-            expected == "currency" and kind == "currency"
-        ):
-            score += GCG_WEIGHTS["type_exact_bonus"]
-            features["type_exact"] = True
-        elif expected in ("int", "float") and kind in {"int", "currency", "float"}:
-            score += GCG_WEIGHTS["type_loose_bonus"]
-            features["type_loose"] = True
-
-    # NEW 1 — Percent firewall.
-    # If the slot expects percent AND there is at least one percent-kind mention
-    # available but the current mention is not percent, apply a hard penalty.
-    if expected == "percent" and kind != "percent" and has_percent_mention:
-        score += GCG_WEIGHTS["percent_firewall_penalty"]
-        features["percent_firewall"] = True
-
-    # NEW 2 — Magnitude plausibility.
-    if expected == "percent" and m.value is not None and m.value > 100.0:
-        score += GCG_WEIGHTS["percent_magnitude_penalty"]
-        features["percent_magnitude_bad"] = True
-
-    if expected == "int" and m.value is not None:
-        try:
-            if float(int(m.value)) != float(m.value):
-                score += GCG_WEIGHTS["count_decimal_penalty"]
-                features["count_decimal_bad"] = True
-        except (ValueError, OverflowError):
-            pass
-
-    # Optimization-role overlap (same as opt_role).
-    role_overlap = len(m.role_tags & s.slot_role_tags)
-    if role_overlap:
-        score += GCG_WEIGHTS["opt_role_overlap"] * float(role_overlap)
-        features["opt_role_overlap"] = role_overlap
-
-    # Fragment-type compatibility (same as opt_role).
-    if m.fragment_type == "objective" and s.is_objective_like:
-        score += GCG_WEIGHTS["fragment_compat_bonus"]
-        features["fragment_objective"] = True
-    if m.fragment_type in ("constraint", "bound") and s.is_bound_like:
-        score += GCG_WEIGHTS["fragment_compat_bonus"]
-        features["fragment_bound"] = True
-    if m.fragment_type == "resource" and s.is_total_like:
-        score += GCG_WEIGHTS["fragment_compat_bonus"]
-        features["fragment_resource"] = True
-    if m.fragment_type == "ratio" and (
-        "ratio_constraint" in s.slot_role_tags
-        or "percentage_constraint" in s.slot_role_tags
-    ):
-        score += GCG_WEIGHTS["fragment_compat_bonus"]
-        features["fragment_ratio"] = True
-
-    # NEW 3 — Polarity enforcement (replaces the simple +1.2 operator_match_bonus).
-    m_has_min = "min" in m.operator_tags
-    m_has_max = "max" in m.operator_tags
-    s_wants_min = "min" in s.operator_preference
-    s_wants_max = "max" in s.operator_preference
-    if s_wants_min and m_has_max:
-        score += GCG_WEIGHTS["polarity_mismatch_penalty"]
-        features["polarity_mismatch_min"] = True
-    elif s_wants_max and m_has_min:
-        score += GCG_WEIGHTS["polarity_mismatch_penalty"]
-        features["polarity_mismatch_max"] = True
-    elif (s_wants_min and m_has_min) or (s_wants_max and m_has_max):
-        score += GCG_WEIGHTS["polarity_match_bonus"]
-        features["polarity_match"] = True
-    elif m.operator_tags & s.operator_preference:
-        score += GCG_WEIGHTS["operator_match_bonus"]
-        features["operator_match"] = True
-
-    # Lexical overlap (same as opt_role).
-    slot_words = set(s.norm_tokens) | s.alias_tokens
-    ctx_set = set(m.context_tokens)
-    sent_set = set(m.sentence_tokens)
-    ctx_overlap = len(ctx_set & slot_words)
-    if ctx_overlap:
-        score += GCG_WEIGHTS["lex_context_overlap"] * float(ctx_overlap)
-        features["ctx_overlap"] = ctx_overlap
-    sent_overlap = len(sent_set & slot_words)
-    if sent_overlap:
-        score += GCG_WEIGHTS["lex_sentence_overlap"] * float(sent_overlap)
-        features["sent_overlap"] = sent_overlap
-
-    # Unit match (same as opt_role).
-    if m.unit_tags & s.unit_preference:
-        score += GCG_WEIGHTS["unit_match_bonus"]
-        features["unit_match"] = True
-
-    # Entity/resource overlap (same as opt_role).
-    entity_resource = len(
-        (m.nearby_entity_tokens | m.nearby_resource_tokens | m.nearby_product_tokens)
-        & slot_words
-    )
-    if entity_resource:
-        score += GCG_WEIGHTS["entity_resource_overlap"] * float(entity_resource)
-        features["entity_resource_overlap"] = entity_resource
-
-    # NEW 4 — Total vs coefficient cross-penalty (explicit, both directions).
-    if s.is_total_like and m.is_per_unit:
-        score += GCG_WEIGHTS["coeff_to_total_penalty"]
-        features["coeff_to_total_conflict"] = True
-    elif s.is_total_like and m.is_total_like:
-        score += GCG_WEIGHTS["total_match_bonus"]
-        features["total_match"] = True
-
-    if s.is_coefficient_like and m.is_total_like:
-        score += GCG_WEIGHTS["total_to_coeff_penalty"]
-        features["total_to_coeff_conflict"] = True
-    elif s.is_coefficient_like and m.is_per_unit:
-        score += GCG_WEIGHTS["coeff_match_bonus"]
-        features["coeff_match"] = True
-
-    # NEW 5 — Entity anchor: slot-name tokens directly present in mention context.
-    entity_anchor_tokens = frozenset(
-        t for t in s.norm_tokens
-        if len(t) > 3 and t not in _GCG_FUNCTION_WORDS
-    )
-    if entity_anchor_tokens & ctx_set:
-        score += GCG_WEIGHTS["entity_anchor_bonus"]
-        features["entity_anchor"] = True
-
-    # Schema prior bonus (same as opt_role).
-    score += GCG_WEIGHTS["schema_prior_bonus"]
-    features["schema_prior"] = True
-
-    # Weak-match penalty.
-    if score <= 0.0:
-        score += GCG_WEIGHTS["weak_match_penalty"]
-        features["weak_penalty"] = True
-
-    features["total_score"] = score
-    return score, features
-
-
-def _gcg_global_assignment(
-    mentions: list[MentionOptIR],
-    slots: list[SlotOptIR],
-    has_percent_mention: bool,
-) -> tuple[dict[str, MentionOptIR], dict[str, float], dict[str, list[dict[str, Any]]]]:
-    """GCG bipartite matching using the richer GCG scoring."""
-    assignments: dict[str, MentionOptIR] = {}
-    scores_out: dict[str, float] = {}
-    debug: dict[str, list[dict[str, Any]]] = {}
-
-    if not mentions or not slots:
-        return assignments, scores_out, debug
-
-    m_len, s_len = len(mentions), len(slots)
-    cost = [[0.0] * s_len for _ in range(m_len)]
-    for i, mr in enumerate(mentions):
-        for j, sr in enumerate(slots):
-            sc, feats = _score_mention_slot_gcg(mr, sr, has_percent_mention)
-            cost[i][j] = -sc if sc > -1e8 else 1e9
-            debug.setdefault(sr.name, []).append(
-                {"mention_id": mr.mention_id, "mention_raw": mr.raw_surface, "score": sc, "features": feats}
-            )
-
-    for name in debug:
-        debug[name].sort(key=lambda x: x["score"], reverse=True)
-
-    try:
-        from scipy.optimize import linear_sum_assignment
-        import numpy as np
-
-        cost_arr = np.array(cost)
-        row_ind, col_ind = linear_sum_assignment(cost_arr)
-        for ri, cj in zip(row_ind, col_ind):
-            if cost_arr[ri, cj] < 1e8:
-                sr = slots[cj]
-                mr = mentions[ri]
-                sc, _ = _score_mention_slot_gcg(mr, sr, has_percent_mention)
-                assignments[sr.name] = mr
-                scores_out[sr.name] = sc
-    except ImportError:
-        from math import inf
-
-        num_states = 1 << s_len
-        dp = [[-inf] * num_states for _ in range(m_len + 1)]
-        parent: list[list[tuple[int, int | None]]] = [
-            [(-1, None)] * num_states for _ in range(m_len + 1)
-        ]
-        dp[0][0] = 0.0
-        for i in range(m_len):
-            for mask in range(num_states):
-                if dp[i][mask] == -inf:
-                    continue
-                if dp[i][mask] > dp[i + 1][mask]:
-                    dp[i + 1][mask] = dp[i][mask]
-                    parent[i + 1][mask] = (mask, None)
-                for j in range(s_len):
-                    if (mask >> j) & 1:
-                        continue
-                    sc = -cost[i][j]
-                    if sc <= 0:
-                        continue
-                    new_mask = mask | (1 << j)
-                    val = dp[i][mask] + sc
-                    if val > dp[i + 1][new_mask]:
-                        dp[i + 1][new_mask] = val
-                        parent[i + 1][new_mask] = (mask, j)
-        best_mask = max(range(num_states), key=lambda mk: dp[m_len][mk])
-        i, mask = m_len, best_mask
-        used_slot_for_mention: dict[int, int] = {}
-        while i > 0:
-            prev_mask, j = parent[i][mask]
-            if j is not None:
-                used_slot_for_mention[i - 1] = j
-            mask = prev_mask
-            i -= 1
-        for mi, cj in used_slot_for_mention.items():
-            sr = slots[cj]
-            mr = mentions[mi]
-            sc, _ = _score_mention_slot_gcg(mr, sr, has_percent_mention)
-            assignments[sr.name] = mr
-            scores_out[sr.name] = sc
-
-    return assignments, scores_out, debug
-
-
-def _gcg_conflict_repair(
-    assignments: dict[str, MentionOptIR],
-    siblings: dict[str, dict[str, str | None]],
-) -> dict[str, MentionOptIR]:
-    """NEW 6 — Post-assignment min/max conflict repair.
-
-    For each min/max sibling pair where both slots are assigned:
-    if assigned_min_value > assigned_max_value, swap the two assignments.
-    """
-    repaired = dict(assignments)
-    visited: set[frozenset[str]] = set()
-
-    for slot_name, sib_info in siblings.items():
-        max_sib = sib_info.get("max_sibling")
-        min_sib = sib_info.get("min_sibling")
-
-        for partner in (max_sib, min_sib):
-            if partner is None:
-                continue
-            pair_key: frozenset[str] = frozenset([slot_name, partner])
-            if pair_key in visited:
-                continue
-            visited.add(pair_key)
-
-            # Determine which slot is min and which is max.
-            if sib_info.get("max_sibling") == partner:
-                min_name, max_name = slot_name, partner
-            else:
-                min_name, max_name = partner, slot_name
-
-            min_m = repaired.get(min_name)
-            max_m = repaired.get(max_name)
-            if min_m is None or max_m is None:
-                continue
-
-            min_val = min_m.value
-            max_val = max_m.value
-            if min_val is None or max_val is None:
-                continue
-
-            # Conflict detected: swap.
-            if min_val > max_val:
-                repaired[min_name] = max_m
-                repaired[max_name] = min_m
-
-    return repaired
-
-
-def _gcg_validate_and_repair(
-    mentions: list[MentionOptIR],
-    slots: list[SlotOptIR],
-    initial_assignments: dict[str, MentionOptIR],
-    initial_scores: dict[str, float],
-    debug: dict[str, list[dict[str, Any]]],
-    siblings: dict[str, dict[str, str | None]],
-    has_percent_mention: bool,
-) -> tuple[dict[str, MentionOptIR], dict[str, str]]:
-    """GCG validation, coverage repair, and conflict repair."""
-    filled = dict(initial_assignments)
-    filled_in_repair: dict[str, str] = {slot: "initial" for slot in filled}
-
-    used_ids = {m.mention_id for m in filled.values()}
-
-    # Remove type-incompatible or low-confidence assignments.
-    for s in list(slots):
-        if s.name not in filled:
-            continue
-        m = filled[s.name]
-        score = initial_scores.get(s.name, 0.0)
-        if _is_type_incompatible(s.expected_type, m.type_bucket):
-            del filled[s.name]
-            del filled_in_repair[s.name]
-            used_ids.discard(m.mention_id)
-            continue
-        if score < GCG_REPAIR_WEIGHTS["min_role_support"] and not (
-            m.role_tags & s.slot_role_tags
-        ):
-            del filled[s.name]
-            del filled_in_repair[s.name]
-            used_ids.discard(m.mention_id)
-
-    # Coverage repair: try to fill unfilled slots from remaining candidates.
-    unfilled = [s for s in slots if s.name not in filled]
-    unfilled.sort(key=lambda x: len(x.slot_role_tags) + len(x.alias_tokens), reverse=True)
-    for s in unfilled:
-        for cand in debug.get(s.name, []):
-            mid = cand.get("mention_id")
-            if mid is None:
-                continue
-            mr = next((m for m in mentions if m.mention_id == mid), None)
-            if mr is None or mr.mention_id in used_ids:
-                continue
-            sc = cand.get("score", 0.0)
-            if sc <= 0 or _is_type_incompatible(s.expected_type, mr.type_bucket):
-                continue
-            if sc > GCG_REPAIR_WEIGHTS["min_role_support"] or (
-                mr.role_tags & s.slot_role_tags
-            ):
-                filled[s.name] = mr
-                filled_in_repair[s.name] = "repair"
-                used_ids.add(mr.mention_id)
-                break
-
-    # Min/max conflict repair.
-    filled = _gcg_conflict_repair(filled, siblings)
-    for slot in filled:
-        if slot not in filled_in_repair:
-            filled_in_repair[slot] = "conflict_repair"
-
-    return filled, filled_in_repair
-
-
-def _run_global_consistency_grounding(
-    query: str,
-    variant: str,
-    expected_scalar: list[str],
-) -> tuple[dict[str, Any], dict[str, MentionOptIR], dict[str, str]]:
-    """Global Consistency Grounding: stronger deterministic downstream grounding.
-
-    Improvements over ``optimization_role_repair``:
-
-    1. **Percent firewall** — if percent mentions exist, non-percent → percent slot is
-       penalised by −6.0, preventing ``type_loose_bonus`` from overriding type safety.
-    2. **Polarity enforcement** — min-context mention → max-slot (or vice versa) receives
-       −4.0 penalty instead of just losing a +1.2 bonus.
-    3. **Total/coeff cross-penalty** — total mention → coefficient slot and per-unit
-       mention → total slot both receive −3.0 instead of merely missing a +1.2 bonus.
-    4. **Entity anchor** — slot-name tokens (non-function words, length > 3) appearing
-       directly in the mention context window receive a +2.0 bonus.
-    5. **Magnitude plausibility** — percent slot with value > 100 or int slot with
-       decimal value each receive −1.5.
-    6. **Min/max conflict repair** — after bipartite matching, if a min/max sibling pair
-       has min_value > max_value the two assignments are swapped.
-    """
-    filled_values: dict[str, Any] = {}
-    filled_mentions: dict[str, MentionOptIR] = {}
-    filled_in_repair: dict[str, str] = {}
-
-    if not expected_scalar:
-        return filled_values, filled_mentions, filled_in_repair
-
-    # Reuse optimization_role_repair's extraction (MentionOptIR) and slot building (SlotOptIR).
-    mentions = _extract_opt_role_mentions(query, variant)
-    slots = _build_slot_opt_irs(expected_scalar)
-    if not mentions or not slots:
-        return filled_values, filled_mentions, filled_in_repair
-
-    has_percent_mention = any(m.type_bucket == "percent" for m in mentions)
-    siblings = _detect_gcg_sibling_slots(expected_scalar)
-
-    initial_assignments, initial_scores, debug = _gcg_global_assignment(
-        mentions, slots, has_percent_mention
-    )
-    filled, filled_in_repair = _gcg_validate_and_repair(
-        mentions, slots, initial_assignments, initial_scores, debug,
-        siblings, has_percent_mention,
-    )
-
-    for slot_name, m in filled.items():
-        filled_values[slot_name] = m.tok.value if m.tok.value is not None else m.tok.raw
-        filled_mentions[slot_name] = m
-    return filled_values, filled_mentions, filled_in_repair
-
-
-
-
 def _run_optimization_role_anchor_linking(
     query: str,
     variant: str,
@@ -2808,6 +3855,7 @@ def _run_optimization_role_anchor_linking(
         filled_values[slot_name] = m.tok.value if m.tok.value is not None else m.tok.raw
         filled_mentions[slot_name] = m
     return filled_values, filled_mentions, filled_in_repair
+
 
 def _run_optimization_role_bottomup_beam_repair(
     query: str,
@@ -2915,6 +3963,886 @@ def _run_optimization_role_bottomup_beam_repair(
         filled_values[slot_name] = m.tok.value if m.tok.value is not None else m.tok.raw
         filled_mentions[slot_name] = m
     return filled_values, filled_mentions, filled_in_repair
+
+
+def _gcg_local_score(m: "MentionOptIR", s: "SlotOptIR") -> tuple[float, dict[str, Any]]:
+    """Local compatibility score between one mention and one slot.
+
+    Mirrors the logic of _score_mention_slot_opt but uses GCG_LOCAL_WEIGHTS so
+    that the two scoring functions can be tuned independently.
+    """
+    features: dict[str, Any] = {}
+    score = 0.0
+    kind = m.type_bucket
+    expected = s.expected_type
+
+    if _is_type_incompatible(expected, kind):
+        features["type_incompatible"] = True
+        return GCG_LOCAL_WEIGHTS["type_incompatible_penalty"], features
+
+    # Count-like slot: non-integer decimals are hard incompatible.
+    if s.is_count_like and kind == "float":
+        features["count_slot_float_incompatible"] = True
+        return GCG_LOCAL_WEIGHTS["type_incompatible_penalty"], features
+
+    # Enumeration-derived counts are hard-incompatible with non-count-like slots.
+    # They are cardinality candidates only and must not bleed into numeric slots.
+    if "derived_count" in m.role_tags and not s.is_count_like:
+        features["derived_count_non_count"] = True
+        return GCG_LOCAL_WEIGHTS["derived_count_non_count_penalty"], features
+
+    if kind != "unknown":
+        if (expected == "percent" and kind == "percent") or (expected == "currency" and kind == "currency"):
+            score += GCG_LOCAL_WEIGHTS["type_exact_bonus"]
+            features["type_exact"] = True
+        elif expected == "float" and kind in {"float", "int"}:
+            # float+float = exact; integer-valued tokens are valid for float slots
+            score += GCG_LOCAL_WEIGHTS["type_exact_bonus"]
+            features["type_exact"] = True
+        elif expected == "int" and kind == "int":
+            score += GCG_LOCAL_WEIGHTS["type_exact_bonus"]
+            features["type_exact"] = True
+        elif expected in ("int", "float") and kind in {"currency"}:
+            score += GCG_LOCAL_WEIGHTS["type_loose_bonus"]
+            features["type_loose"] = True
+        elif expected == "int" and kind == "float":
+            score += GCG_LOCAL_WEIGHTS["type_loose_bonus"]
+            features["type_loose"] = True
+        elif expected == "currency" and kind in {"float", "int"}:
+            # Monetary slots filled with a plain integer/float token (no "$" sign)
+            # are a full exact match — the value IS a valid monetary quantity.
+            score += GCG_LOCAL_WEIGHTS["type_exact_bonus"]
+            features["type_exact"] = True
+
+    # Count-like slot: small-integer cardinality prior and large-value penalty.
+    if s.is_count_like and kind == "int" and m.value is not None:
+        val = m.value
+        if 1 <= val <= GCG_LOCAL_WEIGHTS["count_plausible_max"]:
+            score += GCG_LOCAL_WEIGHTS["count_small_int_prior"]
+            features["count_small_int_prior"] = True
+        elif val > GCG_LOCAL_WEIGHTS["count_large_penalty_threshold"]:
+            score += GCG_LOCAL_WEIGHTS["count_large_int_penalty"]
+            features["count_large_int_penalty"] = True
+
+    role_overlap = len(m.role_tags & s.slot_role_tags)
+    if role_overlap:
+        score += GCG_LOCAL_WEIGHTS["opt_role_overlap"] * float(role_overlap)
+        features["opt_role_overlap"] = role_overlap
+
+    if m.fragment_type == "objective" and s.is_objective_like:
+        score += GCG_LOCAL_WEIGHTS["fragment_compat_bonus"]
+        features["fragment_objective"] = True
+    if m.fragment_type in ("constraint", "bound") and s.is_bound_like:
+        score += GCG_LOCAL_WEIGHTS["fragment_compat_bonus"]
+        features["fragment_bound"] = True
+    if m.fragment_type == "resource" and s.is_total_like:
+        score += GCG_LOCAL_WEIGHTS["fragment_compat_bonus"]
+        features["fragment_resource"] = True
+    if m.fragment_type == "ratio" and (
+        "ratio_constraint" in s.slot_role_tags or "percentage_constraint" in s.slot_role_tags
+    ):
+        score += GCG_LOCAL_WEIGHTS["fragment_compat_bonus"]
+        features["fragment_ratio"] = True
+
+    if m.operator_tags & s.operator_preference:
+        score += GCG_LOCAL_WEIGHTS["operator_match_bonus"]
+        features["operator_match"] = True
+
+    slot_words = set(s.norm_tokens) | s.alias_tokens
+    ctx_set = set(m.context_tokens)
+    sent_set = set(m.sentence_tokens)
+    ctx_overlap = len(ctx_set & slot_words)
+    if ctx_overlap:
+        score += GCG_LOCAL_WEIGHTS["lex_context_overlap"] * float(ctx_overlap)
+        features["ctx_overlap"] = ctx_overlap
+    sent_overlap = len(sent_set & slot_words)
+    if sent_overlap:
+        score += GCG_LOCAL_WEIGHTS["lex_sentence_overlap"] * float(sent_overlap)
+        features["sent_overlap"] = sent_overlap
+
+    if m.unit_tags & s.unit_preference:
+        score += GCG_LOCAL_WEIGHTS["unit_match_bonus"]
+        features["unit_match"] = True
+
+    entity_resource = len(
+        (m.nearby_entity_tokens | m.nearby_resource_tokens | m.nearby_product_tokens) & slot_words
+    )
+    if entity_resource:
+        score += GCG_LOCAL_WEIGHTS["entity_resource_overlap"] * float(entity_resource)
+        features["entity_resource_overlap"] = entity_resource
+
+    # Narrow-left entity anchor: use ONLY single-character tokens from the tight
+    # left-context window.  Single letters (e.g. 'b' from "Feed B contains") and
+    # single digits (e.g. '1' from "Machine 1 processes") are entity-identifier
+    # suffixes that uniquely discriminate FeedB vs FeedA slots or Machine1 vs
+    # Machine2 slots.  Longer tokens (semantic-domain words such as 'labor' in
+    # "3 labor hours AND 5 board feet") are excluded because they appear in the
+    # narrow_left of the *second* list value due to the preceding clause, and
+    # would cause false cross-attribute matches within the same entity.
+    _nl_id_tokens = {t for t in m.narrow_left_tokens if len(t) == 1}
+    narrow_left_overlap = len(_nl_id_tokens & slot_words)
+    if narrow_left_overlap:
+        score += GCG_LOCAL_WEIGHTS["narrow_left_overlap"] * float(narrow_left_overlap)
+        features["narrow_left_overlap"] = narrow_left_overlap
+
+    # Tight-context cost / profit semantic hints.
+    # Only fires when the mention is UNambiguously cost-like (not also profit-like)
+    # or profit-like (not also cost-like).  When BOTH flags are set the tight window
+    # is too contaminated to be a reliable signal (e.g. right-context of "profit is 8"
+    # spills "cost" into its tight window), so we skip the rule.
+    if m.is_cost_like and not m.is_profit_like:
+        if slot_words & _COST_CONTEXT_WORDS:
+            score += GCG_LOCAL_WEIGHTS["tight_cost_match_bonus"]
+            features["tight_cost_match"] = True
+        elif slot_words & _PROFIT_CONTEXT_WORDS:
+            score += GCG_LOCAL_WEIGHTS["tight_cost_mismatch_penalty"]
+            features["tight_cost_mismatch"] = True
+    if m.is_profit_like and not m.is_cost_like:
+        if slot_words & _PROFIT_CONTEXT_WORDS:
+            score += GCG_LOCAL_WEIGHTS["tight_profit_match_bonus"]
+            features["tight_profit_match"] = True
+        elif slot_words & _COST_CONTEXT_WORDS:
+            score += GCG_LOCAL_WEIGHTS["tight_profit_mismatch_penalty"]
+            features["tight_profit_mismatch"] = True
+
+    if s.is_total_like and m.is_total_like:
+        score += GCG_LOCAL_WEIGHTS["coefficient_vs_total_bonus"]
+        features["total_match"] = True
+    if s.is_coefficient_like and m.is_per_unit:
+        score += GCG_LOCAL_WEIGHTS["coefficient_vs_total_bonus"]
+        features["coefficient_match"] = True
+    # Local mismatch penalties: per-unit mention → total slot, or total mention → coeff slot.
+    if s.is_total_like and not s.is_coefficient_like and m.is_per_unit and not m.is_total_like:
+        score += GCG_LOCAL_WEIGHTS["coeff_to_total_local_penalty"]
+        features["coeff_to_total_penalty"] = True
+    if s.is_coefficient_like and not s.is_total_like and m.is_total_like and not m.is_per_unit:
+        score += GCG_LOCAL_WEIGHTS["total_to_coeff_local_penalty"]
+        features["total_to_coeff_penalty"] = True
+
+    # ── Quantity-role layer: primary_role bonuses / penalties ─────────────────
+    if m.is_count_like and s.is_count_like:
+        score += GCG_LOCAL_WEIGHTS["count_mention_count_slot_bonus"]
+        features["count_role_match"] = True
+    if m.is_count_like and not s.is_count_like and not m.is_percent_like:
+        score += GCG_LOCAL_WEIGHTS["count_mention_non_count_penalty"]
+        features["count_to_non_count_penalty"] = True
+    if m.is_lower_bound_like and "min" in s.operator_preference:
+        score += GCG_LOCAL_WEIGHTS["bound_direction_bonus"]
+        features["lower_bound_match"] = True
+    if m.is_upper_bound_like and "max" in s.operator_preference:
+        score += GCG_LOCAL_WEIGHTS["bound_direction_bonus"]
+        features["upper_bound_match"] = True
+    # Wrong-direction bound penalty: strong discouragement for cross-direction assignments.
+    if _ENABLE_BOUND_ROLE_LAYER:
+        if m.is_lower_bound_like and "max" in s.operator_preference and "min" not in s.operator_preference:
+            score += GCG_LOCAL_WEIGHTS["bound_direction_penalty"]
+            features["bound_direction_wrong"] = True
+        elif m.is_upper_bound_like and "min" in s.operator_preference and "max" not in s.operator_preference:
+            score += GCG_LOCAL_WEIGHTS["bound_direction_penalty"]
+            features["bound_direction_wrong"] = True
+
+    score += GCG_LOCAL_WEIGHTS["schema_prior_bonus"]
+    features["schema_prior"] = True
+
+    if score <= 0.0:
+        score += GCG_LOCAL_WEIGHTS["weak_match_penalty"]
+        features["weak_penalty"] = True
+
+    features["total_score"] = score
+    return score, features
+
+
+def _gcg_global_penalty(
+    assignment: dict[str, "MentionOptIR"],
+    slots_by_name: dict[str, "SlotOptIR"],
+    all_mentions: list["MentionOptIR"],
+) -> tuple[float, list[str]]:
+    """Compute global consistency delta (rewards + penalties) for a full/partial assignment.
+
+    Returns (total_delta, list_of_active_reasons) for diagnostics.
+    """
+    delta = 0.0
+    reasons: list[str] = []
+    w = GCG_GLOBAL_WEIGHTS
+
+    # Detect global evidence: are there percent mentions in the text?
+    has_pct_mention = any(m.type_bucket == "percent" for m in all_mentions)
+
+    # Detect per-slot penalties.
+    used_mention_ids: list[int] = []
+    for slot_name, m in assignment.items():
+        s = slots_by_name.get(slot_name)
+        if s is None:
+            continue
+
+        mid = m.mention_id
+        used_mention_ids.append(mid)
+
+        # Percent misuse.
+        if has_pct_mention and s.expected_type != "percent" and m.type_bucket == "percent":
+            delta += w["percent_misuse_penalty"]
+            reasons.append(f"percent_misuse:{slot_name}")
+
+        if s.expected_type == "percent" and m.type_bucket != "percent" and has_pct_mention:
+            delta += w["non_percent_to_pct_slot_penalty"]
+            reasons.append(f"non_pct_to_pct_slot:{slot_name}")
+
+        # Total vs coefficient mismatch.
+        if s.is_total_like and m.is_per_unit and not m.is_total_like:
+            delta += w["total_to_coeff_penalty"]
+            reasons.append(f"coeff_to_total:{slot_name}")
+        if s.is_coefficient_like and m.is_total_like and not m.is_per_unit:
+            delta += w["coeff_to_total_penalty"]
+            reasons.append(f"total_to_coeff:{slot_name}")
+
+        # Operator/bound flip.
+        if s.operator_preference and m.operator_tags:
+            if "min" in s.operator_preference and "max" in m.operator_tags and "min" not in m.operator_tags:
+                delta += w["bound_flip_penalty"]
+                reasons.append(f"bound_flip_min_to_max:{slot_name}")
+            if "max" in s.operator_preference and "min" in m.operator_tags and "max" not in m.operator_tags:
+                delta += w["bound_flip_penalty"]
+                reasons.append(f"bound_flip_max_to_min:{slot_name}")
+
+        # Coverage reward (per filled slot).
+        delta += w["coverage_reward_per_slot"]
+        reasons.append(f"coverage_reward:{slot_name}")
+
+        # Type consistency reward.
+        if m.type_bucket == s.expected_type or (
+            s.expected_type in ("int", "float") and m.type_bucket in ("int", "float", "currency")
+        ):
+            delta += w["type_consistency_reward"]
+            reasons.append(f"type_consistent:{slot_name}")
+
+    # Duplicate mention penalty (one-to-one should hold).
+    seen: set[int] = set()
+    for mid in used_mention_ids:
+        if mid in seen:
+            delta += w["duplicate_mention_penalty"]
+            reasons.append(f"duplicate_mention:{mid}")
+        seen.add(mid)
+
+    # Overall coverage bonus.
+    if slots_by_name and len(assignment) / max(1, len(slots_by_name)) >= 0.8:
+        delta += w["plausibility_coverage_bonus"]
+        reasons.append("plausibility_coverage_bonus")
+
+    # ── Entity-coherence among consecutive-mention pairs ─────────────────────
+    # When mention M_{i+1} has no entity-letter anchor in its narrow_left, it
+    # should be assigned to the same entity as the preceding mention M_i.
+    # This repairs cases like "Feed B contains 7 protein AND 15 fat" where the
+    # fat value (15) carries no explicit entity marker in its narrow_left but
+    # must follow the Feed-B-anchored protein assignment.
+    # Only fires when BOTH the preceding and current slot names contain
+    # single-char entity identifiers (preventing spurious penalties for
+    # attribute-only slot names such as "TotalBudget").
+    _mid_to_slot: dict[int, "SlotOptIR"] = {}
+    for _sn, _m in assignment.items():
+        _s = slots_by_name.get(_sn)
+        if _s is not None:
+            _mid_to_slot[_m.mention_id] = _s
+    for _sn, _m in assignment.items():
+        _prev_mid = _m.mention_id - 1
+        if _prev_mid not in _mid_to_slot:
+            continue
+        # Skip if this mention already has a direct entity-letter anchor.
+        _cur_entity_letters = {t for t in _m.narrow_left_tokens if len(t) == 1 and t.isalpha()}
+        if _cur_entity_letters:
+            continue
+        _prev_slot = _mid_to_slot[_prev_mid]
+        _cur_slot = slots_by_name.get(_sn)
+        if _cur_slot is None:
+            continue
+        # Extract single-char entity identifiers from both slot names.
+        _prev_eids = {t for t in _prev_slot.norm_tokens if len(t) == 1}
+        _cur_eids = {t for t in _cur_slot.norm_tokens if len(t) == 1}
+        if _prev_eids and _cur_eids:
+            if _prev_eids & _cur_eids:
+                delta += w["entity_coherence_reward"]
+                reasons.append(f"entity_coherent:{_sn}")
+            else:
+                delta += w["entity_coherence_penalty"]
+                reasons.append(f"entity_incoherent:{_sn}")
+
+    return delta, reasons
+
+
+def _gcg_beam_search(
+    mentions: list["MentionOptIR"],
+    slots: list["SlotOptIR"],
+    local_scores: list[list[float]],
+    local_features: list[list[dict[str, Any]]],
+    beam_width: int = GCG_BEAM_WIDTH,
+) -> tuple[
+    dict[str, "MentionOptIR"],
+    dict[str, float],
+    dict[str, list[dict[str, Any]]],
+    list[dict[str, Any]],
+]:
+    """Beam search over partial slot assignments scored by local + global consistency.
+
+    State: frozenset of (slot_index, mention_index) pairs already committed.
+    Beam entry: (committed_bundle, sum_local_scores).
+
+    At the end, the beam entry with the highest (local_sum + global_delta) wins.
+
+    Returns:
+        assignments        : slot_name -> MentionOptIR
+        slot_scores        : slot_name -> local score
+        debug              : slot_name -> candidate list (for diagnostics)
+        top_assignments    : list of top-k assignment dicts with scores/reasons (diagnostics)
+    """
+    if not mentions or not slots:
+        return {}, {}, {}, []
+
+    slots_by_name = {s.name: s for s in slots}
+
+    # Build debug info: per-slot sorted candidate list.
+    debug: dict[str, list[dict[str, Any]]] = {}
+    for j, sr in enumerate(slots):
+        cands = []
+        for i, mr in enumerate(mentions):
+            cands.append({
+                "mention_id": mr.mention_id,
+                "mention_raw": mr.raw_surface,
+                "score": local_scores[i][j],
+                "features": local_features[i][j],
+            })
+        cands.sort(key=lambda x: x["score"], reverse=True)
+        debug[sr.name] = cands
+
+    # Pruning: build per-slot list of admissible (mention_index, local_score) pairs.
+    admissible: list[list[tuple[int, float]]] = []
+    for j in range(len(slots)):
+        opts = [
+            (i, local_scores[i][j])
+            for i in range(len(mentions))
+            if local_scores[i][j] > GCG_PRUNE_THRESHOLD
+        ]
+        opts.sort(key=lambda x: -x[1])
+        admissible.append(opts)
+
+    # Each beam state: (bundle: frozenset[(slot_j, mention_i)], sum_local)
+    # Slots are processed in their original order.
+    slot_order = list(range(len(slots)))
+
+    # Beam: list of (bundle, sum_local_score)
+    BeamState = tuple[frozenset[tuple[int, int]], float]
+    beam: list[BeamState] = [(frozenset(), 0.0)]
+
+    for j in slot_order:
+        next_beam: list[BeamState] = []
+        for bundle, sum_local in beam:
+            # Option 1: skip this slot (leave unassigned).
+            next_beam.append((bundle, sum_local))
+            # Option 2: assign an admissible mention (one not already used).
+            used_mentions = {mi for _, mi in bundle}
+            for mi, loc_sc in admissible[j]:
+                if mi in used_mentions:
+                    continue
+                new_bundle = bundle | frozenset([(j, mi)])
+                next_beam.append((new_bundle, sum_local + loc_sc))
+
+        # Sort by local sum and prune to beam width.
+        next_beam.sort(key=lambda x: -x[1])
+        beam = next_beam[:beam_width]
+
+    # Score all final beam states with global consistency delta and pick the best.
+    scored_final: list[tuple[float, BeamState, float, list[str]]] = []
+    for bundle, sum_local in beam:
+        assignment_candidate: dict[str, "MentionOptIR"] = {
+            slots[j].name: mentions[mi] for j, mi in bundle
+        }
+        g_delta, reasons = _gcg_global_penalty(assignment_candidate, slots_by_name, mentions)
+        total_score = sum_local + g_delta
+        scored_final.append((total_score, (bundle, sum_local), g_delta, reasons))
+
+    if not scored_final:
+        return {}, {}, debug, []
+
+    scored_final.sort(key=lambda x: -x[0])
+    best_total, (best_bundle, _), best_g_delta, best_reasons = scored_final[0]
+
+    # Build output.
+    assignments: dict[str, "MentionOptIR"] = {}
+    slot_scores: dict[str, float] = {}
+    for j, mi in best_bundle:
+        slot_name = slots[j].name
+        assignments[slot_name] = mentions[mi]
+        slot_scores[slot_name] = local_scores[mi][j]
+
+    # Build top-k diagnostics.
+    top_assignments: list[dict[str, Any]] = []
+    for rank, (total_sc, (bun, loc_sum), g_dl, rsns) in enumerate(scored_final[:beam_width]):
+        asgn_repr = {slots[j].name: mentions[mi].raw_surface for j, mi in bun}
+        top_assignments.append({
+            "rank": rank,
+            "total_score": total_sc,
+            "local_sum": loc_sum,
+            "global_delta": g_dl,
+            "active_reasons": rsns,
+            "assignment": asgn_repr,
+        })
+
+    return assignments, slot_scores, debug, top_assignments
+
+
+def _run_global_consistency_grounding(
+    query: str,
+    variant: str,
+    expected_scalar: list[str],
+    beam_width: int = GCG_BEAM_WIDTH,
+) -> tuple[dict[str, Any], dict[str, "MentionOptIR"], dict[str, Any]]:
+    """Global Consistency Grounding (GCG): beam-search global assignment.
+
+    Stages:
+      1. Extract optimization-role mentions (reuses existing extractor).
+      2. Build slot IRs (reuses existing builder).
+      3. Compute local scores for all (mention, slot) pairs.
+      4. Prune implausible pairs below GCG_PRUNE_THRESHOLD.
+      5. Beam search over partial assignments, scoring by local + global consistency.
+      6. Return the assignment with the highest combined score.
+
+    Returns:
+        filled_values      : slot_name -> numeric value (float or raw string)
+        filled_mentions    : slot_name -> MentionOptIR
+        diagnostics        : dict with top_assignments + per-slot debug info
+    """
+    filled_values: dict[str, Any] = {}
+    filled_mentions: dict[str, "MentionOptIR"] = {}
+    diagnostics: dict[str, Any] = {}
+
+    if not expected_scalar:
+        return filled_values, filled_mentions, diagnostics
+
+    mentions = _extract_opt_role_mentions(query, variant)
+    slots = _build_slot_opt_irs(expected_scalar)
+    if not mentions or not slots:
+        return filled_values, filled_mentions, diagnostics
+
+    m_count, s_count = len(mentions), len(slots)
+
+    # Precompute local scores and features for all (mention, slot) pairs.
+    local_scores: list[list[float]] = [[0.0] * s_count for _ in range(m_count)]
+    local_features: list[list[dict[str, Any]]] = [[{} for _ in range(s_count)] for _ in range(m_count)]
+    for i, mr in enumerate(mentions):
+        for j, sr in enumerate(slots):
+            sc, feats = _gcg_local_score(mr, sr)
+            local_scores[i][j] = sc
+            local_features[i][j] = feats
+
+    assignments, slot_scores, debug, top_assignments = _gcg_beam_search(
+        mentions, slots, local_scores, local_features, beam_width=beam_width
+    )
+
+    # ── Bound-flip swap repair: correct inverted min/max assignments ──────────
+    gcg_filled_in_repair: dict[str, str] = {k: "initial" for k in assignments}
+    if _ENABLE_BOUND_ROLE_LAYER:
+        _bound_swap_repair(assignments, gcg_filled_in_repair, slots)
+
+    for slot_name, mr in assignments.items():
+        filled_values[slot_name] = mr.tok.value if mr.tok.value is not None else mr.tok.raw
+        filled_mentions[slot_name] = mr
+
+    diagnostics["top_assignments"] = top_assignments
+    diagnostics["per_slot_candidates"] = debug
+    return filled_values, filled_mentions, diagnostics
+
+
+# ── Maximum-Weight Bipartite Matching Grounding ───────────────────────────────
+# Uses the exact Hungarian algorithm (scipy.optimize.linear_sum_assignment) to
+# find the globally optimal one-to-one mention-slot assignment.  Unlike
+# beam-search methods this approach:
+#   - Builds the FULL score matrix for all (mention, slot) pairs.
+#   - Enforces the one-to-one constraint exactly.
+#   - Finds the globally optimal assignment (under the local score objective)
+#     in polynomial time — O(min(m,s)^3) via scipy's implementation.
+#
+# Falls back to a bitmask-DP assignment if scipy is unavailable
+# (_opt_role_global_assignment already handles this internally).
+
+
+def _run_max_weight_matching_grounding(
+    query: str,
+    variant: str,
+    expected_scalar: list[str],
+) -> tuple[dict[str, Any], dict[str, "MentionOptIR"], dict[str, Any]]:
+    """Maximum-weight bipartite matching grounding (Hungarian algorithm).
+
+    Computes the globally optimal one-to-one mention-to-slot assignment by:
+      1. Extracting optimization-role mentions.
+      2. Building slot IRs.
+      3. Scoring all (mention, slot) pairs with the opt-role scoring function.
+      4. Solving the resulting assignment problem exactly using
+         ``scipy.optimize.linear_sum_assignment`` (Hungarian algorithm) or a
+         bitmask-DP fallback if scipy is not available.
+
+    This guarantees:
+      - A **full score matrix** is computed (no greedy shortcut).
+      - A **one-to-one assignment constraint** is enforced exactly.
+      - The **globally optimal assignment** under the local score objective is
+        returned.
+
+    Returns
+    -------
+    filled_values   : slot_name -> numeric value (float or raw string)
+    filled_mentions : slot_name -> MentionOptIR
+    diagnostics     : dict with per_slot_candidates and slot_scores
+    """
+    filled_values: dict[str, Any] = {}
+    filled_mentions: dict[str, "MentionOptIR"] = {}
+    diagnostics: dict[str, Any] = {}
+
+    if not expected_scalar:
+        return filled_values, filled_mentions, diagnostics
+
+    mentions = _extract_opt_role_mentions(query, variant)
+    slots = _build_slot_opt_irs(expected_scalar)
+    if not mentions or not slots:
+        return filled_values, filled_mentions, diagnostics
+
+    # _opt_role_global_assignment already implements the full score matrix +
+    # Hungarian algorithm (scipy linear_sum_assignment) with a DP fallback.
+    assignments, scores, debug = _opt_role_global_assignment(mentions, slots)
+
+    for slot_name, mr in assignments.items():
+        filled_values[slot_name] = mr.tok.value if mr.tok.value is not None else mr.tok.raw
+        filled_mentions[slot_name] = mr
+
+    diagnostics["per_slot_candidates"] = debug
+    diagnostics["slot_scores"] = scores
+    return filled_values, filled_mentions, diagnostics
+
+
+# ── Global Compatibility Grounding (global_compatibility_grounding) ───────────
+# Extends GCG with explicit pairwise slot-slot compatibility terms that score
+# *pairs* of (slot, mention) assignments jointly.  This implements the
+# reviewer-requested "structured slot filling" idea: adjacent slots should be
+# coherent with each other, not only individually compatible with their mentions.
+#
+# Ablation modes (controlled by the ablation_mode argument):
+#   "local_only"  — local mention-slot scores only (no pairwise, no global)
+#   "pairwise"    — local + pairwise slot-slot terms (no global coverage bonuses)
+#   "full"        — local + pairwise + global consistency (complete method)
+#
+# The pairwise score Phi((si,mi),(sj,mj)) is a sum over pairwise feature detectors.
+# Each detector fires based on:
+#   - slot role semantics (min/max, total/coeff, percent/scalar, objective/bound)
+#   - mention types and per-unit / total flags
+#   - relative mention values (ordering coherence for min/max)
+#   - mention identity (duplicate penalty)
+
+GCGP_PAIRWISE_WEIGHTS: dict[str, float] = {
+    # ── Min/max value ordering ────────────────────────────────────────────────
+    "minmax_correct_order_bonus": 2.5,  # min_val <= max_val → bonus
+    "minmax_inverted_order_penalty": -4.0,  # min_val > max_val → penalty
+    # ── Total vs coefficient separation ──────────────────────────────────────
+    "total_coeff_type_distinct_bonus": 1.5,  # total slot + coeff slot → different types/sizes → bonus
+    "total_coeff_both_same_type_penalty": -2.0,  # both get same mention type → penalty
+    # ── Percent exclusivity ───────────────────────────────────────────────────
+    "percent_exclusive_bonus": 1.5,  # percent slot ← pct mention, other ← non-pct → bonus
+    "percent_collision_penalty": -3.5,  # two percent slots both get non-pct (when pct exists) → penalty
+    # ── Duplicate mention penalty ─────────────────────────────────────────────
+    "duplicate_mention_pairwise_penalty": -6.0,  # two slots share the same mention_id → hard penalty
+    # ── Semantic role compatibility ───────────────────────────────────────────
+    "objective_bound_compatible_bonus": 1.0,  # objective slot + bound slot → different mention roles → bonus
+    "objective_objective_collision_penalty": -1.0,  # two objective slots with same-role mention → mild penalty
+    # ── Value magnitude plausibility ─────────────────────────────────────────
+    "magnitude_budget_gt_coeff_bonus": 1.0,  # total slot value > coeff slot value → bonus
+    "magnitude_budget_lt_coeff_penalty": -2.0,  # total slot value < coeff slot value → penalty
+}
+
+# Beam width for the pairwise-aware beam search.
+GCGP_BEAM_WIDTH: int = 12  # slightly wider than GCG because pairwise reranking helps
+
+
+def _gcgp_pairwise_score(
+    si: "SlotOptIR",
+    mi: "MentionOptIR",
+    sj: "SlotOptIR",
+    mj: "MentionOptIR",
+) -> tuple[float, list[str]]:
+    """Compute a pairwise compatibility score for the joint assignment (si→mi, sj→mj).
+
+    This scores *cross-slot coherence*: do the two assigned mentions make sense
+    together given the semantic relationship between si and sj?
+
+    Returns (delta, reasons) where reasons is a diagnostic list of strings.
+    """
+    delta = 0.0
+    reasons: list[str] = []
+    w = GCGP_PAIRWISE_WEIGHTS
+
+    # ── Hard duplicate penalty ────────────────────────────────────────────────
+    if mi.mention_id == mj.mention_id:
+        delta += w["duplicate_mention_pairwise_penalty"]
+        reasons.append(f"duplicate_mention:({si.name},{sj.name})")
+        return delta, reasons  # no other terms make sense if same mention
+
+    # ── Min/max value ordering ────────────────────────────────────────────────
+    si_is_min = bool(si.operator_preference and "min" in si.operator_preference)
+    sj_is_max = bool(sj.operator_preference and "max" in sj.operator_preference)
+    si_is_max = bool(si.operator_preference and "max" in si.operator_preference)
+    sj_is_min = bool(sj.operator_preference and "min" in sj.operator_preference)
+
+    if si_is_min and sj_is_max and mi.value is not None and mj.value is not None:
+        if mi.value <= mj.value:
+            delta += w["minmax_correct_order_bonus"]
+            reasons.append(f"minmax_correct_order:({si.name},{sj.name})")
+        else:
+            delta += w["minmax_inverted_order_penalty"]
+            reasons.append(f"minmax_inverted_order:({si.name},{sj.name})")
+    elif si_is_max and sj_is_min and mi.value is not None and mj.value is not None:
+        if mj.value <= mi.value:
+            delta += w["minmax_correct_order_bonus"]
+            reasons.append(f"minmax_correct_order_rev:({si.name},{sj.name})")
+        else:
+            delta += w["minmax_inverted_order_penalty"]
+            reasons.append(f"minmax_inverted_order_rev:({si.name},{sj.name})")
+
+    # ── Total vs coefficient separation ──────────────────────────────────────
+    one_total_one_coeff = (si.is_total_like and sj.is_coefficient_like) or (
+        si.is_coefficient_like and sj.is_total_like
+    )
+    if one_total_one_coeff:
+        # Good: different mention kinds (or different is_per_unit / is_total_like flags)
+        if mi.is_total_like != mj.is_total_like or mi.is_per_unit != mj.is_per_unit:
+            delta += w["total_coeff_type_distinct_bonus"]
+            reasons.append(f"total_coeff_distinct:({si.name},{sj.name})")
+        elif mi.type_bucket == mj.type_bucket:
+            delta += w["total_coeff_both_same_type_penalty"]
+            reasons.append(f"total_coeff_same_type:({si.name},{sj.name})")
+        # Magnitude plausibility: total slot should have larger value than coeff slot.
+        total_m = mi if si.is_total_like else mj
+        coeff_m = mj if si.is_total_like else mi
+        if total_m.value is not None and coeff_m.value is not None:
+            if total_m.value > coeff_m.value:
+                delta += w["magnitude_budget_gt_coeff_bonus"]
+                reasons.append(f"magnitude_total_gt_coeff:({si.name},{sj.name})")
+            elif total_m.value < coeff_m.value:
+                delta += w["magnitude_budget_lt_coeff_penalty"]
+                reasons.append(f"magnitude_total_lt_coeff:({si.name},{sj.name})")
+
+    # ── Percent exclusivity ───────────────────────────────────────────────────
+    si_is_pct = si.expected_type == "percent"
+    sj_is_pct = sj.expected_type == "percent"
+    if si_is_pct != sj_is_pct:
+        # One percent slot, one non-percent slot.
+        pct_slot_m = mi if si_is_pct else mj
+        non_pct_slot_m = mj if si_is_pct else mi
+        if pct_slot_m.type_bucket == "percent" and non_pct_slot_m.type_bucket != "percent":
+            delta += w["percent_exclusive_bonus"]
+            reasons.append(f"percent_exclusive:({si.name},{sj.name})")
+    elif si_is_pct and sj_is_pct:
+        # Both percent slots — check they don't both get non-percent mentions.
+        if mi.type_bucket != "percent" and mj.type_bucket != "percent":
+            delta += w["percent_collision_penalty"]
+            reasons.append(f"percent_collision:({si.name},{sj.name})")
+
+    # ── Objective vs bound role compatibility ─────────────────────────────────
+    si_obj = si.is_objective_like
+    sj_bnd = sj.is_bound_like
+    si_bnd = si.is_bound_like
+    sj_obj = sj.is_objective_like
+    if (si_obj and sj_bnd) or (si_bnd and sj_obj):
+        # Objective-like slot and bound-like slot: prefer different fragment types.
+        mi_obj = mi.fragment_type == "objective"
+        mj_bnd = mj.fragment_type in ("constraint", "bound")
+        mi_bnd = mi.fragment_type in ("constraint", "bound")
+        mj_obj = mj.fragment_type == "objective"
+        if (si_obj and mi_obj and sj_bnd and mj_bnd) or (si_bnd and mi_bnd and sj_obj and mj_obj):
+            delta += w["objective_bound_compatible_bonus"]
+            reasons.append(f"obj_bound_compat:({si.name},{sj.name})")
+    elif si_obj and sj_obj:
+        # Both objective: mild penalty if they share the same fragment context.
+        if mi.fragment_type == mj.fragment_type == "objective":
+            delta += w["objective_objective_collision_penalty"]
+            reasons.append(f"obj_obj_collision:({si.name},{sj.name})")
+
+    return delta, reasons
+
+
+def _gcgp_beam_search(
+    mentions: list["MentionOptIR"],
+    slots: list["SlotOptIR"],
+    local_scores: list[list[float]],
+    local_features: list[list[dict[str, Any]]],
+    ablation_mode: str = "full",
+    beam_width: int = GCGP_BEAM_WIDTH,
+) -> tuple[
+    dict[str, "MentionOptIR"],
+    dict[str, float],
+    dict[str, list[dict[str, Any]]],
+    list[dict[str, Any]],
+]:
+    """Beam search with pairwise slot-slot compatibility terms.
+
+    ablation_mode controls which scoring components are active:
+      "local_only"  — only local mention-slot scores (GCG without global/pairwise)
+      "pairwise"    — local + pairwise (no GCG global consistency terms)
+      "full"        — local + pairwise + GCG global consistency terms
+
+    Returns same structure as _gcg_beam_search for drop-in compatibility.
+    """
+    if not mentions or not slots:
+        return {}, {}, {}, []
+
+    slots_by_name = {s.name: s for s in slots}
+
+    # Build per-slot candidate debug info.
+    debug: dict[str, list[dict[str, Any]]] = {}
+    for j, sr in enumerate(slots):
+        cands = []
+        for i, mr in enumerate(mentions):
+            cands.append({
+                "mention_id": mr.mention_id,
+                "mention_raw": mr.raw_surface,
+                "score": local_scores[i][j],
+                "features": local_features[i][j],
+            })
+        cands.sort(key=lambda x: x["score"], reverse=True)
+        debug[sr.name] = cands
+
+    # Per-slot admissible (mention_index, local_score) lists, pruned.
+    admissible: list[list[tuple[int, float]]] = []
+    for j in range(len(slots)):
+        opts = [
+            (i, local_scores[i][j])
+            for i in range(len(mentions))
+            if local_scores[i][j] > GCG_PRUNE_THRESHOLD
+        ]
+        opts.sort(key=lambda x: -x[1])
+        admissible.append(opts)
+
+    # Beam state: (bundle: frozenset[(slot_j, mention_i)], running_score)
+    # running_score accumulates local + pairwise scores during the search.
+    BeamState = tuple[frozenset[tuple[int, int]], float]
+    beam: list[BeamState] = [(frozenset(), 0.0)]
+
+    for j in range(len(slots)):
+        next_beam: list[BeamState] = []
+        for bundle, running_score in beam:
+            # Option 1: leave slot j unassigned.
+            next_beam.append((bundle, running_score))
+            # Option 2: assign an admissible, unused mention.
+            used_mentions = {mi for _, mi in bundle}
+            for mi, loc_sc in admissible[j]:
+                if mi in used_mentions:
+                    continue
+                new_score = running_score + loc_sc
+                # Add pairwise terms against all already-committed slots.
+                if ablation_mode in ("pairwise", "full"):
+                    for prev_j, prev_mi in bundle:
+                        pw_delta, _ = _gcgp_pairwise_score(
+                            slots[j], mentions[mi],
+                            slots[prev_j], mentions[prev_mi],
+                        )
+                        new_score += pw_delta
+                new_bundle = bundle | frozenset([(j, mi)])
+                next_beam.append((new_bundle, new_score))
+
+        next_beam.sort(key=lambda x: -x[1])
+        beam = next_beam[:beam_width]
+
+    # Re-score final beam states with global consistency terms (full mode only).
+    scored_final: list[tuple[float, BeamState, float, list[str]]] = []
+    for bundle, running_score in beam:
+        assignment_candidate: dict[str, "MentionOptIR"] = {
+            slots[j].name: mentions[mi] for j, mi in bundle
+        }
+        if ablation_mode == "full":
+            g_delta, reasons = _gcg_global_penalty(assignment_candidate, slots_by_name, mentions)
+        else:
+            g_delta, reasons = 0.0, []
+        total_score = running_score + g_delta
+        scored_final.append((total_score, (bundle, running_score), g_delta, reasons))
+
+    if not scored_final:
+        return {}, {}, debug, []
+
+    scored_final.sort(key=lambda x: -x[0])
+    best_total, (best_bundle, _), best_g_delta, best_reasons = scored_final[0]
+
+    assignments: dict[str, "MentionOptIR"] = {}
+    slot_scores: dict[str, float] = {}
+    for j, mi in best_bundle:
+        slot_name = slots[j].name
+        assignments[slot_name] = mentions[mi]
+        slot_scores[slot_name] = local_scores[mi][j]
+
+    # Top-k diagnostics.
+    top_assignments: list[dict[str, Any]] = []
+    for rank, (total_sc, (bun, loc_sum), g_dl, rsns) in enumerate(scored_final[:beam_width]):
+        asgn_repr = {slots[j].name: mentions[mi].raw_surface for j, mi in bun}
+        top_assignments.append({
+            "rank": rank,
+            "total_score": total_sc,
+            "local_sum": loc_sum,
+            "global_delta": g_dl,
+            "active_reasons": rsns,
+            "assignment": asgn_repr,
+        })
+
+    return assignments, slot_scores, debug, top_assignments
+
+
+def _run_global_compatibility_grounding(
+    query: str,
+    variant: str,
+    expected_scalar: list[str],
+    ablation_mode: str = "full",
+    beam_width: int = GCGP_BEAM_WIDTH,
+) -> tuple[dict[str, Any], dict[str, "MentionOptIR"], dict[str, Any]]:
+    """Global Compatibility Grounding (GCGP): beam search with pairwise slot-slot terms.
+
+    Extension of Global Consistency Grounding that adds explicit pairwise
+    compatibility terms between assigned slot-mention pairs.
+
+    ablation_mode:
+      "local_only"  — local scores only (same as simplified GCG)
+      "pairwise"    — local + pairwise slot-slot terms
+      "full"        — local + pairwise + global consistency (complete method)
+
+    Returns:
+        filled_values      : slot_name -> numeric value
+        filled_mentions    : slot_name -> MentionOptIR
+        diagnostics        : dict with top_assignments, per_slot_candidates, ablation_mode
+    """
+    filled_values: dict[str, Any] = {}
+    filled_mentions: dict[str, "MentionOptIR"] = {}
+    diagnostics: dict[str, Any] = {"ablation_mode": ablation_mode}
+
+    if not expected_scalar:
+        return filled_values, filled_mentions, diagnostics
+
+    mentions = _extract_opt_role_mentions(query, variant)
+    slots = _build_slot_opt_irs(expected_scalar)
+    if not mentions or not slots:
+        return filled_values, filled_mentions, diagnostics
+
+    m_count, s_count = len(mentions), len(slots)
+    local_scores: list[list[float]] = [[0.0] * s_count for _ in range(m_count)]
+    local_features: list[list[dict[str, Any]]] = [[{} for _ in range(s_count)] for _ in range(m_count)]
+    for i, mr in enumerate(mentions):
+        for j, sr in enumerate(slots):
+            sc, feats = _gcg_local_score(mr, sr)
+            local_scores[i][j] = sc
+            local_features[i][j] = feats
+
+    assignments, slot_scores, debug, top_assignments = _gcgp_beam_search(
+        mentions, slots, local_scores, local_features,
+        ablation_mode=ablation_mode,
+        beam_width=beam_width,
+    )
+
+    for slot_name, mr in assignments.items():
+        filled_values[slot_name] = mr.tok.value if mr.tok.value is not None else mr.tok.raw
+        filled_mentions[slot_name] = mr
+
+    diagnostics["top_assignments"] = top_assignments
+    diagnostics["per_slot_candidates"] = debug
+    return filled_values, filled_mentions, diagnostics
 
 
 def _constrained_assignment(
@@ -3598,7 +5526,7 @@ def run_setting(
                     type_filled_total[btype] += 1
                     type_filled_q[btype] += 1
                     et = _expected_type(p)
-                    if tok.kind == et:
+                    if _is_type_match(et, tok.kind):
                         type_matches += 1
                         type_correct_total[btype] += 1
                         type_correct_q[btype] += 1
@@ -3630,7 +5558,7 @@ def run_setting(
                     type_filled_total[btype] += 1
                     type_filled_q[btype] += 1
                     et = _expected_type(p)
-                    if tok.kind == et:
+                    if _is_type_match(et, tok.kind):
                         type_matches += 1
                         type_correct_total[btype] += 1
                         type_correct_q[btype] += 1
@@ -3662,7 +5590,7 @@ def run_setting(
                     type_filled_total[btype] += 1
                     type_filled_q[btype] += 1
                     et = _expected_type(p)
-                    if tok.kind == et:
+                    if _is_type_match(et, tok.kind):
                         type_matches += 1
                         type_correct_total[btype] += 1
                         type_correct_q[btype] += 1
@@ -3694,7 +5622,7 @@ def run_setting(
                     type_filled_total[btype] += 1
                     type_filled_q[btype] += 1
                     et = _expected_type(p)
-                    if tok.kind == et:
+                    if _is_type_match(et, tok.kind):
                         type_matches += 1
                         type_correct_total[btype] += 1
                         type_correct_q[btype] += 1
@@ -3727,7 +5655,7 @@ def run_setting(
                     type_filled_total[btype] += 1
                     type_filled_q[btype] += 1
                     et = _expected_type(p)
-                    if tok.kind == et:
+                    if _is_type_match(et, tok.kind):
                         type_matches += 1
                         type_correct_total[btype] += 1
                         type_correct_q[btype] += 1
@@ -3760,7 +5688,7 @@ def run_setting(
                     type_filled_total[btype] += 1
                     type_filled_q[btype] += 1
                     et = _expected_type(p)
-                    if tok.kind == et:
+                    if _is_type_match(et, tok.kind):
                         type_matches += 1
                         type_correct_total[btype] += 1
                         type_correct_q[btype] += 1
@@ -3776,8 +5704,8 @@ def run_setting(
                             if err <= 0.20:
                                 type_exact20_num[btype] += 1
             elif assignment_mode == "global_consistency_grounding" and expected_scalar:
-                # Global Consistency Grounding: stronger deterministic method.
-                filled_values, filled_mentions, _ = _run_global_consistency_grounding(
+                # Global Consistency Grounding: beam-search assignment with global penalties.
+                filled_values, filled_mentions, _diag = _run_global_consistency_grounding(
                     query, variant, expected_scalar
                 )
                 for p in expected_scalar:
@@ -3793,7 +5721,175 @@ def run_setting(
                     type_filled_total[btype] += 1
                     type_filled_q[btype] += 1
                     et = _expected_type(p)
-                    if tok.kind == et:
+                    if _is_type_match(et, tok.kind):
+                        type_matches += 1
+                        type_correct_total[btype] += 1
+                        type_correct_q[btype] += 1
+                    if schema_hit and tok.value is not None and _is_scalar(gold_params.get(p)):
+                        gold_val = float(gold_params[p])
+                        err = _rel_err(float(tok.value), gold_val)
+                        comparable_errs.append(err)
+                        if btype in type_names:
+                            type_exact5_den[btype] += 1
+                            type_exact20_den[btype] += 1
+                            if err <= 0.05:
+                                type_exact5_num[btype] += 1
+                            if err <= 0.20:
+                                type_exact20_num[btype] += 1
+            elif assignment_mode == "max_weight_matching" and expected_scalar:
+                # Maximum-weight bipartite matching (Hungarian algorithm / DP fallback).
+                filled_values, filled_mentions, _diag = _run_max_weight_matching_grounding(
+                    query, variant, expected_scalar
+                )
+                for p in expected_scalar:
+                    if p not in filled_values:
+                        continue
+                    m_ir = filled_mentions.get(p)
+                    tok = m_ir.tok if m_ir else None
+                    if tok is None:
+                        continue
+                    n_filled += 1
+                    filled[p] = filled_values[p]
+                    btype = _bucket_type(p)
+                    type_filled_total[btype] += 1
+                    type_filled_q[btype] += 1
+                    et = _expected_type(p)
+                    if _is_type_match(et, tok.kind):
+                        type_matches += 1
+                        type_correct_total[btype] += 1
+                        type_correct_q[btype] += 1
+                    if schema_hit and tok.value is not None and _is_scalar(gold_params.get(p)):
+                        gold_val = float(gold_params[p])
+                        err = _rel_err(float(tok.value), gold_val)
+                        comparable_errs.append(err)
+                        if btype in type_names:
+                            type_exact5_den[btype] += 1
+                            type_exact20_den[btype] += 1
+                            if err <= 0.05:
+                                type_exact5_num[btype] += 1
+                            if err <= 0.20:
+                                type_exact20_num[btype] += 1
+            elif assignment_mode in (
+                "global_compat_local",
+                "global_compat_pairwise",
+                "global_compat_full",
+            ) and expected_scalar:
+                # Global Compatibility Grounding (GCGP): beam search with pairwise terms.
+                _gcgp_ablation_map = {
+                    "global_compat_local": "local",
+                    "global_compat_pairwise": "pairwise",
+                    "global_compat_full": "full",
+                }
+                _gcgp_ablation = _gcgp_ablation_map[assignment_mode]
+                filled_values, filled_mentions, _diag = _run_global_compatibility_grounding(
+                    query, variant, expected_scalar, ablation_mode=_gcgp_ablation
+                )
+                for p in expected_scalar:
+                    if p not in filled_values:
+                        continue
+                    m_ir = filled_mentions.get(p)
+                    tok = m_ir.tok if m_ir else None
+                    if tok is None:
+                        continue
+                    n_filled += 1
+                    filled[p] = filled_values[p]
+                    btype = _bucket_type(p)
+                    type_filled_total[btype] += 1
+                    type_filled_q[btype] += 1
+                    et = _expected_type(p)
+                    if _is_type_match(et, tok.kind):
+                        type_matches += 1
+                        type_correct_total[btype] += 1
+                        type_correct_q[btype] += 1
+                    if schema_hit and tok.value is not None and _is_scalar(gold_params.get(p)):
+                        gold_val = float(gold_params[p])
+                        err = _rel_err(float(tok.value), gold_val)
+                        comparable_errs.append(err)
+                        if btype in type_names:
+                            type_exact5_den[btype] += 1
+                            type_exact20_den[btype] += 1
+                            if err <= 0.05:
+                                type_exact5_num[btype] += 1
+                            if err <= 0.20:
+                                type_exact20_num[btype] += 1
+            elif assignment_mode in (
+                "relation_aware_basic",
+                "relation_aware_ops",
+                "relation_aware_semantic",
+                "relation_aware_full",
+            ) and expected_scalar:
+                # Relation-aware greedy grounding.
+                _ral_ablation_map = {
+                    "relation_aware_basic": "basic",
+                    "relation_aware_ops": "ops",
+                    "relation_aware_semantic": "semantic",
+                    "relation_aware_full": "full",
+                }
+                _ral_ablation = _ral_ablation_map[assignment_mode]
+                from tools.relation_aware_linking import run_relation_aware_grounding
+                filled_values, filled_mentions, _diag = run_relation_aware_grounding(
+                    query, variant, expected_scalar, ablation_mode=_ral_ablation
+                )
+                for p in expected_scalar:
+                    if p not in filled_values:
+                        continue
+                    m_ir = filled_mentions.get(p)
+                    tok = m_ir.tok if m_ir else None
+                    if tok is None:
+                        continue
+                    n_filled += 1
+                    filled[p] = filled_values[p]
+                    btype = _bucket_type(p)
+                    type_filled_total[btype] += 1
+                    type_filled_q[btype] += 1
+                    et = _expected_type(p)
+                    if _is_type_match(et, tok.kind):
+                        type_matches += 1
+                        type_correct_total[btype] += 1
+                        type_correct_q[btype] += 1
+                    if schema_hit and tok.value is not None and _is_scalar(gold_params.get(p)):
+                        gold_val = float(gold_params[p])
+                        err = _rel_err(float(tok.value), gold_val)
+                        comparable_errs.append(err)
+                        if btype in type_names:
+                            type_exact5_den[btype] += 1
+                            type_exact20_den[btype] += 1
+                            if err <= 0.05:
+                                type_exact5_num[btype] += 1
+                            if err <= 0.20:
+                                type_exact20_num[btype] += 1
+            elif assignment_mode in (
+                "ambiguity_candidate_greedy",
+                "ambiguity_aware_beam",
+                "ambiguity_aware_abstain",
+                "ambiguity_aware_full",
+            ) and expected_scalar:
+                # Ambiguity-aware grounding (candidate-set + competition reasoning).
+                _aag_ablation_map = {
+                    "ambiguity_candidate_greedy": "candidate_greedy",
+                    "ambiguity_aware_beam": "ambiguity_beam",
+                    "ambiguity_aware_abstain": "ambiguity_abstain",
+                    "ambiguity_aware_full": "ambiguity_full",
+                }
+                _aag_mode = _aag_ablation_map[assignment_mode]
+                from tools.ambiguity_aware_grounding import run_ambiguity_aware_grounding
+                filled_values, filled_mentions, _diag = run_ambiguity_aware_grounding(
+                    query, variant, expected_scalar, ablation_mode=_aag_mode
+                )
+                for p in expected_scalar:
+                    if p not in filled_values:
+                        continue
+                    m_ir = filled_mentions.get(p)
+                    tok = m_ir.tok if m_ir else None
+                    if tok is None:
+                        continue
+                    n_filled += 1
+                    filled[p] = filled_values[p]
+                    btype = _bucket_type(p)
+                    type_filled_total[btype] += 1
+                    type_filled_q[btype] += 1
+                    et = _expected_type(p)
+                    if _is_type_match(et, tok.kind):
                         type_matches += 1
                         type_correct_total[btype] += 1
                         type_correct_q[btype] += 1
@@ -3830,7 +5926,7 @@ def run_setting(
                     type_filled_total[btype] += 1
                     type_filled_q[btype] += 1
                     et = _expected_type(p)
-                    if tok.kind == et:
+                    if _is_type_match(et, tok.kind):
                         type_matches += 1
                         type_correct_total[btype] += 1
                         type_correct_q[btype] += 1
@@ -3863,7 +5959,7 @@ def run_setting(
                     btype = _bucket_type(p)
                     type_filled_total[btype] += 1
                     type_filled_q[btype] += 1
-                    if tok.kind == et:
+                    if _is_type_match(et, tok.kind):
                         type_matches += 1
                         type_correct_total[btype] += 1
                         type_correct_q[btype] += 1
@@ -4106,6 +6202,26 @@ def run_single_setting(
         effective_baseline = f"{baseline_arg}_optimization_role_bottomup_beam_repair"
     elif assignment_mode == "optimization_role_entity_semantic_beam_repair":
         effective_baseline = f"{baseline_arg}_optimization_role_entity_semantic_beam_repair"
+    elif assignment_mode == "global_consistency_grounding":
+        effective_baseline = f"{baseline_arg}_global_consistency_grounding"
+    elif assignment_mode == "max_weight_matching":
+        effective_baseline = f"{baseline_arg}_max_weight_matching"
+    elif assignment_mode in ("global_compat_local", "global_compat_pairwise", "global_compat_full"):
+        effective_baseline = f"{baseline_arg}_{assignment_mode}"
+    elif assignment_mode in (
+        "relation_aware_basic",
+        "relation_aware_ops",
+        "relation_aware_semantic",
+        "relation_aware_full",
+    ):
+        effective_baseline = f"{baseline_arg}_{assignment_mode}"
+    elif assignment_mode in (
+        "ambiguity_candidate_greedy",
+        "ambiguity_aware_beam",
+        "ambiguity_aware_abstain",
+        "ambiguity_aware_full",
+    ):
+        effective_baseline = f"{baseline_arg}_{assignment_mode}"
 
     run_setting(
         variant=variant,
@@ -4145,6 +6261,12 @@ def main() -> None:
             "typed", "untyped", "constrained", "semantic_ir_repair",
             "optimization_role_repair", "optimization_role_relation_repair",
             "global_consistency_grounding",
+            "max_weight_matching",
+            "global_compat_local", "global_compat_pairwise", "global_compat_full",
+            "relation_aware_basic", "relation_aware_ops",
+            "relation_aware_semantic", "relation_aware_full",
+            "ambiguity_candidate_greedy", "ambiguity_aware_beam",
+            "ambiguity_aware_abstain", "ambiguity_aware_full",
             # Experimental/archived (not in default focused eval; use run_nlp4lp_focused_eval.py --experimental):
             "optimization_role_anchor_linking", "optimization_role_bottomup_beam_repair",
             "optimization_role_entity_semantic_beam_repair",
@@ -4209,9 +6331,6 @@ def main() -> None:
         effective_baseline = f"{args.baseline}_semantic_ir_repair"
     elif args.assignment_mode == "optimization_role_repair":
         effective_baseline = f"{args.baseline}_optimization_role_repair"
-
-    elif args.assignment_mode == "global_consistency_grounding":
-        effective_baseline = f"{args.baseline}_global_consistency_grounding"
     elif args.assignment_mode == "optimization_role_relation_repair":
         effective_baseline = f"{args.baseline}_optimization_role_relation_repair"
     elif args.assignment_mode == "optimization_role_anchor_linking":
@@ -4220,6 +6339,26 @@ def main() -> None:
         effective_baseline = f"{args.baseline}_optimization_role_bottomup_beam_repair"
     elif args.assignment_mode == "optimization_role_entity_semantic_beam_repair":
         effective_baseline = f"{args.baseline}_optimization_role_entity_semantic_beam_repair"
+    elif args.assignment_mode == "global_consistency_grounding":
+        effective_baseline = f"{args.baseline}_global_consistency_grounding"
+    elif args.assignment_mode == "max_weight_matching":
+        effective_baseline = f"{args.baseline}_max_weight_matching"
+    elif args.assignment_mode in ("global_compat_local", "global_compat_pairwise", "global_compat_full"):
+        effective_baseline = f"{args.baseline}_{args.assignment_mode}"
+    elif args.assignment_mode in (
+        "relation_aware_basic",
+        "relation_aware_ops",
+        "relation_aware_semantic",
+        "relation_aware_full",
+    ):
+        effective_baseline = f"{args.baseline}_{args.assignment_mode}"
+    elif args.assignment_mode in (
+        "ambiguity_candidate_greedy",
+        "ambiguity_aware_beam",
+        "ambiguity_aware_abstain",
+        "ambiguity_aware_full",
+    ):
+        effective_baseline = f"{args.baseline}_{args.assignment_mode}"
 
     out_dir = ROOT / "results" / "paper"
     run_setting(

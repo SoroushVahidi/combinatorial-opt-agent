@@ -1,0 +1,26 @@
+{
+  "config": {
+    "variant": "orig",
+    "baseline": "tfidf_optimization_role_repair",
+    "k": 1,
+    "random_control": false
+  },
+  "aggregate": {
+    "variant": "orig",
+    "baseline": "tfidf_optimization_role_repair",
+    "schema_R1": 0.9063444108761329,
+    "param_coverage": 0.8218017128893268,
+    "type_match": 0.2715936882855315,
+    "exact5_on_hits": 0.27723855760827615,
+    "exact20_on_hits": 0.3035743501412517,
+    "param_coverage_hits": 0.8817212232212241,
+    "param_coverage_miss": 0.24193548387096775,
+    "type_match_hits": 0.2844361471861475,
+    "type_match_miss": 0.14731182795698924,
+    "key_overlap": 0.918759890663214,
+    "key_overlap_hits": 0.9947619047619048,
+    "key_overlap_miss": 0.18325652841781875,
+    "instantiation_ready": 0.06646525679758308,
+    "n": 331
+  }
+}

@@ -37,6 +37,19 @@ FOCUSED_BASELINES_DEFAULT = [
     "tfidf_hierarchical_acceptance_rerank",
     "tfidf_optimization_role_repair",
     "tfidf_optimization_role_relation_repair",
+    "tfidf_global_consistency_grounding",
+    "tfidf_max_weight_matching",
+    "tfidf_global_compat_local",
+    "tfidf_global_compat_pairwise",
+    "tfidf_global_compat_full",
+    "tfidf_relation_aware_basic",
+    "tfidf_relation_aware_ops",
+    "tfidf_relation_aware_semantic",
+    "tfidf_relation_aware_full",
+    "tfidf_ambiguity_candidate_greedy",
+    "tfidf_ambiguity_aware_beam",
+    "tfidf_ambiguity_aware_abstain",
+    "tfidf_ambiguity_aware_full",
 ]
 
 BASELINE_ASSIGNMENT_DEFAULT = [
@@ -44,6 +57,19 @@ BASELINE_ASSIGNMENT_DEFAULT = [
     ("tfidf_hierarchical_acceptance_rerank", "typed"),
     ("tfidf", "optimization_role_repair"),
     ("tfidf", "optimization_role_relation_repair"),
+    ("tfidf", "global_consistency_grounding"),
+    ("tfidf", "max_weight_matching"),
+    ("tfidf", "global_compat_local"),
+    ("tfidf", "global_compat_pairwise"),
+    ("tfidf", "global_compat_full"),
+    ("tfidf", "relation_aware_basic"),
+    ("tfidf", "relation_aware_ops"),
+    ("tfidf", "relation_aware_semantic"),
+    ("tfidf", "relation_aware_full"),
+    ("tfidf", "ambiguity_candidate_greedy"),
+    ("tfidf", "ambiguity_aware_beam"),
+    ("tfidf", "ambiguity_aware_abstain"),
+    ("tfidf", "ambiguity_aware_full"),
 ]
 
 # Experimental/archived methods (only with --experimental).
@@ -100,6 +126,26 @@ def _effective_baseline(baseline_arg: str, assignment_mode: str) -> str:
         return f"{baseline_arg}_optimization_role_bottomup_beam_repair"
     if assignment_mode == "optimization_role_entity_semantic_beam_repair":
         return f"{baseline_arg}_optimization_role_entity_semantic_beam_repair"
+    if assignment_mode == "global_consistency_grounding":
+        return f"{baseline_arg}_global_consistency_grounding"
+    if assignment_mode == "max_weight_matching":
+        return f"{baseline_arg}_max_weight_matching"
+    if assignment_mode in ("global_compat_local", "global_compat_pairwise", "global_compat_full"):
+        return f"{baseline_arg}_{assignment_mode}"
+    if assignment_mode in (
+        "relation_aware_basic",
+        "relation_aware_ops",
+        "relation_aware_semantic",
+        "relation_aware_full",
+    ):
+        return f"{baseline_arg}_{assignment_mode}"
+    if assignment_mode in (
+        "ambiguity_candidate_greedy",
+        "ambiguity_aware_beam",
+        "ambiguity_aware_abstain",
+        "ambiguity_aware_full",
+    ):
+        return f"{baseline_arg}_{assignment_mode}"
     return f"{baseline_arg}_{assignment_mode}"
 
 

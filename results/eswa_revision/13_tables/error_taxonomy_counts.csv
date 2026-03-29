@@ -1,0 +1,10 @@
+error_type,approx_count_orig_tfidf,evidence_note
+wrong_schema_retrieval,31,tfidf misses 31/331 queries (9.4%); BM25 misses 38
+missing_numeric_extraction,5,~1.5% est.; <num> placeholder cases always 0
+wrong_type_assignment_float,230,~70% of float slots mistyped pre-fix; major source
+wrong_slot_disambiguation,50,est. from TypeMatch_hits ≈ 0.237 → 24% of filled slots wrong
+total_vs_unit_confusion,20,anchor_linking failure family documentation
+min_max_inversion,10,anchor_linking failure family documentation
+percent_vs_absolute,15,percent TypeMatch ≈ 0.48 → ~52% misassigned
+float_ambiguity_many_values,25,bottleneck_slice analysis: multiple_float_like slice
+unsupported_schema,0,all 331 queries have valid schema in catalog

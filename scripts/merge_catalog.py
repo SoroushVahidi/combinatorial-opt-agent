@@ -158,7 +158,7 @@ def load_raw_pyomo() -> list[dict]:
 
 def merge_catalog(existing: list[dict], new_problems: list[dict]) -> tuple[list[dict], int]:
     """Merge new problems into existing; skip if id already present."""
-    ids = {p["id"] for p in existing}
+    ids = {p.get("id") for p in existing if p.get("id")}
     merged = list(existing)
     added = 0
     for p in new_problems:

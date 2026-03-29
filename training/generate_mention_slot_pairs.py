@@ -1,13 +1,6 @@
 """
 Generate (mention_context, slot_name, label) training pairs from NLP4LP eval + HF gold.
 Writes JSONL for train_mention_slot_scorer.py. Run from repo root.
-
-Augmentation strategy (Bottleneck 3 fix):
-- Written-word number paraphrases: for every extracted digit mention (e.g. "2 warehouses"),
-  also emit a variant where the digit is replaced by the English word ("two warehouses").
-  This teaches the scorer to recognise mentions that spell out numeric values.
-- Type-correct negatives: add extra label=0 pairs for numerically close but
-  type-incompatible mentions, sharpening the type-matching signal.
 """
 from __future__ import annotations
 
@@ -19,7 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 NUM_RE = re.compile(r"^[$]?\d[\d,]*(?:\.\d+)?%?$")
 
-# ── Digit → word lookup (int values 0-19 and round tens) ─────────────────────
+# Digit → word lookup (int values 0-19 and round tens)
 _NUM_TO_WORD: dict[int, str] = {
     0: "zero", 1: "one", 2: "two", 3: "three", 4: "four",
     5: "five", 6: "six", 7: "seven", 8: "eight", 9: "nine",
@@ -32,19 +25,7 @@ _NUM_TO_WORD: dict[int, str] = {
 
 
 def _int_to_word(n: int) -> str | None:
-    """Return English spelling of integer n, or None if not in the lookup.
-
-    Covers 0–19, round tens (20–90), 100, 1000, and two-word compounds 21–99.
-
-    Examples::
-
-        >>> _int_to_word(2)
-        'two'
-        >>> _int_to_word(25)
-        'twenty-five'
-        >>> _int_to_word(100)
-        'hundred'
-    """
+    """Return English spelling of integer n, or None if not in the lookup."""
     if n in _NUM_TO_WORD:
         return _NUM_TO_WORD[n]
     if 20 < n < 100:
@@ -57,12 +38,7 @@ def _int_to_word(n: int) -> str | None:
 
 
 def _word_paraphrase(context: str, digit_str: str, word: str) -> str:
-    """Replace the first whole-word occurrence of digit_str with word in context.
-
-    Uses a word-boundary regex so that e.g. replacing "2" in "2nd of 2 items"
-    produces "two of 2 items" (only the first standalone token is replaced),
-    rather than "twond of 2 items".
-    """
+    """Replace the first whole-word occurrence of digit_str with word in context."""
     pattern = re.compile(r"(?<!\w)" + re.escape(digit_str) + r"(?!\w)")
     return pattern.sub(word, context, count=1)
 
@@ -99,12 +75,7 @@ def _augment_with_word_paraphrases(
     scalar_slots: list[tuple[str, float]],
     item_idx: int,
 ) -> list[tuple[dict, int]]:
-    """For each digit mention in query that matches an int value, add a written-word variant.
-
-    This produces paraphrased pairs such as:
-      ("two facilities", "numFacilities", label=1)
-    for an original pair ("2 facilities", "numFacilities", label=1).
-    """
+    """For each digit mention in query that matches an int value, add a written-word variant."""
     toks = query.split()
     extra: list[tuple[dict, int]] = []
     for i, w in enumerate(toks):
@@ -113,13 +84,12 @@ def _augment_with_word_paraphrases(
         val = _parse_value(w)
         if val is None:
             continue
-        # Only paraphrase small integers that have a word form.
         try:
             int_val = int(val)
         except (OverflowError, ValueError):
             continue
         if float(int_val) != val:
-            continue  # skip non-integer values
+            continue
         word = _int_to_word(int_val)
         if word is None:
             continue
@@ -218,7 +188,6 @@ def main() -> None:
                 label = 1 if rel_ok else 0
                 pairs_with_idx.append(({"sentence1": ctx, "sentence2": slot_name, "label": label}, idx))
 
-        # Written-word number paraphrase augmentation.
         if not args.no_augment:
             extra = _augment_with_word_paraphrases(pairs_with_idx, query, scalar_slots, idx)
             pairs_with_idx.extend(extra)

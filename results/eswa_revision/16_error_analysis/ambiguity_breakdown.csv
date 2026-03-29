@@ -1,0 +1,4 @@
+ambiguity_bucket,n_mentions_range,n,Coverage_mean,TypeMatch_mean,InstReady_rate,schema_hit_rate
+low,1-2,5,0.1000,0.2000,0.0000,0.8000
+medium,3-5,70,0.8371,0.6897,0.4429,0.9857
+high,6-21,256,0.8862,0.7790,0.5586,0.8906

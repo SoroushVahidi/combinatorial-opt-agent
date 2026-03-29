@@ -123,8 +123,8 @@ def main() -> None:
     p.add_argument("--num", type=int, default=500, help="Num eval instances when regenerating")
     p.add_argument("--seed", type=int, default=999, help="RNG seed for eval generation (deterministic)")
     p.add_argument("--k", type=int, default=10, help="Top-k for MRR/nDCG/Coverage")
-    p.add_argument("--baselines", type=str, nargs="+", default=["bm25", "tfidf", "sbert"],
-                   help="Baseline names (default: bm25 tfidf sbert)")
+    p.add_argument("--baselines", type=str, nargs="+", default=["bm25", "tfidf", "sbert", "e5", "bge"],
+                   help="Baseline names (default: bm25 tfidf sbert e5 bge)")
     p.add_argument("--results-dir", type=Path, default=None, help="Output dir (default: results/)")
     p.add_argument("--dataset-name", type=str, default=None,
                    help="Short name for dataset (e.g. test_normal, test_masked, resocratic, nl4opt). "
@@ -185,7 +185,7 @@ def main() -> None:
 
     k = max(args.k, 1)
     from retrieval.baselines import get_baseline
-    from training.metrics import compute_metrics
+    from training.metrics import compute_metrics, diagnose_failures
     from training.bootstrap import bootstrap_ci
 
     config = {
@@ -200,6 +200,7 @@ def main() -> None:
     }
     all_metrics: dict[str, dict[str, float]] = {}
     per_baseline_items: dict[str, list[tuple[list[str], str]]] = {}
+    per_baseline_instances: dict[str, list[tuple[str, list[str], str]]] = {}
     baseline_times: dict[str, float] = {}
 
     for bl_name in args.baselines:
@@ -212,14 +213,17 @@ def main() -> None:
             print(f"Skipping {bl_name!r}: {e}", flush=True)
             continue
         results_for_metrics: list[tuple[list[str], str]] = []
+        instances_for_diagnosis: list[tuple[str, list[str], str]] = []
         for query, expected_id in eval_pairs:
             ranked = baseline.rank(query, top_k=k)
             ranked_names = [id_to_name.get(pid, "") for pid, _ in ranked]
             expected_name = id_to_name.get(expected_id, "")
             results_for_metrics.append((ranked_names, expected_name))
+            instances_for_diagnosis.append((query, ranked_names, expected_name))
         metrics = compute_metrics(results_for_metrics, k=k)
         all_metrics[bl_name] = metrics
         per_baseline_items[bl_name] = results_for_metrics
+        per_baseline_instances[bl_name] = instances_for_diagnosis
         baseline_times[bl_name] = time.time() - start_time
 
     # Decide dataset name for file prefixes
@@ -236,7 +240,15 @@ def main() -> None:
     out_csv = results_dir / f"{out_name}.csv"
 
     with open(out_json, "w", encoding="utf-8") as f:
-        json.dump({"config": config, "baselines": all_metrics}, f, indent=2)
+        failure_modes: dict[str, dict] = {
+            bl_name: diagnose_failures(per_baseline_instances[bl_name], k=k)
+            for bl_name in per_baseline_instances
+        }
+        json.dump(
+            {"config": config, "baselines": all_metrics, "failure_modes": failure_modes},
+            f,
+            indent=2,
+        )
 
     metric_keys = ["P@1", "P@5", f"MRR@{k}", f"nDCG@{k}", f"Coverage@{k}"]
     with open(out_csv, "w", newline="", encoding="utf-8") as f:

@@ -231,6 +231,18 @@ results/
 
 # Generated per-example JSONL audit slices (regenerable from src/learning scripts)
 artifacts/learning_audit/*.jsonl
+# Exclude specific artifacts subdirs (not the root, to allow negation)
+artifacts/stage*/
+artifacts/learning_runs/
+artifacts/training_results/
+artifacts/paper/
+artifacts/experiments/
+logs/
+comparison_reports/
+results/*
+# Exception: ESWA revision outputs are committed (reproducibility artifacts)
+!results/eswa_revision/
+!results/eswa_revision/**
 
 # Gradio / web UI runtime state
 .gradio/
@@ -242,3 +254,12 @@ train_retrieval_*.err
 training_latest_status.txt
 
 data/external/resocratic
+
+# Local audit and cleanup outputs (do not commit)
+learning_dataset_access_audit.csv
+learning_dataset_access_audit.md
+nlp4lp_manuscript_vs_current_repo_audit.csv
+nlp4lp_manuscript_vs_current_repo_audit.md
+repo_cleanup_archived_paths.txt
+repo_cleanup_deleted_paths.txt
+repo_cleanup_report.md

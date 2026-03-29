@@ -1,0 +1,7 @@
+method,retrieval,variant,Schema_R1_live,Coverage,TypeMatch,InstReady
+bm25_typed_greedy,bm25,orig,0.8822,0.8133,0.2251,0.0755
+tfidf_typed_greedy,tfidf,orig,0.9094,0.8222,0.2267,0.0725
+oracle_typed_greedy,oracle,orig,1.0,0.8695,0.2475,0.0816
+tfidf_typed_greedy,tfidf,noisy,0.9033,0.71,0.0,0.0
+tfidf_typed_greedy,tfidf,short,0.7795,0.0333,0.0272,0.006
+oracle_typed_greedy,oracle,short,1.0,0.0373,0.0287,0.003

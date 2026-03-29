@@ -98,6 +98,11 @@ def main():
                    help="Evaluate only on this split (requires --splits). Use test for final metrics.")
     p.add_argument("--results-dir", type=Path, default=None, help="Write metrics JSON here (default: results/)")
     p.add_argument("--top-k", type=int, default=10, help="Top-k for MRR/nDCG/Coverage (default 10)")
+    p.add_argument(
+        "--no-short-query-expansion",
+        action="store_true",
+        help="Disable short-query expansion heuristic when calling retrieval.search.search()",
+    )
     args = p.parse_args()
 
     catalog = _load_catalog()
@@ -152,7 +157,7 @@ def main():
 
     model = SentenceTransformer(_default_model_path())
     embeddings = build_index(catalog, model)
-    k = max(args.top_k, 10)
+    k = max(args.top_k, 1)
 
     results_for_metrics: list[tuple[list[str], str]] = []
     for i, (query, expected_id) in enumerate(eval_pairs):
@@ -164,6 +169,7 @@ def main():
             model=model,
             embeddings=embeddings,
             top_k=k,
+            expand_short_queries=not args.no_short_query_expansion,
         )
         top_names = [p.get("name", "") for p, _ in search_results]
         expected_name = id_to_name.get(expected_id, "")

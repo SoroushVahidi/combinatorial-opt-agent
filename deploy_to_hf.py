@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parent
 token = os.environ.get("HF_TOKEN") or os.environ.get("HUGGING_FACE_HUB_TOKEN")
 
 def main():
+    global token  # may be reassigned below from the cached huggingface-cli token
     if not token:
         # Try cached token from huggingface-cli
         cache = Path.home() / ".cache" / "huggingface" / "token"
@@ -21,7 +22,6 @@ def main():
             token_str = cache.read_text().strip()
             if token_str:
                 os.environ["HF_TOKEN"] = token_str
-                global token
                 token = token_str
     if not token:
         print("Set HF_TOKEN or run: huggingface-cli login", file=sys.stderr)

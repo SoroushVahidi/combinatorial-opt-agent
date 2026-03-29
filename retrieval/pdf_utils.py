@@ -15,14 +15,7 @@ def extract_text_from_pdf(file_path: str) -> str:
     Pages are joined with a single space and runs of whitespace are collapsed
     so the result is suitable as a search query.  Returns an empty string when
     *file_path* is falsy.  Returns a descriptive error string (starting with
-    ``"(Could not extract PDF text:"`` ) if the file cannot be parsed.
-
-    Parameters
-    ----------
-    file_path:
-        Absolute or relative path to the PDF file on disk.  This is the
-        value provided by the Gradio ``gr.File`` component when
-        ``type="filepath"`` is used.
+    ``\"(Could not extract PDF text:\"``) if the file cannot be parsed.
     """
     if not file_path:
         return ""
@@ -38,3 +31,4 @@ def extract_text_from_pdf(file_path: str) -> str:
         return re.sub(r"\s+", " ", combined).strip()
     except Exception as exc:
         return f"(Could not extract PDF text: {exc})"
+

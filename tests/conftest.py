@@ -23,6 +23,16 @@ def network_available() -> bool:
     return _is_network_available()
 
 
+def pytest_collection_modifyitems(config, items):
+    """Automatically skip tests marked ``requires_network`` when offline."""
+    if _is_network_available():
+        return  # network is up — run everything
+    skip_offline = pytest.mark.skip(reason="network unavailable (HuggingFace unreachable)")
+    for item in items:
+        if item.get_closest_marker("requires_network"):
+            item.add_marker(skip_offline)
+
+
 def tiny_catalog() -> list[dict]:
     """Minimal three-problem catalog for fast unit tests."""
     return [
@@ -45,3 +55,4 @@ def tiny_catalog() -> list[dict]:
             "description": "Minimum vertices to cover every edge.",
         },
     ]
+

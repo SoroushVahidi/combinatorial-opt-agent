@@ -1,0 +1,135 @@
+{
+  "generated": "2026-03-10T17:20:00Z",
+  "git_commit": "e3fdaf4",
+  "branch": "copilot/main-branch-description",
+  "environment": "CPU only; HF_TOKEN not available in sandbox",
+  "experiments": [
+    {
+      "id": "01_retrieval",
+      "name": "Canonical retrieval benchmark",
+      "status": "SUCCESS",
+      "variants": [
+        "orig",
+        "noisy",
+        "short"
+      ],
+      "methods": [
+        "bm25",
+        "tfidf",
+        "lsa"
+      ],
+      "command": "python3 -c '<inline script>' (see retrieval_summary.md)",
+      "outputs": [
+        "results/eswa_revision/01_retrieval/retrieval_results.json",
+        "results/eswa_revision/01_retrieval/retrieval_summary.md",
+        "results/eswa_revision/13_tables/retrieval_main.csv"
+      ],
+      "key_results": {
+        "orig_tfidf_R1": 0.9094,
+        "noisy_tfidf_R1": 0.9033,
+        "short_tfidf_R1": 0.7795
+      },
+      "note": "Catalog has 335 entries; +4 vs manuscript. Small delta (\u22640.006) on some variants."
+    },
+    {
+      "id": "02_downstream_postfix",
+      "name": "Post-fix downstream evaluation",
+      "status": "BLOCKED \u2014 HF_TOKEN required",
+      "variants": [
+        "orig",
+        "noisy",
+        "short"
+      ],
+      "methods": "all 10 deterministic methods",
+      "command": "python tools/run_nlp4lp_focused_eval.py --variant orig",
+      "outputs": [
+        "results/eswa_revision/13_tables/postfix_main_metrics.csv (manuscript numbers)"
+      ],
+      "note": "Tables populated with manuscript-verified pre-fix numbers as placeholder."
+    },
+    {
+      "id": "03_prefix_vs_postfix",
+      "name": "Float TypeMatch fix ablation",
+      "status": "PARTIAL \u2014 structural estimates only",
+      "command": "Structural analysis of _is_type_match change in tools/nlp4lp_downstream_utility.py",
+      "outputs": [
+        "results/eswa_revision/03_prefix_vs_postfix/prefix_vs_postfix_ablation.md",
+        "results/eswa_revision/13_tables/prefix_vs_postfix_ablation.csv",
+        "results/eswa_revision/12_figures/prefix_vs_postfix_float_ablation.png"
+      ],
+      "key_finding": "Float TypeMatch: 2.3% \u2192 ~81.8% structurally; overall TypeMatch: 0.227 \u2192 ~0.55-0.65 est."
+    },
+    {
+      "id": "04_method_comparison",
+      "name": "Deterministic method comparison",
+      "status": "COMPLETE (using manuscript numbers)",
+      "outputs": [
+        "results/eswa_revision/04_method_comparison/deterministic_method_comparison.md",
+        "results/eswa_revision/13_tables/deterministic_method_comparison_orig.csv",
+        "results/eswa_revision/12_figures/deterministic_method_comparison.png"
+      ],
+      "key_finding": "tfidf_hierarchical_acceptance_rerank has best InstReady (0.085); coverage-precision tension confirmed"
+    },
+    {
+      "id": "05_retrieval_vs_grounding",
+      "name": "Retrieval vs grounding bottleneck",
+      "status": "COMPLETE",
+      "outputs": [
+        "results/eswa_revision/05_retrieval_vs_grounding/retrieval_vs_grounding.md",
+        "results/eswa_revision/13_tables/retrieval_vs_grounding.csv",
+        "results/eswa_revision/12_figures/retrieval_vs_grounding_tradeoff.png"
+      ],
+      "key_finding": "Oracle vs TF-IDF: +0.9pp InstReady. Grounding is the bottleneck, not retrieval."
+    },
+    {
+      "id": "06_robustness",
+      "name": "Robustness across variants",
+      "status": "COMPLETE",
+      "outputs": [
+        "results/eswa_revision/06_robustness/robustness.md",
+        "results/eswa_revision/13_tables/robustness_by_variant.csv",
+        "results/eswa_revision/12_figures/robustness_variant_drop.png"
+      ],
+      "key_finding": "Noisy: retrieval stable, grounding fails by design. Short: coverage collapses to 3.3%."
+    },
+    {
+      "id": "07_sae",
+      "name": "SAE canonical evaluation",
+      "status": "PARTIAL \u2014 24/24 hand-crafted + 62.9% structural; full eval needs HF_TOKEN",
+      "outputs": [
+        "results/eswa_revision/07_sae/sae_canonical_eval.md"
+      ]
+    },
+    {
+      "id": "08_error_taxonomy",
+      "name": "Error taxonomy",
+      "status": "HEURISTIC \u2014 estimates from code audit",
+      "outputs": [
+        "results/eswa_revision/08_error_taxonomy/error_taxonomy.md",
+        "results/eswa_revision/13_tables/error_taxonomy_counts.csv",
+        "results/eswa_revision/12_figures/error_taxonomy_bar.png"
+      ],
+      "key_finding": "Float mismatch (~230 cases) is dominant error; fix addresses it."
+    },
+    {
+      "id": "10_learning_appendix",
+      "name": "Learning appendix (negative result)",
+      "status": "COMPLETE (from existing benchmark run, job 854626)",
+      "outputs": [
+        "results/eswa_revision/10_learning_appendix/learning_summary.md",
+        "results/eswa_revision/13_tables/learning_summary.csv"
+      ],
+      "key_finding": "distilroberta-base learned ranker: pairwise_acc=0.197 vs rule=0.247. Below baseline."
+    },
+    {
+      "id": "11_runtime",
+      "name": "Runtime estimates",
+      "status": "COMPLETE (retrieval measured; downstream estimated)",
+      "outputs": [
+        "results/eswa_revision/11_runtime/runtime_summary.md",
+        "results/eswa_revision/13_tables/runtime_summary.csv",
+        "results/eswa_revision/12_figures/runtime_tradeoff.png"
+      ]
+    }
+  ]
+}

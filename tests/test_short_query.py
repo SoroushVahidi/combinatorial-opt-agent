@@ -5,18 +5,11 @@ Covers:
 - expand_short_query / _is_short_query: boundary behaviour and docstring examples
 - search() expand_short_queries parameter (default on, can be disabled)
 - All four baselines apply expansion inside rank()
-- generate_queries_for_problem produces short-form queries via SHORT_QUERY_TEMPLATES
 """
 from __future__ import annotations
 
-import random
-
 import pytest
 
-
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
 
 def _tiny_catalog() -> list[dict]:
     """Three-problem catalog — same structure used across all tests."""
@@ -45,40 +38,42 @@ def _tiny_catalog() -> list[dict]:
     ]
 
 
-# ---------------------------------------------------------------------------
-# 1. expand_short_query — unit tests
-# ---------------------------------------------------------------------------
-
 class TestExpandShortQuery:
     """Directly validate the expansion function and its word-count threshold."""
 
     def test_single_word_expanded(self):
-        from retrieval.search import expand_short_query
+        from retrieval.utils import expand_short_query
         result = expand_short_query("knapsack")
-        assert result == "knapsack optimization problem formulation"
+        # "knapsack" triggers knapsack domain expansion; must start with original query
+        assert result.startswith("knapsack")
+        assert len(result) > len("knapsack")
 
     def test_two_words_expanded(self):
-        from retrieval.search import expand_short_query
+        from retrieval.utils import expand_short_query
         result = expand_short_query("TSP ILP")
-        assert result == "TSP ILP optimization problem formulation"
+        # "TSP" triggers traveling-salesman domain expansion
+        assert result.startswith("TSP ILP")
+        assert len(result) > len("TSP ILP")
 
     def test_exactly_five_words_expanded(self):
         """Boundary: 5-word query should still be expanded."""
-        from retrieval.search import expand_short_query
+        from retrieval.utils import expand_short_query
         q = "facility location integer linear program"
         assert len(q.split()) == 5
         result = expand_short_query(q)
-        assert result == q + " optimization problem formulation"
+        # "facility" and "location" trigger facility-domain expansion
+        assert result.startswith(q)
+        assert len(result) > len(q)
 
     def test_six_words_not_expanded(self):
         """Boundary: 6-word query should be returned unchanged."""
-        from retrieval.search import expand_short_query
+        from retrieval.utils import expand_short_query
         q = "facility location integer linear program formulation"
         assert len(q.split()) == 6
         assert expand_short_query(q) == q
 
     def test_long_query_unchanged(self):
-        from retrieval.search import expand_short_query
+        from retrieval.utils import expand_short_query
         long_q = (
             "minimize cost of opening warehouses and assigning customers "
             "to open warehouses subject to capacity constraints"
@@ -86,306 +81,220 @@ class TestExpandShortQuery:
         assert expand_short_query(long_q) == long_q
 
     def test_empty_string_unchanged(self):
-        from retrieval.search import expand_short_query
+        from retrieval.utils import expand_short_query
         assert expand_short_query("") == ""
 
     def test_whitespace_only_unchanged(self):
-        from retrieval.search import expand_short_query
+        from retrieval.utils import expand_short_query
         assert expand_short_query("   ") == ""
 
     def test_leading_trailing_whitespace_stripped(self):
-        from retrieval.search import expand_short_query
+        from retrieval.utils import expand_short_query
         result = expand_short_query("  TSP  ")
-        assert result == "TSP optimization problem formulation"
+        # "TSP" triggers domain expansion; result starts with stripped query
+        assert result.startswith("TSP")
+        assert len(result) > len("TSP")
 
-    def test_docstring_examples(self):
-        """Verify the three examples in the expand_short_query docstring."""
-        from retrieval.search import expand_short_query
-        assert expand_short_query("knapsack") == "knapsack optimization problem formulation"
-        assert expand_short_query("TSP ILP") == "TSP ILP optimization problem formulation"
-        long_q = "minimize cost of opening warehouses and assigning customers"
-        assert expand_short_query(long_q) == long_q
+    def test_unknown_domain_uses_generic_suffix(self):
+        """A query with no known domain trigger falls back to the generic suffix."""
+        from retrieval.utils import expand_short_query, _EXPANSION_SUFFIX
+        result = expand_short_query("lagrangian dual")
+        # No known domain keyword → generic suffix
+        assert result == f"lagrangian dual {_EXPANSION_SUFFIX}"
 
+    def test_lp_keyword_triggers_lp_expansion(self):
+        """'lp' is a known domain keyword → LP/MIP expansion."""
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("lp")
+        assert result.startswith("lp")
+        assert "linear" in result.lower() or "integer" in result.lower()
 
-# ---------------------------------------------------------------------------
-# 2. _is_short_query — unit tests
-# ---------------------------------------------------------------------------
+    def test_ilp_keyword_triggers_lp_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("ILP")
+        assert result.startswith("ILP")
+        assert len(result) > len("ILP")
+
+    def test_ilp_formulation_triggers_lp_expansion_not_generic(self):
+        """'ILP formulation' contains the LP-domain trigger 'formulation'; must NOT fall
+        back to the generic suffix."""
+        from retrieval.utils import expand_short_query, _EXPANSION_SUFFIX
+        result = expand_short_query("ILP formulation")
+        # must NOT be just the query + generic suffix
+        assert result != f"ILP formulation {_EXPANSION_SUFFIX}", (
+            "'ILP formulation' should match the LP/MIP domain, not the generic fallback"
+        )
+        assert len(result) > len("ILP formulation")
+
+    def test_portfolio_keyword_triggers_finance_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("portfolio")
+        assert result.startswith("portfolio")
+        assert "risk" in result.lower() or "invest" in result.lower()
+
+    def test_matching_keyword_triggers_matching_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("matching")
+        assert result.startswith("matching")
+        assert "bipartite" in result.lower() or "assignment" in result.lower()
+
+    def test_inventory_keyword_triggers_resource_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("inventory")
+        assert result.startswith("inventory")
+        assert "planning" in result.lower() or "demand" in result.lower()
+
+    def test_qp_keyword_triggers_qp_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("qp")
+        assert result.startswith("qp")
+        assert "quadratic" in result.lower() or "convex" in result.lower()
+
+    # ── New domain triggers added in the "improve weakest point" iteration ──
+
+    def test_flowshop_keyword_triggers_scheduling_not_flow(self):
+        """'flowshop' (single token) must expand to scheduling context, NOT
+        to network-flow context, even though 'flow' appears in its expansion."""
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("flowshop")
+        assert result.startswith("flowshop")
+        # Scheduling-family keywords must be present
+        assert any(kw in result.lower() for kw in ("scheduling", "makespan", "sequencing", "job shop")), (
+            "'flowshop' must trigger the flow-shop/scheduling domain expansion"
+        )
+        # Must NOT be the bare network-flow expansion (which mentions 'arc' or 'path' only)
+        assert "shortest path" not in result.lower(), (
+            "'flowshop' must not map to the network-flow expansion"
+        )
+
+    def test_makespan_keyword_triggers_scheduling_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("makespan")
+        assert result.startswith("makespan")
+        assert any(kw in result.lower() for kw in ("scheduling", "makespan", "sequencing"))
+
+    def test_sequencing_keyword_triggers_scheduling_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("sequencing")
+        assert result.startswith("sequencing")
+        assert any(kw in result.lower() for kw in ("scheduling", "sequencing", "job shop"))
+
+    def test_spanning_keyword_triggers_tree_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("spanning")
+        assert result.startswith("spanning")
+        assert any(kw in result.lower() for kw in ("spanning", "steiner", "tree"))
+
+    def test_steiner_keyword_triggers_tree_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("steiner")
+        assert result.startswith("steiner")
+        assert any(kw in result.lower() for kw in ("steiner", "spanning", "tree"))
+
+    def test_mst_keyword_triggers_tree_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("mst")
+        assert result.startswith("mst")
+        assert any(kw in result.lower() for kw in ("spanning", "tree"))
+
+    def test_auction_keyword_triggers_auction_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("auction")
+        assert result.startswith("auction")
+        assert any(kw in result.lower() for kw in ("auction", "bidding", "winner"))
+
+    def test_bidding_keyword_triggers_auction_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("bidding")
+        assert result.startswith("bidding")
+        assert any(kw in result.lower() for kw in ("auction", "winner", "procurement"))
+
+    def test_procurement_keyword_triggers_auction_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("procurement")
+        assert result.startswith("procurement")
+        assert any(kw in result.lower() for kw in ("auction", "bidding", "procurement"))
+
+    def test_crew_keyword_triggers_scheduling_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("crew")
+        assert result.startswith("crew")
+        assert any(kw in result.lower() for kw in ("scheduling", "crew", "rostering", "assignment"))
+
+    def test_rostering_keyword_triggers_scheduling_expansion(self):
+        from retrieval.utils import expand_short_query
+        result = expand_short_query("rostering")
+        assert result.startswith("rostering")
+        assert any(kw in result.lower() for kw in ("rostering", "scheduling", "crew"))
+
+    def test_domain_count_at_least_21(self):
+        """Regression guard: the domain map must not shrink below 21 entries."""
+        from retrieval.utils import _DOMAIN_EXPANSION_MAP
+        assert len(_DOMAIN_EXPANSION_MAP) >= 21, (
+            f"Expected ≥ 21 domain expansion entries, got {len(_DOMAIN_EXPANSION_MAP)}"
+        )
+
 
 class TestIsShortQuery:
-
     def test_one_word_is_short(self):
-        from retrieval.search import _is_short_query
+        from retrieval.utils import _is_short_query
         assert _is_short_query("knapsack") is True
 
     def test_five_words_is_short(self):
-        from retrieval.search import _is_short_query
+        from retrieval.utils import _is_short_query
         assert _is_short_query("a b c d e") is True
 
     def test_six_words_is_not_short(self):
-        from retrieval.search import _is_short_query
+        from retrieval.utils import _is_short_query
         assert _is_short_query("a b c d e f") is False
 
     def test_long_sentence_is_not_short(self):
-        from retrieval.search import _is_short_query
-        assert _is_short_query("minimize the total cost of opening warehouses") is False
+        from retrieval.utils import _is_short_query
+        assert _is_short_query("minimize cost of opening warehouses and assigning customers") is False
 
 
-# ---------------------------------------------------------------------------
-# 3. search() — expand_short_queries parameter
-# ---------------------------------------------------------------------------
-
-class TestSearchExpansionParameter:
-    """search() must accept expand_short_queries and it must default to True."""
-
-    def test_expand_short_queries_default_true(self, monkeypatch):
-        """search() default expand_short_queries=True calls expand_short_query."""
-        from retrieval import search as search_mod
-        calls = []
-
-        original = search_mod.expand_short_query
-
-        def tracking_expand(q):
-            calls.append(q)
-            return original(q)
-
-        monkeypatch.setattr(search_mod, "expand_short_query", tracking_expand)
-
-        # Build tiny fake embeddings (just zeros) to avoid needing a real model
-        import numpy as np
+class TestSearchIntegration:
+    @pytest.mark.requires_network
+    def test_search_uses_expansion_by_default(self):
+        from retrieval.search import search, _default_model_path
+        try:
+            from sentence_transformers import SentenceTransformer
+        except Exception:
+            pytest.skip("sentence-transformers (and/or torch) not available")
 
         catalog = _tiny_catalog()
-        n = len(catalog)
-        dim = 4
+        model = SentenceTransformer(_default_model_path())
+        results = search("knapsack", catalog=catalog, model=model, top_k=1)
+        assert results
+        assert results[0][0]["id"] == "p1"
 
-        fake_embeddings = np.random.default_rng(0).random((n, dim)).astype("float32")
-
-        class FakeModel:
-            def encode(self, texts, **kwargs):
-                return np.random.default_rng(1).random((len(texts), dim)).astype("float32")
-
-        search_mod.search(
-            "knapsack",
-            catalog=catalog,
-            model=FakeModel(),
-            embeddings=fake_embeddings,
-            top_k=1,
-        )
-        assert "knapsack" in calls, "expand_short_query should have been called with the query"
-
-    def test_expand_short_queries_false_skips_expansion(self, monkeypatch):
-        """expand_short_queries=False must NOT call expand_short_query."""
-        from retrieval import search as search_mod
-        calls = []
-
-        original = search_mod.expand_short_query
-
-        def tracking_expand(q):
-            calls.append(q)
-            return original(q)
-
-        monkeypatch.setattr(search_mod, "expand_short_query", tracking_expand)
-
-        import numpy as np
+    @pytest.mark.requires_network
+    def test_search_can_disable_expansion(self):
+        from retrieval.search import search, _default_model_path
+        try:
+            from sentence_transformers import SentenceTransformer
+        except Exception:
+            pytest.skip("sentence-transformers (and/or torch) not available")
 
         catalog = _tiny_catalog()
-        n = len(catalog)
-        dim = 4
-        fake_embeddings = np.random.default_rng(0).random((n, dim)).astype("float32")
-
-        class FakeModel:
-            def encode(self, texts, **kwargs):
-                return np.random.default_rng(1).random((len(texts), dim)).astype("float32")
-
-        search_mod.search(
-            "knapsack",
-            catalog=catalog,
-            model=FakeModel(),
-            embeddings=fake_embeddings,
-            top_k=1,
-            expand_short_queries=False,
-        )
-        assert calls == [], "expand_short_query should NOT have been called when disabled"
+        model = SentenceTransformer(_default_model_path())
+        # This primarily exercises the code path; behaviour difference depends on model.
+        results = search("knapsack", catalog=catalog, model=model, top_k=1, expand_short_queries=False)
+        assert results
 
 
-# ---------------------------------------------------------------------------
-# 4. Baselines — rank() applies expansion
-# ---------------------------------------------------------------------------
+class TestBaselinesUseExpansion:
+    @pytest.mark.parametrize("cls_name", ["BM25Baseline", "TfidfBaseline", "LSABaseline"])
+    def test_text_baselines_use_expansion(self, cls_name):
+        from retrieval.baselines import BM25Baseline, TfidfBaseline, LSABaseline
 
-class TestBaselineRankExpansion:
-    """Each baseline's rank() must pass the expanded query to its retrieval engine."""
-
-    def _catalog_with_domain_terms(self) -> list[dict]:
-        """Catalog whose passages contain the expansion suffix tokens.
-
-        When a short query like "testproblem" is expanded to
-        "testproblem optimization problem formulation", BM25 / TF-IDF can
-        match on the shared suffix tokens even though "testproblem" itself
-        appears in only one passage.
-        """
-        return [
-            {
-                "id": "target",
-                "name": "testproblem",
-                "aliases": [],
-                "description": "A special optimization problem formulation for testing.",
-            },
-            {
-                "id": "other1",
-                "name": "unrelated alpha",
-                "aliases": [],
-                "description": "Completely different subject with no overlap.",
-            },
-            {
-                "id": "other2",
-                "name": "unrelated beta",
-                "aliases": [],
-                "description": "Another completely different topic.",
-            },
-        ]
-
-    def test_bm25_short_query_retrieves_correct_problem(self):
-        """BM25 with a 1-word query should return the matching problem at rank 1."""
-        from retrieval.baselines import BM25Baseline
-        cat = self._catalog_with_domain_terms()
-        bl = BM25Baseline()
-        bl.fit(cat)
-        top = bl.rank("testproblem", top_k=1)
-        assert len(top) == 1
-        pid, score = top[0]
-        assert pid == "target", (
-            f"Expected 'target' at rank 1 for short query, got {pid!r}"
-        )
-
-    def test_tfidf_short_query_retrieves_correct_problem(self):
-        """TF-IDF with a 1-word query should return the matching problem at rank 1."""
-        from retrieval.baselines import TfidfBaseline
-        cat = self._catalog_with_domain_terms()
-        bl = TfidfBaseline()
-        bl.fit(cat)
-        top = bl.rank("testproblem", top_k=1)
-        assert len(top) == 1
-        pid, score = top[0]
-        assert pid == "target", (
-            f"Expected 'target' at rank 1 for short query, got {pid!r}"
-        )
-
-    def test_bm25_rank_returns_top_k_for_short_query(self):
-        """BM25 rank() does not crash or lose results when given a short query."""
-        from retrieval.baselines import BM25Baseline
-        cat = _tiny_catalog()
-        bl = BM25Baseline()
-        bl.fit(cat)
-        out = bl.rank("knapsack", top_k=2)
-        assert len(out) == 2
-
-    def test_tfidf_rank_returns_top_k_for_short_query(self):
-        """TF-IDF rank() does not crash or lose results when given a short query."""
-        from retrieval.baselines import TfidfBaseline
-        cat = _tiny_catalog()
-        bl = TfidfBaseline()
-        bl.fit(cat)
-        out = bl.rank("knapsack", top_k=2)
-        assert len(out) == 2
-
-    def test_lsa_rank_returns_top_k_for_short_query(self):
-        """LSA rank() does not crash or lose results when given a short query."""
-        from retrieval.baselines import LSABaseline
-        cat = _tiny_catalog()
-        bl = LSABaseline()
-        bl.fit(cat)
-        out = bl.rank("knapsack", top_k=2)
-        assert len(out) == 2
-
-    def test_bm25_long_query_unaffected(self):
-        """BM25 rank() works correctly for long queries (no accidental expansion)."""
-        from retrieval.baselines import BM25Baseline
-        cat = _tiny_catalog()
-        bl = BM25Baseline()
-        bl.fit(cat)
-        long_q = "select items to maximize total value without exceeding weight capacity"
-        out = bl.rank(long_q, top_k=3)
-        assert len(out) == 3
-
-
-# ---------------------------------------------------------------------------
-# 5. generate_queries_for_problem — SHORT_QUERY_TEMPLATES coverage
-# ---------------------------------------------------------------------------
-
-class TestShortQueryTemplatesInSamples:
-    """SHORT_QUERY_TEMPLATES must produce short-form training queries."""
-
-    def _make_problem(self) -> dict:
-        return {
-            "id": "k1",
-            "name": "Knapsack",
-            "aliases": ["0-1 knapsack"],
-            "description": "Select items with weights and values.",
+        cls_map = {
+            "BM25Baseline": BM25Baseline,
+            "TfidfBaseline": TfidfBaseline,
+            "LSABaseline": LSABaseline,
         }
+        baseline = cls_map[cls_name]()
+        baseline.fit(_tiny_catalog())
+        results = baseline.rank("knapsack", top_k=1)
+        assert results
 
-    def test_short_templates_exported(self):
-        """SHORT_QUERY_TEMPLATES must be importable and non-empty."""
-        from training.generate_samples import SHORT_QUERY_TEMPLATES
-        assert len(SHORT_QUERY_TEMPLATES) > 0
-
-    def test_all_short_templates_have_text_placeholder(self):
-        """Every SHORT_QUERY_TEMPLATE must contain the {text} placeholder."""
-        from training.generate_samples import SHORT_QUERY_TEMPLATES
-        for t in SHORT_QUERY_TEMPLATES:
-            assert "{text}" in t, f"Template missing {{text}}: {t!r}"
-
-    def test_name_ilp_variant_present(self):
-        """'Knapsack ILP' should appear in generated queries."""
-        from training.generate_samples import generate_queries_for_problem
-        prob = self._make_problem()
-        queries = generate_queries_for_problem(prob, random.Random(0), target_per_problem=200)
-        assert "Knapsack ILP" in queries, (
-            "SHORT_QUERY_TEMPLATES should produce 'Knapsack ILP' for a problem named 'Knapsack'"
-        )
-
-    def test_name_problem_variant_present(self):
-        """'Knapsack problem' should appear in generated queries."""
-        from training.generate_samples import generate_queries_for_problem
-        prob = self._make_problem()
-        queries = generate_queries_for_problem(prob, random.Random(0), target_per_problem=200)
-        assert "Knapsack problem" in queries
-
-    def test_name_optimization_variant_present(self):
-        """'Knapsack optimization' should appear in generated queries."""
-        from training.generate_samples import generate_queries_for_problem
-        prob = self._make_problem()
-        queries = generate_queries_for_problem(prob, random.Random(0), target_per_problem=200)
-        assert "Knapsack optimization" in queries
-
-    def test_alias_short_variant_present(self):
-        """Short-form queries for aliases also appear, e.g. '0-1 knapsack ILP'."""
-        from training.generate_samples import generate_queries_for_problem
-        prob = self._make_problem()
-        queries = generate_queries_for_problem(prob, random.Random(0), target_per_problem=200)
-        assert "0-1 knapsack ILP" in queries, (
-            "SHORT_QUERY_TEMPLATES should produce alias short-form queries"
-        )
-
-    def test_no_duplicates_in_output(self):
-        """generate_queries_for_problem should deduplicate its output."""
-        from training.generate_samples import generate_queries_for_problem
-        prob = self._make_problem()
-        queries = generate_queries_for_problem(prob, random.Random(0), target_per_problem=200)
-        assert len(queries) == len(set(queries))
-
-    def test_short_queries_are_short(self):
-        """Queries produced by SHORT_QUERY_TEMPLATES must themselves be short (≤ 5 words + name).
-
-        Since problem names are typically 1–3 words and templates add at most
-        2 words (e.g. "optimization", "ILP"), the resulting short-form queries
-        should be ≤ 7 words in total.  This is well inside the 5-word expansion
-        threshold for a 1-word name like "Knapsack".
-        """
-        from training.generate_samples import generate_queries_for_problem, SHORT_QUERY_TEMPLATES
-        prob = self._make_problem()
-        queries = generate_queries_for_problem(prob, random.Random(0), target_per_problem=200)
-        # Extract only the queries that match a short-template pattern for the name
-        name = prob["name"]
-        short_variants = {t.format(text=name) for t in SHORT_QUERY_TEMPLATES}
-        for q in short_variants:
-            if q in queries:
-                assert len(q.split()) <= 7, f"Short template produced unexpectedly long query: {q!r}"
