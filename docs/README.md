@@ -23,10 +23,6 @@ Overview of documentation in this repository.
 - **Optimization role method:** [NLP4LP_OPTIMIZATION_ROLE_METHOD_IMPLEMENTATION.md](NLP4LP_OPTIMIZATION_ROLE_METHOD_IMPLEMENTATION.md), [NLP4LP_OPTIMIZATION_ROLE_METHOD_EXAMPLES.md](NLP4LP_OPTIMIZATION_ROLE_METHOD_EXAMPLES.md), [NLP4LP_OPTIMIZATION_ROLE_METHOD_RESULTS.md](NLP4LP_OPTIMIZATION_ROLE_METHOD_RESULTS.md)
 - **Semantic IR / repair:** [NLP4LP_SEMANTIC_IR_REPAIR_IMPLEMENTATION.md](NLP4LP_SEMANTIC_IR_REPAIR_IMPLEMENTATION.md), [NLP4LP_SEMANTIC_IR_REPAIR_EXAMPLES.md](NLP4LP_SEMANTIC_IR_REPAIR_EXAMPLES.md), [NLP4LP_SEMANTIC_IR_REPAIR_RESULTS.md](NLP4LP_SEMANTIC_IR_REPAIR_RESULTS.md)
 - **Manuscript and reporting:** [NLP4LP_MANUSCRIPT_REPORTING_PACKAGE.md](NLP4LP_MANUSCRIPT_REPORTING_PACKAGE.md), [NLP4LP_MANUSCRIPT_CONSISTENCY_PLAN.md](NLP4LP_MANUSCRIPT_CONSISTENCY_PLAN.md), [NLP4LP_EXPERIMENT_VERIFICATION_REPORT.md](NLP4LP_EXPERIMENT_VERIFICATION_REPORT.md), [NLP4LP_CHATGPT_CLARIFICATION_PACKAGE.md](NLP4LP_CHATGPT_CLARIFICATION_PACKAGE.md)
-- **Constrained assignment:** [NLP4LP_CONSTRAINED_ASSIGNMENT_*.md](NLP4LP_CONSTRAINED_ASSIGNMENT_EXAMPLES.md)
-- **Optimization role method:** [NLP4LP_OPTIMIZATION_ROLE_METHOD_*.md](NLP4LP_OPTIMIZATION_ROLE_METHOD_IMPLEMENTATION.md)
-- **Semantic IR / repair:** [NLP4LP_SEMANTIC_IR_REPAIR_*.md](NLP4LP_SEMANTIC_IR_REPAIR_IMPLEMENTATION.md)
-- **Manuscript and reporting:** [NLP4LP_MANUSCRIPT_*.md](NLP4LP_MANUSCRIPT_REPORTING_PACKAGE.md), [NLP4LP_EXPERIMENT_VERIFICATION_REPORT.md](NLP4LP_EXPERIMENT_VERIFICATION_REPORT.md), [NLP4LP_CHATGPT_CLARIFICATION_PACKAGE.md](NLP4LP_CHATGPT_CLARIFICATION_PACKAGE.md)
 
 ## HPC and runs
 
@@ -59,12 +55,9 @@ Overview of documentation in this repository.
 - **[FULL_REPO_SUMMARY.md](FULL_REPO_SUMMARY.md)** — Comprehensive audit of the current GitHub repo state (generated 2026-03-09).
 - **[REPO_CLEANUP_PLAN.md](REPO_CLEANUP_PLAN.md)** — Cleanup plan and deleted-files manifest.
 - **[REPO_CLEANUP_DELETED_FILES_MANIFEST.txt](REPO_CLEANUP_DELETED_FILES_MANIFEST.txt)** — Paths deleted by `scripts/cleanup_old_artifacts.sh`; used for reproducible cleanup.
+
 ## Experiments
 
 - **[../EXPERIMENTS.md](../EXPERIMENTS.md)** — Consolidated overview of all experiments: retrieval baselines, grounding/assignment methods, learning runs, copilot comparison, and ESWA revision experiments.
 - **[EXPERIMENT_AUDIT.md](EXPERIMENT_AUDIT.md)** — Strict evidence-based audit: which experiments are truly measured vs placeholder/scaffolding only. Updated to reflect benchmark run `22922351003`.
 - **[CI_ROOT_CAUSE_AUDIT.md](CI_ROOT_CAUSE_AUDIT.md)** — Root-cause analysis of why prior workflow runs appeared fast (push-triggered stubs) and confirmation that the real benchmark ran in 32 s.
-
-## Repo maintenance
-
-- **[REPO_CLEANUP_PLAN.md](REPO_CLEANUP_PLAN.md)** — Cleanup plan and deleted-files manifest.

@@ -1,26 +1,5 @@
 # Combinatorial Optimization AI Agent
 
-An **AI-powered agent** for **natural-language optimization**: describe a problem in plain English and get problem recognition, formulations, and solver-ready code.
-
-**Capabilities:**
-
-- **Problem recognition** — Match queries to a catalog of known combinatorial optimization problems (facility location, knapsack, scheduling, etc.).
-- **Formulation retrieval** — Return ILP/LP formulations (variables, objective, constraints) for matched problems.
-- **NLP4LP pipeline** — Schema retrieval, acceptance-aware reranking, constrained assignment (mention→slot), and optimization-role extraction for NL-to-optimization workflows.
-- **GAMSPy integration** — Local GAMSPy/GAMS example collection and catalog for problem-family grouping and evaluation (see [GAMSPy docs](#documentation)).
-- **Solver-ready code** — Pyomo, Gurobi, PuLP, and GAMSPy when applicable.
-
-## Project vision
-
-You describe a problem in plain English; the agent identifies the problem type (e.g. Uncapacitated Facility Location), returns the ILP/LP formulation, and can generate code you run with standard solvers. The project also supports research on **NL-to-optimization** (NLP4LP): schema acceptance, parameter instantiation, and optimization-role extraction.
-
-## Architecture (high level)
-
-- **Natural language** → entity and constraint extraction.
-- **Problem classifier** (embeddings + LLM) matches against a **database of known problems** (90+ types).
-- For **known problems:** retrieve formulation from the DB.
-- For **unknown problems:** generate formulation via LLM and verify.
-- **Output:** ILP formulation, LP relaxation, solver code (Pyomo/Gurobi/PuLP), and complexity class when applicable.
 An **AI-powered agent** that translates plain-English optimization problem descriptions into
 structured ILP/LP formulations and solver-ready code.  It combines a **retrieval pipeline**
 (query → problem schema) with a **downstream grounding pipeline** (NL numeric mentions →
@@ -422,61 +401,11 @@ The web app is a full **Progressive Web App (PWA)** — it works in Safari on iO
 
 - **Mention–slot scorer** (NLP4LP) — For constrained assignment (NL numeric mentions → schema slots). Generate pairs with `training/generate_mention_slot_pairs.py` and train with `training/train_mention_slot_scorer.py`. See `docs/NLP4LP_CONSTRAINED_ASSIGNMENT_*.md`.
 
-## 📋 Project Phases
-
-### ✅ Phase 1: Data Collection & Processing (Current)
-- [x] Define unified data schema
-- [x] Collect NL4Opt dataset (1,101 NL→LP pairs) — public data added via `pipeline/run_collection.py`
-- [ ] Collect Gurobi Modeling Examples (40+ notebooks)
-- [ ] Collect Gurobi OptiMods (15+ documented mods)
-- [ ] Parse all sources into unified JSON format
-- [ ] Generate `all_problems.json`
-
-### 🔲 Phase 2: Expand Dataset
-- [ ] Parse GAMS Model Library (400+ models, needs GAMS license)
-- [ ] Download & parse MIPLIB 2017 instances
-- [ ] Scrape OR-Library problem families
-- [ ] Extract Pyomo example formulations
-- [ ] Manual additions from Williams' textbook
-
-### 🔲 Phase 3: Problem Recognition Engine
-- [ ] Generate embeddings for all problem descriptions
-- [ ] Build similarity search index (FAISS/ChromaDB)
-- [ ] Train/fine-tune problem classifier
-- [ ] Implement disambiguation (clarifying questions)
-
-### 🔲 Phase 4: Formulation Generation
-- [ ] Retrieval pipeline for known problems
-- [ ] LLM-based generation for novel problems
-- [ ] LaTeX + solver code output formatting
-- [ ] Validation against benchmark instances
-
-### 🔲 Phase 5: Conversational Agent
-- [ ] Conversation flow design
-- [ ] Backend API (FastAPI)
-- [ ] Frontend (Streamlit/Gradio)
-- [ ] Deployment
-
 ## 🛠️ Tech Stack
 
 | Component | Technology |
 |-----------|-----------|
 | Language | Python 3.10+ |
-| Data Processing | pandas, json, BeautifulSoup |
-| Embeddings | Sentence-Transformers / OpenAI |
-| Vector Search | FAISS / ChromaDB |
-| LLM | GPT-4 / Claude / LLaMA (fine-tuned on Wulver) |
-| Optimization Solvers | Gurobi, Pyomo, PuLP, OR-Tools |
-| Math Rendering | LaTeX / KaTeX |
-| Backend | FastAPI |
-| Frontend | Streamlit / Gradio |
-| HPC | NJIT Wulver (SLURM) |
-| CI/CD | GitHub Actions |
-| Dev Environment | GitHub Codespaces |
-
-## 📄 License
-
-MIT License — see [LICENSE](LICENSE) for details.
 | Data processing | pandas, json, BeautifulSoup |
 | Retrieval | TF-IDF (scikit-learn), BM25 (rank-bm25), LSA, Sentence-Transformers, E5, BGE |
 | NLP / extraction | Regex-based numeric tokenisation, operator-cue detection, bound-role annotation |
@@ -503,14 +432,11 @@ This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for t
 
 ## 📬 Contact
 
-**Soroush Vahidi** — NJIT Student  
 **Soroush Vahidi** — NJIT  
 - Email: [sv96@njit.edu](mailto:sv96@njit.edu)  
 - GitHub: [@SoroushVahidi](https://github.com/SoroushVahidi)
 
 ---
 
-**Repository description** (for GitHub **Settings → General → Description**):  
-*NL-to-optimization agent: problem recognition, formulation retrieval, GAMSPy/NLP4LP pipelines, and solver code generation.*
 **Repository description** (for GitHub **Settings → General → Description**; update manually if needed):  
 *NL-to-optimization agent: plain-English → ILP/LP formulation + solver code. Schema retrieval (R@1 0.906), deterministic grounding (typed greedy, optimization-role repair, GCG), and bound-role annotation pipeline.*
