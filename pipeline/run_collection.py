@@ -7,7 +7,7 @@ service always has access to the full catalog.
 
 Pipeline steps
 --------------
-1. Collect each requested source (NL4Opt, OptMATH, Gurobi examples, Pyomo, …).
+1. Collect each requested source (NL4Opt, OptMATH, Gurobi examples, Pyomo, ...).
 2. Merge per-source JSON files into ``data/processed/all_problems.json``.
 3. Run ``scripts/merge_catalog`` to merge base + custom + collected problems
    into the full catalog used by the app.
