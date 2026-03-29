@@ -3,12 +3,6 @@ Tests for PDF text extraction (retrieval/pdf_utils.py).
 """
 from __future__ import annotations
 
-import sys
-from pathlib import Path
-
-# Ensure project root is on sys.path
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-
 from retrieval.pdf_utils import extract_text_from_pdf
 
 
