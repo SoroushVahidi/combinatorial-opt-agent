@@ -1,0 +1,387 @@
+{
+  "knapsack_01": [
+    {
+      "title": "Discrete-Variable Extremum Problems",
+      "authors": "Dantzig, G. B.",
+      "year": 1957,
+      "venue": "Operations Research, 5(2), 266–277",
+      "url": "https://doi.org/10.1287/opre.5.2.266"
+    }
+  ],
+  "set_cover": [
+    {
+      "title": "Approximation Algorithms for Combinatorial Problems",
+      "authors": "Johnson, D. S.",
+      "year": 1974,
+      "venue": "Journal of Computer and System Sciences, 9(3), 256–278",
+      "url": "https://doi.org/10.1016/S0022-0000(74)80044-9"
+    },
+    {
+      "title": "A Greedy Heuristic for the Set-Covering Problem",
+      "authors": "Chvátal, V.",
+      "year": 1979,
+      "venue": "Mathematics of Operations Research, 4(3), 233–235",
+      "url": "https://doi.org/10.1287/moor.4.3.233"
+    }
+  ],
+  "vertex_cover": [
+    {
+      "title": "Reducibility Among Combinatorial Problems",
+      "authors": "Karp, R. M.",
+      "year": 1972,
+      "venue": "Complexity of Computer Computations, 85–103",
+      "url": "https://doi.org/10.1007/978-1-4684-2001-2_9"
+    }
+  ],
+  "facility_location_ufl": [
+    {
+      "title": "Fixed Cost Transportation Problems",
+      "authors": "Balinski, M. L.",
+      "year": 1961,
+      "venue": "Naval Research Logistics Quarterly, 8(1), 41–54",
+      "url": "https://doi.org/10.1002/nav.3800080104"
+    },
+    {
+      "title": "An Analysis of Approximations for Maximizing Submodular Set Functions",
+      "authors": "Nemhauser, G. L.; Wolsey, L. A.; Fisher, M. L.",
+      "year": 1978,
+      "venue": "Mathematical Programming, 14(1), 265–294",
+      "url": "https://doi.org/10.1007/BF01588971"
+    }
+  ],
+  "tsp": [
+    {
+      "title": "Solution of a Large-Scale Traveling-Salesman Problem",
+      "authors": "Dantzig, G. B.; Fulkerson, R.; Johnson, S.",
+      "year": 1954,
+      "venue": "Operations Research, 2(4), 393–410",
+      "url": "https://doi.org/10.1287/opre.2.4.393"
+    },
+    {
+      "title": "An Effective Heuristic Algorithm for the Traveling-Salesman Problem",
+      "authors": "Lin, S.; Kernighan, B. W.",
+      "year": 1973,
+      "venue": "Operations Research, 21(2), 498–516",
+      "url": "https://doi.org/10.1287/opre.21.2.498"
+    }
+  ],
+  "max_cut": [
+    {
+      "title": "Improved Approximation Algorithms for Maximum Cut and Satisfiability Problems Using Semidefinite Programming",
+      "authors": "Goemans, M. X.; Williamson, D. P.",
+      "year": 1995,
+      "venue": "Journal of the ACM, 42(6), 1115–1145",
+      "url": "https://doi.org/10.1145/227683.227684"
+    }
+  ],
+  "bin_packing": [
+    {
+      "title": "Worst-Case Analysis of a New Heuristic for the Travelling Salesman Problem",
+      "authors": "Johnson, D. S.",
+      "year": 1973,
+      "venue": "SIAM Journal on Computing, 3(4), 299–325",
+      "url": "https://doi.org/10.1137/0203025"
+    },
+    {
+      "title": "Bin Packing Approximation Algorithms: A Survey",
+      "authors": "Coffman, E. G.; Garey, M. R.; Johnson, D. S.",
+      "year": 1997,
+      "venue": "Approximation Algorithms for NP-Hard Problems, 46–93",
+      "url": "https://doi.org/10.1145/265910.265933"
+    }
+  ],
+  "shortest_path": [
+    {
+      "title": "A Note on Two Problems in Connexion with Graphs",
+      "authors": "Dijkstra, E. W.",
+      "year": 1959,
+      "venue": "Numerische Mathematik, 1(1), 269–271",
+      "url": "https://doi.org/10.1007/BF01386390"
+    },
+    {
+      "title": "On a Routing Problem",
+      "authors": "Bellman, R.",
+      "year": 1958,
+      "venue": "Quarterly of Applied Mathematics, 16(1), 87–90",
+      "url": "https://doi.org/10.1090/qam/102435"
+    }
+  ],
+  "assignment": [
+    {
+      "title": "The Hungarian Method for the Assignment Problem",
+      "authors": "Kuhn, H. W.",
+      "year": 1955,
+      "venue": "Naval Research Logistics Quarterly, 2(1–2), 83–97",
+      "url": "https://doi.org/10.1002/nav.3800020109"
+    },
+    {
+      "title": "Algorithms for the Assignment and Transportation Problems",
+      "authors": "Munkres, J.",
+      "year": 1957,
+      "venue": "Journal of the Society for Industrial and Applied Mathematics, 5(1), 32–38",
+      "url": "https://doi.org/10.1137/0105003"
+    }
+  ],
+  "max_clique": [
+    {
+      "title": "Algorithm 457: Finding All Cliques of an Undirected Graph",
+      "authors": "Bron, C.; Kerbosch, J.",
+      "year": 1973,
+      "venue": "Communications of the ACM, 16(9), 575–577",
+      "url": "https://doi.org/10.1145/360384.360390"
+    }
+  ],
+  "set_partitioning": [
+    {
+      "title": "Set Partitioning: A Survey",
+      "authors": "Balas, E.; Padberg, M. W.",
+      "year": 1976,
+      "venue": "SIAM Review, 18(4), 710–760",
+      "url": "https://doi.org/10.1137/1018115"
+    }
+  ],
+  "graph_coloring": [
+    {
+      "title": "Reducibility Among Combinatorial Problems",
+      "authors": "Karp, R. M.",
+      "year": 1972,
+      "venue": "Complexity of Computer Computations, 85–103",
+      "url": "https://doi.org/10.1007/978-1-4684-2001-2_9"
+    }
+  ],
+  "generalised_assignment": [
+    {
+      "title": "A Survey of Algorithms for the Generalized Assignment Problem",
+      "authors": "Cattrysse, D. G.; Van Wassenhove, L. N.",
+      "year": 1992,
+      "venue": "European Journal of Operational Research, 60(3), 260–272",
+      "url": "https://doi.org/10.1016/0377-2217(92)90077-G"
+    }
+  ],
+  "p_median": [
+    {
+      "title": "Optimum Locations of Switching Centers and the Absolute Centers and Medians of a Graph",
+      "authors": "Hakimi, S. L.",
+      "year": 1964,
+      "venue": "Operations Research, 12(3), 450–459",
+      "url": "https://doi.org/10.1287/opre.12.3.450"
+    },
+    {
+      "title": "Central Facilities Location",
+      "authors": "ReVelle, C. S.; Swain, R. W.",
+      "year": 1970,
+      "venue": "Geographical Analysis, 2(1), 30–42",
+      "url": "https://doi.org/10.1111/j.1538-4632.1970.tb00142.x"
+    }
+  ],
+  "capacitated_facility_location": [
+    {
+      "title": "A Comparison of Heuristics and Relaxations for the Capacitated Plant Location Problem",
+      "authors": "Cornuejols, G.; Sridharan, R.; Thizy, J. M.",
+      "year": 1991,
+      "venue": "European Journal of Operational Research, 50(3), 280–297",
+      "url": "https://doi.org/10.1016/0377-2217(91)90261-S"
+    }
+  ],
+  "steiner_tree": [
+    {
+      "title": "Improved Steiner Tree Approximation in Graphs",
+      "authors": "Robins, G.; Zelikovsky, A.",
+      "year": 2005,
+      "venue": "ACM Transactions on Algorithms, 1(1), 38–58",
+      "url": "https://doi.org/10.1145/1077464.1077468"
+    }
+  ],
+  "maximum_weight_independent_set": [
+    {
+      "title": "Finding a Maximum Independent Set",
+      "authors": "Tarjan, R. E.; Trojanowski, A. E.",
+      "year": 1977,
+      "venue": "SIAM Journal on Computing, 6(3), 537–546",
+      "url": "https://doi.org/10.1137/0206038"
+    }
+  ],
+  "job_shop_scheduling": [
+    {
+      "title": "Optimization and Approximation in Deterministic Sequencing and Scheduling: A Survey",
+      "authors": "Graham, R. L.; Lawler, E. L.; Lenstra, J. K.; Rinnooy Kan, A. H. G.",
+      "year": 1979,
+      "venue": "Annals of Discrete Mathematics, 5, 287–326",
+      "url": "https://doi.org/10.1016/S0167-5060(08)70356-X"
+    }
+  ],
+  "flow_shop": [
+    {
+      "title": "Optimal Two- and Three-Stage Production Schedules with Setup Times Included",
+      "authors": "Johnson, S. M.",
+      "year": 1954,
+      "venue": "Naval Research Logistics Quarterly, 1(1), 61–68",
+      "url": "https://doi.org/10.1002/nav.3800010110"
+    },
+    {
+      "title": "The Complexity of Flowshop and Jobshop Scheduling",
+      "authors": "Garey, M. R.; Johnson, D. S.; Sethi, R.",
+      "year": 1976,
+      "venue": "Mathematics of Operations Research, 1(2), 117–129",
+      "url": "https://doi.org/10.1287/moor.1.2.117"
+    }
+  ],
+  "aircraft_landing": [
+    {
+      "title": "Scheduling Aircraft Landings—The Static Case",
+      "authors": "Beasley, J. E.; Krishnamoorthy, M.; Sharaiha, Y. M.; Abramson, D.",
+      "year": 2000,
+      "venue": "Transportation Science, 34(2), 180–197",
+      "url": "https://doi.org/10.1287/trsc.34.2.180.12302"
+    }
+  ],
+  "cvrp": [
+    {
+      "title": "The Truck Dispatching Problem",
+      "authors": "Dantzig, G. B.; Ramser, J. H.",
+      "year": 1959,
+      "venue": "Management Science, 6(1), 80–91",
+      "url": "https://doi.org/10.1287/mnsc.6.1.80"
+    },
+    {
+      "title": "Scheduling of Vehicles from a Central Depot to a Number of Delivery Points",
+      "authors": "Clarke, G.; Wright, J. W.",
+      "year": 1964,
+      "venue": "Operations Research, 12(4), 568–581",
+      "url": "https://doi.org/10.1287/opre.12.4.568"
+    }
+  ],
+  "quadratic_assignment": [
+    {
+      "title": "Assignment Problems and the Location of Economic Activities",
+      "authors": "Koopmans, T. C.; Beckmann, M.",
+      "year": 1957,
+      "venue": "Econometrica, 25(1), 53–76",
+      "url": "https://doi.org/10.2307/1907742"
+    }
+  ],
+  "max_flow": [
+    {
+      "title": "Maximal Flow Through a Network",
+      "authors": "Ford, L. R.; Fulkerson, D. R.",
+      "year": 1956,
+      "venue": "Canadian Journal of Mathematics, 8, 399–404",
+      "url": "https://doi.org/10.4153/CJM-1956-045-5"
+    }
+  ],
+  "min_cut": [
+    {
+      "title": "Maximal Flow Through a Network",
+      "authors": "Ford, L. R.; Fulkerson, D. R.",
+      "year": 1956,
+      "venue": "Canadian Journal of Mathematics, 8, 399–404",
+      "url": "https://doi.org/10.4153/CJM-1956-045-5"
+    },
+    {
+      "title": "A Simple Min-Cut Algorithm",
+      "authors": "Stoer, M.; Wagner, F.",
+      "year": 1997,
+      "venue": "Journal of the ACM, 44(4), 585–591",
+      "url": "https://doi.org/10.1145/263867.263872"
+    }
+  ],
+  "fixed_charge_transportation": [
+    {
+      "title": "Fixed-Cost Transportation Problems",
+      "authors": "Balinski, M. L.",
+      "year": 1961,
+      "venue": "Naval Research Logistics Quarterly, 8(1), 41–54",
+      "url": "https://doi.org/10.1002/nav.3800080104"
+    }
+  ],
+  "set_packing": [
+    {
+      "title": "Set Partitioning: A Survey",
+      "authors": "Balas, E.; Padberg, M. W.",
+      "year": 1976,
+      "venue": "SIAM Review, 18(4), 710–760",
+      "url": "https://doi.org/10.1137/1018115"
+    }
+  ],
+  "multidimensional_knapsack": [
+    {
+      "title": "A Branch and Bound Method for the Multiconstraint Zero-One Knapsack Problem",
+      "authors": "Shih, W.",
+      "year": 1979,
+      "venue": "Journal of the Operational Research Society, 30(4), 369–378",
+      "url": "https://doi.org/10.1057/jors.1979.78"
+    }
+  ],
+  "dominating_set": [
+    {
+      "title": "Reducibility Among Combinatorial Problems",
+      "authors": "Karp, R. M.",
+      "year": 1972,
+      "venue": "Complexity of Computer Computations, 85–103",
+      "url": "https://doi.org/10.1007/978-1-4684-2001-2_9"
+    }
+  ],
+  "maximum_matching": [
+    {
+      "title": "Paths, Trees, and Flowers",
+      "authors": "Edmonds, J.",
+      "year": 1965,
+      "venue": "Canadian Journal of Mathematics, 17, 449–467",
+      "url": "https://doi.org/10.4153/CJM-1965-045-4"
+    }
+  ],
+  "uncapacitated_lot_sizing": [
+    {
+      "title": "Dynamic Version of the Economic Lot Size Model",
+      "authors": "Wagner, H. M.; Whitin, T. M.",
+      "year": 1958,
+      "venue": "Management Science, 5(1), 89–96",
+      "url": "https://doi.org/10.1287/mnsc.5.1.89"
+    }
+  ],
+  "crew_scheduling": [
+    {
+      "title": "Airline Crew Scheduling: From Planning to Operations",
+      "authors": "Barnhart, C.; Cohn, A. M.; Johnson, E. L.; Klabjan, D.; Nemhauser, G. L.; Vance, P. H.",
+      "year": 2003,
+      "venue": "Handbook of Transportation Science (2nd ed.), 517–560",
+      "url": "https://doi.org/10.1007/b101975"
+    }
+  ],
+  "feedback_vertex_set": [
+    {
+      "title": "Reducibility Among Combinatorial Problems",
+      "authors": "Karp, R. M.",
+      "year": 1972,
+      "venue": "Complexity of Computer Computations, 85–103",
+      "url": "https://doi.org/10.1007/978-1-4684-2001-2_9"
+    }
+  ],
+  "job_shop": [
+    {
+      "title": "Optimization and Approximation in Deterministic Sequencing and Scheduling: A Survey",
+      "authors": "Graham, R. L.; Lawler, E. L.; Lenstra, J. K.; Rinnooy Kan, A. H. G.",
+      "year": 1979,
+      "venue": "Annals of Discrete Mathematics, 5, 287–326",
+      "url": "https://doi.org/10.1016/S0167-5060(08)70356-X"
+    }
+  ],
+  "max_independent_set": [
+    {
+      "title": "Finding a Maximum Independent Set",
+      "authors": "Tarjan, R. E.; Trojanowski, A. E.",
+      "year": 1977,
+      "venue": "SIAM Journal on Computing, 6(3), 537–546",
+      "url": "https://doi.org/10.1137/0206038"
+    }
+  ],
+  "shortest_path_lp": [
+    {
+      "title": "A Note on Two Problems in Connexion with Graphs",
+      "authors": "Dijkstra, E. W.",
+      "year": 1959,
+      "venue": "Numerische Mathematik, 1(1), 269–271",
+      "url": "https://doi.org/10.1007/BF01386390"
+    }
+  ]
+}

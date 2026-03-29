@@ -1,0 +1,13 @@
+method,variant,Coverage,TypeMatch,Exact20,InstReady,source
+tfidf_typed_greedy,orig,0.8639,0.7513,0.1991,0.5257,measured
+tfidf_typed_greedy,noisy,0.7693,0.1414,0.1801,0.0393,measured
+tfidf_typed_greedy,short,0.105,0.2286,0.232,0.0151,measured
+tfidf_optimization_role_repair,orig,0.8248,0.7036,0.2847,0.4411,measured
+tfidf_optimization_role_repair,noisy,0.7103,0.0,N/A,0.0,measured
+tfidf_optimization_role_repair,short,0.0318,0.0725,0.3939,0.006,measured
+tfidf_hierarchical_acceptance_rerank,orig,0.8121,0.7146,0.2003,0.5136,measured
+tfidf_hierarchical_acceptance_rerank,noisy,0.6956,0.138,0.2118,0.0423,measured
+tfidf_hierarchical_acceptance_rerank,short,0.1062,0.2261,0.2826,0.0211,measured
+oracle_typed_greedy,orig,0.9151,0.803,0.1882,0.565,measured
+oracle_typed_greedy,noisy,0.8196,0.1524,0.1797,0.0423,measured
+oracle_typed_greedy,short,0.1258,0.2709,0.2317,0.0151,measured

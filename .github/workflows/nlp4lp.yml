@@ -1,0 +1,167 @@
+# Runs the full NLP4LP benchmark pipeline against the HuggingFace gated dataset.
+#
+# ══════════════════════════════════════════════════════════════════════════════
+# ⚠️  IMPORTANT — "Run workflow" button not visible?
+#     The button only appears when this file is on the DEFAULT BRANCH (main).
+#     Merge PR #3 first, then the button will appear here:
+#     https://github.com/SoroushVahidi/combinatorial-opt-agent/actions/workflows/nlp4lp.yml
+#
+#     Alternative (no merge needed) — use GitHub CLI:
+#       gh workflow run nlp4lp.yml \
+#         --repo SoroushVahidi/combinatorial-opt-agent \
+#         --ref copilot/main-branch-description
+# ══════════════════════════════════════════════════════════════════════════════
+#
+# Phase 1: Build eval sets from udell-lab/NLP4LP (3 variants: orig, noisy, short)
+# Phase 2: Run ALL downstream experiments (9 methods × 3 variants) and commit
+#           measured results back to the branch.
+#           Measured runtime: ~32 s for the full benchmark loop (CPU-only assignment).
+#
+# SETUP (one-time, by the repo owner):
+#   1. Go to https://huggingface.co/settings/tokens and create a read-only token.
+#   2. In this GitHub repo: Settings → Secrets and variables → Actions → New repository secret
+#      Name:  HF_TOKEN
+#      Value: your token (starts with hf_...)
+#
+# TRIGGER:
+#   Actions tab → "NLP4LP benchmark" → Run workflow (select correct branch)
+#
+# The token is NEVER written to code or logs — it is injected only into
+# the process environment of the steps that need it.
+
+name: NLP4LP benchmark
+
+on:
+  workflow_dispatch:   # trigger manually: Actions tab → "NLP4LP benchmark" → Run workflow
+
+jobs:
+  build-benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300    # generous safety budget; measured runtime: ~5 min (32 s benchmark + pip install)
+    permissions:
+      contents: write         # needed to push measured results back to branch
+
+    env:
+      PYTHONUNBUFFERED: "1"
+      HF_DATASETS_DISABLE_PROGRESS_BARS: "1"
+      OMP_NUM_THREADS: "2"
+      MKL_NUM_THREADS: "2"
+      OPENBLAS_NUM_THREADS: "2"
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # ── Phase 0: Check token presence (safe — prints only present/absent) ─
+      - name: Check HF_TOKEN presence
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          if [ -n "$HF_TOKEN" ]; then
+            echo "HF_TOKEN: present"
+          else
+            echo "HF_TOKEN: NOT SET — add HF_TOKEN as a repository secret (Settings → Secrets → Actions)"
+          fi
+
+      # ── Phase 0: Verify HF access ─────────────────────────────────────────
+      - name: Verify HF token and dataset access
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python training/external/verify_hf_access.py
+
+      # ── Phase 1: Build eval sets ──────────────────────────────────────────
+      - name: Build NLP4LP eval sets
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          python training/external/build_nlp4lp_benchmark.py \
+            --variants orig,noisy,short
+
+      # ── Phase 2: Full downstream benchmark ───────────────────────────────
+      - name: Run full downstream benchmark (9 methods × 3 variants + ablation)
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          NLP4LP_GOLD_CACHE: results/eswa_revision/00_env/nlp4lp_gold_cache.json
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+          GITHUB_SHA: ${{ github.sha }}
+        run: |
+          python training/external/run_full_downstream_benchmark.py \
+            2>&1 | tee /tmp/benchmark_stdout.log
+
+      # ── Upload raw log ────────────────────────────────────────────────────
+      - name: Upload benchmark log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-log-${{ github.run_id }}
+          path: /tmp/benchmark_stdout.log
+          if-no-files-found: warn
+
+      # ── Upload result artifacts ───────────────────────────────────────────
+      - name: Upload result artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nlp4lp-results-${{ github.run_id }}
+          path: |
+            data/processed/nlp4lp_catalog.jsonl
+            data/processed/nlp4lp_eval_*.jsonl
+            results/nlp4lp_benchmark_stats.json
+            results/eswa_revision/
+            results/paper/nlp4lp_downstream_summary.csv
+            results/paper/nlp4lp_downstream_types_summary.csv
+          if-no-files-found: warn
+          retention-days: 90
+
+      # ── Commit measured results back to branch ────────────────────────────
+      - name: Commit and push measured results
+        if: success()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add \
+            data/processed/ \
+            results/eswa_revision/00_env/ \
+            results/eswa_revision/02_downstream_postfix/ \
+            results/eswa_revision/03_prefix_vs_postfix/ \
+            results/eswa_revision/13_tables/postfix_main_metrics.csv \
+            results/eswa_revision/13_tables/prefix_vs_postfix_ablation.csv \
+            results/eswa_revision/14_reports/postfix_main_metrics.md \
+            results/eswa_revision/14_reports/prefix_vs_postfix_ablation.md \
+            results/eswa_revision/manifests/ \
+            results/paper/ || true
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            RUN_ID="${{ github.run_id }}"
+            COMMIT="${{ github.sha }}"
+            git commit -m "data: add measured downstream benchmark results (run ${RUN_ID}, commit ${COMMIT:0:8})"
+            git push origin HEAD:${{ github.ref_name }}
+            echo "Results pushed to branch."
+          fi
+
+      # ── Print summary ─────────────────────────────────────────────────────
+      - name: Print result summary
+        if: always()
+        run: |
+          echo "=== postfix_main_metrics.csv ==="
+          cat results/eswa_revision/13_tables/postfix_main_metrics.csv 2>/dev/null || echo "(not found)"
+          echo ""
+          echo "=== prefix_vs_postfix_ablation.csv ==="
+          cat results/eswa_revision/13_tables/prefix_vs_postfix_ablation.csv 2>/dev/null || echo "(not found)"

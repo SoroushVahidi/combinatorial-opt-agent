@@ -1,0 +1,8 @@
+{
+  "name": "Pyomo Examples",
+  "url": "https://github.com/Pyomo/pyomo",
+  "type": "python_examples",
+  "examples": [
+    "abstract2", "bilevel", "callback", "concrete", "diet", "duality", "eight_process", "facility_location", "farmer", "gdp", "hydro", "knapsack", "piecewise", "reactor_design", "rosenbrock", "simple", "solver_interface", "tsp", "warm_start"
+  ]
+}

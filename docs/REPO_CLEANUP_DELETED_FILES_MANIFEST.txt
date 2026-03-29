@@ -1,0 +1,6 @@
+# Paths deleted by scripts/cleanup_old_artifacts.sh (one path per line; lines starting with # are ignored)
+# Generated for reproducible cleanup. Only SAFE_TO_DELETE items are listed.
+
+results/mention_slot_scorer/checkpoint-2000
+results/mention_slot_scorer/checkpoint-2115
+data/models/retrieval_finetuned/checkpoint-10038

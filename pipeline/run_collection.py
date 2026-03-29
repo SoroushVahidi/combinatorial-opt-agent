@@ -1,16 +1,21 @@
 """Master pipeline script for orchestrating all data collectors.
 
 Runs each configured collector in sequence, merges all outputs into a single
-``data/processed/all_problems.json`` file, and prints summary statistics.
+``data/processed/all_problems.json`` file, runs the catalog merge step, then
+optionally rebuilds ``data/processed/all_problems_extended.json`` so the search
+service always has access to the full catalog.
 
 Pipeline steps
 --------------
-1. Collect each requested source (NL4Opt, Gurobi examples, Pyomo, …).
+1. Collect each requested source (NL4Opt, OptMATH, Gurobi examples, Pyomo, …).
 2. Merge per-source JSON files into ``data/processed/all_problems.json``.
-3. Optionally rebuild ``data/processed/all_problems_extended.json`` so the
-   search service always has access to the full catalog.  Without this step
-   the extended catalog can become stale and silently restrict search to a
-   tiny subset (a known production bug).
+3. Run ``scripts/merge_catalog`` to merge base + custom + collected problems
+   into the full catalog used by the app.
+4. Rebuild ``data/processed/all_problems_extended.json`` so the search service
+   always has access to the full catalog.  Without this step the extended
+   catalog can become stale and silently restrict search to a tiny subset
+   (a known production bug: only 36 of 1,597 problems were searchable when
+   the catalog grew but the extended file was not rebuilt).
 
 Usage examples::
 
@@ -56,6 +61,7 @@ logger = logging.getLogger(__name__)
 # Phase 1 sources — run by default
 PHASE1_SOURCES: dict[str, tuple[str, str]] = {
     "nl4opt": ("collectors.collect_nl4opt", "nl4opt.json"),
+    "optmath": ("collectors.collect_optmath", "optmath.json"),
     "gurobi_optimods": ("collectors.collect_gurobi_optimods", "gurobi_optimods.json"),
     "gurobi_examples": ("collectors.collect_gurobi_examples", "gurobi_examples.json"),
     "pyomo": ("collectors.collect_pyomo", "pyomo_examples.json"),
@@ -207,17 +213,31 @@ def print_summary(stats: dict[str, Any]) -> None:
     print("=" * 60 + "\n")
 
 
-def _rebuild_extended_catalog(enrich: bool) -> None:
-    """Rebuild ``all_problems_extended.json`` if ``build_extended_catalog`` is available.
+def _run_merge_catalog() -> None:
+    """Run ``scripts/merge_catalog`` to merge base + custom + collected problems.
 
-    This step keeps the extended catalog in sync with the base catalog so that
-    the search service always has access to the full problem set.  It is
-    skipped silently when the module is not present (e.g. on the scaffolding
-    branch before that step is implemented).
+    Skipped silently if the module is not present.
+    """
+    try:
+        from scripts.merge_catalog import main as merge_catalog_main  # type: ignore[import]
+        print("Merging into catalog (NL4Opt + OptMATH + classic_extra)...")
+        merge_catalog_main()
+    except ImportError:
+        logger.debug("scripts.merge_catalog not available; skipping catalog merge.")
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("Catalog merge failed: %s", exc)
+
+
+def _rebuild_extended_catalog(enrich: bool) -> None:
+    """Rebuild ``all_problems_extended.json`` via ``build_extended_catalog``.
+
+    This step keeps the extended catalog in sync with the base catalog so the
+    search service always has access to the full problem set.  Skipped
+    silently when the module is not present.
     """
     try:
         from build_extended_catalog import build_extended_catalog  # type: ignore[import]
-        print("Rebuilding all_problems_extended.json ...")
+        print("Rebuilding all_problems_extended.json (merging base + custom + enrichment)...")
         out = build_extended_catalog(enrich=enrich, verbose=True)
         print(f"Extended catalog written to: {out}")
     except ImportError:
@@ -300,6 +320,15 @@ def main() -> None:
             except Exception as exc:  # noqa: BLE001
                 logger.error("Collector nl4opt failed: %s", exc)
                 success = False
+        # For OptMATH, call the callable API directly to honour --max-optmath.
+        elif source_name == "optmath" and args.max_optmath is not None:
+            try:
+                from collectors.collect_optmath import collect_optmath
+                collect_optmath(max_items=args.max_optmath)
+                success = True
+            except Exception as exc:  # noqa: BLE001
+                logger.error("Collector optmath failed: %s", exc)
+                success = False
         else:
             success = _import_and_run(module_path, args.skip_clone)
 
@@ -316,7 +345,10 @@ def main() -> None:
     stats = merge_outputs(output_dir, collected_files)
     print_summary(stats)
 
-    # Optionally rebuild the extended catalog (keeps search service current)
+    # Run the catalog merge step (NL4Opt + OptMATH + classic_extra)
+    _run_merge_catalog()
+
+    # Rebuild the extended catalog so the search service sees the full catalog
     _rebuild_extended_catalog(enrich=args.enrich)
 
     # Exit with non-zero status if any collector failed

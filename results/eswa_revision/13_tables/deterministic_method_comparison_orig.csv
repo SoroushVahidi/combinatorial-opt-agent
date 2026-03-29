@@ -1,0 +1,10 @@
+method,Schema_R1,Coverage,TypeMatch,Exact20_on_hits,InstReady,rank_InstReady,source
+tfidf_typed_greedy,0.9094,0.8639,0.7513,0.1991,0.5257,2,measured
+bm25_typed_greedy,0.8822,0.8509,0.7386,0.2057,0.5196,4,measured
+lsa_typed_greedy,0.8459,0.8176,0.7028,0.2048,0.4985,6,measured
+oracle_typed_greedy,1.0,0.9151,0.803,0.1882,0.565,1,measured
+tfidf_constrained,0.9094,0.8112,0.7113,0.3293,0.423,9,measured
+tfidf_semantic_ir_repair,0.9094,0.7817,0.7549,0.2843,0.4864,7,measured
+tfidf_optimization_role_repair,0.9094,0.8248,0.7036,0.2847,0.4411,8,measured
+tfidf_acceptance_rerank,0.9094,0.8332,0.734,0.1994,0.5227,3,measured
+tfidf_hierarchical_acceptance_rerank,0.9094,0.8121,0.7146,0.2003,0.5136,5,measured

@@ -1,0 +1,17 @@
+{
+  "n_cases": 15,
+  "n_correct": 7,
+  "n_wrong": 8,
+  "old": {
+    "fpr_correct": 0.8571428571428571,
+    "recall_wrong": 0.0,
+    "n_flagged_correct": 6,
+    "n_flagged_wrong": 0
+  },
+  "repaired": {
+    "fpr_correct": 0.14285714285714285,
+    "recall_wrong": 0.625,
+    "n_flagged_correct": 1,
+    "n_flagged_wrong": 5
+  }
+}
