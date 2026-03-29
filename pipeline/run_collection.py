@@ -1,14 +1,34 @@
 """Master pipeline script for orchestrating all data collectors.
 
-Runs each Phase 1 collector in sequence, merges outputs into a single
-all_problems.json file, and prints summary statistics.
+Runs each configured collector in sequence, merges all outputs into a single
+``data/processed/all_problems.json`` file, and prints summary statistics.
 
-Usage:
+Pipeline steps
+--------------
+1. Collect each requested source (NL4Opt, Gurobi examples, Pyomo, …).
+2. Merge per-source JSON files into ``data/processed/all_problems.json``.
+3. Optionally rebuild ``data/processed/all_problems_extended.json`` so the
+   search service always has access to the full catalog.  Without this step
+   the extended catalog can become stale and silently restrict search to a
+   tiny subset (a known production bug).
+
+Usage examples::
+
+    # Run all Phase 1 collectors:
     python pipeline/run_collection.py
-    python pipeline/run_collection.py --sources nl4opt gurobi_optimods
-    python pipeline/run_collection.py --sources nl4opt --skip-clone
-    python pipeline/run_collection.py --output-dir data/processed
+
+    # Run only NL4Opt with a record limit (useful for quick smoke-tests):
+    python pipeline/run_collection.py --sources nl4opt --max-per-file 100
+
+    # Run specific sources, custom output dir, skip git clones:
+    python pipeline/run_collection.py --sources nl4opt gurobi_optimods \\
+        --output-dir data/processed --skip-clone
+
+    # Rebuild extended catalog with web enrichment after collection:
+    python pipeline/run_collection.py --enrich
 """
+
+from __future__ import annotations
 
 import argparse
 import json
@@ -17,6 +37,11 @@ import sys
 from pathlib import Path
 from typing import Any
 
+# Ensure project root is on sys.path so submodules resolve correctly.
+ROOT = Path(__file__).resolve().parent.parent
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s %(levelname)s %(message)s",
@@ -24,7 +49,11 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Mapping of source name → (collector module path, output JSON file)
+# --------------------------------------------------------------------------- #
+# Source registry                                                              #
+# --------------------------------------------------------------------------- #
+
+# Phase 1 sources — run by default
 PHASE1_SOURCES: dict[str, tuple[str, str]] = {
     "nl4opt": ("collectors.collect_nl4opt", "nl4opt.json"),
     "gurobi_optimods": ("collectors.collect_gurobi_optimods", "gurobi_optimods.json"),
@@ -32,31 +61,35 @@ PHASE1_SOURCES: dict[str, tuple[str, str]] = {
     "pyomo": ("collectors.collect_pyomo", "pyomo_examples.json"),
 }
 
-# Phase 2 sources (scaffolds only — not run by default)
+# Phase 2 sources — scaffolds only, not run by default
 PHASE2_SOURCES: dict[str, tuple[str, str]] = {
     "gamslib": ("collectors.collect_gamslib", "gamslib.json"),
     "miplib": ("collectors.collect_miplib", "miplib.json"),
     "or_library": ("collectors.collect_or_library", "or_library.json"),
 }
 
-ALL_SOURCES = {**PHASE1_SOURCES, **PHASE2_SOURCES}
+ALL_SOURCES: dict[str, tuple[str, str]] = {**PHASE1_SOURCES, **PHASE2_SOURCES}
 
+
+# --------------------------------------------------------------------------- #
+# Pipeline helpers                                                             #
+# --------------------------------------------------------------------------- #
 
 def _import_and_run(module_path: str, skip_clone: bool) -> bool:
-    """Dynamically import a collector module and call its main() function.
+    """Dynamically import a collector module and call its ``main()`` function.
 
     Parameters
     ----------
     module_path:
-        Dotted module path (e.g. ``collectors.collect_nl4opt``).
+        Dotted module path, e.g. ``collectors.collect_nl4opt``.
     skip_clone:
-        If True, set the ``SKIP_CLONE`` environment variable so collectors
-        skip the git clone step.
+        When *True*, sets the ``SKIP_CLONE`` environment variable before
+        calling ``main()`` so collectors can honour it.
 
     Returns
     -------
     bool
-        True on success, False on failure.
+        ``True`` on success, ``False`` if an exception is raised.
     """
     import importlib
     import os
@@ -76,7 +109,7 @@ def _import_and_run(module_path: str, skip_clone: bool) -> bool:
 
 
 def count_problems(json_path: Path) -> int:
-    """Return the number of problems in a processed JSON file."""
+    """Return the number of entries in a processed JSON list file."""
     try:
         with open(json_path, encoding="utf-8") as fh:
             data = json.load(fh)
@@ -86,19 +119,20 @@ def count_problems(json_path: Path) -> int:
 
 
 def merge_outputs(output_dir: Path, source_files: list[str]) -> dict[str, Any]:
-    """Merge individual source JSON files into a single all_problems.json.
+    """Merge per-source JSON files into ``all_problems.json``.
 
     Parameters
     ----------
     output_dir:
-        Directory containing per-source JSON files.
+        Directory that contains the per-source JSON files.
     source_files:
-        List of filenames (relative to output_dir) to merge.
+        Filenames (relative to *output_dir*) to merge.
 
     Returns
     -------
     dict
-        Summary statistics.
+        Summary statistics: total count, breakdowns by source / category /
+        problem type (LP, ILP, MILP).
     """
     all_problems: list[dict[str, Any]] = []
 
@@ -120,8 +154,7 @@ def merge_outputs(output_dir: Path, source_files: list[str]) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     with open(merged_path, "w", encoding="utf-8") as fh:
         json.dump(all_problems, fh, indent=2, ensure_ascii=False)
-
-    logger.info("Merged %d total problems → %s", len(all_problems), merged_path)
+    logger.info("Merged %d total problems -> %s", len(all_problems), merged_path)
 
     # Compute statistics
     by_source: dict[str, int] = {}
@@ -131,21 +164,16 @@ def merge_outputs(output_dir: Path, source_files: list[str]) -> dict[str, Any]:
     for p in all_problems:
         src = p.get("source_dataset", "unknown")
         cat = p.get("category", "unknown")
-        tags = p.get("tags", [])
-
         by_source[src] = by_source.get(src, 0) + 1
         by_category[cat] = by_category.get(cat, 0) + 1
 
-        # Classify as LP, ILP, or MILP based on decision variable types
+        # Classify as LP / ILP / MILP from decision variable types
         var_types = {
             v.get("type", "")
             for v in p.get("formulation", {}).get("decision_variables", [])
         }
         if "binary" in var_types or "integer" in var_types:
-            if "continuous" in var_types:
-                problem_type = "MILP"
-            else:
-                problem_type = "ILP"
+            problem_type = "MILP" if "continuous" in var_types else "ILP"
         else:
             problem_type = "LP"
         by_type[problem_type] = by_type.get(problem_type, 0) + 1
@@ -159,7 +187,7 @@ def merge_outputs(output_dir: Path, source_files: list[str]) -> dict[str, Any]:
 
 
 def print_summary(stats: dict[str, Any]) -> None:
-    """Print a human-readable summary of collection statistics."""
+    """Print a human-readable collection summary to stdout."""
     print("\n" + "=" * 60)
     print("COLLECTION SUMMARY")
     print("=" * 60)
@@ -179,8 +207,33 @@ def print_summary(stats: dict[str, Any]) -> None:
     print("=" * 60 + "\n")
 
 
+def _rebuild_extended_catalog(enrich: bool) -> None:
+    """Rebuild ``all_problems_extended.json`` if ``build_extended_catalog`` is available.
+
+    This step keeps the extended catalog in sync with the base catalog so that
+    the search service always has access to the full problem set.  It is
+    skipped silently when the module is not present (e.g. on the scaffolding
+    branch before that step is implemented).
+    """
+    try:
+        from build_extended_catalog import build_extended_catalog  # type: ignore[import]
+        print("Rebuilding all_problems_extended.json ...")
+        out = build_extended_catalog(enrich=enrich, verbose=True)
+        print(f"Extended catalog written to: {out}")
+    except ImportError:
+        logger.debug(
+            "build_extended_catalog not available; skipping extended catalog rebuild."
+        )
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("Extended catalog rebuild failed: %s", exc)
+
+
+# --------------------------------------------------------------------------- #
+# Main entry point                                                             #
+# --------------------------------------------------------------------------- #
+
 def main() -> None:
-    """Parse arguments and orchestrate the collection pipeline."""
+    """Parse CLI arguments and orchestrate the collection pipeline."""
     parser = argparse.ArgumentParser(
         description="Run the combinatorial optimization data collection pipeline."
     )
@@ -189,7 +242,7 @@ def main() -> None:
         nargs="*",
         default=list(PHASE1_SOURCES.keys()),
         choices=list(ALL_SOURCES.keys()),
-        help="Which sources to collect (default: all Phase 1 sources).",
+        help="Sources to collect (default: all Phase 1 sources).",
     )
     parser.add_argument(
         "--output-dir",
@@ -201,6 +254,27 @@ def main() -> None:
         action="store_true",
         help="Skip git clone steps if repositories are already downloaded.",
     )
+    parser.add_argument(
+        "--max-per-file",
+        type=int,
+        default=None,
+        help="Limit NL4Opt records per file (default: all). Useful for quick tests.",
+    )
+    parser.add_argument(
+        "--max-optmath",
+        type=int,
+        default=None,
+        help="Limit OptMATH benchmark problems (default: all).",
+    )
+    parser.add_argument(
+        "--enrich",
+        action="store_true",
+        default=False,
+        help=(
+            "Fetch missing formulations from the web when rebuilding the "
+            "extended catalog (requires network access)."
+        ),
+    )
     args = parser.parse_args()
 
     output_dir = Path(args.output_dir)
@@ -211,26 +285,41 @@ def main() -> None:
 
     for source_name in args.sources:
         if source_name not in ALL_SOURCES:
-            logger.warning("Unknown source: %s — skipping.", source_name)
+            logger.warning("Unknown source: %s -- skipping.", source_name)
             continue
 
         module_path, output_file = ALL_SOURCES[source_name]
         logger.info("Running collector: %s ...", source_name)
-        success = _import_and_run(module_path, args.skip_clone)
+
+        # For NL4Opt, call the callable API directly to honour --max-per-file.
+        if source_name == "nl4opt" and args.max_per_file is not None:
+            try:
+                from collectors.collect_nl4opt import collect_nl4opt
+                collect_nl4opt(max_per_file=args.max_per_file)
+                success = True
+            except Exception as exc:  # noqa: BLE001
+                logger.error("Collector nl4opt failed: %s", exc)
+                success = False
+        else:
+            success = _import_and_run(module_path, args.skip_clone)
+
         results[source_name] = success
 
         if success:
-            count = count_problems(output_dir / output_file)
-            logger.info("[OK] %s: collected %d problems.", source_name, count)
+            n = count_problems(output_dir / output_file)
+            logger.info("[OK] %s: collected %d problems.", source_name, n)
             collected_files.append(output_file)
         else:
             logger.error("[FAIL] %s: collector failed.", source_name)
 
-    # Merge all outputs
+    # Merge all per-source outputs into all_problems.json
     stats = merge_outputs(output_dir, collected_files)
     print_summary(stats)
 
-    # Report overall success/failure
+    # Optionally rebuild the extended catalog (keeps search service current)
+    _rebuild_extended_catalog(enrich=args.enrich)
+
+    # Exit with non-zero status if any collector failed
     failed = [s for s, ok in results.items() if not ok]
     if failed:
         logger.warning("The following collectors failed: %s", failed)

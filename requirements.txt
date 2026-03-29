@@ -1,3 +1,24 @@
+# Retrieval: semantic search over problem catalog
+sentence-transformers>=2.2.0
+numpy>=1.20.0
+
+# Baselines: BM25, TF-IDF
+rank_bm25>=0.2.2
+scikit-learn>=1.0.0
+
+# Web UI
+gradio>=4.0.0
+fastapi>=0.100.0
+uvicorn>=0.22.0
+
+# Training (GPU on Wulver): generate samples + fine-tune retrieval
+datasets>=2.14.0
+accelerate>=1.1.0
+
+# PDF support for web UI
+pypdf>=4.0.0
+
+# Data collection pipeline
 requests>=2.28.0
 beautifulsoup4>=4.11.0
 nbformat>=5.7.0
