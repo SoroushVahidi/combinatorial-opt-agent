@@ -1,0 +1,6 @@
+failure_category,count
+gurobipy missing,805
+incomplete instantiation,267
+type mismatch,82
+missing scalar slots,69
+schema miss,37

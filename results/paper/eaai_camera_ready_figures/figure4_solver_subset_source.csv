@@ -1,0 +1,3 @@
+method,executable,solver_success,feasible,objective
+TFIDF,0.95,0.8,0.8,0.8
+ORACLE,0.95,0.75,0.75,0.75

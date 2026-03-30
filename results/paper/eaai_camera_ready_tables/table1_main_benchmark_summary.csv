@@ -1,0 +1,5 @@
+method_label,method_key,group,schema_retrieval_r1,coverage_metric,type_match_metric,instantiation_ready,source_file
+TF-IDF,tfidf_typed_greedy,core,0.9094,0.8639,0.7513,0.5257,results/eswa_revision/13_tables/deterministic_method_comparison_orig.csv
+BM25,bm25_typed_greedy,core,0.8822,0.8509,0.7386,0.5196,results/eswa_revision/13_tables/deterministic_method_comparison_orig.csv
+Oracle schema,oracle_typed_greedy,core,1.0,0.9151,0.803,0.565,results/eswa_revision/13_tables/deterministic_method_comparison_orig.csv
+Best downstream grounding used in final paper (TF-IDF + typed_greedy),tfidf_typed_greedy,best_downstream,0.9094,0.8639,0.7513,0.5257,results/eswa_revision/13_tables/deterministic_method_comparison_orig.csv

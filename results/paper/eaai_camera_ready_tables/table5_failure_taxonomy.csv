@@ -1,0 +1,8 @@
+failure_category,scope,count_or_rate,evidence,source_file
+Schema retrieval miss,Engineering subset (60 x 3 baselines),~10 cases total (derived from rounded schema-hit rates),tfidf 4 + bm25 6 + oracle 0,analysis/eaai_engineering_subset_report.md
+Incomplete instantiation,Engineering subset (60 x 3 baselines),~44 cases total (derived from rounded rates),instantiation_complete deficits across tfidf/bm25/oracle,analysis/eaai_engineering_subset_report.md
+Missing scalar slots,Executable-attempt subset (269),69 total counts,tfidf 24 + bm25 24 + oracle 21,analysis/eaai_executable_subset_report.md
+Type mismatch,Executable-attempt subset (269),82 total counts,tfidf 27 + bm25 28 + oracle 27,analysis/eaai_executable_subset_report.md
+Incomplete instantiation,Executable-attempt subset (269),267 total counts,tfidf 90 + bm25 92 + oracle 85,analysis/eaai_executable_subset_report.md
+Missing runtime dependency: gurobipy,Executable-attempt subset (269),805/807 baseline-instance rows,"all tfidf/oracle rows, 267/269 bm25 rows",analysis/eaai_executable_subset_report.md
+Indexing incompatibility in shim path,Final solver-backed subset (20 x 2 baselines),2/40 rows,IndexError: list index out of range,analysis/eaai_final_solver_attempt_report.md

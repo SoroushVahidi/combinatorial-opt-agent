@@ -1,0 +1,4 @@
+method,structural_valid,instantiation_complete
+TFIDF,0.75,0.75
+BM25,0.7333,0.7333
+ORACLE,0.7667,0.7833
