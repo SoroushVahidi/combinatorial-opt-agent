@@ -1,10 +1,10 @@
-# Combinatorial Optimization AI Agent
+# Retrieval-Assisted Optimization Schema Grounding
 
-An **AI-powered agent** that translates plain-English optimization problem descriptions into
-structured ILP/LP formulations and solver-ready code.  It combines a **retrieval pipeline**
-(query → problem schema) with a **downstream grounding pipeline** (NL numeric mentions →
-parameter slots) so that the generated formulation is both syntactically correct and
-numerically instantiated from the user's own problem data.
+A research codebase for **retrieval-assisted instantiation of natural-language optimization
+problems**, as described in the companion EAAI manuscript.  The pipeline combines a
+**schema retrieval stage** (NL query → problem schema) with a **deterministic scalar
+grounding stage** (NL numeric mentions → parameter slots) so that the retrieved
+formulation is numerically instantiated from the user's own problem data.
 
 **Core capabilities:**
 
@@ -12,18 +12,26 @@ numerically instantiated from the user's own problem data.
 |---|---|
 | **Problem recognition** | TF-IDF / dense retrieval matches queries to 90+ known problem types (facility location, knapsack, scheduling, …) at **Schema R@1 = 0.906** |
 | **Formulation retrieval** | Returns the ILP/LP formulation (variables, objective, constraints) for the matched schema |
-| **Downstream grounding** | Assigns numeric mentions from the NL query to schema parameter slots; best method: **Optimization-Role Repair** (Coverage 0.822 · TypeMatch 0.243 · Exact20 0.277) |
-| **GAMSPy integration** | Local GAMSPy/GAMS example collection, catalog grouping, and evaluation |
-| **Solver-ready code** | Pyomo, Gurobi, PuLP, and GAMSPy output when applicable |
+| **Deterministic scalar grounding** | Assigns numeric mentions from the NL query to schema parameter slots; best method: **Optimization-Role Repair** (Coverage 0.822 · TypeMatch 0.243 · Exact20 0.277) |
+| **Structural validation** | LP structural consistency checks (invalid objective sense, missing variable symbols) without requiring a live solver |
+| **Restricted solver execution** | Real solver outcomes on a 20-instance subset via SciPy HiGHS shim (see Table 4) |
+| **Demo app** | Gradio web UI for interactive schema search; GAMSPy/GAMS example collection (outside paper scope) |
 
-## Project vision
+## Project scope (EAAI manuscript)
 
-You describe a problem in plain English; the agent identifies the problem type (e.g.
-Uncapacitated Facility Location), extracts the numeric parameters from your description,
-and returns both the ILP/LP formulation and solver code ready to run.  The project also
-advances research on **NL-to-optimization** (NLP4LP): schema acceptance, parameter
-instantiation, optimization-role extraction, and incremental admissibility-constrained
-decoding.
+This system retrieves a compatible optimization schema from a fixed catalog, deterministically
+instantiates scalar parameters from numeric evidence in NL text, and supports restricted
+engineering-oriented downstream validation on subsets of the NLP4LP benchmark.
+
+**The paper story in brief:**
+- Main benchmark on NLP4LP (331 test queries, `orig` variant)
+- Retrieval is already strong (TF-IDF Schema R@1 = 0.9094)
+- Main bottleneck is downstream number-to-slot grounding
+- Three engineering-oriented validations: structural subset (60 instances), executable-attempt subset (269 instances with documented blockers), and a solver-backed restricted subset (20 instances, real nonzero outcomes)
+
+> **Note:** The demo app also supports querying unknown problem types via an LLM-generation
+> path. This feature is outside the scope of the EAAI manuscript and is provided for
+> demonstration purposes only.
 
 ## Current evidence-based status
 
@@ -35,11 +43,12 @@ decoding.
 | Downstream grounding — optimization-role repair (recommended) | ✅ Best deterministic | Coverage 0.822, TypeMatch 0.243, Exact20 0.277 |
 | Downstream grounding — global consistency grounding (GCG) | 🔬 Experimental | Unit-tested; full-run needs HF gold data |
 | Learned retrieval fine-tuning | ⚠️ Future work | Real-data run did not beat rule baseline |
-| Solver-based output validation | ⚠️ Partial | Structural consistency checks only; no LP solver |
+| Structural validation (no live solver) | ✅ Available | LP objective/variable consistency checks in `formulation/verify.py` |
+| Solver-backed restricted subset (20 instances, SciPy HiGHS shim) | ✅ Real outcomes | TF-IDF: 80% feasible; Oracle: 75% feasible |
 
-**Downstream grounding is the active research frontier** — all five assignment methods
-(typed greedy, constrained, semantic IR repair, optimization-role repair, GCG) are
-implemented and benchmarked; see [EXPERIMENTS.md](EXPERIMENTS.md) for full tables.
+All claims are **benchmark-scoped** (NLP4LP `orig` variant, 331 test queries). See the
+[EAAI paper artifacts](#paper-artifacts--eaai-manuscript-support) section for camera-ready
+tables and figures.
 
 ## Recent improvements
 
@@ -87,13 +96,15 @@ Natural-language query
          │  slot → value mapping
          ▼
 ┌───────────────────┐
-│  Output           │  ILP/LP formulation, LP relaxation,
-│                   │  solver code (Pyomo / Gurobi / PuLP / GAMSPy)
+│  Output           │  ILP/LP formulation + instantiated parameter slots;
+│                   │  structural consistency check; solver code (demo only)
 └───────────────────┘
 ```
 
-For **known problems** the formulation is fetched from the catalog; for **unknown
-problems** it is generated via LLM and structurally verified.
+For **known problems** the formulation is fetched from the catalog.
+Structural validation checks LP consistency without a live solver.
+Solver execution is supported on a restricted subset via the SciPy HiGHS shim
+(see `tools/run_eaai_final_solver_attempt.py` and Table 4 in the paper).
 
 ## Quick start (use the bot)
 
@@ -205,6 +216,57 @@ request is made and no data leaves the machine beyond the local log file.
 
 The local log file (`data/collected_queries/user_queries.jsonl`) is listed in
 `.gitignore` and is never committed to the public repository.
+
+## Paper artifacts / EAAI manuscript support
+
+All camera-ready artifacts for the EAAI manuscript live under `results/paper/`.
+
+### Tables
+
+| Table | File | Description |
+|-------|------|-------------|
+| Table 1 | `results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv` | Main NLP4LP benchmark (TF-IDF, BM25, Oracle) |
+| Table 2 | `results/paper/eaai_camera_ready_tables/table2_engineering_structural_subset.csv` | Engineering structural subset (60 instances) |
+| Table 3 | `results/paper/eaai_camera_ready_tables/table3_executable_attempt_with_blockers.csv` | Executable-attempt study with blockers (269 instances) |
+| Table 4 | `results/paper/eaai_camera_ready_tables/table4_final_solver_backed_subset.csv` | Final solver-backed subset (20 instances, SciPy shim) |
+| Table 5 | `results/paper/eaai_camera_ready_tables/table5_failure_taxonomy.csv` | Cross-experiment failure taxonomy |
+| Bundle | `results/paper/eaai_camera_ready_tables/camera_ready_tables.md` | All tables in Markdown |
+
+### Figures
+
+| Figure | Files | Description |
+|--------|-------|-------------|
+| Figure 1 | `results/paper/eaai_camera_ready_figures/figure1_pipeline_overview.{png,pdf}` | Pipeline overview schematic |
+| Figure 2 | `results/paper/eaai_camera_ready_figures/figure2_main_benchmark_comparison.{png,pdf}` | Main benchmark comparison |
+| Figure 3 | `results/paper/eaai_camera_ready_figures/figure3_engineering_validation_comparison.{png,pdf}` | Engineering validation subset |
+| Figure 4 | `results/paper/eaai_camera_ready_figures/figure4_final_solver_backed_subset.{png,pdf}` | Final solver-backed subset |
+| Figure 5 | `results/paper/eaai_camera_ready_figures/figure5_failure_breakdown.{png,pdf}` | Failure breakdown (appendix) |
+
+To regenerate figures from the authoritative tables:
+
+```bash
+pip install Pillow>=9.0.0
+python tools/build_eaai_camera_ready_figures.py
+```
+
+### Experiment reports (provenance)
+
+- `analysis/eaai_engineering_subset_report.md` — Engineering subset (60 instances)
+- `analysis/eaai_executable_subset_report.md` — Executable-attempt study (269 instances)
+- `analysis/eaai_final_solver_attempt_report.md` — Final solver-backed subset (20 instances)
+- `analysis/eaai_tables_build_report.md` — Table provenance and conflict resolution
+- `analysis/eaai_figures_build_report.md` — Figure build notes
+- `analysis/eaai_figures_reproduction_report.md` — Figure reproduction log
+- `docs/EAAI_SOURCE_OF_TRUTH.md` — Canonical paper framing and authoritative file list
+- `docs/EAAI_REPO_ALIGNMENT_AUDIT.md` — Repo alignment audit report
+
+### Historical note
+
+Older docs in `docs/` (e.g., `JOURNAL_READINESS_AUDIT.md`, `Q1_JOURNAL_AUDIT.md`,
+`eswa_revision/`) contain earlier ESWA-era experiment records. They are preserved for
+history but should not be cited as authoritative for the current EAAI manuscript.
+The ESWA revision tables in `results/eswa_revision/13_tables/` **are** still authoritative
+for the main benchmark metrics used in Table 1.
 
 ## Documentation
 
@@ -439,4 +501,4 @@ This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for t
 ---
 
 **Repository description** (for GitHub **Settings → General → Description**; update manually if needed):  
-*NL-to-optimization agent: plain-English → ILP/LP formulation + solver code. Schema retrieval (R@1 0.906), deterministic grounding (typed greedy, optimization-role repair, GCG), and bound-role annotation pipeline.*
+*Retrieval-assisted optimization schema grounding: NLP4LP benchmark, deterministic scalar instantiation (typed greedy, optimization-role repair, GCG), engineering-oriented validation. EAAI manuscript companion codebase.*
