@@ -2,6 +2,8 @@
 
 This document provides a consolidated overview of all experiments conducted in this project. Detailed results, implementation notes, and reproduction commands are linked in each section.
 
+> **EAAI manuscript note:** For the current EAAI submission, the authoritative paper-facing results are in `results/paper/eaai_camera_ready_tables/` and `analysis/eaai_*_report.md`. The sections below cover the full experiment history including pre-EAAI exploratory work. Dense retrieval baselines (E5, BGE, SBERT) documented here are supplementary and not in the EAAI main results table. See [`docs/EAAI_SOURCE_OF_TRUTH.md`](docs/EAAI_SOURCE_OF_TRUTH.md) for the canonical paper framing.
+
 > **Audit note:** For a strict evidence-driven breakdown of which experiments are truly measured vs. placeholder/scaffolding, see [docs/EXPERIMENT_AUDIT.md](docs/EXPERIMENT_AUDIT.md).
 
 ---

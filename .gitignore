@@ -235,6 +235,9 @@ results/*
 # Exception: ESWA revision outputs are committed (reproducibility artifacts)
 !results/eswa_revision/
 !results/eswa_revision/**
+# Exception: EAAI camera-ready paper artifacts are committed
+!results/paper/
+!results/paper/**
 
 # Gradio / web UI runtime state
 .gradio/
