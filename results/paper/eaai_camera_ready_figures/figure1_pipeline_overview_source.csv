@@ -1,0 +1,7 @@
+step_index,step_name
+1,NL query
+2,Schema retrieval
+3,Scalar grounding
+4,Structural validation
+5,Executable attempt
+6,Solver-backed subset validation
