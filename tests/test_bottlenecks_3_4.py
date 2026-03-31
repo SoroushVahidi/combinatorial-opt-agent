@@ -142,8 +142,11 @@ class TestExtractNumTokensWordRecognition:
 
     def test_hyphenated_written_word(self):
         from tools.nlp4lp_downstream_utility import _extract_num_tokens
+        # "twenty-five percent" → the hyphenated compound is parsed as 25 and then
+        # normalized to 0.25 (kind="percent") because "percent" is the next token.
+        # This mirrors digit-based behaviour: "25 percent" → value=0.25, kind="percent".
         toks = _extract_num_tokens("twenty-five percent discount applies", "orig")
-        assert any(t.value == 25.0 for t in toks)
+        assert any(abs(t.value - 0.25) < 1e-9 and t.kind == "percent" for t in toks)
 
     def test_mixed_digit_and_word(self):
         from tools.nlp4lp_downstream_utility import _extract_num_tokens
@@ -211,8 +214,10 @@ class TestExpectedTypeExtended:
 
     def test_currency_slots_extended(self):
         from tools.nlp4lp_downstream_utility import _expected_type
-        assert _expected_type("totalAmount") == "currency"
-        assert _expected_type("supplyLimit") == "currency"
+        # "amount" is ambiguous (AmountPerPill is float) so totalAmount → float
+        assert _expected_type("totalAmount") == "float"
+        # supplyLimit is a quantity constraint bound (not monetary) → float
+        assert _expected_type("supplyLimit") == "float"
         assert _expected_type("allocationBudget") == "currency"
         assert _expected_type("incomeThreshold") == "currency"
         assert _expected_type("salaryLimit") == "currency"
