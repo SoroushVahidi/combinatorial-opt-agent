@@ -441,96 +441,11 @@ def _extract_num_tokens(query: str, variant: str) -> list[NumTok]:
     toks = query.split()
     out: list[NumTok] = []
     for i, w in enumerate(toks):
-        if w == "<num>" and variant in ("noisy", "nonum"):
-            out.append(NumTok(raw=w, value=None, kind="unknown"))
-            continue
         # local context window
         ctx = set(x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 3) : i + 4])
-<<<<<<< HEAD
-        # Digit-based token
-        m = NUM_TOKEN_RE.fullmatch(w.strip())
-=======
         # Digit-based token (single token only)
         m = NUM_TOKEN_RE.fullmatch(w.strip().rstrip(",;:()[]{}").rstrip("."))
->>>>>>> 891440f (fix: total-vs-coefficient grounding confusion in downstream pipeline)
         if m:
-            out.append(_parse_num_token(w, ctx))
-            continue
-        # Written-word number: "two", "twenty-five", etc.
-        clean = w.lower().strip(".,;:()[]{}\"'")
-        wval = _word_to_number(clean)
-        if wval is not None:
-<<<<<<< HEAD
-            kind = "int" if float(int(wval)) == wval else "float"
-            out.append(NumTok(raw=w, value=wval, kind=kind))
-=======
-            j = i + consumed  # index of first token after the span
-            raw_surface = " ".join(toks[i:j])
-            out.append(_classify_word_num_tok(raw_surface, wval, ctx, toks, j))
-            i += consumed
-            continue
-        # Fraction word (half, one-third, quarter, …) → kind="percent"
-        _w_clean = w.lower().strip(".,;:()[]{}\"'")
-        _frac_val = _WORD_FRACTIONS.get(_w_clean)
-        if _frac_val is not None:
-            out.append(NumTok(raw=_w_clean, value=_frac_val, kind="percent"))
-            i += 1
-            continue
-        i += 1
->>>>>>> 626d4d2 (feat: strengthen percent vs int/float type incompatibility in grounding pipeline)
-    return out
-
-
-def _normalize_tokens(text: str) -> list[str]:
-    return re.findall(r"\w+", text.lower())
-
-
-def _slot_aliases(param_name: str) -> list[str]:
-    """Rule-based alias expansion for common optimization slot patterns."""
-    n = (param_name or "").lower()
-    aliases = [param_name]
-
-    def add_many(xs: Iterable[str]) -> None:
-        for x in xs:
-            if x not in aliases:
-                aliases.append(x)
-
-    if "budget" in n:
-        add_many(["budget", "total budget", "available amount", "amount available"])
-    if "capacity" in n:
-        add_many(["capacity", "limit", "maximum", "available", "upper bound"])
-    if "cost" in n or "expense" in n or "price" in n:
-        add_many(["cost", "expense", "spending", "spend", "price"])
-    if "profit" in n or "revenue" in n:
-        add_many(["profit", "gain", "revenue", "return"])
-    if "demand" in n or "require" in n or "needed" in n:
-        add_many(["demand", "required", "needed", "requirement"])
-    if any(w in n for w in ("fraction", "ratio", "percent", "percentage", "rate", "share")):
-        add_many(["percentage", "fraction", "share", "ratio", "rate", "proportion"])
-    if "min" in n or "minimum" in n or "atleast" in n:
-        add_many(["minimum", "at least", "lower bound"])
-    if "max" in n or "maximum" in n or "atmost" in n:
-        add_many(["maximum", "at most", "upper bound"])
-
-    return aliases
-
-
-def _extract_num_mentions(query: str, variant: str) -> list[MentionRecord]:
-    """Extract numeric mentions with richer context for constrained assignment.
-
-    In addition to digit-based tokens (e.g. "100", "$5000", "20%"), this also
-    recognises written-word numbers such as "two", "twenty-five", "hundred".
-    """
-    toks = query.split()
-    sent_tokens = [t.lower().strip(".,;:()[]{}") for t in toks]
-    mentions: list[MentionRecord] = []
-    for i, w in enumerate(toks):
-        # slightly wider context window for constrained assignment
-        ctx_tokens = [
-            x.lower().strip(".,;:()[]{}") for x in toks[max(0, i - 8) : i + 9]
-        ]
-        ctx_tokens = [c for c in ctx_tokens if c]
-        cue_words = set(ctx_tokens) & CUE_WORDS
         if w == "<num>" and variant in ("noisy", "nonum"):
             tok = NumTok(raw=w, value=None, kind="unknown")
         else:
@@ -540,7 +455,7 @@ def _extract_num_mentions(query: str, variant: str) -> list[MentionRecord]:
                 ctx_set = set(ctx_tokens)
                 tok = _parse_num_token(w, ctx_set)
             else:
-                clean = w.lower().strip(".,;:()[]{}\"'")
+                clean = w.lower().strip('.,;:()[]{}"'')
                 wval = _word_to_number(clean)
                 if wval is None:
                     continue
@@ -554,81 +469,10 @@ def _extract_num_mentions(query: str, variant: str) -> list[MentionRecord]:
                 sentence_tokens=sent_tokens,
                 cue_words=cue_words,
             )
-<<<<<<< HEAD
         )
-=======
-            i += 1
-            continue
-
-        # Digit-based token (single token only — no multi-token merging needed).
-        m = NUM_TOKEN_RE.fullmatch(w.strip().rstrip(",;:()[]{}").rstrip("."))
-        if m:
-            tok = _parse_num_token(w, set(ctx_tokens))
-            mentions.append(
-                MentionRecord(
-                    index=i,
-                    tok=tok,
-                    context_tokens=ctx_tokens,
-                    sentence_tokens=sent_tokens,
-                    cue_words=cue_words,
-                )
-            )
-            i += 1
-            continue
-
-        # Written-word number — may span multiple tokens ("one hundred fifty").
-        wval, consumed = _parse_word_num_span(toks, i)
-        if wval is not None:
-            j = i + consumed  # first token after the span
-            raw_surface = " ".join(toks[i:j])
-            tok = _classify_word_num_tok(raw_surface, wval, set(ctx_tokens), toks, j)
-            mentions.append(
-                MentionRecord(
-                    index=i,
-                    tok=tok,
-                    context_tokens=ctx_tokens,
-                    sentence_tokens=sent_tokens,
-                    cue_words=cue_words,
-                )
-            )
-            i += consumed
-            continue
-
         i += 1
->>>>>>> 891440f (fix: total-vs-coefficient grounding confusion in downstream pipeline)
     return mentions
 
-
-def _expected_type(param_name: str) -> str:
-    """Infer the expected scalar type of an optimization parameter from its name.
-
-    Type hierarchy (checked in order):
-    1. percent  — clearly represents a rate/fraction/percentage
-    2. int      — primary discrete patterns (num, count, items, …)
-    3. currency — monetary / budget-like quantities
-    4. int      — extended discrete patterns (number-of workers, days, shifts, …)
-                  checked *after* currency so "TotalBudget" still → currency
-    5. float    — catch-all for continuous real-valued parameters
-
-    Note on float/int: many optimization coefficients (e.g. RequiredEggsPerSandwich=2)
-    appear as integer text in queries but are conceptually continuous.  The
-    _is_type_match() helper is the authoritative arbiter: it counts an integer
-    token as a full type-match for a float slot.
-    """
-    n = (param_name or "").lower()
-    if any(s in n for s in ("percent", "percentage", "rate", "fraction", "pct", "ratio", "proportion", "share")):
-        return "percent"
-    # Primary integer indicators (checked before currency to preserve existing behaviour)
-    if any(s in n for s in ("num", "count", "types", "items", "ingredients", "nodes", "edges")):
-        return "int"
-    # Currency / monetary quantities
-    if any(
-        s in n
-        for s in (
-            "budget",
-            "cost",
-            "price",
-            "revenue",
             "profit",
             "penalty",
             "investment",
