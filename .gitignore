@@ -253,7 +253,9 @@ data/external/nl4opt/
 data/external/text2zinc/
 data/external/optmath/
 data/external/complexor/
+data/external/optimus/
 data/external/*/downloads/
+data/processed/expanded_schema_catalog.jsonl
 cache/
 
 # Local audit and cleanup outputs (do not commit)

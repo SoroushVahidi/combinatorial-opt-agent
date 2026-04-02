@@ -1,0 +1,1 @@
+{"id":"optimus_test_1","nl_query":"Minimize total transportation cost from warehouses to customers.","problem_type":"transportation","scalar_gold_params":{"num_warehouses":3,"num_customers":4},"formulation_text":"min sum(i,j: cost[i,j]*x[i,j])"}
