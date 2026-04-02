@@ -12,7 +12,7 @@
 |--------------|------|--------|
 | API error with **`limit: 0`** (free-tier metric); preflight exit **2** | **Hard zero quota** | Not fixable by retries; change model, billing, or use **`GEMINI_SKIP_ON_ZERO_QUOTA=1`** to soft-skip. |
 | **429** with a **positive** limit and “retry in Xs” / rate limit | **Transient** | `tools/llm_baselines.py` retries with backoff (hard zero is **not** retried). |
-| Python **`FutureWarning`** / deprecated **`google.generativeai`** on import | **SDK deprecation** | Does not mean your key or model is wrong; see **[MIGRATION_GOOGLE_GENAI.md](MIGRATION_GOOGLE_GENAI.md)**. |
+| Import / dependency issues for **`google.genai`** | **SDK install** | `pip install google-genai` (`requirements.txt`). Not a quota problem. |
 | **`pthread_create failed: Resource temporarily unavailable`** (e.g. Wulver) | **HPC / thread** | **`GEMINI_LIMIT_RUNTIME_THREADS=1`** (default in the sbatch script) caps OMP/BLAS threads **before** the client loads; **does not** change quota or API behavior. Preflight may still exit **0** despite warnings. |
 
 ### Wulver copy-paste (current defaults: `gemini-2.5-flash-lite`, auto-pick, thread cap, soft-skip optional)
@@ -45,7 +45,7 @@ To **disable** auto-`pick-model` (yaml / `GEMINI_MODEL` only): `export GEMINI_AU
 | `GEMINI_SKIP_PREFLIGHT=1 (set for variant loop)` | Downstream variants will not re-probe |
 | **`gemini_sbatch_run_*.json`** | Machine-readable copy of model + flags |
 
-Stderr (`*.err`) may contain **`FutureWarning`** (`google.generativeai` deprecation) and occasional **`pthread_create failed`**; those do not necessarily mean failure if stdout shows **`PREFLIGHT_PASSED=1`** and the baseline steps run.
+Stderr (`*.err`) may contain occasional **`pthread_create failed`** lines from native libs; those do not necessarily mean failure if stdout shows **`PREFLIGHT_PASSED=1`** and the baseline steps run.
 
 ---
 
@@ -78,13 +78,13 @@ Only **text / flash-style** model ids are listed in config (no image/video-only 
 
 Logs may show **`pthread_create failed: Resource temporarily unavailable`** while gRPC or client libraries start. **`preflight` can still exit 0**—the probe may succeed despite warnings.
 
-**Mitigation (not quota):** `batch/learning/run_gemini_llm_baselines.sbatch` exports **`GEMINI_LIMIT_RUNTIME_THREADS=1`** by default. That enables `tools/llm_baselines.py` to set **`OMP_NUM_THREADS`**, **`OPENBLAS_NUM_THREADS`**, **`MKL_NUM_THREADS`**, **`NUMEXPR_MAX_THREADS`**, and **`TOKENIZERS_PARALLELISM`** *before* importing **`google.generativeai`**, and the same hook runs at **CLI entry** (`main()`), **`gemini_probe_minimal`**, and **`LLMTwoStageBaseline`** construction. It **does not** change free-tier limits, auth, or hard-zero detection.
+**Mitigation (not quota):** `batch/learning/run_gemini_llm_baselines.sbatch` exports **`GEMINI_LIMIT_RUNTIME_THREADS=1`** by default. That enables `tools/llm_baselines.py` to set **`OMP_NUM_THREADS`**, **`OPENBLAS_NUM_THREADS`**, **`MKL_NUM_THREADS`**, **`NUMEXPR_MAX_THREADS`**, and **`TOKENIZERS_PARALLELISM`** *before* importing **`google.genai`**, and the same hook runs at **CLI entry** (`main()`), **`gemini_probe_minimal`**, and **`LLMTwoStageBaseline`** construction. It **does not** change free-tier limits, auth, or hard-zero detection.
 
 Disable the cap for this job: `export GEMINI_LIMIT_RUNTIME_THREADS=0` before `sbatch` (or interactive Python).
 
-## SDK migration (`google.generativeai` → `google.genai`)
+## SDK (`google.genai`)
 
-The repo still uses the **`google.generativeai`** package (deprecated). A staged move to **`google.genai`** is documented in **[MIGRATION_GOOGLE_GENAI.md](MIGRATION_GOOGLE_GENAI.md)**.
+Gemini baselines use the **`google-genai`** PyPI package (`from google import genai`). Historical notes and API mapping from the old SDK are in **[MIGRATION_GOOGLE_GENAI.md](MIGRATION_GOOGLE_GENAI.md)**.
 
 ---
 

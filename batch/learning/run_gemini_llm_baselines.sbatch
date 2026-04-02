@@ -82,15 +82,15 @@ _lim="${GEMINI_LIMIT_RUNTIME_THREADS:-}"
 if [[ "$_lim" == "0" || "$_lim" == "false" || "$_lim" == "no" || "$_lim" == "off" ]]; then
   echo "GEMINI_LIMIT_RUNTIME_THREADS=0 (thread cap disabled in tools/llm_baselines.py)"
 else
-  echo "GEMINI_LIMIT_RUNTIME_THREADS=${GEMINI_LIMIT_RUNTIME_THREADS:-1} (OMP/BLAS/NUMEXPR capped in Python before google.generativeai import)"
+  echo "GEMINI_LIMIT_RUNTIME_THREADS=${GEMINI_LIMIT_RUNTIME_THREADS:-1} (OMP/BLAS/NUMEXPR capped in Python before google.genai import)"
 fi
 echo "GEMINI_MODEL_SELECTED_FILE=${GEMINI_MODEL_SELECTED_FILE:-$REPO_ROOT/results/llm_baselines/gemini_selected_model.json}"
 echo "=========================================="
 
 echo "which python: $(which python 2>/dev/null || true)"
 python --version 2>/dev/null || true
-python -c "import google.generativeai as g; print('google-generativeai import: OK')" 2>/dev/null || {
-  echo "ERROR: google-generativeai is not available in this Python env."
+python -c "from google import genai; print('google-genai import: OK')" 2>/dev/null || {
+  echo "ERROR: google-genai is not available in this Python env (pip install google-genai)."
   exit 1
 }
 

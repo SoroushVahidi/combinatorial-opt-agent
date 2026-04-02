@@ -65,6 +65,13 @@ def is_gemini_hard_zero_quota_error(exc: BaseException) -> bool:
             return True
     except Exception:
         pass
+    try:
+        from google.genai import errors as genai_errors
+
+        if isinstance(exc, genai_errors.APIError) and getattr(exc, "code", None) == 429:
+            return True
+    except Exception:
+        pass
     low = msg.lower()
     if "quota" in low or "free_tier" in low or "resourceexhausted" in type(exc).__name__.lower():
         return True
@@ -182,13 +189,12 @@ class LLMTwoStageBaseline:
             self.client = OpenAI(api_key=api_key)
         else:
             _apply_optional_gemini_thread_env()
-            import google.generativeai as genai
+            from google import genai as google_genai
 
             api_key = os.environ.get("GEMINI_API_KEY", "").strip()
             if not api_key:
                 raise RuntimeError("GEMINI_API_KEY is not set")
-            genai.configure(api_key=api_key)
-            self.client = genai
+            self._gemini_client = google_genai.Client(api_key=api_key)
 
     def _build_schema_list_text(self) -> str:
         lines: list[str] = []
@@ -271,14 +277,16 @@ class LLMTwoStageBaseline:
         max_tokens = int(self.method_cfg.get("max_tokens", 1024))
 
         def _call():
-            model = self.client.GenerativeModel(model_name)
-            return model.generate_content(
-                f"{schema_hint}\n\n{prompt}",
-                generation_config={
-                    "temperature": temp,
-                    "max_output_tokens": max_tokens,
-                    "response_mime_type": "application/json",
-                },
+            from google.genai import types as genai_types
+
+            return self._gemini_client.models.generate_content(
+                model=model_name,
+                contents=f"{schema_hint}\n\n{prompt}",
+                config=genai_types.GenerateContentConfig(
+                    temperature=temp,
+                    max_output_tokens=max_tokens,
+                    response_mime_type="application/json",
+                ),
             )
 
         resp = await asyncio.to_thread(_call)
@@ -426,7 +434,7 @@ def _apply_optional_gemini_thread_env() -> None:
 
     Set ``GEMINI_LIMIT_RUNTIME_THREADS=1`` (default in ``run_gemini_llm_baselines.sbatch``) to
     cap OpenMP/BLAS/NumExpr threads and reduce ``pthread_create failed`` noise. This does **not**
-    change API quota, auth, or retry behavior—only process thread fan-out before the Gemini client loads.
+    change API quota, auth, or retry behavior—only process thread fan-out before the ``google.genai`` client loads.
 
     Explicitly set ``GEMINI_LIMIT_RUNTIME_THREADS=0`` (or ``false``) in the job environment to skip.
     """
@@ -442,23 +450,34 @@ def _apply_optional_gemini_thread_env() -> None:
     os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 
 
-def _ensure_gemini_configured() -> Any:
+def _gemini_supported_methods(model: Any) -> list[str]:
+    """Map API-supported methods (new SDK: supported_actions; legacy attr: supported_generation_methods)."""
+    actions = getattr(model, "supported_actions", None)
+    if actions:
+        return list(actions)
+    legacy = getattr(model, "supported_generation_methods", None)
+    if legacy:
+        return list(legacy)
+    return []
+
+
+def _get_gemini_client() -> Any:
+    """Configured ``google.genai.Client`` for ``GEMINI_API_KEY`` (Gemini Developer API)."""
     _apply_optional_gemini_thread_env()
-    import google.generativeai as genai
+    from google import genai as google_genai
 
     api_key = os.environ.get("GEMINI_API_KEY", "").strip()
     if not api_key:
         raise RuntimeError("GEMINI_API_KEY is not set")
-    genai.configure(api_key=api_key)
-    return genai
+    return google_genai.Client(api_key=api_key)
 
 
 def list_gemini_models_with_generate_content() -> list[dict[str, Any]]:
     """Models visible to this key that advertise generateContent."""
-    genai = _ensure_gemini_configured()
+    client = _get_gemini_client()
     rows: list[dict[str, Any]] = []
-    for m in genai.list_models():
-        methods = list(getattr(m, "supported_generation_methods", []) or [])
+    for m in client.models.list():
+        methods = _gemini_supported_methods(m)
         if "generateContent" not in methods:
             continue
         name = getattr(m, "name", "") or ""
@@ -475,14 +494,18 @@ def list_gemini_models_with_generate_content() -> list[dict[str, Any]]:
 
 def gemini_probe_minimal(model_name: str) -> None:
     """Single minimal generateContent; raises GeminiHardQuotaError on hard zero quota."""
-    _apply_optional_gemini_thread_env()
-    genai = _ensure_gemini_configured()
+    from google.genai import types as genai_types
+
+    client = _get_gemini_client()
     short = _normalize_gemini_model_name(model_name)
-    model = genai.GenerativeModel(short)
     try:
-        model.generate_content(
-            "ok",
-            generation_config={"temperature": 0.0, "max_output_tokens": 4},
+        client.models.generate_content(
+            model=short,
+            contents="ok",
+            config=genai_types.GenerateContentConfig(
+                temperature=0.0,
+                max_output_tokens=4,
+            ),
         )
     except Exception as e:
         if is_gemini_hard_zero_quota_error(e):

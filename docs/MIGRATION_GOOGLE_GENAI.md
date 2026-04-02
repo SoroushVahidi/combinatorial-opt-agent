@@ -1,46 +1,29 @@
-# Migration plan: `google.generativeai` → `google.genai`
+# Migration: `google.generativeai` → `google.genai` (completed)
 
 ## Current state (this repo)
 
-- **Package:** `google-generativeai` on PyPI (`requirements.txt`).
-- **Status:** Google has announced end of feature updates for `google.generativeai` in favor of the **`google.genai`** SDK (see the deprecation notice printed when importing the old package).
-- **Usage in-repo:** `tools/llm_baselines.py` — `import google.generativeai as genai`, `genai.configure(api_key=...)`, `GenerativeModel`, `generate_content`, `list_models`.
+- **Package:** `google-genai` on PyPI (`requirements.txt`); module **`google.genai`** (`from google import genai`).
+- **Implementation:** `tools/llm_baselines.py` — `genai.Client(api_key=...)`, `client.models.list()`, `client.models.generate_content(..., config=types.GenerateContentConfig(...))`.
+- **Removed:** `google-generativeai` (deprecated `import google.generativeai`).
 
-## Target state
+## API mapping (behavioral parity)
 
-- **Package:** `google-genai` (module `google.genai`) per [Google’s migration guidance](https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md).
-- **Auth:** Continue **API key** / AI Studio–style access for LLM baselines unless we add an optional Vertex path later.
+| Old (`google-generativeai`) | New (`google-genai`) |
+|----------------------------|----------------------|
+| `genai.configure(api_key=...)` | `client = genai.Client(api_key=...)` |
+| `genai.list_models()` | `client.models.list()` (pager iterator) |
+| Model: `supported_generation_methods` | Model: **`supported_actions`** (API maps `supportedGenerationMethods` → this field) |
+| `GenerativeModel(name).generate_content(..., generation_config={...})` | `client.models.generate_content(model=name, contents=..., config=GenerateContentConfig(...))` |
+| Response `.usage_metadata.prompt_token_count` / `candidates_token_count` | Same field names on `GenerateContentResponse.usage_metadata` |
+| Response `.text` | Same `GenerateContentResponse.text` helper |
 
-## Planned steps (not yet implemented)
+## Compatibility / differences
 
-1. **Pin and test** — Add `google-genai` alongside `google-generativeai` in a branch; run `preflight`, `pick-model`, and a short NLP4LP baseline smoke test.
-2. **Centralize client** — Replace `_ensure_gemini_configured()` / `LLMTwoStageBaseline` Gemini branch with a thin wrapper that:
-   - configures the client from `GEMINI_API_KEY`;
-   - exposes `list_models` / `generate_content` (or the new SDK equivalents);
-   - preserves **`GeminiHardQuotaError`** and **`is_gemini_hard_zero_quota_error()`** behavior.
-3. **CLI parity** — Ensure `llm_baselines.py` subcommands (`preflight`, `pick-model`, `list-models`, `discover-usable`) behave identically (exit codes, artifacts).
-4. **Remove** `google-generativeai` from `requirements.txt` once stable.
-5. **Docs** — Update `docs/gemini_api_quota.md` and batch comments if CLI or env vars change.
-
-## What stays the same
-
-- Hard zero-quota detection (`limit: 0`), no retry on that path.
-- Environment variables: `GEMINI_API_KEY`, `GEMINI_MODEL`, fallbacks, preflight/skip flags.
-- Batch script flow (`run_gemini_llm_baselines.sbatch`).
-
-## Import / usage inventory (for migration scoping)
-
-| Location | Symbol / usage | Replacement difficulty |
-|----------|----------------|-------------------------|
-| `tools/llm_baselines.py` | `import google.generativeai as genai` in `LLMTwoStageBaseline.__init__` (Gemini branch) | **Medium** — swap client init; keep `GEMINI_API_KEY` |
-| `tools/llm_baselines.py` | `_ensure_gemini_configured()` → `genai.configure`, `list_models`, `GenerativeModel` | **Medium** |
-| `tools/llm_baselines.py` | `GenerativeModel.generate_content` in `_gemini_json`, `gemini_probe_minimal` | **Medium** — map to new SDK request/response shapes |
-| `batch/learning/run_gemini_llm_baselines.sbatch` | `python -c "import google.generativeai as g; ..."` smoke import | **Trivial** — change to `google.genai` or drop after migration |
-| Tests | None import `google.generativeai` directly | **N/A** |
-
-**No other Python modules** in this repo import `google.generativeai` (verified via repository search). All Gemini traffic goes through `tools/llm_baselines.py`.
+1. **Exceptions:** Failures may surface as **`google.genai.errors.APIError`** (HTTP-style `code`, e.g. 429) instead of **`google.api_core.exceptions.ResourceExhausted`**. Hard zero-quota detection still uses message text (`limit: 0`) and **`is_gemini_hard_zero_quota_error()`** also treats **`APIError` with code 429** when `limit: 0` is present.
+2. **Listing:** `list-models` output still exposes `supported_generation_methods` in the JSON-shaped rows for CLI compatibility (values come from **`supported_actions`**).
+3. **No Vertex path** in-repo; only API key (Gemini Developer API) as before.
 
 ## References
 
-- Deprecated SDK README: <https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md>
+- `google-genai` (python-genai): <https://github.com/googleapis/python-genai>
 - Gemini API docs: <https://ai.google.dev/gemini-api/docs>

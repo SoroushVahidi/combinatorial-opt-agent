@@ -28,7 +28,7 @@ Overview of documentation in this repository.
 
 - **[wulver.md](wulver.md)** — NJIT Wulver cluster setup and usage.
 - **[gemini_api_quota.md](gemini_api_quota.md)** — Gemini free-tier quota, preflight, Wulver pthread notes.
-- **[MIGRATION_GOOGLE_GENAI.md](MIGRATION_GOOGLE_GENAI.md)** — Planned migration from deprecated `google.generativeai` to `google.genai`.
+- **[MIGRATION_GOOGLE_GENAI.md](MIGRATION_GOOGLE_GENAI.md)** — Gemini SDK (`google.genai`) migration notes and API mapping.
 - **[wulver_webapp.md](wulver_webapp.md)** — Running the web app on Wulver.
 - **[WULVER_RESOURCE_INVENTORY.md](WULVER_RESOURCE_INVENTORY.md)**, **[WULVER_FIRST_TRAINING_RUN.md](WULVER_FIRST_TRAINING_RUN.md)** — Resource inventory and first training run notes.
 

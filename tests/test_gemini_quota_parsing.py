@@ -41,6 +41,40 @@ def test_resource_exhausted_with_limit_zero():
     assert is_gemini_hard_zero_quota_error(exc)
 
 
+def test_genai_api_error_429_with_limit_zero():
+    """New SDK raises google.genai.errors.APIError for quota failures."""
+    from tools.llm_baselines import is_gemini_hard_zero_quota_error
+
+    pytest.importorskip("google.genai.errors")
+    from google.genai.errors import APIError
+
+    exc = APIError(
+        429,
+        {
+            "error": {
+                "message": (
+                    "Quota exceeded for metric: generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash"
+                )
+            }
+        },
+    )
+    assert is_gemini_hard_zero_quota_error(exc)
+
+
+def test_gemini_supported_methods_prefers_supported_actions():
+    from tools.llm_baselines import _gemini_supported_methods
+
+    class M1:
+        supported_actions = ["generateContent", "countTokens"]
+
+    assert _gemini_supported_methods(M1()) == ["generateContent", "countTokens"]
+
+    class M2:
+        supported_generation_methods = ["generateContent"]
+
+    assert _gemini_supported_methods(M2()) == ["generateContent"]
+
+
 def test_write_gemini_selection_artifact_failure_schema(tmp_path):
     from tools.llm_baselines import write_gemini_selection_artifact
     import json
