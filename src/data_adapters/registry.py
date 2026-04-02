@@ -3,9 +3,16 @@
 from __future__ import annotations
 
 from .complexor import ComplexORAdapter
+from .gams_models import GAMSModelsAdapter
+from .gurobi_modeling_examples import GurobiModelingExamplesAdapter
+from .gurobi_optimods import GurobiOptimodsAdapter
+from .miplib import MIPLIBAdapter
 from .nl4opt import NL4OptAdapter
 from .nlp4lp import NLP4LPAdapter
+from .optimus import OptiMUSAdapter
 from .optmath import OptMATHAdapter
+from .or_library import ORLibraryAdapter
+from .pyomo_examples import PyomoExamplesAdapter
 from .text2zinc import Text2ZincAdapter
 
 
@@ -15,6 +22,13 @@ ADAPTERS = {
     "text2zinc": Text2ZincAdapter,
     "optmath": OptMATHAdapter,
     "complexor": ComplexORAdapter,
+    "gurobi_modeling_examples": GurobiModelingExamplesAdapter,
+    "gurobi_optimods": GurobiOptimodsAdapter,
+    "gams_models": GAMSModelsAdapter,
+    "miplib": MIPLIBAdapter,
+    "or_library": ORLibraryAdapter,
+    "pyomo_examples": PyomoExamplesAdapter,
+    "optimus": OptiMUSAdapter,
 }
 
 
