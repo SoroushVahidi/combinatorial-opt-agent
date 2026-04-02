@@ -4,7 +4,7 @@ This document provides a consolidated overview of all experiments conducted in t
 
 > **EAAI manuscript note:** For the current EAAI submission, the authoritative paper-facing results are in `results/paper/eaai_camera_ready_tables/` and `analysis/eaai_*_report.md`. The sections below cover the full experiment history including pre-EAAI exploratory work. Dense retrieval baselines (E5, BGE, SBERT) documented here are supplementary and not in the EAAI main results table. See [`docs/EAAI_SOURCE_OF_TRUTH.md`](docs/EAAI_SOURCE_OF_TRUTH.md) for the canonical paper framing.
 
-> **Audit note:** For a strict evidence-driven breakdown of which experiments are truly measured vs. placeholder/scaffolding, see [docs/EXPERIMENT_AUDIT.md](docs/EXPERIMENT_AUDIT.md).
+> **Audit note:** For a strict evidence-driven breakdown of which experiments are truly measured vs. placeholder/scaffolding, see [docs/archive/EXPERIMENT_AUDIT.md](docs/archive/EXPERIMENT_AUDIT.md).
 
 ---
 
@@ -55,7 +55,7 @@ python -m training.run_baselines \
 
 **Result files:** `results/baselines_test.csv`, `results/nlp4lp_retrieval_summary.csv`
 
-**Detailed docs:** [docs/BASELINE_TABLE_CLI.md](docs/BASELINE_TABLE_CLI.md), [docs/NLP4LP_EXPERIMENT_VERIFICATION_REPORT.md](docs/NLP4LP_EXPERIMENT_VERIFICATION_REPORT.md)
+**Detailed docs:** [docs/archive/BASELINE_TABLE_CLI.md](docs/archive/BASELINE_TABLE_CLI.md), [docs/archive/NLP4LP_EXPERIMENT_VERIFICATION_REPORT.md](docs/archive/NLP4LP_EXPERIMENT_VERIFICATION_REPORT.md)
 
 ---
 
@@ -106,7 +106,7 @@ Global one-to-one bipartite assignment with strict type constraints. Improves nu
 
 **Conclusion:** More precise on filled slots but leaves more slots empty; InstantiationReady drops significantly.
 
-**Detailed docs:** [docs/NLP4LP_CONSTRAINED_ASSIGNMENT_RESULTS.md](docs/NLP4LP_CONSTRAINED_ASSIGNMENT_RESULTS.md)
+**Detailed docs:** [docs/archive/NLP4LP_CONSTRAINED_ASSIGNMENT_RESULTS.md](docs/archive/NLP4LP_CONSTRAINED_ASSIGNMENT_RESULTS.md)
 
 ### 2.4 Acceptance Reranking
 
@@ -133,7 +133,7 @@ Uses semantic roles (operator/unit tags) plus a repair pass to fill unfilled slo
 
 **Conclusion:** Best TypeMatch among deterministic methods. Coverage and InstantiationReady are between typed and constrained.
 
-**Detailed docs:** [docs/NLP4LP_SEMANTIC_IR_REPAIR_RESULTS.md](docs/NLP4LP_SEMANTIC_IR_REPAIR_RESULTS.md)
+**Detailed docs:** [docs/archive/NLP4LP_SEMANTIC_IR_REPAIR_RESULTS.md](docs/archive/NLP4LP_SEMANTIC_IR_REPAIR_RESULTS.md)
 
 ### 2.6 Optimization-Role Repair
 
@@ -286,7 +286,7 @@ A structured experiment round comparing the rule baseline against five learned c
 sbatch batch/learning/run_stage3_experiments.sbatch
 ```
 
-**Detailed docs:** [docs/LEARNING_STAGE3_EXPERIMENTS.md](docs/LEARNING_STAGE3_EXPERIMENTS.md), [docs/LEARNING_STAGE3_FIRST_RESULTS.md](docs/LEARNING_STAGE3_FIRST_RESULTS.md), [docs/learning_runs/README.md](docs/learning_runs/README.md)
+**Detailed docs:** [docs/archive/LEARNING_STAGE3_EXPERIMENTS.md](docs/archive/LEARNING_STAGE3_EXPERIMENTS.md), [docs/archive/LEARNING_STAGE3_FIRST_RESULTS.md](docs/archive/LEARNING_STAGE3_FIRST_RESULTS.md), [docs/learning_runs/README.md](docs/learning_runs/README.md)
 
 ---
 
