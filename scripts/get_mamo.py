@@ -149,6 +149,8 @@ def main() -> None:
             tmp_dir.parent.mkdir(parents=True, exist_ok=True)
             if tmp_dir.exists():
                 shutil.rmtree(tmp_dir)
+            if tmp_dir.exists():
+                shutil.rmtree(tmp_dir)
             ok, method = _attempt_git_clone(tmp_dir)
             if ok:
                 retrieval_method = method
