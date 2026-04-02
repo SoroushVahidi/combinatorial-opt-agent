@@ -1,85 +1,56 @@
 # Normalized Source Matrix
 
-This document describes the normalization status of every external data source referenced in the
-repository, relative to the `src/data_adapters/` layer.
+## 1) Fully normalized benchmark datasets (adapter + benchmark semantics)
 
----
-
-## 1. Fully Benchmark-Ready Normalized Datasets
-
-Sources with labeled NL queries, gold parameters, and/or formulations that support meaningful
-evaluation metrics.
-
-| Source | Adapter | Capabilities | Splits | Notes |
-|---|---|---|---|---|
-| NLP4LP | `nlp4lp.py` | Schema retrieval ✓, Scalar inst. ✓ | orig, noisy, short | Backed by `data/processed/`; existing pipeline unchanged |
-| NL4Opt | `nl4opt.py` | Schema retrieval ✓, Scalar inst. ✓, Formulation ✓ | train, dev, test | `data/external/nl4opt/` |
-| Text2Zinc | `text2zinc.py` | Scalar inst. ✓, Solver eval ✓, Formulation ✓ | train, validation, test | `data/external/text2zinc/` |
-| OptMATH | `optmath.py` | Scalar inst. ✓, Solver eval ✓, Formulation ✓ | train, validation, test, bench | `data/external/optmath/` |
-| ComplexOR | `complexor.py` | Scalar inst. ✓, Solver eval ✓, Formulation ✓ | train, validation, test | Derived from Text2Zinc |
-
----
-
-## 2. Benchmark-Ready When Data Is Present (Dynamic)
-
-Sources that are fully normalized as benchmark datasets but require external data to be downloaded.
-
-| Source | Adapter | Capabilities | Notes |
+| Source | Adapter | Status | Notes |
 |---|---|---|---|
-| OptiMUS | `optimus.py` | Schema retrieval ✓, Scalar inst. ✓, Formulation ✓ | Reads `data/external/optimus/*.jsonl`; returns 0 splits until downloaded from https://github.com/teshnizi/OptiMUS |
+| NLP4LP | `nlp4lp.py` | Full | Existing repo-native benchmark path |
+| NL4Opt (competition) | `nl4opt.py` | Full | Existing adapter over local split JSONL |
+| Text2Zinc | `text2zinc.py` | Full | Data download/auth dependent |
+| OptMATH | `optmath.py` | Full | Snapshot export script available |
+| ComplexOR | `complexor.py` | Full (derived) | Derived from Text2Zinc subset |
+| MAMO | `mamo.py` | Full when data present | New adapter with permissive schema mapping |
+| StructuredOR | `structuredor.py` | Full when data present | New adapter |
+| CardinalOperations/NL4OPT | `cardinal_nl4opt.py` | Full when data present | New adapter, separate from `nl4opt.py` |
+| IndustryOR | `industryor.py` | Full when data present | New adapter |
 
----
+## 2) Partially normalized / data-dependent benchmark datasets
 
-## 3. Catalog-Only Normalized Sources
-
-Sources normalized as schema/problem catalogs. They provide problem families or schema entries
-but do **not** provide labeled NL-query → formulation pairs. All benchmark metrics are `N/A`.
-
-| Source | Adapter | Entry count | Entry type | Source URL |
-|---|---|---|---|---|
-| Gurobi Modeling Examples | `gurobi_modeling_examples.py` | 55 | Example folders | https://github.com/Gurobi/modeling-examples |
-| Gurobi OptiMods | `gurobi_optimods.py` | 14 | Module names | https://github.com/Gurobi/gurobi-optimods |
-| GAMS Model Library | `gams_models.py` | 143 | Model names | https://www.gams.com/latest/gamslib_ml/libhtml/ |
-| MIPLIB 2017 | `miplib.py` | 1 | Benchmark collection entry | https://miplib.zib.de/ |
-| OR-Library | `or_library.py` | 63 | Problem families | http://people.brunel.ac.uk/~mastjjb/jeb/info.html |
-| Pyomo Examples | `pyomo_examples.py` | 19 | Example names | https://github.com/Pyomo/pyomo |
-
-All catalog-only adapters have:
-- `supports_schema_retrieval = False`
-- `supports_scalar_instantiation = False`
-- `supports_solver_eval = False`
-- `supports_full_formulation = False`
-- `metadata.catalog_only = True`
-
----
-
-## 4. Raw Source Manifests (Not Yet Fully Normalized)
-
-Sources present as JSON manifests in `data/sources/` but with limited normalization coverage
-beyond the catalog-only entries described above.
-
-| Source | Location | Reason not fully normalized |
+| Source | Adapter | Partial reason |
 |---|---|---|
-| MIPLIB 2017 instance files | `data/sources/miplib.json` (metadata only) | Raw `.mps` instance files are large binaries; not vendored. Catalog entry covers metadata only. |
-| Gurobi notebook content | `data/sources/gurobi_modeling_examples.json` (folder names only) | Jupyter notebooks not vendored; no stable lightweight download path. |
-| GAMS `.gms` source files | `data/sources/gams_models.json` (model names only) | Require GAMS license to access and run. Name-level normalization only. |
-| Real-world queries | `data/sources/real_world_queries.json` | Internal synthetic queries used ad-hoc; no external normalization target. |
+| OptiMUS | `optimus.py` | Adapter is ready; requires external JSONL download |
 
----
+## 3) Catalog-only normalized sources
 
-## Expanded Schema Catalog
+| Source | Adapter | Classification |
+|---|---|---|
+| Gurobi Modeling Examples | `gurobi_modeling_examples.py` | Catalog-only |
+| Gurobi OptiMods | `gurobi_optimods.py` | Catalog-only |
+| GAMS Models | `gams_models.py` | Catalog-only |
+| MIPLIB | `miplib.py` | Catalog-only summary entry |
+| OR-Library | `or_library.py` | Catalog-only |
+| Pyomo Examples | `pyomo_examples.py` | Catalog-only |
 
-The script `scripts/build_expanded_schema_catalog.py` collects all schema entries from both
-benchmark and catalog-only adapters and writes them to:
+## 4) Source-only / not yet benchmark-normalized collections
 
-```
-data/processed/expanded_schema_catalog.jsonl
-```
+| Source | Status |
+|---|---|
+| Full GAMS source corpus | Source-only (metadata/catalog level in-repo) |
+| Full MIPLIB instance corpus | Source-only (large external binaries) |
 
-Each row includes: `id`, `source_dataset`, `schema_id`, `schema_text`, `source_url`,
-`catalog_only`, `benchmark_labeled`, `nl_query`, `metadata`.
+## Expanded schema catalog
+Run:
 
-Run with:
 ```bash
 python scripts/build_expanded_schema_catalog.py
 ```
+
+Output:
+- `data/processed/expanded_schema_catalog.jsonl`
+
+Each row includes:
+- `id`
+- `source_dataset`
+- `schema_text`
+- `source_metadata`
+- `entry_status` (`benchmark-ready` / `catalog-only` / `source-only`)

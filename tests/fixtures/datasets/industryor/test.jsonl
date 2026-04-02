@@ -1,0 +1,1 @@
+{"id":"ior_1","nl_query":"Schedule shifts to satisfy demand.","domain":"workforce_scheduling","scalar_gold_params":{"num_workers":12},"formulation_text":"min sum(wage[t]*x[w,t])"}

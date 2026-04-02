@@ -167,3 +167,16 @@ This is the **canonical list** of external libraries and datasets used (or plann
 ---
 
 *This file is the single place in the project where the full list of libraries and their problem names are written. Manifests in `data/sources/` provide machine-readable lists for collectors.*
+
+---
+
+## Parallel dataset-normalization targets (new)
+
+The following sources are now wired into the adapter/retrieval layer for parallel integration work:
+
+| Source | Retrieval script | Adapter key | Status |
+|---|---|---|---|
+| MAMO | `scripts/get_mamo.py` | `mamo` | Retrieval and normalization are environment-dependent; provenance/errors written to `data/external/mamo/provenance.json`. |
+| StructuredOR | `scripts/get_structuredor.py` | `structuredor` | Retrieval tries git clone and split discovery; blocked states are explicit. |
+| CardinalOperations/NL4OPT | `scripts/get_cardinal_nl4opt.py` | `cardinal_nl4opt` | Retrieval from raw split URLs with per-split error reporting. |
+| IndustryOR | `scripts/get_industryor.py` | `industryor` | Retrieval tries git clone and split discovery with explicit blockers. |

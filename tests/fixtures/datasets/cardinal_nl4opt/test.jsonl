@@ -1,0 +1,1 @@
+{"id":"cn4o_1","query":"Ship goods from plants to markets.","relevant_doc_id":"transportation","scalar_gold_params":{"num_plants":3},"formulation_text":"min sum(c[i,j]*x[i,j])"}

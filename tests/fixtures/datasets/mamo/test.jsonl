@@ -1,0 +1,1 @@
+{"id":"mamo_1","nl_query":"A factory makes products A and B with limited labor.","problem_type":"production_planning","scalar_gold_params":{"labor_hours":120},"formulation_text":"max z = 5a + 4b"}

@@ -2,13 +2,17 @@
 
 from __future__ import annotations
 
+from .cardinal_nl4opt import CardinalNL4OPTAdapter
 from .complexor import ComplexORAdapter
 from .gams_models import GAMSModelsAdapter
 from .gurobi_modeling_examples import GurobiModelingExamplesAdapter
 from .gurobi_optimods import GurobiOptimodsAdapter
+from .mamo import MAMOAdapter
 from .miplib import MIPLIBAdapter
 from .nl4opt import NL4OptAdapter
 from .nlp4lp import NLP4LPAdapter
+from .structuredor import StructuredORAdapter
+from .industryor import IndustryORAdapter
 from .optimus import OptiMUSAdapter
 from .optmath import OptMATHAdapter
 from .or_library import ORLibraryAdapter
@@ -22,6 +26,10 @@ ADAPTERS = {
     "text2zinc": Text2ZincAdapter,
     "optmath": OptMATHAdapter,
     "complexor": ComplexORAdapter,
+    "mamo": MAMOAdapter,
+    "structuredor": StructuredORAdapter,
+    "cardinal_nl4opt": CardinalNL4OPTAdapter,
+    "industryor": IndustryORAdapter,
     "gurobi_modeling_examples": GurobiModelingExamplesAdapter,
     "gurobi_optimods": GurobiOptimodsAdapter,
     "gams_models": GAMSModelsAdapter,
