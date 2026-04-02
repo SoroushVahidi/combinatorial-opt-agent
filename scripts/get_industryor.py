@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT_DIR = ROOT / "data" / "external" / "industryor"
 META = OUT_DIR / "provenance.json"
 REPO_URL = "https://github.com/CardinalOperations/IndustryOR"
-KNOWN_SPLITS = ("train", "validation", "test")
+KNOWN_SPLITS = ("train", "dev", "validation", "test")
 
 
 def _collect_json_candidates(repo_dir: Path, split: str) -> list[Path]:
