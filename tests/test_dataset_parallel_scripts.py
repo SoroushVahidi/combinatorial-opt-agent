@@ -32,12 +32,20 @@ def test_extract_pairs_positive_on_fixture_by_temp_copy() -> None:
     out_dir = data_root / "external" / "cardinal_nl4opt"
     out_dir.mkdir(parents=True, exist_ok=True)
     payload = (FIX / "cardinal_nl4opt" / "test.jsonl").read_text(encoding="utf-8")
-    (out_dir / "test.jsonl").write_text(payload, encoding="utf-8")
+    out_file = out_dir / "test.jsonl"
+    out_file.write_text(payload, encoding="utf-8")
 
-    pairs, blockers = _extract_pairs("cardinal_nl4opt", data_root=data_root)
-    assert len(pairs) >= 1
-    assert all("slot_or_schema" in p for p in pairs)
-    assert isinstance(blockers, list)
+    try:
+        pairs, blockers = _extract_pairs("cardinal_nl4opt")
+        assert len(pairs) >= 1
+        assert all("slot_or_schema" in p for p in pairs)
+        assert isinstance(blockers, list)
 
-    # verify serializable
-    json.dumps(pairs[0])
+        # verify serializable
+        json.dumps(pairs[0])
+    finally:
+        # Clean up the staged fixture to avoid cross-test pollution and repo artifacts.
+        try:
+            out_file.unlink()
+        except FileNotFoundError:
+            pass
