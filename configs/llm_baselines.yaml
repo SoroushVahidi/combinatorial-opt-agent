@@ -3,8 +3,10 @@ openai:
   temperature: 0.0
   max_tokens: 1200
 
+# Model id must match a name your key can call via generateContent (see ListModels in AI Studio).
+# gemini-1.5-flash may 404 on some API versions; gemini-2.0-flash is widely available.
 gemini:
-  model: gemini-1.5-flash
+  model: gemini-2.0-flash
   temperature: 0.0
   max_tokens: 1200
 

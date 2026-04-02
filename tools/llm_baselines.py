@@ -197,7 +197,11 @@ class LLMTwoStageBaseline:
             return {}
 
     async def _gemini_json(self, prompt: str, schema_hint: str) -> dict[str, Any]:
-        model_name = self.method_cfg.get("model", "gemini-1.5-flash")
+        # Allow override without editing YAML: export GEMINI_MODEL=gemini-2.0-flash
+        model_name = (
+            (os.environ.get("GEMINI_MODEL") or "").strip()
+            or self.method_cfg.get("model", "gemini-2.0-flash")
+        )
         temp = float(self.method_cfg.get("temperature", 0.0))
         max_tokens = int(self.method_cfg.get("max_tokens", 1024))
 
