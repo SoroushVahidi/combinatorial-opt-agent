@@ -40,11 +40,11 @@ ADAPTERS = {
 }
 
 
-def create_adapter(name: str):
+def create_adapter(name: str, **kwargs):
     key = name.strip().lower()
     if key not in ADAPTERS:
         raise KeyError(f"Unknown dataset adapter: {name}. Available: {sorted(ADAPTERS)}")
-    return ADAPTERS[key]()
+    return ADAPTERS[key](**kwargs)
 
 
 def list_datasets() -> list[str]:

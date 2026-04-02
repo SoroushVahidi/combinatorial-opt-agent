@@ -17,8 +17,9 @@ if str(ROOT) not in sys.path:
 from data_adapters.registry import create_adapter, list_datasets
 
 
-def _extract_pairs(dataset_name: str) -> tuple[list[dict], list[str]]:
-    adapter = create_adapter(dataset_name)
+def _extract_pairs(dataset_name: str, data_root: Path | None = None) -> tuple[list[dict], list[str]]:
+    kwargs = {"data_root": data_root} if data_root is not None else {}
+    adapter = create_adapter(dataset_name, **kwargs)
     pairs: list[dict] = []
     blockers: list[str] = []
 

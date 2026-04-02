@@ -16,39 +16,31 @@ if str(ROOT) not in sys.path:
 
 from data_adapters.registry import create_adapter, list_datasets
 
+# Source URLs for all registered adapters; used to generate dynamic source-only
+# fallback catalog entries when no local splits are available for a dataset.
+_ADAPTER_SOURCE_URLS: dict[str, str | None] = {
+    "cardinal_nl4opt": "https://github.com/CardinalOperations/NL4OPT",
+    "complexor": None,
+    "gams_models": "https://www.gams.com/latest/gamslib_ml/libhtml/",
+    "gurobi_modeling_examples": "https://github.com/Gurobi/modeling-examples",
+    "gurobi_optimods": "https://github.com/Gurobi/gurobi-optimods",
+    "industryor": "https://github.com/CardinalOperations/IndustryOR",
+    "mamo": "https://github.com/FreedomIntelligence/Mamo",
+    "miplib": "https://miplib.zib.de/",
+    "nl4opt": None,
+    "nlp4lp": None,
+    "optimus": "https://github.com/teshnizi/OptiMUS",
+    "optmath": None,
+    "or_library": "http://people.brunel.ac.uk/~mastjjb/jeb/info.html",
+    "pyomo_examples": "https://github.com/Pyomo/pyomo",
+    "structuredor": "https://github.com/CardinalOperations/StructuredOR",
+    "text2zinc": None,
+}
+
+# Fixed manifest for source-only entries that are *not* registered as adapters
+# (e.g., corpus aliases, legacy dataset names).  Registered adapters with no
+# local data now get a dynamic fallback entry generated at build time instead.
 SOURCE_ONLY_MANIFEST = [
-    {
-        "id": "source_only_mamo",
-        "source_dataset": "mamo",
-        "schema_text": "MAMO source registered; local benchmark splits not available in this environment.",
-        "source_metadata": {"source_url": "https://github.com/FreedomIntelligence/Mamo"},
-        "entry_status": "source-only",
-        "benchmark_labeled": False,
-    },
-    {
-        "id": "source_only_structuredor",
-        "source_dataset": "structuredor",
-        "schema_text": "StructuredOR source registered; local benchmark splits not available in this environment.",
-        "source_metadata": {"source_url": "https://github.com/CardinalOperations/StructuredOR"},
-        "entry_status": "source-only",
-        "benchmark_labeled": False,
-    },
-    {
-        "id": "source_only_cardinal_nl4opt",
-        "source_dataset": "cardinal_nl4opt",
-        "schema_text": "CardinalOperations/NL4OPT source registered; local benchmark splits may require manual retrieval.",
-        "source_metadata": {"source_url": "https://github.com/CardinalOperations/NL4OPT"},
-        "entry_status": "source-only",
-        "benchmark_labeled": False,
-    },
-    {
-        "id": "source_only_industryor",
-        "source_dataset": "industryor",
-        "schema_text": "IndustryOR source registered; local benchmark splits not available in this environment.",
-        "source_metadata": {"source_url": "https://github.com/CardinalOperations/IndustryOR"},
-        "entry_status": "source-only",
-        "benchmark_labeled": False,
-    },
     {
         "id": "source_only_gams_model_library",
         "source_dataset": "gams_model_library",
@@ -123,6 +115,21 @@ def collect_schema_entries(dataset_name: str) -> list[dict]:
     return entries
 
 
+def _make_dynamic_source_only_entry(dataset_name: str) -> dict:
+    """Generate a source-only catalog entry for a registered adapter with no local data."""
+    source_url = _ADAPTER_SOURCE_URLS.get(dataset_name)
+    return {
+        "id": f"source_only_{dataset_name}",
+        "source_dataset": dataset_name,
+        "schema_text": (
+            f"{dataset_name} source registered; local splits not available in this environment."
+        ),
+        "source_metadata": {"source_url": source_url},
+        "entry_status": "source-only",
+        "benchmark_labeled": False,
+    }
+
+
 def build_catalog(out_path: Path) -> int:
     all_entries: list[dict] = []
     seen_ids: set[str] = set()
@@ -130,6 +137,13 @@ def build_catalog(out_path: Path) -> int:
     for dataset_name in list_datasets():
         entries = collect_schema_entries(dataset_name)
         if not entries:
+            # No local data: emit a dynamic source-only fallback so every
+            # registered adapter appears in the catalog.
+            fallback = _make_dynamic_source_only_entry(dataset_name)
+            fid = fallback["id"]
+            if fid not in seen_ids:
+                seen_ids.add(fid)
+                all_entries.append(fallback)
             continue
 
         for entry in entries:
@@ -140,7 +154,12 @@ def build_catalog(out_path: Path) -> int:
             seen_ids.add(uid)
             all_entries.append(entry)
 
-    all_entries.extend(SOURCE_ONLY_MANIFEST)
+    # Append fixed manifest entries for sources not covered by registered adapters.
+    for manifest_entry in SOURCE_ONLY_MANIFEST:
+        mid = manifest_entry["id"]
+        if mid not in seen_ids:
+            seen_ids.add(mid)
+            all_entries.append(manifest_entry)
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w", encoding="utf-8") as fh:

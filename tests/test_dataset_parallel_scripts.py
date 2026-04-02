@@ -26,7 +26,7 @@ def test_extract_pairs_reports_blocker_for_missing_dataset() -> None:
     assert any("no local splits available" in str(blocker) for blocker in blockers)
 
 
-def test_extract_pairs_positive_on_fixture_by_temp_copy() -> None:
+def test_extract_pairs_positive_on_fixture_by_temp_copy(tmp_path: Path) -> None:
     # use a temporary data_root for cardinal_nl4opt by staging tiny fixture
     data_root = tmp_path / "data"
     out_dir = data_root / "external" / "cardinal_nl4opt"
@@ -35,17 +35,10 @@ def test_extract_pairs_positive_on_fixture_by_temp_copy() -> None:
     out_file = out_dir / "test.jsonl"
     out_file.write_text(payload, encoding="utf-8")
 
-    try:
-        pairs, blockers = _extract_pairs("cardinal_nl4opt")
-        assert len(pairs) >= 1
-        assert all("slot_or_schema" in p for p in pairs)
-        assert isinstance(blockers, list)
+    pairs, blockers = _extract_pairs("cardinal_nl4opt", data_root=out_dir)
+    assert len(pairs) >= 1
+    assert all("slot_or_schema" in p for p in pairs)
+    assert isinstance(blockers, list)
 
-        # verify serializable
-        json.dumps(pairs[0])
-    finally:
-        # Clean up the staged fixture to avoid cross-test pollution and repo artifacts.
-        try:
-            out_file.unlink()
-        except FileNotFoundError:
-            pass
+    # verify serializable
+    json.dumps(pairs[0])
