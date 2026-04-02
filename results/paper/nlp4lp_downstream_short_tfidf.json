@@ -1,0 +1,26 @@
+{
+  "config": {
+    "variant": "short",
+    "baseline": "tfidf",
+    "k": 1,
+    "random_control": false
+  },
+  "aggregate": {
+    "variant": "short",
+    "baseline": "tfidf",
+    "schema_R1": 0.7794561933534743,
+    "param_coverage": 0.11025645907909996,
+    "type_match": 0.29254783484390734,
+    "exact5_on_hits": 0.2173202614379085,
+    "exact20_on_hits": 0.22222222222222224,
+    "param_coverage_hits": 0.13660809284954295,
+    "param_coverage_miss": 0.017123287671232876,
+    "type_match_hits": 0.3675710594315245,
+    "type_match_miss": 0.0273972602739726,
+    "key_overlap": 0.7823707511018689,
+    "key_overlap_hits": 0.9977851605758583,
+    "key_overlap_miss": 0.021043112139002552,
+    "instantiation_ready": 0.027190332326283987,
+    "n": 331
+  }
+}

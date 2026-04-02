@@ -1,0 +1,26 @@
+{
+  "config": {
+    "variant": "orig",
+    "baseline": "lsa",
+    "k": 1,
+    "random_control": false
+  },
+  "aggregate": {
+    "variant": "orig",
+    "baseline": "lsa",
+    "schema_R1": 0.8459214501510574,
+    "param_coverage": 0.8331059507796671,
+    "type_match": 0.7987818408513275,
+    "exact5_on_hits": 0.22571373273928022,
+    "exact20_on_hits": 0.25450542968791157,
+    "param_coverage_hits": 0.9491359632431062,
+    "param_coverage_miss": 0.19607843137254902,
+    "type_match_hits": 0.9085599618635336,
+    "type_match_miss": 0.19607843137254902,
+    "key_overlap": 0.8566705030451254,
+    "key_overlap_hits": 0.9979591836734695,
+    "key_overlap_miss": 0.08096794273264862,
+    "instantiation_ready": 0.7311178247734139,
+    "n": 331
+  }
+}

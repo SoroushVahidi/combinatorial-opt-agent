@@ -254,6 +254,7 @@ data/external/text2zinc/
 data/external/optmath/
 data/external/complexor/
 data/external/*/downloads/
+cache/
 
 # Local audit and cleanup outputs (do not commit)
 learning_dataset_access_audit.csv
