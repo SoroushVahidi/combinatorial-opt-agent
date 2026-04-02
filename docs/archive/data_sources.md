@@ -29,7 +29,7 @@ This is the **canonical list** of external libraries and datasets used (or plann
 | **Type** | NL → Formulation |
 | **Size** | 269 problems |
 | **What we extract** | Natural language + LP/MILP formulations |
-| **Status** | Planned |
+| **Status** | Planned — `optimus.py` adapter added under `src/data_adapters/`; reads `data/external/optimus/*.jsonl` when data is downloaded. |
 
 ---
 

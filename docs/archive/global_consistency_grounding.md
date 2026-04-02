@@ -119,6 +119,107 @@ python tools/run_nlp4lp_focused_eval.py --variant orig --safe
 python -m pytest tests/test_global_consistency_grounding.py -v
 ```
 
+---
+
+## New: `search_structured_grounding`
+
+The repository also includes `search_structured_grounding` (and ablation
+`search_structured_grounding_no_global`), a deterministic beam-search method
+that keeps top-k candidates per slot plus an explicit NULL/abstain option.
+It differs from greedy/repair methods by jointly exploring partial assignments
+and scoring them with local compatibility *and* assignment-level consistency
+signals (duplicate reuse, min/max inversion, percent mismatches, total-vs-unit
+conflicts, count plausibility), with pruning at each layer.
+
+It targets ambiguity failures such as total vs per-unit confusion, lower vs
+upper bound swaps, percent/scalar mix-ups, and forced bad fills when evidence
+is weak (handled via abstention). See `tools/search_structured_grounding.py`.
+
+### New: `counterfactual_grounding_refinement`
+
+`counterfactual_grounding_refinement` is an additive inference-time refinement
+stage that runs **after** an initial assignment (for example, after
+`search_structured_grounding`). It is deterministic and local: it does not
+rebuild retrieval, and it does not run unconstrained combinatorial search.
+
+Workflow:
+
+1. Inspect current slot→mention assignments.
+2. Mark unstable slots (close top-2 local scores, weak/local forced fill,
+   contradiction-triggering assignments, ambiguity-prone slot families).
+3. Generate local counterfactual moves (2nd/3rd-best replacement, abstain/null,
+   and selected slot-to-slot swaps).
+4. Re-score each modified **full assignment** with global consistency penalties
+   (duplicate mention reuse, min/max inversion, total-vs-unit mismatch,
+   percent/scalar mismatch, count implausibility, weak evidence, null handling).
+5. Accept only improving moves (`min_improvement=1e-6`) or contradiction-reducing
+   moves with no meaningful score drop; iterate until convergence or
+   `max_refinement_steps`.
+
+This stage specifically targets brittle post-search errors: total/per-unit
+confusion, min/max flips, percent/scalar swaps, duplicate reuse conflicts, and
+cases where abstention is safer than forced assignment.
+
+Enable via assignment mode:
+
+```bash
+python tools/nlp4lp_downstream_utility.py \
+    --variant orig \
+    --baseline tfidf \
+    --assignment-mode search_structured_grounding_counterfactual
+```
+
+Or in Python:
+
+```python
+from tools.search_structured_grounding import run_search_structured_grounding
+
+filled_values, filled_mentions, diagnostics = run_search_structured_grounding(
+    query=query,
+    variant="orig",
+    expected_scalar=expected_scalar,
+    use_global=True,
+    use_counterfactual_refinement=True,
+)
+print(diagnostics["counterfactual_grounding_refinement"])
+```
+
+### New: `hierarchical_structured_grounding`
+
+`hierarchical_structured_grounding` adds a **region decomposition stage before
+value-to-slot assignment**. Unlike flat matching, it first partitions the query
+into semantic regions (objective, constraint, resource/capacity, demand, bound,
+per-unit, total, count, rate, generic), localizes each numeric mention to its
+region, infers slot-side coarse roles, and adds a deterministic
+region↔slot compatibility term to local candidate scores.
+
+Then it reuses structured search assignment on top of these region-aware local
+scores. This specifically targets:
+
+- objective coefficient vs resource bound confusion,
+- total vs per-unit swaps,
+- lower vs upper bound swaps,
+- demand vs capacity swaps,
+- count-like vs quantity-like swaps,
+- long prompts where unrelated numeric values compete globally.
+
+Assignment modes:
+
+- `hierarchical_structured_grounding` (full: regions + search),
+- `hierarchical_structured_grounding_no_regions` (ablation: search only),
+- `hierarchical_structured_grounding_no_search` (ablation: region-aware greedy).
+
+Run:
+
+```bash
+python tools/nlp4lp_downstream_utility.py \
+    --variant orig \
+    --baseline tfidf \
+    --assignment-mode hierarchical_structured_grounding
+```
+
+Implementation: `tools/hierarchical_structured_grounding.py`.
+
 ### Run in-process via Python
 
 ```python

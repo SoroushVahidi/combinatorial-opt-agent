@@ -50,6 +50,8 @@ FOCUSED_BASELINES_DEFAULT = [
     "tfidf_ambiguity_aware_beam",
     "tfidf_ambiguity_aware_abstain",
     "tfidf_ambiguity_aware_full",
+    "tfidf_search_structured_grounding",
+    "tfidf_search_structured_grounding_no_global",
 ]
 
 BASELINE_ASSIGNMENT_DEFAULT = [
@@ -70,6 +72,8 @@ BASELINE_ASSIGNMENT_DEFAULT = [
     ("tfidf", "ambiguity_aware_beam"),
     ("tfidf", "ambiguity_aware_abstain"),
     ("tfidf", "ambiguity_aware_full"),
+    ("tfidf", "search_structured_grounding"),
+    ("tfidf", "search_structured_grounding_no_global"),
 ]
 
 # Experimental/archived methods (only with --experimental).
@@ -145,6 +149,8 @@ def _effective_baseline(baseline_arg: str, assignment_mode: str) -> str:
         "ambiguity_aware_abstain",
         "ambiguity_aware_full",
     ):
+        return f"{baseline_arg}_{assignment_mode}"
+    if assignment_mode in ("search_structured_grounding", "search_structured_grounding_no_global"):
         return f"{baseline_arg}_{assignment_mode}"
     return f"{baseline_arg}_{assignment_mode}"
 
