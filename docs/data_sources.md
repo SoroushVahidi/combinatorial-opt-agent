@@ -170,13 +170,13 @@ This is the **canonical list** of external libraries and datasets used (or plann
 
 ---
 
-## Parallel dataset-normalization targets (new)
+## Parallel source additions (inventory note)
 
-The following sources are now wired into the adapter/retrieval layer for parallel integration work:
+Additional source collections considered in the current dataset expansion work:
 
-| Source | Retrieval script | Adapter key | Status |
-|---|---|---|---|
-| MAMO | `scripts/get_mamo.py` | `mamo` | Retrieval and normalization are environment-dependent; provenance/errors written to `data/external/mamo/provenance.json`. |
-| StructuredOR | `scripts/get_structuredor.py` | `structuredor` | Retrieval tries git clone and split discovery; blocked states are explicit. |
-| CardinalOperations/NL4OPT | `scripts/get_cardinal_nl4opt.py` | `cardinal_nl4opt` | Retrieval from raw split URLs with per-split error reporting. |
-| IndustryOR | `scripts/get_industryor.py` | `industryor` | Retrieval tries git clone and split discovery with explicit blockers. |
+- **MAMO** — benchmark dataset/source collection for NL-to-optimization tasks.
+- **StructuredOR** — benchmark-style source collection for structured optimization queries.
+- **CardinalOperations/NL4OPT** — source collection related to NL4OPT-style benchmark data.
+- **IndustryOR** — source collection focused on industry-themed optimization tasks.
+
+These entries are listed here as source inventory items. Integration/adapter implementation status is tracked in `docs/dataset_integration_report.md` and `docs/NORMALIZED_SOURCE_MATRIX.md`.
