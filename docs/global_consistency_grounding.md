@@ -119,6 +119,22 @@ python tools/run_nlp4lp_focused_eval.py --variant orig --safe
 python -m pytest tests/test_global_consistency_grounding.py -v
 ```
 
+---
+
+## New: `search_structured_grounding`
+
+The repository also includes `search_structured_grounding` (and ablation
+`search_structured_grounding_no_global`), a deterministic beam-search method
+that keeps top-k candidates per slot plus an explicit NULL/abstain option.
+It differs from greedy/repair methods by jointly exploring partial assignments
+and scoring them with local compatibility *and* assignment-level consistency
+signals (duplicate reuse, min/max inversion, percent mismatches, total-vs-unit
+conflicts, count plausibility), with pruning at each layer.
+
+It targets ambiguity failures such as total vs per-unit confusion, lower vs
+upper bound swaps, percent/scalar mix-ups, and forced bad fills when evidence
+is weak (handled via abstention). See `tools/search_structured_grounding.py`.
+
 ### Run in-process via Python
 
 ```python
