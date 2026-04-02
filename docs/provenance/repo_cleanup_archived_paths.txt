@@ -1,0 +1,7 @@
+logs/mention_slot_%j.out
+logs/mention_slot_%j.err
+logs/nlp4lp_focused_eval_853539.out
+logs/nlp4lp_focused_eval_853539.err
+logs/nlp4lp_focused_eval_853548.out
+logs/nlp4lp_focused_eval_853548.err
+data_external/manifests/collection_20260307_151515.log

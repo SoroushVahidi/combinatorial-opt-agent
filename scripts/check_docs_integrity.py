@@ -82,17 +82,19 @@ STALE_PATTERNS: List[Tuple[str, str]] = [
     ("learning_dataset_access_audit.md", "docs/provenance/learning_dataset_access_audit.md"),
     ("repo_cleanup_report.md", "docs/provenance/repo_cleanup_report.md"),
     ("nlp4lp_manuscript_vs_current_repo_audit.csv", "docs/provenance/nlp4lp_manuscript_vs_current_repo_audit.csv"),
+    # Note: HOW_TO_REPRODUCE.md / KNOWN_ISSUES.md etc. now live under docs/.
+    # Same-folder links inside docs/*.md are valid; README/CONTRIBUTING use docs/... paths.
 ]
 
 # Files to check for broken relative links (relative to REPO_ROOT)
 LINK_CHECK_FILES = [
     "README.md",
-    "REPO_STRUCTURE.md",
-    "KNOWN_ISSUES.md",
-    "HOW_TO_REPRODUCE.md",
-    "HOW_TO_RUN_BENCHMARK.md",
+    "docs/REPO_STRUCTURE.md",
+    "docs/KNOWN_ISSUES.md",
+    "docs/HOW_TO_REPRODUCE.md",
+    "docs/HOW_TO_RUN_BENCHMARK.md",
     "CONTRIBUTING.md",
-    "EXPERIMENTS.md",
+    "docs/EXPERIMENTS.md",
     "docs/CURRENT_STATUS.md",
     "docs/EAAI_SOURCE_OF_TRUTH.md",
     "docs/RESULTS_PROVENANCE.md",

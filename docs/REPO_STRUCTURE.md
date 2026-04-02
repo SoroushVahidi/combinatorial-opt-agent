@@ -87,13 +87,15 @@ combinatorial-opt-agent/
 │
 ├── ⚠ results/eswa_revision/           ESWA-era experiment results
 │
-├──   HOW_TO_REPRODUCE.md             ★ Canonical reproduction commands (EAAI subsets)
-├──   HOW_TO_RUN_BENCHMARK.md          GitHub Actions NLP4LP workflow (utility CSVs)
-├──   EXPERIMENTS.md                   Consolidated experiments overview
-├──   KNOWN_ISSUES.md                  Active blockers, limitations, resolved issues
+├──   docs/HOW_TO_REPRODUCE.md         ★ Canonical reproduction commands (EAAI subsets)
+├──   docs/HOW_TO_RUN_BENCHMARK.md     GitHub Actions NLP4LP workflow (utility CSVs)
+├──   docs/EXPERIMENTS.md              Consolidated experiments overview
+├──   docs/KNOWN_ISSUES.md             Active blockers, limitations, resolved issues
+├──   docs/REVIEWER_GUIDE.md           First-pass orientation for reviewers
+├──   docs/README.md                   Documentation index
 ├──   CONTRIBUTING.md                  Contribution guidelines
-├──   REPO_STRUCTURE.md                This file
-├──   README.md                        ★ Main documentation
+├──   docs/REPO_STRUCTURE.md           This file
+├──   README.md                        ★ GitHub landing page (start here)
 ├──   LICENSE                          MIT License
 ├──   requirements.txt                 Runtime dependencies
 ├──   requirements-dev.txt             Testing/dev extras
@@ -170,7 +172,7 @@ NL query
 | `scripts/gemini_preflight.py` | Gemini list/probe preflight (used by Slurm batch) |
 | `training/external/run_full_downstream_benchmark.py` | CI full downstream loop (see `HOW_TO_RUN_BENCHMARK.md`) |
 
-For full reproduction commands, see `HOW_TO_REPRODUCE.md`. For the Actions workflow, see `HOW_TO_RUN_BENCHMARK.md`.
+For full reproduction commands, see [`HOW_TO_REPRODUCE.md`](HOW_TO_REPRODUCE.md). For the Actions workflow, see [`HOW_TO_RUN_BENCHMARK.md`](HOW_TO_RUN_BENCHMARK.md).
 
 ---
 

@@ -15,7 +15,7 @@ Canonical documentation for the EAAI companion codebase. **Start with the review
 | **[GEMINI_RERUN_REPORT.md](GEMINI_RERUN_REPORT.md)** | Gemini Slurm/preflight/cache — **infrastructure**; not Table 1–5 authority |
 | **[paper_vs_demo_scope.md](paper_vs_demo_scope.md)** | Fixed-catalog benchmark vs demo / open-domain |
 
-**Root (shortcuts):** [README.md](../README.md) · [HOW_TO_REPRODUCE.md](../HOW_TO_REPRODUCE.md) · [HOW_TO_RUN_BENCHMARK.md](../HOW_TO_RUN_BENCHMARK.md) · [REPO_STRUCTURE.md](../REPO_STRUCTURE.md) · [KNOWN_ISSUES.md](../KNOWN_ISSUES.md) · [EXPERIMENTS.md](../EXPERIMENTS.md)
+**Same folder (`docs/`):** [HOW_TO_REPRODUCE.md](HOW_TO_REPRODUCE.md) · [HOW_TO_RUN_BENCHMARK.md](HOW_TO_RUN_BENCHMARK.md) · [REPO_STRUCTURE.md](REPO_STRUCTURE.md) · [KNOWN_ISSUES.md](KNOWN_ISSUES.md) · [EXPERIMENTS.md](EXPERIMENTS.md) · [README.md](../README.md) (repo root)
 
 **Integrity:** `python scripts/check_docs_integrity.py` (from repo root)
 

@@ -76,5 +76,5 @@ and where the evidence lives. It complements **[`docs/EAAI_SOURCE_OF_TRUTH.md`](
 | Reviewer orientation | [`REVIEWER_GUIDE.md`](REVIEWER_GUIDE.md) |
 | Full paper artifact list | [`docs/EAAI_SOURCE_OF_TRUTH.md`](EAAI_SOURCE_OF_TRUTH.md) |
 | How to rerun EAAI experiments | [`README.md`](../README.md) section “How to reproduce the main paper artifacts” |
-| Known issues (retrieval training, etc.) | [`KNOWN_ISSUES.md`](../KNOWN_ISSUES.md) |
-| Repo layout | [`REPO_STRUCTURE.md`](../REPO_STRUCTURE.md) |
+| Known issues (retrieval training, etc.) | [`KNOWN_ISSUES.md`](KNOWN_ISSUES.md) |
+| Repo layout | [`REPO_STRUCTURE.md`](REPO_STRUCTURE.md) |

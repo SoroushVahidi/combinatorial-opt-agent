@@ -246,10 +246,13 @@ results/*
 .gradio/
 flags/
 
-# Training job logs and status files
+# Training job logs and status files (root / generic; provenance copies may live under docs/provenance/)
 train_retrieval_*.out
 train_retrieval_*.err
 training_latest_status.txt
+!docs/provenance/train_retrieval_*.out
+!docs/provenance/train_retrieval_*.err
+!docs/provenance/training_latest_status.txt
 
 data/external/resocratic
 data/external/nl4opt/
@@ -261,9 +264,9 @@ data/external/*/downloads/
 data/processed/expanded_schema_catalog.jsonl
 cache/
 
-# Local cleanup machine outputs (regenerable; keep out of git)
-repo_cleanup_archived_paths.txt
-repo_cleanup_deleted_paths.txt
+# Local cleanup machine outputs at repo root only (tracked snapshots: docs/provenance/repo_cleanup_*.txt)
+/repo_cleanup_archived_paths.txt
+/repo_cleanup_deleted_paths.txt
 # Tracked provenance snapshots: docs/provenance/*.md and *.csv
 
 data/external/mamo/

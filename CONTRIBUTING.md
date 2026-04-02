@@ -18,7 +18,7 @@ pip install -r requirements-dev.txt
 
 No special environment variables are needed for most contributions.  Downstream
 benchmark scripts additionally require `HF_TOKEN` for access to the gated
-`udell-lab/NLP4LP` dataset — see `HOW_TO_REPRODUCE.md` for setup.
+`udell-lab/NLP4LP` dataset — see [`docs/HOW_TO_REPRODUCE.md`](docs/HOW_TO_REPRODUCE.md) for setup.
 
 ---
 
@@ -51,7 +51,7 @@ touches `results/paper/` or `analysis/eaai_*`.
 - `results/paper/` — camera-ready artifacts; regenerate only via
   `tools/build_eaai_camera_ready_figures.py`
 - `analysis/eaai_*` — experiment reports; regenerate only by re-running the canonical
-  experiment scripts (see `HOW_TO_REPRODUCE.md`)
+  experiment scripts (see [`docs/HOW_TO_REPRODUCE.md`](docs/HOW_TO_REPRODUCE.md))
 - `docs/EAAI_SOURCE_OF_TRUTH.md` — manuscript authority; edit only when the manuscript
   itself changes
 

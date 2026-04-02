@@ -94,7 +94,7 @@ without HF access using the local catalog files in `data/processed/`.
 
 **Symptom:** Confusion between **Tables 1–5** (deterministic / EAAI scripts) and **optional** two-stage LLM baselines (`tools/llm_baselines.py`).
 
-**Detail:** **OpenAI** downstream CSV/JSON for some variants exists under `results/paper/` from a completed historical batch. **Gemini** has Slurm + preflight infrastructure (**[`docs/GEMINI_RERUN_REPORT.md`](docs/GEMINI_RERUN_REPORT.md)**); a **full** Gemini NLP4LP rerun is **not** claimed in docs unless matching artifacts exist under `results/rerun/gemini/…`. **Mistral** is not wired in this repository.
+**Detail:** **OpenAI** downstream CSV/JSON for some variants exists under `results/paper/` from a completed historical batch. **Gemini** has Slurm + preflight infrastructure (**[`GEMINI_RERUN_REPORT.md`](GEMINI_RERUN_REPORT.md)**); a **full** Gemini NLP4LP rerun is **not** claimed in docs unless matching artifacts exist under `results/rerun/gemini/…`. **Mistral** is not wired in this repository.
 
 **Workaround:** Treat **`results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv`** as headline authority; read **`docs/RESULTS_PROVENANCE.md`** before mixing columns from `nlp4lp_downstream_summary.csv`.
 
@@ -118,7 +118,7 @@ is infrastructure-complete but not benchmark-validated. Results are documented a
 future work.
 
 **Status:** ⚠️ Future work. Infrastructure exists; see
-[`docs/learning_runs/README.md`](docs/learning_runs/README.md).
+[`learning_runs/README.md`](learning_runs/README.md).
 
 ---
 

@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parent.parent
 @pytest.mark.parametrize("rel_path", [
     "docs/EAAI_SOURCE_OF_TRUTH.md",
     "README.md",
-    "REPO_STRUCTURE.md",
+    "docs/REPO_STRUCTURE.md",
     "CONTRIBUTING.md",
 ])
 def test_source_of_truth_file_exists(rel_path: str) -> None:

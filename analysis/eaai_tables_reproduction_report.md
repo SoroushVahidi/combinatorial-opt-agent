@@ -32,7 +32,7 @@ All five EAAI camera-ready tables were present in `results/paper/eaai_camera_rea
 
 - **Source:** `results/eswa_revision/13_tables/deterministic_method_comparison_orig.csv`
 - **Authoritative report:** Pre-existing ESWA revision metrics (Schema R@1, Coverage, TypeMatch, InstReady)
-- **Verification:** Consistent with EXPERIMENTS.md Section 2 and the main NLP4LP benchmark results
+- **Verification:** Consistent with `docs/EXPERIMENTS.md` Section 2 and the main NLP4LP benchmark results
 
 **Key values:**
 

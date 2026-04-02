@@ -58,7 +58,7 @@ def check_source_of_truth_docs() -> None:
     required = [
         "docs/EAAI_SOURCE_OF_TRUTH.md",
         "README.md",
-        "REPO_STRUCTURE.md",
+        "docs/REPO_STRUCTURE.md",
         "CONTRIBUTING.md",
     ]
     for rel in required:

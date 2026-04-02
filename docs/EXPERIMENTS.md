@@ -2,9 +2,9 @@
 
 This document provides a consolidated overview of all experiments conducted in this project. Detailed results, implementation notes, and reproduction commands are linked in each section.
 
-> **EAAI manuscript note:** Authoritative paper-facing results: **`results/paper/eaai_camera_ready_tables/`** and **`analysis/eaai_*_report.md`**. One-page status: **[`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md)**. The sections below include **full experiment history** (pre-EAAI exploratory work). Dense retrieval (E5, BGE, SBERT) is **supplementary**. Canonical framing: **[`docs/EAAI_SOURCE_OF_TRUTH.md`](docs/EAAI_SOURCE_OF_TRUTH.md)**.
+> **EAAI manuscript note:** Authoritative paper-facing results: **`results/paper/eaai_camera_ready_tables/`** and **`analysis/eaai_*_report.md`**. One-page status: **[`CURRENT_STATUS.md`](CURRENT_STATUS.md)**. The sections below include **full experiment history** (pre-EAAI exploratory work). Dense retrieval (E5, BGE, SBERT) is **supplementary**. Canonical framing: **[`EAAI_SOURCE_OF_TRUTH.md`](EAAI_SOURCE_OF_TRUTH.md)**.
 
-> **Audit note:** For a strict evidence-driven breakdown of which experiments are truly measured vs. placeholder/scaffolding, see [docs/archive/EXPERIMENT_AUDIT.md](docs/archive/EXPERIMENT_AUDIT.md).
+> **Audit note:** For a strict evidence-driven breakdown of which experiments are truly measured vs. placeholder/scaffolding, see [archive/EXPERIMENT_AUDIT.md](archive/EXPERIMENT_AUDIT.md).
 
 ---
 
@@ -55,7 +55,7 @@ python -m training.run_baselines \
 
 **Result files:** `results/baselines_test.csv`, `results/nlp4lp_retrieval_summary.csv`
 
-**Detailed docs:** [docs/archive/BASELINE_TABLE_CLI.md](docs/archive/BASELINE_TABLE_CLI.md), [docs/archive/NLP4LP_EXPERIMENT_VERIFICATION_REPORT.md](docs/archive/NLP4LP_EXPERIMENT_VERIFICATION_REPORT.md)
+**Detailed docs:** [archive/BASELINE_TABLE_CLI.md](archive/BASELINE_TABLE_CLI.md), [archive/NLP4LP_EXPERIMENT_VERIFICATION_REPORT.md](archive/NLP4LP_EXPERIMENT_VERIFICATION_REPORT.md)
 
 ---
 
@@ -118,7 +118,7 @@ Global one-to-one bipartite assignment with strict type constraints. Improves nu
 
 **Conclusion:** More precise on filled slots but leaves more slots empty; InstantiationReady drops significantly.
 
-**Detailed docs:** [docs/archive/NLP4LP_CONSTRAINED_ASSIGNMENT_RESULTS.md](docs/archive/NLP4LP_CONSTRAINED_ASSIGNMENT_RESULTS.md)
+**Detailed docs:** [archive/NLP4LP_CONSTRAINED_ASSIGNMENT_RESULTS.md](archive/NLP4LP_CONSTRAINED_ASSIGNMENT_RESULTS.md)
 
 ### 2.4 Acceptance Reranking
 
@@ -135,7 +135,7 @@ Re-ranks the top-K retrieved schemas by an acceptance scorer before assignment, 
 
 **Conclusion:** Reranking trades a small amount of Schema R@1 for a small gain in InstantiationReady. The hierarchical variant gives the highest InstantiationReady (0.085) at the lowest Schema R@1.
 
-**Detailed docs:** [docs/archive/NLP4LP_ACCEPTANCE_RERANK_RESULTS.md](docs/archive/NLP4LP_ACCEPTANCE_RERANK_RESULTS.md)
+**Detailed docs:** [archive/NLP4LP_ACCEPTANCE_RERANK_RESULTS.md](archive/NLP4LP_ACCEPTANCE_RERANK_RESULTS.md)
 
 ### 2.5 Semantic IR + Repair
 
@@ -148,7 +148,7 @@ Uses semantic roles (operator/unit tags) plus a repair pass to fill unfilled slo
 
 **Conclusion:** Best TypeMatch among deterministic methods. Coverage and InstantiationReady are between typed and constrained.
 
-**Detailed docs:** [docs/archive/NLP4LP_SEMANTIC_IR_REPAIR_RESULTS.md](docs/archive/NLP4LP_SEMANTIC_IR_REPAIR_RESULTS.md)
+**Detailed docs:** [archive/NLP4LP_SEMANTIC_IR_REPAIR_RESULTS.md](archive/NLP4LP_SEMANTIC_IR_REPAIR_RESULTS.md)
 
 ### 2.6 Optimization-Role Repair
 
@@ -161,7 +161,7 @@ Adds optimization-role tags (objective coefficient, bound, RHS) as an extra sign
 
 **Conclusion:** Current strongest structured deterministic method for balancing coverage, TypeMatch, and Exact20. InstantiationReady is slightly below typed greedy but much above constrained.
 
-**Detailed docs:** [docs/archive/NLP4LP_OPTIMIZATION_ROLE_METHOD_RESULTS.md](docs/archive/NLP4LP_OPTIMIZATION_ROLE_METHOD_RESULTS.md)
+**Detailed docs:** [archive/NLP4LP_OPTIMIZATION_ROLE_METHOD_RESULTS.md](archive/NLP4LP_OPTIMIZATION_ROLE_METHOD_RESULTS.md)
 
 ### 2.7 Optimization-Role + Relation-Aware Repair
 
@@ -174,7 +174,7 @@ python tools/nlp4lp_downstream_utility.py --variant orig \
     --baseline tfidf --assignment-mode optimization_role_relation_repair
 ```
 
-**Detailed docs:** [docs/archive/NLP4LP_RELATION_AWARE_METHOD_RESULTS.md](docs/archive/NLP4LP_RELATION_AWARE_METHOD_RESULTS.md)
+**Detailed docs:** [archive/NLP4LP_RELATION_AWARE_METHOD_RESULTS.md](archive/NLP4LP_RELATION_AWARE_METHOD_RESULTS.md)
 
 ### 2.8 Global Consistency Grounding (GCG)
 
@@ -195,7 +195,7 @@ A new method that enforces global consistency constraints during assignment (e.g
 python tools/run_nlp4lp_focused_eval.py --variant orig --safe
 ```
 
-**Detailed docs:** [docs/archive/global_consistency_grounding.md](docs/archive/global_consistency_grounding.md), [docs/learning_runs/global_consistency_grounding_results.md](docs/learning_runs/global_consistency_grounding_results.md)
+**Detailed docs:** [archive/global_consistency_grounding.md](archive/global_consistency_grounding.md), [learning_runs/global_consistency_grounding_results.md](learning_runs/global_consistency_grounding_results.md)
 
 ---
 
@@ -244,7 +244,7 @@ python -m training.train_retrieval \
 python -m training.evaluate_retrieval --regenerate --num 500
 ```
 
-**Detailed docs:** [training/README.md](training/README.md)
+**Detailed docs:** [training/README.md](../training/README.md)
 
 ---
 
@@ -281,7 +281,7 @@ The key benchmark for learned grounding: train and evaluate entirely on real NLP
 
 **Conclusion:** Learned model is below the rule baseline on all metrics. **Learning is documented as future work.**
 
-**Detailed docs:** [docs/learning_runs/real_data_only_learning_check.md](docs/learning_runs/real_data_only_learning_check.md)
+**Detailed docs:** [learning_runs/real_data_only_learning_check.md](learning_runs/real_data_only_learning_check.md)
 
 ### 5.4 Stage 3 Experiment Round
 
@@ -303,7 +303,7 @@ A structured experiment round comparing the rule baseline against five learned c
 sbatch batch/learning/run_stage3_experiments.sbatch
 ```
 
-**Detailed docs:** [docs/archive/LEARNING_STAGE3_EXPERIMENTS.md](docs/archive/LEARNING_STAGE3_EXPERIMENTS.md), [docs/archive/LEARNING_STAGE3_FIRST_RESULTS.md](docs/archive/LEARNING_STAGE3_FIRST_RESULTS.md), [docs/learning_runs/README.md](docs/learning_runs/README.md)
+**Detailed docs:** [archive/LEARNING_STAGE3_EXPERIMENTS.md](archive/LEARNING_STAGE3_EXPERIMENTS.md), [archive/LEARNING_STAGE3_FIRST_RESULTS.md](archive/LEARNING_STAGE3_FIRST_RESULTS.md), [learning_runs/README.md](learning_runs/README.md)
 
 ---
 
@@ -324,7 +324,7 @@ A benchmark comparing our retrieval-based agent against GitHub Copilot (and GPT-
 | Run our model | `artifacts/copilot_vs_model/run_our_model.py` |
 | Score comparison | `artifacts/copilot_vs_model/score_comparison.py` |
 
-**Detailed docs:** [docs/archive/copilot_vs_our_model_comparison.md](docs/archive/copilot_vs_our_model_comparison.md)
+**Detailed docs:** [archive/copilot_vs_our_model_comparison.md](archive/copilot_vs_our_model_comparison.md)
 
 ---
 
