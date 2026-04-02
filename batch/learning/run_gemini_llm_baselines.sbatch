@@ -15,9 +15,24 @@ REPO_ROOT="${SLURM_SUBMIT_DIR:-${REPO_ROOT:-$(cd "$(dirname "$0")/../.." && pwd)
 cd "$REPO_ROOT"
 mkdir -p logs/learning results/llm_baselines
 
+# Optional: repo-local secrets (gitignored) — same pattern as README .env
+if [[ -f "$REPO_ROOT/.env" ]]; then
+  set +u
+  set +a
+  # shellcheck disable=SC1091
+  source "$REPO_ROOT/.env"
+  set -a
+  set -u
+fi
+
 # Load interactive-shell exports (including GEMINI_API_KEY).
+# NOTE: ~/.bashrc often sources /etc/bashrc which references $BASHRCSOURCED before
+# it is set; with `set -u` that aborts. Temporarily allow unset vars while sourcing.
 if [[ -f "$HOME/.bashrc" ]]; then
+  set +u
+  # shellcheck disable=SC1091
   source "$HOME/.bashrc"
+  set -u
 fi
 
 if [[ -z "${GEMINI_API_KEY:-}" ]]; then
