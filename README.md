@@ -179,60 +179,15 @@ Solver execution is supported on a restricted subset via the SciPy HiGHS shim
 
 ---
 
-## Data Collection
+## Data Collection (demo / app only)
 
-> **⚠️ Please read this section before deploying or distributing the application.**
+> **Note:** Data collection is part of the **demo application** (`app.py`), not the
+> paper-evaluated pipeline. It is irrelevant for benchmark reproduction.
 
-When a user submits a query in the web UI, the application logs the interaction
-for training purposes.  Logging happens at **two levels**:
-
-| Level | Where | When |
-|---|---|---|
-| **Local file** | `data/collected_queries/user_queries.jsonl` on the server's disk | Always (every query) |
-| **Private GitHub repository** | `queries/<date>/<session-id>.jsonl` inside the repo named by `TELEMETRY_REPO` | Only when `TELEMETRY_REPO` **and** `TELEMETRY_TOKEN` env vars are set |
-
-### What is collected
-
-Each record contains **only**:
-
-```json
-{
-  "ts":      "2026-03-16T18:21:36.000000+00:00",
-  "query":   "minimize cost of opening warehouses and assigning customers",
-  "top_k":   3,
-  "results": [
-    {"id": "facility_location", "name": "Facility Location", "score": 0.93},
-    ...
-  ]
-}
-```
-
-No personally identifiable information (PII) is ever collected — no IP addresses,
-browser fingerprints, user accounts, session cookies, or any other identifying data.
-
-### How to enable remote telemetry
-
-1. Create a **private** GitHub repository (e.g. `YourOrg/opt-agent-telemetry`).
-2. Generate a GitHub personal-access-token with **`repo` scope** for that repository
-   (or a fine-grained token with *Contents: Read & write*).
-   See <https://github.com/settings/tokens>.
-3. Copy `.env.example` → `.env` and fill in:
-   ```
-   TELEMETRY_REPO=YourOrg/opt-agent-telemetry
-   TELEMETRY_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxx
-   ```
-4. The app reads these variables at startup.  The Gradio footer will show
-   *"Queries are also pushed to a private GitHub repository for training"*
-   when telemetry is active.
-
-### How to opt out
-
-Simply leave `TELEMETRY_REPO` and `TELEMETRY_TOKEN` unset (or empty).  When these
-variables are absent the module (`telemetry.py`) is a complete no-op — no network
-request is made and no data leaves the machine beyond the local log file.
-
-The local log file (`data/collected_queries/user_queries.jsonl`) is listed in
-`.gitignore` and is never committed to the public repository.
+When a user submits a query via the web UI, the app logs the interaction to a local
+file (`data/collected_queries/user_queries.jsonl`, gitignored). Remote telemetry
+is opt-in via `TELEMETRY_REPO` / `TELEMETRY_TOKEN` env vars. No PII is collected.
+Set `.env.example` → `.env` to configure. See `telemetry.py` for full details.
 
 ---
 
@@ -340,6 +295,7 @@ See **[`REPO_STRUCTURE.md`](REPO_STRUCTURE.md)** for the full annotated director
 
 | Topic | Doc |
 |-------|-----|
+| **Reviewer guide** | [`docs/REVIEWER_GUIDE.md`](docs/REVIEWER_GUIDE.md) — what to look at, headline metrics, limitations |
 | **Current status (reviewers)** | [`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md) — headline metrics pointer, validated vs auxiliary |
 | **Manuscript authority** | [`docs/EAAI_SOURCE_OF_TRUTH.md`](docs/EAAI_SOURCE_OF_TRUTH.md) — paper framing and authoritative file list |
 | **Results provenance** | [`docs/RESULTS_PROVENANCE.md`](docs/RESULTS_PROVENANCE.md) — canonical metrics + provenance chain |

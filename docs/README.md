@@ -9,6 +9,7 @@ Start with the reviewer-facing docs below; the archive folders hold historical m
 
 | Doc | Purpose |
 |-----|---------|
+| **[REVIEWER_GUIDE.md](REVIEWER_GUIDE.md)** | Practical guide for reviewers — what to look at, where metrics come from, limitations |
 | **[CURRENT_STATUS.md](CURRENT_STATUS.md)** | Single concise status page — headline metrics, validated vs auxiliary, limitations |
 | **[EAAI_SOURCE_OF_TRUTH.md](EAAI_SOURCE_OF_TRUTH.md)** | Manuscript authority — paper framing, authoritative file list, benchmark story |
 | **[RESULTS_PROVENANCE.md](RESULTS_PROVENANCE.md)** | Canonical metrics + full provenance chain (which number came from where) |

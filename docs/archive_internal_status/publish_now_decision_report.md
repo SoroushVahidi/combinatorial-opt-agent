@@ -1,6 +1,12 @@
 # Publish-Now Decision Report
 ## Combinatorial Opt Agent — NLP4LP Pipeline
 
+> **Provenance note:** This file is retained for provenance and is not the canonical
+> public summary. See [`docs/CURRENT_STATUS.md`](../CURRENT_STATUS.md) and
+> [`docs/EAAI_SOURCE_OF_TRUTH.md`](../EAAI_SOURCE_OF_TRUTH.md) for the current
+> official status.
+
+
 **Date:** 2026-03-10  
 **Branch:** `copilot/main-branch-description` (commit `9346cad`)  
 **Environment:** CPU-only, offline (Wulver down). No GPU. No HuggingFace gold data access.  
