@@ -41,6 +41,13 @@ Environment variables
                                  HuggingFace token for loading gated NLP4LP dataset.
   OPENAI_API_KEY                 Required for LLM baseline methods (openai_*).
   GEMINI_API_KEY                 Required for LLM baseline methods (gemini_*).
+  GEMINI_MODEL                   Optional override for configs/llm_baselines.yaml gemini.model.
+  GEMINI_MODEL_FALLBACKS         Comma-separated extra model ids for pick-model / fallbacks.
+  GEMINI_SKIP_PREFLIGHT          If "1", skip list+probe checks (use after successful batch preflight).
+  GEMINI_SKIP_ON_ZERO_QUOTA      If "1", skip Gemini baseline when free-tier quota is hard-zero (limit:0).
+  GEMINI_MODEL_SELECTED_FILE     Optional path for pick-model --persist-selected / batch artifact JSON.
+  GEMINI_AUTO_PICK_MODEL         batch run_gemini_llm_baselines.sbatch: "1" (default) runs pick-model before preflight; "0" skips.
+  GEMINI_LIMIT_RUNTIME_THREADS   "1" (default in that sbatch) caps OMP/BLAS threads before Gemini client; "0" disables.
   LOW_RESOURCE                   Set to "1" to skip HF dataset download in dry runs.
 """
 from __future__ import annotations
@@ -6359,6 +6366,17 @@ def run_single_setting(
             variant=variant,
         )
     elif baseline_arg in ("openai", "gemini"):
+        if baseline_arg == "gemini":
+            from tools.llm_baselines import GeminiHardQuotaError, gemini_baseline_should_run
+
+            try:
+                run, skip_reason = gemini_baseline_should_run()
+            except GeminiHardQuotaError as e:
+                print(f"Gemini preflight failed (hard zero quota): {e}", file=sys.stderr)
+                return False
+            if not run:
+                print(f"SKIP gemini baseline: {skip_reason}", file=sys.stderr)
+                return True
         llm_ranker = LLMTwoStageBaseline(
             method=baseline_arg,
             catalog=catalog,
@@ -6484,9 +6502,23 @@ def main() -> None:
             "optimization_role_entity_semantic_beam_repair",
         ),
     )
+    p.add_argument(
+        "--skip-gemini-preflight",
+        action="store_true",
+        help="Do not run Gemini list/probe checks (GEMINI_SKIP_PREFLIGHT=1).",
+    )
+    p.add_argument(
+        "--gemini-skip-on-zero-quota",
+        action="store_true",
+        help="If Gemini preflight hits hard zero quota, skip the run instead of failing (GEMINI_SKIP_ON_ZERO_QUOTA=1).",
+    )
     args = p.parse_args()
     if args.method:
         args.baseline = args.method
+    if args.skip_gemini_preflight:
+        os.environ["GEMINI_SKIP_PREFLIGHT"] = "1"
+    if args.gemini_skip_on_zero_quota:
+        os.environ["GEMINI_SKIP_ON_ZERO_QUOTA"] = "1"
 
     if args.k != 1:
         raise SystemExit("This demo currently supports --k 1 only (top-1 schema selection).")
@@ -6531,6 +6563,20 @@ def main() -> None:
             variant=args.variant,
         )
     elif args.baseline in ("openai", "gemini"):
+        if args.baseline == "gemini":
+            from tools.llm_baselines import GeminiHardQuotaError, gemini_baseline_should_run
+
+            try:
+                run, skip_reason = gemini_baseline_should_run()
+            except GeminiHardQuotaError as e:
+                raise SystemExit(
+                    f"Gemini preflight failed (hard zero quota): {e}\n"
+                    "Fix: enable billing / pick a model with nonzero free-tier limits, or set "
+                    "GEMINI_SKIP_ON_ZERO_QUOTA=1 or --gemini-skip-on-zero-quota to skip."
+                )
+            if not run:
+                print(f"SKIP gemini baseline: {skip_reason}", file=sys.stderr)
+                return
         llm_ranker = LLMTwoStageBaseline(
             method=args.baseline,
             catalog=catalog,

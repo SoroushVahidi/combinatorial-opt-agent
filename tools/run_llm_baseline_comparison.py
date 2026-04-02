@@ -71,6 +71,17 @@ def main() -> None:
                 if method == "gemini" and not os.environ.get("GEMINI_API_KEY"):
                     print("Skipping gemini: GEMINI_API_KEY not set", file=sys.stderr)
                     continue
+                if method == "gemini":
+                    from tools.llm_baselines import GeminiHardQuotaError, gemini_baseline_should_run
+
+                    try:
+                        run, skip_reason = gemini_baseline_should_run()
+                    except GeminiHardQuotaError as e:
+                        print(f"Skipping gemini (hard zero quota): {e}", file=sys.stderr)
+                        continue
+                    if not run:
+                        print(f"Skipping gemini (preflight): {skip_reason}", file=sys.stderr)
+                        continue
                 print(f"Running variant={variant} method={method}")
                 ok = dutil.run_single_setting(
                     variant=variant,

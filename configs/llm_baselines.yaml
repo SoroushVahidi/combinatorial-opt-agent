@@ -4,13 +4,26 @@ openai:
   max_tokens: 1200
 
 # Model id must match a name your key can call via generateContent (see ListModels in AI Studio).
-# gemini-1.5-flash may 404 on some API versions; gemini-2.0-flash is widely available.
+# Usability is account-specific: always run `python tools/llm_baselines.py preflight` before batch Gemini jobs.
+# Free tier: only models with *nonzero* visible limits work; `limit: 0` in 429s cannot be fixed in code.
+# New API keys in the same AI Studio project do not increase quota.
+#
+# Standard-text models only — suggested pick-model / fallback order (after GEMINI_MODEL, if set):
+#   1) gemini-2.5-flash-lite  (default below; confirmed preflight-OK on one Wulver-tested account)
+#   2) gemini-2.0-flash-lite
+#   3) gemini-2.0-flash       (hard zero free-tier quota on that same tested account)
+#   4) gemini-1.5-flash       (may 404 on some API versions)
 gemini:
-  model: gemini-2.0-flash
+  model: gemini-2.5-flash-lite
+  fallback_models:
+    - gemini-2.0-flash-lite
+    - gemini-2.0-flash
+    - gemini-1.5-flash
   temperature: 0.0
   max_tokens: 1200
 
 # Gemini/OpenAI may return 429; first retry uses base_backoff, then honors API "retry in Xs" when present.
+# Hard `limit: 0` quota errors do not retry (see tools/llm_baselines.py).
 retry:
   max_retries: 8
   base_backoff_seconds: 2.0
@@ -24,4 +37,3 @@ pricing_usd_per_1k_tokens:
   gemini:
     input_per_1k: 0.00035
     output_per_1k: 0.00105
-

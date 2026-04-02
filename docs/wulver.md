@@ -79,6 +79,14 @@ ssh -L 7860:localhost:7860 your_netid@wulver.njit.edu
 
 Then in the browser open **http://127.0.0.1:7860** (not 0.0.0.0).
 
+---
+
+## Gemini LLM baselines (optional)
+
+If you use **`GEMINI_API_KEY`** and `batch/learning/run_gemini_llm_baselines.sbatch`, the Google client may print **`pthread_create failed: Resource temporarily unavailable`** on some nodes. **`preflight`** can still succeed; see **`docs/gemini_api_quota.md`** (section *Wulver / HPC: pthread*) and optional **`export GEMINI_LIMIT_RUNTIME_THREADS=1`** before Python.
+
+`run_gemini_llm_baselines.sbatch` defaults to **`GEMINI_LIMIT_RUNTIME_THREADS=1`**, **`GEMINI_AUTO_PICK_MODEL` on** (run `pick-model` then `preflight`), and the yaml default model **`gemini-2.5-flash-lite`**. Always run **`python tools/llm_baselines.py preflight`** in the same venv when debugging; quota is **account-specific** (see `configs/llm_baselines.yaml`, `docs/gemini_api_quota.md`).
+
 **If you see `ImportError: cannot import name 'HfFolder'`:** Upgrade the `datasets` package:  
 `pip install --upgrade datasets --user`
 
