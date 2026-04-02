@@ -49,6 +49,15 @@ class GeminiHardQuotaError(RuntimeError):
     """
 
 
+class LlmBaselineRunInterrupted(RuntimeError):
+    """LLM baseline stopped mid-eval (quota, rate limit, or API error). Partial per-query CSV may exist."""
+
+    def __init__(self, message: str, *, n_completed: int, failure_kind: str) -> None:
+        super().__init__(message)
+        self.n_completed = n_completed
+        self.failure_kind = failure_kind
+
+
 def is_gemini_hard_zero_quota_error(exc: BaseException) -> bool:
     """True when the error text indicates a hard zero quota (not a transient 429)."""
     if isinstance(exc, GeminiHardQuotaError):
@@ -76,6 +85,52 @@ def is_gemini_hard_zero_quota_error(exc: BaseException) -> bool:
     if "quota" in low or "free_tier" in low or "resourceexhausted" in type(exc).__name__.lower():
         return True
     return False
+
+
+def classify_gemini_quota_failure(exc: BaseException) -> str:
+    """Return a short label for logging: hard_zero, rate_limited, not_found, other."""
+    msg = str(exc)
+    low = msg.lower()
+    if "not found" in low or "not supported for generatecontent" in low or "404" in msg:
+        return "not_found"
+    if is_gemini_hard_zero_quota_error(exc):
+        return "hard_zero"
+    if isinstance(exc, GeminiHardQuotaError):
+        return "hard_zero"
+    # Paid / free tier daily or RPM caps (limit > 0) still surface as 429 / ResourceExhausted
+    if "resource exhausted" in type(exc).__name__.lower():
+        return "rate_limited"
+    if "quota" in low and "429" in msg:
+        return "rate_limited"
+    try:
+        from google.api_core import exceptions as gexc
+
+        if isinstance(exc, gexc.ResourceExhausted):
+            return "rate_limited" if not is_gemini_hard_zero_quota_error(exc) else "hard_zero"
+        if isinstance(exc, gexc.NotFound):
+            return "not_found"
+    except Exception:
+        pass
+    try:
+        from google.genai import errors as genai_errors
+
+        if isinstance(exc, genai_errors.APIError):
+            code = getattr(exc, "code", None)
+            if code == 404:
+                return "not_found"
+            if code == 429:
+                return "hard_zero" if is_gemini_hard_zero_quota_error(exc) else "rate_limited"
+    except Exception:
+        pass
+    return "other"
+
+
+def is_gemini_transient_quota_or_rate_limit(exc: BaseException) -> bool:
+    """True for 429 / exhausted quota where retry or waiting might help (non-zero limits)."""
+    if is_gemini_hard_zero_quota_error(exc):
+        return False
+    kind = classify_gemini_quota_failure(exc)
+    return kind == "rate_limited"
 
 
 def _normalize_gemini_model_name(name: str) -> str:
@@ -301,8 +356,24 @@ class LLMTwoStageBaseline:
         except Exception:
             return {}
 
+    def _cache_payload(self, payload: dict[str, Any]) -> dict[str, Any]:
+        """Include model + generation settings so cache entries invalidate when those change."""
+        base = dict(payload)
+        if self.method == "openai":
+            base["llm_model"] = str(self.method_cfg.get("model", "gpt-4o-mini"))
+        else:
+            base["llm_model"] = _normalize_gemini_model_name(
+                (os.environ.get("GEMINI_MODEL") or "").strip()
+                or str(self.method_cfg.get("model", DEFAULT_GEMINI_MODEL))
+            )
+        base["temperature"] = float(self.method_cfg.get("temperature", 0.0))
+        base["max_output_tokens"] = int(self.method_cfg.get("max_tokens", 1024))
+        base["cache_key_version"] = 2
+        return base
+
     async def _llm_json(self, stage: str, payload: dict[str, Any], prompt: str, schema_hint: str) -> dict[str, Any]:
-        cpath = self._cache_path(stage, payload)
+        cache_payload = self._cache_payload(payload)
+        cpath = self._cache_path(stage, cache_payload)
         if cpath.exists():
             with open(cpath, encoding="utf-8") as f:
                 return json.load(f)

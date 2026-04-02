@@ -13,9 +13,10 @@ set -euo pipefail
 
 REPO_ROOT="${SLURM_SUBMIT_DIR:-${REPO_ROOT:-$(cd "$(dirname "$0")/../.." && pwd)}}"
 cd "$REPO_ROOT"
-mkdir -p logs/learning results/llm_baselines
+mkdir -p logs/learning results/llm_baselines results/rerun/gemini
 
-# Optional: repo-local secrets (gitignored) — same pattern as README .env
+# ── Bootstrap: do NOT source ~/.bashrc under `set -u` (breaks on BASHRCSOURCED). ──
+# Use only: repo .env, Slurm --export / --export-file, or GEMINI_API_KEY_FILE.
 if [[ -f "$REPO_ROOT/.env" ]]; then
   set +u
   set +a
@@ -25,18 +26,6 @@ if [[ -f "$REPO_ROOT/.env" ]]; then
   set -u
 fi
 
-# Load interactive-shell exports (including GEMINI_API_KEY).
-# NOTE: ~/.bashrc often sources /etc/bashrc which references $BASHRCSOURCED before
-# it is set; with `set -u` that aborts. Temporarily allow unset vars while sourcing.
-if [[ -f "$HOME/.bashrc" ]]; then
-  set +u
-  # shellcheck disable=SC1091
-  source "$HOME/.bashrc"
-  set -u
-fi
-
-# Optional: load API key from a gitignored one-line file (avoids exporting in ~/.bashrc).
-# Example: export GEMINI_API_KEY_FILE=$REPO_ROOT/.secrets/gemini_api_key  (chmod 600)
 if [[ -z "${GEMINI_API_KEY:-}" && -n "${GEMINI_API_KEY_FILE:-}" ]]; then
   if [[ -f "$GEMINI_API_KEY_FILE" ]]; then
     export GEMINI_API_KEY="$(tr -d '\r\n' < "$GEMINI_API_KEY_FILE")"
@@ -47,105 +36,91 @@ if [[ -z "${GEMINI_API_KEY:-}" && -n "${GEMINI_API_KEY_FILE:-}" ]]; then
 fi
 
 if [[ -z "${GEMINI_API_KEY:-}" ]]; then
-  echo "ERROR: GEMINI_API_KEY is not set. Export it, add to ~/.bashrc, use repo .env, or set GEMINI_API_KEY_FILE."
+  echo "ERROR: GEMINI_API_KEY is not set."
+  echo "Fix: use Slurm --export=ALL or --export-file=..., put GEMINI_API_KEY in repo .env, or set GEMINI_API_KEY_FILE."
+  echo "Do not rely on sourcing ~/.bashrc in this batch script."
   exit 1
 fi
 
-# Cap OpenMP/BLAS/NumExpr threads before the Gemini client loads (mitigates Wulver pthread_create warnings).
-# Does not change API quota. Disable with: export GEMINI_LIMIT_RUNTIME_THREADS=0 before sbatch.
 export GEMINI_LIMIT_RUNTIME_THREADS="${GEMINI_LIMIT_RUNTIME_THREADS:-1}"
 
-# Prefer repo venv when available (preflight must use the same env as the run).
 if [[ -x "$REPO_ROOT/venv/bin/python" ]]; then
   export PATH="$REPO_ROOT/venv/bin:${PATH}"
   echo "Using repo venv: $REPO_ROOT/venv"
 else
-  echo "WARNING: $REPO_ROOT/venv/bin/python not found; using PATH python (install deps in this env)."
+  echo "WARNING: $REPO_ROOT/venv/bin/python not found; using PATH python."
 fi
 
-# ── Batch banner (grep-friendly; see docs/gemini_api_quota.md) ───────────────
 _run_id="${SLURM_JOB_ID:-manual}"
+RERUN_ROOT="${GEMINI_RERUN_ROOT:-$REPO_ROOT/results/rerun/gemini/run_${_run_id}}"
+export RERUN_ROOT
+export NLP4LP_OUTPUT_DIR="${NLP4LP_OUTPUT_DIR:-$RERUN_ROOT/paper}"
+mkdir -p "$RERUN_ROOT" "$NLP4LP_OUTPUT_DIR" logs/learning
+
 echo "=========================================="
 echo "Gemini NLP4LP batch — run_id=${_run_id}"
 echo "time_utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 echo "host=$(hostname 2>/dev/null || true)"
-echo "SLURM_JOB_NODELIST=${SLURM_JOB_NODELIST:-<n/a>}"
 echo "REPO_ROOT=$REPO_ROOT"
+echo "RERUN_ROOT=$RERUN_ROOT"
+echo "NLP4LP_OUTPUT_DIR=$NLP4LP_OUTPUT_DIR"
 echo "GEMINI_AUTO_PICK_MODEL=${GEMINI_AUTO_PICK_MODEL:-1}"
-_skip_z="${GEMINI_SKIP_ON_ZERO_QUOTA:-}"
-if [[ "$_skip_z" == "1" || "$_skip_z" == "true" || "$_skip_z" == "yes" || "$_skip_z" == "on" ]]; then
-  echo "GEMINI_SKIP_ON_ZERO_QUOTA=enabled (soft-skip on hard limit:0 / pick-model total failure)"
-else
-  echo "GEMINI_SKIP_ON_ZERO_QUOTA=disabled (job fails on hard quota or pick-model exit 3)"
-fi
-_lim="${GEMINI_LIMIT_RUNTIME_THREADS:-}"
-if [[ "$_lim" == "0" || "$_lim" == "false" || "$_lim" == "no" || "$_lim" == "off" ]]; then
-  echo "GEMINI_LIMIT_RUNTIME_THREADS=0 (thread cap disabled in tools/llm_baselines.py)"
-else
-  echo "GEMINI_LIMIT_RUNTIME_THREADS=${GEMINI_LIMIT_RUNTIME_THREADS:-1} (OMP/BLAS/NUMEXPR capped in Python before google.genai import)"
-fi
-echo "GEMINI_MODEL_SELECTED_FILE=${GEMINI_MODEL_SELECTED_FILE:-$REPO_ROOT/results/llm_baselines/gemini_selected_model.json}"
+echo "GEMINI_SKIP_ON_ZERO_QUOTA=${GEMINI_SKIP_ON_ZERO_QUOTA:-}"
+echo "GEMINI_SMOKE_TEST=${GEMINI_SMOKE_TEST:-0} (1 = orig only, --max-queries 5, then exit)"
 echo "=========================================="
 
 echo "which python: $(which python 2>/dev/null || true)"
 python --version 2>/dev/null || true
 python -c "from google import genai; print('google-genai import: OK')" 2>/dev/null || {
-  echo "ERROR: google-genai is not available in this Python env (pip install google-genai)."
+  echo "ERROR: google-genai is not available (pip install google-genai)."
   exit 1
 }
 
-# Auto-pick the first model that passes a minimal probe (configs/llm_baselines.yaml fallbacks).
-# Default ON — no manual export of GEMINI_MODEL required. Disable with GEMINI_AUTO_PICK_MODEL=0.
-# Writes JSON to GEMINI_MODEL_SELECTED_FILE or results/llm_baselines/gemini_selected_model.json.
+# ── Model selection, then mandatory preflight (scripts/gemini_preflight.py) ───
 _gemini_auto_pick="${GEMINI_AUTO_PICK_MODEL:-1}"
 if [[ "$_gemini_auto_pick" != "0" && "$_gemini_auto_pick" != "false" && "$_gemini_auto_pick" != "no" && "$_gemini_auto_pick" != "off" ]]; then
   ART="${GEMINI_MODEL_SELECTED_FILE:-$REPO_ROOT/results/llm_baselines/gemini_selected_model.json}"
   mkdir -p "$(dirname "$ART")"
-  echo "pick-model: running (candidates from yaml + GEMINI_MODEL / GEMINI_MODEL_FALLBACKS) ..."
-  if ! PICKED=$(python tools/llm_baselines.py pick-model --write-selected "$ART"); then
+  echo "pick-model: probing yaml/env fallback chain (tools/llm_baselines.py) ..."
+  if ! PICKED="$(python tools/llm_baselines.py pick-model --write-selected "$ART")"; then
     _pick_rc=$?
     if [[ $_pick_rc -eq 3 && "${GEMINI_SKIP_ON_ZERO_QUOTA:-}" == "1" ]]; then
-      echo "Skipping Gemini baseline job: pick-model found no usable model (all candidates failed). See artifact: $ART"
+      echo "Skipping Gemini baseline job: pick-model found no usable model. See $ART"
       exit 0
     fi
-    echo "ERROR: pick-model failed (exit $_pick_rc). Every candidate failed probes; see stderr and $ART"
+    echo "ERROR: pick-model failed (exit $_pick_rc). See stderr and $ART"
     exit "$_pick_rc"
   fi
   export GEMINI_MODEL="$PICKED"
-  echo "GEMINI_SELECTED_MODEL=$GEMINI_MODEL"
-  echo "GEMINI_AUTO_PICK=on (pick-model succeeded; artifact: $ART)"
+  echo "GEMINI_MODEL=$GEMINI_MODEL (artifact $ART)"
 else
-  echo "GEMINI_AUTO_PICK=off (using GEMINI_MODEL or configs/llm_baselines.yaml gemini.model only; no pick-model probe)"
+  echo "GEMINI_AUTO_PICK_MODEL=off — using GEMINI_MODEL / configs/llm_baselines.yaml gemini.model only."
   python - <<'PY'
 from tools.llm_baselines import gemini_fallback_candidates, resolve_gemini_model_from_config
 print("resolved_model:", resolve_gemini_model_from_config())
-print("fallback_chain (same order pick-model would use):", ", ".join(gemini_fallback_candidates()))
+print("fallback_chain:", ", ".join(gemini_fallback_candidates()))
 PY
 fi
 
-# Preflight: model must be list_models-visible and must not hit free-tier limit:0.
-# Exit 2 = hard zero quota. If GEMINI_SKIP_ON_ZERO_QUOTA=1, exit 0 and skip this job.
-echo "preflight: running list_models + minimal generateContent probe ..."
-python tools/llm_baselines.py preflight
-_preflight_rc=$?
-if [[ $_preflight_rc -eq 0 ]]; then
-  echo "PREFLIGHT_PASSED=1"
-else
-  echo "PREFLIGHT_PASSED=0 (exit $_preflight_rc)"
+_preflight_json="$RERUN_ROOT/preflight_${_run_id}.json"
+echo "Mandatory Gemini preflight → $_preflight_json"
+if ! python scripts/gemini_preflight.py \
+  --output-json "$_preflight_json" \
+  --estimate-calls \
+  --estimate-queries 331 \
+  --estimate-variants 3; then
+  _pf_rc=$?
+  if [[ $_pf_rc -eq 2 && "${GEMINI_SKIP_ON_ZERO_QUOTA:-}" == "1" ]]; then
+    echo "Skipping job: hard zero quota (preflight exit 2)."
+    exit 0
+  fi
+  echo "ERROR: gemini_preflight.py failed (exit $_pf_rc). See $_preflight_json and stderr above."
+  exit "$_pf_rc"
 fi
-if [[ $_preflight_rc -eq 2 && "${GEMINI_SKIP_ON_ZERO_QUOTA:-}" == "1" ]]; then
-  echo "Skipping Gemini baseline job (preflight: hard zero quota for this model/account)."
-  exit 0
-fi
-if [[ $_preflight_rc -ne 0 ]]; then
-  echo "ERROR: Gemini preflight failed (exit $_preflight_rc). See docs/gemini_api_quota.md"
-  exit "$_preflight_rc"
-fi
-# Avoid repeating the same probe on every variant in this job.
-export GEMINI_SKIP_PREFLIGHT=1
-echo "GEMINI_SKIP_PREFLIGHT=1 (set for variant loop; downstream will not re-probe)"
 
-# Small JSON record for log aggregation (cwd is REPO_ROOT).
+export GEMINI_SKIP_PREFLIGHT=1
+echo "GEMINI_SKIP_PREFLIGHT=1 for nlp4lp_downstream_utility variant loop"
+
 python - <<'PY'
 import json
 import os
@@ -153,30 +128,45 @@ import datetime
 import pathlib
 
 root = pathlib.Path.cwd()
-art = pathlib.Path(os.environ.get("GEMINI_MODEL_SELECTED_FILE") or (root / "results/llm_baselines/gemini_selected_model.json"))
-out = root / "results" / "llm_baselines" / f"gemini_sbatch_run_{os.environ.get('SLURM_JOB_ID', 'manual')}.json"
+rerun = pathlib.Path(os.environ.get("RERUN_ROOT", root / "results/rerun/gemini/run_manual"))
+out = rerun / f"gemini_sbatch_meta_{os.environ.get('SLURM_JOB_ID', 'manual')}.json"
 out.parent.mkdir(parents=True, exist_ok=True)
 payload = {
     "run_id": os.environ.get("SLURM_JOB_ID", "manual"),
     "time_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
     "gemini_model": (os.environ.get("GEMINI_MODEL") or "").strip(),
-    "preflight_passed": True,
-    "gemini_auto_pick": os.environ.get("GEMINI_AUTO_PICK_MODEL", "1"),
-    "gemini_skip_on_zero_quota": os.environ.get("GEMINI_SKIP_ON_ZERO_QUOTA", ""),
-    "gemini_limit_runtime_threads": os.environ.get("GEMINI_LIMIT_RUNTIME_THREADS", "1"),
-    "gemini_skip_preflight_after": "1",
-    "model_artifact": str(art),
+    "nlp4lp_output_dir": os.environ.get("NLP4LP_OUTPUT_DIR", ""),
+    "rerun_root": str(rerun),
 }
 out.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
-print(f"Wrote batch status JSON: {out}")
+print(f"Wrote {out}")
 PY
+
+# ── Smoke test (optional): tiny orig run ──────────────────────────────────────
+if [[ "${GEMINI_SMOKE_TEST:-0}" == "1" || "${GEMINI_SMOKE_TEST:-0}" == "true" || "${GEMINI_SMOKE_TEST:-0}" == "yes" ]]; then
+  echo "=== GEMINI_SMOKE_TEST: orig, max 5 queries ==="
+  python tools/nlp4lp_downstream_utility.py \
+    --variant orig \
+    --method gemini \
+    --max-queries 5 \
+    --output-dir "$NLP4LP_OUTPUT_DIR"
+  echo "Smoke test finished OK (outputs under $NLP4LP_OUTPUT_DIR)."
+  exit 0
+fi
 
 for variant in orig noisy short; do
   echo "=== Running Gemini baseline for ${variant} ==="
+  _extra=()
+  if [[ "${GEMINI_RESUME:-0}" == "1" || "${GEMINI_RESUME:-0}" == "true" || "${GEMINI_RESUME:-0}" == "yes" ]]; then
+    _extra+=(--resume)
+  fi
   python tools/nlp4lp_downstream_utility.py \
     --variant "${variant}" \
-    --method gemini
+    --method gemini \
+    --output-dir "$NLP4LP_OUTPUT_DIR" \
+    "${_extra[@]}"
 done
 
 echo "Gemini baseline run completed."
-echo "Summary CSV: results/paper/nlp4lp_downstream_summary.csv"
+echo "Per-variant artifacts: $NLP4LP_OUTPUT_DIR"
+echo "Summary CSV (sidecar): $NLP4LP_OUTPUT_DIR/nlp4lp_downstream_summary.csv"

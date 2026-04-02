@@ -48,6 +48,7 @@ Environment variables
   GEMINI_MODEL_SELECTED_FILE     Optional path for pick-model --persist-selected / batch artifact JSON.
   GEMINI_AUTO_PICK_MODEL         batch run_gemini_llm_baselines.sbatch: "1" (default) runs pick-model before preflight; "0" skips.
   GEMINI_LIMIT_RUNTIME_THREADS   "1" (default in that sbatch) caps OMP/BLAS threads before Gemini client; "0" disables.
+  GEMINI_RERUN_ROOT / NLP4LP_OUTPUT_DIR   batch script sets default results/rerun/gemini/run_<SLURM_JOB_ID>/paper for Gemini reruns.
   LOW_RESOURCE                   Set to "1" to skip HF dataset download in dry runs.
 """
 from __future__ import annotations
@@ -65,7 +66,14 @@ from typing import Any, Iterable
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-from tools.llm_baselines import LLMTwoStageBaseline
+from tools.llm_baselines import (
+    LLMTwoStageBaseline,
+    LlmBaselineRunInterrupted,
+    classify_gemini_quota_failure,
+    GeminiHardQuotaError,
+    is_gemini_hard_zero_quota_error,
+    is_gemini_transient_quota_or_rate_limit,
+)
 
 NUM_TOKEN_RE = re.compile(r"[$]?\d[\d,]*(?:\.\d+)?%?")
 
@@ -5033,6 +5041,164 @@ def _md5_seed(s: str) -> int:
     return int(hashlib.md5(s.encode("utf-8")).hexdigest()[:8], 16)
 
 
+def _load_per_query_csv_rows(path: Path) -> list[dict[str, str]]:
+    if not path.exists():
+        return []
+    with open(path, encoding="utf-8") as f:
+        return list(csv.DictReader(f))
+
+
+def _coerce_resume_per_query_row(r: dict[str, str]) -> dict[str, Any]:
+    """Rebuild in-memory row dict from CSV strings (for --resume continuation)."""
+    e5, e20 = r.get("exact5", ""), r.get("exact20", "")
+    return {
+        "query_id": r.get("query_id", ""),
+        "variant": r.get("variant", ""),
+        "baseline": r.get("baseline", ""),
+        "predicted_doc_id": r.get("predicted_doc_id", ""),
+        "gold_doc_id": r.get("gold_doc_id", ""),
+        "schema_hit": int(r.get("schema_hit", 0) or 0),
+        "n_expected_scalar": int(r.get("n_expected_scalar", 0) or 0),
+        "n_filled": int(r.get("n_filled", 0) or 0),
+        "param_coverage": float(r.get("param_coverage", 0) or 0),
+        "type_match": float(r.get("type_match", 0) or 0),
+        "exact5": float(e5) if e5 not in ("", "None") else "",
+        "exact20": float(e20) if e20 not in ("", "None") else "",
+        "key_overlap": float(r.get("key_overlap", 0) or 0),
+    }
+
+
+def _per_query_rows_to_aggregate(
+    rows: list[dict[str, str]], variant: str, baseline: str
+) -> dict[str, Any]:
+    """Rebuild main downstream aggregate dict from per-query CSV rows (string-valued)."""
+    n = len(rows)
+    if n == 0:
+        return {
+            "variant": variant,
+            "baseline": baseline,
+            "schema_R1": 0.0,
+            "param_coverage": 0.0,
+            "type_match": 0.0,
+            "exact5_on_hits": "",
+            "exact20_on_hits": "",
+            "param_coverage_hits": "",
+            "param_coverage_miss": "",
+            "type_match_hits": "",
+            "type_match_miss": "",
+            "key_overlap": "",
+            "key_overlap_hits": "",
+            "key_overlap_miss": "",
+            "instantiation_ready": 0.0,
+            "n": 0,
+        }
+
+    def _f(x: str) -> float:
+        return float(x) if x not in ("", "None") else 0.0
+
+    hit_flags = [int(r.get("schema_hit", 0) or 0) for r in rows]
+    cov_vals = [_f(r.get("param_coverage", "0")) for r in rows]
+    type_vals = [_f(r.get("type_match", "0")) for r in rows]
+    ko_all = [_f(r.get("key_overlap", "0")) for r in rows]
+    cov_hits = [cov_vals[i] for i in range(n) if hit_flags[i]]
+    cov_miss = [cov_vals[i] for i in range(n) if not hit_flags[i]]
+    type_hits = [type_vals[i] for i in range(n) if hit_flags[i]]
+    type_miss = [type_vals[i] for i in range(n) if not hit_flags[i]]
+    ko_hits = [ko_all[i] for i in range(n) if hit_flags[i]]
+    ko_miss = [ko_all[i] for i in range(n) if not hit_flags[i]]
+    exact5_vals: list[float] = []
+    exact20_vals: list[float] = []
+    for i, r in enumerate(rows):
+        if not hit_flags[i]:
+            continue
+        e5, e20 = r.get("exact5", ""), r.get("exact20", "")
+        if e5 not in ("", "None"):
+            exact5_vals.append(float(e5))
+        if e20 not in ("", "None"):
+            exact20_vals.append(float(e20))
+    inst_ready = 0
+    for i in range(n):
+        if _f(rows[i].get("param_coverage", "0")) >= 0.8 and _f(rows[i].get("type_match", "0")) >= 0.8:
+            inst_ready += 1
+
+    def _mean(xs: list[float]) -> float | str:
+        return (sum(xs) / len(xs)) if xs else ""
+
+    return {
+        "variant": variant,
+        "baseline": baseline,
+        "schema_R1": sum(hit_flags) / n,
+        "param_coverage": sum(cov_vals) / n,
+        "type_match": sum(type_vals) / n,
+        "exact5_on_hits": (sum(exact5_vals) / len(exact5_vals)) if exact5_vals else "",
+        "exact20_on_hits": (sum(exact20_vals) / len(exact20_vals)) if exact20_vals else "",
+        "param_coverage_hits": _mean(cov_hits),
+        "param_coverage_miss": _mean(cov_miss),
+        "type_match_hits": _mean(type_hits),
+        "type_match_miss": _mean(type_miss),
+        "key_overlap": _mean(ko_all),
+        "key_overlap_hits": _mean(ko_hits),
+        "key_overlap_miss": _mean(ko_miss),
+        "instantiation_ready": inst_ready / n,
+        "n": n,
+    }
+
+
+def _write_llm_interrupt_artifacts(
+    *,
+    rows: list[dict],
+    cols: list[str],
+    per_query_path: Path,
+    json_path: Path,
+    variant: str,
+    baseline_name: str,
+    random_control: bool,
+    exc: BaseException,
+    failure_kind: str,
+    expected_total: int,
+) -> None:
+    per_query_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(per_query_path, "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=cols)
+        w.writeheader()
+        w.writerows(rows)
+    agg = _per_query_rows_to_aggregate(
+        [{k: str(v) for k, v in r.items()} for r in rows], variant, baseline_name
+    )
+    payload = {
+        "partial": True,
+        "interrupted": True,
+        "failure_kind": failure_kind,
+        "error": str(exc),
+        "n_completed": len(rows),
+        "expected_total_queries": expected_total,
+        "config": {"variant": variant, "baseline": baseline_name, "k": 1, "random_control": random_control},
+        "aggregate": agg,
+    }
+    with open(json_path, "w", encoding="utf-8") as f:
+        json.dump(payload, f, indent=2)
+    manifest_path = per_query_path.with_name(per_query_path.stem + ".interrupt.json")
+    with open(manifest_path, "w", encoding="utf-8") as f:
+        json.dump(
+            {
+                "status": "interrupted",
+                "failure_kind": failure_kind,
+                "error": str(exc),
+                "per_query_csv": str(per_query_path),
+                "json_path": str(json_path),
+                "n_completed": len(rows),
+                "expected_total_queries": expected_total,
+            },
+            f,
+            indent=2,
+        )
+    print(
+        f"[llm-checkpoint] Wrote partial results ({len(rows)}/{expected_total} queries) to {per_query_path}; "
+        f"manifest {manifest_path} (failure_kind={failure_kind})",
+        file=sys.stderr,
+    )
+
+
 def _upsert_summary_row(summary_path: Path, row: dict) -> None:
     cols = [
         "variant",
@@ -5461,6 +5627,10 @@ def run_setting(
     random_control: bool,
     assignment_mode: str,
     out_dir: Path,
+    *,
+    max_queries: int | None = None,
+    resume: bool = False,
+    llm_save_partial_on_failure: bool = False,
 ) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
     llm_runner = getattr(rank_fn, "_llm_runner", None) if rank_fn is not None else None
@@ -5469,7 +5639,44 @@ def run_setting(
     json_path = out_dir / f"nlp4lp_downstream_{variant}_{baseline_name}.json"
     summary_path = out_dir / "nlp4lp_downstream_summary.csv"
 
-    def run_one(label: str, mode: str) -> tuple[list[dict], dict, dict]:
+    base_eval = list(eval_items)
+    if max_queries is not None:
+        base_eval = base_eval[: max(0, int(max_queries))]
+    query_budget_total = len(base_eval)
+    pre_rows_raw: list[dict[str, str]] = []
+    if resume:
+        pre_rows_raw = _load_per_query_csv_rows(per_query_path)
+        if pre_rows_raw:
+            done_ids = {r.get("query_id", "") for r in pre_rows_raw}
+            base_eval = [ex for ex in base_eval if ex.get("query_id") not in done_ids]
+            print(
+                f"[resume] Loaded {len(pre_rows_raw)} completed queries from {per_query_path}; "
+                f"{len(base_eval)} remaining.",
+                file=sys.stderr,
+            )
+        else:
+            print(f"[resume] No existing rows at {per_query_path}; running full slice.", file=sys.stderr)
+    loop_items = base_eval
+    skip_types_due_to_resume = bool(pre_rows_raw)
+    save_partial = bool(llm_save_partial_on_failure and llm_runner is not None)
+
+    _PQ_COLS = [
+        "query_id",
+        "variant",
+        "baseline",
+        "predicted_doc_id",
+        "gold_doc_id",
+        "schema_hit",
+        "n_expected_scalar",
+        "n_filled",
+        "param_coverage",
+        "type_match",
+        "exact5",
+        "exact20",
+        "key_overlap",
+    ]
+
+    def run_one(label: str, mode: str, expected_total: int, do_save_partial: bool) -> tuple[list[dict], dict, dict]:
         rows: list[dict] = []
         hit_flags: list[int] = []
         cov_vals: list[float] = []
@@ -5494,7 +5701,50 @@ def run_setting(
         type_exact20_num = {t: 0 for t in type_names}
         type_exact20_den = {t: 0 for t in type_names}
 
-        for ex in eval_items:
+        def _maybe_llm_interrupt(exc: BaseException) -> None:
+            if not do_save_partial or llm_runner is None:
+                raise exc
+            if isinstance(exc, (KeyboardInterrupt, SystemExit)):
+                raise exc
+            interrupt = False
+            if llm_runner.method == "gemini":
+                interrupt = (
+                    isinstance(exc, GeminiHardQuotaError)
+                    or is_gemini_hard_zero_quota_error(exc)
+                    or is_gemini_transient_quota_or_rate_limit(exc)
+                    or classify_gemini_quota_failure(exc) in ("not_found", "hard_zero", "rate_limited")
+                )
+            else:
+                try:
+                    from openai import APIError, RateLimitError
+
+                    interrupt = isinstance(exc, RateLimitError) or (
+                        isinstance(exc, APIError) and getattr(exc, "status_code", None) == 429
+                    )
+                except Exception:
+                    pass
+            if not interrupt:
+                raise exc
+            kind = classify_gemini_quota_failure(exc) if llm_runner.method == "gemini" else "openai_rate_or_quota"
+            _write_llm_interrupt_artifacts(
+                rows=rows,
+                cols=_PQ_COLS,
+                per_query_path=per_query_path,
+                json_path=json_path,
+                variant=variant,
+                baseline_name=label,
+                random_control=random_control,
+                exc=exc,
+                failure_kind=kind,
+                expected_total=expected_total,
+            )
+            raise LlmBaselineRunInterrupted(
+                f"LLM baseline interrupted ({kind}): {exc}",
+                n_completed=len(rows),
+                failure_kind=kind,
+            ) from exc
+
+        for ex in loop_items:
             qid = ex["query_id"]
             query = ex["query"]
             gold_id = ex["relevant_doc_id"]
@@ -5504,7 +5754,10 @@ def run_setting(
                 rng = random.Random(_md5_seed(qid))
                 pred_id = doc_ids[rng.randrange(len(doc_ids))] if doc_ids else ""
             else:  # retrieval
-                ranked = rank_fn(query, top_k=1)
+                try:
+                    ranked = rank_fn(query, top_k=1)
+                except BaseException as e:
+                    _maybe_llm_interrupt(e)
                 pred_id = ranked[0][0] if ranked else ""
             schema_hit = 1 if pred_id == gold_id else 0
 
@@ -6057,32 +6310,35 @@ def run_setting(
                                 type_exact20_num[btype] += 1
             elif assignment_mode in ("typed", "untyped") and llm_runner is not None and expected_scalar:
                 # Two-stage LLM baseline: stage2 slot filling from schema slot definitions.
-                llm_filled, _llm_n_filled, llm_type_matches = llm_runner.llm_assign(
-                    query=query,
-                    schema_id=pred_id,
-                    expected_scalar=expected_scalar,
-                )
-                for p, v in llm_filled.items():
-                    n_filled += 1
-                    filled[p] = v
-                    btype = _bucket_type(p)
-                    type_filled_total[btype] += 1
-                    type_filled_q[btype] += 1
-                    if schema_hit and _is_scalar(gold_params.get(p)):
-                        try:
-                            gold_val = float(gold_params[p])
-                            err = _rel_err(float(v), gold_val)
-                            comparable_errs.append(err)
-                            if btype in type_names:
-                                type_exact5_den[btype] += 1
-                                type_exact20_den[btype] += 1
-                                if err <= 0.05:
-                                    type_exact5_num[btype] += 1
-                                if err <= 0.20:
-                                    type_exact20_num[btype] += 1
-                        except Exception:
-                            pass
-                type_matches += llm_type_matches
+                try:
+                    llm_filled, _llm_n_filled, llm_type_matches = llm_runner.llm_assign(
+                        query=query,
+                        schema_id=pred_id,
+                        expected_scalar=expected_scalar,
+                    )
+                    for p, v in llm_filled.items():
+                        n_filled += 1
+                        filled[p] = v
+                        btype = _bucket_type(p)
+                        type_filled_total[btype] += 1
+                        type_filled_q[btype] += 1
+                        if schema_hit and _is_scalar(gold_params.get(p)):
+                            try:
+                                gold_val = float(gold_params[p])
+                                err = _rel_err(float(v), gold_val)
+                                comparable_errs.append(err)
+                                if btype in type_names:
+                                    type_exact5_den[btype] += 1
+                                    type_exact20_den[btype] += 1
+                                    if err <= 0.05:
+                                        type_exact5_num[btype] += 1
+                                    if err <= 0.20:
+                                        type_exact20_num[btype] += 1
+                            except Exception:
+                                pass
+                    type_matches += llm_type_matches
+                except BaseException as e:
+                    _maybe_llm_interrupt(e)
             elif assignment_mode == "constrained" and expected_scalar:
                 # Global constrained assignment over mention-slot pairs.
                 mention_records = _extract_num_mentions(query, variant)
@@ -6257,25 +6513,24 @@ def run_setting(
 
         return rows, agg, types_agg
 
-    rows_main, agg_main, types_main = run_one(baseline_name, "oracle" if baseline_name.startswith("oracle") else "retrieval")
+    rows_main, agg_main, types_main = run_one(
+        baseline_name,
+        "oracle" if baseline_name.startswith("oracle") else "retrieval",
+        query_budget_total,
+        save_partial,
+    )
 
-    cols = [
-        "query_id",
-        "variant",
-        "baseline",
-        "predicted_doc_id",
-        "gold_doc_id",
-        "schema_hit",
-        "n_expected_scalar",
-        "n_filled",
-        "param_coverage",
-        "type_match",
-        "exact5",
-        "exact20",
-        "key_overlap",
-    ]
+    if pre_rows_raw:
+        rows_main = [_coerce_resume_per_query_row(r) for r in pre_rows_raw] + rows_main
+        agg_main = _per_query_rows_to_aggregate(
+            [{k: str(v) for k, v in row.items()} for row in rows_main],
+            variant,
+            baseline_name,
+        )
+        types_main = {}
+
     with open(per_query_path, "w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=cols)
+        w = csv.DictWriter(f, fieldnames=_PQ_COLS)
         w.writeheader()
         w.writerows(rows_main)
 
@@ -6284,6 +6539,7 @@ def run_setting(
             {
                 "config": {"variant": variant, "baseline": baseline_name, "k": 1, "random_control": random_control},
                 "aggregate": agg_main,
+                "resume_merged": bool(pre_rows_raw),
             },
             f,
             indent=2,
@@ -6293,11 +6549,18 @@ def run_setting(
 
     # Update per-type summary
     types_summary_path = out_dir / "nlp4lp_downstream_types_summary.csv"
-    _upsert_types_rows(types_summary_path, types_main)
+    if skip_types_due_to_resume:
+        print(
+            "[resume] Skipping nlp4lp_downstream_types_summary.csv upsert "
+            "(merged run — per-type breakdown not recomputed from CSV).",
+            file=sys.stderr,
+        )
+    else:
+        _upsert_types_rows(types_summary_path, types_main)
 
     if random_control:
         rand_label = "random_untyped" if baseline_name.endswith("_untyped") else "random"
-        _, agg_rand, types_rand = run_one(rand_label, "random")
+        _, agg_rand, types_rand = run_one(rand_label, "random", query_budget_total, save_partial)
         _upsert_summary_row(summary_path, agg_rand)
         _upsert_types_rows(types_summary_path, types_rand)
 
@@ -6322,6 +6585,10 @@ def run_single_setting(
     catalog: list[dict] | None = None,
     doc_ids: list[str] | None = None,
     random_control: bool = False,
+    *,
+    max_queries: int | None = None,
+    resume: bool = False,
+    llm_save_partial_on_failure: bool = False,
 ) -> bool:
     """Run one (variant, baseline, assignment_mode). If eval_items/gold_by_id/catalog/doc_ids
     are provided, use them (avoids reload; safe for low-resource). Returns True on success."""
@@ -6451,6 +6718,9 @@ def run_single_setting(
         random_control=random_control,
         assignment_mode=assignment_mode,
         out_dir=out_dir,
+        max_queries=max_queries,
+        resume=resume,
+        llm_save_partial_on_failure=llm_save_partial_on_failure,
     )
     return True
 
@@ -6511,6 +6781,29 @@ def main() -> None:
         "--gemini-skip-on-zero-quota",
         action="store_true",
         help="If Gemini preflight hits hard zero quota, skip the run instead of failing (GEMINI_SKIP_ON_ZERO_QUOTA=1).",
+    )
+    p.add_argument(
+        "--output-dir",
+        type=Path,
+        default=None,
+        help="Directory for per-query CSV, JSON, and summary sidecars (default: results/paper).",
+    )
+    p.add_argument(
+        "--max-queries",
+        type=int,
+        default=None,
+        metavar="N",
+        help="Evaluate only the first N queries after any resume skip (smoke tests / quota conservation).",
+    )
+    p.add_argument(
+        "--resume",
+        action="store_true",
+        help="Skip query_ids already present in the output per-query CSV; merge with new rows.",
+    )
+    p.add_argument(
+        "--no-llm-save-partial-on-failure",
+        action="store_true",
+        help="Do not write partial per-query CSV + manifest on LLM quota/API interrupt (Gemini/OpenAI).",
     )
     args = p.parse_args()
     if args.method:
@@ -6638,18 +6931,27 @@ def main() -> None:
     ):
         effective_baseline = f"{args.baseline}_{args.assignment_mode}"
 
-    out_dir = ROOT / "results" / "paper"
-    run_setting(
-        variant=args.variant,
-        baseline_name=effective_baseline,
-        eval_items=eval_items,
-        gold_by_id=gold_by_id,
-        rank_fn=rank_fn,
-        doc_ids=doc_ids,
-        random_control=bool(args.random_control),
-        assignment_mode=args.assignment_mode,
-        out_dir=out_dir,
-    )
+    out_dir = Path(args.output_dir).resolve() if args.output_dir else (ROOT / "results" / "paper")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    llm_partial = args.baseline in ("gemini", "openai") and not args.no_llm_save_partial_on_failure
+    try:
+        run_setting(
+            variant=args.variant,
+            baseline_name=effective_baseline,
+            eval_items=eval_items,
+            gold_by_id=gold_by_id,
+            rank_fn=rank_fn,
+            doc_ids=doc_ids,
+            random_control=bool(args.random_control),
+            assignment_mode=args.assignment_mode,
+            out_dir=out_dir,
+            max_queries=args.max_queries,
+            resume=bool(args.resume),
+            llm_save_partial_on_failure=llm_partial,
+        )
+    except LlmBaselineRunInterrupted as e:
+        print(str(e), file=sys.stderr)
+        raise SystemExit(5)
 
     print(f"Wrote {out_dir / f'nlp4lp_downstream_{args.variant}_{effective_baseline}.json'}")
     print(f"Wrote {out_dir / f'nlp4lp_downstream_per_query_{args.variant}_{effective_baseline}.csv'}")

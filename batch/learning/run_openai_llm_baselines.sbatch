@@ -25,18 +25,19 @@ if [[ -f "$REPO_ROOT/.env" ]]; then
   set -u
 fi
 
-# Load interactive-shell exports (including OPENAI_API_KEY).
-# NOTE: ~/.bashrc often sources /etc/bashrc which references $BASHRCSOURCED before
-# it is set; with `set -u` that aborts. Temporarily allow unset vars while sourcing.
-if [[ -f "$HOME/.bashrc" ]]; then
-  set +u
-  # shellcheck disable=SC1091
-  source "$HOME/.bashrc"
-  set -u
+# Do NOT source ~/.bashrc under `set -u` (HPC /etc/bashrc can trip BASHRCSOURCED).
+# Use repo .env, Slurm --export, or OPENAI_API_KEY_FILE.
+if [[ -z "${OPENAI_API_KEY:-}" && -n "${OPENAI_API_KEY_FILE:-}" ]]; then
+  if [[ -f "$OPENAI_API_KEY_FILE" ]]; then
+    export OPENAI_API_KEY="$(tr -d '\r\n' < "$OPENAI_API_KEY_FILE")"
+  else
+    echo "ERROR: OPENAI_API_KEY_FILE is set but not found: $OPENAI_API_KEY_FILE"
+    exit 1
+  fi
 fi
 
 if [[ -z "${OPENAI_API_KEY:-}" ]]; then
-  echo "ERROR: OPENAI_API_KEY is not set. Add it to ~/.bashrc and resubmit."
+  echo "ERROR: OPENAI_API_KEY is not set. Use .env, Slurm --export, or OPENAI_API_KEY_FILE."
   exit 1
 fi
 

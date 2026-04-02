@@ -11,14 +11,14 @@ openai:
 # Standard-text models only — suggested pick-model / fallback order (after GEMINI_MODEL, if set):
 #   1) gemini-2.5-flash-lite  (default below; confirmed preflight-OK on one Wulver-tested account)
 #   2) gemini-2.0-flash-lite
-#   3) gemini-2.0-flash       (hard zero free-tier quota on that same tested account)
-#   4) gemini-1.5-flash       (may 404 on some API versions)
+#   3) gemini-2.5-flash       (often higher caps than flash-lite when billing enabled)
+#   4) gemini-2.0-flash       (may show limit:0 on free tier for some projects)
 gemini:
   model: gemini-2.5-flash-lite
   fallback_models:
+    - gemini-2.5-flash
     - gemini-2.0-flash-lite
     - gemini-2.0-flash
-    - gemini-1.5-flash
   temperature: 0.0
   max_tokens: 1200
 

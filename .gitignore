@@ -238,6 +238,9 @@ results/*
 # Exception: EAAI camera-ready paper artifacts are committed
 !results/paper/
 !results/paper/**
+# Exception: Gemini (and other) explicit rerun bundles under results/rerun/
+!results/rerun/
+!results/rerun/**
 
 # Gradio / web UI runtime state
 .gradio/
