@@ -5914,11 +5914,20 @@ def run_setting(
             elif assignment_mode in (
                 "search_structured_grounding",
                 "search_structured_grounding_no_global",
+                "search_structured_grounding_counterfactual",
             ) and expected_scalar:
                 from tools.search_structured_grounding import run_search_structured_grounding
-                _ssg_use_global = assignment_mode == "search_structured_grounding"
+                _ssg_use_global = assignment_mode in (
+                    "search_structured_grounding",
+                    "search_structured_grounding_counterfactual",
+                )
+                _ssg_use_counterfactual = assignment_mode == "search_structured_grounding_counterfactual"
                 filled_values, filled_mentions, _diag = run_search_structured_grounding(
-                    query, variant, expected_scalar, use_global=_ssg_use_global
+                    query,
+                    variant,
+                    expected_scalar,
+                    use_global=_ssg_use_global,
+                    use_counterfactual_refinement=_ssg_use_counterfactual,
                 )
                 for p in expected_scalar:
                     if p not in filled_values:
@@ -6313,6 +6322,7 @@ def run_single_setting(
     elif assignment_mode in (
         "search_structured_grounding",
         "search_structured_grounding_no_global",
+        "search_structured_grounding_counterfactual",
     ):
         effective_baseline = f"{baseline_arg}_{assignment_mode}"
 
@@ -6367,6 +6377,7 @@ def main() -> None:
             "ambiguity_candidate_greedy", "ambiguity_aware_beam",
             "ambiguity_aware_abstain", "ambiguity_aware_full",
             "search_structured_grounding", "search_structured_grounding_no_global",
+            "search_structured_grounding_counterfactual",
             # Experimental/archived (not in default focused eval; use run_nlp4lp_focused_eval.py --experimental):
             "optimization_role_anchor_linking", "optimization_role_bottomup_beam_repair",
             "optimization_role_entity_semantic_beam_repair",

@@ -44,6 +44,13 @@ SEARCH_STRUCTURED_WEIGHTS: dict[str, float] = {
     "coherent_full_reward": 0.50,
 }
 
+COUNTERFACTUAL_REFINEMENT_DEFAULTS: dict[str, float | int] = {
+    "max_refinement_steps": 10,
+    "max_counterfactuals_per_slot": 3,
+    "min_improvement": 1e-6,
+    "unstable_margin": 0.35,
+}
+
 
 @dataclass(frozen=True)
 class SlotCandidate:
@@ -64,6 +71,15 @@ class SearchState:
     global_score: float
     score: float
     prune_reasons: list[str]
+
+
+@dataclass(frozen=True)
+class CounterfactualMove:
+    move_type: str
+    primary_slot: str
+    secondary_slot: str | None
+    candidate: SlotCandidate | None
+    reason: str
 
 
 def _slot_priority(slot: SlotOptIR) -> tuple[int, int, int]:
@@ -257,12 +273,13 @@ def expand_state(
 
 
 def finalize_best_assignment(
-    best: SearchState,
+    best: SearchState | dict[str, SlotCandidate],
     mention_by_id: dict[int, MentionOptIR],
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     filled_values: dict[str, Any] = {}
     filled_mentions: dict[str, Any] = {}
-    for slot_name, cand in best.assignment.items():
+    assignment = best.assignment if isinstance(best, SearchState) else best
+    for slot_name, cand in assignment.items():
         if cand.is_null or cand.mention_id is None:
             continue
         m = mention_by_id.get(cand.mention_id)
@@ -273,6 +290,398 @@ def finalize_best_assignment(
     return filled_values, filled_mentions
 
 
+def score_full_assignment(
+    assignment: dict[str, SlotCandidate],
+    slot_by_name: dict[str, SlotOptIR],
+    *,
+    weights: dict[str, float],
+) -> tuple[float, int, dict[str, Any]]:
+    total = 0.0
+    contradiction_count = 0
+    reasons: dict[str, int] = {}
+    slot_penalty_hits: dict[str, int] = {k: 0 for k in slot_by_name}
+
+    for slot_name, cand in assignment.items():
+        if cand.is_null:
+            total += weights["null_penalty"] + weights["abstain_reward"]
+            reasons["null_assignment"] = reasons.get("null_assignment", 0) + 1
+            continue
+        total += cand.local_score + weights["coverage_reward"]
+        if cand.local_score <= 0.0:
+            total -= 0.5
+            reasons["weak_assignment"] = reasons.get("weak_assignment", 0) + 1
+            slot_penalty_hits[slot_name] = slot_penalty_hits.get(slot_name, 0) + 1
+
+    non_null = [(s, c) for s, c in assignment.items() if not c.is_null]
+    if non_null and len(non_null) == len(slot_by_name):
+        total += weights["coherent_full_reward"]
+
+    mention_to_slots: dict[int, list[str]] = {}
+    for slot_name, cand in non_null:
+        if cand.mention_id is None:
+            continue
+        mention_to_slots.setdefault(cand.mention_id, []).append(slot_name)
+    for slots in mention_to_slots.values():
+        if len(slots) > 1:
+            penalty = abs(weights["duplicate_mention_penalty"]) * (len(slots) - 1)
+            total -= penalty
+            contradiction_count += 1
+            reasons["duplicate_mention"] = reasons.get("duplicate_mention", 0) + 1
+            for s in slots:
+                slot_penalty_hits[s] = slot_penalty_hits.get(s, 0) + 1
+
+    keys = sorted(assignment.keys())
+    for i, s1 in enumerate(keys):
+        c1 = assignment[s1]
+        if c1.is_null:
+            continue
+        sl1 = slot_by_name[s1]
+        for s2 in keys[i + 1 :]:
+            c2 = assignment[s2]
+            if c2.is_null:
+                continue
+            sl2 = slot_by_name[s2]
+
+            if ("min" in sl1.operator_preference and "max" in sl2.operator_preference):
+                if c1.mention_value is not None and c2.mention_value is not None and c1.mention_value > c2.mention_value:
+                    total += weights["bound_inversion_penalty"]
+                    contradiction_count += 1
+                    reasons["bound_inversion"] = reasons.get("bound_inversion", 0) + 1
+                    slot_penalty_hits[s1] = slot_penalty_hits.get(s1, 0) + 1
+                    slot_penalty_hits[s2] = slot_penalty_hits.get(s2, 0) + 1
+            if ("max" in sl1.operator_preference and "min" in sl2.operator_preference):
+                if c1.mention_value is not None and c2.mention_value is not None and c2.mention_value > c1.mention_value:
+                    total += weights["bound_inversion_penalty"]
+                    contradiction_count += 1
+                    reasons["bound_inversion"] = reasons.get("bound_inversion", 0) + 1
+                    slot_penalty_hits[s1] = slot_penalty_hits.get(s1, 0) + 1
+                    slot_penalty_hits[s2] = slot_penalty_hits.get(s2, 0) + 1
+
+            if (sl1.is_total_like and sl2.is_coefficient_like) or (sl1.is_coefficient_like and sl2.is_total_like):
+                total_c = c1 if sl1.is_total_like else c2
+                coeff_c = c2 if sl1.is_total_like else c1
+                if total_c.mention_value is not None and coeff_c.mention_value is not None and total_c.mention_value < coeff_c.mention_value:
+                    total += weights["total_per_unit_penalty"]
+                    contradiction_count += 1
+                    reasons["total_per_unit_mismatch"] = reasons.get("total_per_unit_mismatch", 0) + 1
+                    slot_penalty_hits[s1] = slot_penalty_hits.get(s1, 0) + 1
+                    slot_penalty_hits[s2] = slot_penalty_hits.get(s2, 0) + 1
+
+    for slot_name, cand in non_null:
+        sl = slot_by_name[slot_name]
+        if sl.expected_type == "percent":
+            if "%" not in cand.mention_raw and cand.mention_value is not None and cand.mention_value > 1.0:
+                total += weights["percent_mismatch_penalty"]
+                contradiction_count += 1
+                reasons["percent_mismatch"] = reasons.get("percent_mismatch", 0) + 1
+                slot_penalty_hits[slot_name] = slot_penalty_hits.get(slot_name, 0) + 1
+        if sl.is_count_like and cand.mention_value is not None and cand.mention_value > 1000:
+            total += weights["count_implausibility_penalty"]
+            contradiction_count += 1
+            reasons["count_implausibility"] = reasons.get("count_implausibility", 0) + 1
+            slot_penalty_hits[slot_name] = slot_penalty_hits.get(slot_name, 0) + 1
+
+    return total, contradiction_count, {
+        "active_reasons": reasons,
+        "slot_penalty_hits": slot_penalty_hits,
+    }
+
+
+def identify_unstable_slots(
+    assignment: dict[str, SlotCandidate],
+    slot_by_name: dict[str, SlotOptIR],
+    candidates: dict[str, list[SlotCandidate]],
+    score_diag: dict[str, Any],
+    *,
+    unstable_margin: float,
+) -> list[dict[str, Any]]:
+    unstable: list[dict[str, Any]] = []
+    slot_penalty_hits = score_diag.get("slot_penalty_hits", {})
+    for slot_name, slot in slot_by_name.items():
+        cur = assignment.get(slot_name)
+        cands = [c for c in candidates.get(slot_name, []) if not c.is_null]
+        cands_sorted = sorted(cands, key=lambda c: (-c.local_score, c.mention_id if c.mention_id is not None else 10**9))
+        reasons: list[str] = []
+
+        if len(cands_sorted) >= 2 and (cands_sorted[0].local_score - cands_sorted[1].local_score) <= unstable_margin:
+            reasons.append("top2_close")
+        if cur is None or cur.is_null:
+            reasons.append("null_or_forced")
+        elif cur.local_score <= 0.0:
+            reasons.append("weak_assignment")
+        if slot_penalty_hits.get(slot_name, 0) > 0:
+            reasons.append("global_penalty_trigger")
+        if slot.is_count_like or slot.expected_type == "percent":
+            reasons.append("ambiguity_family")
+        if slot.is_total_like or slot.is_coefficient_like or ("min" in slot.operator_preference) or ("max" in slot.operator_preference):
+            reasons.append("ambiguity_family")
+
+        if reasons:
+            unstable.append({"slot_name": slot_name, "reasons": sorted(set(reasons))})
+    return unstable
+
+
+def apply_counterfactual_move(
+    assignment: dict[str, SlotCandidate],
+    move: CounterfactualMove,
+) -> dict[str, SlotCandidate]:
+    new_assignment = dict(assignment)
+    if move.move_type in ("replace", "abstain") and move.candidate is not None:
+        new_assignment[move.primary_slot] = move.candidate
+    elif move.move_type == "swap" and move.secondary_slot is not None:
+        a = new_assignment.get(move.primary_slot)
+        b = new_assignment.get(move.secondary_slot)
+        if a is not None and b is not None:
+            new_assignment[move.primary_slot], new_assignment[move.secondary_slot] = b, a
+    return new_assignment
+
+
+def generate_counterfactual_moves(
+    assignment: dict[str, SlotCandidate],
+    unstable_slots: list[dict[str, Any]],
+    candidates: dict[str, list[SlotCandidate]],
+    *,
+    max_counterfactuals_per_slot: int,
+) -> list[CounterfactualMove]:
+    moves: list[CounterfactualMove] = []
+    unstable_names = [u["slot_name"] for u in unstable_slots]
+    for entry in unstable_slots:
+        slot_name = entry["slot_name"]
+        cur = assignment.get(slot_name)
+        ranked = sorted(
+            candidates.get(slot_name, []),
+            key=lambda c: (-c.local_score, c.mention_id if c.mention_id is not None else 10**9),
+        )
+        n_added = 0
+        for cand in ranked:
+            if cur is not None and cand.mention_id == cur.mention_id and cand.is_null == cur.is_null:
+                continue
+            mtype = "abstain" if cand.is_null else "replace"
+            moves.append(
+                CounterfactualMove(
+                    move_type=mtype,
+                    primary_slot=slot_name,
+                    secondary_slot=None,
+                    candidate=cand,
+                    reason=";".join(entry["reasons"]),
+                )
+            )
+            n_added += 1
+            if n_added >= max_counterfactuals_per_slot:
+                break
+
+    for i, s1 in enumerate(unstable_names):
+        for s2 in unstable_names[i + 1 :]:
+            c1 = assignment.get(s1)
+            c2 = assignment.get(s2)
+            if c1 is None or c2 is None or c1.is_null or c2.is_null:
+                continue
+            if c1.mention_id == c2.mention_id:
+                moves.append(CounterfactualMove("swap", s1, s2, None, "duplicate_mention_conflict"))
+            else:
+                moves.append(CounterfactualMove("swap", s1, s2, None, "local_neighborhood_swap"))
+    return moves
+
+
+def run_counterfactual_refinement(
+    query: str,
+    variant: str,
+    expected_scalar: list[str],
+    initial_assignment: dict[str, SlotCandidate],
+    slot_by_name: dict[str, SlotOptIR],
+    candidates: dict[str, list[SlotCandidate]],
+    *,
+    max_refinement_steps: int = 10,
+    max_counterfactuals_per_slot: int = 3,
+    min_improvement: float = 1e-6,
+) -> tuple[dict[str, SlotCandidate], dict[str, Any]]:
+    _ = (query, variant, expected_scalar)  # explicit API surface for parity with run_* methods
+    current = dict(initial_assignment)
+    original_score, original_contradictions, original_diag = score_full_assignment(
+        current, slot_by_name, weights=SEARCH_STRUCTURED_WEIGHTS
+    )
+
+    diagnostics: dict[str, Any] = {
+        "slots_examined": sorted(slot_by_name.keys()),
+        "unstable_slots_selected": [],
+        "counterfactuals_evaluated": 0,
+        "accepted_changes": [],
+        "rejected_changes": 0,
+        "original_score": original_score,
+        "original_contradictions": original_contradictions,
+        "change_log": [],
+    }
+
+    current_score = original_score
+    current_contradictions = original_contradictions
+    current_diag = original_diag
+
+    for step in range(max_refinement_steps):
+        unstable_slots = identify_unstable_slots(
+            current,
+            slot_by_name,
+            candidates,
+            current_diag,
+            unstable_margin=float(COUNTERFACTUAL_REFINEMENT_DEFAULTS["unstable_margin"]),
+        )
+        diagnostics["unstable_slots_selected"].append(
+            {"step": step, "slots": unstable_slots}
+        )
+        if not unstable_slots:
+            break
+
+        moves = generate_counterfactual_moves(
+            current,
+            unstable_slots,
+            candidates,
+            max_counterfactuals_per_slot=max_counterfactuals_per_slot,
+        )
+        if not moves:
+            break
+
+        best_move: CounterfactualMove | None = None
+        best_candidate_assignment: dict[str, SlotCandidate] | None = None
+        best_candidate_diag: dict[str, Any] | None = None
+        best_candidate_score = current_score
+        best_candidate_contradictions = current_contradictions
+
+        for move in moves:
+            trial = apply_counterfactual_move(current, move)
+            score, contradictions, trial_diag = score_full_assignment(
+                trial, slot_by_name, weights=SEARCH_STRUCTURED_WEIGHTS
+            )
+            diagnostics["counterfactuals_evaluated"] += 1
+            improves = score > (current_score + min_improvement)
+            lowers_contradiction = (
+                contradictions < current_contradictions and score >= (current_score - min_improvement)
+            )
+            if improves or lowers_contradiction:
+                if (
+                    best_move is None
+                    or score > best_candidate_score + min_improvement
+                    or (
+                        abs(score - best_candidate_score) <= min_improvement
+                        and contradictions < best_candidate_contradictions
+                    )
+                ):
+                    best_move = move
+                    best_candidate_assignment = trial
+                    best_candidate_diag = trial_diag
+                    best_candidate_score = score
+                    best_candidate_contradictions = contradictions
+
+        if best_move is None or best_candidate_assignment is None or best_candidate_diag is None:
+            diagnostics["rejected_changes"] += len(moves)
+            break
+
+        diagnostics["accepted_changes"].append(
+            {
+                "step": step,
+                "move_type": best_move.move_type,
+                "slot": best_move.primary_slot,
+                "other_slot": best_move.secondary_slot,
+                "reason": best_move.reason,
+                "score_before": current_score,
+                "score_after": best_candidate_score,
+                "contradictions_before": current_contradictions,
+                "contradictions_after": best_candidate_contradictions,
+            }
+        )
+        diagnostics["change_log"].append(diagnostics["accepted_changes"][-1])
+        current = best_candidate_assignment
+        current_score = best_candidate_score
+        current_contradictions = best_candidate_contradictions
+        current_diag = best_candidate_diag
+
+    diagnostics["refined_score"] = current_score
+    diagnostics["refined_contradictions"] = current_contradictions
+    diagnostics["active_reasons_refined"] = current_diag.get("active_reasons", {})
+    return current, diagnostics
+
+
+def counterfactual_grounding_refinement(
+    query: str,
+    variant: str,
+    expected_scalar: list[str],
+    *,
+    filled_values: dict[str, Any],
+    filled_mentions: dict[str, Any],
+    per_slot_candidates: dict[str, list[dict[str, Any]]] | None = None,
+    slot_by_name: dict[str, SlotOptIR] | None = None,
+    mention_by_id: dict[int, MentionOptIR] | None = None,
+    max_refinement_steps: int = 10,
+    max_counterfactuals_per_slot: int = 3,
+    min_improvement: float = 1e-6,
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+    if per_slot_candidates is None or slot_by_name is None or mention_by_id is None:
+        _, slots, cands, _ = build_slot_candidates(query, variant, expected_scalar)
+        slot_by_name = {s.name: s for s in slots}
+        mention_by_id = {}
+        per_slot_candidates = {
+            sn: [
+                {
+                    "slot_name": c.slot_name,
+                    "mention_id": c.mention_id,
+                    "mention_value": c.mention_value,
+                    "mention_raw": c.mention_raw,
+                    "local_score": c.local_score,
+                    "local_features": c.local_features,
+                    "is_null": c.is_null,
+                }
+                for c in lst
+            ]
+            for sn, lst in cands.items()
+        }
+
+    assert slot_by_name is not None
+    assert mention_by_id is not None
+    assert per_slot_candidates is not None
+
+    candidates: dict[str, list[SlotCandidate]] = {
+        slot_name: [
+            SlotCandidate(
+                slot_name=slot_name,
+                mention_id=row.get("mention_id"),
+                mention_value=row.get("mention_value"),
+                mention_raw=str(row.get("mention_raw", "")),
+                local_score=float(row.get("local_score", 0.0)),
+                local_features=dict(row.get("local_features", {})),
+                is_null=bool(row.get("is_null", False)),
+            )
+            for row in rows
+        ]
+        for slot_name, rows in per_slot_candidates.items()
+    }
+
+    initial_assignment: dict[str, SlotCandidate] = {}
+    for slot_name in slot_by_name:
+        cur_mid = getattr(filled_mentions.get(slot_name), "mention_id", None)
+        selected: SlotCandidate | None = None
+        for cand in candidates.get(slot_name, []):
+            if cur_mid is not None and cand.mention_id == cur_mid:
+                selected = cand
+                break
+        if selected is None:
+            selected = next((c for c in candidates.get(slot_name, []) if c.is_null), None)
+        if selected is None:
+            selected = SlotCandidate(slot_name, None, None, "<NULL>", SEARCH_STRUCTURED_WEIGHTS["null_penalty"], {}, True)
+        initial_assignment[slot_name] = selected
+
+    refined_assignment, diagnostics = run_counterfactual_refinement(
+        query,
+        variant,
+        expected_scalar,
+        initial_assignment,
+        slot_by_name,
+        candidates,
+        max_refinement_steps=max_refinement_steps,
+        max_counterfactuals_per_slot=max_counterfactuals_per_slot,
+        min_improvement=min_improvement,
+    )
+    refined_values, refined_mentions = finalize_best_assignment(refined_assignment, mention_by_id)
+    return refined_values, refined_mentions, diagnostics
+
+
 def run_search_structured_grounding(
     query: str,
     variant: str,
@@ -281,6 +690,10 @@ def run_search_structured_grounding(
     beam_width: int = DEFAULT_BEAM_WIDTH,
     top_k_per_slot: int = DEFAULT_TOP_K_PER_SLOT,
     use_global: bool = True,
+    use_counterfactual_refinement: bool = False,
+    max_refinement_steps: int = 10,
+    max_counterfactuals_per_slot: int = 3,
+    min_improvement: float = 1e-6,
 ) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
     if not expected_scalar:
         return {}, {}, {"beam_width": beam_width, "top_k_per_slot": top_k_per_slot, "n_slots": 0, "n_mentions": 0}
@@ -373,4 +786,24 @@ def run_search_structured_grounding(
         "per_slot_candidates": per_slot_candidates,
         "slot_order": [s.name for s in ordered_slots],
     }
+    if use_counterfactual_refinement:
+        refined_values, refined_mentions, refinement_diag = counterfactual_grounding_refinement(
+            query,
+            variant,
+            expected_scalar,
+            filled_values=filled_values,
+            filled_mentions=filled_mentions,
+            per_slot_candidates=per_slot_candidates,
+            slot_by_name=slot_by_name,
+            mention_by_id=mention_by_id,
+            max_refinement_steps=max_refinement_steps,
+            max_counterfactuals_per_slot=max_counterfactuals_per_slot,
+            min_improvement=min_improvement,
+        )
+        filled_values = refined_values
+        filled_mentions = refined_mentions
+        diagnostics["counterfactual_grounding_refinement"] = refinement_diag
+        diagnostics["use_counterfactual_refinement"] = True
+    else:
+        diagnostics["use_counterfactual_refinement"] = False
     return filled_values, filled_mentions, diagnostics

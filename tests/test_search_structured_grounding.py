@@ -73,3 +73,4 @@ def test_mode_is_registered_in_cli_choices():
                                     found.add(el.value)
     assert "search_structured_grounding" in found
     assert "search_structured_grounding_no_global" in found
+    assert "search_structured_grounding_counterfactual" in found

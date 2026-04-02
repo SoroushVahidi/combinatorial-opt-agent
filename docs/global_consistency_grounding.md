@@ -135,6 +135,55 @@ It targets ambiguity failures such as total vs per-unit confusion, lower vs
 upper bound swaps, percent/scalar mix-ups, and forced bad fills when evidence
 is weak (handled via abstention). See `tools/search_structured_grounding.py`.
 
+### New: `counterfactual_grounding_refinement`
+
+`counterfactual_grounding_refinement` is an additive inference-time refinement
+stage that runs **after** an initial assignment (for example, after
+`search_structured_grounding`). It is deterministic and local: it does not
+rebuild retrieval, and it does not run unconstrained combinatorial search.
+
+Workflow:
+
+1. Inspect current slot→mention assignments.
+2. Mark unstable slots (close top-2 local scores, weak/local forced fill,
+   contradiction-triggering assignments, ambiguity-prone slot families).
+3. Generate local counterfactual moves (2nd/3rd-best replacement, abstain/null,
+   and selected slot-to-slot swaps).
+4. Re-score each modified **full assignment** with global consistency penalties
+   (duplicate mention reuse, min/max inversion, total-vs-unit mismatch,
+   percent/scalar mismatch, count implausibility, weak evidence, null handling).
+5. Accept only improving moves (`min_improvement=1e-6`) or contradiction-reducing
+   moves with no meaningful score drop; iterate until convergence or
+   `max_refinement_steps`.
+
+This stage specifically targets brittle post-search errors: total/per-unit
+confusion, min/max flips, percent/scalar swaps, duplicate reuse conflicts, and
+cases where abstention is safer than forced assignment.
+
+Enable via assignment mode:
+
+```bash
+python tools/nlp4lp_downstream_utility.py \
+    --variant orig \
+    --baseline tfidf \
+    --assignment-mode search_structured_grounding_counterfactual
+```
+
+Or in Python:
+
+```python
+from tools.search_structured_grounding import run_search_structured_grounding
+
+filled_values, filled_mentions, diagnostics = run_search_structured_grounding(
+    query=query,
+    variant="orig",
+    expected_scalar=expected_scalar,
+    use_global=True,
+    use_counterfactual_refinement=True,
+)
+print(diagnostics["counterfactual_grounding_refinement"])
+```
+
 ### Run in-process via Python
 
 ```python
