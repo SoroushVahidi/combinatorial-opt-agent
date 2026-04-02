@@ -39,7 +39,8 @@ def test_paper_artifact_exists(rel_path: str) -> None:
     p = ROOT / rel_path
     assert p.exists(), f"Missing paper artifact: {rel_path}"
     # Also verify it's a non-empty valid CSV
-    rows = list(csv.reader(p.open()))
+    with p.open(newline="", encoding="utf-8") as fh:
+        rows = list(csv.reader(fh))
     assert len(rows) >= 2, f"{rel_path} has fewer than 2 rows (header + 1 data row)"
 
 

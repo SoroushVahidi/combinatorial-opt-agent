@@ -85,7 +85,8 @@ def check_paper_tables() -> None:
             fail(f"results/paper/eaai_camera_ready_tables/{name}  (missing)")
             continue
         try:
-            rows = list(csv.reader(p.open()))
+            with p.open(newline="", encoding="utf-8") as fh:
+                rows = list(csv.reader(fh))
         except Exception as exc:
             fail(f"{name}: unreadable CSV — {exc}")
             continue
@@ -98,7 +99,7 @@ def check_paper_tables() -> None:
 def check_paper_figures() -> None:
     print("\n[3] EAAI camera-ready figures")
     figs_dir = ROOT / "results" / "paper" / "eaai_camera_ready_figures"
-    for fig_num in range(1, 5):
+    for fig_num in range(1, 6):
         matches = list(figs_dir.glob(f"figure{fig_num}_*.png"))
         if matches:
             ok(f"figure{fig_num} PNG: {matches[0].name}")

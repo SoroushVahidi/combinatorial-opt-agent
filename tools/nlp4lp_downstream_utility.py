@@ -37,7 +37,8 @@ Table of contents
 
 Environment variables
 ---------------------
-  HF_TOKEN / HUGGINGFACE_TOKEN   HuggingFace token for loading gated NLP4LP dataset.
+  HF_TOKEN / HUGGINGFACE_TOKEN / HUGGINGFACE_HUB_TOKEN
+                                 HuggingFace token for loading gated NLP4LP dataset.
   OPENAI_API_KEY                 Required for LLM baseline methods (openai_*).
   GEMINI_API_KEY                 Required for LLM baseline methods (gemini_*).
   LOW_RESOURCE                   Set to "1" to skip HF dataset download in dry runs.
