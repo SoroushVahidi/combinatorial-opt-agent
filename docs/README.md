@@ -48,6 +48,37 @@ Overview of documentation in this repository.
 - **[STRONGER_DETERMINISTIC_PIPELINE_PLAN.md](STRONGER_DETERMINISTIC_PIPELINE_PLAN.md)** — Evidence-based design plan for the `global_consistency_grounding` downstream method: what the current pipeline does, why it fails, and the exact stronger design.
 - **[STRONGER_DETERMINISTIC_PIPELINE_RESULTS.md](STRONGER_DETERMINISTIC_PIPELINE_RESULTS.md)** — Implementation summary, metrics comparison against all existing methods, honest interpretation, and ChatGPT-ready copy-paste summary.
 
+## Search-based structured grounding
+
+`tools/search_structured_grounding.py` implements `search_structured_grounding`,
+a beam-search-driven assignment method for numeric slot filling.
+
+**What it does**: extracts numeric mentions, builds top-*k* candidates per slot
+(plus an explicit null/abstain option), orders slots by constraint difficulty
+(percent → count-like → bound → generic), then runs beam search over partial
+assignments with hard-constraint pruning and global consistency scoring.
+
+**Why it exists**: systematic failure modes in the existing pipeline —
+total-vs-per-unit confusion, min/max inversion, percent/scalar mixing,
+duplicate mention reuse, and forced weak assignments — all arise from local
+greedy choices.  Beam search with global scoring can recover globally better
+assignments while abstaining when evidence is genuinely ambiguous.
+
+**How it differs from GCG / GCGP**:
+- *Top-k per slot* instead of threshold-only pruning.
+- *Null candidate* is a first-class beam option (configurable `SSG_NULL_PENALTY`).
+- *Slot ordering* before search (hardest constraints processed first).
+- *Hard constraint pruning* during expansion (duplicate reuse, min > max, type clash).
+- *Ablation variant* `search_structured_grounding_no_global` disables global/pairwise
+  terms for controlled comparison.
+
+**Assignment mode strings** for `run_setting` / CLI:
+- `search_structured_grounding`
+- `search_structured_grounding_no_global`
+
+**Tests**: `tests/test_search_structured_grounding.py` (34 tests covering all 6
+targeted failure modes plus diagnostics, ablation, and edge cases).
+
 ## Repo maintenance
 
 - **[COPY_PASTE_INFO.md](COPY_PASTE_INFO.md)** — Copy-paste reference card: key numbers, pipeline overview, and pointers to all major docs.

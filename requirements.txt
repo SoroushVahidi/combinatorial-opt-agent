@@ -11,9 +11,6 @@ gradio>=4.0.0
 fastapi>=0.100.0
 uvicorn>=0.22.0
 
-# PDF ingestion: extract text from uploaded PDF files
-pypdf>=3.0.0
-
 # Training (GPU on Wulver): generate samples + fine-tune retrieval
 datasets>=2.14.0
 accelerate>=1.1.0

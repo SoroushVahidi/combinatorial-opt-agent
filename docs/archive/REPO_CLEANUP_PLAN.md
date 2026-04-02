@@ -48,7 +48,7 @@ This document summarizes the cleanup of stale generated artifacts. Only **SAFE_T
 
 ## Manifest of deleted paths
 
-See **`docs/REPO_CLEANUP_DELETED_FILES_MANIFEST.txt`** for the exact list of paths passed to the cleanup script (one path per line).
+See **`docs/archive/REPO_CLEANUP_DELETED_FILES_MANIFEST.txt`** for the exact list of paths passed to the cleanup script (one path per line).
 
 ## Cleanup script
 
