@@ -48,15 +48,20 @@ def main() -> None:
             repo_dir.parent.mkdir(parents=True, exist_ok=True)
             if repo_dir.exists():
                 shutil.rmtree(repo_dir)
+            if repo_dir.exists() and args.force:
+                shutil.rmtree(repo_dir)
             try:
-                subprocess.run(
-                    ["git", "clone", "--depth", "1", REPO_URL, str(repo_dir)],
-                    check=True,
-                    stdout=subprocess.PIPE,
-                    stderr=subprocess.PIPE,
-                    text=True,
-                )
-                method = "git_clone"
+                if not repo_dir.exists():
+                    subprocess.run(
+                        ["git", "clone", "--depth", "1", REPO_URL, str(repo_dir)],
+                        check=True,
+                        stdout=subprocess.PIPE,
+                        stderr=subprocess.PIPE,
+                        text=True,
+                    )
+                    method = "git_clone"
+                else:
+                    method = "existing_repo"
                 for split in KNOWN_SPLITS:
                     if split in found:
                         continue
