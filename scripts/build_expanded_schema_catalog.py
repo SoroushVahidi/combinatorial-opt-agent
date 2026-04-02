@@ -18,6 +18,38 @@ from data_adapters.registry import create_adapter, list_datasets
 
 SOURCE_ONLY_MANIFEST = [
     {
+        "id": "source_only_mamo",
+        "source_dataset": "mamo",
+        "schema_text": "MAMO source registered; local benchmark splits not available in this environment.",
+        "source_metadata": {"source_url": "https://github.com/FreedomIntelligence/Mamo"},
+        "entry_status": "source-only",
+        "benchmark_labeled": False,
+    },
+    {
+        "id": "source_only_structuredor",
+        "source_dataset": "structuredor",
+        "schema_text": "StructuredOR source registered; local benchmark splits not available in this environment.",
+        "source_metadata": {"source_url": "https://github.com/CardinalOperations/StructuredOR"},
+        "entry_status": "source-only",
+        "benchmark_labeled": False,
+    },
+    {
+        "id": "source_only_cardinal_nl4opt",
+        "source_dataset": "cardinal_nl4opt",
+        "schema_text": "CardinalOperations/NL4OPT source registered; local benchmark splits may require manual retrieval.",
+        "source_metadata": {"source_url": "https://github.com/CardinalOperations/NL4OPT"},
+        "entry_status": "source-only",
+        "benchmark_labeled": False,
+    },
+    {
+        "id": "source_only_industryor",
+        "source_dataset": "industryor",
+        "schema_text": "IndustryOR source registered; local benchmark splits not available in this environment.",
+        "source_metadata": {"source_url": "https://github.com/CardinalOperations/IndustryOR"},
+        "entry_status": "source-only",
+        "benchmark_labeled": False,
+    },
+    {
         "id": "source_only_gams_model_library",
         "source_dataset": "gams_model_library",
         "schema_text": "GAMS model library collection; currently tracked via source manifest and catalog metadata.",
@@ -98,21 +130,6 @@ def build_catalog(out_path: Path) -> int:
     for dataset_name in list_datasets():
         entries = collect_schema_entries(dataset_name)
         if not entries:
-            all_entries.append(
-                {
-                    "id": f"source_only_{dataset_name}",
-                    "source_dataset": dataset_name,
-                    "schema_id": None,
-                    "schema_text": None,
-                    "source_metadata": {
-                        "notes": "Adapter registered but no local split data discovered.",
-                    },
-                    "benchmark_labeled": False,
-                    "entry_status": "source-only",
-                    "nl_query": None,
-                    "metadata": {"adapter_registered": True, "no_local_data": True},
-                }
-            )
             continue
 
         for entry in entries:

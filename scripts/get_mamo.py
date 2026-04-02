@@ -15,7 +15,6 @@ import datetime as dt
 import json
 import shutil
 import subprocess
-import sys
 from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.request import urlopen

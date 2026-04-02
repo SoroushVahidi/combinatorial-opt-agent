@@ -43,8 +43,20 @@ def main() -> None:
             with urlopen(url, timeout=30) as resp:
                 text = resp.read().decode("utf-8")
             lines = [ln for ln in text.splitlines() if ln.strip()]
+            # Validate JSONL payload to avoid treating HTML/error pages as successful splits.
+            parsed = 0
+            for ln in lines:
+                try:
+                    json.loads(ln)
+                    parsed += 1
+                except Exception:
+                    parsed = -1
+                    break
+            if parsed <= 0:
+                errors.append(f"{split}: fetched payload was not valid JSONL from {url}")
+                continue
             out.write_text("\n".join(lines) + ("\n" if lines else ""), encoding="utf-8")
-            row_counts[split] = len(lines)
+            row_counts[split] = parsed
             found.append(split)
         except HTTPError as e:
             errors.append(f"{split}: HTTPError {e.code} from {url}")
