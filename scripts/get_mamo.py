@@ -80,7 +80,8 @@ def main() -> None:
     for split in DATA_URLS:
         if (OUT_DIR / f"{split}.jsonl").exists() and not args.force:
             splits_found.append(split)
-            row_counts[split] = sum(1 for _ in open(OUT_DIR / f"{split}.jsonl", encoding="utf-8"))
+            with open(OUT_DIR / f"{split}.jsonl", encoding="utf-8") as fh:
+                row_counts[split] = sum(1 for _ in fh)
 
     if splits_found and len(splits_found) == len(DATA_URLS):
         retrieval_method = "preexisting_local_files"
