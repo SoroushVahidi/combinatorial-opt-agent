@@ -127,3 +127,17 @@ Tests tagged `requires_network` are automatically skipped when `HF_TOKEN` is abs
 | Experiment reports | `analysis/eaai_*_report.md` |
 | Results provenance | `docs/RESULTS_PROVENANCE.md` |
 | Paper framing authority | `docs/EAAI_SOURCE_OF_TRUTH.md` |
+
+---
+
+## Optional — full downstream utility CSVs and LLM baselines
+
+The **camera-ready** headline row for typed greedy + TF-IDF is in **`results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv`**, not necessarily identical to every column in **`results/paper/nlp4lp_downstream_summary.csv`** (different metric definitions — see **`docs/RESULTS_PROVENANCE.md`**).
+
+To run the **interactive** downstream utility locally (all variants / methods):
+
+```bash
+python tools/nlp4lp_downstream_utility.py --variant orig --baseline tfidf
+```
+
+**Optional LLM baselines** require API keys and use **`batch/learning/run_*_llm_baselines.sbatch`** on Slurm or direct CLI with `--method openai` / `--method gemini`. Gemini workflow: **`docs/GEMINI_RERUN_REPORT.md`**.

@@ -1,5 +1,7 @@
 # Internal status & decision archives (provenance only)
 
+> **This folder is retained for provenance and is not the canonical public summary.** See **[`docs/CURRENT_STATUS.md`](../CURRENT_STATUS.md)**.
+
 This folder holds **non-canonical** narrative reports: manuscript-vs-repo comparisons, internal
 go/no-go notes, literature-informed reruns, and similar **planning / audit** artifacts.
 

@@ -8,7 +8,9 @@ combinatorial-opt-agent/
 │
 ├── ★ results/paper/                   Camera-ready EAAI tables and figures (DO NOT EDIT)
 │   ├── eaai_camera_ready_tables/      Tables 1–5 CSV files
-│   └── eaai_camera_ready_figures/     Figures 1–5 PNG/PDF files
+│   ├── eaai_camera_ready_figures/     Figures 1–5 PNG/PDF files
+│   └── (other CSV/JSON)               Downstream utility summaries — see RESULTS_PROVENANCE
+├──   results/rerun/                   Optional provider reruns (e.g. Gemini); may be empty
 │
 ├── ★ analysis/                        EAAI experiment reports (canonical)
 │   ├── eaai_engineering_subset_report.md
@@ -30,8 +32,10 @@ combinatorial-opt-agent/
 ├──   docs/learning_runs/              Benchmark-safe splits, real-data-only check
 ├── ⚠ docs/archive_internal_status/   Internal audits / decision logs (provenance only)
 ├── ⚠ docs/archive/                    Historical dev notes + moved internal files (NOT authoritative)
+├── ⚠ docs/provenance/                 Dated audit CSV/MD snapshots (NOT live status)
 ├── ⚠ docs/eswa_revision/              ESWA-era revision materials
 ├── ⚠ docs/audits/                     Audit files index (see archive_internal_status/)
+├──   docs/GEMINI_RERUN_REPORT.md      Gemini Slurm/preflight infrastructure notes
 │
 ├── ★ tools/nlp4lp_downstream_utility.py   Core grounding pipeline (6 000+ lines)
 │   │   Sections: extraction → slot records → basic scoring →
@@ -52,7 +56,11 @@ combinatorial-opt-agent/
 │
 ├──   tests/                           Pytest test suite (1 400+ tests, CPU-only)
 ├──   scripts/                         Utility and paper-support scripts
-│   └── paper/run_repo_validation.py   Canonical validation entrypoint
+│   ├── paper/run_repo_validation.py   Canonical validation entrypoint
+│   ├── gemini_preflight.py            Mandatory Gemini preflight (batch jobs)
+│   └── check_docs_integrity.py        Markdown / stale-path checks
+├──   batch/learning/                  Slurm: OpenAI / Gemini NLP4LP baselines
+├──   training/external/               CI helpers: build_nlp4lp_benchmark, full downstream loop
 │
 ├──   training/                        Retrieval fine-tuning pipeline
 ├──   pipeline/                        Data collection pipeline
@@ -66,7 +74,7 @@ combinatorial-opt-agent/
 ├──   schema/                          Problem schema definitions
 ├──   static/                          Web UI static assets
 ├──   collectors/                      Data collection scripts
-├──   jobs/                            SLURM job definitions
+├──   jobs/                            Additional SLURM / job helpers (see also batch/)
 │
 ├── ✦ app.py                           Gradio web UI (demo only)
 ├── ✦ feedback_server.py               Feedback collection server (demo only)
@@ -79,7 +87,8 @@ combinatorial-opt-agent/
 │
 ├── ⚠ results/eswa_revision/           ESWA-era experiment results
 │
-├──   HOW_TO_REPRODUCE.md             ★ Canonical reproduction commands
+├──   HOW_TO_REPRODUCE.md             ★ Canonical reproduction commands (EAAI subsets)
+├──   HOW_TO_RUN_BENCHMARK.md          GitHub Actions NLP4LP workflow (utility CSVs)
 ├──   EXPERIMENTS.md                   Consolidated experiments overview
 ├──   KNOWN_ISSUES.md                  Active blockers, limitations, resolved issues
 ├──   CONTRIBUTING.md                  Contribution guidelines
@@ -112,7 +121,10 @@ combinatorial-opt-agent/
 | `app.py` and ✦-marked files | Demo application | Demo only; outside paper scope |
 | `demo/` | Demo documentation | Demo only |
 | `docs/archive_internal_status/` | Internal audits / decision logs | ⚠ Provenance only; not headline source |
+| `docs/provenance/` | Dated audits / cleanup notes | ⚠ Not live status |
 | `docs/archive/`, `results/eswa_revision/` | Historical | ⚠ Not authoritative |
+| `results/rerun/` | Provider reruns | Optional; not manuscript authority |
+| `batch/learning/` | Slurm LLM baselines | Infrastructure |
 
 ---
 
@@ -127,6 +139,7 @@ combinatorial-opt-agent/
 | `docs/RESULTS_PROVENANCE.md` | ★ Authoritative | Canonical metrics + provenance chain |
 | `docs/CURRENT_STATUS.md` | ★ Summary | Reviewer-facing status; points to tables |
 | `docs/archive_internal_status/` | ⚠ Provenance | Internal audits; not headline source |
+| `docs/provenance/` | ⚠ Provenance | Audit snapshots; not citation-ready |
 | `docs/archive/` | ⚠ Historical | Dev notes + moved internal files; not citation-ready |
 | `docs/eswa_revision/` | ⚠ Historical | ESWA-era revision; not EAAI-authoritative |
 | `results/eswa_revision/` | ⚠ Historical | Earlier experiment results |
@@ -154,8 +167,10 @@ NL query
 | `tools/run_eaai_final_solver_attempt.py` | Solver-backed subset (20 instances) |
 | `tools/build_eaai_camera_ready_figures.py` | Regenerate camera-ready figures |
 | `scripts/paper/run_repo_validation.py` | Validate repo integrity for paper use |
+| `scripts/gemini_preflight.py` | Gemini list/probe preflight (used by Slurm batch) |
+| `training/external/run_full_downstream_benchmark.py` | CI full downstream loop (see `HOW_TO_RUN_BENCHMARK.md`) |
 
-For full reproduction commands, see `HOW_TO_REPRODUCE.md`.
+For full reproduction commands, see `HOW_TO_REPRODUCE.md`. For the Actions workflow, see `HOW_TO_RUN_BENCHMARK.md`.
 
 ---
 

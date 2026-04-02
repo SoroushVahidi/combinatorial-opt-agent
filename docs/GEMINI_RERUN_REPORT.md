@@ -1,5 +1,10 @@
 # Gemini NLP4LP baseline — stabilization and rerun workflow
 
+**Role:** Infrastructure and workflow for optional **Gemini** runs of `tools/nlp4lp_downstream_utility.py` — **not** a substitute for camera-ready paper tables in `results/paper/eaai_camera_ready_tables/`.  
+**Public status summary:** [`docs/CURRENT_STATUS.md`](CURRENT_STATUS.md) · **Headline metrics:** [`docs/RESULTS_PROVENANCE.md`](RESULTS_PROVENANCE.md)
+
+> **Honest scope:** Code and Slurm wiring for Gemini have been stabilized (preflight, cache keys, partial save, `results/rerun/` layout). **A successful full Gemini benchmark rerun is not claimed here** unless you have committed artifacts under `results/rerun/gemini/…` and logs to match. OpenAI optional baseline artifacts under `results/paper/` reflect a completed historical run; Gemini rows in `nlp4lp_llm_baseline_comparison.csv` may remain empty until a rerun lands.
+
 This document records the **code and workflow changes** for robust Gemini runs on Slurm, and the **verification performed in this workspace** (without fabricating API results).
 
 ## 1. Code and configuration changes

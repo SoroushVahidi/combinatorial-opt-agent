@@ -90,6 +90,18 @@ without HF access using the local catalog files in `data/processed/`.
 
 ---
 
+### 2.2 Optional API baselines (OpenAI / Gemini) are outside camera-ready tables
+
+**Symptom:** Confusion between **Tables 1–5** (deterministic / EAAI scripts) and **optional** two-stage LLM baselines (`tools/llm_baselines.py`).
+
+**Detail:** **OpenAI** downstream CSV/JSON for some variants exists under `results/paper/` from a completed historical batch. **Gemini** has Slurm + preflight infrastructure (**[`docs/GEMINI_RERUN_REPORT.md`](docs/GEMINI_RERUN_REPORT.md)**); a **full** Gemini NLP4LP rerun is **not** claimed in docs unless matching artifacts exist under `results/rerun/gemini/…`. **Mistral** is not wired in this repository.
+
+**Workaround:** Treat **`results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv`** as headline authority; read **`docs/RESULTS_PROVENANCE.md`** before mixing columns from `nlp4lp_downstream_summary.csv`.
+
+**Status:** ⚠️ By design — optional tooling, not paper-core.
+
+---
+
 ## 3. Engineering / Repository Limitations
 
 ### 3.1 Learned model does not outperform the deterministic rule baseline

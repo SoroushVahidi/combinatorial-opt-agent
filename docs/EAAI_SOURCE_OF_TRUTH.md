@@ -3,7 +3,8 @@
 **Created:** 2026-03-30  
 **Status:** Authoritative — supersedes older broad repo framing docs for manuscript purposes
 
-**Concise companion:** **[`docs/CURRENT_STATUS.md`](CURRENT_STATUS.md)** (reviewer-facing status + headline metrics pointer).
+**Concise companion:** **[`docs/CURRENT_STATUS.md`](CURRENT_STATUS.md)** (reviewer-facing status + headline metrics pointer).  
+**Reviewer entry:** **[`docs/REVIEWER_GUIDE.md`](REVIEWER_GUIDE.md)**.
 
 ---
 

@@ -1,0 +1,5 @@
+dataset,found_in_repo,found_in_cache,remote_source,access_status,immediate_use,evidence_path_or_command,notes
+NLP4LP,yes,yes,udell-lab/NLP4LP (HuggingFace),local_ok_hf_login_fails,yes,"data/processed/nlp4lp_eval_orig.jsonl (331 lines); results/paper/nlp4lp_gold_cache.json; artifacts/learning_ranker_data/nlp4lp/",Use NLP4LP_GOLD_CACHE to bypass HF on login node
+NL4OPT,yes,no,github.com/nl4opt/nl4opt-competition,local_ok,yes,"data_external/raw/nl4opt_competition/generation_data/{train,dev,test}.jsonl; artifacts/learning_aux_data/nl4opt/",No remote access needed
+Text2Zinc,no,no,skadio/text2zinc (HuggingFace),gated_no_access,no,"load_dataset('skadio/text2zinc') fails with gated message",Request access at https://huggingface.co/datasets/skadio/text2zinc
+ORQA,yes,no,github.com/nl4opt/ORQA,local_ok,yes,"data_external/raw/orqa/dataset/ORQA_test.jsonl (1468 lines) ORQA_validation.jsonl (45 lines)",Data present; no training pipeline integration yet

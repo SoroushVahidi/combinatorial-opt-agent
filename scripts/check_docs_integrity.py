@@ -35,11 +35,28 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 CONFLICT_SCAN_GLOBS = ["**/*.md", "**/*.py", "**/*.yaml", "**/*.yml"]
 
 # Directories to skip entirely
-SKIP_DIRS = {".git", "__pycache__", ".cursor", "node_modules", "venv", ".venv"}
+SKIP_DIRS = {
+    ".git",
+    "__pycache__",
+    ".cursor",
+    "node_modules",
+    "venv",
+    ".venv",
+    "logs",
+    "cache",
+    "data_private",
+    "outputs",
+    "artifacts",
+}
 
 # Directories to skip for stale-reference checks (archive files may legitimately
 # reference old paths; checking them would produce noise, not signal)
-STALE_CHECK_SKIP_DIRS = {"docs/archive", "docs/archive_internal_status", "analysis/archive"}
+STALE_CHECK_SKIP_DIRS = {
+    "docs/archive",
+    "docs/archive_internal_status",
+    "docs/provenance",
+    "analysis/archive",
+}
 
 # Stale path patterns: (old_path_fragment, suggested_replacement)
 STALE_PATTERNS: List[Tuple[str, str]] = [
@@ -62,6 +79,9 @@ STALE_PATTERNS: List[Tuple[str, str]] = [
     ("docs/NLP4LP_RELATION_AWARE_METHOD_RESULTS", "docs/archive/NLP4LP_RELATION_AWARE_METHOD_RESULTS"),
     ("docs/global_consistency_grounding", "docs/archive/global_consistency_grounding"),
     ("docs/copilot_vs_our_model_comparison", "docs/archive/copilot_vs_our_model_comparison"),
+    ("learning_dataset_access_audit.md", "docs/provenance/learning_dataset_access_audit.md"),
+    ("repo_cleanup_report.md", "docs/provenance/repo_cleanup_report.md"),
+    ("nlp4lp_manuscript_vs_current_repo_audit.csv", "docs/provenance/nlp4lp_manuscript_vs_current_repo_audit.csv"),
 ]
 
 # Files to check for broken relative links (relative to REPO_ROOT)
@@ -78,6 +98,8 @@ LINK_CHECK_FILES = [
     "docs/RESULTS_PROVENANCE.md",
     "docs/REVIEWER_GUIDE.md",
     "docs/README.md",
+    "docs/GEMINI_RERUN_REPORT.md",
+    "docs/provenance/README.md",
 ]
 
 # ---------------------------------------------------------------------------

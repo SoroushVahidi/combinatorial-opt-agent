@@ -121,4 +121,6 @@ See `HOW_TO_REPRODUCE.md` for step-by-step commands.
 | `docs/archive_internal_status/` | Internal audits, go/no-go decision logs. Provenance only. |
 | `docs/eswa_revision/` | ESWA-era revision materials. Superseded by EAAI framing. |
 | `analysis/archive/` | Non-EAAI analysis files (exploratory reports). Not headline source. |
+| `docs/provenance/` | Dated audit CSV/MD snapshots (e.g. dataset access audit). Not live status. |
 | `results/eswa_revision/` | Earlier experiment runs. `13_tables/` is a provenance source for Table 1. |
+| `docs/GEMINI_RERUN_REPORT.md` | Gemini batch/preflight **infrastructure**; do not treat as completed benchmark unless `results/rerun/` artifacts exist. |

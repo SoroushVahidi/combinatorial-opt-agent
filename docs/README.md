@@ -1,60 +1,72 @@
 # Documentation index
 
-This folder contains the canonical documentation for the EAAI companion codebase.
-Start with the reviewer-facing docs below; the archive folders hold historical material.
+Canonical documentation for the EAAI companion codebase. **Start with the reviewer row**, then drill into scope and reproduction.
 
 ---
 
-## Reviewer-facing (start here)
+## Reviewer-facing (canonical story)
 
-| Doc | Purpose |
-|-----|---------|
-| **[REVIEWER_GUIDE.md](REVIEWER_GUIDE.md)** | Practical guide for reviewers — what to look at, where metrics come from, limitations |
-| **[CURRENT_STATUS.md](CURRENT_STATUS.md)** | Single concise status page — headline metrics, validated vs auxiliary, limitations |
-| **[EAAI_SOURCE_OF_TRUTH.md](EAAI_SOURCE_OF_TRUTH.md)** | Manuscript authority — paper framing, authoritative file list, benchmark story |
-| **[RESULTS_PROVENANCE.md](RESULTS_PROVENANCE.md)** | Canonical metrics + full provenance chain (which number came from where) |
-| **[paper_vs_demo_scope.md](paper_vs_demo_scope.md)** | Paper scope vs demo scope — what is benchmarked vs demo-only |
-| **[../REPO_STRUCTURE.md](../REPO_STRUCTURE.md)** | Annotated directory map (canonical vs historical) |
-| **[../KNOWN_ISSUES.md](../KNOWN_ISSUES.md)** | Active blockers, limitations, and resolved historical issues |
-| **[../HOW_TO_REPRODUCE.md](../HOW_TO_REPRODUCE.md)** | Step-by-step reproduction commands |
-| **[../EXPERIMENTS.md](../EXPERIMENTS.md)** | Consolidated experiments overview (retrieval, grounding, learning) |
+| Doc | Role |
+|-----|------|
+| **[REVIEWER_GUIDE.md](REVIEWER_GUIDE.md)** | **Read first** — orientation, official metrics pointer, limitations |
+| **[CURRENT_STATUS.md](CURRENT_STATUS.md)** | One-page public truth — validated vs auxiliary |
+| **[EAAI_SOURCE_OF_TRUTH.md](EAAI_SOURCE_OF_TRUTH.md)** | Manuscript authority — what IS / IS NOT claimed |
+| **[RESULTS_PROVENANCE.md](RESULTS_PROVENANCE.md)** | Definitions + provenance chain (“which file is this number?”) |
+| **[GEMINI_RERUN_REPORT.md](GEMINI_RERUN_REPORT.md)** | Gemini Slurm/preflight/cache — **infrastructure**; not Table 1–5 authority |
+| **[paper_vs_demo_scope.md](paper_vs_demo_scope.md)** | Fixed-catalog benchmark vs demo / open-domain |
 
----
+**Root (shortcuts):** [README.md](../README.md) · [HOW_TO_REPRODUCE.md](../HOW_TO_REPRODUCE.md) · [HOW_TO_RUN_BENCHMARK.md](../HOW_TO_RUN_BENCHMARK.md) · [REPO_STRUCTURE.md](../REPO_STRUCTURE.md) · [KNOWN_ISSUES.md](../KNOWN_ISSUES.md) · [EXPERIMENTS.md](../EXPERIMENTS.md)
 
-## HPC and infrastructure
-
-| Doc | Purpose |
-|-----|---------|
-| [wulver.md](wulver.md) | NJIT Wulver cluster setup and batch job submission |
-| [wulver_webapp.md](wulver_webapp.md) | Running the web app on Wulver |
+**Integrity:** `python scripts/check_docs_integrity.py` (from repo root)
 
 ---
 
-## Learning experiments
+## Terminology (consistent)
 
-| Doc | Purpose |
-|-----|---------|
-| [learning_runs/README.md](learning_runs/README.md) | Benchmark-safe splits and learning experiment records |
-| [learning_runs/real_data_only_learning_check.md](learning_runs/real_data_only_learning_check.md) | Real-data-only learning check (no synthetic aux); conclusion: learning did not beat rule baseline |
-
----
-
-## Archive folders (provenance, not authoritative)
-
-| Folder | Contents |
-|--------|---------|
-| [archive/](archive/README.md) | Historical dev notes, method iteration logs, handoff documents. **Not** authoritative for the EAAI manuscript. |
-| [archive_internal_status/](archive_internal_status/README.md) | Internal audits, manuscript-vs-repo comparisons, go/no-go decision logs. **Not** the public headline source. |
-| [eswa_revision/](eswa_revision/README.md) | ESWA-era revision materials (superseded by EAAI framing). |
-| [audits/](audits/README.md) | Index pointing to `archive_internal_status/` (files consolidated there). |
+| Term | Meaning here |
+|------|----------------|
+| **Fixed-catalog NLP4LP benchmark** | 331 test queries, `orig` primary; retrieval over NLP4LP schema catalog |
+| **Deterministic scalar grounding** | Rule-based / repair pipeline in `tools/nlp4lp_downstream_utility.py` (not LLM slot-fill for paper tables) |
+| **Restricted solver-backed subset** | 20 instances, SciPy HiGHS shim (Table 4) |
+| **Rerun infrastructure** | Slurm `batch/learning/`, `results/rerun/`, optional LLM APIs |
+| **Canonical vs legacy** | Camera-ready `results/paper/eaai_camera_ready_tables/` + `docs/EAAI_SOURCE_OF_TRUTH.md` vs `docs/archive/` / `results/eswa_revision/` |
 
 ---
 
-## Quick links
+## HPC and cluster
+
+| Doc | Role |
+|-----|------|
+| [wulver.md](wulver.md) | NJIT Wulver / SLURM |
+| [wulver_webapp.md](wulver_webapp.md) | Web app on Wulver |
+
+---
+
+## Learning experiments (non-paper-core)
+
+| Doc | Role |
+|-----|------|
+| [learning_runs/README.md](learning_runs/README.md) | Splits, records, benchmark-safe practice |
+
+---
+
+## Provenance and archives (not headline sources)
+
+| Location | Role |
+|----------|------|
+| [provenance/](provenance/README.md) | Dated audits / cleanup CSVs — **not** `CURRENT_STATUS.md` |
+| [archive_internal_status/](archive_internal_status/README.md) | Internal go/no-go and manuscript comparison trails |
+| [archive/](archive/README.md) | Historical development notes |
+| [eswa_revision/](eswa_revision/README.md) | ESWA-era materials (superseded by EAAI framing) |
+| [audits/](audits/README.md) | Index into archive_internal_status |
+| [../analysis/archive/](../analysis/archive/README.md) | Non-EAAI analysis artifacts |
+
+---
+
+## Camera-ready artifacts (paths only)
 
 | Need | Location |
 |------|----------|
-| Camera-ready tables (Tables 1–5) | `results/paper/eaai_camera_ready_tables/` |
-| Camera-ready figures (Figures 1–5) | `results/paper/eaai_camera_ready_figures/` |
+| Tables 1–5 | `results/paper/eaai_camera_ready_tables/` |
+| Figures 1–5 | `results/paper/eaai_camera_ready_figures/` |
 | EAAI experiment reports | `analysis/eaai_*_report.md` |
-| Non-canonical analysis archive | `analysis/archive/` |

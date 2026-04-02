@@ -1,5 +1,7 @@
 # analysis/archive — Non-canonical analysis reports
 
+> **This folder is retained for provenance and is not the canonical public summary.** See **`docs/CURRENT_STATUS.md`**.
+
 This folder holds analysis and audit reports that are **not** authoritative for the
 EAAI manuscript. They are retained for provenance and research history.
 

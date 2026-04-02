@@ -261,13 +261,10 @@ data/external/*/downloads/
 data/processed/expanded_schema_catalog.jsonl
 cache/
 
-# Local audit and cleanup outputs (do not commit)
-learning_dataset_access_audit.csv
-learning_dataset_access_audit.md
-nlp4lp_manuscript_vs_current_repo_audit.csv
+# Local cleanup machine outputs (regenerable; keep out of git)
 repo_cleanup_archived_paths.txt
 repo_cleanup_deleted_paths.txt
-repo_cleanup_report.md
+# Tracked provenance snapshots: docs/provenance/*.md and *.csv
 
 data/external/mamo/
 data/external/structuredor/

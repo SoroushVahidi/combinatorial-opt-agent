@@ -1,5 +1,7 @@
 # docs/archive — Historical Development Documents
 
+> **This folder is retained for provenance and is not the canonical public summary.** See **[`docs/CURRENT_STATUS.md`](../CURRENT_STATUS.md)**.
+
 This folder contains historical development notes, handoff documents, intermediate
 working documents, method iteration logs, and agent session notes accumulated during
 the research process. It also holds internal auxiliary documentation (API migration
@@ -13,6 +15,7 @@ For authoritative sources, see:
 - `results/paper/` — camera-ready tables and figures
 - `analysis/eaai_*` — EAAI experiment reports
 - `docs/CURRENT_STATUS.md` — reviewer-facing status summary
+- `docs/provenance/` — dated audit CSVs/MD snapshots (not the live status page)
 
 The files here are retained as provenance / research history and must not be deleted.
 They should not be cited as paper evidence.

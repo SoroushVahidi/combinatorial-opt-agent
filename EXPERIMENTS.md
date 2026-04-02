@@ -2,7 +2,7 @@
 
 This document provides a consolidated overview of all experiments conducted in this project. Detailed results, implementation notes, and reproduction commands are linked in each section.
 
-> **EAAI manuscript note:** For the current EAAI submission, the authoritative paper-facing results are in `results/paper/eaai_camera_ready_tables/` and `analysis/eaai_*_report.md`. The sections below cover the full experiment history including pre-EAAI exploratory work. Dense retrieval baselines (E5, BGE, SBERT) documented here are supplementary and not in the EAAI main results table. See [`docs/EAAI_SOURCE_OF_TRUTH.md`](docs/EAAI_SOURCE_OF_TRUTH.md) for the canonical paper framing.
+> **EAAI manuscript note:** Authoritative paper-facing results: **`results/paper/eaai_camera_ready_tables/`** and **`analysis/eaai_*_report.md`**. One-page status: **[`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md)**. The sections below include **full experiment history** (pre-EAAI exploratory work). Dense retrieval (E5, BGE, SBERT) is **supplementary**. Canonical framing: **[`docs/EAAI_SOURCE_OF_TRUTH.md`](docs/EAAI_SOURCE_OF_TRUTH.md)**.
 
 > **Audit note:** For a strict evidence-driven breakdown of which experiments are truly measured vs. placeholder/scaffolding, see [docs/archive/EXPERIMENT_AUDIT.md](docs/archive/EXPERIMENT_AUDIT.md).
 
@@ -31,8 +31,8 @@ This document provides a consolidated overview of all experiments conducted in t
 | Baseline | Schema R@1 (orig) |
 |----------|-------------------|
 | Random | 0.003 |
-| TF-IDF | 0.906 |
-| BM25 | ~0.88 |
+| TF-IDF | 0.9094 (camera-ready Table 1; use this for citations) |
+| BM25 | 0.8822 (camera-ready Table 1) |
 
 **Variant summary:**
 

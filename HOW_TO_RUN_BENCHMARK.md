@@ -1,69 +1,57 @@
-# How to Run the NLP4LP Benchmark via GitHub Actions
+# How to run the NLP4LP benchmark via GitHub Actions
 
-This document explains how to trigger the NLP4LP benchmark CI workflow.
-For local reproduction steps, see **[`HOW_TO_REPRODUCE.md`](HOW_TO_REPRODUCE.md)**.
+This document explains how to trigger the **optional** NLP4LP downstream benchmark CI workflow (utility CSVs and related paths). It is **not** the same artifact as the **camera-ready EAAI tables** in `results/paper/eaai_camera_ready_tables/` — see **[`docs/RESULTS_PROVENANCE.md`](docs/RESULTS_PROVENANCE.md)** for which numbers are manuscript-authoritative.
+
+For **local** reproduction of EAAI subset experiments, see **[`HOW_TO_REPRODUCE.md`](HOW_TO_REPRODUCE.md)**.
 
 ---
 
 ## Prerequisites
 
-The GitHub Actions workflow requires a `HF_TOKEN` repository secret with read access
-to the gated `udell-lab/NLP4LP` dataset.
+The workflow needs a **`HF_TOKEN`** repository secret with read access to the gated **`udell-lab/NLP4LP`** dataset.
 
-### Add the HF_TOKEN secret
-
-1. Go to **Settings → Secrets and variables → Actions → New repository secret**
+1. **Settings → Secrets and variables → Actions → New repository secret**
 2. Name: `HF_TOKEN`
-3. Value: your token from <https://huggingface.co/settings/tokens>
-   (requires approved access to `udell-lab/NLP4LP`)
+3. Value: token from https://huggingface.co/settings/tokens (with dataset access approved)
 
 ---
 
-## Step 1 — Verify HF token (~60 seconds)
+## Step 1 — Verify HF token (~1 minute)
 
-Before running the full benchmark, confirm your token works:
-
-1. Go to <https://github.com/SoroushVahidi/combinatorial-opt-agent/actions>
-2. In the left sidebar, click **"Check HF access"**
-3. Click **"Run workflow"** → leave branch as `main` → click the green **"Run workflow"** button
-4. Wait ~60 seconds — look for a green ✅
+1. https://github.com/SoroushVahidi/combinatorial-opt-agent/actions
+2. Workflow **“Check HF access”** (`check-hf-access.yml`)
+3. **Run workflow** on `main` (or your branch)
 
 ---
 
-## Step 2 — Run the full benchmark (~2–3 hours)
+## Step 2 — Run the NLP4LP benchmark workflow
 
-1. Go to <https://github.com/SoroushVahidi/combinatorial-opt-agent/actions>
-2. In the left sidebar, click **"NLP4LP benchmark"**
-3. Click **"Run workflow"** → leave branch as `main` → click the green **"Run workflow"** button
-4. Wait 2–3 hours (30 experiment settings × ~4 minutes each)
-5. Results are automatically committed back to the branch
+1. Actions → **“NLP4LP benchmark”** (`nlp4lp.yml`)
+2. **Run workflow** on the desired branch
+
+**Runtime:** The workflow header documents **roughly a few minutes** on a typical runner (dataset fetch + `training/external/run_full_downstream_benchmark.py`). It is **not** a multi-hour job unless the runner or network is unusually slow.
+
+**Scripts involved (authoritative paths in the YAML):**
+
+| Step | Script |
+|------|--------|
+| Verify access | `training/external/verify_hf_access.py` |
+| Build eval JSONL | `training/external/build_nlp4lp_benchmark.py` |
+| Downstream loop | `training/external/run_full_downstream_benchmark.py` |
+
+**Outputs:** May update `results/paper/nlp4lp_downstream_summary.csv`, `results/paper/nlp4lp_downstream_types_summary.csv`, and paths under `results/eswa_revision/` as configured in the workflow commit step. **Compare** any new numbers to **`docs/RESULTS_PROVENANCE.md`** before treating them as manuscript headlines.
 
 ---
 
-## Alternative: trigger via GitHub CLI
+## GitHub CLI
 
 ```bash
-# Quick HF access check (~60s):
-gh workflow run check-hf-access.yml \
-  --repo SoroushVahidi/combinatorial-opt-agent \
-  --ref main
-
-# Full benchmark (~2–3 hours):
-gh workflow run nlp4lp.yml \
-  --repo SoroushVahidi/combinatorial-opt-agent \
-  --ref main
+gh workflow run check-hf-access.yml --repo SoroushVahidi/combinatorial-opt-agent --ref main
+gh workflow run nlp4lp.yml --repo SoroushVahidi/combinatorial-opt-agent --ref main
 ```
 
 ---
 
-## What the benchmark workflow produces
+## Optional LLM baselines (OpenAI / Gemini)
 
-| Step | Script | Duration |
-|------|--------|----------|
-| Verify HF token | `verify_hf_access.py` | ~5 s |
-| Build NLP4LP eval sets | `build_nlp4lp_benchmark.py` | ~10 min |
-| Run downstream benchmark | `run_full_downstream_benchmark.py` | ~2 h |
-| Upload artifacts | GitHub Actions artifact upload | ~1 min |
-| Commit results to branch | `git push` | ~10 s |
-
-Result files written to `results/paper/` and committed back to the branch.
+Not driven by this Actions workflow. Use **`tools/nlp4lp_downstream_utility.py`** and Slurm batch scripts under **`batch/learning/`**. Gemini infrastructure is documented in **[`docs/GEMINI_RERUN_REPORT.md`](docs/GEMINI_RERUN_REPORT.md)**.

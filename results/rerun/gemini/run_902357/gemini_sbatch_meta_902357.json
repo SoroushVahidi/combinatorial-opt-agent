@@ -1,0 +1,7 @@
+{
+  "run_id": "902357",
+  "time_utc": "2026-04-02T23:44:56.133242+00:00",
+  "gemini_model": "gemini-2.5-flash-lite",
+  "nlp4lp_output_dir": "/mmfs1/home/sv96/combinatorial-opt-agent/results/rerun/gemini/run_902357/paper",
+  "rerun_root": "/mmfs1/home/sv96/combinatorial-opt-agent/results/rerun/gemini/run_902357"
+}
