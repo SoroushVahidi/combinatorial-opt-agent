@@ -85,7 +85,9 @@ Then in the browser open **http://127.0.0.1:7860** (not 0.0.0.0).
 
 If you use **`GEMINI_API_KEY`** and `batch/learning/run_gemini_llm_baselines.sbatch`, the Google client may print **`pthread_create failed: Resource temporarily unavailable`** on some nodes. **`preflight`** can still succeed; see **`docs/gemini_api_quota.md`** (section *Wulver / HPC: pthread*) and optional **`export GEMINI_LIMIT_RUNTIME_THREADS=1`** before Python.
 
-`run_gemini_llm_baselines.sbatch` defaults to **`GEMINI_LIMIT_RUNTIME_THREADS=1`**, **`GEMINI_AUTO_PICK_MODEL` on** (run `pick-model` then `preflight`), and the yaml default model **`gemini-2.5-flash-lite`**. Always run **`python tools/llm_baselines.py preflight`** in the same venv when debugging; quota is **account-specific** (see `configs/llm_baselines.yaml`, `docs/gemini_api_quota.md`).
+`run_gemini_llm_baselines.sbatch` defaults to **`GEMINI_LIMIT_RUNTIME_THREADS=1`**, **`GEMINI_AUTO_PICK_MODEL` on** (run `pick-model` then `preflight`), and the yaml default model **`gemini-2.5-flash-lite`**. Logs: grep **`PREFLIGHT_PASSED`**, **`GEMINI_SELECTED_MODEL`**, and read **`results/llm_baselines/gemini_sbatch_run_<JOBID>.json`** after a run. Optional **`GEMINI_API_KEY_FILE`** if you prefer not to export the key in `~/.bashrc` (see `docs/gemini_api_quota.md`). Always run **`python tools/llm_baselines.py preflight`** in the same venv when debugging; quota is **account-specific** (see `configs/llm_baselines.yaml`, `docs/gemini_api_quota.md`).
+
+**Recommended sequence on Wulver:** `cd` to the clone → **`source venv/bin/activate`** (or rely on sbatch prepending `venv/bin` to `PATH` if present) → ensure **`google-generativeai`** imports → **`export GEMINI_API_KEY=...`** (or `.env` / **`GEMINI_API_KEY_FILE`**) → optional **`export GEMINI_SKIP_ON_ZERO_QUOTA=1`** for soft-skip → **`sbatch batch/learning/run_gemini_llm_baselines.sbatch`** → inspect **`logs/learning/run_gemini_llm_baselines_<jobid>.out`** and **`results/llm_baselines/gemini_sbatch_run_<jobid>.json`**.
 
 **If you see `ImportError: cannot import name 'HfFolder'`:** Upgrade the `datasets` package:  
 `pip install --upgrade datasets --user`

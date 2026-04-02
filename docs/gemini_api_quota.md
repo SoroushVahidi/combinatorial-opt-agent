@@ -29,6 +29,24 @@ sbatch batch/learning/run_gemini_llm_baselines.sbatch
 
 To **disable** auto-`pick-model` (yaml / `GEMINI_MODEL` only): `export GEMINI_AUTO_PICK_MODEL=0` before `sbatch`. To **disable** the thread cap: `export GEMINI_LIMIT_RUNTIME_THREADS=0`.
 
+**Secrets without polluting `~/.bashrc`:** if `GEMINI_API_KEY` is unset, `batch/learning/run_gemini_llm_baselines.sbatch` can read a one-line key from **`GEMINI_API_KEY_FILE`** (e.g. a gitignored file, `chmod 600`). `.env` in the repo root is still supported.
+
+### SLURM log: what to grep for
+
+`run_gemini_llm_baselines.sbatch` prints a **banner** (job id, flags) and, after success, writes **`results/llm_baselines/gemini_sbatch_run_<JOBID>.json`** with the resolved model and flags. Useful lines in **`logs/learning/run_gemini_llm_baselines_<JOBID>.out`**:
+
+| Line / key | Meaning |
+|------------|---------|
+| `GEMINI_SKIP_ON_ZERO_QUOTA=enabled` / `disabled` | Whether soft-skip on hard `limit:0` is on |
+| `GEMINI_LIMIT_RUNTIME_THREADS=...` | Thread cap (default **1** in sbatch) |
+| `GEMINI_SELECTED_MODEL=...` | Model id after **`pick-model`** (auto-pick on) |
+| `GEMINI_AUTO_PICK=off` + `resolved_model:` | Yaml/env model when auto-pick is off |
+| `PREFLIGHT_PASSED=1` | **`preflight`** exited **0** |
+| `GEMINI_SKIP_PREFLIGHT=1 (set for variant loop)` | Downstream variants will not re-probe |
+| **`gemini_sbatch_run_*.json`** | Machine-readable copy of model + flags |
+
+Stderr (`*.err`) may contain **`FutureWarning`** (`google.generativeai` deprecation) and occasional **`pthread_create failed`**; those do not necessarily mean failure if stdout shows **`PREFLIGHT_PASSED=1`** and the baseline steps run.
+
 ---
 
 ## Account-specific models — run preflight before Gemini jobs
@@ -172,6 +190,7 @@ Configuration:
 | `GEMINI_SKIP_PREFLIGHT=1` or `--skip-gemini-preflight` | Skip list+probe (e.g. after a successful **`preflight`** in a batch script so each variant does not re-probe). |
 | `GEMINI_AUTO_PICK_MODEL` | In **`run_gemini_llm_baselines.sbatch`**, **`1`** (default) runs **`pick-model`** before **`preflight`**; set **`0`** to skip auto-pick. |
 | `GEMINI_LIMIT_RUNTIME_THREADS` | **`1`** (default in sbatch) enables OMP/BLAS thread caps before the Gemini client; **`0`** disables. |
+| `GEMINI_API_KEY_FILE` | If **`GEMINI_API_KEY`** is unset, sbatch reads the key from this path (one line). Optional alternative to `.env` / shell exports. |
 
 SLURM `batch/learning/run_gemini_llm_baselines.sbatch` optionally runs **`pick-model`**, then **`preflight`**, then sets **`GEMINI_SKIP_PREFLIGHT=1`**. If preflight exits **2** and **`GEMINI_SKIP_ON_ZERO_QUOTA=1`**, the job exits **0** and skips the baseline.
 
