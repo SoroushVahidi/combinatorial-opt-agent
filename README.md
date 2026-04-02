@@ -1,34 +1,27 @@
 # Retrieval-Assisted Optimization Schema Grounding
 
 A research codebase for **retrieval-assisted instantiation of natural-language optimization
-problems**, as described in the companion EAAI manuscript.  The pipeline combines a
-**schema retrieval stage** (NL query → problem schema) with a **deterministic scalar
-grounding stage** (NL numeric mentions → parameter slots) so that the retrieved
-formulation is numerically instantiated from the user's own problem data.
+problems**, as described in the companion **EAAI** manuscript. The **paper-evaluated path**
+is: **schema retrieval** (NL query → catalog schema) → **deterministic scalar grounding**
+(numeric mentions → parameter slots) on the **NLP4LP** benchmark, plus **restricted**
+engineering and solver-backed studies documented in the camera-ready tables.
 
 ## Repository status
 
-> **This is a companion research repository** for an EAAI submission, not a production tool.
+> **Companion research repository** (EAAI manuscript), not a production product.
 
-| Item | Details |
-|------|---------|
-| **Benchmark scope** | Fixed-catalog NLP4LP (`orig` variant, 331 test queries) |
-| **Core evaluated task** | Schema retrieval + deterministic scalar parameter grounding |
-| **Solver-backed results** | Restricted to a 20-instance subset via SciPy HiGHS shim |
-| **Gurobi** | NOT required; paper results use SciPy only |
-| **HF dataset** | Full benchmark rerun requires the gated `udell-lab/NLP4LP` dataset |
-| **LLM generation path** | Present in demo app; outside the scope of the paper evaluation |
+**Single source of truth for reviewers:** **[`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md)**  
+Headline numbers, limitations, and what is validated vs auxiliary are summarized there and in
+**[`docs/EAAI_SOURCE_OF_TRUTH.md`](docs/EAAI_SOURCE_OF_TRUTH.md)**.
 
-**Core capabilities:**
-
-| Capability | What it does |
+| | |
 |---|---|
-| **Problem recognition** | TF-IDF / dense retrieval matches queries to 90+ known problem types (facility location, knapsack, scheduling, …) at **Schema R@1 = 0.906** |
-| **Formulation retrieval** | Returns the ILP/LP formulation (variables, objective, constraints) for the matched schema |
-| **Deterministic scalar grounding** | Assigns numeric mentions from the NL query to schema parameter slots; best method: **Optimization-Role Repair** (Coverage 0.822 · TypeMatch 0.243 · Exact20 0.277) |
-| **Structural validation** | LP structural consistency checks (invalid objective sense, missing variable symbols) without requiring a live solver |
-| **Restricted solver execution** | Real solver outcomes on a 20-instance subset via SciPy HiGHS shim (see Table 4) |
-| **Demo app** | Gradio web UI for interactive schema search; GAMSPy/GAMS example collection (outside paper scope) |
+| **Paper / core pipeline** | NLP4LP `orig` (331 queries): retrieval + deterministic grounding; camera-ready tables in **`results/paper/eaai_camera_ready_tables/`** |
+| **Auxiliary (demo / app / optional APIs)** | Gradio **`app.py`**, optional **OpenAI / Gemini** baselines (`tools/llm_baselines.py`), telemetry hooks — **not** the main evaluated claim set unless stated otherwise |
+| **Experimental / non-canonical** | Learned retrieval fine-tuning, GCG and other extended grounding modes, HPC learning runs — see **`EXPERIMENTS.md`** and `docs/learning_runs/` |
+
+**Manuscript-aligned headline (Table 1, TF-IDF + typed greedy):** Schema R@1 = **0.9094**; downstream columns in the same row are **0.8639 / 0.7513 / 0.5257** (coverage / type match / instantiation-ready as defined in that table — see CSV).  
+Do **not** mix these with ad hoc columns from other CSVs without checking definitions (**[`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md)**).
 
 ## Project scope (EAAI manuscript)
 
@@ -38,38 +31,33 @@ engineering-oriented downstream validation on subsets of the NLP4LP benchmark.
 
 **The paper story in brief:**
 - Main benchmark on NLP4LP (331 test queries, `orig` variant)
-- Retrieval is already strong (TF-IDF Schema R@1 = 0.9094)
+- Retrieval is strong on `orig` (TF-IDF Schema R@1 = **0.9094** in Table 1)
 - Main bottleneck is downstream number-to-slot grounding
-- Three engineering-oriented validations: structural subset (60 instances), executable-attempt subset (269 instances with documented blockers), and a solver-backed restricted subset (20 instances, real nonzero outcomes)
+- Three engineering-oriented validations: structural subset (60 instances), executable-attempt subset (269 instances with documented blockers), and a solver-backed restricted subset (20 instances, SciPy HiGHS shim)
 
-> **Note:** The demo app also supports querying unknown problem types via an LLM-generation
-> path. This feature is outside the scope of the EAAI manuscript and is provided for
-> demonstration purposes only.
+> **Demo / open-domain:** The Gradio app can surface **LLM-based formulation paths** for unknown
+> problem types. That path is **outside** the main paper evaluation unless explicitly documented
+> elsewhere. The **benchmarked** system assumes a **fixed catalog** of known schemas.
 
 ## What this repo does not claim
 
 - Full natural-language-to-optimization **compilation** for arbitrary problems (solver-ready output is a restricted subset only)
-- **Benchmark-wide solver readiness** — not all NLP4LP instances are executable
-- **Dense retrieval (E5/BGE) as primary results** — these are supplementary; TF-IDF is the paper's primary retrieval baseline
-- That the **learned retrieval model beats the rule baseline** — it does not (see `KNOWN_ISSUES.md`)
-- That **Gurobi is available or required** — paper results use SciPy HiGHS shim for the solver subset
+- **Benchmark-wide solver readiness** — not all NLP4LP instances are executable end-to-end
+- **Dense retrieval (E5/BGE) as primary results** — supplementary; TF-IDF is the paper’s primary retrieval baseline
+- That the **learned retrieval model beats the rule baseline** — it does not (see **`KNOWN_ISSUES.md`**)
+- That **Gurobi is available or required** — paper solver-backed results use a **SciPy HiGHS shim** on a small subset
 
-## Current evidence-based status
+## Reproducibility and requirements
 
-| Component | Status | Key metric |
-|---|---|---|
-| Problem retrieval (TF-IDF, orig queries) | ✅ Strong | Schema R@1 = **0.906** |
-| Problem retrieval (short / first-sentence queries) | ⚠️ Degraded | Schema R@1 = 0.786 |
-| Downstream grounding — typed greedy (primary baseline) | ✅ Reproducible | Coverage 0.822, TypeMatch 0.226, InstReady 0.076 |
-| Downstream grounding — optimization-role repair (recommended) | ✅ Best deterministic | Coverage 0.822, TypeMatch 0.243, Exact20 0.277 |
-| Downstream grounding — global consistency grounding (GCG) | 🔬 Experimental | Unit-tested; full-run needs HF gold data |
-| Learned retrieval fine-tuning | ⚠️ Future work | Real-data run did not beat rule baseline |
-| Structural validation (no live solver) | ✅ Available | LP objective/variable consistency checks in `formulation/verify.py` |
-| Solver-backed restricted subset (20 instances, SciPy HiGHS shim) | ✅ Real outcomes | TF-IDF: 80% feasible; Oracle: 75% feasible |
+| Mode | Needs |
+|------|--------|
+| **Offline / no HF** | Unit tests (`pytest`), structural checks, repo validation scripts (e.g. `scripts/paper/run_repo_validation.py`), figure rebuild from **existing** tables |
+| **Gated HuggingFace NLP4LP** | `HF_TOKEN` (or CLI login) + dataset access — required to **recompute** full benchmark metrics and gold-parameter grounding |
+| **Solver-backed paper subset (Table 4)** | SciPy stack as in `requirements.txt`; **no** Gurobi for those results |
+| **Paper-validated artifacts** | Tables 1–5 + figures under **`results/paper/`** and reports under **`analysis/eaai_*.md`** |
+| **Demo-only** | Gradio app; optional LLM API keys for non-benchmark tooling |
 
-All claims are **benchmark-scoped** (NLP4LP `orig` variant, 331 test queries). See the
-[EAAI paper artifacts](#paper-artifacts--eaai-manuscript-support) section for camera-ready
-tables and figures.
+Intermediate audits and internal decision logs were moved to **`docs/archive_internal_status/`** (provenance; not the canonical headline source).
 
 ## Recent improvements
 
@@ -99,7 +87,7 @@ Natural-language query
         ▼
 ┌───────────────────┐
 │  Schema Retrieval │  TF-IDF / BM25 / LSA / SBERT / E5 / BGE
-│  (retrieval/)     │  → top-1 schema ID  (Schema R@1 = 0.906)
+│  (retrieval/)     │  → top-1 schema ID  (Schema R@1 ≈ 0.9094 on NLP4LP orig, Table 1)
 └────────┬──────────┘
          │  predicted schema (slot names + types)
          ▼
@@ -147,41 +135,6 @@ Solver execution is supported on a restricted subset via the SciPy HiGHS shim
    ```
 
 **Note:** When the app is run (e.g. on a server), every search is logged to `data/collected_queries/user_queries.jsonl` so you can use real user prompts for training. See [Training the retrieval model](#training-the-retrieval-model) and [training/README.md](training/README.md).
-
-## Connect Codex to another repository
-
-If you want to run Codex against a different project folder/repository, use one of the
-workflows below.
-
-### Option A: Open Codex in a new local clone
-
-```bash
-git clone https://github.com/<owner>/<repo>.git
-cd <repo>
-codex
-```
-
-### Option B: Add a second remote to the current repository
-
-```bash
-git remote add upstream https://github.com/<owner>/<repo>.git
-git fetch upstream
-git remote -v
-```
-
-### Option C: Worktree for side-by-side repositories/branches
-
-```bash
-git worktree add ../<repo>-alt <branch-or-ref>
-cd ../<repo>-alt
-codex
-```
-
-### Authentication notes
-
-- For private repositories, authenticate first via your Git provider CLI (for example,
-  `gh auth login`) or SSH keys.
-- Confirm access with `git ls-remote <repo-url>` before launching Codex.
 
 ## Data Collection
 
@@ -319,6 +272,8 @@ python tools/build_eaai_camera_ready_figures.py
 | `formulation/verify.py` | LP structural validation | Core source |
 | `tests/` | Pytest suite (1400+ tests, CPU-only) | Core source |
 | `scripts/paper/` | Paper support scripts | Core source |
+| `docs/CURRENT_STATUS.md` | Reviewer-facing status | ★ Summary |
+| `docs/archive_internal_status/` | Internal audits / decision logs | ⚠ Provenance only |
 | `docs/archive/` | Historical dev notes | ⚠ Non-authoritative |
 | `docs/eswa_revision/` | Earlier ESWA materials | ⚠ Non-authoritative |
 | `results/eswa_revision/` | Earlier experiment results | ⚠ Non-authoritative |
@@ -327,11 +282,14 @@ python tools/build_eaai_camera_ready_figures.py
 
 | Topic | Doc |
 |-------|-----|
-| **Experiments** | [EXPERIMENTS.md](EXPERIMENTS.md) — Consolidated overview of all experiments (retrieval, grounding methods, learning, copilot comparison) |
-| **Data sources** | `data/sources/` — Machine-readable manifests |
+| **Current status (reviewers)** | [docs/CURRENT_STATUS.md](docs/CURRENT_STATUS.md) — headline metrics pointer, validated vs auxiliary |
+| **Manuscript authority** | [docs/EAAI_SOURCE_OF_TRUTH.md](docs/EAAI_SOURCE_OF_TRUTH.md) — paper framing and authoritative file list |
+| **Experiments** | [EXPERIMENTS.md](EXPERIMENTS.md) — consolidated overview (retrieval, grounding methods, learning) |
+| **Data sources** | `data/sources/` — machine-readable manifests |
 | **Wulver (HPC)** | [docs/wulver.md](docs/wulver.md) — NJIT cluster setup and batch jobs |
 | **Training** | [training/README.md](training/README.md) — retrieval fine-tuning; mention-slot scorer in `training/` |
-| **Learning (NLP4LP)** | [docs/learning_runs/](docs/learning_runs/README.md) — benchmark-safe splits, real-data-only check, experiment records |
+| **Learning (NLP4LP)** | [docs/learning_runs/](docs/learning_runs/README.md) — benchmark-safe splits, experiment records |
+| **Internal status archives** | [docs/archive_internal_status/](docs/archive_internal_status/README.md) — provenance only (not canonical headlines) |
 | **Historical docs** | [docs/archive/](docs/archive/README.md) — development notes (non-authoritative) |
 
 Private data (GAMSPy models, license-related files) live under **`data_private/`** (gitignored). Manifests and catalogs are in `data_private/gams_models/manifests/` and `catalog/`.
@@ -514,5 +472,11 @@ This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for t
 
 ---
 
-**Repository description** (for GitHub **Settings → General → Description**; update manually if needed):  
-*Retrieval-assisted optimization schema grounding: NLP4LP benchmark, deterministic scalar instantiation (typed greedy, optimization-role repair, GCG), engineering-oriented validation. EAAI manuscript companion codebase.*
+**Repository description** (GitHub **Settings → General → Description**):  
+*EAAI companion: NLP4LP retrieval + deterministic scalar grounding; camera-ready tables in `results/paper/`; demo app and optional LLM paths are auxiliary.*
+
+---
+
+## Developer workflows
+
+For second remotes, worktrees, or AI coding assistants against another clone, see **[CONTRIBUTING.md](CONTRIBUTING.md)** and your tool’s docs. Use `git remote -v` and provider authentication (`gh auth login`, SSH) as usual.

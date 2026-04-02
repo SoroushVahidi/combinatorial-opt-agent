@@ -81,7 +81,7 @@ All in `tools/nlp4lp_downstream_utility.py`:
 | `results/nlp4lp_retrieval_summary.csv` | Retrieval R@1/R@5/MRR by variant/baseline |
 | `results/paper/nlp4lp_downstream_summary.csv` | Downstream metrics by method (pre-fix) |
 | `results/paper/nlp4lp_focused_eval_summary.csv` | 7-method side-by-side |
-| `current_repo_vs_manuscript_rerun.csv` | Manuscript vs rerun comparison |
+| `docs/archive_internal_status/current_repo_vs_manuscript_rerun.csv` | Manuscript vs rerun comparison (archived) |
 | `results/eswa_revision/` | All ESWA revision outputs |
 
 ## Tests

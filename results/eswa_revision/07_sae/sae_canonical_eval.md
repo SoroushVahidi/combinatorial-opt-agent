@@ -11,7 +11,7 @@ It can be activated via `--assignment-mode slot_aware_extraction` or by calling
 
 ## Structurally verified results
 
-From `docs/publish_now_decision_report.md §2.3` (locally verified, NOT gold-data-dependent):
+From `docs/archive_internal_status/publish_now_decision_report.md §2.3` (locally verified, NOT gold-data-dependent):
 
 | Evaluation | Result | Evidence |
 |-----------|--------|---------|

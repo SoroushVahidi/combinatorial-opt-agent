@@ -2,6 +2,12 @@
 
 Overview of documentation in this repository.
 
+## Reviewer-facing (start here)
+
+- **[CURRENT_STATUS.md](CURRENT_STATUS.md)** — canonical short status + headline metric pointers  
+- **[EAAI_SOURCE_OF_TRUTH.md](EAAI_SOURCE_OF_TRUTH.md)** — manuscript authority and authoritative file list  
+- **[archive_internal_status/README.md](archive_internal_status/README.md)** — internal audits retained for provenance (not headline summaries)
+
 ## Data and setup
 
 - **[data_sources.md](data_sources.md)** — Canonical list of optimization data sources (OR-Library, Gurobi, NL4Opt, etc.).

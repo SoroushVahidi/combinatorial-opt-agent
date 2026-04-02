@@ -20,7 +20,9 @@ combinatorial-opt-agent/
 │   └── eaai_tables_reproduction_report.md
 │
 ├── ★ docs/EAAI_SOURCE_OF_TRUTH.md     Manuscript authority — paper framing + claims
+├── ★ docs/CURRENT_STATUS.md           Reviewer-facing status + headline pointers
 ├──   docs/wulver.md                   HPC setup reference (Wulver @ NJIT)
+├── ⚠ docs/archive_internal_status/   Internal audits / decision logs (provenance only)
 ├── ⚠ docs/archive/                    Historical dev notes (NOT authoritative)
 ├── ⚠ docs/eswa_revision/              Earlier ESWA-era revision materials
 │
@@ -87,6 +89,8 @@ NL query
 | `results/paper/` | ★ Authoritative | DO NOT edit; regenerate via canonical scripts only |
 | `analysis/eaai_*` | ★ Authoritative | Experiment reports; regenerate by re-running scripts |
 | `docs/EAAI_SOURCE_OF_TRUTH.md` | ★ Authoritative | Master reference for paper claims |
+| `docs/CURRENT_STATUS.md` | ★ Summary | Reviewer-facing status; points to tables |
+| `docs/archive_internal_status/` | ⚠ Provenance | Internal audits; not headline source |
 | `docs/archive/` | ⚠ Historical | Dev notes; preserved for provenance, not citation |
 | `docs/eswa_revision/` | ⚠ Historical | ESWA-era revision; not EAAI-authoritative |
 | `results/eswa_revision/` | ⚠ Historical | Earlier experiment results |
