@@ -14,6 +14,7 @@ import hashlib
 import json
 import math
 import os
+import re
 import time
 from dataclasses import dataclass
 from pathlib import Path
@@ -156,16 +157,30 @@ class LLMTwoStageBaseline:
         key = _sha({"stage": stage, "method": self.method, "payload": payload})
         return self.cache_dir / f"{stage}_{key}.json"
 
+    def _retry_sleep_seconds(self, attempt: int, exc: BaseException) -> float:
+        """Compute sleep before retry. Honors Gemini/Vertex 'Please retry in Xs' on 429."""
+        backoff = float(self.retry_cfg.get("base_backoff_seconds", 1.0))
+        base = backoff * (2**attempt)
+        msg = str(exc).lower()
+        # Google Generative Language API often embeds: "Please retry in 50.12s."
+        m = re.search(r"retry in ([\d.]+)\s*s", msg)
+        if m:
+            return max(base, float(m.group(1)) + 2.0)
+        # Quota / rate limit: wait at least ~1 minute if message suggests retry later
+        if "resourceexhausted" in type(exc).__name__.lower() or "429" in msg or "quota" in msg:
+            return max(base, 60.0)
+        return base
+
     async def _retry(self, coro_factory):
         max_retries = int(self.retry_cfg.get("max_retries", 3))
-        backoff = float(self.retry_cfg.get("base_backoff_seconds", 1.0))
         for i in range(max_retries + 1):
             try:
                 return await coro_factory()
-            except Exception:
+            except Exception as e:
                 if i >= max_retries:
                     raise
-                await asyncio.sleep(backoff * (2**i))
+                delay = self._retry_sleep_seconds(i, e)
+                await asyncio.sleep(delay)
         raise RuntimeError("unreachable")
 
     async def _openai_json(self, prompt: str, schema_hint: str) -> dict[str, Any]:
