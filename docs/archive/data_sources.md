@@ -167,16 +167,3 @@ This is the **canonical list** of external libraries and datasets used (or plann
 ---
 
 *This file is the single place in the project where the full list of libraries and their problem names are written. Manifests in `data/sources/` provide machine-readable lists for collectors.*
-
----
-
-## Parallel source additions (inventory note)
-
-Additional source collections considered in the current dataset expansion work:
-
-- **MAMO** — benchmark dataset/source collection for NL-to-optimization tasks.
-- **StructuredOR** — benchmark-style source collection for structured optimization queries.
-- **CardinalOperations/NL4OPT** — source collection related to NL4OPT-style benchmark data.
-- **IndustryOR** — source collection focused on industry-themed optimization tasks.
-
-These entries are listed here as source inventory items. Integration/adapter implementation status is tracked in `docs/dataset_integration_report.md` and `docs/NORMALIZED_SOURCE_MATRIX.md`.

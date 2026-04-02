@@ -9,6 +9,7 @@ data from the nl4opt-competition GitHub repository. This version (cardinal_nl4op
 is the CardinalOperations curation and is registered as a separate adapter.
 
 Exits non-zero with details when retrieval is blocked.
+Outputs are written to data/external/cardinal_nl4opt/ (gitignored).
 """
 
 from __future__ import annotations
@@ -19,6 +20,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.error import HTTPError, URLError
+from urllib.error import URLError
 from urllib.request import urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -116,6 +118,74 @@ def main() -> None:
         sys.exit(1)
 
     print(f"[ok] Cardinal NL4OPT ready: {sorted(found)}")
+    }
+
+    any_success = False
+    for split_name, url in SPLITS.items():
+        out_path = OUT_DIR / f"{split_name}.jsonl"
+        if out_path.exists() and not args.force:
+            print(f"[skip] {out_path} already exists (use --force to overwrite)")
+            rows_count = sum(1 for line in out_path.read_text(encoding="utf-8").splitlines() if line.strip())
+            provenance["splits"][split_name] = {"rows": rows_count, "status": "existing"}
+            any_success = True
+            continue
+
+        raw = _fetch(url)
+        if raw is None:
+            msg = f"Could not fetch {split_name} from {url}"
+            print(f"[error] {msg}", file=sys.stderr)
+            provenance["warnings"].append(msg)
+            provenance["splits"][split_name] = {"rows": 0, "status": "fetch_failed", "url": url}
+            continue
+
+        try:
+            rows = _parse_jsonl(raw)
+        except json.JSONDecodeError as exc:
+            msg = f"JSON parse error for {split_name}: {exc}"
+            print(f"[error] {msg}", file=sys.stderr)
+            provenance["warnings"].append(msg)
+            provenance["splits"][split_name] = {"rows": 0, "status": "parse_error"}
+            continue
+
+        if not rows:
+            msg = f"No rows parsed for split {split_name}"
+            print(f"[warn] {msg}", file=sys.stderr)
+            provenance["warnings"].append(msg)
+            provenance["splits"][split_name] = {"rows": 0, "status": "empty"}
+            continue
+
+        normalized: list[dict] = []
+        for idx, row in enumerate(rows):
+            normalized.append(
+                {
+                    "id": f"cardinal_nl4opt_{split_name}_{idx}",
+                    "nl_query": (row.get("en_question") or "").strip(),
+                    "en_answer": row.get("en_answer"),
+                    "split": split_name,
+                    "source": "CardinalOperations/NL4OPT",
+                    "metadata": {"original_index": idx},
+                }
+            )
+
+        with open(out_path, "w", encoding="utf-8") as fh:
+            for r in normalized:
+                fh.write(json.dumps(r, ensure_ascii=False) + "\n")
+
+        print(f"[ok] {split_name}: wrote {len(normalized)} rows -> {out_path}")
+        provenance["splits"][split_name] = {"rows": len(normalized), "status": "ok", "url": url}
+        any_success = True
+
+    prov_path = OUT_DIR / "provenance.json"
+    with open(prov_path, "w", encoding="utf-8") as fh:
+        json.dump(provenance, fh, indent=2, ensure_ascii=False)
+    print(f"[ok] provenance written -> {prov_path}")
+
+    if not any_success:
+        print(
+            "[warn] No data was downloaded. Check internet connectivity.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
 
 
 if __name__ == "__main__":

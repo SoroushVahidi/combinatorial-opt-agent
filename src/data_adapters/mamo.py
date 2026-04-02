@@ -29,6 +29,27 @@ class MAMOAdapter:
         supports_scalar_instantiation=True,
         supports_solver_eval=False,
         supports_full_formulation=True,
+
+_KNOWN_SPLITS = ("easy_lp", "complex_lp")
+_SOURCE_URL = "https://huggingface.co/datasets/CardinalOperations/MAMO"
+
+
+class MAMOAdapter:
+    """Adapter for the MAMO LP benchmark (EasyLP and ComplexLP subsets).
+
+    Each example contains a natural-language optimization problem
+    (``nl_query``) and an answer string (``en_answer``) representing the
+    optimal objective value.  Scalar gold params are populated from the
+    answer when it parses as a number; otherwise the raw string is preserved
+    in ``metadata``.
+    """
+
+    name = "mamo"
+    capabilities = DatasetCapabilities(
+        supports_schema_retrieval=False,
+        supports_scalar_instantiation=True,
+        supports_solver_eval=False,
+        supports_full_formulation=False,
     )
 
     def __init__(self, data_root: Path | None = None) -> None:
@@ -41,13 +62,13 @@ class MAMOAdapter:
         return [s for s in _KNOWN_SPLITS if self._split_path(s).exists()]
 
     def load_split(self, split_name: str) -> list[dict[str, Any]]:
-        path = self._split_path(split_name)
-        if not path.exists():
+        p = self._split_path(split_name)
+        if not p.exists():
             raise FileNotFoundError(
-                f"Missing MAMO split at {path}. Run scripts/get_mamo.py or place split JSONL files manually."
+                f"Missing MAMO split at {p}. Run scripts/get_mamo.py to download."
             )
         rows: list[dict[str, Any]] = []
-        with open(path, encoding="utf-8") as fh:
+        with open(p, encoding="utf-8") as fh:
             for line in fh:
                 line = line.strip()
                 if line:
@@ -132,5 +153,31 @@ class MAMOAdapter:
                     else self._parse_answer(row.get("en_answer"))
                 ),
                 "formulation_text": row.get("formulation_text") or row.get("target_model") or row.get("lp"),
+            schema_id=None,
+            schema_text=None,
+            candidate_schemas=None,
+            scalar_gold_params=scalar,
+            structured_gold_params=None,
+            formulation_text=None,
+            solver_artifact_path=None,
+            metadata={
+                "source_url": _SOURCE_URL,
+                "license": "CC-BY-NC-4.0",
+                "en_answer_raw": answer,
+                "mamo_split": split_name,
+            },
+        )
+
+    def get_schema_candidates(self) -> list[dict[str, Any]]:
+        return []
+
+    def get_gold_targets(self, split_name: str) -> dict[str, dict[str, Any]]:
+        out: dict[str, dict[str, Any]] = {}
+        for ex in self.load_split(split_name):
+            ex_id = str(ex.get("id") or "")
+            if not ex_id:
+                continue
+            out[ex_id] = {
+                "scalar_gold_params": self._parse_answer(ex.get("en_answer")),
             }
         return out

@@ -22,6 +22,10 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.error import HTTPError, URLError
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+from urllib.error import URLError
 from urllib.request import urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
