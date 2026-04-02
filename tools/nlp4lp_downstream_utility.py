@@ -1,7 +1,46 @@
-"""Downstream utility demo for NLP4LP: retrieval enables parameter instantiation from NL.
+"""Downstream utility for NLP4LP: retrieval-enabled parameter instantiation from NL.
 
-Primarily deterministic and CPU-only. Optional LLM baselines are supported via
-OPENAI_API_KEY / GEMINI_API_KEY when selected as baseline methods.
+This module implements the full downstream grounding pipeline used in the EAAI paper.
+It is primarily deterministic and CPU-only.  Optional LLM baselines are supported via
+``OPENAI_API_KEY`` / ``GEMINI_API_KEY`` environment variables.
+
+Table of contents
+-----------------
+  1.  Constants & lexicons        — NUM_TOKEN_RE, MONEY_CONTEXT, _ONES, _WORD_TO_NUM,
+                                    _WORD_FRACTIONS, _ENUM_STOP_WORDS, _SLOT_SYNONYMS,
+                                    operator cue weights, etc.
+  2.  Evaluation / data loading   — _safe_json_loads, _load_eval, _load_catalog_as_problems,
+                                    _apply_low_resource_env, _load_hf_gold
+  3.  Core data classes           — NumTok, MentionRecord, SlotRecord
+  4.  Numeric extraction          — _parse_num_token, _extract_num_tokens, _normalize_tokens,
+                                    _split_camel_case, _extract_num_mentions, _tokens_lower
+  5.  Slot utilities              — _slot_measure_tokens, _slot_aliases, _build_slot_records,
+                                    _expected_type, _is_count_like_slot, _is_type_match,
+                                    _choose_token, _is_scalar, _is_type_incompatible
+  6.  Basic scoring               — _score_mention_slot (typed-greedy)
+  7.  Semantic IR assignment      — MentionIR, SlotIR, SEMANTIC_ROLE_WORDS,
+                                    _context_to_semantic_tags, _detect_operator_tags,
+                                    _extract_enriched_mentions, _slot_semantic_expansion,
+                                    _build_slot_irs, _score_mention_slot_ir,
+                                    _semantic_ir_global_assignment, _validation_and_repair,
+                                    _run_semantic_ir_repair
+  8.  Optimization-role grounding — MentionOptIR, SlotOptIR, _extract_opt_role_mentions,
+                                    _build_slot_opt_irs, _score_mention_slot_opt,
+                                    _opt_role_global_assignment, _opt_role_validate_and_repair,
+                                    _run_optimization_role_repair, and beam/anchor variants
+  9.  Global Consistency Grounding (GCG)
+  10. Maximum-Weight Bipartite Matching Grounding
+  11. Global Compatibility Grounding
+  12. Acceptance reranking
+  13. run_setting()               — dispatch one (query, schema, method) tuple → metrics
+  14. main() / CLI                — argument parsing and multi-method batch runner
+
+Environment variables
+---------------------
+  HF_TOKEN / HUGGINGFACE_TOKEN   HuggingFace token for loading gated NLP4LP dataset.
+  OPENAI_API_KEY                 Required for LLM baseline methods (openai_*).
+  GEMINI_API_KEY                 Required for LLM baseline methods (gemini_*).
+  LOW_RESOURCE                   Set to "1" to skip HF dataset download in dry runs.
 """
 from __future__ import annotations
 
@@ -370,6 +409,7 @@ ASSIGN_WEIGHTS = {
     "count_large_penalty_threshold": 50, # integers > this get the large-int penalty
 }
 
+# ── Section 2 – Evaluation / data loading ────────────────────────────────────
 
 def _safe_json_loads(s: str | None) -> Any:
     if not s:
@@ -482,6 +522,7 @@ def _load_hf_gold(split: str = "test", use_cache: bool = True) -> dict[str, dict
             pass
     return gold
 
+# ── Section 3 – Core data classes ────────────────────────────────────────────
 
 def _tokens_lower(text: str) -> list[str]:
     return re.findall(r"\w+|<num>|[$]?\d[\d,]*(?:\.\d+)?%?", text.lower())
@@ -516,6 +557,7 @@ class SlotRecord:
     alias_tokens: set[str]
     is_count_like: bool = False
 
+# ── Section 4 – Numeric extraction ───────────────────────────────────────────
 
 def _parse_num_token(tok: str, context_words: set[str]) -> NumTok:
     # Strip whitespace, then strip trailing punctuation characters so that
@@ -623,6 +665,7 @@ def _split_camel_case(name: str) -> list[str]:
     # Replace underscores and collapse whitespace, then return lowercase tokens.
     return [t.lower() for t in re.split(r"[\s_]+", s) if t]
 
+# ── Section 5 – Slot utilities ────────────────────────────────────────────────
 
 def _slot_measure_tokens(name: str) -> list[str]:
     """Return a de-duplicated list of lowercase tokens for a slot name.
@@ -1013,6 +1056,7 @@ def _build_slot_records(expected_scalar: list[str]) -> list[SlotRecord]:
         )
     return slots
 
+# ── Section 6 – Basic scoring (typed greedy) ─────────────────────────────────
 
 def _score_mention_slot(m: MentionRecord, s: SlotRecord) -> tuple[float, dict[str, Any]]:
     """Compute interpretable compatibility score and feature breakdown."""
@@ -5397,6 +5441,7 @@ def make_rerank_rank_fn(
 
     return rank_fn
 
+# ── Section 13 – run_setting(): dispatch one (variant, method) run ────────────
 
 def run_setting(
     variant: str,
@@ -6287,6 +6332,7 @@ def run_single_setting(
     )
     return True
 
+# ── Section 14 – main() / CLI ─────────────────────────────────────────────────
 
 def main() -> None:
     import argparse
