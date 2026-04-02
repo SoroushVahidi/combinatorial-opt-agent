@@ -31,13 +31,14 @@ def main() -> None:
     errors: list[str] = []
     row_counts: dict[str, int] = {}
     found: list[str] = []
-    method = "direct_raw_http"
+    method = "none"
 
     for split, url in SPLIT_URLS.items():
         out = OUT_DIR / f"{split}.jsonl"
         if out.exists() and not args.force:
             found.append(split)
-            row_counts[split] = sum(1 for _ in open(out, encoding="utf-8"))
+            with out.open(encoding="utf-8") as fh:
+                row_counts[split] = sum(1 for _ in fh)
             continue
         try:
             with urlopen(url, timeout=30) as resp:
@@ -58,12 +59,17 @@ def main() -> None:
             out.write_text("\n".join(lines) + ("\n" if lines else ""), encoding="utf-8")
             row_counts[split] = parsed
             found.append(split)
+            method = "direct_raw_http"
         except HTTPError as e:
             errors.append(f"{split}: HTTPError {e.code} from {url}")
         except URLError as e:
             errors.append(f"{split}: URLError {e.reason} from {url}")
         except Exception as e:
             errors.append(f"{split}: unexpected error: {e}")
+
+    # If everything was preexisting and no network was used, reflect that in provenance.
+    if method == "none" and found:
+        method = "preexisting_local_files"
 
     payload = {
         "source": "CardinalOperations/NL4OPT",

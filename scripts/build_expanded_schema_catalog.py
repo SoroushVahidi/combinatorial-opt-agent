@@ -79,38 +79,39 @@ def collect_schema_entries(dataset_name: str) -> list[dict]:
     entries: list[dict] = []
 
     for split in adapter.list_splits():
+        idx = 0
         try:
-            raw = list(adapter.iter_examples(split))
+            for raw_ex in adapter.iter_examples(split):
+                ie = adapter.to_internal_example(raw_ex, split)
+                if not ie.schema_id and not ie.schema_text:
+                    idx += 1
+                    continue
+
+                benchmark_labeled = (
+                    ie.scalar_gold_params is not None
+                    or ie.formulation_text is not None
+                    or ie.solver_artifact_path is not None
+                )
+                entry = {
+                    "id": ie.id or f"{dataset_name}:{split}:{idx}",
+                    "source_dataset": ie.source_dataset,
+                    "schema_id": ie.schema_id,
+                    "schema_text": ie.schema_text,
+                    "source_metadata": {
+                        "split": split,
+                        "source_url": ie.metadata.get("source_url"),
+                        "catalog_only": bool(ie.metadata.get("catalog_only", False)),
+                        "raw_keys": sorted(raw_ex.keys()) if isinstance(raw_ex, dict) else None,
+                    },
+                    "benchmark_labeled": benchmark_labeled,
+                    "entry_status": _entry_status(ie.metadata, benchmark_labeled),
+                    "nl_query": ie.nl_query,
+                    "metadata": ie.metadata,
+                }
+                entries.append(entry)
+                idx += 1
         except FileNotFoundError:
             continue
-
-        for raw_ex in raw:
-            ie = adapter.to_internal_example(raw_ex, split)
-            if not ie.schema_id and not ie.schema_text:
-                continue
-
-            benchmark_labeled = (
-                ie.scalar_gold_params is not None
-                or ie.formulation_text is not None
-                or ie.solver_artifact_path is not None
-            )
-            entry = {
-                "id": ie.id or f"{dataset_name}:{split}",
-                "source_dataset": ie.source_dataset,
-                "schema_id": ie.schema_id,
-                "schema_text": ie.schema_text,
-                "source_metadata": {
-                    "split": split,
-                    "source_url": ie.metadata.get("source_url"),
-                    "catalog_only": bool(ie.metadata.get("catalog_only", False)),
-                    "raw_keys": sorted(raw_ex.keys()) if isinstance(raw_ex, dict) else None,
-                },
-                "benchmark_labeled": benchmark_labeled,
-                "entry_status": _entry_status(ie.metadata, benchmark_labeled),
-                "nl_query": ie.nl_query,
-                "metadata": ie.metadata,
-            }
-            entries.append(entry)
 
     return entries
 

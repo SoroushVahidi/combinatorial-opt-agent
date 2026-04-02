@@ -37,7 +37,8 @@ def main() -> None:
         p = OUT_DIR / f"{split}.jsonl"
         if p.exists() and not args.force:
             found.append(split)
-            row_counts[split] = sum(1 for _ in open(p, encoding="utf-8"))
+            with p.open(encoding="utf-8") as fh:
+                row_counts[split] = sum(1 for _ in fh)
 
     if len(found) < len(KNOWN_SPLITS):
         if shutil.which("git") is None:
@@ -45,6 +46,8 @@ def main() -> None:
         else:
             repo_dir = OUT_DIR / "downloads" / "industryor_repo"
             repo_dir.parent.mkdir(parents=True, exist_ok=True)
+            if repo_dir.exists():
+                shutil.rmtree(repo_dir)
             try:
                 subprocess.run(
                     ["git", "clone", "--depth", "1", REPO_URL, str(repo_dir)],

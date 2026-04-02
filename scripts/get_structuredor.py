@@ -35,7 +35,8 @@ def _to_jsonl(src: Path, dst: Path) -> int:
     except Exception:
         lines = [ln for ln in text.splitlines() if ln.strip()]
         dst.write_text("\n".join(lines) + ("\n" if lines else ""), encoding="utf-8")
-    return sum(1 for _ in open(dst, encoding="utf-8"))
+    with open(dst, encoding="utf-8") as fh:
+        return sum(1 for _ in fh)
 
 
 def main() -> None:
@@ -54,7 +55,8 @@ def main() -> None:
         p = OUT_DIR / f"{split}.jsonl"
         if p.exists() and not args.force:
             found.append(split)
-            row_counts[split] = sum(1 for _ in open(p, encoding="utf-8"))
+            with p.open(encoding="utf-8") as fh:
+                row_counts[split] = sum(1 for _ in fh)
 
     if len(found) < len(KNOWN_SPLITS):
         if shutil.which("git") is None:
@@ -62,6 +64,8 @@ def main() -> None:
         else:
             clone_dir = OUT_DIR / "downloads" / "structuredor_repo"
             clone_dir.parent.mkdir(parents=True, exist_ok=True)
+            if clone_dir.exists():
+                shutil.rmtree(clone_dir)
             try:
                 subprocess.run(
                     ["git", "clone", "--depth", "1", REPO_URL, str(clone_dir)],

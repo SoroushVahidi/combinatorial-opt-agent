@@ -97,19 +97,43 @@ def main() -> None:
                 src_path = OUT_DIR / f"{split}.source.json"
                 src_path.write_text(payload, encoding="utf-8")
                 src_rows = _count_json_rows(src_path)
+                success = False
                 with open(out_path, "w", encoding="utf-8") as out_fh:
                     if src_rows is not None:
+                        # JSON list; normalize to JSONL
                         for row in json.loads(payload):
                             out_fh.write(json.dumps(row, ensure_ascii=False) + "\n")
                         row_counts[split] = src_rows
+                        success = True
                     else:
-                        # already jsonl or non-list json; keep as single-line stream
+                        # Validate as JSONL: each non-empty line must be valid JSON
+                        valid_rows = 0
                         for line in payload.splitlines():
-                            if line.strip():
-                                out_fh.write(line.strip() + "\n")
-                        row_counts[split] = sum(1 for _ in open(out_path, encoding="utf-8"))
-                splits_found.append(split)
-                retrieval_method = "direct_raw_http"
+                            stripped = line.strip()
+                            if not stripped:
+                                continue
+                            try:
+                                json.loads(stripped)
+                            except json.JSONDecodeError:
+                                valid_rows = 0
+                                break
+                            else:
+                                out_fh.write(stripped + "\n")
+                                valid_rows += 1
+                        if valid_rows > 0:
+                            row_counts[split] = valid_rows
+                            success = True
+                if success:
+                    splits_found.append(split)
+                    retrieval_method = "direct_raw_http"
+                else:
+                    errors.append(
+                        f"{split}: non-JSON response from {url} (expected JSON list or JSONL)"
+                    )
+                    try:
+                        out_path.unlink()
+                    except FileNotFoundError:
+                        pass
             except HTTPError as e:
                 errors.append(f"{split}: HTTPError {e.code} from {url}")
             except URLError as e:
@@ -121,6 +145,8 @@ def main() -> None:
         if len(splits_found) < len(DATA_URLS):
             tmp_dir = OUT_DIR / "downloads" / "mamo_repo"
             tmp_dir.parent.mkdir(parents=True, exist_ok=True)
+            if tmp_dir.exists():
+                shutil.rmtree(tmp_dir)
             ok, method = _attempt_git_clone(tmp_dir)
             if ok:
                 retrieval_method = method
@@ -144,11 +170,13 @@ def main() -> None:
                                         fh.write(json.dumps(row, ensure_ascii=False) + "\n")
                                 else:
                                     fh.write(json.dumps(obj, ensure_ascii=False) + "\n")
-                            row_counts[split] = sum(1 for _ in open(out, encoding="utf-8"))
+                            with open(out, encoding="utf-8") as fh:
+                                row_counts[split] = sum(1 for _ in fh)
                             splits_found.append(split)
                         except Exception:
                             out.write_text(text, encoding="utf-8")
-                            row_counts[split] = sum(1 for _ in open(out, encoding="utf-8"))
+                            with open(out, encoding="utf-8") as fh:
+                                row_counts[split] = sum(1 for _ in fh)
                             splits_found.append(split)
                 else:
                     warnings.append("cloned Mamo repo but benchmark/ directory missing")
