@@ -21,16 +21,14 @@ combinatorial-opt-agent/
 │
 ├── ★ docs/EAAI_SOURCE_OF_TRUTH.md     Master manuscript authority
 ├── ★ docs/RESULTS_PROVENANCE.md       Canonical metrics + provenance chain
+├── ★ docs/CURRENT_STATUS.md           Reviewer-facing status + headline pointers
 ├──   docs/paper_vs_demo_scope.md      Paper scope vs demo scope explanation
 ├──   docs/wulver.md                   HPC setup (Wulver @ NJIT)
 ├──   docs/wulver_webapp.md            Web app on Wulver
 ├──   docs/learning_runs/              Benchmark-safe splits, real-data-only check
+├── ⚠ docs/archive_internal_status/   Internal audits / decision logs (provenance only)
 ├── ⚠ docs/archive/                    Historical dev notes (NOT authoritative)
 ├── ⚠ docs/eswa_revision/              ESWA-era revision materials
-├── ⚠ docs/audits/                     Legacy audit/decision reports
-│   ├── current_repo_vs_manuscript_rerun.{md,csv}   Pre-EAAI comparison (superseded)
-│   ├── literature_informed_rerun_{report.md,summary.csv}  Method exploration
-│   └── publish_now_decision_{report.md,evidence.csv}      Internal go/no-go log
 │
 ├── ★ tools/nlp4lp_downstream_utility.py   Core grounding pipeline (6 000+ lines)
 │   │   Sections: extraction → slot records → basic scoring →
@@ -103,12 +101,30 @@ combinatorial-opt-agent/
 | `analysis/eaai_*` | Experiment reports | ★ Regenerate by re-running experiment scripts |
 | `docs/EAAI_SOURCE_OF_TRUTH.md` | Paper framing | ★ Edit only when manuscript changes |
 | `docs/RESULTS_PROVENANCE.md` | Metrics provenance | ★ Update when canonical results change |
+| `docs/CURRENT_STATUS.md` | Reviewer-facing status | ★ Single summary page |
 | `tools/run_eaai_*.py` | Experiment scripts | Core paper pipeline |
 | `retrieval/`, `formulation/`, `src/` | Core source | Paper-scoped |
 | `tests/` | Test suite | Core source |
 | `app.py` and ✦-marked files | Demo application | Demo only; outside paper scope |
 | `demo/` | Demo documentation | Demo only |
-| `docs/archive/`, `docs/audits/`, `results/eswa_revision/` | Historical | ⚠ Not authoritative |
+| `docs/archive_internal_status/` | Internal audits / decision logs | ⚠ Provenance only; not headline source |
+| `docs/archive/`, `results/eswa_revision/` | Historical | ⚠ Not authoritative |
+
+---
+
+## Authoritative vs historical
+
+| Path | Status | Notes |
+|------|--------|-------|
+| `results/paper/` | ★ Authoritative | DO NOT edit; regenerate via canonical scripts only |
+| `analysis/eaai_*` | ★ Authoritative | Experiment reports; regenerate by re-running scripts |
+| `docs/EAAI_SOURCE_OF_TRUTH.md` | ★ Authoritative | Master reference for paper claims |
+| `docs/RESULTS_PROVENANCE.md` | ★ Authoritative | Canonical metrics + provenance chain |
+| `docs/CURRENT_STATUS.md` | ★ Summary | Reviewer-facing status; points to tables |
+| `docs/archive_internal_status/` | ⚠ Provenance | Internal audits; not headline source |
+| `docs/archive/` | ⚠ Historical | Dev notes; preserved for provenance, not citation |
+| `docs/eswa_revision/` | ⚠ Historical | ESWA-era revision; not EAAI-authoritative |
+| `results/eswa_revision/` | ⚠ Historical | Earlier experiment results |
 
 ---
 

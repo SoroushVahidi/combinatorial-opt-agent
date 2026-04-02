@@ -3,6 +3,8 @@
 **Created:** 2026-03-30  
 **Status:** Authoritative — supersedes older broad repo framing docs for manuscript purposes
 
+**Concise companion:** **[`docs/CURRENT_STATUS.md`](CURRENT_STATUS.md)** (reviewer-facing status + headline metrics pointer).
+
 ---
 
 ## Intended Paper Framing
@@ -88,9 +90,7 @@ The following docs contain earlier experiment records or ESWA-era framing and sh
 - `docs/CURRENT_STATE_AUDIT.md` — Point-in-time snapshot
 - `docs/FULL_REPO_SUMMARY.md` — Broad summary, not EAAI-specific
 - `docs/eswa_revision/` — ESWA revision materials
-- `current_repo_vs_manuscript_rerun.md` — Intermediate comparison
-- `literature_informed_rerun_report.md` — Earlier literature rerun
-- `publish_now_decision_report.md` — Internal decision document
+- `docs/archive_internal_status/` — Internal comparisons, decision logs, and manuscript audits (see folder README)
 
 Note: The ESWA revision tables in `results/eswa_revision/13_tables/` ARE still authoritative for **Table 1** (main benchmark metrics), because they contain the canonical NLP4LP orig-variant measured results.
 

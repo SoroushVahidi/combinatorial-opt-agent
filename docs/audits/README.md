@@ -1,18 +1,14 @@
-# Audit Reports (Legacy)
+# Audit Reports (Legacy — moved)
 
-This directory contains **legacy audit and decision reports** that were generated
-during pre-EAAI development.  They are preserved for provenance but are **not
-authoritative** for the current EAAI manuscript.
+The audit and decision report files previously in this directory have been consolidated
+into **[`docs/archive_internal_status/`](../archive_internal_status/)**.
 
-| File | Status | Notes |
-|------|--------|-------|
-| `current_repo_vs_manuscript_rerun.md` | ⚠ Legacy | Pre-EAAI comparison; superseded by camera-ready tables |
-| `current_repo_vs_manuscript_rerun.csv` | ⚠ Legacy | Data source for the above |
-| `literature_informed_rerun_report.md` | ⚠ Legacy | Literature-informed method exploration; not paper-facing |
-| `literature_informed_rerun_summary.csv` | ⚠ Legacy | Data source for the above |
-| `publish_now_decision_report.md` | ⚠ Legacy | Internal go/no-go decision log |
-| `publish_now_decision_evidence.csv` | ⚠ Legacy | Evidence table for the above |
+Please refer to that directory for:
+- `current_repo_vs_manuscript_rerun.{md,csv}` — Pre-EAAI comparison (superseded)
+- `literature_informed_rerun_{report.md,summary.csv}` — Literature-informed method exploration
+- `publish_now_decision_{report.md,evidence.csv}` — Internal go/no-go decision log
 
 For the canonical results source, see:
-- `docs/RESULTS_PROVENANCE.md`
+- [`docs/RESULTS_PROVENANCE.md`](../RESULTS_PROVENANCE.md)
+- [`docs/CURRENT_STATUS.md`](../CURRENT_STATUS.md)
 - `results/paper/eaai_camera_ready_tables/`

@@ -2,6 +2,12 @@
 
 Overview of documentation in this repository.
 
+## Reviewer-facing (start here)
+
+- **[CURRENT_STATUS.md](CURRENT_STATUS.md)** — canonical short status + headline metric pointers  
+- **[EAAI_SOURCE_OF_TRUTH.md](EAAI_SOURCE_OF_TRUTH.md)** — manuscript authority and authoritative file list  
+- **[archive_internal_status/README.md](archive_internal_status/README.md)** — internal audits retained for provenance (not headline summaries)
+
 ## Data and setup
 
 - **[data_sources.md](data_sources.md)** — Canonical list of optimization data sources (OR-Library, Gurobi, NL4Opt, etc.).
@@ -27,6 +33,8 @@ Overview of documentation in this repository.
 ## HPC and runs
 
 - **[wulver.md](wulver.md)** — NJIT Wulver cluster setup and usage.
+- **[gemini_api_quota.md](gemini_api_quota.md)** — Gemini free-tier quota, preflight, Wulver pthread notes.
+- **[MIGRATION_GOOGLE_GENAI.md](MIGRATION_GOOGLE_GENAI.md)** — Gemini SDK (`google.genai`) migration notes and API mapping.
 - **[wulver_webapp.md](wulver_webapp.md)** — Running the web app on Wulver.
 - **[WULVER_RESOURCE_INVENTORY.md](WULVER_RESOURCE_INVENTORY.md)**, **[WULVER_FIRST_TRAINING_RUN.md](WULVER_FIRST_TRAINING_RUN.md)** — Resource inventory and first training run notes.
 
