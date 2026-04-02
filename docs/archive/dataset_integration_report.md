@@ -41,6 +41,27 @@ This work is additive and keeps `tools/nlp4lp_downstream_utility.py` as the NLP4
   - `tests/fixtures/datasets/optimus/test.jsonl`
 - `.gitignore` updated for `data/external/optimus/` and `data/processed/expanded_schema_catalog.jsonl`
 
+### Round 3 (parallel dataset normalization for MAMO / StructuredOR / Cardinal NL4OPT / IndustryOR)
+- New retrieval scripts:
+  - `scripts/get_mamo.py`
+  - `scripts/get_structuredor.py`
+  - `scripts/get_cardinal_nl4opt.py`
+  - `scripts/get_industryor.py`
+- New adapters:
+  - `src/data_adapters/mamo.py`
+  - `src/data_adapters/structuredor.py`
+  - `src/data_adapters/cardinal_nl4opt.py`
+  - `src/data_adapters/industryor.py`
+- Registry updates in `src/data_adapters/registry.py`.
+- Expanded schema catalog script now emits explicit `entry_status` and `source_metadata` fields.
+- Added grounding-pair export stub:
+  - `scripts/export_grounding_training_pairs.py`
+- Added tiny fixtures and smoke tests for the new adapters and export flow.
+
+Note on retrieval realism:
+- retrieval scripts intentionally fail loudly when blocked and always write provenance metadata.
+- in restricted environments, upstream connectivity can fail (e.g., tunnel/network `403`), which is reported in `docs/DATASET_PARALLEL_INTEGRATION_REPORT.md`.
+
 ## Internal Normalized Example Schema
 
 All adapters map to `InternalExample` with the following fields:
@@ -78,6 +99,9 @@ Capability flags per dataset:
 - `supports_solver_eval`
 - `supports_full_formulation`
 
+## What Is Fully Integrated vs Partial
+
+- Fully integrated (adapter + script + runner compatibility), data-access dependent:
 ## Source, License, and Redistribution Notes
 
 | Dataset | Public Source | License Clear | GitHub-vendorable raw data | Schema Retrieval | Scalar Instantiation | Full Formulation | Notes |
@@ -150,6 +174,10 @@ Unsupported metrics are reported as `N/A` by capability instead of failing.
   - Text2Zinc
   - OptMATH
   - ComplexOR (closest public variant path)
+  - MAMO
+  - StructuredOR
+  - CardinalOperations/NL4OPT
+  - IndustryOR
   - Gurobi Modeling Examples (catalog-only)
   - Gurobi OptiMods (catalog-only)
   - GAMS Model Library (catalog-only)

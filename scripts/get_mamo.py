@@ -1,18 +1,27 @@
 #!/usr/bin/env python3
-"""Fetch and prepare MAMO dataset (CardinalOperations/MAMO) from HuggingFace.
+"""Fetch/prepare MAMO dataset snapshots into data/external/mamo.
 
-Source: https://huggingface.co/datasets/CardinalOperations/MAMO
-License: CC-BY-NC-4.0 (non-commercial use only)
-Splits: easy_lp (MAMO_EasyLP.json), complex_lp (MAMO_ComplexLP.json)
+Source: https://github.com/FreedomIntelligence/Mamo
+Splits: train, validation, test (benchmark/ directory)
 
-Outputs are written to data/external/mamo/ (gitignored).
-A provenance file (provenance.json) is also written.
+This script is offline-friendly:
+- it first looks for pre-existing local files,
+- then attempts network retrieval,
+- falls back to git clone if direct HTTP is blocked,
+- always writes a provenance report,
+- exits non-zero with exact blocker details when retrieval is blocked.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import shutil
+import subprocess
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+from urllib.error import HTTPError, URLError
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -21,116 +30,207 @@ from urllib.request import urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT_DIR = ROOT / "data" / "external" / "mamo"
+META_PATH = OUT_DIR / "provenance.json"
 
-HF_RESOLVE = "https://huggingface.co/datasets/CardinalOperations/MAMO/resolve/main"
-
-SPLITS = {
-    "easy_lp": f"{HF_RESOLVE}/MAMO_EasyLP.json",
-    "complex_lp": f"{HF_RESOLVE}/MAMO_ComplexLP.json",
+DATA_URLS = {
+    "train": "https://raw.githubusercontent.com/FreedomIntelligence/Mamo/main/benchmark/MAMO_train.json",
+    "validation": "https://raw.githubusercontent.com/FreedomIntelligence/Mamo/main/benchmark/MAMO_valid.json",
+    "test": "https://raw.githubusercontent.com/FreedomIntelligence/Mamo/main/benchmark/MAMO_test.json",
 }
 
 
-def _fetch(url: str, timeout: int = 30) -> str | None:
+def _write_metadata(payload: dict) -> None:
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    with open(META_PATH, "w", encoding="utf-8") as fh:
+        json.dump(payload, fh, indent=2)
+
+
+def _count_json_rows(path: Path) -> int | None:
     try:
-        with urlopen(url, timeout=timeout) as resp:
-            return resp.read().decode("utf-8")
-    except URLError as exc:
-        print(f"[error] fetch failed for {url}: {exc}", file=sys.stderr)
+        with open(path, encoding="utf-8") as fh:
+            obj = json.load(fh)
+        if isinstance(obj, list):
+            return len(obj)
+    except Exception:
         return None
+    return None
 
 
-def _parse_jsonl(raw: str) -> list[dict]:
-    rows: list[dict] = []
-    for line in raw.splitlines():
-        line = line.strip()
-        if line:
-            rows.append(json.loads(line))
-    return rows
+def _attempt_git_clone(tmp_dir: Path) -> tuple[bool, str]:
+    if shutil.which("git") is None:
+        return False, "git binary not available"
+    try:
+        subprocess.run(
+            ["git", "clone", "--depth", "1", "https://github.com/FreedomIntelligence/Mamo.git", str(tmp_dir)],
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        return True, "git clone"
+    except subprocess.CalledProcessError as e:
+        return False, f"git clone failed: {e.stderr.strip() or e.stdout.strip()}"
 
 
 def main() -> None:
-    ap = argparse.ArgumentParser(description="Download MAMO dataset from HuggingFace.")
-    ap.add_argument("--force", action="store_true", help="Overwrite existing files.")
+    ap = argparse.ArgumentParser(description="Fetch/prepare MAMO snapshots.")
+    ap.add_argument("--force", action="store_true", help="Overwrite existing split JSONL files.")
     args = ap.parse_args()
 
+    now = datetime.now(timezone.utc).isoformat()
+    warnings: list[str] = []
+    errors: list[str] = []
+    row_counts: dict[str, int | None] = {}
+    splits_found: list[str] = []
+    retrieval_method = "none"
+
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    provenance: dict = {
+
+    for split in DATA_URLS:
+        if (OUT_DIR / f"{split}.jsonl").exists() and not args.force:
+            splits_found.append(split)
+            with open(OUT_DIR / f"{split}.jsonl", encoding="utf-8") as fh:
+                row_counts[split] = sum(1 for _ in fh)
+
+    if splits_found and len(splits_found) == len(DATA_URLS):
+        retrieval_method = "preexisting_local_files"
+    else:
+        # First attempt direct file retrieval from raw GitHub URLs.
+        for split, url in DATA_URLS.items():
+            out_path = OUT_DIR / f"{split}.jsonl"
+            if out_path.exists() and not args.force:
+                continue
+            try:
+                with urlopen(url, timeout=30) as resp:
+                    payload = resp.read().decode("utf-8")
+                src_path = OUT_DIR / f"{split}.source.json"
+                src_path.write_text(payload, encoding="utf-8")
+                src_rows = _count_json_rows(src_path)
+                success = False
+                with open(out_path, "w", encoding="utf-8") as out_fh:
+                    if src_rows is not None:
+                        # JSON list; normalize to JSONL
+                        for row in json.loads(payload):
+                            out_fh.write(json.dumps(row, ensure_ascii=False) + "\n")
+                        row_counts[split] = src_rows
+                        success = True
+                    else:
+                        # Validate as JSONL: each non-empty line must be valid JSON
+                        valid_rows = 0
+                        for line in payload.splitlines():
+                            stripped = line.strip()
+                            if not stripped:
+                                continue
+                            try:
+                                json.loads(stripped)
+                            except json.JSONDecodeError:
+                                valid_rows = 0
+                                break
+                            else:
+                                out_fh.write(stripped + "\n")
+                                valid_rows += 1
+                        if valid_rows > 0:
+                            row_counts[split] = valid_rows
+                            success = True
+                if success:
+                    splits_found.append(split)
+                    retrieval_method = "direct_raw_http"
+                    print(f"[ok] {split}: {row_counts[split]} rows -> {out_path}")
+                else:
+                    snippet = payload[:100].replace("\n", " ")
+                    msg = (
+                        f"{split}: non-JSON response from {url} (expected JSON list or JSONL); "
+                        f"response starts with: {snippet!r}"
+                    )
+                    print(f"[error] {msg}", file=sys.stderr)
+                    errors.append(msg)
+                    try:
+                        out_path.unlink()
+                    except FileNotFoundError:
+                        pass
+            except HTTPError as e:
+                msg = f"{split}: HTTPError {e.code} from {url}"
+                print(f"[error] {msg}", file=sys.stderr)
+                errors.append(msg)
+            except URLError as e:
+                msg = f"{split}: URLError {e.reason} from {url}"
+                print(f"[error] {msg}", file=sys.stderr)
+                errors.append(msg)
+            except Exception as e:
+                msg = f"{split}: unexpected error from {url}: {e}"
+                print(f"[error] {msg}", file=sys.stderr)
+                errors.append(msg)
+
+        # Fallback: clone repo and search benchmark directory
+        if len(splits_found) < len(DATA_URLS):
+            tmp_dir = OUT_DIR / "downloads" / "mamo_repo"
+            tmp_dir.parent.mkdir(parents=True, exist_ok=True)
+            if tmp_dir.exists():
+                shutil.rmtree(tmp_dir)
+            ok, method = _attempt_git_clone(tmp_dir)
+            if ok:
+                retrieval_method = method
+                benchmark_dir = tmp_dir / "benchmark"
+                if benchmark_dir.exists():
+                    for split in DATA_URLS:
+                        if split in splits_found:
+                            continue
+                        candidates = list(benchmark_dir.glob(f"*{split}*.json")) + list(benchmark_dir.glob(f"*{split}*.jsonl"))
+                        if not candidates:
+                            msg = f"{split}: no file matching *{split}*.json/.jsonl under benchmark/"
+                            print(f"[warn] {msg}", file=sys.stderr)
+                            warnings.append(msg)
+                            continue
+                        src = sorted(candidates)[0]
+                        out = OUT_DIR / f"{split}.jsonl"
+                        text = src.read_text(encoding="utf-8")
+                        try:
+                            obj = json.loads(text)
+                            with open(out, "w", encoding="utf-8") as fh:
+                                if isinstance(obj, list):
+                                    for row in obj:
+                                        fh.write(json.dumps(row, ensure_ascii=False) + "\n")
+                                else:
+                                    fh.write(json.dumps(obj, ensure_ascii=False) + "\n")
+                            with open(out, encoding="utf-8") as fh:
+                                row_counts[split] = sum(1 for _ in fh)
+                            splits_found.append(split)
+                            print(f"[ok] {split}: {row_counts[split]} rows -> {out}")
+                        except Exception:
+                            out.write_text(text, encoding="utf-8")
+                            with open(out, encoding="utf-8") as fh:
+                                row_counts[split] = sum(1 for _ in fh)
+                            splits_found.append(split)
+                            print(f"[ok] {split}: {row_counts[split]} rows -> {out}")
+                else:
+                    msg = "cloned Mamo repo but benchmark/ directory missing"
+                    print(f"[warn] {msg}", file=sys.stderr)
+                    warnings.append(msg)
+            else:
+                print(f"[error] {method}", file=sys.stderr)
+                errors.append(method)
+
+    provenance = {
         "dataset": "MAMO",
-        "source": "https://huggingface.co/datasets/CardinalOperations/MAMO",
-        "license": "CC-BY-NC-4.0",
-        "retrieval_method": "urllib direct download via HuggingFace resolve URL",
-        "timestamp": datetime.now(timezone.utc).isoformat(),
-        "splits": {},
-        "warnings": [],
+        "source": "FreedomIntelligence/Mamo",
+        "source_url": "https://github.com/FreedomIntelligence/Mamo",
+        "retrieval_method": retrieval_method,
+        "timestamp": now,
+        "splits": sorted(set(splits_found)),
+        "row_counts": row_counts,
+        "warnings": warnings,
+        "errors": errors,
     }
+    _write_metadata(provenance)
+    print(f"[ok] provenance written -> {META_PATH}")
 
-    any_success = False
-    for split_name, url in SPLITS.items():
-        out_path = OUT_DIR / f"{split_name}.jsonl"
-        if out_path.exists() and not args.force:
-            print(f"[skip] {out_path} already exists (use --force to overwrite)")
-            rows_count = sum(1 for line in out_path.read_text(encoding="utf-8").splitlines() if line.strip())
-            provenance["splits"][split_name] = {"rows": rows_count, "status": "existing"}
-            any_success = True
-            continue
-
-        raw = _fetch(url)
-        if raw is None:
-            msg = f"Could not fetch {split_name} from {url}"
-            print(f"[error] {msg}", file=sys.stderr)
-            provenance["warnings"].append(msg)
-            provenance["splits"][split_name] = {"rows": 0, "status": "fetch_failed", "url": url}
-            continue
-
-        try:
-            rows = _parse_jsonl(raw)
-        except json.JSONDecodeError as exc:
-            msg = f"JSON parse error for {split_name}: {exc}"
-            print(f"[error] {msg}", file=sys.stderr)
-            provenance["warnings"].append(msg)
-            provenance["splits"][split_name] = {"rows": 0, "status": "parse_error"}
-            continue
-
-        if not rows:
-            msg = f"No rows parsed for split {split_name}"
-            print(f"[warn] {msg}", file=sys.stderr)
-            provenance["warnings"].append(msg)
-            provenance["splits"][split_name] = {"rows": 0, "status": "empty"}
-            continue
-
-        # Normalize: assign synthetic id, keep original fields
-        normalized: list[dict] = []
-        for idx, row in enumerate(rows):
-            normalized.append(
-                {
-                    "id": f"mamo_{split_name}_{idx}",
-                    "nl_query": (row.get("en_question") or "").strip(),
-                    "en_answer": row.get("en_answer"),
-                    "split": split_name,
-                    "source": "CardinalOperations/MAMO",
-                    "metadata": {"original_index": idx},
-                }
-            )
-
-        with open(out_path, "w", encoding="utf-8") as fh:
-            for r in normalized:
-                fh.write(json.dumps(r, ensure_ascii=False) + "\n")
-
-        print(f"[ok] {split_name}: wrote {len(normalized)} rows -> {out_path}")
-        provenance["splits"][split_name] = {"rows": len(normalized), "status": "ok", "url": url}
-        any_success = True
-
-    prov_path = OUT_DIR / "provenance.json"
-    with open(prov_path, "w", encoding="utf-8") as fh:
-        json.dump(provenance, fh, indent=2, ensure_ascii=False)
-    print(f"[ok] provenance written -> {prov_path}")
-
-    if not any_success:
-        print(
-            "[warn] No data was downloaded. Check internet connectivity or run manually.",
-            file=sys.stderr,
-        )
+    missing = sorted(set(DATA_URLS) - set(splits_found))
+    if missing:
+        print(json.dumps(provenance, indent=2))
+        print(f"[warn] Could not prepare MAMO splits: {missing}", file=sys.stderr)
         sys.exit(1)
+
+    print(f"[ok] MAMO ready: {sorted(set(splits_found))}")
 
 
 if __name__ == "__main__":

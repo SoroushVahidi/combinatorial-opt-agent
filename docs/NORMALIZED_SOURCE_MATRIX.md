@@ -17,6 +17,10 @@ evaluation metrics.
 | Text2Zinc | `text2zinc.py` | Scalar inst. ✓, Solver eval ✓, Formulation ✓ | train, validation, test | `data/external/text2zinc/` |
 | OptMATH | `optmath.py` | Scalar inst. ✓, Solver eval ✓, Formulation ✓ | train, validation, test, bench | `data/external/optmath/` |
 | ComplexOR | `complexor.py` | Scalar inst. ✓, Solver eval ✓, Formulation ✓ | train, validation, test | Derived from Text2Zinc |
+| MAMO | `mamo.py` | Schema retrieval ✓, Scalar inst. ✓, Formulation ✓ | data-dependent | Added in parallel dataset branch |
+| StructuredOR | `structuredor.py` | Schema retrieval ✓, Scalar inst. ✓, Formulation ✓ | data-dependent | Added in parallel dataset branch |
+| CardinalOperations/NL4OPT | `cardinal_nl4opt.py` | Schema retrieval ✓, Scalar inst. ✓, Formulation ✓ | data-dependent | Separate adapter from competition `nl4opt.py` |
+| IndustryOR | `industryor.py` | Schema retrieval ✓, Scalar inst. ✓, Formulation ✓ | data-dependent | Added in parallel dataset branch |
 
 ---
 
@@ -53,31 +57,26 @@ All catalog-only adapters have:
 
 ---
 
-## 4. Raw Source Manifests (Not Yet Fully Normalized)
-
-Sources present as JSON manifests in `data/sources/` but with limited normalization coverage
-beyond the catalog-only entries described above.
+## 4. Source-only / Not Yet Benchmark-Normalized Collections
 
 | Source | Location | Reason not fully normalized |
 |---|---|---|
-| MIPLIB 2017 instance files | `data/sources/miplib.json` (metadata only) | Raw `.mps` instance files are large binaries; not vendored. Catalog entry covers metadata only. |
-| Gurobi notebook content | `data/sources/gurobi_modeling_examples.json` (folder names only) | Jupyter notebooks not vendored; no stable lightweight download path. |
-| GAMS `.gms` source files | `data/sources/gams_models.json` (model names only) | Require GAMS license to access and run. Name-level normalization only. |
-| Real-world queries | `data/sources/real_world_queries.json` | Internal synthetic queries used ad-hoc; no external normalization target. |
+| MIPLIB 2017 instance files | `data/sources/miplib.json` (metadata only) | Raw `.mps` instance files are large binaries; not vendored. |
+| GAMS `.gms` source files | `data/sources/gams_models.json` (model names only) | Requires license/download workflow outside this repo. |
+| MAMO / StructuredOR / IndustryOR (in restricted env) | `data/external/*/provenance.json` | Retrieval may be blocked by environment network policy; scripts record exact blockers. |
 
 ---
 
 ## Expanded Schema Catalog
 
-The script `scripts/build_expanded_schema_catalog.py` collects all schema entries from both
-benchmark and catalog-only adapters and writes them to:
+The script `scripts/build_expanded_schema_catalog.py` collects schema entries and writes:
 
 ```
 data/processed/expanded_schema_catalog.jsonl
 ```
 
-Each row includes: `id`, `source_dataset`, `schema_id`, `schema_text`, `source_url`,
-`catalog_only`, `benchmark_labeled`, `nl_query`, `metadata`.
+Each row includes: `id`, `source_dataset`, `schema_id`, `schema_text`, `source_metadata`,
+`benchmark_labeled`, `entry_status`, `nl_query`, `metadata`.
 
 Run with:
 ```bash

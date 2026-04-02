@@ -266,3 +266,10 @@ nlp4lp_manuscript_vs_current_repo_audit.md
 repo_cleanup_archived_paths.txt
 repo_cleanup_deleted_paths.txt
 repo_cleanup_report.md
+
+data/external/mamo/
+data/external/structuredor/
+data/external/cardinal_nl4opt/
+data/external/industryor/
+data/processed/grounding_training_pairs_*.jsonl
+data/processed/grounding_training_pairs_summary.json

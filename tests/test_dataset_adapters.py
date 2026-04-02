@@ -13,10 +13,14 @@ if str(ROOT) not in sys.path:
 from data_adapters.gams_models import GAMSModelsAdapter
 from data_adapters.gurobi_modeling_examples import GurobiModelingExamplesAdapter
 from data_adapters.gurobi_optimods import GurobiOptimodsAdapter
+from data_adapters.cardinal_nl4opt import CardinalNL4OPTAdapter
+from data_adapters.industryor import IndustryORAdapter
+from data_adapters.mamo import MAMOAdapter
 from data_adapters.miplib import MIPLIBAdapter
 from data_adapters.nl4opt import NL4OptAdapter
 from data_adapters.nlp4lp import NLP4LPAdapter
 from data_adapters.optimus import OptiMUSAdapter
+from data_adapters.structuredor import StructuredORAdapter
 from data_adapters.or_library import ORLibraryAdapter
 from data_adapters.pyomo_examples import PyomoExamplesAdapter
 from data_adapters.registry import create_adapter, list_datasets
@@ -34,6 +38,10 @@ def test_registry_contains_expected_datasets() -> None:
     assert "text2zinc" in names
     assert "optmath" in names
     assert "complexor" in names
+    assert "mamo" in names
+    assert "structuredor" in names
+    assert "cardinal_nl4opt" in names
+    assert "industryor" in names
     # newly added adapters
     assert "gurobi_modeling_examples" in names
     assert "gurobi_optimods" in names
@@ -99,6 +107,41 @@ def test_runner_na_for_unsupported_metrics() -> None:
     row = next(r for r in rows if r["split"] == "test")
     assert row["schema_target_coverage"] == "N/A"
     assert row["scalar_target_coverage"] != "N/A"
+
+
+
+def test_mamo_adapter_conversion_from_fixture() -> None:
+    ad = MAMOAdapter(data_root=FIX / "mamo")
+    ex = ad.load_split("test")[0]
+    ie = ad.to_internal_example(ex, "test")
+    assert ie.source_dataset == "mamo"
+    assert ie.schema_id == "production_planning"
+    assert ie.scalar_gold_params is not None
+
+
+def test_structuredor_adapter_conversion_from_fixture() -> None:
+    ad = StructuredORAdapter(data_root=FIX / "structuredor")
+    ex = ad.load_split("test")[0]
+    ie = ad.to_internal_example(ex, "test")
+    assert ie.source_dataset == "structuredor"
+    assert ie.schema_id == "assignment"
+
+
+def test_cardinal_nl4opt_adapter_conversion_from_fixture() -> None:
+    ad = CardinalNL4OPTAdapter(data_root=FIX / "cardinal_nl4opt")
+    ex = ad.load_split("test")[0]
+    ie = ad.to_internal_example(ex, "test")
+    assert ie.source_dataset == "cardinal_nl4opt"
+    assert ie.schema_id == "transportation"
+
+
+def test_industryor_adapter_conversion_from_fixture() -> None:
+    ad = IndustryORAdapter(data_root=FIX / "industryor")
+    ex = ad.load_split("test")[0]
+    ie = ad.to_internal_example(ex, "test")
+    assert ie.source_dataset == "industryor"
+    assert ie.schema_id == "workforce_scheduling"
+
 
 
 # ---------------------------------------------------------------------------
@@ -245,7 +288,8 @@ def test_build_expanded_schema_catalog(tmp_path: Path) -> None:
     for row in lines:
         assert "id" in row
         assert "source_dataset" in row
-        assert "catalog_only" in row
+        assert "source_metadata" in row
+        assert "entry_status" in row
         assert "benchmark_labeled" in row
 
 
@@ -253,6 +297,12 @@ def test_collect_schema_entries_gurobi() -> None:
     entries = collect_schema_entries("gurobi_modeling_examples")
     assert len(entries) > 50
     for e in entries:
-        assert e["catalog_only"] is True
+        assert e["entry_status"] == "catalog-only"
         assert e["benchmark_labeled"] is False
 
+
+def test_build_expanded_schema_catalog_contains_source_only_rows(tmp_path: Path) -> None:
+    out = tmp_path / "catalog_source_only.jsonl"
+    build_catalog(out)
+    rows = [json.loads(l) for l in out.read_text(encoding="utf-8").splitlines() if l.strip()]
+    assert any(r.get("entry_status") == "source-only" for r in rows)

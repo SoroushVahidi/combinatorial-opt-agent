@@ -1,0 +1,1 @@
+{"id":"sor_1","query":"Assign technicians to jobs with skill constraints.","schema_id":"assignment","scalar_gold_params":{"num_technicians":5},"formulation_text":"min sum(cost[i,j]*x[i,j])"}
