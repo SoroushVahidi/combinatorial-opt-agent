@@ -27,13 +27,12 @@ def test_extract_pairs_reports_blocker_for_missing_dataset() -> None:
 
 
 def test_extract_pairs_positive_on_fixture_by_temp_copy(tmp_path: Path) -> None:
-    # use a temporary data_root for cardinal_nl4opt by staging tiny fixture
-    data_root = tmp_path / "data"
-    out_dir = data_root / "external" / "cardinal_nl4opt"
+    # Stage a tiny fixture in an isolated temp directory, using the same layout
+    # the adapter expects: <data_root>/<split>.jsonl
+    out_dir = tmp_path / "cardinal_nl4opt"
     out_dir.mkdir(parents=True, exist_ok=True)
     payload = (FIX / "cardinal_nl4opt" / "test.jsonl").read_text(encoding="utf-8")
-    out_file = out_dir / "test.jsonl"
-    out_file.write_text(payload, encoding="utf-8")
+    (out_dir / "test.jsonl").write_text(payload, encoding="utf-8")
 
     pairs, blockers = _extract_pairs("cardinal_nl4opt", data_root=out_dir)
     assert len(pairs) >= 1
