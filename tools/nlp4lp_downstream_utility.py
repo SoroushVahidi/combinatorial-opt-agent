@@ -5957,6 +5957,51 @@ def run_setting(
                                 type_exact5_num[btype] += 1
                             if err <= 0.20:
                                 type_exact20_num[btype] += 1
+            elif assignment_mode in (
+                "hierarchical_structured_grounding",
+                "hierarchical_structured_grounding_no_regions",
+                "hierarchical_structured_grounding_no_search",
+            ) and expected_scalar:
+                from tools.hierarchical_structured_grounding import run_hierarchical_structured_grounding
+                _hsg_ablation_map = {
+                    "hierarchical_structured_grounding": "full",
+                    "hierarchical_structured_grounding_no_regions": "no_regions",
+                    "hierarchical_structured_grounding_no_search": "no_search",
+                }
+                filled_values, filled_mentions, _diag = run_hierarchical_structured_grounding(
+                    query,
+                    variant,
+                    expected_scalar,
+                    ablation_mode=_hsg_ablation_map[assignment_mode],
+                )
+                for p in expected_scalar:
+                    if p not in filled_values:
+                        continue
+                    m_ir = filled_mentions.get(p)
+                    tok = m_ir.tok if m_ir else None
+                    if tok is None:
+                        continue
+                    n_filled += 1
+                    filled[p] = filled_values[p]
+                    btype = _bucket_type(p)
+                    type_filled_total[btype] += 1
+                    type_filled_q[btype] += 1
+                    et = _expected_type(p)
+                    if _is_type_match(et, tok.kind):
+                        type_matches += 1
+                        type_correct_total[btype] += 1
+                        type_correct_q[btype] += 1
+                    if schema_hit and tok.value is not None and _is_scalar(gold_params.get(p)):
+                        gold_val = float(gold_params[p])
+                        err = _rel_err(float(tok.value), gold_val)
+                        comparable_errs.append(err)
+                        if btype in type_names:
+                            type_exact5_den[btype] += 1
+                            type_exact20_den[btype] += 1
+                            if err <= 0.05:
+                                type_exact5_num[btype] += 1
+                            if err <= 0.20:
+                                type_exact20_num[btype] += 1
             elif assignment_mode in ("typed", "untyped") and llm_runner is not None and expected_scalar:
                 # Two-stage LLM baseline: stage2 slot filling from schema slot definitions.
                 llm_filled, _llm_n_filled, llm_type_matches = llm_runner.llm_assign(
@@ -6325,6 +6370,12 @@ def run_single_setting(
         "search_structured_grounding_counterfactual",
     ):
         effective_baseline = f"{baseline_arg}_{assignment_mode}"
+    elif assignment_mode in (
+        "hierarchical_structured_grounding",
+        "hierarchical_structured_grounding_no_regions",
+        "hierarchical_structured_grounding_no_search",
+    ):
+        effective_baseline = f"{baseline_arg}_{assignment_mode}"
 
     run_setting(
         variant=variant,
@@ -6378,6 +6429,9 @@ def main() -> None:
             "ambiguity_aware_abstain", "ambiguity_aware_full",
             "search_structured_grounding", "search_structured_grounding_no_global",
             "search_structured_grounding_counterfactual",
+            "hierarchical_structured_grounding",
+            "hierarchical_structured_grounding_no_regions",
+            "hierarchical_structured_grounding_no_search",
             # Experimental/archived (not in default focused eval; use run_nlp4lp_focused_eval.py --experimental):
             "optimization_role_anchor_linking", "optimization_role_bottomup_beam_repair",
             "optimization_role_entity_semantic_beam_repair",
@@ -6479,6 +6533,15 @@ def main() -> None:
         "ambiguity_aware_beam",
         "ambiguity_aware_abstain",
         "ambiguity_aware_full",
+    ):
+        effective_baseline = f"{args.baseline}_{args.assignment_mode}"
+    elif args.assignment_mode in (
+        "search_structured_grounding",
+        "search_structured_grounding_no_global",
+        "search_structured_grounding_counterfactual",
+        "hierarchical_structured_grounding",
+        "hierarchical_structured_grounding_no_regions",
+        "hierarchical_structured_grounding_no_search",
     ):
         effective_baseline = f"{args.baseline}_{args.assignment_mode}"
 
