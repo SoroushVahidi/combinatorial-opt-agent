@@ -26,7 +26,7 @@ def test_extract_pairs_reports_blocker_for_missing_dataset() -> None:
     assert any("no local splits available" in str(blocker) for blocker in blockers)
 
 
-def test_extract_pairs_positive_on_fixture_by_temp_copy(tmp_path: Path) -> None:
+def test_extract_pairs_positive_on_fixture_by_temp_copy() -> None:
     # use a temporary data_root for cardinal_nl4opt by staging tiny fixture
     data_root = tmp_path / "data"
     out_dir = data_root / "external" / "cardinal_nl4opt"
