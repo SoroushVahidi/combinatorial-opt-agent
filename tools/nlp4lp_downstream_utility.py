@@ -5956,6 +5956,53 @@ def run_setting(
                                 type_exact5_num[btype] += 1
                             if err <= 0.20:
                                 type_exact20_num[btype] += 1
+            elif assignment_mode in (
+                "search_structured_grounding",
+                "search_structured_grounding_no_global",
+            ) and expected_scalar:
+                # Search-based structured grounding: beam search with top-k candidates,
+                # explicit null/abstain, slot ordering, hard pruning, and (optionally)
+                # global consistency scoring.
+                from tools.search_structured_grounding import (
+                    search_structured_grounding as _ssg_run,
+                    search_structured_grounding_no_global as _ssg_no_global_run,
+                )
+                if assignment_mode == "search_structured_grounding":
+                    filled_values, filled_mentions, _diag = _ssg_run(
+                        query, variant, expected_scalar
+                    )
+                else:
+                    filled_values, filled_mentions, _diag = _ssg_no_global_run(
+                        query, variant, expected_scalar
+                    )
+                for p in expected_scalar:
+                    if p not in filled_values:
+                        continue
+                    m_ir = filled_mentions.get(p)
+                    tok = m_ir.tok if m_ir else None
+                    if tok is None:
+                        continue
+                    n_filled += 1
+                    filled[p] = filled_values[p]
+                    btype = _bucket_type(p)
+                    type_filled_total[btype] += 1
+                    type_filled_q[btype] += 1
+                    et = _expected_type(p)
+                    if _is_type_match(et, tok.kind):
+                        type_matches += 1
+                        type_correct_total[btype] += 1
+                        type_correct_q[btype] += 1
+                    if schema_hit and tok.value is not None and _is_scalar(gold_params.get(p)):
+                        gold_val = float(gold_params[p])
+                        err = _rel_err(float(tok.value), gold_val)
+                        comparable_errs.append(err)
+                        if btype in type_names:
+                            type_exact5_den[btype] += 1
+                            type_exact20_den[btype] += 1
+                            if err <= 0.05:
+                                type_exact5_num[btype] += 1
+                            if err <= 0.20:
+                                type_exact20_num[btype] += 1
             elif assignment_mode in ("typed", "untyped") and llm_runner is not None and expected_scalar:
                 # Two-stage LLM baseline: stage2 slot filling from schema slot definitions.
                 llm_filled, _llm_n_filled, llm_type_matches = llm_runner.llm_assign(
