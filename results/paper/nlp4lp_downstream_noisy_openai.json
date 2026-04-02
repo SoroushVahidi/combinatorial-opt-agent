@@ -1,0 +1,26 @@
+{
+  "config": {
+    "variant": "noisy",
+    "baseline": "openai",
+    "k": 1,
+    "random_control": false
+  },
+  "aggregate": {
+    "variant": "noisy",
+    "baseline": "openai",
+    "schema_R1": 0.9335347432024169,
+    "param_coverage": 0.4160661747075467,
+    "type_match": 0.5317220543806647,
+    "exact5_on_hits": 0.13943191311612363,
+    "exact20_on_hits": 0.1460665552770816,
+    "param_coverage_hits": 0.4295077793792814,
+    "param_coverage_miss": 0.22727272727272727,
+    "type_match_hits": 0.5533980582524272,
+    "type_match_miss": 0.22727272727272727,
+    "key_overlap": 0.9505394907207596,
+    "key_overlap_hits": 0.9981507165973186,
+    "key_overlap_miss": 0.2818181818181818,
+    "instantiation_ready": 0.3504531722054381,
+    "n": 331
+  }
+}
