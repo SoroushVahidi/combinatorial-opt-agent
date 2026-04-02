@@ -21,6 +21,9 @@ def test_extract_pairs_reports_blocker_for_missing_dataset() -> None:
     pairs, blockers = _extract_pairs("mamo")
     assert isinstance(pairs, list)
     assert isinstance(blockers, list)
+    # when no local data is available, we expect no pairs and at least one blocker
+    assert not pairs
+    assert any("no local splits available" in str(blocker) for blocker in blockers)
 
 
 def test_extract_pairs_positive_on_fixture_by_temp_copy(tmp_path: Path) -> None:
