@@ -4,7 +4,7 @@ This document provides a consolidated overview of all experiments conducted in t
 
 > **EAAI manuscript note:** For the current EAAI submission, the authoritative paper-facing results are in `results/paper/eaai_camera_ready_tables/` and `analysis/eaai_*_report.md`. The sections below cover the full experiment history including pre-EAAI exploratory work. Dense retrieval baselines (E5, BGE, SBERT) documented here are supplementary and not in the EAAI main results table. See [`docs/EAAI_SOURCE_OF_TRUTH.md`](docs/EAAI_SOURCE_OF_TRUTH.md) for the canonical paper framing.
 
-> **Audit note:** For a strict evidence-driven breakdown of which experiments are truly measured vs. placeholder/scaffolding, see [docs/EXPERIMENT_AUDIT.md](docs/EXPERIMENT_AUDIT.md).
+> **Audit note:** For a strict evidence-driven breakdown of which experiments are truly measured vs. placeholder/scaffolding, see [docs/archive/EXPERIMENT_AUDIT.md](docs/archive/EXPERIMENT_AUDIT.md).
 
 ---
 
@@ -55,13 +55,22 @@ python -m training.run_baselines \
 
 **Result files:** `results/baselines_test.csv`, `results/nlp4lp_retrieval_summary.csv`
 
-**Detailed docs:** [docs/BASELINE_TABLE_CLI.md](docs/BASELINE_TABLE_CLI.md), [docs/NLP4LP_EXPERIMENT_VERIFICATION_REPORT.md](docs/NLP4LP_EXPERIMENT_VERIFICATION_REPORT.md)
+**Detailed docs:** [docs/archive/BASELINE_TABLE_CLI.md](docs/archive/BASELINE_TABLE_CLI.md), [docs/archive/NLP4LP_EXPERIMENT_VERIFICATION_REPORT.md](docs/archive/NLP4LP_EXPERIMENT_VERIFICATION_REPORT.md)
 
 ---
 
 ## 2. Downstream Grounding / Assignment Method Experiments
 
 After schema retrieval, the pipeline assigns numeric mentions from the NL query to schema parameter slots. Several assignment methods have been implemented and compared.
+
+> **⚠ Canonical vs. exploratory values:** Section 2.1 shows the **canonical post-fix values**
+> from the EAAI camera-ready Table 1
+> (`results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv`).
+> Sections 2.2–2.8 document the **pre-EAAI exploratory development history** and were produced
+> before the float-type-match fixes described in `KNOWN_ISSUES.md §3.2`.
+> Do **not** cite values from §2.2–2.8 as the paper's main results.
+> For canonical manuscript-facing numbers, see
+> `results/paper/eaai_camera_ready_tables/` and `docs/EAAI_SOURCE_OF_TRUTH.md`.
 
 **Eval set:** 331 NLP4LP test queries (`orig` variant, plus `noisy` and `short` robustness variants).
 
@@ -79,10 +88,13 @@ After schema retrieval, the pipeline assigns numeric mentions from the NL query 
 
 The primary production baseline. Assigns numeric mentions to schema slots greedily, respecting parameter types.
 
+**Canonical post-fix values** (source: `results/eswa_revision/13_tables/deterministic_method_comparison_orig.csv`):
+
 | Schema | Coverage | TypeMatch | Exact20 | InstantiationReady |
 |--------|----------|-----------|---------|-------------------|
-| TF-IDF | 0.822 | 0.226 | 0.233 | 0.076 |
-| Oracle | 0.870 | 0.240 | 0.204 | 0.082 |
+| TF-IDF | 0.8639 | 0.7513 | 0.1991 | 0.5257 |
+| BM25 | 0.8509 | 0.7386 | 0.2057 | 0.5196 |
+| Oracle | 0.9151 | 0.8030 | 0.1882 | 0.5650 |
 
 ### 2.2 Untyped Assignment (Ablation)
 
@@ -106,11 +118,14 @@ Global one-to-one bipartite assignment with strict type constraints. Improves nu
 
 **Conclusion:** More precise on filled slots but leaves more slots empty; InstantiationReady drops significantly.
 
-**Detailed docs:** [docs/NLP4LP_CONSTRAINED_ASSIGNMENT_RESULTS.md](docs/NLP4LP_CONSTRAINED_ASSIGNMENT_RESULTS.md)
+**Detailed docs:** [docs/archive/NLP4LP_CONSTRAINED_ASSIGNMENT_RESULTS.md](docs/archive/NLP4LP_CONSTRAINED_ASSIGNMENT_RESULTS.md)
 
 ### 2.4 Acceptance Reranking
 
 Re-ranks the top-K retrieved schemas by an acceptance scorer before assignment, rather than always taking rank-1. Also tested with a hierarchical family-mismatch penalty variant.
+
+> **Pre-EAAI exploratory values** — numbers below were produced before the float type-match fixes.
+> The canonical post-fix TF-IDF baseline is: Coverage 0.8639, TypeMatch 0.7513, InstReady 0.5257.
 
 | Method | Schema R@1 | Coverage | TypeMatch | InstantiationReady |
 |--------|------------|----------|-----------|-------------------|
@@ -133,7 +148,7 @@ Uses semantic roles (operator/unit tags) plus a repair pass to fill unfilled slo
 
 **Conclusion:** Best TypeMatch among deterministic methods. Coverage and InstantiationReady are between typed and constrained.
 
-**Detailed docs:** [docs/NLP4LP_SEMANTIC_IR_REPAIR_RESULTS.md](docs/NLP4LP_SEMANTIC_IR_REPAIR_RESULTS.md)
+**Detailed docs:** [docs/archive/NLP4LP_SEMANTIC_IR_REPAIR_RESULTS.md](docs/archive/NLP4LP_SEMANTIC_IR_REPAIR_RESULTS.md)
 
 ### 2.6 Optimization-Role Repair
 
@@ -188,10 +203,12 @@ python tools/run_nlp4lp_focused_eval.py --variant orig --safe
 
 **Variants tested:** `orig` (standard queries), `noisy` (numeric values replaced with `<num>`), `short` (abbreviated queries).
 
+**Canonical post-fix values** (source: `results/eswa_revision/13_tables/robustness_by_variant.csv`):
+
 | Method | orig InstReady | noisy InstReady | short InstReady |
 |--------|---------------|-----------------|-----------------|
-| tfidf typed | 0.076 | 0.0 | ~0.006 |
-| tfidf constrained | 0.027 | 0.0 | ~0.006 |
+| tfidf typed | 0.5257 | 0.0393 | 0.0151 |
+| tfidf constrained | 0.4230 | — | — |
 
 **Observations:**
 - `noisy`: TypeMatch and InstantiationReady collapse to 0 because `<num>` placeholders are not resolvable to numeric values.
@@ -286,7 +303,7 @@ A structured experiment round comparing the rule baseline against five learned c
 sbatch batch/learning/run_stage3_experiments.sbatch
 ```
 
-**Detailed docs:** [docs/LEARNING_STAGE3_EXPERIMENTS.md](docs/LEARNING_STAGE3_EXPERIMENTS.md), [docs/LEARNING_STAGE3_FIRST_RESULTS.md](docs/LEARNING_STAGE3_FIRST_RESULTS.md), [docs/learning_runs/README.md](docs/learning_runs/README.md)
+**Detailed docs:** [docs/archive/LEARNING_STAGE3_EXPERIMENTS.md](docs/archive/LEARNING_STAGE3_EXPERIMENTS.md), [docs/archive/LEARNING_STAGE3_FIRST_RESULTS.md](docs/archive/LEARNING_STAGE3_FIRST_RESULTS.md), [docs/learning_runs/README.md](docs/learning_runs/README.md)
 
 ---
 
@@ -338,15 +355,19 @@ Structured experiment suite for the journal paper revision. Results are stored u
 
 ## 8. Summary of Key Findings
 
+> **Note:** Numbers in this summary reflect the full experiment history, including
+> pre-EAAI exploratory runs.  For canonical manuscript-facing values, see
+> `results/paper/eaai_camera_ready_tables/` and `docs/EAAI_SOURCE_OF_TRUTH.md`.
+
 | Experiment | Key finding |
 |------------|-------------|
-| Retrieval | TF-IDF achieves Schema R@1 = 0.906 on orig; strong across variants |
-| Typed greedy assignment | Primary production baseline; best balance of coverage and InstReady |
-| Constrained assignment | Best Exact20 (0.325) but lowest InstantiationReady (0.027) |
-| Acceptance reranking | Highest InstantiationReady (0.085 hierarchical) at cost of Schema R@1 |
-| Semantic IR repair | Best TypeMatch (0.254) among deterministic methods |
-| Optimization-role repair | Best balance of coverage + TypeMatch + Exact20; current recommended method |
-| Robustness | Noisy queries collapse downstream metrics; short queries are very limited |
+| Retrieval | TF-IDF achieves Schema R@1 = 0.9094 on orig; strong across variants |
+| Typed greedy assignment (canonical) | Primary production baseline; Coverage 0.8639, TypeMatch 0.7513, InstReady 0.5257 |
+| Constrained assignment | Highest Exact20 (0.3293) at the cost of lower InstReady (0.4230) |
+| Acceptance reranking | Comparable InstReady (0.5227) with slightly lower coverage |
+| Semantic IR repair | Competitive TypeMatch (0.7549); lower coverage than typed greedy |
+| Optimization-role repair | Best Exact20 among ablations; slightly lower InstReady than typed greedy |
+| Robustness | Noisy queries collapse TypeMatch and InstReady; short queries are very limited |
 | Real-data learning | Learned model below rule baseline; learning is future work |
 | Stage 3 experiments | Infra validated; full GPU run still needed |
 

@@ -1,293 +1,212 @@
 # Known Issues
 
-This document records the main problems with the application as of the current state of the codebase.
-Each issue describes the symptom, root cause, and current status.
+Structured record of active blockers, active limitations, and resolved historical
+issues for the EAAI companion codebase.
 
 ---
 
-## 1. Code / Test Issues
+## 1. Active Blockers
 
-### 1.1 Optional runtime dependencies must be installed for full functionality
+### 1.1 Downstream evaluation requires gated HuggingFace dataset access
 
-**Symptom:** Several tests fail with `ModuleNotFoundError` for `starlette`, `gradio`, or `pypdf`
-when those packages are not installed in the environment.
+**Symptom:** Full downstream rerun (parameter gold values, exact-match scoring) cannot
+be performed in a fresh offline environment.
 
-**Root cause (now fixed):** `app.py` previously imported `starlette.concurrency` and `gradio`
-unconditionally at the top level.  Any test that imported `app` would fail immediately, even
-though the test only exercised functions (`_log_user_query`, `answer`) that do not use those
-libraries at all.
+**Detail:** The dataset `udell-lab/NLP4LP` is gated and requires a HuggingFace account
+with approved access and a personal access token set as `HF_TOKEN`.
 
-**Fix applied:**
-- `app.py` — the `starlette` HPC thread-pool patch and the `import gradio as gr` statement are
-  now wrapped in `try/except ImportError` blocks so that `app` can be imported in lightweight
-  test environments where those packages are not installed.
-- `tests/test_pdf_upload.py` — `test_whitespace_collapsing` calls `patch("pypdf.PdfReader")`,
-  which requires `pypdf` to be importable.  A `pytest.importorskip("pypdf")` guard is added
-  so the test is **skipped** (not failed) when `pypdf` is absent.
+**Impact:** The downstream metrics in `EXPERIMENTS.md` (TypeMatch, Exact20,
+InstantiationReady) cannot be re-verified without `HF_TOKEN`.  Retrieval metrics
+(Schema R@1) can be reproduced without HF access using the local eval files in
+`data/processed/`.
 
-**How to install all runtime dependencies:**
-```bash
-pip install -r requirements.txt
-```
+**Workaround:** See `HOW_TO_REPRODUCE.md` and the HuggingFace access section in
+`README.md` for token setup instructions.
 
-**Status:** ✅ Fixed.
+**Status:** ⚠️ Environment dependency — unresolved by design (gated dataset).
 
 ---
 
-## 2. Application-Level Limitations
+### 1.2 Learned model does not outperform the deterministic rule baseline
 
-### 2.1 Float type matching is nearly zero
-
-**Symptom:** Overall `type_match ≈ 0.226`, but broken down by numeric type:
-
-| Numeric type | type_match (before fixes) |
-|---|---|
-| Float | ≈ 0.029 |
-| Integer | ≈ 0.991 |
-
-The vast majority of numeric parameters in NLP4LP are floats.
-
-**Root causes identified and fixed:**
-
-1. `_is_type_match("float", "int")` previously returned `False` — integer tokens
-   (the most common representation in NL for coefficients like `RequiredEggs = 2`)
-   were never counted as matches for float slots.  **Fixed** in a prior session.
-
-2. `_expected_type` misclassified `demand`, `capacity`, `minimum`, `maximum`, and
-   `limit` as `"currency"` — these are quantity constraints, not monetary values.
-   For a `MinimumDemand = 100` slot, the token `"100"` (kind=`int`) received no type
-   bonus and a weak-match penalty (-1.0) instead of the full `type_match_bonus` (+3.0).
-   **Fixed:** those five keywords removed from the currency list; they now correctly
-   fall through to `"float"`.
-
-3. `_is_type_match("currency", "int/float")` returned `False` — monetary slots
-   (budget, cost, price, …) whose values appear without an explicit `$` prefix in NL
-   were never credited as type matches.  **Fixed:** both `int` and `float` are now
-   treated as full matches for `currency` slots.
-
-4. All four scoring functions (`_score_mention_slot`, `_score_mention_slot_ir`,
-   `_score_mention_slot_opt`, `_gcg_local_score`) were missing the
-   `expected == "currency" and kind in {"int","float"}` branch, so plain-integer
-   monetary values were silently ignored during assignment scoring.  **Fixed.**
-
-5. `_parse_num_token` classified **any value ≥ 1000** as `kind="currency"` via a
-   size-based heuristic (`abs(val) >= 1000`), regardless of monetary context.
-   This was a direct regression with fix 2 above: once `TimeLimit`, `MaxCapacity`,
-   `MaximumDemand`, etc. were correctly typed as `"float"` by `_expected_type`,
-   large non-monetary values like `5000` (hours) or `2000` (units) still got
-   `kind="currency"` from the heuristic — and `_is_type_match("float", "currency")`
-   is `False`, causing a systematic type-match failure for all large non-monetary
-   parameters.  **Fixed:** the `abs(val) >= 1000` branch was removed.  Currency
-   classification now requires an explicit `$` prefix or a MONEY_CONTEXT word
-   (budget, cost, price, profit, revenue, dollar, dollars, $, €, usd, eur).
-   18 new tests in `tests/test_float_type_match.py::TestLargeNumberNotCurrency`
-   cover the regression and all boundary cases.  One existing test in
-   `tests/test_global_vs_local_grounding.py` that relied on the size heuristic
-   to make a type mismatch was corrected to use a properly-classified
-   coefficient-like slot (`HoursPerProduct`).
-
-**Status:** ✅ Fixed — all five coding-level root causes above are resolved.
-The end-to-end TypeMatch improvement requires a downstream re-evaluation run
-(needs HF dataset access), but the algorithmic fixes are in place and verified
-by 43 targeted tests in `tests/test_float_type_match.py`.
-
----
-
-### 2.2 InstantiationReady rate is low (≤ 8.5 %)
-
-**Symptom:** The end-to-end metric `InstantiationReady` (coverage ≥ 0.8 **and**
-type_match ≥ 0.8) is ≤ 0.082 for all evaluated assignment methods.
-
-| Method | Schema R@1 | Coverage | TypeMatch | InstantiationReady |
-|--------|------------|----------|-----------|-------------------|
-| Typed Greedy (TF-IDF) | 0.906 | 0.822 | 0.226 | 0.076 |
-| Typed Greedy (Oracle) | 1.000 | 0.870 | 0.240 | 0.082 |
-| Constrained (TF-IDF) | 0.906 | 0.772 | 0.195 | 0.027 |
-
-**Root cause:** High coverage and high type accuracy are in tension.  Typed greedy fills
-more slots (high coverage) but misidentifies float types; constrained assignment improves
-type accuracy but leaves more slots empty.  Both fail the joint threshold.
-
-**Code-level fixes applied (contributing improvements):**
-
-1. `_choose_token` in `tools/nlp4lp_downstream_utility.py` had a scoring inconsistency
-   for `currency` slots.  The four scoring functions
-   (`_score_mention_slot`, `_score_mention_slot_ir`, `_score_mention_slot_opt`,
-   `_gcg_local_score`) all give `int`/`float` tokens a full `type_exact_bonus` for
-   `currency` slots, but `_choose_token` gave them `pref=0` — identical to `unknown`
-   tokens.  This meant a plain-integer budget value ("100") could lose the value-selection
-   tiebreaker to an unclassified token with a larger absolute value ("9999_unknown").
-   **Fixed:** `_choose_token` now assigns `pref=1` to `int`/`float` tokens for currency
-   slots (below `pref=2` for explicit currency tokens, above `pref=0` for others).
-   9 new tests in `tests/test_float_type_match.py::TestChooseTokenCurrencySlot` verify
-   all ranking cases including the regression.
-
-2. `_is_partial_admissible` (the PICARD-style incremental admissibility gate) did not
-   check the **numeric ordering** of assigned min/max slot values — it only checked
-   operator-tag direction.  Schemas with paired bound slots (e.g. `MinDemand`/`MaxDemand`,
-   `LowerBound`/`UpperBound`) could therefore receive inverted assignments (min value >
-   max value) without being rejected, directly causing `lower_vs_upper_bound` failures.
-   **Fixed:** a new `_slot_stem` helper strips min/max/lower/upper affixes to identify
-   paired bound slots sharing the same quantity stem.  `_is_partial_admissible` now
-   enforces `value(min_slot) ≤ value(max_slot)` for every such paired slot in the
-   partial assignment, rejecting inverted configurations before they propagate.
-   22 new tests in `tests/test_bound_role_layer.py` (`TestSlotStem` and
-   `TestAdmissibleMinMaxOrdering`) cover all cases: correct ordering, inverted ordering,
-   equal values, different-stem pairs (not enforced), and incomplete partials.
-
-**Status:** ⚠️ Open research problem.  The primary bottleneck (joint coverage+type
-threshold) remains unresolved, but the `_choose_token` scoring inconsistency and the
-`lower_vs_upper_bound` admissibility gap are now fixed.
-
----
-
-### 2.3 Short-query retrieval and grounding performance is degraded
-
-**Symptom:**
-- Retrieval Schema R@1 drops from **0.906** (full queries) to **0.786** (short/first-sentence
-  queries) for TF-IDF.
-- Short-query downstream coverage ≈ 0.03 — effectively zero numeric grounding because short
-  queries contain almost no numeric information.
-
-**Fixes applied:**
-- `retrieval/utils.py` — `_DOMAIN_EXPANSION_MAP` extended with six new problem families
-  that were not previously handled: LP/MIP/ILP formulations, quadratic/convex programs (QP),
-  portfolio/finance optimisation, bipartite matching, resource/inventory capacity planning,
-  and cutting/layout/strip packing.  Short queries like `"lp"`, `"portfolio"`, `"matching"`,
-  `"inventory"`, `"qp"`, `"ilp"` now receive rich domain-specific expansion phrases instead
-  of the generic fallback.  This improves retrieval R@1 for these families.
-
-**Status:** ✅ Domain-expansion coverage improved.  Downstream grounding for short queries
-(which carry almost no numeric information) remains an open problem.
-
----
-
-### 2.4 Learned model does not outperform the deterministic rule baseline
-
-**Symptom:** No learned model checkpoints have been produced.  A real-data-only benchmark run
-confirmed that the learned formulation did not improve over the typed greedy rule baseline.
+**Symptom:** No learned model checkpoints have been produced that improve over the
+typed-greedy rule baseline.
 
 **Root cause:** GPU / `torch` required for training.  Training is blocked in CPU-only
 environments (e.g. the Wulver login node) and no usable checkpoint was generated.
 
-**Status:** ⚠️ Future work.  Infrastructure (benchmark-safe splits, pairwise ranker code,
-training scripts) exists in `src/learning/` and `training/`.  See
+**Impact:** The learned retrieval fine-tuning path (`src/learning/`, `training/`) is
+infrastructure-complete but not benchmark-validated.
+
+**Status:** ⚠️ Future work.  Infrastructure exists; see
 [`docs/learning_runs/README.md`](docs/learning_runs/README.md).
 
 ---
 
-### 2.5 Downstream evaluation requires gated HuggingFace dataset access
+## 2. Active Limitations
 
-**Symptom:** Full downstream rerun (parameter gold values, exact-match scoring) cannot be
-performed offline.  The dataset `udell-lab/NLP4LP` is gated and requires a HuggingFace
-account with approved access and a personal access token.
+### 2.1 Downstream grounding leaves ~47% of queries not fully instantiation-ready
 
-**Impact:** The downstream metrics in EXPERIMENTS.md (TypeMatch, Exact20,
-InstantiationReady) cannot be re-verified in a fresh offline environment.
+**Symptom:** The joint metric `InstantiationReady` (coverage ≥ 0.8 **and**
+type_match ≥ 0.8) is 0.5257 for TF-IDF typed greedy — meaning roughly half of
+queries reach the joint threshold, but the remaining ~47% still fall short.
 
-**Status:** ⚠️ Environment dependency.  See README "HuggingFace dataset access" section for
-setup instructions.
+**Canonical post-fix values** (source: `results/eswa_revision/13_tables/deterministic_method_comparison_orig.csv`):
 
----
+| Method | Schema R@1 | Coverage | TypeMatch | InstantiationReady |
+|--------|------------|----------|-----------|-------------------|
+| Typed Greedy (TF-IDF) | 0.9094 | 0.8639 | 0.7513 | 0.5257 |
+| Typed Greedy (Oracle) | 1.0000 | 0.9151 | 0.8030 | 0.5650 |
+| Constrained (TF-IDF) | 0.9094 | 0.8112 | 0.7113 | 0.4230 |
 
-### 2.6 No LP/ILP solver for output validation
+> **Historical note:** Earlier exploratory runs (pre float-type-match fix) showed
+> InstantiationReady ≤ 0.082 and TypeMatch ≈ 0.226.  Those values reflected five
+> code-level bugs since resolved (see Resolved Issues §3.2).  The table above
+> represents the current canonical state.
 
-**Symptom:** The `validate` flag in `answer()` is wired into the UI but no solver
-(Pyomo, Gurobi, PuLP, OR-Tools) is installed or invoked in the current codebase.
-Full feasibility/optimality checking therefore cannot be performed.
+**Root cause (remaining):** The joint threshold requires both coverage ≥ 0.8 and
+TypeMatch ≥ 0.8 simultaneously.  Typed greedy fills most slots (Coverage 0.8639)
+and matches types well (TypeMatch 0.7513), but the intersection still leaves ~47%
+of queries below the joint bar.
 
-**Fixes applied:**
-- `formulation/verify.py` — new `verify_lp_consistency` function that catches
-  LP/ILP structural inconsistencies that do not require a solver:
-  - Invalid objective sense (anything other than `minimize`, `maximize`, `min`, `max`).
-  - Variables with missing or empty `symbol` fields.
-  - Duplicate variable symbols within the same formulation.
-  - Constraints with missing or empty `expression` fields.
-- `run_all_problem_checks` now calls `verify_lp_consistency` and returns a third key
-  `lp_consistency_errors` alongside the existing `schema_errors` and `formulation_errors`.
-- `app.py` — the validation output block surfaces `lp_consistency_errors` to the user
-  and updates the all-clear message to
-  "✓ Schema, formulation, and LP consistency OK".
-- 16 new tests in `tests/test_verify.py` (`TestVerifyLpConsistency`) exercise all
-  new checks, including the integration path through `run_all_problem_checks`.
-
-**Impact:** The validate checkbox now catches a meaningful class of formulation authoring
-errors at structure-check time, without requiring a solver installation.  Full
-feasibility/optimality verification still requires an external solver.
-
-**Status:** ✅ LP structural consistency checks implemented.  Full solver-based
-feasibility/optimality validation remains future work.
+**Status:** ⚠️ Open research problem.  Float type-match bugs are resolved; the
+remaining gap is an inherent coverage × type-accuracy trade-off.  Further
+improvement requires additional grounding signal or relaxed threshold definitions.
 
 ---
 
-## 3. One Known Warning
+### 2.2 Short-query downstream grounding is near zero
 
-### 3.1 `RuntimeWarning: invalid value encountered in divide` in LSA decomposition
+**Symptom:** Short-query downstream coverage ≈ 0.03 — effectively zero numeric
+grounding because short queries contain almost no numeric information.
 
-**Symptom:** `sklearn`'s `TruncatedSVD` emits a `RuntimeWarning` about division
-by zero during `explained_variance_ratio_` calculation when the corpus is very small.
+**Context:** Short-query retrieval Schema R@1 = 0.786 (degraded vs 0.906 for full
+queries).  Domain-expansion coverage has been improved (see §3.3), but downstream
+grounding for short queries is an inherent data limitation.
 
-**Fix applied:** Both call sites that invoke `TruncatedSVD.fit_transform` on
-potentially small corpora now wrap the call with a
-`warnings.catch_warnings() / warnings.simplefilter("ignore", RuntimeWarning)` context:
+**Status:** ⚠️ Open limitation — downstream grounding for short queries requires
+numeric information that is absent from first-sentence-only queries.
 
-* `retrieval/baselines.py` — `LSABaseline.fit()`
-* `tools/run_overlap_analysis.py` — LSA section of the overlap-analysis runner
+---
 
-The full test suite now passes with `-W error::RuntimeWarning` (zero warnings).
+### 2.3 No full LP/ILP solver for benchmark-wide validation
 
-**Impact:** None — the decomposition result is correct; only the explained-variance
-ratio statistic (not used at run-time) is undefined on tiny corpora.
+**Symptom:** Full feasibility/optimality checking is not available across the benchmark.
+
+**Detail:** The solver-backed subset is restricted to 20 instances via a SciPy HiGHS
+shim.  GAMSPy/Pyomo/PuLP/Gurobi appear in demo code only and are outside paper scope.
+
+**Status:** ⚠️ By design — paper scope is restricted to the 20-instance subset.
+See `docs/paper_vs_demo_scope.md`.
+
+---
+
+## 3. Resolved Historical Issues
+
+### 3.1 Optional runtime dependencies caused test failures
+
+**Was:** `app.py` unconditionally imported `starlette.concurrency` and `gradio`,
+causing `ModuleNotFoundError` in lightweight test environments.
+
+**Fix:** Both imports wrapped in `try/except ImportError` blocks.  `test_pdf_upload.py`
+guarded with `pytest.importorskip("pypdf")`.
 
 **Status:** ✅ Fixed.
 
 ---
 
-## 4. Main Weakpoint: Missing Error Handling and Input Validation in `answer()`
+### 3.2 Float type-match was near zero (five root causes)
 
-**Symptom (before fix):** The `answer()` function — the single entry point for all user
-queries — had **no error handling** around its main processing pipeline and **no query
-length validation**.
+**Was:** Overall `type_match ≈ 0.226`, but float-specific `type_match ≈ 0.029`
+due to five bugs:
+1. `_is_type_match("float", "int")` returned `False`
+2. `_expected_type` misclassified quantity-constraint keywords as `"currency"`
+3. `_is_type_match("currency", "int/float")` returned `False`
+4. All four scoring functions missing the `currency × int/float` branch
+5. `abs(val) >= 1000` size heuristic mis-tagged large non-monetary numbers as currency
 
-* If any step in the pipeline raised an exception (e.g. model download failure,
-  malformed catalog entry, unexpected token in the grounding layer), the exception
-  propagated unhandled all the way back to the Gradio / FastAPI layer.  Users would see
-  a generic 500-style error with no actionable guidance.
+**Fix:** All five root causes corrected.  `_parse_num_token` currency classification
+now requires an explicit `$` prefix or a MONEY_CONTEXT keyword.  43 targeted tests
+in `tests/test_float_type_match.py` verify the fixes.
 
-* There was no upper bound on query length.  A user who accidentally pasted an entire
-  paper or document into the query box would trigger slow embedding computation and
-  potentially a grounding-layer crash, again with no helpful feedback.
+**Status:** ✅ Fixed — code-level.  End-to-end TypeMatch improvement requires a
+downstream rerun with HF gold data (blocker §1.1 above).
 
-**Root cause:** The `answer()` function was written with the happy-path in mind.
-The two existing guard clauses (empty query → placeholder; no results → warning) did
-not cover failure modes outside the normal flow (malformed input, infrastructure
-errors, unexpected exceptions).
+---
 
-**Fixes applied:**
+### 3.3 Short-query retrieval performance degraded for several problem families
 
-1. **Query length cap** — `_MAX_QUERY_LEN = 5_000` (characters) constant added in
-   `app.py`.  `answer()` now checks `len(query) > _MAX_QUERY_LEN` **before**
-   calling `get_model()` and returns a styled warning card that reports the actual
-   character count and tells the user to shorten the input.  No model inference
-   is performed for over-long queries.
+**Was:** Short queries like `"lp"`, `"portfolio"`, `"matching"`, `"inventory"` received
+only the generic fallback expansion, causing retrieval R@1 drop.
 
-2. **Pipeline try/except** — The entire pipeline body of `answer()` (model loading,
-   `search()`, result formatting) is now wrapped in a `try/except Exception` block.
-   Any unexpected exception is caught and returned to the user as a styled warning
-   card that shows the exception message, preventing a silent 500 response.
-   The logging call (`_log_user_query`) already had its own guard and is unaffected.
+**Fix:** `retrieval/utils.py` `_DOMAIN_EXPANSION_MAP` extended with six new problem
+families (LP/MIP/ILP, QP, portfolio/finance, bipartite matching, resource/inventory
+capacity, cutting/layout/strip packing).
 
-**Tests added:**
+**Status:** ✅ Domain-expansion coverage improved.
 
-* `tests/test_app_validation_toggle.py` — 5 new tests alongside the existing
-  signature test:
-  - `test_answer_empty_query_returns_placeholder` — blank input → empty-state card.
-  - `test_answer_whitespace_only_returns_placeholder` — whitespace-only → same.
-  - `test_answer_query_too_long_returns_warning` — over-length query → warning card
-    with character count and no pipeline call.
-  - `test_answer_pipeline_error_returns_warning` — mocked `get_model` raises
-    `RuntimeError` → warning card with error details (no unhandled exception).
-  - `test_max_query_len_is_positive_int` — constant sanity check.
+---
+
+### 3.4 Min/max ordering not enforced in partial assignments
+
+**Was:** `_is_partial_admissible` did not check numeric ordering of min/max slot
+pairs, allowing inverted assignments (e.g. `MinDemand > MaxDemand`) to propagate.
+
+**Fix:** New `_slot_stem` helper pairs bound slots by quantity stem.
+`_is_partial_admissible` now enforces `value(min_slot) ≤ value(max_slot)`.
+22 tests in `tests/test_bound_role_layer.py` cover all cases.
 
 **Status:** ✅ Fixed.
 
+---
+
+### 3.5 `_choose_token` scoring inconsistency for currency slots
+
+**Was:** `_choose_token` gave `pref=0` to `int`/`float` tokens on currency slots,
+identical to `unknown` tokens, causing plain-integer budget values to lose tiebreakers.
+
+**Fix:** `pref=1` assigned to `int`/`float` tokens on currency slots (below `pref=2`
+for explicit currency tokens).  9 tests in `tests/test_float_type_match.py` verify.
+
+**Status:** ✅ Fixed.
+
+---
+
+### 3.6 LP structural consistency checks missing
+
+**Was:** The `validate` checkbox in the UI had no implementation; structural errors
+(invalid objective sense, missing variable symbols, duplicate symbols) were not caught.
+
+**Fix:** `formulation/verify.py` new `verify_lp_consistency` function covers all
+structural checks without requiring a solver.  16 tests in `tests/test_verify.py`.
+
+**Status:** ✅ Fixed.  Full solver-based feasibility validation remains future work.
+
+---
+
+### 3.7 Missing error handling and input validation in `answer()`
+
+**Was:** `answer()` had no error handling around the main pipeline and no query length
+cap; any exception produced an unhandled 500-style error.
+
+**Fix:**
+- `_MAX_QUERY_LEN = 5_000` character cap added; over-long queries return a styled
+  warning card before model inference is triggered.
+- Full pipeline wrapped in `try/except Exception`; errors surface as styled warning
+  cards rather than unhandled exceptions.
+- 5 new tests in `tests/test_app_validation_toggle.py`.
+
+**Status:** ✅ Fixed.
+
+---
+
+### 3.8 `RuntimeWarning: invalid value encountered in divide` in LSA
+
+**Was:** `sklearn`'s `TruncatedSVD` emitted a `RuntimeWarning` for tiny corpora
+during `explained_variance_ratio_` calculation.
+
+**Fix:** Both `retrieval/baselines.py` (`LSABaseline.fit`) and
+`tools/run_overlap_analysis.py` now suppress the warning with
+`warnings.catch_warnings() / warnings.simplefilter("ignore", RuntimeWarning)`.
+
+**Status:** ✅ Fixed.

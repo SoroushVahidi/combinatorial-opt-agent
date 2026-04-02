@@ -43,7 +43,7 @@ engineering-oriented downstream validation on subsets of the NLP4LP benchmark.
 
 - Full natural-language-to-optimization **compilation** for arbitrary problems (solver-ready output is a restricted subset only)
 - **Benchmark-wide solver readiness** — not all NLP4LP instances are executable end-to-end
-- **Dense retrieval (E5/BGE) as primary results** — supplementary; TF-IDF is the paper’s primary retrieval baseline
+- **Dense retrieval (E5/BGE) as primary results** — supplementary; TF-IDF is the paper's primary retrieval baseline
 - That the **learned retrieval model beats the rule baseline** — it does not (see **`KNOWN_ISSUES.md`**)
 - That **Gurobi is available or required** — paper solver-backed results use a **SciPy HiGHS shim** on a small subset
 
@@ -57,7 +57,44 @@ engineering-oriented downstream validation on subsets of the NLP4LP benchmark.
 | **Paper-validated artifacts** | Tables 1–5 + figures under **`results/paper/`** and reports under **`analysis/eaai_*.md`** |
 | **Demo-only** | Gradio app; optional LLM API keys for non-benchmark tooling |
 
-Intermediate audits and internal decision logs were moved to **`docs/archive_internal_status/`** (provenance; not the canonical headline source).
+Intermediate audits and internal decision logs are in **`docs/archive_internal_status/`** (provenance; not the canonical headline source).
+
+---
+
+## Current evidence-based results
+
+All results are benchmark-scoped (NLP4LP `orig` variant, 331 test queries).
+
+### Retrieval
+
+| Method | Schema R@1 (orig) | Schema R@1 (noisy) | Schema R@1 (short) |
+|--------|------------------|-------------------|-------------------|
+| TF-IDF | **0.9094** | 0.9033 | 0.7855 |
+| BM25 | 0.8822 | — | — |
+| Oracle | 1.000 | — | — |
+
+### Downstream grounding
+
+Source: `results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv`
+(provenance: `results/eswa_revision/13_tables/deterministic_method_comparison_orig.csv`)
+
+| Method | Schema | Coverage | TypeMatch | Exact20 | InstReady |
+|--------|--------|----------|-----------|---------|-----------|
+| Typed Greedy | TF-IDF | 0.8639 | 0.7513 | 0.1991 | 0.5257 |
+| Typed Greedy | BM25 | 0.8509 | 0.7386 | 0.2057 | 0.5196 |
+| Typed Greedy | Oracle | 0.9151 | 0.8030 | 0.1882 | 0.5650 |
+| Opt-Role Repair | TF-IDF | 0.8248 | 0.7036 | 0.2847 | 0.4411 |
+| Constrained | TF-IDF | 0.8112 | 0.7113 | 0.3293 | 0.4230 |
+
+### Engineering-oriented validation subsets
+
+| Subset | Instances | Key result |
+|--------|-----------|-----------|
+| Structural subset (Table 2) | 60 | End-to-end structural consistency |
+| Executable-attempt subset (Table 3) | 269 | Full execution with documented blockers |
+| Solver-backed subset (Table 4) | 20 | TF-IDF: **80% feasible** via SciPy HiGHS |
+
+---
 
 ## Recent improvements
 
@@ -78,6 +115,8 @@ Intermediate audits and internal decision logs were moved to **`docs/archive_int
 - **Bound-role annotation layer** — Deterministic min/max operator-phrase recognition,
   fine-grained `bound_role` field on `MentionOptIR`, range-expression detection
   (`between X and Y`), wrong-direction penalties, and bound-flip swap repair.
+
+---
 
 ## Architecture
 
@@ -115,7 +154,9 @@ Structural validation checks LP consistency without a live solver.
 Solver execution is supported on a restricted subset via the SciPy HiGHS shim
 (see `tools/run_eaai_final_solver_attempt.py` and Table 4 in the paper).
 
-## Quick start (use the bot)
+---
+
+## Quick start
 
 1. **Clone and install**
    ```bash
@@ -134,7 +175,9 @@ Solver execution is supported on a restricted subset via the SciPy HiGHS shim
    python -m retrieval.search "minimize cost of opening warehouses and assigning customers" 3
    ```
 
-**Note:** When the app is run (e.g. on a server), every search is logged to `data/collected_queries/user_queries.jsonl` so you can use real user prompts for training. See [Training the retrieval model](#training-the-retrieval-model) and [training/README.md](training/README.md).
+**Note:** When the app is run (e.g. on a server), every search is logged to `data/collected_queries/user_queries.jsonl` so you can use real user prompts for training. See [training/README.md](training/README.md).
+
+---
 
 ## Data Collection
 
@@ -191,6 +234,8 @@ request is made and no data leaves the machine beyond the local log file.
 The local log file (`data/collected_queries/user_queries.jsonl`) is listed in
 `.gitignore` and is never committed to the public repository.
 
+---
+
 ## Paper artifacts / EAAI manuscript support
 
 All camera-ready artifacts for the EAAI manuscript live under `results/paper/`.
@@ -232,6 +277,7 @@ python tools/build_eaai_camera_ready_figures.py
 - `analysis/eaai_figures_build_report.md` — Figure build notes
 - `analysis/eaai_figures_reproduction_report.md` — Figure reproduction log
 - `docs/EAAI_SOURCE_OF_TRUTH.md` — Canonical paper framing and authoritative file list
+- `docs/RESULTS_PROVENANCE.md` — Canonical metrics + full provenance chain
 
 ### Historical note
 
@@ -239,10 +285,12 @@ Older docs in `docs/archive/` contain earlier ESWA-era experiment records and de
 notes. They are preserved for history but should not be cited as authoritative for the
 current EAAI manuscript.
 
+---
+
 ## How to reproduce the main paper artifacts
 
 > Full benchmark rerun requires the gated `udell-lab/NLP4LP` dataset (HuggingFace
-> access required). See [Benchmark access requirements](#huggingface-dataset-access).
+> access required). See [HuggingFace dataset access](#huggingface-dataset-access).
 
 ```bash
 # 1. Install dependencies
@@ -260,211 +308,104 @@ python tools/run_eaai_final_solver_attempt.py            # Table 4 (20 instances
 python tools/build_eaai_camera_ready_figures.py
 ```
 
-## Repo map
+See **[`HOW_TO_REPRODUCE.md`](HOW_TO_REPRODUCE.md)** for the full step-by-step guide.
+
+---
+
+## Repository map
 
 | Path | Purpose | Authority |
 |------|---------|-----------|
 | `results/paper/` | Camera-ready tables and figures | ★ Authoritative |
 | `analysis/eaai_*` | EAAI experiment reports | ★ Authoritative |
 | `docs/EAAI_SOURCE_OF_TRUTH.md` | Master paper framing | ★ Authoritative |
+| `docs/RESULTS_PROVENANCE.md` | Canonical metrics + provenance chain | ★ Authoritative |
+| `docs/CURRENT_STATUS.md` | Reviewer-facing status | ★ Summary |
 | `tools/nlp4lp_downstream_utility.py` | Core grounding pipeline | Core source |
 | `retrieval/` | Schema retrieval methods | Core source |
 | `formulation/verify.py` | LP structural validation | Core source |
-| `tests/` | Pytest suite (1400+ tests, CPU-only) | Core source |
+| `tests/` | Pytest suite (1 400+ tests, CPU-only) | Core source |
 | `scripts/paper/` | Paper support scripts | Core source |
-| `docs/CURRENT_STATUS.md` | Reviewer-facing status | ★ Summary |
+| `demo/` | Demo app documentation | Demo only |
 | `docs/archive_internal_status/` | Internal audits / decision logs | ⚠ Provenance only |
 | `docs/archive/` | Historical dev notes | ⚠ Non-authoritative |
-| `docs/eswa_revision/` | Earlier ESWA materials | ⚠ Non-authoritative |
+| `docs/eswa_revision/` | ESWA-era materials | ⚠ Non-authoritative |
 | `results/eswa_revision/` | Earlier experiment results | ⚠ Non-authoritative |
+
+See **[`REPO_STRUCTURE.md`](REPO_STRUCTURE.md)** for the full annotated directory map.
+
+---
 
 ## Documentation
 
 | Topic | Doc |
 |-------|-----|
-| **Current status (reviewers)** | [docs/CURRENT_STATUS.md](docs/CURRENT_STATUS.md) — headline metrics pointer, validated vs auxiliary |
-| **Manuscript authority** | [docs/EAAI_SOURCE_OF_TRUTH.md](docs/EAAI_SOURCE_OF_TRUTH.md) — paper framing and authoritative file list |
-| **Experiments** | [EXPERIMENTS.md](EXPERIMENTS.md) — consolidated overview (retrieval, grounding methods, learning) |
-| **Data sources** | `data/sources/` — machine-readable manifests |
-| **Wulver (HPC)** | [docs/wulver.md](docs/wulver.md) — NJIT cluster setup and batch jobs |
-| **Training** | [training/README.md](training/README.md) — retrieval fine-tuning; mention-slot scorer in `training/` |
-| **Learning (NLP4LP)** | [docs/learning_runs/](docs/learning_runs/README.md) — benchmark-safe splits, experiment records |
-| **Internal status archives** | [docs/archive_internal_status/](docs/archive_internal_status/README.md) — provenance only (not canonical headlines) |
-| **Historical docs** | [docs/archive/](docs/archive/README.md) — development notes (non-authoritative) |
+| **Current status (reviewers)** | [`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md) — headline metrics pointer, validated vs auxiliary |
+| **Manuscript authority** | [`docs/EAAI_SOURCE_OF_TRUTH.md`](docs/EAAI_SOURCE_OF_TRUTH.md) — paper framing and authoritative file list |
+| **Results provenance** | [`docs/RESULTS_PROVENANCE.md`](docs/RESULTS_PROVENANCE.md) — canonical metrics + provenance chain |
+| **Reproduction steps** | [`HOW_TO_REPRODUCE.md`](HOW_TO_REPRODUCE.md) |
+| **Experiments overview** | [`EXPERIMENTS.md`](EXPERIMENTS.md) — retrieval, grounding methods, learning |
+| **Known issues** | [`KNOWN_ISSUES.md`](KNOWN_ISSUES.md) |
+| **Paper vs demo scope** | [`docs/paper_vs_demo_scope.md`](docs/paper_vs_demo_scope.md) |
+| **Repo structure** | [`REPO_STRUCTURE.md`](REPO_STRUCTURE.md) |
+| **Wulver (HPC)** | [`docs/wulver.md`](docs/wulver.md) — NJIT cluster setup and batch jobs |
+| **Training** | [`training/README.md`](training/README.md) — retrieval fine-tuning |
+| **Learning (NLP4LP)** | [`docs/learning_runs/`](docs/learning_runs/README.md) — benchmark-safe splits, experiment records |
+| **Internal status archives** | [`docs/archive_internal_status/`](docs/archive_internal_status/README.md) — provenance only |
+| **Historical docs** | [`docs/archive/`](docs/archive/README.md) — development notes (non-authoritative) |
+| **Contributing** | [`CONTRIBUTING.md`](CONTRIBUTING.md) |
+| **Demo app** | [`demo/README.md`](demo/README.md) |
 
-Private data (GAMSPy models, license-related files) live under **`data_private/`** (gitignored). Manifests and catalogs are in `data_private/gams_models/manifests/` and `catalog/`.
-
-## Data sources
-
-The benchmark dataset is NLP4LP (`udell-lab/NLP4LP` on HuggingFace; gated access required).
-The problem catalog is built from public sources including NL4Opt, OR-Library, and Gurobi
-modeling examples. Machine-readable manifests are in `data/sources/`.
+---
 
 ## HuggingFace dataset access
 
-Several scripts (e.g. `training/external/nlp4lp_loader.py`, `training/external/build_nlp4lp_benchmark.py`)
-load gated datasets such as `udell-lab/NLP4LP` from the HuggingFace Hub.
-To use them you need a HuggingFace account with access approved on the dataset page,
-and a personal access token configured locally.
-
-**Safe setup — never paste your token into code or a chat:**
+Several downstream scripts require the gated `udell-lab/NLP4LP` dataset.
 
 ```bash
-# 1. Copy the example env file
-cp .env.example .env          # .env is gitignored — it will NOT be committed
-
-# 2. Edit .env and replace the placeholder with your real token
-#    Get a (read-only) token at: https://huggingface.co/settings/tokens
-#    Then set:  HF_TOKEN=hf_...
-
-# 3. Load the variable into your shell (or let your IDE load .env automatically)
+# Safe setup — never paste your token into code or a chat:
+cp .env.example .env   # .env is gitignored — it will NOT be committed
+# Edit .env: set HF_TOKEN=hf_...
+# Request access: https://huggingface.co/datasets/udell-lab/NLP4LP
 export $(grep -v '^#' .env | xargs)
-
-# 4. Verify
-python -c "import os; print('HF_TOKEN set:', bool(os.environ.get('HF_TOKEN')))"
 ```
 
-Alternatively, authenticate once with the HuggingFace CLI (token is stored in
-`~/.cache/huggingface/token` and is never written to the repo):
-
+Or authenticate once with the HuggingFace CLI:
 ```bash
-pip install huggingface_hub
-huggingface-cli login        # paste your token at the prompt; choose read-only
+pip install huggingface_hub && huggingface-cli login
 ```
 
-All scripts automatically pick up the token from `HF_TOKEN`, `HUGGINGFACE_TOKEN`,
-or the cached CLI token — in that priority order.
+**For CI / GitHub Actions** — add `HF_TOKEN` as a repository secret (Settings → Secrets and variables → Actions → New repository secret).
 
-**For CI / GitHub Actions** — add the token as a repository secret (token never appears in logs):
+---
 
-1. Go to **Settings → Secrets and variables → Actions → New repository secret**
-2. Name: `HF_TOKEN`, Value: your token (starts with `hf_...`)
-3. The `NLP4LP benchmark` workflow (`.github/workflows/nlp4lp.yml`) will pick it up automatically.
-   Trigger it from the **Actions** tab → **NLP4LP benchmark** → **Run workflow**.
-
-## How to run
-
-1. Clone the repo and install dependencies (see `requirements.txt` or project docs).
-2. Run the agent (e.g. CLI or web interface) and input a natural-language description of your optimization problem.
-3. Use the generated formulation and solver code with your preferred solver.
-
-See in-repo documentation for API keys (if using hosted LLMs), environment variables, and example prompts.
-
-### Option A: GitHub Codespaces
-
-1. **Code → Codespaces → Create codespace on main**
-2. Wait for the environment to build (~2 minutes)
-3. In the terminal: `python pipeline/run_collection.py`
-
-### Option B: Local Setup
-
-```bash
-# Clone the repo
-git clone https://github.com/SoroushVahidi/combinatorial-opt-agent.git
-cd combinatorial-opt-agent
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run the collection pipeline
-python pipeline/run_collection.py
-```
-
-### Refresh catalog (add public data)
-
-To fetch public NL4Opt data and merge it into the bot's catalog (1,100+ problems):
-
-```bash
-bash setup_catalog.sh
-# or step by step:
-pip install -r requirements.txt
-python pipeline/run_collection.py
-```
-
-### Try the retrieval (query → problem + IP)
-
-**Option 1 — Web UI (recommended):** A window in your browser where you type and get an answer.
-
-```bash
-pip install -r requirements.txt
-python app.py
-```
-
-Then open the URL shown (e.g. http://127.0.0.1:7860), type your problem in the text box, and click Submit. The bot shows the best-matching problem(s) and their integer program.
-
-**Option 2 — Command line:**
-
-```bash
-pip install -r requirements.txt
-python run_search.py "minimize cost of opening warehouses and assigning customers"
-python run_search.py "knapsack" 2
-```
-
-First run will download the sentence-transformers model (~90MB). Results show the best-matching problem(s) and their integer program (variables, objective, constraints).
-
-### Option C: HPC (Wulver @ NJIT)
-
-You can run the same retrieval bot on NJIT’s Wulver cluster. See **[docs/wulver.md](docs/wulver.md)** for step-by-step setup. Summary:
-
-```bash
-# SSH to Wulver, then:
-git clone https://github.com/SoroushVahidi/combinatorial-opt-agent.git
-cd combinatorial-opt-agent
-module load python/3.10
-python -m venv venv
-source venv/bin/activate   # or: venv/Scripts/activate on Windows
-pip install -r requirements.txt
-
-# Run a query (interactive)
-python run_search.py "minimize cost of opening warehouses"
-
-# Or submit as a batch job (optional)
-sbatch scripts/run_search.slurm
-```
-
-## Training
-
-- **Retrieval model** — Fine-tune the sentence-transformers model so it better matches NL queries to problems in the catalog.  
-  **Full guide:** [training/README.md](training/README.md)  
-  Steps: generate synthetic (query, passage) pairs → optional: add collected user queries → run training (local or GPU batch on Wulver, see [docs/wulver.md](docs/wulver.md)).  
-  **Evaluation:** `python -m training.evaluate_retrieval --regenerate --num 500` for Precision@1 / Precision@5 on 500 held-out instances.
-
-- **Mention–slot scorer** (NLP4LP) — For constrained assignment (NL numeric mentions → schema slots). Generate pairs with `training/generate_mention_slot_pairs.py` and train with `training/train_mention_slot_scorer.py`.
-
-## 🛠️ Tech Stack
+## Tech stack
 
 | Component | Technology |
 |-----------|-----------|
 | Language | Python 3.10+ |
-| Data processing | pandas, json, BeautifulSoup |
 | Retrieval | TF-IDF (scikit-learn), BM25 (rank-bm25), LSA, Sentence-Transformers, E5, BGE |
-| NLP / extraction | Regex-based numeric tokenisation, operator-cue detection, bound-role annotation |
-| Assignment | Typed greedy, constrained DP, semantic IR repair, optimization-role repair, GCG |
-| Optimization solvers | SciPy HiGHS shim (restricted subset, paper results); GAMSPy/Pyomo/PuLP (demo only, outside paper scope) |
+| Grounding | Typed greedy, constrained DP, semantic IR repair, optimization-role repair, GCG |
+| Solver | SciPy HiGHS shim (restricted 20-instance subset); demo also supports GAMSPy/Pyomo/PuLP |
 | Web UI | Gradio |
+| CI | GitHub Actions |
 | HPC | NJIT Wulver (SLURM) |
-| CI/CD | GitHub Actions |
-| Dev environment | GitHub Codespaces |
 
-## 📄 License
+---
 
-This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for the full text. Copyright (c) Soroush Vahidi.
+## License
 
-## 🙏 Acknowledgments
+MIT License. See [LICENSE](LICENSE). Copyright © Soroush Vahidi.
+
+## Acknowledgments
 
 - [NL4Opt Competition](https://nl4opt.github.io/) — NeurIPS 2022
 - [Gurobi Optimization](https://www.gurobi.com/) — OptiMods & Modeling Examples
 - [GAMS Development Corp.](https://www.gams.com/) — Model Library
-- [MIPLIB](https://miplib.zib.de/) — Benchmark instances
-- [J.E. Beasley](http://people.brunel.ac.uk/~mastjjb/jeb/info.html) — OR-Library
-- [Pyomo Project](https://www.pyomo.org/) — Open-source optimization
+- MIPLIB, OR-Library, Pyomo Project
 - NJIT Department of Computer Science
 
-## 📬 Contact
+## Contact
 
 **Soroush Vahidi** — NJIT  
 - Email: [sv96@njit.edu](mailto:sv96@njit.edu)  
@@ -472,11 +413,6 @@ This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for t
 
 ---
 
-**Repository description** (GitHub **Settings → General → Description**):  
-*EAAI companion: NLP4LP retrieval + deterministic scalar grounding; camera-ready tables in `results/paper/`; demo app and optional LLM paths are auxiliary.*
-
----
-
 ## Developer workflows
 
-For second remotes, worktrees, or AI coding assistants against another clone, see **[CONTRIBUTING.md](CONTRIBUTING.md)** and your tool’s docs. Use `git remote -v` and provider authentication (`gh auth login`, SSH) as usual.
+For second remotes, worktrees, or AI coding assistants against another clone, see **[CONTRIBUTING.md](CONTRIBUTING.md)** and your tool's docs. Use `git remote -v` and provider authentication (`gh auth login`, SSH) as usual.
