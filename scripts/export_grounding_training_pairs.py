@@ -28,20 +28,21 @@ def _extract_pairs(dataset_name: str) -> tuple[list[dict], list[str]]:
         return pairs, blockers
 
     for split in splits:
-        for raw in adapter.iter_examples(split):
+        for idx, raw in enumerate(adapter.iter_examples(split)):
             ie = adapter.to_internal_example(raw, split)
+            example_id = ie.id or f"{split}-{idx}"
             if not ie.nl_query:
-                blockers.append(f"{split}:{ie.id or '<missing-id>'} missing nl_query")
+                blockers.append(f"{split}:{example_id} missing nl_query")
                 continue
             if not ie.schema_id and not ie.schema_text:
-                blockers.append(f"{split}:{ie.id or '<missing-id>'} missing schema signal")
+                blockers.append(f"{split}:{example_id} missing schema signal")
                 continue
             pairs.append(
                 {
-                    "pair_id": f"{dataset_name}:{split}:{ie.id}",
+                    "pair_id": f"{dataset_name}:{split}:{example_id}",
                     "source_dataset": dataset_name,
                     "split": split,
-                    "example_id": ie.id,
+                    "example_id": example_id,
                     "mention_text": ie.nl_query,
                     "slot_or_schema": ie.schema_id or ie.schema_text,
                     "label": None,
