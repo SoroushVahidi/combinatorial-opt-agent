@@ -13,7 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OUT_DIR = ROOT / "data" / "external" / "structuredor"
 META_PATH = OUT_DIR / "provenance.json"
-KNOWN_SPLITS = ("train", "validation", "test")
+KNOWN_SPLITS = ("train", "validation", "dev", "test")
 REPO_URL = "https://github.com/CardinalOperations/StructuredOR"
 
 
