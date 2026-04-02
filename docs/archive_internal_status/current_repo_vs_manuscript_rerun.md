@@ -1,5 +1,11 @@
 # Current Repo vs Manuscript Baseline: Benchmark Rerun Report
 
+> **Provenance note:** This file is retained for provenance and is not the canonical
+> public summary. See [`docs/CURRENT_STATUS.md`](../CURRENT_STATUS.md) and
+> [`docs/EAAI_SOURCE_OF_TRUTH.md`](../EAAI_SOURCE_OF_TRUTH.md) for the current
+> official status.
+
+
 **Generated:** 2026-03-10  
 **Branch:** `copilot/main-branch-description` (commit `ed68121`)  
 **Manuscript reference:** `docs/NLP4LP_MANUSCRIPT_REPORTING_PACKAGE.md` (baseline numbers embedded in problem statement and this repo's docs).

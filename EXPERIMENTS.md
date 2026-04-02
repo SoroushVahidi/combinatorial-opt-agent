@@ -47,7 +47,7 @@ This document provides a consolidated overview of all experiments conducted in t
 ```bash
 python -m training.run_baselines \
   --splits data/processed/splits.json --split test \
-  --regenerate --num 500 --seed 999 --k 10 \
+  --regenerate --num 331 --seed 999 --k 10 \
   --baselines bm25 tfidf lsa sbert e5 bge --results-dir results
 ```
 
@@ -135,7 +135,7 @@ Re-ranks the top-K retrieved schemas by an acceptance scorer before assignment, 
 
 **Conclusion:** Reranking trades a small amount of Schema R@1 for a small gain in InstantiationReady. The hierarchical variant gives the highest InstantiationReady (0.085) at the lowest Schema R@1.
 
-**Detailed docs:** [docs/NLP4LP_ACCEPTANCE_RERANK_RESULTS.md](docs/NLP4LP_ACCEPTANCE_RERANK_RESULTS.md)
+**Detailed docs:** [docs/archive/NLP4LP_ACCEPTANCE_RERANK_RESULTS.md](docs/archive/NLP4LP_ACCEPTANCE_RERANK_RESULTS.md)
 
 ### 2.5 Semantic IR + Repair
 
@@ -161,7 +161,7 @@ Adds optimization-role tags (objective coefficient, bound, RHS) as an extra sign
 
 **Conclusion:** Current strongest structured deterministic method for balancing coverage, TypeMatch, and Exact20. InstantiationReady is slightly below typed greedy but much above constrained.
 
-**Detailed docs:** [docs/NLP4LP_OPTIMIZATION_ROLE_METHOD_RESULTS.md](docs/NLP4LP_OPTIMIZATION_ROLE_METHOD_RESULTS.md)
+**Detailed docs:** [docs/archive/NLP4LP_OPTIMIZATION_ROLE_METHOD_RESULTS.md](docs/archive/NLP4LP_OPTIMIZATION_ROLE_METHOD_RESULTS.md)
 
 ### 2.7 Optimization-Role + Relation-Aware Repair
 
@@ -174,7 +174,7 @@ python tools/nlp4lp_downstream_utility.py --variant orig \
     --baseline tfidf --assignment-mode optimization_role_relation_repair
 ```
 
-**Detailed docs:** [docs/NLP4LP_RELATION_AWARE_METHOD_RESULTS.md](docs/NLP4LP_RELATION_AWARE_METHOD_RESULTS.md)
+**Detailed docs:** [docs/archive/NLP4LP_RELATION_AWARE_METHOD_RESULTS.md](docs/archive/NLP4LP_RELATION_AWARE_METHOD_RESULTS.md)
 
 ### 2.8 Global Consistency Grounding (GCG)
 
@@ -195,7 +195,7 @@ A new method that enforces global consistency constraints during assignment (e.g
 python tools/run_nlp4lp_focused_eval.py --variant orig --safe
 ```
 
-**Detailed docs:** [docs/global_consistency_grounding.md](docs/global_consistency_grounding.md), [docs/learning_runs/global_consistency_grounding_results.md](docs/learning_runs/global_consistency_grounding_results.md)
+**Detailed docs:** [docs/archive/global_consistency_grounding.md](docs/archive/global_consistency_grounding.md), [docs/learning_runs/global_consistency_grounding_results.md](docs/learning_runs/global_consistency_grounding_results.md)
 
 ---
 
@@ -324,7 +324,7 @@ A benchmark comparing our retrieval-based agent against GitHub Copilot (and GPT-
 | Run our model | `artifacts/copilot_vs_model/run_our_model.py` |
 | Score comparison | `artifacts/copilot_vs_model/score_comparison.py` |
 
-**Detailed docs:** [docs/copilot_vs_our_model_comparison.md](docs/copilot_vs_our_model_comparison.md)
+**Detailed docs:** [docs/archive/copilot_vs_our_model_comparison.md](docs/archive/copilot_vs_our_model_comparison.md)
 
 ---
 

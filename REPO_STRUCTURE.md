@@ -10,14 +10,16 @@ combinatorial-opt-agent/
 │   ├── eaai_camera_ready_tables/      Tables 1–5 CSV files
 │   └── eaai_camera_ready_figures/     Figures 1–5 PNG/PDF files
 │
-├── ★ analysis/                        EAAI experiment reports
+├── ★ analysis/                        EAAI experiment reports (canonical)
 │   ├── eaai_engineering_subset_report.md
 │   ├── eaai_executable_subset_report.md
 │   ├── eaai_final_solver_attempt_report.md
+│   ├── eaai_repo_validation_report.md
 │   ├── eaai_tables_build_report.md
 │   ├── eaai_figures_build_report.md
 │   ├── eaai_figures_reproduction_report.md
-│   └── eaai_tables_reproduction_report.md
+│   ├── eaai_tables_reproduction_report.md
+│   └── ⚠ archive/                    Non-EAAI analysis files (provenance only)
 │
 ├── ★ docs/EAAI_SOURCE_OF_TRUTH.md     Master manuscript authority
 ├── ★ docs/RESULTS_PROVENANCE.md       Canonical metrics + provenance chain
@@ -27,8 +29,9 @@ combinatorial-opt-agent/
 ├──   docs/wulver_webapp.md            Web app on Wulver
 ├──   docs/learning_runs/              Benchmark-safe splits, real-data-only check
 ├── ⚠ docs/archive_internal_status/   Internal audits / decision logs (provenance only)
-├── ⚠ docs/archive/                    Historical dev notes (NOT authoritative)
+├── ⚠ docs/archive/                    Historical dev notes + moved internal files (NOT authoritative)
 ├── ⚠ docs/eswa_revision/              ESWA-era revision materials
+├── ⚠ docs/audits/                     Audit files index (see archive_internal_status/)
 │
 ├── ★ tools/nlp4lp_downstream_utility.py   Core grounding pipeline (6 000+ lines)
 │   │   Sections: extraction → slot records → basic scoring →
@@ -99,6 +102,7 @@ combinatorial-opt-agent/
 |------|---------|-----------|
 | `results/paper/` | Camera-ready artifacts | ★ DO NOT edit; regenerate via canonical scripts |
 | `analysis/eaai_*` | Experiment reports | ★ Regenerate by re-running experiment scripts |
+| `analysis/archive/` | Non-EAAI analysis files | ⚠ Provenance only; not headline source |
 | `docs/EAAI_SOURCE_OF_TRUTH.md` | Paper framing | ★ Edit only when manuscript changes |
 | `docs/RESULTS_PROVENANCE.md` | Metrics provenance | ★ Update when canonical results change |
 | `docs/CURRENT_STATUS.md` | Reviewer-facing status | ★ Single summary page |
@@ -118,11 +122,12 @@ combinatorial-opt-agent/
 |------|--------|-------|
 | `results/paper/` | ★ Authoritative | DO NOT edit; regenerate via canonical scripts only |
 | `analysis/eaai_*` | ★ Authoritative | Experiment reports; regenerate by re-running scripts |
+| `analysis/archive/` | ⚠ Provenance | Non-EAAI analysis files; not headline source |
 | `docs/EAAI_SOURCE_OF_TRUTH.md` | ★ Authoritative | Master reference for paper claims |
 | `docs/RESULTS_PROVENANCE.md` | ★ Authoritative | Canonical metrics + provenance chain |
 | `docs/CURRENT_STATUS.md` | ★ Summary | Reviewer-facing status; points to tables |
 | `docs/archive_internal_status/` | ⚠ Provenance | Internal audits; not headline source |
-| `docs/archive/` | ⚠ Historical | Dev notes; preserved for provenance, not citation |
+| `docs/archive/` | ⚠ Historical | Dev notes + moved internal files; not citation-ready |
 | `docs/eswa_revision/` | ⚠ Historical | ESWA-era revision; not EAAI-authoritative |
 | `results/eswa_revision/` | ⚠ Historical | Earlier experiment results |
 

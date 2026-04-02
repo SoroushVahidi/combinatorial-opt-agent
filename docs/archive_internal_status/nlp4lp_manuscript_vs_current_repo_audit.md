@@ -1,5 +1,11 @@
 ## SECTION A — Manuscript baseline (reference only)
 
+> **Provenance note:** This file is retained for provenance and is not the canonical
+> public summary. See [`docs/CURRENT_STATUS.md`](../CURRENT_STATUS.md) and
+> [`docs/EAAI_SOURCE_OF_TRUTH.md`](../EAAI_SOURCE_OF_TRUTH.md) for the current
+> official status.
+
+
 - **Schema retrieval (orig / noisy / short)** — *classical baselines, N=331 problems*  
   - **Orig**: TF‑IDF R@1 = 0.9063, BM25 = 0.8852, LSA = 0.8550.  
   - **Noisy**: TF‑IDF = 0.9033, BM25 = 0.8943, LSA = 0.8912.  
