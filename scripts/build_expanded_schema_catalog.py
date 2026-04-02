@@ -79,12 +79,10 @@ def collect_schema_entries(dataset_name: str) -> list[dict]:
     entries: list[dict] = []
 
     for split in adapter.list_splits():
-        idx = 0
         try:
-            for raw_ex in adapter.iter_examples(split):
+            for idx, raw_ex in enumerate(adapter.iter_examples(split)):
                 ie = adapter.to_internal_example(raw_ex, split)
                 if not ie.schema_id and not ie.schema_text:
-                    idx += 1
                     continue
 
                 benchmark_labeled = (
@@ -109,7 +107,6 @@ def collect_schema_entries(dataset_name: str) -> list[dict]:
                     "metadata": ie.metadata,
                 }
                 entries.append(entry)
-                idx += 1
         except FileNotFoundError:
             continue
 

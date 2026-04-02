@@ -127,8 +127,10 @@ def main() -> None:
                     splits_found.append(split)
                     retrieval_method = "direct_raw_http"
                 else:
+                    snippet = payload[:100].replace("\n", " ")
                     errors.append(
-                        f"{split}: non-JSON response from {url} (expected JSON list or JSONL)"
+                        f"{split}: non-JSON response from {url} (expected JSON list or JSONL); "
+                        f"response starts with: {snippet!r}"
                     )
                     try:
                         out_path.unlink()
