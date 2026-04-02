@@ -83,7 +83,7 @@ catalog files in `data/processed/`.
 Pre-computed camera-ready results are committed under `results/paper/` and do not
 require re-running.
 
-See `HOW_TO_REPRODUCE.md` for step-by-step commands.
+See [`HOW_TO_REPRODUCE.md`](HOW_TO_REPRODUCE.md) for step-by-step commands.
 
 ---
 
@@ -104,12 +104,12 @@ See `HOW_TO_REPRODUCE.md` for step-by-step commands.
 
 | Limitation | Location |
 |------------|---------|
-| ~47% of queries not fully instantiation-ready | `KNOWN_ISSUES.md` §1 and `docs/CURRENT_STATUS.md` |
-| Gated dataset dependency | `KNOWN_ISSUES.md` §2.1 and `HOW_TO_REPRODUCE.md` |
-| Solver execution restricted to 20 instances | `KNOWN_ISSUES.md` §1.3 and `docs/paper_vs_demo_scope.md` |
-| Learned model does not beat rule baseline | `KNOWN_ISSUES.md` §3 and `docs/learning_runs/README.md` |
-| Short-query grounding near zero | `KNOWN_ISSUES.md` §1.2 |
-| Metric definitions differ across artifact files | `docs/RESULTS_PROVENANCE.md` legacy note |
+| ~47% of queries not fully instantiation-ready | [`KNOWN_ISSUES.md`](KNOWN_ISSUES.md) §1 and [`CURRENT_STATUS.md`](CURRENT_STATUS.md) |
+| Gated dataset dependency | [`KNOWN_ISSUES.md`](KNOWN_ISSUES.md) §2.1 and [`HOW_TO_REPRODUCE.md`](HOW_TO_REPRODUCE.md) |
+| Solver execution restricted to 20 instances | [`KNOWN_ISSUES.md`](KNOWN_ISSUES.md) §1.3 and [`paper_vs_demo_scope.md`](paper_vs_demo_scope.md) |
+| Learned model does not beat rule baseline | [`KNOWN_ISSUES.md`](KNOWN_ISSUES.md) §3 and [`learning_runs/README.md`](learning_runs/README.md) |
+| Short-query grounding near zero | [`KNOWN_ISSUES.md`](KNOWN_ISSUES.md) §1.2 |
+| Metric definitions differ across artifact files | [`RESULTS_PROVENANCE.md`](RESULTS_PROVENANCE.md) legacy note |
 
 ---
 

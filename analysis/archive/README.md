@@ -1,9 +1,10 @@
 # analysis/archive — Non-canonical analysis reports
 
-> **This folder is retained for provenance and is not the canonical public summary.** See **`docs/CURRENT_STATUS.md`**.
+> **This folder is retained for provenance and is not the canonical public summary.** See **`docs/CURRENT_STATUS.md`** and **`docs/REVIEWER_GUIDE.md`** first.
 
 This folder holds analysis and audit reports that are **not** authoritative for the
-EAAI manuscript. They are retained for provenance and research history.
+EAAI manuscript. They are retained for provenance and research history. For the
+annotated repository map and canonical code paths, use **`docs/REPO_STRUCTURE.md`**.
 
 **Do not cite these files as the paper's main results.**
 

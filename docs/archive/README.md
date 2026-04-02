@@ -1,6 +1,8 @@
 # docs/archive — Historical Development Documents
 
-> **This folder is retained for provenance and is not the canonical public summary.** See **[`docs/CURRENT_STATUS.md`](../CURRENT_STATUS.md)**.
+> **This folder is retained for provenance and is not the canonical public summary.** See **[`docs/CURRENT_STATUS.md`](../CURRENT_STATUS.md)** and **[`docs/REVIEWER_GUIDE.md`](../REVIEWER_GUIDE.md)** first.
+
+**Operational / canonical guides** (reproduce, benchmarks, experiment log, known issues, repo map) live alongside other headline docs in **`docs/`** (e.g. `HOW_TO_REPRODUCE.md`, `KNOWN_ISSUES.md`, `REPO_STRUCTURE.md`) — not at the repository root — so the GitHub landing page stays minimal.
 
 This folder contains historical development notes, handoff documents, intermediate
 working documents, method iteration logs, and agent session notes accumulated during

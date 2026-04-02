@@ -96,7 +96,7 @@ without HF access using the local catalog files in `data/processed/`.
 
 **Detail:** **OpenAI** downstream CSV/JSON for some variants exists under `results/paper/` from a completed historical batch. **Gemini** has Slurm + preflight infrastructure (**[`GEMINI_RERUN_REPORT.md`](GEMINI_RERUN_REPORT.md)**); a **full** Gemini NLP4LP rerun is **not** claimed in docs unless matching artifacts exist under `results/rerun/gemini/…`. **Mistral** is not wired in this repository.
 
-**Workaround:** Treat **`results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv`** as headline authority; read **`docs/RESULTS_PROVENANCE.md`** before mixing columns from `nlp4lp_downstream_summary.csv`.
+**Workaround:** Treat **`results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv`** as headline authority; read **`RESULTS_PROVENANCE.md`** before mixing columns from `nlp4lp_downstream_summary.csv`.
 
 **Status:** ⚠️ By design — optional tooling, not paper-core.
 
