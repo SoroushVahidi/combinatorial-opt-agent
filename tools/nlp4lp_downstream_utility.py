@@ -1,7 +1,47 @@
-"""Downstream utility demo for NLP4LP: retrieval enables parameter instantiation from NL.
+"""Downstream utility for NLP4LP: retrieval-enabled parameter instantiation from NL.
 
-Primarily deterministic and CPU-only. Optional LLM baselines are supported via
-OPENAI_API_KEY / GEMINI_API_KEY when selected as baseline methods.
+This module implements the full downstream grounding pipeline used in the EAAI paper.
+It is primarily deterministic and CPU-only.  Optional LLM baselines are supported via
+``OPENAI_API_KEY`` / ``GEMINI_API_KEY`` environment variables.
+
+Table of contents
+-----------------
+  1.  Constants & lexicons        — NUM_TOKEN_RE, MONEY_CONTEXT, _ONES, _WORD_TO_NUM,
+                                    _WORD_FRACTIONS, _ENUM_STOP_WORDS, _SLOT_SYNONYMS,
+                                    operator cue weights, etc.
+  2.  Evaluation / data loading   — _safe_json_loads, _load_eval, _load_catalog_as_problems,
+                                    _apply_low_resource_env, _load_hf_gold
+  3.  Core data classes           — NumTok, MentionRecord, SlotRecord
+  4.  Numeric extraction          — _parse_num_token, _extract_num_tokens, _normalize_tokens,
+                                    _split_camel_case, _extract_num_mentions, _tokens_lower
+  5.  Slot utilities              — _slot_measure_tokens, _slot_aliases, _build_slot_records,
+                                    _expected_type, _is_count_like_slot, _is_type_match,
+                                    _choose_token, _is_scalar, _is_type_incompatible
+  6.  Basic scoring               — _score_mention_slot (typed-greedy)
+  7.  Semantic IR assignment      — MentionIR, SlotIR, SEMANTIC_ROLE_WORDS,
+                                    _context_to_semantic_tags, _detect_operator_tags,
+                                    _extract_enriched_mentions, _slot_semantic_expansion,
+                                    _build_slot_irs, _score_mention_slot_ir,
+                                    _semantic_ir_global_assignment, _validation_and_repair,
+                                    _run_semantic_ir_repair
+  8.  Optimization-role grounding — MentionOptIR, SlotOptIR, _extract_opt_role_mentions,
+                                    _build_slot_opt_irs, _score_mention_slot_opt,
+                                    _opt_role_global_assignment, _opt_role_validate_and_repair,
+                                    _run_optimization_role_repair, and beam/anchor variants
+  9.  Global Consistency Grounding (GCG)
+  10. Maximum-Weight Bipartite Matching Grounding
+  11. Global Compatibility Grounding
+  12. Acceptance reranking
+  13. run_setting()               — dispatch one (query, schema, method) tuple → metrics
+  14. main() / CLI                — argument parsing and multi-method batch runner
+
+Environment variables
+---------------------
+  HF_TOKEN / HUGGINGFACE_TOKEN / HUGGINGFACE_HUB_TOKEN
+                                 HuggingFace token for loading gated NLP4LP dataset.
+  OPENAI_API_KEY                 Required for LLM baseline methods (openai_*).
+  GEMINI_API_KEY                 Required for LLM baseline methods (gemini_*).
+  LOW_RESOURCE                   Set to "1" to skip HF dataset download in dry runs.
 """
 from __future__ import annotations
 
@@ -370,6 +410,7 @@ ASSIGN_WEIGHTS = {
     "count_large_penalty_threshold": 50, # integers > this get the large-int penalty
 }
 
+# ── Section 2 – Evaluation / data loading ────────────────────────────────────
 
 def _safe_json_loads(s: str | None) -> Any:
     if not s:
@@ -482,6 +523,7 @@ def _load_hf_gold(split: str = "test", use_cache: bool = True) -> dict[str, dict
             pass
     return gold
 
+# ── Section 3 – Core data classes ────────────────────────────────────────────
 
 def _tokens_lower(text: str) -> list[str]:
     return re.findall(r"\w+|<num>|[$]?\d[\d,]*(?:\.\d+)?%?", text.lower())
@@ -516,6 +558,7 @@ class SlotRecord:
     alias_tokens: set[str]
     is_count_like: bool = False
 
+# ── Section 4 – Numeric extraction ───────────────────────────────────────────
 
 def _parse_num_token(tok: str, context_words: set[str]) -> NumTok:
     # Strip whitespace, then strip trailing punctuation characters so that
@@ -623,6 +666,7 @@ def _split_camel_case(name: str) -> list[str]:
     # Replace underscores and collapse whitespace, then return lowercase tokens.
     return [t.lower() for t in re.split(r"[\s_]+", s) if t]
 
+# ── Section 5 – Slot utilities ────────────────────────────────────────────────
 
 def _slot_measure_tokens(name: str) -> list[str]:
     """Return a de-duplicated list of lowercase tokens for a slot name.
@@ -1013,6 +1057,7 @@ def _build_slot_records(expected_scalar: list[str]) -> list[SlotRecord]:
         )
     return slots
 
+# ── Section 6 – Basic scoring (typed greedy) ─────────────────────────────────
 
 def _score_mention_slot(m: MentionRecord, s: SlotRecord) -> tuple[float, dict[str, Any]]:
     """Compute interpretable compatibility score and feature breakdown."""
@@ -5397,6 +5442,7 @@ def make_rerank_rank_fn(
 
     return rank_fn
 
+# ── Section 13 – run_setting(): dispatch one (variant, method) run ────────────
 
 def run_setting(
     variant: str,
@@ -5957,6 +6003,51 @@ def run_setting(
                                 type_exact5_num[btype] += 1
                             if err <= 0.20:
                                 type_exact20_num[btype] += 1
+            elif assignment_mode in (
+                "hierarchical_structured_grounding",
+                "hierarchical_structured_grounding_no_regions",
+                "hierarchical_structured_grounding_no_search",
+            ) and expected_scalar:
+                from tools.hierarchical_structured_grounding import run_hierarchical_structured_grounding
+                _hsg_ablation_map = {
+                    "hierarchical_structured_grounding": "full",
+                    "hierarchical_structured_grounding_no_regions": "no_regions",
+                    "hierarchical_structured_grounding_no_search": "no_search",
+                }
+                filled_values, filled_mentions, _diag = run_hierarchical_structured_grounding(
+                    query,
+                    variant,
+                    expected_scalar,
+                    ablation_mode=_hsg_ablation_map[assignment_mode],
+                )
+                for p in expected_scalar:
+                    if p not in filled_values:
+                        continue
+                    m_ir = filled_mentions.get(p)
+                    tok = m_ir.tok if m_ir else None
+                    if tok is None:
+                        continue
+                    n_filled += 1
+                    filled[p] = filled_values[p]
+                    btype = _bucket_type(p)
+                    type_filled_total[btype] += 1
+                    type_filled_q[btype] += 1
+                    et = _expected_type(p)
+                    if _is_type_match(et, tok.kind):
+                        type_matches += 1
+                        type_correct_total[btype] += 1
+                        type_correct_q[btype] += 1
+                    if schema_hit and tok.value is not None and _is_scalar(gold_params.get(p)):
+                        gold_val = float(gold_params[p])
+                        err = _rel_err(float(tok.value), gold_val)
+                        comparable_errs.append(err)
+                        if btype in type_names:
+                            type_exact5_den[btype] += 1
+                            type_exact20_den[btype] += 1
+                            if err <= 0.05:
+                                type_exact5_num[btype] += 1
+                            if err <= 0.20:
+                                type_exact20_num[btype] += 1
             elif assignment_mode in ("typed", "untyped") and llm_runner is not None and expected_scalar:
                 # Two-stage LLM baseline: stage2 slot filling from schema slot definitions.
                 llm_filled, _llm_n_filled, llm_type_matches = llm_runner.llm_assign(
@@ -6325,6 +6416,12 @@ def run_single_setting(
         "search_structured_grounding_counterfactual",
     ):
         effective_baseline = f"{baseline_arg}_{assignment_mode}"
+    elif assignment_mode in (
+        "hierarchical_structured_grounding",
+        "hierarchical_structured_grounding_no_regions",
+        "hierarchical_structured_grounding_no_search",
+    ):
+        effective_baseline = f"{baseline_arg}_{assignment_mode}"
 
     run_setting(
         variant=variant,
@@ -6339,6 +6436,7 @@ def run_single_setting(
     )
     return True
 
+# ── Section 14 – main() / CLI ─────────────────────────────────────────────────
 
 def main() -> None:
     import argparse
@@ -6378,6 +6476,9 @@ def main() -> None:
             "ambiguity_aware_abstain", "ambiguity_aware_full",
             "search_structured_grounding", "search_structured_grounding_no_global",
             "search_structured_grounding_counterfactual",
+            "hierarchical_structured_grounding",
+            "hierarchical_structured_grounding_no_regions",
+            "hierarchical_structured_grounding_no_search",
             # Experimental/archived (not in default focused eval; use run_nlp4lp_focused_eval.py --experimental):
             "optimization_role_anchor_linking", "optimization_role_bottomup_beam_repair",
             "optimization_role_entity_semantic_beam_repair",
@@ -6479,6 +6580,15 @@ def main() -> None:
         "ambiguity_aware_beam",
         "ambiguity_aware_abstain",
         "ambiguity_aware_full",
+    ):
+        effective_baseline = f"{args.baseline}_{args.assignment_mode}"
+    elif args.assignment_mode in (
+        "search_structured_grounding",
+        "search_structured_grounding_no_global",
+        "search_structured_grounding_counterfactual",
+        "hierarchical_structured_grounding",
+        "hierarchical_structured_grounding_no_regions",
+        "hierarchical_structured_grounding_no_search",
     ):
         effective_baseline = f"{args.baseline}_{args.assignment_mode}"
 

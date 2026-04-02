@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """Fetch/prepare MAMO dataset snapshots into data/external/mamo.
 
+Source: https://github.com/FreedomIntelligence/Mamo
+Splits: train, validation, test (benchmark/ directory)
+
 This script is offline-friendly:
 - it first looks for pre-existing local files,
 - then attempts network retrieval,
+- falls back to git clone if direct HTTP is blocked,
 - always writes a provenance report,
 - exits non-zero with exact blocker details when retrieval is blocked.
 """
@@ -11,10 +15,11 @@ This script is offline-friendly:
 from __future__ import annotations
 
 import argparse
-import datetime as dt
 import json
 import shutil
 import subprocess
+import sys
+from datetime import datetime, timezone
 from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.request import urlopen
@@ -68,7 +73,7 @@ def main() -> None:
     ap.add_argument("--force", action="store_true", help="Overwrite existing split JSONL files.")
     args = ap.parse_args()
 
-    now = dt.datetime.now(dt.timezone.utc).isoformat()
+    now = datetime.now(timezone.utc).isoformat()
     warnings: list[str] = []
     errors: list[str] = []
     row_counts: dict[str, int | None] = {}
@@ -86,7 +91,7 @@ def main() -> None:
     if splits_found and len(splits_found) == len(DATA_URLS):
         retrieval_method = "preexisting_local_files"
     else:
-        # First attempt direct file retrieval from likely raw URLs.
+        # First attempt direct file retrieval from raw GitHub URLs.
         for split, url in DATA_URLS.items():
             out_path = OUT_DIR / f"{split}.jsonl"
             if out_path.exists() and not args.force:
@@ -126,22 +131,31 @@ def main() -> None:
                 if success:
                     splits_found.append(split)
                     retrieval_method = "direct_raw_http"
+                    print(f"[ok] {split}: {row_counts[split]} rows -> {out_path}")
                 else:
                     snippet = payload[:100].replace("\n", " ")
-                    errors.append(
+                    msg = (
                         f"{split}: non-JSON response from {url} (expected JSON list or JSONL); "
                         f"response starts with: {snippet!r}"
                     )
+                    print(f"[error] {msg}", file=sys.stderr)
+                    errors.append(msg)
                     try:
                         out_path.unlink()
                     except FileNotFoundError:
                         pass
             except HTTPError as e:
-                errors.append(f"{split}: HTTPError {e.code} from {url}")
+                msg = f"{split}: HTTPError {e.code} from {url}"
+                print(f"[error] {msg}", file=sys.stderr)
+                errors.append(msg)
             except URLError as e:
-                errors.append(f"{split}: URLError {e.reason} from {url}")
+                msg = f"{split}: URLError {e.reason} from {url}"
+                print(f"[error] {msg}", file=sys.stderr)
+                errors.append(msg)
             except Exception as e:
-                errors.append(f"{split}: unexpected error from {url}: {e}")
+                msg = f"{split}: unexpected error from {url}: {e}"
+                print(f"[error] {msg}", file=sys.stderr)
+                errors.append(msg)
 
         # Fallback: clone repo and search benchmark directory
         if len(splits_found) < len(DATA_URLS):
@@ -159,7 +173,9 @@ def main() -> None:
                             continue
                         candidates = list(benchmark_dir.glob(f"*{split}*.json")) + list(benchmark_dir.glob(f"*{split}*.jsonl"))
                         if not candidates:
-                            warnings.append(f"{split}: no file matching *{split}*.json/.jsonl under benchmark/")
+                            msg = f"{split}: no file matching *{split}*.json/.jsonl under benchmark/"
+                            print(f"[warn] {msg}", file=sys.stderr)
+                            warnings.append(msg)
                             continue
                         src = sorted(candidates)[0]
                         out = OUT_DIR / f"{split}.jsonl"
@@ -175,34 +191,42 @@ def main() -> None:
                             with open(out, encoding="utf-8") as fh:
                                 row_counts[split] = sum(1 for _ in fh)
                             splits_found.append(split)
+                            print(f"[ok] {split}: {row_counts[split]} rows -> {out}")
                         except Exception:
                             out.write_text(text, encoding="utf-8")
                             with open(out, encoding="utf-8") as fh:
                                 row_counts[split] = sum(1 for _ in fh)
                             splits_found.append(split)
+                            print(f"[ok] {split}: {row_counts[split]} rows -> {out}")
                 else:
-                    warnings.append("cloned Mamo repo but benchmark/ directory missing")
+                    msg = "cloned Mamo repo but benchmark/ directory missing"
+                    print(f"[warn] {msg}", file=sys.stderr)
+                    warnings.append(msg)
             else:
+                print(f"[error] {method}", file=sys.stderr)
                 errors.append(method)
 
-    payload = {
+    provenance = {
+        "dataset": "MAMO",
         "source": "FreedomIntelligence/Mamo",
         "source_url": "https://github.com/FreedomIntelligence/Mamo",
         "retrieval_method": retrieval_method,
-        "timestamp_utc": now,
+        "timestamp": now,
         "splits": sorted(set(splits_found)),
         "row_counts": row_counts,
         "warnings": warnings,
         "errors": errors,
     }
-    _write_metadata(payload)
+    _write_metadata(provenance)
+    print(f"[ok] provenance written -> {META_PATH}")
 
     missing = sorted(set(DATA_URLS) - set(splits_found))
     if missing:
-        print(json.dumps(payload, indent=2))
-        raise SystemExit(f"Blocked: could not prepare MAMO splits: {missing}")
+        print(json.dumps(provenance, indent=2))
+        print(f"[warn] Could not prepare MAMO splits: {missing}", file=sys.stderr)
+        sys.exit(1)
 
-    print(json.dumps(payload, indent=2))
+    print(f"[ok] MAMO ready: {sorted(set(splits_found))}")
 
 
 if __name__ == "__main__":

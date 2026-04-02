@@ -6,6 +6,19 @@ problems**, as described in the companion EAAI manuscript.  The pipeline combine
 grounding stage** (NL numeric mentions → parameter slots) so that the retrieved
 formulation is numerically instantiated from the user's own problem data.
 
+## Repository status
+
+> **This is a companion research repository** for an EAAI submission, not a production tool.
+
+| Item | Details |
+|------|---------|
+| **Benchmark scope** | Fixed-catalog NLP4LP (`orig` variant, 331 test queries) |
+| **Core evaluated task** | Schema retrieval + deterministic scalar parameter grounding |
+| **Solver-backed results** | Restricted to a 20-instance subset via SciPy HiGHS shim |
+| **Gurobi** | NOT required; paper results use SciPy only |
+| **HF dataset** | Full benchmark rerun requires the gated `udell-lab/NLP4LP` dataset |
+| **LLM generation path** | Present in demo app; outside the scope of the paper evaluation |
+
 **Core capabilities:**
 
 | Capability | What it does |
@@ -32,6 +45,14 @@ engineering-oriented downstream validation on subsets of the NLP4LP benchmark.
 > **Note:** The demo app also supports querying unknown problem types via an LLM-generation
 > path. This feature is outside the scope of the EAAI manuscript and is provided for
 > demonstration purposes only.
+
+## What this repo does not claim
+
+- Full natural-language-to-optimization **compilation** for arbitrary problems (solver-ready output is a restricted subset only)
+- **Benchmark-wide solver readiness** — not all NLP4LP instances are executable
+- **Dense retrieval (E5/BGE) as primary results** — these are supplementary; TF-IDF is the paper's primary retrieval baseline
+- That the **learned retrieval model beats the rule baseline** — it does not (see `KNOWN_ISSUES.md`)
+- That **Gurobi is available or required** — paper results use SciPy HiGHS shim for the solver subset
 
 ## Current evidence-based status
 
@@ -258,40 +279,68 @@ python tools/build_eaai_camera_ready_figures.py
 - `analysis/eaai_figures_build_report.md` — Figure build notes
 - `analysis/eaai_figures_reproduction_report.md` — Figure reproduction log
 - `docs/EAAI_SOURCE_OF_TRUTH.md` — Canonical paper framing and authoritative file list
-- `docs/EAAI_REPO_ALIGNMENT_AUDIT.md` — Repo alignment audit report
 
 ### Historical note
 
-Older docs in `docs/` (e.g., `JOURNAL_READINESS_AUDIT.md`, `Q1_JOURNAL_AUDIT.md`,
-`eswa_revision/`) contain earlier ESWA-era experiment records. They are preserved for
-history but should not be cited as authoritative for the current EAAI manuscript.
-The ESWA revision tables in `results/eswa_revision/13_tables/` **are** still authoritative
-for the main benchmark metrics used in Table 1.
+Older docs in `docs/archive/` contain earlier ESWA-era experiment records and development
+notes. They are preserved for history but should not be cited as authoritative for the
+current EAAI manuscript.
+
+## How to reproduce the main paper artifacts
+
+> Full benchmark rerun requires the gated `udell-lab/NLP4LP` dataset (HuggingFace
+> access required). See [Benchmark access requirements](#huggingface-dataset-access).
+
+```bash
+# 1. Install dependencies
+pip install -r requirements.txt
+
+# 2. Validate repo integrity (does NOT need HF token)
+python scripts/paper/run_repo_validation.py
+
+# 3. Re-run EAAI experiments (requires HF_TOKEN)
+python tools/run_eaai_engineering_subset_experiment.py   # Table 2 (60 instances)
+python tools/run_eaai_executable_subset_experiment.py    # Table 3 (269 instances)
+python tools/run_eaai_final_solver_attempt.py            # Table 4 (20 instances)
+
+# 4. Regenerate figures from tables
+python tools/build_eaai_camera_ready_figures.py
+```
+
+## Repo map
+
+| Path | Purpose | Authority |
+|------|---------|-----------|
+| `results/paper/` | Camera-ready tables and figures | ★ Authoritative |
+| `analysis/eaai_*` | EAAI experiment reports | ★ Authoritative |
+| `docs/EAAI_SOURCE_OF_TRUTH.md` | Master paper framing | ★ Authoritative |
+| `tools/nlp4lp_downstream_utility.py` | Core grounding pipeline | Core source |
+| `retrieval/` | Schema retrieval methods | Core source |
+| `formulation/verify.py` | LP structural validation | Core source |
+| `tests/` | Pytest suite (1400+ tests, CPU-only) | Core source |
+| `scripts/paper/` | Paper support scripts | Core source |
+| `docs/archive/` | Historical dev notes | ⚠ Non-authoritative |
+| `docs/eswa_revision/` | Earlier ESWA materials | ⚠ Non-authoritative |
+| `results/eswa_revision/` | Earlier experiment results | ⚠ Non-authoritative |
 
 ## Documentation
 
 | Topic | Doc |
 |-------|-----|
 | **Experiments** | [EXPERIMENTS.md](EXPERIMENTS.md) — Consolidated overview of all experiments (retrieval, grounding methods, learning, copilot comparison) |
-| **Data sources** | [docs/data_sources.md](docs/data_sources.md) — OR-Library, Gurobi examples/OptiMods, NL4Opt, etc. |
-| **GAMSPy** | [docs/GAMSPY_SETUP_AND_LICENSE.md](docs/GAMSPY_SETUP_AND_LICENSE.md), [GAMSPY_LOCAL_EXAMPLES_COLLECTION.md](docs/GAMSPY_LOCAL_EXAMPLES_COLLECTION.md), [GAMSPY_LOCAL_EXAMPLES_NEXT_STEPS.md](docs/GAMSPY_LOCAL_EXAMPLES_NEXT_STEPS.md) — setup, license, local example collection and manifests |
-| **NLP4LP** | Acceptance rerank, constrained assignment, optimization-role method, semantic IR — see `docs/NLP4LP_*.md` |
+| **Data sources** | `data/sources/` — Machine-readable manifests |
 | **Wulver (HPC)** | [docs/wulver.md](docs/wulver.md) — NJIT cluster setup and batch jobs |
 | **Training** | [training/README.md](training/README.md) — retrieval fine-tuning; mention-slot scorer in `training/` |
-| **Evaluation / paper** | `docs/BASELINE_TABLE_CLI.md`, `docs/PATCH_LEAK_FREE_EVAL.md`, and other experiment docs in `docs/` |
 | **Learning (NLP4LP)** | [docs/learning_runs/](docs/learning_runs/README.md) — benchmark-safe splits, real-data-only check, experiment records |
-| **Dataset adapters (multi-benchmark)** | [docs/dataset_integration_report.md](docs/dataset_integration_report.md) — NL4Opt/Text2Zinc/OptMATH/ComplexOR integration, download scripts, capability matrix |
+| **Historical docs** | [docs/archive/](docs/archive/README.md) — development notes (non-authoritative) |
 
 Private data (GAMSPy models, license-related files) live under **`data_private/`** (gitignored). Manifests and catalogs are in `data_private/gams_models/manifests/` and `catalog/`.
 
 ## Data sources
 
-The dataset is built from multiple authoritative sources:
-
-- **[docs/data_sources.md](docs/data_sources.md)** — Canonical list with URLs, sizes, and problem/example names (OR-Library, Gurobi modeling examples, Gurobi OptiMods, etc.).
-- **data/sources/** — Machine-readable manifests: `or_library.json`, `gurobi_modeling_examples.json`, `gurobi_optimods.json`, `index.json`.
-
-Notable sources: [NL4Opt](https://github.com/nl4opt/nl4opt-competition) (NL→formulation), NLP4LP/OptiMUS, and GAMSPy examples (see [GAMSPy collection](docs/GAMSPY_LOCAL_EXAMPLES_COLLECTION.md)).
+The benchmark dataset is NLP4LP (`udell-lab/NLP4LP` on HuggingFace; gated access required).
+The problem catalog is built from public sources including NL4Opt, OR-Library, and Gurobi
+modeling examples. Machine-readable manifests are in `data/sources/`.
 
 ## HuggingFace dataset access
 
@@ -419,50 +468,14 @@ python run_search.py "minimize cost of opening warehouses"
 sbatch scripts/run_search.slurm
 ```
 
-## Testing on iPhone (or any phone / tablet)
-
-The web app is a full **Progressive Web App (PWA)** — it works in Safari on iOS just like a native app, including an "Add to Home Screen" icon, fullscreen mode, and offline fallback.
-
-### Steps
-
-1. **Start the server on your laptop/desktop** (the server and iPhone must be on the same Wi-Fi):
-   ```bash
-   python app.py
-   ```
-   The startup output now prints two URLs, for example:
-   ```
-     Local:   http://127.0.0.1:7860
-     Network: http://192.168.1.42:7860  ← open this on your iPhone/phone
-   ```
-
-2. **On your iPhone, open Safari** and navigate to the **Network URL** shown (e.g. `http://192.168.1.42:7860`).  
-   *(Other browsers such as Chrome or Firefox for iOS also work, but Safari is required for the "Add to Home Screen" feature.)*
-
-3. **Use the app** — type an optimization problem in the text box and tap **Search**.
-
-4. **Optional — install as a home-screen app:**
-   - Tap the **Share** icon (the box with an arrow pointing up) at the bottom of Safari.
-   - Scroll down and tap **Add to Home Screen**.
-   - Give it a name (or keep "Opt Bot") and tap **Add**.
-   - The app icon appears on your home screen and opens fullscreen, just like a native app.
-
-### Troubleshooting
-
-| Symptom | Fix |
-|---|---|
-| iPhone can't reach the URL | Make sure your laptop and iPhone are on the **same Wi-Fi network**. Check that no firewall blocks port 7860: on Linux run `sudo ufw allow 7860`; on Windows add an inbound rule in Windows Firewall; on macOS go to **System Settings → Network → Firewall → Options** and allow incoming connections for Python. |
-| No "Network" URL printed at startup | The LAN IP detection may fail (e.g., no default gateway). Run `ipconfig` (Windows) or `ifconfig` / `ip addr` (macOS/Linux) to find your machine's local IP, then open `http://<your-ip>:7860` on the iPhone. |
-| Page loads but search hangs | First-time startup downloads the embedding model (~90 MB). Wait until the terminal says *"Model ready"* before running queries. |
-| "Add to Home Screen" not in Share sheet | The option only appears in **Safari** (not Chrome or Firefox on iOS). |
-
 ## Training
 
 - **Retrieval model** — Fine-tune the sentence-transformers model so it better matches NL queries to problems in the catalog.  
   **Full guide:** [training/README.md](training/README.md)  
-  Steps: generate synthetic (query, passage) pairs → optional: add [collected user queries](training/README.md#6-collect-real-user-prompts-for-training) from the app → run training (local or GPU batch on Wulver).  
+  Steps: generate synthetic (query, passage) pairs → optional: add collected user queries → run training (local or GPU batch on Wulver, see [docs/wulver.md](docs/wulver.md)).  
   **Evaluation:** `python -m training.evaluate_retrieval --regenerate --num 500` for Precision@1 / Precision@5 on 500 held-out instances.
 
-- **Mention–slot scorer** (NLP4LP) — For constrained assignment (NL numeric mentions → schema slots). Generate pairs with `training/generate_mention_slot_pairs.py` and train with `training/train_mention_slot_scorer.py`. See `docs/NLP4LP_CONSTRAINED_ASSIGNMENT_*.md`.
+- **Mention–slot scorer** (NLP4LP) — For constrained assignment (NL numeric mentions → schema slots). Generate pairs with `training/generate_mention_slot_pairs.py` and train with `training/train_mention_slot_scorer.py`.
 
 ## 🛠️ Tech Stack
 
@@ -473,7 +486,7 @@ The web app is a full **Progressive Web App (PWA)** — it works in Safari on iO
 | Retrieval | TF-IDF (scikit-learn), BM25 (rank-bm25), LSA, Sentence-Transformers, E5, BGE |
 | NLP / extraction | Regex-based numeric tokenisation, operator-cue detection, bound-role annotation |
 | Assignment | Typed greedy, constrained DP, semantic IR repair, optimization-role repair, GCG |
-| Optimization solvers | Gurobi, Pyomo, PuLP, GAMSPy (output only; no live solver in CI) |
+| Optimization solvers | SciPy HiGHS shim (restricted subset, paper results); GAMSPy/Pyomo/PuLP (demo only, outside paper scope) |
 | Web UI | Gradio |
 | HPC | NJIT Wulver (SLURM) |
 | CI/CD | GitHub Actions |

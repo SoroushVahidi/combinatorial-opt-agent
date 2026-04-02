@@ -1,13 +1,24 @@
 #!/usr/bin/env python3
-"""Fetch/prepare StructuredOR snapshots into data/external/structuredor."""
+"""Fetch/prepare StructuredOR dataset snapshots into data/external/structuredor.
+
+Source: https://github.com/CardinalOperations/StructuredOR
+Splits: train, validation, dev, test
+
+This script is offline-friendly:
+- it first looks for pre-existing local files,
+- then attempts git clone,
+- always writes a provenance report,
+- exits non-zero when retrieval is blocked.
+"""
 
 from __future__ import annotations
 
 import argparse
-import datetime as dt
 import json
 import shutil
 import subprocess
+import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -15,11 +26,6 @@ OUT_DIR = ROOT / "data" / "external" / "structuredor"
 META_PATH = OUT_DIR / "provenance.json"
 KNOWN_SPLITS = ("train", "validation", "dev", "test")
 REPO_URL = "https://github.com/CardinalOperations/StructuredOR"
-
-
-def _write_meta(payload: dict) -> None:
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-    META_PATH.write_text(json.dumps(payload, indent=2), encoding="utf-8")
 
 
 def _to_jsonl(src: Path, dst: Path) -> int:
@@ -41,7 +47,7 @@ def _to_jsonl(src: Path, dst: Path) -> int:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="Fetch/prepare StructuredOR dataset.")
-    ap.add_argument("--force", action="store_true")
+    ap.add_argument("--force", action="store_true", help="Overwrite existing split JSONL files.")
     args = ap.parse_args()
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -58,9 +64,13 @@ def main() -> None:
             with p.open(encoding="utf-8") as fh:
                 row_counts[split] = sum(1 for _ in fh)
 
-    if len(found) < len(KNOWN_SPLITS):
+    if len(found) == len(KNOWN_SPLITS):
+        retrieval_method = "preexisting_local_files"
+    else:
         if shutil.which("git") is None:
-            errors.append("git binary unavailable for retrieval")
+            msg = "git binary unavailable for retrieval"
+            print(f"[error] {msg}", file=sys.stderr)
+            errors.append(msg)
         else:
             clone_dir = OUT_DIR / "downloads" / "structuredor_repo"
             clone_dir.parent.mkdir(parents=True, exist_ok=True)
@@ -80,33 +90,41 @@ def main() -> None:
                         continue
                     candidates = list(clone_dir.rglob(f"*{split}*.json")) + list(clone_dir.rglob(f"*{split}*.jsonl"))
                     if not candidates:
-                        warnings.append(f"missing split-like file for {split}")
+                        msg = f"missing split-like file for {split}"
+                        print(f"[warn] {msg}", file=sys.stderr)
+                        warnings.append(msg)
                         continue
                     src = sorted(candidates)[0]
                     out = OUT_DIR / f"{split}.jsonl"
                     row_counts[split] = _to_jsonl(src, out)
                     found.append(split)
+                    print(f"[ok] {split}: {row_counts[split]} rows -> {out}")
             except subprocess.CalledProcessError as e:
-                errors.append(f"git clone failed: {e.stderr.strip() or e.stdout.strip()}")
+                msg = f"git clone failed: {e.stderr.strip() or e.stdout.strip()}"
+                print(f"[error] {msg}", file=sys.stderr)
+                errors.append(msg)
 
-    payload = {
+    provenance = {
+        "dataset": "StructuredOR",
         "source": "CardinalOperations/StructuredOR",
         "source_url": REPO_URL,
-        "timestamp_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "retrieval_method": retrieval_method,
         "splits": sorted(set(found)),
         "row_counts": row_counts,
         "warnings": warnings,
         "errors": errors,
     }
-    _write_meta(payload)
+    META_PATH.write_text(json.dumps(provenance, indent=2), encoding="utf-8")
+    print(f"[ok] provenance written -> {META_PATH}")
 
     missing = sorted(set(KNOWN_SPLITS) - set(found))
     if missing:
-        print(json.dumps(payload, indent=2))
-        raise SystemExit(f"Blocked: unable to prepare StructuredOR splits: {missing}")
+        print(json.dumps(provenance, indent=2))
+        print(f"[warn] Could not prepare StructuredOR splits: {missing}", file=sys.stderr)
+        sys.exit(1)
 
-    print(json.dumps(payload, indent=2))
+    print(f"[ok] StructuredOR ready: {sorted(set(found))}")
 
 
 if __name__ == "__main__":

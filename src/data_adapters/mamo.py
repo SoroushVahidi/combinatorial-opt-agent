@@ -1,6 +1,11 @@
 """MAMO adapter (FreedomIntelligence/Mamo).
 
 This adapter expects local JSONL split files under ``data/external/mamo/``.
+Run ``scripts/get_mamo.py`` to download.
+
+Source: https://github.com/FreedomIntelligence/Mamo
+Splits: train, validation, test (benchmark directory)
+
 It is intentionally permissive about raw row keys because upstream formats can vary.
 """
 
@@ -53,6 +58,22 @@ class MAMOAdapter:
         for row in self.load_split(split_name):
             yield row
 
+    @staticmethod
+    def _parse_answer(answer: Any) -> dict[str, Any] | None:
+        """Try to extract a numeric objective value from the answer field."""
+        if answer is None:
+            return None
+        if isinstance(answer, (int, float)):
+            return {"objective_value": float(answer)}
+        if isinstance(answer, str):
+            val = answer.strip()
+            for converter in (int, float):
+                try:
+                    return {"objective_value": float(converter(val))}
+                except (ValueError, TypeError):
+                    pass
+        return None
+
     def to_internal_example(self, example: dict[str, Any], split_name: str) -> InternalExample:
         ex_id = str(example.get("id") or example.get("instance_id") or example.get("uid") or "")
         nl = (
@@ -60,11 +81,16 @@ class MAMOAdapter:
             or example.get("query")
             or example.get("problem")
             or example.get("question")
+            or example.get("en_question")
             or ""
         ).strip()
         schema = example.get("schema_id") or example.get("problem_type") or example.get("task")
         formulation = example.get("formulation_text") or example.get("target_model") or example.get("lp")
-        scalar = example.get("scalar_gold_params") if isinstance(example.get("scalar_gold_params"), dict) else None
+        # Prefer explicit scalar_gold_params dict; fall back to parsing en_answer
+        if isinstance(example.get("scalar_gold_params"), dict):
+            scalar = example["scalar_gold_params"]
+        else:
+            scalar = self._parse_answer(example.get("en_answer"))
         return InternalExample(
             id=ex_id,
             source_dataset=self.name,
@@ -100,7 +126,11 @@ class MAMOAdapter:
                 continue
             out[ex_id] = {
                 "schema_id": row.get("schema_id") or row.get("problem_type") or row.get("task"),
-                "scalar_gold_params": row.get("scalar_gold_params"),
+                "scalar_gold_params": (
+                    row["scalar_gold_params"]
+                    if isinstance(row.get("scalar_gold_params"), dict)
+                    else self._parse_answer(row.get("en_answer"))
+                ),
                 "formulation_text": row.get("formulation_text") or row.get("target_model") or row.get("lp"),
             }
         return out

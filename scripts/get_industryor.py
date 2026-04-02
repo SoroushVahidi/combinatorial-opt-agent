@@ -1,13 +1,24 @@
 #!/usr/bin/env python3
-"""Fetch/prepare IndustryOR snapshots into data/external/industryor."""
+"""Fetch/prepare IndustryOR snapshots into data/external/industryor.
+
+Source: https://github.com/CardinalOperations/IndustryOR
+Splits: train, dev, validation, test
+
+This script is offline-friendly:
+- it first looks for pre-existing local files,
+- then attempts git clone,
+- always writes a provenance report,
+- exits non-zero when retrieval is blocked.
+"""
 
 from __future__ import annotations
 
 import argparse
-import datetime as dt
 import json
 import shutil
 import subprocess
+import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,8 +33,8 @@ def _collect_json_candidates(repo_dir: Path, split: str) -> list[Path]:
 
 
 def main() -> None:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--force", action="store_true")
+    ap = argparse.ArgumentParser(description="Fetch/prepare IndustryOR snapshots.")
+    ap.add_argument("--force", action="store_true", help="Overwrite existing split JSONL files.")
     args = ap.parse_args()
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -40,34 +51,35 @@ def main() -> None:
             with p.open(encoding="utf-8") as fh:
                 row_counts[split] = sum(1 for _ in fh)
 
-    if len(found) < len(KNOWN_SPLITS):
+    if len(found) == len(KNOWN_SPLITS):
+        method = "preexisting_local_files"
+    else:
         if shutil.which("git") is None:
-            errors.append("git binary unavailable for clone")
+            msg = "git binary unavailable for clone"
+            print(f"[error] {msg}", file=sys.stderr)
+            errors.append(msg)
         else:
             repo_dir = OUT_DIR / "downloads" / "industryor_repo"
             repo_dir.parent.mkdir(parents=True, exist_ok=True)
             if repo_dir.exists():
                 shutil.rmtree(repo_dir)
-            if repo_dir.exists() and args.force:
-                shutil.rmtree(repo_dir)
             try:
-                if not repo_dir.exists():
-                    subprocess.run(
-                        ["git", "clone", "--depth", "1", REPO_URL, str(repo_dir)],
-                        check=True,
-                        stdout=subprocess.PIPE,
-                        stderr=subprocess.PIPE,
-                        text=True,
-                    )
-                    method = "git_clone"
-                else:
-                    method = "existing_repo"
+                subprocess.run(
+                    ["git", "clone", "--depth", "1", REPO_URL, str(repo_dir)],
+                    check=True,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    text=True,
+                )
+                method = "git_clone"
                 for split in KNOWN_SPLITS:
                     if split in found:
                         continue
                     cands = _collect_json_candidates(repo_dir, split)
                     if not cands:
-                        warnings.append(f"{split}: no matching split file found in repo")
+                        msg = f"{split}: no matching split file found in repo"
+                        print(f"[warn] {msg}", file=sys.stderr)
+                        warnings.append(msg)
                         continue
                     src = cands[0]
                     text = src.read_text(encoding="utf-8")
@@ -84,27 +96,33 @@ def main() -> None:
                     out.write_text("\n".join(lines) + ("\n" if lines else ""), encoding="utf-8")
                     row_counts[split] = len(lines)
                     found.append(split)
+                    print(f"[ok] {split}: {len(lines)} rows -> {out}")
             except subprocess.CalledProcessError as e:
-                errors.append(f"git clone failed: {e.stderr.strip() or e.stdout.strip()}")
+                msg = f"git clone failed: {e.stderr.strip() or e.stdout.strip()}"
+                print(f"[error] {msg}", file=sys.stderr)
+                errors.append(msg)
 
-    payload = {
+    provenance = {
+        "dataset": "IndustryOR",
         "source": "CardinalOperations/IndustryOR",
         "source_url": REPO_URL,
-        "timestamp_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "retrieval_method": method,
         "splits": sorted(set(found)),
         "row_counts": row_counts,
         "warnings": warnings,
         "errors": errors,
     }
-    META.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    META.write_text(json.dumps(provenance, indent=2), encoding="utf-8")
+    print(f"[ok] provenance written -> {META}")
 
     missing = sorted(set(KNOWN_SPLITS) - set(found))
     if missing:
-        print(json.dumps(payload, indent=2))
-        raise SystemExit(f"Blocked: unable to prepare IndustryOR splits: {missing}")
+        print(json.dumps(provenance, indent=2))
+        print(f"[warn] Could not prepare IndustryOR splits: {missing}", file=sys.stderr)
+        sys.exit(1)
 
-    print(json.dumps(payload, indent=2))
+    print(f"[ok] IndustryOR ready: {sorted(set(found))}")
 
 
 if __name__ == "__main__":

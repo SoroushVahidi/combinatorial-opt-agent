@@ -184,6 +184,42 @@ filled_values, filled_mentions, diagnostics = run_search_structured_grounding(
 print(diagnostics["counterfactual_grounding_refinement"])
 ```
 
+### New: `hierarchical_structured_grounding`
+
+`hierarchical_structured_grounding` adds a **region decomposition stage before
+value-to-slot assignment**. Unlike flat matching, it first partitions the query
+into semantic regions (objective, constraint, resource/capacity, demand, bound,
+per-unit, total, count, rate, generic), localizes each numeric mention to its
+region, infers slot-side coarse roles, and adds a deterministic
+region↔slot compatibility term to local candidate scores.
+
+Then it reuses structured search assignment on top of these region-aware local
+scores. This specifically targets:
+
+- objective coefficient vs resource bound confusion,
+- total vs per-unit swaps,
+- lower vs upper bound swaps,
+- demand vs capacity swaps,
+- count-like vs quantity-like swaps,
+- long prompts where unrelated numeric values compete globally.
+
+Assignment modes:
+
+- `hierarchical_structured_grounding` (full: regions + search),
+- `hierarchical_structured_grounding_no_regions` (ablation: search only),
+- `hierarchical_structured_grounding_no_search` (ablation: region-aware greedy).
+
+Run:
+
+```bash
+python tools/nlp4lp_downstream_utility.py \
+    --variant orig \
+    --baseline tfidf \
+    --assignment-mode hierarchical_structured_grounding
+```
+
+Implementation: `tools/hierarchical_structured_grounding.py`.
+
 ### Run in-process via Python
 
 ```python
