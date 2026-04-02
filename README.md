@@ -37,12 +37,16 @@ All results are benchmark-scoped (NLP4LP `orig` variant, 331 test queries).
 
 ### Downstream grounding
 
+Source: `results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv`
+(provenance: `results/eswa_revision/13_tables/deterministic_method_comparison_orig.csv`)
+
 | Method | Schema | Coverage | TypeMatch | Exact20 | InstReady |
 |--------|--------|----------|-----------|---------|-----------|
-| Typed Greedy | TF-IDF | 0.822 | 0.226 | 0.233 | 0.076 |
-| Typed Greedy | Oracle | 0.870 | 0.240 | 0.204 | 0.082 |
-| Opt-Role Repair | TF-IDF | 0.822 | 0.243 | 0.277 | — |
-| Constrained | TF-IDF | 0.772 | 0.195 | 0.328 | 0.027 |
+| Typed Greedy | TF-IDF | 0.8639 | 0.7513 | 0.1991 | 0.5257 |
+| Typed Greedy | BM25 | 0.8509 | 0.7386 | 0.2057 | 0.5196 |
+| Typed Greedy | Oracle | 0.9151 | 0.8030 | 0.1882 | 0.5650 |
+| Opt-Role Repair | TF-IDF | 0.8248 | 0.7036 | 0.2847 | 0.4411 |
+| Constrained | TF-IDF | 0.8112 | 0.7113 | 0.3293 | 0.4230 |
 
 ### Engineering-oriented validation subsets
 

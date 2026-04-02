@@ -45,23 +45,33 @@ infrastructure-complete but not benchmark-validated.
 
 ## 2. Active Limitations
 
-### 2.1 InstantiationReady rate is low (≤ 8.5 %)
+### 2.1 Downstream grounding leaves ~47% of queries not fully instantiation-ready
 
 **Symptom:** The joint metric `InstantiationReady` (coverage ≥ 0.8 **and**
-type_match ≥ 0.8) is ≤ 0.082 for all evaluated assignment methods.
+type_match ≥ 0.8) is 0.5257 for TF-IDF typed greedy — meaning roughly half of
+queries reach the joint threshold, but the remaining ~47% still fall short.
+
+**Canonical post-fix values** (source: `results/eswa_revision/13_tables/deterministic_method_comparison_orig.csv`):
 
 | Method | Schema R@1 | Coverage | TypeMatch | InstantiationReady |
 |--------|------------|----------|-----------|-------------------|
-| Typed Greedy (TF-IDF) | 0.906 | 0.822 | 0.226 | 0.076 |
-| Typed Greedy (Oracle) | 1.000 | 0.870 | 0.240 | 0.082 |
-| Constrained (TF-IDF) | 0.906 | 0.772 | 0.195 | 0.027 |
+| Typed Greedy (TF-IDF) | 0.9094 | 0.8639 | 0.7513 | 0.5257 |
+| Typed Greedy (Oracle) | 1.0000 | 0.9151 | 0.8030 | 0.5650 |
+| Constrained (TF-IDF) | 0.9094 | 0.8112 | 0.7113 | 0.4230 |
 
-**Root cause:** High coverage and high type accuracy are in tension.  Typed greedy
-fills more slots (high coverage) but misidentifies float types; constrained assignment
-improves type accuracy but leaves more slots empty.  Both fail the joint threshold.
+> **Historical note:** Earlier exploratory runs (pre float-type-match fix) showed
+> InstantiationReady ≤ 0.082 and TypeMatch ≈ 0.226.  Those values reflected five
+> code-level bugs since resolved (see Resolved Issues §3.2).  The table above
+> represents the current canonical state.
 
-**Status:** ⚠️ Open research problem.  Several code-level fixes have improved the
-situation (see Resolved Issues §3.2); the primary bottleneck remains unresolved.
+**Root cause (remaining):** The joint threshold requires both coverage ≥ 0.8 and
+TypeMatch ≥ 0.8 simultaneously.  Typed greedy fills most slots (Coverage 0.8639)
+and matches types well (TypeMatch 0.7513), but the intersection still leaves ~47%
+of queries below the joint bar.
+
+**Status:** ⚠️ Open research problem.  Float type-match bugs are resolved; the
+remaining gap is an inherent coverage × type-accuracy trade-off.  Further
+improvement requires additional grounding signal or relaxed threshold definitions.
 
 ---
 
