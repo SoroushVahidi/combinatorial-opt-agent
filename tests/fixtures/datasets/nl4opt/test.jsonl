@@ -1,0 +1,1 @@
+{"id":"nl4opt_test_1","query":"Minimize shipping cost from plants to stores.","schema_id":"transportation","scalar_gold_params":{"num_plants":3,"num_stores":5},"formulation_text":"min cost ..."}

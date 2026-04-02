@@ -1,0 +1,1 @@
+{"id":"cx_1","nl_query":"Schedule jobs with setup dependencies and due dates.","problem_family":"scheduling","model_mzn":"solve minimize tardiness;"}

@@ -1,6 +1,7 @@
 """Downstream utility demo for NLP4LP: retrieval enables parameter instantiation from NL.
 
-Deterministic, CPU-only: no LLMs, no torch, no solver dependency.
+Primarily deterministic and CPU-only. Optional LLM baselines are supported via
+OPENAI_API_KEY / GEMINI_API_KEY when selected as baseline methods.
 """
 from __future__ import annotations
 
@@ -17,6 +18,7 @@ from typing import Any, Iterable
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
+from tools.llm_baselines import LLMTwoStageBaseline
 
 NUM_TOKEN_RE = re.compile(r"[$]?\d[\d,]*(?:\.\d+)?%?")
 
@@ -5408,6 +5410,7 @@ def run_setting(
     out_dir: Path,
 ) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
+    llm_runner = getattr(rank_fn, "_llm_runner", None) if rank_fn is not None else None
 
     per_query_path = out_dir / f"nlp4lp_downstream_per_query_{variant}_{baseline_name}.csv"
     json_path = out_dir / f"nlp4lp_downstream_{variant}_{baseline_name}.json"
@@ -5908,6 +5911,34 @@ def run_setting(
                                 type_exact5_num[btype] += 1
                             if err <= 0.20:
                                 type_exact20_num[btype] += 1
+            elif assignment_mode in ("typed", "untyped") and llm_runner is not None and expected_scalar:
+                # Two-stage LLM baseline: stage2 slot filling from schema slot definitions.
+                llm_filled, _llm_n_filled, llm_type_matches = llm_runner.llm_assign(
+                    query=query,
+                    schema_id=pred_id,
+                    expected_scalar=expected_scalar,
+                )
+                for p, v in llm_filled.items():
+                    n_filled += 1
+                    filled[p] = v
+                    btype = _bucket_type(p)
+                    type_filled_total[btype] += 1
+                    type_filled_q[btype] += 1
+                    if schema_hit and _is_scalar(gold_params.get(p)):
+                        try:
+                            gold_val = float(gold_params[p])
+                            err = _rel_err(float(v), gold_val)
+                            comparable_errs.append(err)
+                            if btype in type_names:
+                                type_exact5_den[btype] += 1
+                                type_exact20_den[btype] += 1
+                                if err <= 0.05:
+                                    type_exact5_num[btype] += 1
+                                if err <= 0.20:
+                                    type_exact20_num[btype] += 1
+                        except Exception:
+                            pass
+                type_matches += llm_type_matches
             elif assignment_mode == "constrained" and expected_scalar:
                 # Global constrained assignment over mention-slot pairs.
                 mention_records = _extract_num_mentions(query, variant)
@@ -6126,6 +6157,13 @@ def run_setting(
         _upsert_summary_row(summary_path, agg_rand)
         _upsert_types_rows(types_summary_path, types_rand)
 
+    if llm_runner is not None:
+        est = llm_runner.cost_estimate_usd()
+        print(
+            f"[{baseline_name}] token usage prompt={llm_runner.usage.prompt_tokens} "
+            f"completion={llm_runner.usage.completion_tokens} estimated_cost_usd={est:.6f}"
+        )
+
 
 def run_single_setting(
     variant: str,
@@ -6183,6 +6221,15 @@ def run_single_setting(
             use_hierarchy=(baseline_arg == "bm25_hierarchical_acceptance_rerank"),
             variant=variant,
         )
+    elif baseline_arg in ("openai", "gemini"):
+        llm_ranker = LLMTwoStageBaseline(
+            method=baseline_arg,
+            catalog=catalog,
+            expected_type_fn=_expected_type,
+        )
+        def rank_fn(query: str, top_k: int = 1) -> list[tuple[str, float]]:
+            return llm_ranker.rank(query, top_k=top_k)
+        setattr(rank_fn, "_llm_runner", llm_ranker)
     else:
         if baseline_arg not in ("bm25", "tfidf", "lsa"):
             return False
@@ -6252,7 +6299,13 @@ def main() -> None:
         "--baseline",
         type=str,
         default="tfidf",
-        help="One of: bm25, tfidf, lsa, oracle; or tfidf_acceptance_rerank, tfidf_hierarchical_acceptance_rerank, bm25_acceptance_rerank, bm25_hierarchical_acceptance_rerank",
+        help="One of: bm25, tfidf, lsa, openai, gemini, oracle; or tfidf_acceptance_rerank, tfidf_hierarchical_acceptance_rerank, bm25_acceptance_rerank, bm25_hierarchical_acceptance_rerank",
+    )
+    p.add_argument(
+        "--method",
+        type=str,
+        default=None,
+        help="Alias of --baseline (e.g., --method openai / --method gemini).",
     )
     p.add_argument("--k", type=int, default=1)
     p.add_argument("--acceptance-k", type=int, default=10, help="Top-k retrieval candidates for acceptance reranking (default 10)")
@@ -6277,6 +6330,8 @@ def main() -> None:
         ),
     )
     args = p.parse_args()
+    if args.method:
+        args.baseline = args.method
 
     if args.k != 1:
         raise SystemExit("This demo currently supports --k 1 only (top-1 schema selection).")
@@ -6320,9 +6375,18 @@ def main() -> None:
             use_hierarchy=(args.baseline == "bm25_hierarchical_acceptance_rerank"),
             variant=args.variant,
         )
+    elif args.baseline in ("openai", "gemini"):
+        llm_ranker = LLMTwoStageBaseline(
+            method=args.baseline,
+            catalog=catalog,
+            expected_type_fn=_expected_type,
+        )
+        def rank_fn(query: str, top_k: int = 1) -> list[tuple[str, float]]:
+            return llm_ranker.rank(query, top_k=top_k)
+        setattr(rank_fn, "_llm_runner", llm_ranker)
     else:
         if args.baseline not in ("bm25", "tfidf", "lsa"):
-            raise SystemExit(f"Unknown baseline: {args.baseline}. Use bm25, tfidf, lsa, oracle, or *_acceptance_rerank / *_hierarchical_acceptance_rerank.")
+            raise SystemExit(f"Unknown baseline: {args.baseline}. Use bm25, tfidf, lsa, openai, gemini, oracle, or *_acceptance_rerank / *_hierarchical_acceptance_rerank.")
         from retrieval.baselines import get_baseline
         baseline = get_baseline(args.baseline)
         baseline.fit(catalog)

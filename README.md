@@ -280,6 +280,7 @@ for the main benchmark metrics used in Table 1.
 | **Training** | [training/README.md](training/README.md) — retrieval fine-tuning; mention-slot scorer in `training/` |
 | **Evaluation / paper** | `docs/BASELINE_TABLE_CLI.md`, `docs/PATCH_LEAK_FREE_EVAL.md`, and other experiment docs in `docs/` |
 | **Learning (NLP4LP)** | [docs/learning_runs/](docs/learning_runs/README.md) — benchmark-safe splits, real-data-only check, experiment records |
+| **Dataset adapters (multi-benchmark)** | [docs/dataset_integration_report.md](docs/dataset_integration_report.md) — NL4Opt/Text2Zinc/OptMATH/ComplexOR integration, download scripts, capability matrix |
 
 Private data (GAMSPy models, license-related files) live under **`data_private/`** (gitignored). Manifests and catalogs are in `data_private/gams_models/manifests/` and `catalog/`.
 

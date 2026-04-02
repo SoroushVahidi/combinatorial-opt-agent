@@ -249,6 +249,11 @@ train_retrieval_*.err
 training_latest_status.txt
 
 data/external/resocratic
+data/external/nl4opt/
+data/external/text2zinc/
+data/external/optmath/
+data/external/complexor/
+data/external/*/downloads/
 
 # Local audit and cleanup outputs (do not commit)
 learning_dataset_access_audit.csv
