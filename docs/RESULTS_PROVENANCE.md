@@ -88,6 +88,8 @@ Two-stage LLM baselines (`--method openai` / `gemini` / `mistral`) write **auxil
 
 Treat any LLM CSV as **non-interchangeable** with Table 1 without reading column definitions and the rerun report. **Absence** of `results/rerun/mistral/…` (or incomplete row counts) means **no full Mistral benchmark claim**.
 
+**2026-04-03 (Wulver):** Slurm jobs **902367** and **902368** were submitted for an **orig-only** Mistral baseline but **failed immediately** because the batch job environment had **no** `MISTRAL_API_KEY` (no preflight JSON, no per-query CSVs). This is **not** a Mistral API auth failure. Evidence: [`docs/provenance/mistral_wulver_submission_2026-04-03.md`](provenance/mistral_wulver_submission_2026-04-03.md) and gitignored `logs/learning/run_mistral_llm_baselines_902367.out` / `_902368.out` on the cluster.
+
 ---
 
 ## Canonical engineering-oriented validation metrics
@@ -149,6 +151,7 @@ current EAAI manuscript:
 
 | Blocker | Impact |
 |---------|--------|
+| `MISTRAL_API_KEY` not exported into Slurm jobs | Mistral batch exits immediately; use `sbatch --export=ALL` from a shell with the key, `.env`, or `MISTRAL_API_KEY_FILE` (see [`MISTRAL_RERUN_REPORT.md`](MISTRAL_RERUN_REPORT.md)) |
 | `udell-lab/NLP4LP` gated on HuggingFace | Downstream metrics (TypeMatch, Exact20, InstReady) require `HF_TOKEN` |
 | GPU / `torch` required | Learned retrieval fine-tuning cannot run CPU-only |
 | No external LP/ILP solver | Solver-backed results use SciPy HiGHS shim (restricted to 20-instance subset) |

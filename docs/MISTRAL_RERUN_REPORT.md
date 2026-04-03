@@ -23,7 +23,7 @@
 - **Full paper-style sweep (default):** runs **`orig` → `noisy` → `short`** (same as OpenAI/Gemini batches). Wall time **`24:00:00`** on `cpu` — increase `#SBATCH --time` if your site quota allows and runs hit timeouts.
 - **Orig-only (legacy):** `MISTRAL_ORIG_ONLY=1` → skips `noisy`/`short` (preflight estimate uses 1 variant).
 - **Resume:** `MISTRAL_RESUME=1` → passes `--resume` to the utility (partial per-query CSV must exist).
-- **Partition:** defaults to **`cpu`** (API-only workload; adjust `#SBATCH` for your site).
+- **Partition / QoS (Wulver):** **`gpu`** + **`--gres=gpu:1`** + **`qos=standard`** — the cluster does not accept a `cpu` partition name for this workflow; the job is still **API-bound** (GPU unused). For other sites, edit `#SBATCH` lines in `batch/learning/run_mistral_llm_baselines.sbatch` to match local `sinfo`.
 
 ### 1.2 Preflight (`scripts/mistral_preflight.py`)
 
@@ -49,29 +49,31 @@
 
 ## 2. Exact commands
 
-**Local / login node — smoke (5 queries, orig):**
+**Wulver — smoke (5 queries, orig):**
 
 ```bash
-export MISTRAL_API_KEY=...   # or MISTRAL_API_KEY_FILE in sbatch
+export MISTRAL_API_KEY=...   # or use repo .env / MISTRAL_API_KEY_FILE per batch script header
 export MISTRAL_SMOKE_TEST=1
-sbatch batch/learning/run_mistral_llm_baselines.sbatch
+sbatch --export=ALL batch/learning/run_mistral_llm_baselines.sbatch
 ```
 
-**Full run — all three variants (default; after smoke passes):**
+**Wulver — full run — all three variants (default; after smoke passes):**
 
 ```bash
-unset MISTRAL_SMOKE_TEST
+unset MISTRAL_SMOKE_TEST MISTRAL_ORIG_ONLY
 # optional: export MISTRAL_RESUME=1
-sbatch batch/learning/run_mistral_llm_baselines.sbatch
+sbatch --export=ALL batch/learning/run_mistral_llm_baselines.sbatch
 ```
 
-**Orig-only (cheaper / legacy):**
+**Wulver — orig-only (cheaper first full orig slice):**
 
 ```bash
 unset MISTRAL_SMOKE_TEST
 export MISTRAL_ORIG_ONLY=1
-sbatch batch/learning/run_mistral_llm_baselines.sbatch
+sbatch --export=ALL batch/learning/run_mistral_llm_baselines.sbatch
 ```
+
+On sites where the scheduler forwards your login environment by default, plain `sbatch` may work; **Wulver submissions in Apr 2026 required `--export=ALL`** when the key was only in the interactive shell.
 
 **Direct CLI (after preflight or with a valid key):**
 
@@ -105,19 +107,23 @@ Expected: preflight exits **1** with a clear missing-key message when the key is
 
 ## 5. Execution register (honest status)
 
-Update this section when a real Wulver (or other) job finishes. **Do not mark “complete” without row counts and logs.**
+**Last registration update:** 2026-04-03 (Wulver `login01`). Detailed submission log: [`docs/provenance/mistral_wulver_submission_2026-04-03.md`](provenance/mistral_wulver_submission_2026-04-03.md).
 
 | Field | Value |
 |------|--------|
-| **Automation / CI** | **Cannot run Slurm or long API jobs from the Cursor agent shell** on this cluster (fork/thread limits). A maintainer must `sbatch` from a Wulver login or compute session. |
-| **Provider used (priority)** | **1)** Mistral (this doc). **2)** If Mistral preflight fails (401/403/429), use **OpenAI** (`batch/learning/run_openai_llm_baselines.sbatch`) or **Gemini** only if quota is known-good — **do not switch silently**; record failure JSON + reason here. **3)** Avoid Gemini **free tier** as first choice when logs already show `limit: 0` / hard quota (see [`GEMINI_RERUN_REPORT.md`](GEMINI_RERUN_REPORT.md)). |
-| **Smoke-test job ID** | *(pending — fill after `MISTRAL_SMOKE_TEST=1`)* |
-| **Smoke outcome** | *(pending)* |
-| **Full-run job ID** | *(pending)* |
-| **Full-run outcome** | *(pending: complete / partial / blocked)* |
-| **Model resolved** | From `mistral_sbatch_meta_<JOBID>.json` or `MISTRAL_MODEL` / yaml |
-| **Variants completed** | Expect `orig`, `noisy`, `short` per-query files under `NLP4LP_OUTPUT_DIR` |
-| **Artifact root** | `results/rerun/mistral/run_<JOBID>/` |
+| **Latest classification** | **Blocked** — jobs exited before Mistral API preflight (no key in Slurm job environment). |
+| **Job IDs (2026-04-03)** | **902367** — `sbatch` without `--export=ALL`; **902368** — `sbatch --export=ALL` (submitting shell still had no `MISTRAL_API_KEY`). |
+| **Submission commands** | `export MISTRAL_ORIG_ONLY=1 && sbatch batch/learning/run_mistral_llm_baselines.sbatch` → 902367; same + `--export=ALL` → 902368. |
+| **Run scope requested** | **Orig-only** (`MISTRAL_ORIG_ONLY=1`) — chosen as first real attempt (331 queries × 2 stages) to maximize chance of a **complete** outcome vs a 3-variant sweep. |
+| **Preflight passed?** | **No** — batch script failed at key check. |
+| **Model resolved** | N/A (no `preflight_*.json` written). Default would be `mistral-small-latest` from yaml / `MISTRAL_MODEL`. |
+| **Slurm logs (gitignored)** | `logs/learning/run_mistral_llm_baselines_902367.out`, `_902368.out` — both report `ERROR: MISTRAL_API_KEY is not set.` |
+| **Infrastructure fix same day** | Invalid Slurm partition `cpu` on Wulver → batch file updated to **`gpu`** + **`gres=gpu:1`** + **`qos=standard`** (matches OpenAI/Gemini batches). |
+| **Smoke-test job ID** | *(not run in this batch; use `MISTRAL_SMOKE_TEST=1` if desired)* |
+| **Full 3-variant job ID** | *(pending — submit with key present; omit `MISTRAL_ORIG_ONLY` for default orig→noisy→short)* |
+| **Provider priority (unchanged)** | **1)** Mistral. **2)** If Mistral preflight fails (401/403/429), **OpenAI** or **Gemini** only with explicit doc update — **no silent switch**. **3)** Avoid Gemini free tier when logs show hard zero quota ([`GEMINI_RERUN_REPORT.md`](GEMINI_RERUN_REPORT.md)). |
+
+**Next maintainer step:** On Wulver, export a real `MISTRAL_API_KEY` (or use `.env` / `MISTRAL_API_KEY_FILE`), then `sbatch --export=ALL …`. After a job **completes**, fill row counts and point `Artifact root` to `results/rerun/mistral/run_<JOBID>/`.
 
 ### 5.1 Security note
 

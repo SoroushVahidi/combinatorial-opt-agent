@@ -14,5 +14,6 @@ This folder holds **historical audits and internal reports** that are useful for
 | `repo_cleanup_archived_paths.txt` / `repo_cleanup_deleted_paths.txt` | Machine-generated path lists from a cleanup pass (regenerable) |
 | `training_latest_status.txt` | Training job status snapshot (historical) |
 | `train_retrieval_850246.out` | Example Slurm/retrieval log retained for traceability |
+| `mistral_wulver_submission_2026-04-03.md` | Wulver `sbatch` job IDs **902367** / **902368** — Mistral baseline **blocked** (no `MISTRAL_API_KEY` in job env); not a completed benchmark |
 
 Internal decision logs and manuscript comparison narratives live under [`docs/archive_internal_status/`](../archive_internal_status/README.md).

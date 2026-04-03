@@ -1,11 +1,21 @@
 #!/bin/bash
+# Mistral NLP4LP two-stage baseline. Requires MISTRAL_API_KEY in the job environment.
+# Wulver: submit from a login node where the key is set, e.g.:
+#   export MISTRAL_API_KEY=...   # or populate repo .env (gitignored) / MISTRAL_API_KEY_FILE
+#   export MISTRAL_ORIG_ONLY=1   # optional orig-only (cheaper first run)
+#   sbatch --export=ALL batch/learning/run_mistral_llm_baselines.sbatch
+# If you omit --export=ALL and have no .env on the node, the job may exit immediately
+# with "MISTRAL_API_KEY is not set" (see docs/provenance/mistral_wulver_submission_2026-04-03.md).
 #SBATCH --job-name=mistral_nlp4lp
 #SBATCH --output=logs/learning/run_mistral_llm_baselines_%j.out
 #SBATCH --error=logs/learning/run_mistral_llm_baselines_%j.err
 #SBATCH --time=24:00:00
 #SBATCH --mem=12G
 #SBATCH --cpus-per-task=4
-#SBATCH --partition=cpu
+# Wulver: `cpu` is not a valid partition name — match OpenAI/Gemini LLM batches (API-only but same queue).
+#SBATCH --partition=gpu
+#SBATCH --gres=gpu:1
+#SBATCH --qos=standard
 
 set -euo pipefail
 

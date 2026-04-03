@@ -1,6 +1,6 @@
 # Current repository status (reviewer-facing)
 
-**Last updated:** 2026-04-03 (Mistral batch defaults + rerun docs)
+**Last updated:** 2026-04-03 (Mistral Wulver submission attempts registered — blocked on job env key)
 
 This file is the **single concise summary** of what this codebase claims today, what is validated,
 and where the evidence lives. It complements **[`docs/EAAI_SOURCE_OF_TRUTH.md`](EAAI_SOURCE_OF_TRUTH.md)**
@@ -49,7 +49,7 @@ and where the evidence lives. It complements **[`docs/EAAI_SOURCE_OF_TRUTH.md`](
 | **Web demo (`app.py`)** | **Demo / UX** | Not the main evaluated pipeline; may log queries locally |
 | **Open-domain / LLM formulation paths** | **Demo / auxiliary** | Outside main NLP4LP benchmark unless explicitly documented otherwise |
 | **Learned retrieval fine-tuning** | **Experimental** | Does not beat rule baseline on held-out eval (see `KNOWN_ISSUES.md`) |
-| **Optional LLM baselines (OpenAI / Gemini / Mistral)** | **Optional tooling** | Requires API keys; **not** in camera-ready Tables 1–5. OpenAI downstream artifacts exist under `results/paper/` for some variants; Gemini rerun infra — [`docs/GEMINI_RERUN_REPORT.md`](GEMINI_RERUN_REPORT.md); **Mistral** wiring (preflight + Slurm + `--method mistral`) — [`docs/MISTRAL_RERUN_REPORT.md`](MISTRAL_RERUN_REPORT.md). Do not assume completion without matching `results/rerun/…` or documented output artifacts. |
+| **Optional LLM baselines (OpenAI / Gemini / Mistral)** | **Optional tooling** | Requires API keys; **not** in camera-ready Tables 1–5. OpenAI downstream artifacts exist under `results/paper/` for some variants; Gemini rerun infra — [`docs/GEMINI_RERUN_REPORT.md`](GEMINI_RERUN_REPORT.md); **Mistral** wiring — [`docs/MISTRAL_RERUN_REPORT.md`](MISTRAL_RERUN_REPORT.md). **2026-04-03:** real Wulver `sbatch` jobs **902367** / **902368** **did not** produce benchmark outputs (**blocked**: `MISTRAL_API_KEY` missing in job env — see [`docs/provenance/mistral_wulver_submission_2026-04-03.md`](provenance/mistral_wulver_submission_2026-04-03.md)). |
 | **Text2Zinc & CP-Bench (external validation)** | **Integration / adapters only** | Staging + `InternalExample` adapters; **not** paper headline metrics. Text2Zinc: gated HF. CP-Bench: public DCP-Bench-Open JSONL. See [`DATASET_EXPANSION_STATUS.md`](DATASET_EXPANSION_STATUS.md). |
 
 ---
