@@ -241,6 +241,8 @@ results/*
 # Exception: Gemini (and other) explicit rerun bundles under results/rerun/
 !results/rerun/
 !results/rerun/**
+# Scratch exports under a run (partial CSV/JSON/interrupt); not curated rerun bundles
+results/rerun/gemini/*/paper/
 
 # Gradio / web UI runtime state
 .gradio/
