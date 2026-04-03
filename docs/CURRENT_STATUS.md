@@ -1,6 +1,6 @@
 # Current repository status (reviewer-facing)
 
-**Last updated:** 2026-04-02 (documentation organization pass)
+**Last updated:** 2026-04-03 (Mistral batch defaults + rerun docs)
 
 This file is the **single concise summary** of what this codebase claims today, what is validated,
 and where the evidence lives. It complements **[`docs/EAAI_SOURCE_OF_TRUTH.md`](EAAI_SOURCE_OF_TRUTH.md)**

@@ -19,9 +19,10 @@
 - **Key:** `MISTRAL_API_KEY`, or `MISTRAL_API_KEY_FILE`, or repo `.env`.
 - **Order:** mandatory `scripts/mistral_preflight.py` → `MISTRAL_SKIP_PREFLIGHT=1` → downstream runs.
 - **Outputs:** `MISTRAL_RERUN_ROOT` or default `results/rerun/mistral/run_${SLURM_JOB_ID}/` (`NLP4LP_OUTPUT_DIR` defaults to `…/paper`).
-- **Smoke:** `MISTRAL_SMOKE_TEST=1` → `orig`, `--max-queries 5`, exit 0 after smoke.
-- **Orig-first full run (default):** runs **`orig` only** unless `MISTRAL_RUN_ALL_VARIANTS=1` (then `noisy` and `short` follow).
-- **Resume:** `MISTRAL_RESUME=1` → passes `--resume` to the utility.
+- **Smoke:** `MISTRAL_SMOKE_TEST=1` → `orig`, `--max-queries 5`, exit 0 after smoke (still runs preflight first).
+- **Full paper-style sweep (default):** runs **`orig` → `noisy` → `short`** (same as OpenAI/Gemini batches). Wall time **`24:00:00`** on `cpu` — increase `#SBATCH --time` if your site quota allows and runs hit timeouts.
+- **Orig-only (legacy):** `MISTRAL_ORIG_ONLY=1` → skips `noisy`/`short` (preflight estimate uses 1 variant).
+- **Resume:** `MISTRAL_RESUME=1` → passes `--resume` to the utility (partial per-query CSV must exist).
 - **Partition:** defaults to **`cpu`** (API-only workload; adjust `#SBATCH` for your site).
 
 ### 1.2 Preflight (`scripts/mistral_preflight.py`)
@@ -56,7 +57,7 @@ export MISTRAL_SMOKE_TEST=1
 sbatch batch/learning/run_mistral_llm_baselines.sbatch
 ```
 
-**Orig-only full run (331 queries, default batch behavior after unsetting smoke):**
+**Full run — all three variants (default; after smoke passes):**
 
 ```bash
 unset MISTRAL_SMOKE_TEST
@@ -64,10 +65,11 @@ unset MISTRAL_SMOKE_TEST
 sbatch batch/learning/run_mistral_llm_baselines.sbatch
 ```
 
-**Optional — all three variants:**
+**Orig-only (cheaper / legacy):**
 
 ```bash
-export MISTRAL_RUN_ALL_VARIANTS=1
+unset MISTRAL_SMOKE_TEST
+export MISTRAL_ORIG_ONLY=1
 sbatch batch/learning/run_mistral_llm_baselines.sbatch
 ```
 
@@ -98,3 +100,35 @@ unset MISTRAL_API_KEY; python scripts/mistral_preflight.py; echo exit=$?
 ```
 
 Expected: preflight exits **1** with a clear missing-key message when the key is unset.
+
+---
+
+## 5. Execution register (honest status)
+
+Update this section when a real Wulver (or other) job finishes. **Do not mark “complete” without row counts and logs.**
+
+| Field | Value |
+|------|--------|
+| **Automation / CI** | **Cannot run Slurm or long API jobs from the Cursor agent shell** on this cluster (fork/thread limits). A maintainer must `sbatch` from a Wulver login or compute session. |
+| **Provider used (priority)** | **1)** Mistral (this doc). **2)** If Mistral preflight fails (401/403/429), use **OpenAI** (`batch/learning/run_openai_llm_baselines.sbatch`) or **Gemini** only if quota is known-good — **do not switch silently**; record failure JSON + reason here. **3)** Avoid Gemini **free tier** as first choice when logs already show `limit: 0` / hard quota (see [`GEMINI_RERUN_REPORT.md`](GEMINI_RERUN_REPORT.md)). |
+| **Smoke-test job ID** | *(pending — fill after `MISTRAL_SMOKE_TEST=1`)* |
+| **Smoke outcome** | *(pending)* |
+| **Full-run job ID** | *(pending)* |
+| **Full-run outcome** | *(pending: complete / partial / blocked)* |
+| **Model resolved** | From `mistral_sbatch_meta_<JOBID>.json` or `MISTRAL_MODEL` / yaml |
+| **Variants completed** | Expect `orig`, `noisy`, `short` per-query files under `NLP4LP_OUTPUT_DIR` |
+| **Artifact root** | `results/rerun/mistral/run_<JOBID>/` |
+
+### 5.1 Security note
+
+Use **`MISTRAL_API_KEY_FILE`** or Slurm **`--export-file`** for secrets; avoid echoing keys into shared shell transcripts. Rotate any key that may have leaked.
+
+---
+
+## 6. Provider fallback (if Mistral blocks)
+
+1. Capture **`preflight_*.json`** and Slurm **`.err`** from the failed Mistral job.
+2. If failure is **auth** (401/403) or **hard quota** (429 with no retry path), try **OpenAI** with the existing GPU batch script (requires `OPENAI_API_KEY` and HF access for NLP4LP).
+3. If trying **Gemini**, run **`scripts/gemini_preflight.py`** first; if exit **2** (zero quota) or repeated hard 429, **stop** and document — do not claim a benchmark attempt succeeded.
+
+Each provider attempt gets its own `results/rerun/<provider>/run_<JOBID>/` tree and a short note under the Gemini/Mistral report (or a future unified `LLM_RERUN_LOG.md` if you merge logs).

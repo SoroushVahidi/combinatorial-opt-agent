@@ -167,4 +167,4 @@ To run the **interactive** downstream utility locally (all variants / methods):
 python tools/nlp4lp_downstream_utility.py --variant orig --baseline tfidf
 ```
 
-**Optional LLM baselines** require API keys and use **`batch/learning/run_*_llm_baselines.sbatch`** on Slurm or direct CLI with `--method openai` / `gemini` / `mistral`. Gemini: **`docs/GEMINI_RERUN_REPORT.md`**. Mistral (orig-first batch, preflight): **`docs/MISTRAL_RERUN_REPORT.md`**.
+**Optional LLM baselines** require API keys and use **`batch/learning/run_*_llm_baselines.sbatch`** on Slurm or direct CLI with `--method openai` / `gemini` / `mistral`. **Mistral** batch defaults to **`orig` + `noisy` + `short`** (set `MISTRAL_ORIG_ONLY=1` for orig-only). Docs: **`docs/GEMINI_RERUN_REPORT.md`**, **`docs/MISTRAL_RERUN_REPORT.md`**.

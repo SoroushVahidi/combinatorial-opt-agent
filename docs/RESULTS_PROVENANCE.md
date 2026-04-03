@@ -1,7 +1,7 @@
 # Results Provenance
 
 **Status:** Authoritative — canonical evidence source for the EAAI manuscript  
-**Last updated:** 2026-04-02
+**Last updated:** 2026-04-03
 
 This document records the canonical artifact sources, benchmark denominators, and
 provenance chain for all results cited in the EAAI manuscript.  It is the single
@@ -75,6 +75,18 @@ Downstream metrics require the gated `udell-lab/NLP4LP` gold parameter data.
 
 **Note:** Downstream metrics were produced with HF gold data access.
 A fresh full rerun requires `HF_TOKEN` with approved access to `udell-lab/NLP4LP`.
+
+### Optional LLM baseline reruns (not camera-ready Tables 1–5)
+
+Two-stage LLM baselines (`--method openai` / `gemini` / `mistral`) write **auxiliary** CSV/JSON under a chosen output directory (historically `results/paper/` for some OpenAI runs; newer reruns use **`results/rerun/<provider>/run_<SLURM_JOB_ID>/paper/`**).
+
+| Provider | Provenance doc | Typical committed evidence (if a run completes) |
+|----------|----------------|--------------------------------------------------|
+| OpenAI | (historical) | `results/paper/nlp4lp_downstream_*_openai.*` (partial set; not headline Table 1) |
+| Gemini | [`docs/GEMINI_RERUN_REPORT.md`](GEMINI_RERUN_REPORT.md) | `results/rerun/gemini/run_*/preflight_*.json`, per-query CSVs, optional interrupt JSON |
+| Mistral | [`docs/MISTRAL_RERUN_REPORT.md`](MISTRAL_RERUN_REPORT.md) | `results/rerun/mistral/run_*/preflight_*.json`, `mistral_sbatch_meta_*.json`, per-query `*_mistral*.csv`, optional `*.interrupt.json` |
+
+Treat any LLM CSV as **non-interchangeable** with Table 1 without reading column definitions and the rerun report. **Absence** of `results/rerun/mistral/…` (or incomplete row counts) means **no full Mistral benchmark claim**.
 
 ---
 

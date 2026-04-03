@@ -40,7 +40,7 @@
 - **Dense retrieval (E5/BGE) as primary results** — supplementary; TF-IDF is the main retrieval baseline in the paper.  
 - **Learned retrieval beating the rule baseline** on held-out eval — it does not ([`docs/KNOWN_ISSUES.md`](docs/KNOWN_ISSUES.md)).  
 - **Gurobi** for paper numbers — Table 4 uses **SciPy HiGHS** on 20 instances.  
-- **Mistral** — not wired in this repo; optional APIs documented are **OpenAI** and **Gemini** only.
+- **Completed Mistral (or other) LLM benchmark reruns** — **not** claimed unless committed artifacts under `results/rerun/…` match [`docs/MISTRAL_RERUN_REPORT.md`](docs/MISTRAL_RERUN_REPORT.md) / [`docs/GEMINI_RERUN_REPORT.md`](docs/GEMINI_RERUN_REPORT.md).
 
 ---
 
@@ -52,7 +52,7 @@
 | **Structural checks** | `python scripts/paper/run_repo_validation.py`, pytest |
 | **Recompute NLP4LP metrics** | Gated HF dataset `udell-lab/NLP4LP` + `HF_TOKEN` |
 | **EAAI subset experiments** | `tools/run_eaai_*.py` — [`docs/HOW_TO_REPRODUCE.md`](docs/HOW_TO_REPRODUCE.md) |
-| **Optional LLM baselines** | `OPENAI_API_KEY` / `GEMINI_API_KEY` |
+| **Optional LLM baselines** | `OPENAI_API_KEY` / `GEMINI_API_KEY` / `MISTRAL_API_KEY` (see provider docs below) |
 | **HPC (NJIT Wulver)** | [`docs/wulver.md`](docs/wulver.md) |
 
 ---
@@ -63,7 +63,7 @@
 |----------|------|----------------|
 | **OpenAI** | `tools/llm_baselines.py`, `batch/learning/run_openai_llm_baselines.sbatch` | Historical downstream artifacts under `results/paper/` |
 | **Gemini** | `google.genai`, Slurm batch, `scripts/gemini_preflight.py` | **Infra stabilized**; **full benchmark completion not asserted** without your `results/rerun/gemini/…` artifacts |
-| **Mistral** | — | **Not present** in configs / baseline paths |
+| **Mistral** | `tools/llm_baselines.py`, `batch/learning/run_mistral_llm_baselines.sbatch`, `scripts/mistral_preflight.py` | **Infra present**; **full completion not asserted** without `results/rerun/mistral/…` — [`docs/MISTRAL_RERUN_REPORT.md`](docs/MISTRAL_RERUN_REPORT.md) |
 
 Camera-ready **Tables 1–5** remain manuscript authority; LLM CSVs are **auxiliary**.
 
