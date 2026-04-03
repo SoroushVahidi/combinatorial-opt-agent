@@ -13,6 +13,12 @@ openai:
 #   2) gemini-2.0-flash-lite
 #   3) gemini-2.5-flash       (often higher caps than flash-lite when billing enabled)
 #   4) gemini-2.0-flash       (may show limit:0 on free tier for some projects)
+# Mistral chat API (see docs/MISTRAL_RERUN_REPORT.md). Requires mistralai + MISTRAL_API_KEY.
+mistral:
+  model: mistral-small-latest
+  temperature: 0.0
+  max_tokens: 1200
+
 gemini:
   model: gemini-2.5-flash-lite
   fallback_models:
@@ -37,3 +43,7 @@ pricing_usd_per_1k_tokens:
   gemini:
     input_per_1k: 0.00035
     output_per_1k: 0.00105
+  # Placeholder — update from Mistral pricing for your model/tier.
+  mistral:
+    input_per_1k: 0.0
+    output_per_1k: 0.0

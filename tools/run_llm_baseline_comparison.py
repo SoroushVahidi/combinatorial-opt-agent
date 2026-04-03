@@ -23,7 +23,7 @@ if str(ROOT) not in sys.path:
 from tools import nlp4lp_downstream_utility as dutil
 
 
-METHODS = ["tfidf", "bm25", "lsa", "openai", "gemini"]
+METHODS = ["tfidf", "bm25", "lsa", "openai", "gemini", "mistral"]
 VARIANTS = ["orig", "noisy", "short"]
 
 
@@ -70,6 +70,9 @@ def main() -> None:
                     continue
                 if method == "gemini" and not os.environ.get("GEMINI_API_KEY"):
                     print("Skipping gemini: GEMINI_API_KEY not set", file=sys.stderr)
+                    continue
+                if method == "mistral" and not os.environ.get("MISTRAL_API_KEY"):
+                    print("Skipping mistral: MISTRAL_API_KEY not set", file=sys.stderr)
                     continue
                 if method == "gemini":
                     from tools.llm_baselines import GeminiHardQuotaError, gemini_baseline_should_run

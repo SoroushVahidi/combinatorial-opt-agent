@@ -38,6 +38,7 @@ DEFAULT_CACHE_DIR = ROOT / "cache" / "llm_baselines"
 DEFAULT_GEMINI_MODEL_ARTIFACT = ROOT / "results" / "llm_baselines" / "gemini_selected_model.json"
 # Default when YAML/env omit model — prefer free-tier-friendly id; usability is account-specific (run preflight).
 DEFAULT_GEMINI_MODEL = "gemini-2.5-flash-lite"
+DEFAULT_MISTRAL_MODEL = "mistral-small-latest"
 
 
 class GeminiHardQuotaError(RuntimeError):
@@ -133,6 +134,36 @@ def is_gemini_transient_quota_or_rate_limit(exc: BaseException) -> bool:
     return kind == "rate_limited"
 
 
+def classify_mistral_api_failure(exc: BaseException) -> str:
+    """Mistral HTTP failures: rate_limited (429), auth (401/403), other."""
+    try:
+        from mistralai.client.errors import MistralError
+
+        if isinstance(exc, MistralError):
+            code = int(getattr(exc, "status_code", 0) or 0)
+            if code == 429:
+                return "rate_limited"
+            if code in (401, 403):
+                return "auth"
+    except Exception:
+        pass
+    return "other"
+
+
+def is_mistral_interruptible_api_error(exc: BaseException) -> bool:
+    """True when we should checkpoint partial NLP4LP rows (rate limit / auth)."""
+    return classify_mistral_api_failure(exc) in ("rate_limited", "auth")
+
+
+def resolve_mistral_model_from_config(config_path: Path = DEFAULT_CONFIG_PATH) -> str:
+    cfg = _load_yaml_config(config_path)
+    ms = (cfg.get("mistral") or {}) if isinstance(cfg, dict) else {}
+    raw = (os.environ.get("MISTRAL_MODEL") or "").strip() or (
+        (ms.get("model") if isinstance(ms, dict) else None) or DEFAULT_MISTRAL_MODEL
+    )
+    return str(raw).strip()
+
+
 def _normalize_gemini_model_name(name: str) -> str:
     n = (name or "").strip()
     if n.startswith("models/"):
@@ -220,7 +251,7 @@ class LLMTwoStageBaseline:
         cache_dir: Path = DEFAULT_CACHE_DIR,
         config_path: Path = DEFAULT_CONFIG_PATH,
     ) -> None:
-        if method not in ("openai", "gemini"):
+        if method not in ("openai", "gemini", "mistral"):
             raise ValueError(f"Unsupported LLM baseline: {method}")
         self.method = method
         self.catalog = catalog
@@ -242,6 +273,13 @@ class LLMTwoStageBaseline:
             if not api_key:
                 raise RuntimeError("OPENAI_API_KEY is not set")
             self.client = OpenAI(api_key=api_key)
+        elif self.method == "mistral":
+            from mistralai.client import Mistral
+
+            api_key = os.environ.get("MISTRAL_API_KEY", "").strip()
+            if not api_key:
+                raise RuntimeError("MISTRAL_API_KEY is not set")
+            self._mistral_client = Mistral(api_key=api_key)
         else:
             _apply_optional_gemini_thread_env()
             from google import genai as google_genai
@@ -288,6 +326,13 @@ class LLMTwoStageBaseline:
             except Exception as e:
                 if is_gemini_hard_zero_quota_error(e):
                     raise GeminiHardQuotaError(str(e)) from e
+                try:
+                    from mistralai.client.errors import MistralError as MistralHTTPError
+                except Exception:  # pragma: no cover
+                    MistralHTTPError = ()  # type: ignore[misc, assignment]
+                if MistralHTTPError and isinstance(e, MistralHTTPError):
+                    if int(getattr(e, "status_code", 0) or 0) in (401, 403):
+                        raise
                 if i >= max_retries:
                     raise
                 delay = self._retry_sleep_seconds(i, e)
@@ -356,11 +401,51 @@ class LLMTwoStageBaseline:
         except Exception:
             return {}
 
+    async def _mistral_json(self, prompt: str, schema_hint: str) -> dict[str, Any]:
+        model_name = (
+            (os.environ.get("MISTRAL_MODEL") or "").strip()
+            or self.method_cfg.get("model", DEFAULT_MISTRAL_MODEL)
+        )
+        temp = float(self.method_cfg.get("temperature", 0.0))
+        max_tokens = int(self.method_cfg.get("max_tokens", 1024))
+
+        def _call():
+            return self._mistral_client.chat.complete(
+                model=str(model_name),
+                messages=[
+                    {"role": "system", "content": "Return strict JSON only. No prose."},
+                    {"role": "user", "content": f"{schema_hint}\n\n{prompt}"},
+                ],
+                temperature=temp,
+                max_tokens=max_tokens,
+                response_format={"type": "json_object"},
+            )
+
+        resp = await asyncio.to_thread(_call)
+        um = getattr(resp, "usage", None)
+        self.usage.add(
+            int(getattr(um, "prompt_tokens", 0) or 0) if um else 0,
+            int(getattr(um, "completion_tokens", 0) or 0) if um else 0,
+        )
+        choice0 = resp.choices[0] if getattr(resp, "choices", None) else None
+        msg = getattr(choice0, "message", None) if choice0 else None
+        txt = (getattr(msg, "content", None) or "{}").strip()
+        try:
+            return json.loads(txt)
+        except Exception:
+            return {}
+
     def _cache_payload(self, payload: dict[str, Any]) -> dict[str, Any]:
         """Include model + generation settings so cache entries invalidate when those change."""
         base = dict(payload)
+        base["provider"] = self.method
         if self.method == "openai":
             base["llm_model"] = str(self.method_cfg.get("model", "gpt-4o-mini"))
+        elif self.method == "mistral":
+            base["llm_model"] = str(
+                (os.environ.get("MISTRAL_MODEL") or "").strip()
+                or self.method_cfg.get("model", DEFAULT_MISTRAL_MODEL)
+            )
         else:
             base["llm_model"] = _normalize_gemini_model_name(
                 (os.environ.get("GEMINI_MODEL") or "").strip()
@@ -368,7 +453,8 @@ class LLMTwoStageBaseline:
             )
         base["temperature"] = float(self.method_cfg.get("temperature", 0.0))
         base["max_output_tokens"] = int(self.method_cfg.get("max_tokens", 1024))
-        base["cache_key_version"] = 2
+        # Mistral uses v3 so cached JSON never collides with OpenAI/Gemini v2 blobs.
+        base["cache_key_version"] = 3 if self.method == "mistral" else 2
         return base
 
     async def _llm_json(self, stage: str, payload: dict[str, Any], prompt: str, schema_hint: str) -> dict[str, Any]:
@@ -381,6 +467,8 @@ class LLMTwoStageBaseline:
         async def _run():
             if self.method == "openai":
                 return await self._openai_json(prompt, schema_hint)
+            if self.method == "mistral":
+                return await self._mistral_json(prompt, schema_hint)
             return await self._gemini_json(prompt, schema_hint)
 
         out = await self._retry(_run)

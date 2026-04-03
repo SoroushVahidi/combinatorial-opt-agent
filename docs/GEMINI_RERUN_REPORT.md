@@ -104,3 +104,5 @@ Fill in after your cluster runs:
 - Chosen `GEMINI_MODEL` (from `gemini_selected_model.json` or preflight JSON).
 - Slurm job ID(s).
 - Whether `orig` / `noisy` / `short` completed or were blocked by quota.
+
+**See also:** optional **Mistral** rerun path (orig-first batch, separate cache) — [`MISTRAL_RERUN_REPORT.md`](MISTRAL_RERUN_REPORT.md).

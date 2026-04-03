@@ -35,4 +35,5 @@ scipy>=1.9.0
 # LLM baselines — Gemini via google-genai (see docs/MIGRATION_GOOGLE_GENAI.md)
 openai>=1.0.0
 google-genai>=1.0.0
+mistralai>=1.0.0
 PyYAML>=6.0.0

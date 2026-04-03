@@ -38,6 +38,7 @@ combinatorial-opt-agent/
 ├── ⚠ docs/eswa_revision/              ESWA-era revision materials
 ├── ⚠ docs/audits/                     Audit files index (see archive_internal_status/)
 ├──   docs/GEMINI_RERUN_REPORT.md      Gemini Slurm/preflight infrastructure notes
+├──   docs/MISTRAL_RERUN_REPORT.md     Mistral preflight / orig-first Slurm workflow
 │
 ├── ★ tools/nlp4lp_downstream_utility.py   Core grounding pipeline (6 000+ lines)
 │   │   Sections: extraction → slot records → basic scoring →
@@ -64,8 +65,9 @@ combinatorial-opt-agent/
 │   ├── datasets/                      Stage external corpora (e.g. get_cp_bench_open.py)
 │   ├── paper/run_repo_validation.py   Canonical validation entrypoint
 │   ├── gemini_preflight.py            Mandatory Gemini preflight (batch jobs)
+│   ├── mistral_preflight.py           Mandatory Mistral preflight (batch jobs)
 │   └── check_docs_integrity.py        Markdown / stale-path checks
-├──   batch/learning/                  Slurm: OpenAI / Gemini NLP4LP baselines
+├──   batch/learning/                  Slurm: OpenAI / Gemini / Mistral NLP4LP baselines
 ├──   training/external/               CI helpers: build_nlp4lp_benchmark, full downstream loop
 │
 ├──   training/                        Retrieval fine-tuning pipeline
@@ -176,6 +178,7 @@ NL query
 | `tools/build_eaai_camera_ready_figures.py` | Regenerate camera-ready figures |
 | `scripts/paper/run_repo_validation.py` | Validate repo integrity for paper use |
 | `scripts/gemini_preflight.py` | Gemini list/probe preflight (used by Slurm batch) |
+| `scripts/mistral_preflight.py` | Mistral API probe preflight (used by Slurm batch) |
 | `training/external/run_full_downstream_benchmark.py` | CI full downstream loop (see `HOW_TO_RUN_BENCHMARK.md`) |
 
 For full reproduction commands, see [`HOW_TO_REPRODUCE.md`](HOW_TO_REPRODUCE.md). For the Actions workflow, see [`HOW_TO_RUN_BENCHMARK.md`](HOW_TO_RUN_BENCHMARK.md).

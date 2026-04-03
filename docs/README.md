@@ -13,6 +13,7 @@ Canonical documentation for the EAAI companion codebase. **Start with the review
 | **[EAAI_SOURCE_OF_TRUTH.md](EAAI_SOURCE_OF_TRUTH.md)** | Manuscript authority — what IS / IS NOT claimed |
 | **[RESULTS_PROVENANCE.md](RESULTS_PROVENANCE.md)** | Definitions + provenance chain (“which file is this number?”) |
 | **[GEMINI_RERUN_REPORT.md](GEMINI_RERUN_REPORT.md)** | Gemini Slurm/preflight/cache — **infrastructure**; not Table 1–5 authority |
+| **[MISTRAL_RERUN_REPORT.md](MISTRAL_RERUN_REPORT.md)** | Mistral preflight / orig-first Slurm workflow — **infrastructure**; not Table 1–5 authority |
 | **[DATASET_EXPANSION_PLAN.md](DATASET_EXPANSION_PLAN.md)** | Text2Zinc & CP-Bench — why / scope (NLP4LP stays canonical) |
 | **[DATASET_EXPANSION_STATUS.md](DATASET_EXPANSION_STATUS.md)** | What is integrated vs still pending (no fabricated benchmark claims) |
 | **[paper_vs_demo_scope.md](paper_vs_demo_scope.md)** | Fixed-catalog benchmark vs demo / open-domain |

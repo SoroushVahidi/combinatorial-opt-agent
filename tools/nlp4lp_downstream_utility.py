@@ -40,6 +40,7 @@ Environment variables
   HF_TOKEN / HUGGINGFACE_TOKEN / HUGGINGFACE_HUB_TOKEN
                                  HuggingFace token for loading gated NLP4LP dataset.
   OPENAI_API_KEY                 Required for LLM baseline methods (openai_*).
+  MISTRAL_API_KEY                Required for LLM baseline method mistral_*.
   GEMINI_API_KEY                 Required for LLM baseline methods (gemini_*).
   GEMINI_MODEL                   Optional override for configs/llm_baselines.yaml gemini.model.
   GEMINI_MODEL_FALLBACKS         Comma-separated extra model ids for pick-model / fallbacks.
@@ -49,6 +50,8 @@ Environment variables
   GEMINI_AUTO_PICK_MODEL         batch run_gemini_llm_baselines.sbatch: "1" (default) runs pick-model before preflight; "0" skips.
   GEMINI_LIMIT_RUNTIME_THREADS   "1" (default in that sbatch) caps OMP/BLAS threads before Gemini client; "0" disables.
   GEMINI_RERUN_ROOT / NLP4LP_OUTPUT_DIR   batch script sets default results/rerun/gemini/run_<SLURM_JOB_ID>/paper for Gemini reruns.
+  MISTRAL_RERUN_ROOT / NLP4LP_OUTPUT_DIR  batch run_mistral_llm_baselines.sbatch: results/rerun/mistral/run_<SLURM_JOB_ID>/paper.
+  MISTRAL_SKIP_PREFLIGHT         If "1", skip redundant checks after successful batch preflight (set by Mistral sbatch).
   LOW_RESOURCE                   Set to "1" to skip HF dataset download in dry runs.
 """
 from __future__ import annotations
@@ -70,9 +73,11 @@ from tools.llm_baselines import (
     LLMTwoStageBaseline,
     LlmBaselineRunInterrupted,
     classify_gemini_quota_failure,
+    classify_mistral_api_failure,
     GeminiHardQuotaError,
     is_gemini_hard_zero_quota_error,
     is_gemini_transient_quota_or_rate_limit,
+    is_mistral_interruptible_api_error,
 )
 
 NUM_TOKEN_RE = re.compile(r"[$]?\d[\d,]*(?:\.\d+)?%?")
@@ -5714,6 +5719,8 @@ def run_setting(
                     or is_gemini_transient_quota_or_rate_limit(exc)
                     or classify_gemini_quota_failure(exc) in ("not_found", "hard_zero", "rate_limited")
                 )
+            elif llm_runner.method == "mistral":
+                interrupt = is_mistral_interruptible_api_error(exc)
             else:
                 try:
                     from openai import APIError, RateLimitError
@@ -5725,7 +5732,12 @@ def run_setting(
                     pass
             if not interrupt:
                 raise exc
-            kind = classify_gemini_quota_failure(exc) if llm_runner.method == "gemini" else "openai_rate_or_quota"
+            if llm_runner.method == "gemini":
+                kind = classify_gemini_quota_failure(exc)
+            elif llm_runner.method == "mistral":
+                kind = f"mistral_{classify_mistral_api_failure(exc)}"
+            else:
+                kind = "openai_rate_or_quota"
             _write_llm_interrupt_artifacts(
                 rows=rows,
                 cols=_PQ_COLS,
@@ -6632,7 +6644,7 @@ def run_single_setting(
             use_hierarchy=(baseline_arg == "bm25_hierarchical_acceptance_rerank"),
             variant=variant,
         )
-    elif baseline_arg in ("openai", "gemini"):
+    elif baseline_arg in ("openai", "gemini", "mistral"):
         if baseline_arg == "gemini":
             from tools.llm_baselines import GeminiHardQuotaError, gemini_baseline_should_run
 
@@ -6737,13 +6749,13 @@ def main() -> None:
         "--baseline",
         type=str,
         default="tfidf",
-        help="One of: bm25, tfidf, lsa, openai, gemini, oracle; or tfidf_acceptance_rerank, tfidf_hierarchical_acceptance_rerank, bm25_acceptance_rerank, bm25_hierarchical_acceptance_rerank",
+        help="One of: bm25, tfidf, lsa, openai, gemini, mistral, oracle; or tfidf_acceptance_rerank, tfidf_hierarchical_acceptance_rerank, bm25_acceptance_rerank, bm25_hierarchical_acceptance_rerank",
     )
     p.add_argument(
         "--method",
         type=str,
         default=None,
-        help="Alias of --baseline (e.g., --method openai / --method gemini).",
+        help="Alias of --baseline (e.g., --method openai / gemini / mistral).",
     )
     p.add_argument("--k", type=int, default=1)
     p.add_argument("--acceptance-k", type=int, default=10, help="Top-k retrieval candidates for acceptance reranking (default 10)")
@@ -6803,7 +6815,7 @@ def main() -> None:
     p.add_argument(
         "--no-llm-save-partial-on-failure",
         action="store_true",
-        help="Do not write partial per-query CSV + manifest on LLM quota/API interrupt (Gemini/OpenAI).",
+        help="Do not write partial per-query CSV + manifest on LLM quota/API interrupt (Gemini/OpenAI/Mistral).",
     )
     args = p.parse_args()
     if args.method:
@@ -6855,7 +6867,7 @@ def main() -> None:
             use_hierarchy=(args.baseline == "bm25_hierarchical_acceptance_rerank"),
             variant=args.variant,
         )
-    elif args.baseline in ("openai", "gemini"):
+    elif args.baseline in ("openai", "gemini", "mistral"):
         if args.baseline == "gemini":
             from tools.llm_baselines import GeminiHardQuotaError, gemini_baseline_should_run
 
@@ -6880,7 +6892,10 @@ def main() -> None:
         setattr(rank_fn, "_llm_runner", llm_ranker)
     else:
         if args.baseline not in ("bm25", "tfidf", "lsa"):
-            raise SystemExit(f"Unknown baseline: {args.baseline}. Use bm25, tfidf, lsa, openai, gemini, oracle, or *_acceptance_rerank / *_hierarchical_acceptance_rerank.")
+            raise SystemExit(
+                f"Unknown baseline: {args.baseline}. Use bm25, tfidf, lsa, openai, gemini, mistral, oracle, "
+                "or *_acceptance_rerank / *_hierarchical_acceptance_rerank."
+            )
         from retrieval.baselines import get_baseline
         baseline = get_baseline(args.baseline)
         baseline.fit(catalog)
@@ -6933,7 +6948,7 @@ def main() -> None:
 
     out_dir = Path(args.output_dir).resolve() if args.output_dir else (ROOT / "results" / "paper")
     out_dir.mkdir(parents=True, exist_ok=True)
-    llm_partial = args.baseline in ("gemini", "openai") and not args.no_llm_save_partial_on_failure
+    llm_partial = args.baseline in ("gemini", "openai", "mistral") and not args.no_llm_save_partial_on_failure
     try:
         run_setting(
             variant=args.variant,

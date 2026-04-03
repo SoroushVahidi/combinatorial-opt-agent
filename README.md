@@ -10,7 +10,7 @@
 |---|---|
 | **Validated paper core** | NLP4LP `orig` (331 queries): retrieval → grounding; **Tables 1–5** in `results/paper/eaai_camera_ready_tables/` |
 | **Canonical one-pager** | [`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md) |
-| **Infrastructure / reruns** | Slurm `batch/learning/`; optional LLM baselines; Gemini notes in [`docs/GEMINI_RERUN_REPORT.md`](docs/GEMINI_RERUN_REPORT.md) (**infra ≠ completed reruns** unless your `results/rerun/` proves it) |
+| **Infrastructure / reruns** | Slurm `batch/learning/`; optional LLM baselines; Gemini [`docs/GEMINI_RERUN_REPORT.md`](docs/GEMINI_RERUN_REPORT.md); Mistral [`docs/MISTRAL_RERUN_REPORT.md`](docs/MISTRAL_RERUN_REPORT.md) (**infra ≠ completed reruns** unless your `results/rerun/` proves it) |
 | **Demo / app** | `app.py`, `demo/` — **outside** paper-evaluated claims unless explicitly scoped |
 | **Archives** | `docs/archive/`, `docs/archive_internal_status/`, `docs/provenance/`, `analysis/archive/` — **provenance only** |
 | **External validation (non–paper-core)** | **Text2Zinc** + **CP-Bench** (DCP-Bench-Open): adapters + staging docs — **no new camera-ready metrics** until runs exist ([`docs/DATASET_EXPANSION_STATUS.md`](docs/DATASET_EXPANSION_STATUS.md)) |
