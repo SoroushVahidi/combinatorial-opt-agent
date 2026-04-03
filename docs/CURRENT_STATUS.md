@@ -50,6 +50,7 @@ and where the evidence lives. It complements **[`docs/EAAI_SOURCE_OF_TRUTH.md`](
 | **Open-domain / LLM formulation paths** | **Demo / auxiliary** | Outside main NLP4LP benchmark unless explicitly documented otherwise |
 | **Learned retrieval fine-tuning** | **Experimental** | Does not beat rule baseline on held-out eval (see `KNOWN_ISSUES.md`) |
 | **Optional LLM baselines (OpenAI / Gemini)** | **Optional tooling** | Requires API keys; **not** in camera-ready Tables 1–5. OpenAI downstream artifacts exist under `results/paper/` for some variants; Gemini full rerun is **infrastructure-supported** — see [`docs/GEMINI_RERUN_REPORT.md`](GEMINI_RERUN_REPORT.md) (do not assume completion without `results/rerun/` artifacts). **Mistral** is not wired in this repo. |
+| **Text2Zinc & CP-Bench (external validation)** | **Integration / adapters only** | Staging + `InternalExample` adapters; **not** paper headline metrics. Text2Zinc: gated HF. CP-Bench: public DCP-Bench-Open JSONL. See [`DATASET_EXPANSION_STATUS.md`](DATASET_EXPANSION_STATUS.md). |
 
 ---
 
@@ -78,3 +79,4 @@ and where the evidence lives. It complements **[`docs/EAAI_SOURCE_OF_TRUTH.md`](
 | How to rerun EAAI experiments | [`README.md`](../README.md) section “How to reproduce the main paper artifacts” |
 | Known issues (retrieval training, etc.) | [`KNOWN_ISSUES.md`](KNOWN_ISSUES.md) |
 | Repo layout | [`REPO_STRUCTURE.md`](REPO_STRUCTURE.md) |
+| External datasets (Text2Zinc, CP-Bench) | [`DATASET_EXPANSION_PLAN.md`](DATASET_EXPANSION_PLAN.md), [`DATASET_EXPANSION_STATUS.md`](DATASET_EXPANSION_STATUS.md) |

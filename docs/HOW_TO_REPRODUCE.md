@@ -130,6 +130,33 @@ Tests tagged `requires_network` are automatically skipped when `HF_TOKEN` is abs
 
 ---
 
+## External validation datasets (Text2Zinc & CP-Bench) — staging only
+
+These steps **do not** reproduce EAAI Tables 1–5. They only **stage** optional corpora for future evaluation design.
+
+**CP-Bench (DCP-Bench-Open, public):**
+
+```bash
+python scripts/datasets/get_cp_bench_open.py
+```
+
+**Text2Zinc (gated Hugging Face):** request access to `skadio/text2zinc`, set `HF_TOKEN`, then:
+
+```bash
+python scripts/get_text2zinc.py
+```
+
+**Capability smoke check (any registered adapter with local splits):**
+
+```bash
+python tools/run_dataset_benchmarks.py --dataset cp_bench   # after staging CP-Bench JSONL
+python tools/run_dataset_benchmarks.py --dataset text2zinc # after Text2Zinc JSONL exists
+```
+
+See [`DATASET_EXPANSION_STATUS.md`](DATASET_EXPANSION_STATUS.md) for what is and is not benchmarked.
+
+---
+
 ## Optional — full downstream utility CSVs and LLM baselines
 
 The **camera-ready** headline row for typed greedy + TF-IDF is in **`results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv`**, not necessarily identical to every column in **`results/paper/nlp4lp_downstream_summary.csv`** (different metric definitions — see **`docs/RESULTS_PROVENANCE.md`**).

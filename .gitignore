@@ -257,6 +257,8 @@ training_latest_status.txt
 data/external/resocratic
 data/external/nl4opt/
 data/external/text2zinc/
+data/external/cp_bench/*
+!data/external/cp_bench/README.md
 data/external/optmath/
 data/external/complexor/
 data/external/optimus/

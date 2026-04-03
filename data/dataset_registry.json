@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "description": "High-level registry for benchmark and external-validation datasets. Adapters live in src/data_adapters/.",
+  "datasets": {
+    "nlp4lp": {
+      "display_name": "NLP4LP",
+      "status": "existing_paper_core",
+      "local_path": "data/processed/ (eval JSONL) + Hugging Face udell-lab/NLP4LP",
+      "task_type": "fixed-catalog schema retrieval + deterministic scalar grounding (LP-structured)",
+      "evaluation_supported": true,
+      "notes": "Canonical EAAI benchmark. Camera-ready tables under results/paper/eaai_camera_ready_tables/.",
+      "upstream_url": "https://huggingface.co/datasets/udell-lab/NLP4LP",
+      "license_notes": "Gated HF dataset; request access and use HF_TOKEN."
+    },
+    "text2zinc": {
+      "display_name": "Text2Zinc",
+      "status": "partially_integrated",
+      "local_path": "data/external/text2zinc/",
+      "task_type": "natural language → MiniZinc (+ data); scalar / model artifacts in HF schema",
+      "evaluation_supported": false,
+      "notes": "Adapter + scripts/get_text2zinc.py exist. HF hub dataset skadio/text2zinc is GATED. No new paper metrics claimed until data is staged and an eval harness is defined.",
+      "upstream_url": "https://huggingface.co/datasets/skadio/text2zinc",
+      "license_notes": "CC-BY-4.0 per dataset card; access approval required on Hugging Face."
+    },
+    "cp_bench": {
+      "display_name": "CP-Bench (DCP-Bench-Open)",
+      "status": "newly_integrated_adapter",
+      "local_path": "data/external/cp_bench/",
+      "task_type": "constraint modeling / CPMPy reference code (not NLP4LP-style NL queries in sample_test.jsonl)",
+      "evaluation_supported": false,
+      "notes": "Registry key cp_bench maps to public DCP-Bench-Open. sample_test.jsonl has id + CPMPy model only (no natural language). NLP4LP pipeline does not apply directly; use for future external validation design.",
+      "upstream_url": "https://github.com/DCP-Bench/DCP-Bench-Open",
+      "license_notes": "Apache-2.0 (upstream LICENSE)."
+    }
+  }
+}

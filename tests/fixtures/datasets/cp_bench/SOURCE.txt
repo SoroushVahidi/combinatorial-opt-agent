@@ -1,0 +1,3 @@
+Fixture copied from DCP-Bench-Open sample_test.jsonl
+Upstream: https://github.com/DCP-Bench/DCP-Bench-Open
+License: Apache-2.0 (see upstream LICENSE)

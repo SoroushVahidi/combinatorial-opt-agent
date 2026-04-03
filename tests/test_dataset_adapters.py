@@ -25,6 +25,7 @@ from data_adapters.or_library import ORLibraryAdapter
 from data_adapters.pyomo_examples import PyomoExamplesAdapter
 from data_adapters.registry import create_adapter, list_datasets
 from data_adapters.text2zinc import Text2ZincAdapter
+from data_adapters.cp_bench import CPBenchAdapter
 from scripts.build_expanded_schema_catalog import build_catalog, collect_schema_entries
 from tools.run_dataset_benchmarks import evaluate_dataset
 
@@ -36,6 +37,7 @@ def test_registry_contains_expected_datasets() -> None:
     assert "nlp4lp" in names
     assert "nl4opt" in names
     assert "text2zinc" in names
+    assert "cp_bench" in names
     assert "optmath" in names
     assert "complexor" in names
     assert "mamo" in names
@@ -82,6 +84,28 @@ def test_nl4opt_adapter_conversion_from_fixture() -> None:
     assert internal.schema_id == "transportation"
     assert internal.scalar_gold_params is not None
     assert "num_plants" in internal.scalar_gold_params
+
+
+def test_dataset_registry_json_loads() -> None:
+    from datasets.registry import get_dataset_entry, load_registry
+
+    reg = load_registry()
+    assert reg.get("version") == 1
+    assert "text2zinc" in reg["datasets"]
+    entry = get_dataset_entry("cp_bench")
+    assert "DCP-Bench" in entry["display_name"]
+
+
+def test_cp_bench_adapter_from_fixture() -> None:
+    ad = CPBenchAdapter(data_root=FIX / "cp_bench")
+    splits = ad.list_splits()
+    assert "sample_test" in splits
+    raw = ad.load_split("sample_test")
+    assert len(raw) >= 1
+    ie = ad.to_internal_example(raw[0], "sample_test")
+    assert ie.source_dataset == "cp_bench"
+    assert ie.formulation_text
+    assert ie.metadata.get("has_natural_language") is False
 
 
 def test_text2zinc_adapter_capability_and_conversion() -> None:

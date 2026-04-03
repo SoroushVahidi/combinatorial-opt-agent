@@ -101,6 +101,8 @@ LINK_CHECK_FILES = [
     "docs/REVIEWER_GUIDE.md",
     "docs/README.md",
     "docs/GEMINI_RERUN_REPORT.md",
+    "docs/DATASET_EXPANSION_PLAN.md",
+    "docs/DATASET_EXPANSION_STATUS.md",
     "docs/provenance/README.md",
 ]
 

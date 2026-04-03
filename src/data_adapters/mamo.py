@@ -29,27 +29,6 @@ class MAMOAdapter:
         supports_scalar_instantiation=True,
         supports_solver_eval=False,
         supports_full_formulation=True,
-
-_KNOWN_SPLITS = ("easy_lp", "complex_lp")
-_SOURCE_URL = "https://huggingface.co/datasets/CardinalOperations/MAMO"
-
-
-class MAMOAdapter:
-    """Adapter for the MAMO LP benchmark (EasyLP and ComplexLP subsets).
-
-    Each example contains a natural-language optimization problem
-    (``nl_query``) and an answer string (``en_answer``) representing the
-    optimal objective value.  Scalar gold params are populated from the
-    answer when it parses as a number; otherwise the raw string is preserved
-    in ``metadata``.
-    """
-
-    name = "mamo"
-    capabilities = DatasetCapabilities(
-        supports_schema_retrieval=False,
-        supports_scalar_instantiation=True,
-        supports_solver_eval=False,
-        supports_full_formulation=False,
     )
 
     def __init__(self, data_root: Path | None = None) -> None:
@@ -107,7 +86,6 @@ class MAMOAdapter:
         ).strip()
         schema = example.get("schema_id") or example.get("problem_type") or example.get("task")
         formulation = example.get("formulation_text") or example.get("target_model") or example.get("lp")
-        # Prefer explicit scalar_gold_params dict; fall back to parsing en_answer
         if isinstance(example.get("scalar_gold_params"), dict):
             scalar = example["scalar_gold_params"]
         else:
@@ -117,7 +95,7 @@ class MAMOAdapter:
             source_dataset=self.name,
             split=split_name,
             nl_query=nl,
-            schema_id=schema,
+            schema_id=str(schema) if schema is not None else None,
             schema_text=example.get("schema_text") or (str(schema) if schema else None),
             candidate_schemas=example.get("candidate_schemas"),
             scalar_gold_params=scalar,
@@ -145,39 +123,14 @@ class MAMOAdapter:
             ex_id = str(row.get("id") or row.get("instance_id") or row.get("uid") or "")
             if not ex_id:
                 continue
+            scalar = (
+                row["scalar_gold_params"]
+                if isinstance(row.get("scalar_gold_params"), dict)
+                else self._parse_answer(row.get("en_answer"))
+            )
             out[ex_id] = {
                 "schema_id": row.get("schema_id") or row.get("problem_type") or row.get("task"),
-                "scalar_gold_params": (
-                    row["scalar_gold_params"]
-                    if isinstance(row.get("scalar_gold_params"), dict)
-                    else self._parse_answer(row.get("en_answer"))
-                ),
+                "scalar_gold_params": scalar,
                 "formulation_text": row.get("formulation_text") or row.get("target_model") or row.get("lp"),
-            schema_id=None,
-            schema_text=None,
-            candidate_schemas=None,
-            scalar_gold_params=scalar,
-            structured_gold_params=None,
-            formulation_text=None,
-            solver_artifact_path=None,
-            metadata={
-                "source_url": _SOURCE_URL,
-                "license": "CC-BY-NC-4.0",
-                "en_answer_raw": answer,
-                "mamo_split": split_name,
-            },
-        )
-
-    def get_schema_candidates(self) -> list[dict[str, Any]]:
-        return []
-
-    def get_gold_targets(self, split_name: str) -> dict[str, dict[str, Any]]:
-        out: dict[str, dict[str, Any]] = {}
-        for ex in self.load_split(split_name):
-            ex_id = str(ex.get("id") or "")
-            if not ex_id:
-                continue
-            out[ex_id] = {
-                "scalar_gold_params": self._parse_answer(ex.get("en_answer")),
             }
         return out

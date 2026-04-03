@@ -35,6 +35,7 @@ _ADAPTER_SOURCE_URLS: dict[str, str | None] = {
     "pyomo_examples": "https://github.com/Pyomo/pyomo",
     "structuredor": "https://github.com/CardinalOperations/StructuredOR",
     "text2zinc": None,
+    "cp_bench": "https://github.com/DCP-Bench/DCP-Bench-Open",
 }
 
 # Fixed manifest for source-only entries that are *not* registered as adapters

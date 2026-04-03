@@ -40,6 +40,10 @@ This repository is the companion codebase for that manuscript.
 
 ## What the Repository Does and Does Not Claim
 
+### External validation datasets (repository context, not manuscript tables)
+
+**Text2Zinc** and **CP-Bench** (public DCP-Bench-Open; registry key `cp_bench`) have **adapter + staging support** documented in [`DATASET_EXPANSION_PLAN.md`](DATASET_EXPANSION_PLAN.md) / [`DATASET_EXPANSION_STATUS.md`](DATASET_EXPANSION_STATUS.md). Unless and until new results are committed with provenance, they are **not** part of the camera-ready EAAI table story.
+
 ### Repository DOES claim
 
 - Schema retrieval is strong: TF-IDF Schema R@1 = 0.9094 on NLP4LP `orig` variant

@@ -3,6 +3,10 @@
 
 Text2Zinc is gated on Hugging Face. This script tries `datasets` API if access
 is granted; otherwise it prints clear manual steps.
+
+See ``docs/DATASET_EXPANSION_STATUS.md`` and ``scripts/datasets/README.md`` for how
+this fits next to CP-Bench (DCP-Bench-Open) staging. Staging alone does not add
+paper benchmark metrics.
 """
 
 from __future__ import annotations

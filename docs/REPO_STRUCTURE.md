@@ -26,6 +26,8 @@ combinatorial-opt-agent/
 ├── ★ docs/EAAI_SOURCE_OF_TRUTH.md     Master manuscript authority
 ├── ★ docs/RESULTS_PROVENANCE.md       Canonical metrics + provenance chain
 ├── ★ docs/CURRENT_STATUS.md           Reviewer-facing status + headline pointers
+├──   docs/DATASET_EXPANSION_PLAN.md   Text2Zinc + CP-Bench external-validation plan
+├──   docs/DATASET_EXPANSION_STATUS.md Adapter/staging status (honest scope)
 ├──   docs/paper_vs_demo_scope.md      Paper scope vs demo scope explanation
 ├──   docs/wulver.md                   HPC setup (Wulver @ NJIT)
 ├──   docs/wulver_webapp.md            Web app on Wulver
@@ -50,12 +52,16 @@ combinatorial-opt-agent/
 ├──   formulation/                     LP structural validation (no live solver)
 │   └── verify.py                      Objective-sense + variable-symbol checks
 │
-├──   src/                             Number-role repair subsystem
+├──   src/                             Adapters, dataset registry JSON loader, learning helpers
+│   ├── data_adapters/                 Normalized adapters (nlp4lp, text2zinc, cp_bench, …)
+│   ├── datasets/registry.py           Loads data/dataset_registry.json
 │   ├── features/number_role_features.py
 │   └── analysis/consistency_benchmark.py
 │
 ├──   tests/                           Pytest test suite (1 400+ tests, CPU-only)
+├──   data/dataset_registry.json       Metadata: nlp4lp / text2zinc / cp_bench (+ notes)
 ├──   scripts/                         Utility and paper-support scripts
+│   ├── datasets/                      Stage external corpora (e.g. get_cp_bench_open.py)
 │   ├── paper/run_repo_validation.py   Canonical validation entrypoint
 │   ├── gemini_preflight.py            Mandatory Gemini preflight (batch jobs)
 │   └── check_docs_integrity.py        Markdown / stale-path checks

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from .cardinal_nl4opt import CardinalNL4OPTAdapter
 from .complexor import ComplexORAdapter
+from .cp_bench import CPBenchAdapter
 from .gams_models import GAMSModelsAdapter
 from .gurobi_modeling_examples import GurobiModelingExamplesAdapter
 from .gurobi_optimods import GurobiOptimodsAdapter
@@ -24,6 +25,7 @@ ADAPTERS = {
     "nlp4lp": NLP4LPAdapter,
     "nl4opt": NL4OptAdapter,
     "text2zinc": Text2ZincAdapter,
+    "cp_bench": CPBenchAdapter,
     "optmath": OptMATHAdapter,
     "complexor": ComplexORAdapter,
     "mamo": MAMOAdapter,

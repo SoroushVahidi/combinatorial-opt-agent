@@ -13,6 +13,7 @@
 | **Infrastructure / reruns** | Slurm `batch/learning/`; optional LLM baselines; Gemini notes in [`docs/GEMINI_RERUN_REPORT.md`](docs/GEMINI_RERUN_REPORT.md) (**infra ≠ completed reruns** unless your `results/rerun/` proves it) |
 | **Demo / app** | `app.py`, `demo/` — **outside** paper-evaluated claims unless explicitly scoped |
 | **Archives** | `docs/archive/`, `docs/archive_internal_status/`, `docs/provenance/`, `analysis/archive/` — **provenance only** |
+| **External validation (non–paper-core)** | **Text2Zinc** + **CP-Bench** (DCP-Bench-Open): adapters + staging docs — **no new camera-ready metrics** until runs exist ([`docs/DATASET_EXPANSION_STATUS.md`](docs/DATASET_EXPANSION_STATUS.md)) |
 
 **Table 1 headline** (TF-IDF + typed greedy, `orig`): Schema R@1 **0.9094**; Coverage **0.8639**; TypeMatch **0.7513**; InstantiationReady **0.5257** — source: `results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv` (see [`docs/RESULTS_PROVENANCE.md`](docs/RESULTS_PROVENANCE.md)).
 
@@ -28,7 +29,7 @@
 6. [`docs/KNOWN_ISSUES.md`](docs/KNOWN_ISSUES.md) — blockers and design tensions  
 7. [`docs/REPO_STRUCTURE.md`](docs/REPO_STRUCTURE.md) — annotated tree (canonical vs demo vs archive)  
 
-**Index:** [`docs/README.md`](docs/README.md) · **Doc check:** `python scripts/check_docs_integrity.py`
+**Index:** [`docs/README.md`](docs/README.md) · **External datasets plan:** [`docs/DATASET_EXPANSION_PLAN.md`](docs/DATASET_EXPANSION_PLAN.md) · **Doc check:** `python scripts/check_docs_integrity.py`
 
 ---
 

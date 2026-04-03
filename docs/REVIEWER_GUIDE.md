@@ -113,6 +113,16 @@ See [`HOW_TO_REPRODUCE.md`](HOW_TO_REPRODUCE.md) for step-by-step commands.
 
 ---
 
+## External validation datasets (not paper-core)
+
+**Text2Zinc** and **CP-Bench** (public **DCP-Bench-Open**, registry key `cp_bench`) are integrated as **adapters + staging scripts** for future external validation. They are **not** substitutes for NLP4LP in the current manuscript tables.
+
+- Plan: [`DATASET_EXPANSION_PLAN.md`](DATASET_EXPANSION_PLAN.md)
+- Status / honesty boundaries: [`DATASET_EXPANSION_STATUS.md`](DATASET_EXPANSION_STATUS.md)
+- Metadata: [`data/dataset_registry.json`](../data/dataset_registry.json)
+
+---
+
 ## Archive / provenance folders (not headline sources)
 
 | Folder | Contents |
