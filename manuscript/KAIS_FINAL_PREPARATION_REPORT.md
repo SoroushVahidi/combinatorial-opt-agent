@@ -365,3 +365,230 @@ documents what was done and confirms each requested item.
 5. No scientific results, tables, figures, metric definitions, or references were
    touched in this follow-up; the only content change in `main.tex` is the
    Acknowledgements paragraph.
+
+## 17. Targeted Follow-Up: Figure Legend Fix (2026-07-23, third session)
+
+A subsequent request asked specifically to move Fig. 2/3's legends outside the plot
+area (Fig. 3's legend was overlapping a bar-value annotation) and to inspect Fig. 1 for
+similar issues. Summary: replaced the PIL-based bar-chart renderer with a matplotlib
+one for the two figures used in the manuscript (legend centered below the axes,
+enlarged fonts, true vector PDF output instead of a rasterized PNG wrapped in a PDF);
+fixed a cramped-label spacing issue in Fig. 1's generator
+(`figures/gen_instantiation_pipeline.py`). Verified via rendered page images that the
+legend no longer overlaps plot content and the manuscript recompiles clean. Commit
+`1485f10`. See that commit's message for full detail; not repeated here.
+
+## 18. FINAL ACCEPTANCE-ORIENTED CONSISTENCY PASS (2026-07-23, fourth session)
+
+This section documents a deep scientific-consistency pass focused on internal
+contradictions, statistical-claim accuracy, and a proactive reviewer-objection check,
+per an explicit 20-part audit request. A claim-evidence matrix was built internally
+(covering retrieval performance, Oracle behavior, all four core metrics, significance
+tests, overlap robustness, the pre/post-fix ablation, the three engineering subsets,
+reproducibility, and public-artifact availability) and used to drive every fix below;
+it is not reproduced in full here, only its actionable findings.
+
+### 18.1 New HEAD commit SHA
+
+`ac9e84416b1a3c9013663de90e086f7be1df6217` (branch `kais-final-submission-prep`).
+
+### 18.2 Exact files changed
+
+`manuscript/main.tex`, `manuscript/cover-letter.tex`, `manuscript/main.pdf`, their
+mirrors in `manuscript/submission_package/`, `tools/build_eaai_camera_ready_figures.py`
+(font embedding), `tools/run_overlap_analysis.py` (LSA dimensionality fix), new
+`tools/run_strict_instantiation_ready.py`, new
+`results/eswa_revision/18_strict_instready/{strict_instantiation_ready.csv,
+strict_vs_standard_significance.csv}`, regenerated
+`results/eswa_revision/17_overlap_analysis/*` and
+`results/paper/eaai_camera_ready_figures/figure{3,4}_*`, and a dated correction note in
+`results/eswa_revision/14_reports/FINAL_REVISION_EXPERIMENT_SUMMARY.md`.
+
+### 18.3 Known inconsistencies fixed
+
+Two internal contradictions specifically flagged were found to be real and fixed
+precisely as described (see 18.4 and the Oracle-narrative correction in Sec. 3.6
+summary/conclusion: Oracle described as inconsistent across the three engineering
+studies rather than uniformly "small but positive"). A third, previously undiscovered
+inconsistency (the Table 3/Table 11 LSA gap) was root-caused and corrected (18.6).
+
+### 18.4 Table 10 statistical correction
+
+Prose previously claimed TF-IDF-TG "significantly outperforms representative
+global-compatibility, relation-aware, and ambiguity-aware variants" -- contradicted by
+Table 10's own RAL-Basic row ($p=0.218$). Corrected: TF-IDF-TG is statistically
+indistinguishable from relation-aware (as well as acceptance-rerank and
+hierarchical-acceptance-rerank), and significantly outperforms only
+global-compatibility and ambiguity-aware ($p<0.001$ each). The relation-aware family's
+lower point estimate is now described as directionally consistent but not itself
+statistically confirmed, rather than folded into a blanket "significant" claim.
+
+### 18.5 Oracle narrative corrections
+
+Both the Sec. 3.6 summary paragraph and the conclusion's engineering-studies paragraph
+previously implied a consistent (if modest) Oracle advantage across all three
+restricted studies. The 20-instance solver-backed subset actually shows Oracle
+*below* TF-IDF on solver-success/feasible/objective-produced (0.75 vs. 0.80 on each).
+Both passages were rewritten to state this explicitly, attribute it plausibly to the
+subset's small size and compatibility-filtering rule, and reframe the conclusion as
+"Oracle does not consistently provide a substantial advantage" rather than a uniform
+small-improvement narrative. Every use of "oracle upper bound" (abstract, contributions
+paragraph, Sec. 2.4's methodological definition, Sec. 3.3, and the cover letter -- 5
+occurrences total) was replaced with "oracle control" / "oracle reference" / "oracle
+condition," since the solver-backed-subset counterexample shows Oracle is not a
+formally guaranteed upper bound on every reported metric. A one-sentence formal caveat
+was added at the oracle condition's first definition (Sec. 2.4) explaining why.
+
+### 18.6 Table 3/Table 11 discrepancy: root cause, fix, final values
+
+**Root cause:** `tools/run_overlap_analysis.py`'s LSA retriever capped
+`TruncatedSVD(n_components=...)` at 100, while the canonical retriever
+(`retrieval/baselines.py::LSABaseline`) defaults to 256. Schema-text construction,
+corpus (`data/catalogs/nlp4lp_catalog.jsonl`, 335 candidates), query source, and the
+TF-IDF vectorizer's `ngram_range=(1,2)` were already identical between the two scripts
+-- confirmed by direct code comparison before making any change, per the task's
+explicit "establish provenance before overwriting" instruction.
+
+**Fix:** changed `n_comp = min(100, ...)` to `n_comp = min(256, ...)` (one line),
+matching the canonical default exactly, with a code comment explaining why.
+
+**Final values:** rerunning the corrected script reproduces the canonical Table 3 LSA
+value **exactly** for the unsanitized baseline row: $0.8459$ (previously $0.7734$, an
+artifact of the truncated latent space, not a property of LSA retrieval). The
+stopword-removed LSA value is now $0.9184$ (previously $0.8731$) -- notably *above*
+canonical TF-IDF. TF-IDF and BM25's small pre-existing offset from Table 3 ($\le
+0.003$, schema-text-construction differences) is unchanged and was already honestly
+disclosed; it was not chased further, consistent with the task's instruction not to
+over-engineer a already-transparent minor discrepancy. A secondary, unrelated
+single-query environment-sensitivity fluctuation was also caught by the same rerun (the
+high-overlap-bucket TF-IDF rate shifted from $0.9205$ to $0.9174$, one query's
+`schema_hit` flag flipping under the current `sklearn` version) and is now reported
+with the fresher, currently-reproducible value rather than a stale one.
+
+### 18.7 StrictInstantiationReady sensitivity results
+
+New Eq. (7) and Table 12 (Sec. 3.5). Computed from `results/eswa_revision/
+02_downstream_postfix/` per-query artifacts via the new
+`tools/run_strict_instantiation_ready.py`, using the same paired-bootstrap methodology
+as the canonical significance tests ($B=1{,}000$, seed$=42$).
+
+| Method | InstReady | StrictInstReady | $\Delta$ | $n_{\text{differ}}$ |
+|---|---|---|---|---|
+| TFIDF-TG | 0.5287 | 0.5045 | 0.0242 | 8 |
+| BM25-TG | 0.5196 | 0.4924 | 0.0272 | 9 |
+| LSA-TG | 0.5076 | 0.4864 | 0.0211 | 7 |
+| Oracle-TG | 0.5680 | 0.5680 | 0.0000 | 0 |
+
+TF-IDF-vs-Oracle gap: $0.0393$ (standard) $\to$ $0.0634$ (strict); paired bootstrap
+$p=0.004 \to p<0.001$. **The central conclusion is unchanged -- indeed strengthened**:
+adding a hard schema-match gate does not shrink the Oracle advantage, it widens it and
+makes it more significant, directly refuting the possible objection that the modest
+oracle gain is a metric-definition artifact. As a validity check, recomputing the
+*standard* (non-strict) metric from these same live files and paired-bootstrapping
+TFIDF-TG vs. Oracle-TG reproduces the canonical Table 10 result exactly
+($\Delta=-0.0393$, CI $[-0.0665,-0.0151]$, $p=0.004$), confirming the small absolute
+offset from frozen Table 4 values (same cause as 18.6's TF-IDF/BM25 offset) cancels out
+of paired differences and does not affect this conclusion.
+
+### 18.8 "Oracle upper bound" audit outcome
+
+All 5 occurrences reviewed and corrected (18.5). No remaining uses of "upper bound" in
+an oracle context; the two remaining unrelated uses ("lower versus upper bounds" in
+optimization-constraint semantics, error taxonomy) are correct as-is.
+
+### 18.9 Table 13 decision
+
+**Retained as a compact main-text table**, unmodified. Its own caption already states
+"reported as a blocker study, not a success-rate study," which independently satisfies
+the requirement to make an environment-dependency failure's purpose unmistakable
+without presenting it as a methodological result. Moving it to supplementary material
+was considered and rejected: the table is small (3 rows), directly motivates the
+20-instance solver-backed subset that follows it, and its removal from the main text
+would weaken (not strengthen) the paper's transparency about why that smaller subset
+was necessary.
+
+### 18.10 Figure font-embedding status
+
+Fixed. Added `matplotlib.rcParams["pdf.fonttype"] = 42` / `ps.fonttype = 42` to the
+figure generator; `pdffonts` now reports the embedded font as `CID TrueType` (Type 42)
+for both Fig. 2 and Fig. 3, replacing the previous Type 3 embedding. No visual
+regression (verified by rendering both figures before/after at 150 dpi).
+
+### 18.11 KAIS acknowledgment placement status
+
+Unchanged and still compliant: `\bmhead{Acknowledgements}` inside `\backmatter`,
+immediately before `\section*{Declarations}`, matching the official Springer Nature
+template's own structural convention (Sec. 13/16 of this report, prior sessions).
+Acknowledgement wording preserved exactly, including the correct spelling "Ioannis
+Koutis".
+
+### 18.12 Generative-AI disclosure placement/status
+
+Unchanged and still compliant with the policy verified directly from KAIS's title-page
+guidelines in an earlier session (LLMs do not satisfy authorship criteria; substantive
+AI use must be documented; "AI-assisted copy editing" need not be declared). The
+existing Declarations paragraph accurately describes both AI-assisted writing and
+AI-assisted coding and states the author's verification and responsibility. No changes
+were needed or made in this pass.
+
+### 18.13 Numerical consistency audit result
+
+All previously-verified headline numbers (Table 1 core values, the 60/269/20-instance
+subset tables, the significance table, catalog/query denominators) were re-confirmed
+stable and were not touched. Three genuine issues were found and fixed: the Table 10
+significance mischaracterization (18.4), the Oracle-narrative overgeneralization
+(18.5), and the Table 3/Table 11 LSA discrepancy (18.6). No other numerical
+contradictions were found across the abstract, contributions, main text, table values,
+figure labels, captions, or conclusion in this pass.
+
+### 18.14 Clean compilation status
+
+Full clean rebuild (`pdflatex` x3 + `bibtex`) succeeded independently in both
+`manuscript/` and `manuscript/submission_package/`: zero overfull hboxes (one was
+introduced by the new Eq. (7) display and fixed by tightening `\wedge` spacing before
+the final compile), zero undefined citations or references, bibliography resolves
+correctly, all figures present, all fonts embedded (Type 1 for text via the Springer
+template, Type 42/CID TrueType for the two regenerated vector figures).
+
+### 18.15 Final page count
+
+**39 pages** (up from 38, due to the new StrictInstantiationReady equation, table, and
+discussion paragraph in Sec. 3.5).
+
+### 18.16 Final reviewer-style score
+
+**82/100** (revised up from the prior pass's 79/100). Rationale: the statistical and
+Oracle-narrative corrections remove concrete, reviewer-detectable internal
+contradictions that a careful KAIS reviewer would very plausibly have caught and used
+to question the paper's rigor; the new StrictInstantiationReady check proactively and
+convincingly answers the single most likely "is this a metric artifact?" objection with
+a result that *strengthens* rather than merely defends the central claim. Revision
+severity remains **minor revision**: no fatal flaws, and the paper is now free of the
+specific contradictions most likely to draw a skeptical referee's attention.
+
+### 18.17 Remaining acceptance risks
+
+Unchanged from Section 12 of this report (novelty framing, single-benchmark
+dependence, heuristic grounding, no dense-retrieval baseline, no head-to-head LLM-system
+comparison, small solver-backed subset) -- all already disclosed in the Limitations
+subsection. No new risks were introduced by this pass; if anything, risk C ("the Oracle
+improvement is small because of the metric definition") is now substantially mitigated
+by Section 18.7's sensitivity result.
+
+### 18.18 Exact final PDF path
+
+`manuscript/main.pdf` (39 pages, 632,182 bytes).
+
+### 18.19 Exact submission-package path
+
+`manuscript/submission_package/` (byte-identical `main.pdf` independently verified to
+compile from a fresh checkout of just that directory).
+
+### 18.20 Final readiness status
+
+**READY WITH MINOR MANUAL CHECKS** -- unchanged category from Section 1, but on
+materially stronger footing: the manuscript is now free of the specific statistical and
+narrative contradictions a skeptical reviewer would most likely flag, and the central
+finding has been stress-tested against its most probable metric-definition objection
+and survived. Remaining items are the same administrative/portal actions listed in
+Section 14 (nothing new).
