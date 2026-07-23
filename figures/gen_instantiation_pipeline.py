@@ -151,12 +151,18 @@ arrow_diag(X3 + hw + X_GAP, Y_BOT,
 arrow_h(X4 + WIDE_W / 2 + X_GAP, X5 - OUT_W / 2 - X_GAP, Y_MID)
 
 # ── Branch labels (small, to the left of each first box) ─────────────────────
-ax.text(0.005, Y_TOP, "Query\nbranch",
+# Placed at a small negative x (outside the nominal 0-1 data range) with
+# clip_on=False so bbox_inches="tight" expands the canvas to fit them,
+# giving clear separation from the first box instead of sitting flush
+# against its border.
+ax.text(-0.045, Y_TOP, "Query\nbranch",
         ha="left", va="center", fontsize=FS_LABEL,
-        fontstyle="italic", color="#336699", fontfamily=FONT, zorder=5)
-ax.text(0.005, Y_BOT, "Schema\nbranch",
+        fontstyle="italic", color="#336699", fontfamily=FONT, zorder=5,
+        clip_on=False)
+ax.text(-0.045, Y_BOT, "Schema\nbranch",
         ha="left", va="center", fontsize=FS_LABEL,
-        fontstyle="italic", color="#336633", fontfamily=FONT, zorder=5)
+        fontstyle="italic", color="#336633", fontfamily=FONT, zorder=5,
+        clip_on=False)
 
 # ── Light vertical dashed divider between branches and merge ─────────────────
 ax.axvline(x=0.625, ymin=0.12, ymax=0.88,
