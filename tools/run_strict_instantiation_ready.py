@@ -20,14 +20,19 @@ sensitivity check, NOT as a replacement for the canonical metric.
 
 Data source: the same per-query CSVs and bootstrap methodology used by
 tools/run_confidence_intervals.py (results/eswa_revision/02_downstream_postfix/,
-paired percentile bootstrap, B=1000, seed=42). Recomputing the canonical
-(non-strict) InstantiationReady from these same live files reproduces the
-canonical Table 10 paired-bootstrap DIFFERENCE, CI, and p-value for
-TFIDF-TG vs. Oracle-TG exactly, even though the live per-query files carry
-the same small (~1/331) offset from the frozen canonical Table 4 values
-already disclosed for Table 11 (Sec. 3.5) -- i.e. the offset is consistent
-across paired methods and cancels out of the difference, so it does not
-affect the sensitivity conclusion.
+paired percentile bootstrap, B=1000, seed=42).
+
+As of the final KAIS submission pass, Table 4 (tab:nlp4lp-downstream-main)
+and Table 9/10 (significance tables) are themselves regenerated directly
+from these same canonical per-query files (the previously frozen
+results/eswa_revision/15_significance/confidence_intervals.csv snapshot was
+found to be stale -- it no longer reproduced from the currently committed
+per-query CSVs -- and was regenerated). Consequently this script's non-strict
+InstantiationReady column is now IDENTICAL to Table 4, not merely offset from
+it by a small disclosed amount. Recomputing the canonical (non-strict)
+InstantiationReady from these live files reproduces the significance-table
+paired-bootstrap DIFFERENCE, CI, and p-value for TFIDF-TG vs. Oracle-TG
+exactly.
 
 Outputs (results/eswa_revision/18_strict_instready/):
   strict_instantiation_ready.csv     -- per-method Schema_R1, IR, StrictIR
@@ -170,12 +175,12 @@ def main() -> None:
     print()
     print("NOTE: recomputing the standard (non-strict) InstantiationReady from")
     print("these same live per-query files and paired-bootstrapping TFIDF-TG vs.")
-    print("Oracle-TG reproduces the canonical Table 10 result (diff=-0.0393,")
-    print("CI=[-0.0665,-0.0151], p=0.004) exactly, confirming that the small")
-    print("(~1/331) absolute offset between this live rerun and the frozen")
-    print("canonical Table 4 values (already disclosed for Table 11, Sec. 3.5)")
-    print("is consistent across paired methods and cancels out of the")
-    print("difference used for the sensitivity conclusion.")
+    print("Oracle-TG reproduces the significance-table result (diff=-0.0393,")
+    print("CI=[-0.0665,-0.0151], p=0.004) exactly. Table 4 and the significance")
+    print("tables are now themselves generated from these same canonical")
+    print("per-query files (the previously frozen confidence_intervals.csv")
+    print("snapshot was stale and has been regenerated), so there is no longer")
+    print("any offset to reconcile.")
 
 
 if __name__ == "__main__":
