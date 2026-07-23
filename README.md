@@ -1,6 +1,6 @@
 # Retrieval-assisted optimization schema grounding
 
-**EAAI companion repo:** fixed-catalog **NLP4LP** benchmark, **deterministic scalar grounding**, and **restricted** engineering / **solver-backed subset** (SciPy HiGHS, 20 instances)—not a production product.
+**Companion repo for a manuscript submitted to Knowledge and Information Systems (KAIS), Springer Nature** (manuscript source: [`manuscript/`](manuscript/); see [`docs/KAIS_SOURCE_OF_TRUTH.md`](docs/KAIS_SOURCE_OF_TRUTH.md)): fixed-catalog **NLP4LP** benchmark, **deterministic scalar grounding**, and **restricted** engineering / **solver-backed subset** (SciPy HiGHS, 20 instances)—not a production product.
 
 ---
 
@@ -23,7 +23,7 @@
 
 1. [`docs/REVIEWER_GUIDE.md`](docs/REVIEWER_GUIDE.md) — what is official vs auxiliary  
 2. [`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md) — validated vs experimental, limitations  
-3. [`docs/EAAI_SOURCE_OF_TRUTH.md`](docs/EAAI_SOURCE_OF_TRUTH.md) — manuscript authority / scope  
+3. [`docs/KAIS_SOURCE_OF_TRUTH.md`](docs/KAIS_SOURCE_OF_TRUTH.md) — current manuscript authority / scope (see also [`docs/EAAI_SOURCE_OF_TRUTH.md`](docs/EAAI_SOURCE_OF_TRUTH.md) for unchanged benchmark facts)  
 4. [`docs/RESULTS_PROVENANCE.md`](docs/RESULTS_PROVENANCE.md) — metrics and provenance chain  
 5. [`docs/HOW_TO_REPRODUCE.md`](docs/HOW_TO_REPRODUCE.md) — rerun commands  
 6. [`docs/KNOWN_ISSUES.md`](docs/KNOWN_ISSUES.md) — blockers and design tensions  

@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "provider": "mistral",
+  "model": "mistral-small-latest",
+  "timestamp_utc": "2026-04-04T02:59:31.145750+00:00",
+  "probe": {
+    "response_preview": "{\"response\": \"pong\", \"status\": \"success\"}"
+  },
+  "estimate": {
+    "queries_per_variant": 331,
+    "variants": 1,
+    "estimated_chat_completions": 662,
+    "per_variant_calls": 662
+  },
+  "error": null
+}

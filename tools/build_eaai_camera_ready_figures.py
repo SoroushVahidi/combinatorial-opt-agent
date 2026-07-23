@@ -40,7 +40,7 @@ def _write_source_csv(name: str, rows: list[dict[str, object]]) -> None:
 
 
 def _draw_grouped_bars(
-    title: str,
+    title: str | None,
     methods: Sequence[str],
     metrics: Sequence[str],
     values: list[list[float]],
@@ -54,8 +54,16 @@ def _draw_grouped_bars(
     label_f = _font(22)
     small_f = _font(18)
 
-    left, top, right, bottom = 120, 140, width - 60, height - 200
-    d.text((left, 40), title, fill="black", font=title_f)
+    # When title is None, the figure is embedded under a LaTeX \caption that
+    # already supplies the figure number and title text; a baked-in title
+    # here would duplicate it (and drift out of sync with the LaTeX figure
+    # numbering, as happened previously: embedded "Figure 3"/"Figure 4"
+    # while the manuscript numbers them Fig. 2/Fig. 3). Only shrink the top
+    # margin when there is no title to draw.
+    top = 140 if title else 60
+    left, right, bottom = 120, width - 60, height - 200
+    if title:
+        d.text((left, 40), title, fill="black", font=title_f)
     d.line((left, top, left, bottom), fill="black", width=3)
     d.line((left, bottom, right, bottom), fill="black", width=3)
 
@@ -168,7 +176,7 @@ def build_figure3_engineering() -> None:
     methods = [r["method"] for r in rows]
     metrics = ["structural valid", "inst. complete"]
     vals = [[r["structural_valid"], r["instantiation_complete"]] for r in rows]
-    img = _draw_grouped_bars("Figure 3. Engineering validation subset", methods, metrics, vals, y_max=1.0)
+    img = _draw_grouped_bars(None, methods, metrics, vals, y_max=1.0)
     _save_both(img, "figure3_engineering_validation_comparison")
 
 
@@ -189,7 +197,7 @@ def build_figure4_solver_subset() -> None:
     methods = [r["method"] for r in rows]
     metrics = ["executable", "solver success", "feasible", "objective"]
     vals = [[r["executable"], r["solver_success"], r["feasible"], r["objective"]] for r in rows]
-    img = _draw_grouped_bars("Figure 4. Final solver-backed subset", methods, metrics, vals, y_max=1.0)
+    img = _draw_grouped_bars(None, methods, metrics, vals, y_max=1.0)
     _save_both(img, "figure4_final_solver_backed_subset")
 
 
