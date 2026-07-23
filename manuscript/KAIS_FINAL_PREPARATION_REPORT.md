@@ -328,3 +328,40 @@ itself.
   independently verified to compile cleanly with `pdflatex` + `bibtex` + `pdflatex` x2
   from a fresh checkout of just that directory)
 - **This report:** `manuscript/KAIS_FINAL_PREPARATION_REPORT.md`
+
+## 16. Targeted Follow-Up Update (2026-07-23, second session)
+
+A subsequent, narrowly-scoped request asked for four specific changes only (no
+re-audit of scientific content, tables, figures, metrics, or references). This section
+documents what was done and confirms each requested item.
+
+1. **Acknowledgements updated.** `main.tex`'s `\bmhead{Acknowledgements}` text now
+   reads: "The author is deeply grateful to his mother for her continuous emotional
+   support. The author also thanks his PhD advisor, Professor Ioannis Koutis, for his
+   support, guidance, and encouragement." Confirmed by extracting text directly from
+   the compiled PDF (`pdftotext`) -- the surname is spelled **Koutis** (not "Kotis"),
+   and both the mother's emotional support and the PhD advisor's guidance are
+   acknowledged, matching the requested wording exactly.
+2. **Public GitHub URL confirmed present** in the manuscript: `main.tex` cites
+   `https://github.com/SoroushVahidi/combinatorial-opt-agent` in both the **Data
+   availability** statement (for committed camera-ready tables/figures/analysis
+   reports) and the **Code availability** statement (for the retrieval/grounding/
+   evaluation code), consistent with the repository's data being derived from a gated
+   third-party dataset (NLP4LP) that is not itself redistributed.
+3. **Repository public accessibility independently verified** (not assumed from the
+   URL string) via three separate unauthenticated checks run from this environment:
+   - `curl` to `https://github.com/SoroushVahidi/combinatorial-opt-agent` returned
+     HTTP 200 with no authentication.
+   - `git ls-remote` against the HTTPS remote succeeded anonymously
+     (`GIT_TERMINAL_PROMPT=0`, no credential prompt, no stored token used), returning
+     the current `HEAD` commit.
+   - The GitHub REST API (`api.github.com/repos/SoroushVahidi/combinatorial-opt-agent`,
+     unauthenticated) reports `"private": false` and `"visibility": "public"`.
+4. **Recompiled after the change**: `pdflatex` x3 + `bibtex`, zero overfull hboxes,
+   zero undefined citations or references, zero new LaTeX errors or warnings beyond
+   the pre-existing ~29 minor underfull-hbox cosmetic warnings already noted in
+   Section 11. Final PDF: 38 pages (unchanged page count). Verified visually by
+   extracting and rendering the Acknowledgements page from the freshly compiled PDF.
+5. No scientific results, tables, figures, metric definitions, or references were
+   touched in this follow-up; the only content change in `main.tex` is the
+   Acknowledgements paragraph.
