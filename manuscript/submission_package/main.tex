@@ -120,9 +120,10 @@ In this paper, the term \emph{schema} refers to the retrieved optimization templ
 Our scope is intentionally restricted in three ways. First, benchmark-level downstream evaluation is limited to scalar numeric parameters. Second, the core retrieval-and-grounding pipeline is fully deterministic and uses no large language model, no learned retriever, and no learned extractor. Third, the main benchmark study evaluates schema-conditioned scalar recovery rather than full end-to-end model generation. These restrictions are deliberate: they isolate an interpretable intermediate capability and allow precise analysis of where performance gains and failures arise. At the same time, the broader experimental section complements this benchmarked formulation with engineering-oriented subset validation, including structural-validity analysis and a restricted solver-backed study on compatible instances. These additional experiments are intended to assess downstream practical relevance, not to redefine the core task studied here.
 
 Formally, let $G(q)$ denote the set of scalar gold parameters associated with query $q$, and let $P(\hat{s})$ denote the scalar parameter keys exposed by the retrieved schema $\hat{s}$. The downstream evaluator considers only the eligible slot set
-\[
+\begin{equation}
 E(q,\hat{s}) = G(q) \cap P(\hat{s}),
-\]
+\label{eq:eligible_slots}
+\end{equation}
 that is, the scalar gold parameters whose keys are present in the predicted schema. This choice makes downstream evaluation retrieval-dependent by construction. Even when a query contains the correct numeric evidence, an incorrect schema can reduce structural overlap and therefore lower downstream performance. The formulation is designed to measure not only whether the correct schema is retrieved, but also whether improved schema retrieval yields measurable gains in structured parameter instantiation.
 
 Retrieval quality is measured by whether the top-ranked schema matches the gold schema, while downstream quality is measured by how well scalar slots from the retrieved schema can be instantiated from the query text. As the experiments later show, retrieval on \textsc{NLP4LP} is already strong, whereas the main remaining difficulty lies in grounding extracted numbers to the correct scalar roles within the chosen schema. The formulation adopted here therefore isolates the stage that currently matters most empirically: deterministic number-to-slot grounding after schema retrieval.
@@ -266,22 +267,24 @@ The downstream candidate slot set is derived from the \emph{predicted} schema ra
 To assign extracted numbers to slots, we evaluate multiple deterministic grounding families that differ in how much structural guidance they exploit. Across all methods, scalar slots are typed using four lightweight rule-based categories: \emph{percent}, \emph{integer}, \emph{currency}, and \emph{float}. Extracted numeric mentions are mapped into the same categories using surface cues such as percentage markers, currency symbols, and integer-valued forms. The benchmark includes the original typed-greedy baselines based on TF--IDF, BM25, and LSA; an oracle typed-greedy control; and five previously reported TF--IDF-based deterministic grounding variants with additional constraints or repair mechanisms, namely constrained matching, semantic repair, optimization-role repair, acceptance reranking, and hierarchical acceptance reranking. To broaden the comparison set, we further evaluate three additional method families: \emph{global compatibility grounding}, \emph{relation-aware linking}, and \emph{ambiguity-aware grounding}. This expanded design allows us to compare simple deterministic assignment against richer structured grounding strategies while keeping the overall pipeline transparent and reproducible.
 
 We report both retrieval effectiveness and downstream instantiation quality. \textit{Schema\_R@1} is the fraction of test queries whose top-ranked schema matches the gold schema. For downstream evaluation, let $G_i$ denote the scalar gold slots for query $i$ that are eligible for evaluation after intersecting gold scalar parameters with the candidate slots induced by the predicted schema, and let $A_i \subseteq G_i$ denote the subset of those slots that receive an assignment. Then \textit{Coverage} is
-\[
+\begin{equation}
 \textit{Coverage}
 =
 \frac{\sum_i |A_i|}{\sum_i |G_i|},
-\]
+\label{eq:coverage}
+\end{equation}
 that is, the fraction of eligible scalar gold slots that receive any assignment. \textit{TypeMatch} is the fraction of assigned slots whose predicted numeric type matches the expected slot type,
-\[
+\begin{equation}
 \textit{TypeMatch}
 =
 \frac{\sum_i |\{s \in A_i : \mathrm{type}(\hat{y}_{i,s}) = \mathrm{type}(y_{i,s})\}|}{\sum_i |A_i|},
-\]
+\label{eq:typematch}
+\end{equation}
 where $\hat{y}_{i,s}$ and $y_{i,s}$ denote the predicted and gold values for slot $s$ of query $i$.
 
 To measure value accuracy, we report \textit{Exact20\_on\_hits}. This metric is computed only on the subset of \emph{schema-hit} queries for which a comparable numeric prediction and gold value are both available for the slot under consideration. A slot is counted as correct if the predicted numeric value falls within a relative error tolerance of $20\%$ of the gold value. Because meaningful numeric comparison requires both schema correctness and a comparable numeric pair, \textit{Exact20\_on\_hits} is intentionally normalized on this eligible subset rather than on all test queries. It should therefore be interpreted as a conditional value-grounding measure rather than as an end-to-end benchmark score.
 
-Our main end-to-end utility metric is \textit{InstantiationReady}. For query $i$, let $\mathit{Coverage}_i$ and $\mathit{TypeMatch}_i$ denote the per-query coverage and type-match rates computed over the predicted-schema-conditioned eligible slot set $E(q_i,\hat{s}_i)$ defined in Section~\ref{subsec:method_problem}. A query is counted as \textit{InstantiationReady} if both rates reach a fixed threshold,
+Our main end-to-end utility metric is \textit{InstantiationReady}. For query $i$, let $\mathit{Coverage}_i$ and $\mathit{TypeMatch}_i$ denote the per-query coverage and type-match rates (Eqs.~\eqref{eq:coverage}--\eqref{eq:typematch}) computed over the predicted-schema-conditioned eligible slot set $E(q_i,\hat{s}_i)$ (Eq.~\eqref{eq:eligible_slots}). A query is counted as \textit{InstantiationReady} if both rates reach a fixed threshold,
 \begin{equation}
 \mathit{InstantiationReady}_i = \mathbb{1}\!\left[\mathit{Coverage}_i \geq 0.8 \ \wedge\ \mathit{TypeMatch}_i \geq 0.8\right],
 \label{eq:instantiation_ready}
