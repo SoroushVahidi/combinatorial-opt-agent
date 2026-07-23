@@ -109,47 +109,75 @@ was double-anonymized). This folder re-targets all of that content at KAIS.
 - No LaTeX structural errors: brace/label/ref/begin-end balance checked programmatically
   (no duplicate labels, no dangling `\ref`s, no unused `\includegraphics` targets).
 
+## KAIS final-preparation pass (2026-07-23, second pass)
+
+A second, deeper preparation pass resolved every open item listed below (previously
+numbered 1-3) and made additional scientific and presentation corrections. See
+`docs/KAIS_FINAL_PREPARATION_REPORT.md` for the full audit report. Summary of what
+changed in this pass:
+
+- **Official Springer Nature template.** `main.tex` now uses the real `sn-jnl.cls`
+  (December 2024 version, downloaded directly from Springer Nature's own CMS resource
+  host) with `[pdflatex,sn-basic,Numbered]` options, matching KAIS's own citation-style
+  guidance exactly. `elsarticle.cls`/`elsarticle-num.bst` are kept only because the
+  optional standalone `title.tex` still uses them (see Open Item 3 below); they are no
+  longer used by `main.tex`.
+- **Peer-review blinding confirmed.** KAIS's ethics-and-disclosures page
+  (<https://link.springer.com/journal/10115/ethics-and-disclosures>) states review is
+  single-anonymous. Author identity is correctly included in the title block; no
+  anonymization is required.
+- **`InstantiationReady` definition corrected.** The prose previously described an
+  all-or-nothing rule ("schema matches gold AND all slots filled AND all correct
+  type"); the actual implementation
+  (`tools/nlp4lp_downstream_utility.py`, canonical per-query loop) is a per-query
+  `Coverage >= 0.8 AND TypeMatch >= 0.8` threshold rule with no separate hard schema-match
+  gate. Fixed in Sec. 3.1 with a proper equation.
+- **Three new verified references added** to Related Work (Chain-of-Experts, ICLR 2024;
+  LLMOPT, ICLR 2025; a 2025 IJCAI survey on optimization modeling + LLMs), each checked
+  against official proceedings/OpenReview pages before adding.
+- **Table formatting standardized**: all 14 tables converted to Springer's
+  `\toprule`/`\midrule`/`\botrule` style; removed an unjustified `\resizebox`; fixed two
+  inconsistently-`\scriptsize` simple tables to `\small`; fixed a real ~91pt tabularx
+  overfull-hbox bug.
+- **Two figures regenerated** (`tools/build_eaai_camera_ready_figures.py`) to remove a
+  baked-in title that duplicated and numerically mismatched the LaTeX caption.
+- **New "Limitations and Threats to Validity" subsection** added to the Conclusion
+  (previously promised in the intro's roadmap sentence but never delivered as a
+  consolidated section).
+- Minor fixes: a lexical-overlap bucket mislabeled "low" instead of "medium"
+  (data has no "low" bucket); two Related Work sentences with >4 citations restructured
+  so each citation is attributed to a specific claim.
+- Full clean compile verified: 3x `pdflatex` + `bibtex`, 36 pages, all fonts embedded,
+  zero undefined citations/references, zero overfull hboxes.
+
 ## Open items requiring your manual action
 
-1. **Confirm KAIS's peer-review blinding policy** (single- vs. double-anonymous) via the
-   journal's online submission system or by contacting the editorial office -- this could
-   not be confirmed from the public Springer Nature pages during this pass. If
-   double-anonymous, blank the `\author`/`\address` block in `main.tex` and remove the
-   GitHub URL from the Data/Code availability declarations.
-2. **Template conversion.** This package uses the `elsarticle` class (bundled `.cls`/
-   `.bst` files) as a correct, freely redistributable, verified-compilable vehicle,
-   *not* the official Springer Nature LaTeX template (`sn-jnl.cls` / `sn-basic.bst`).
-   Springer's own guidance states LaTeX/Word/PDF are all accepted at initial submission
-   and that authors not using their template should instead "follow the relevant guide,"
-   which this package now does (structure, numbered references, Declarations section,
-   title-page fields, 150-250-word abstract, 4-6 keywords). Before final acceptance,
-   download the official Springer Nature LaTeX template from Springer's author
-   resources site and port this content into it. It was not reconstructed by hand here
-   to avoid shipping an incorrect or outdated proprietary class file.
-3. **Compile and visually inspect the PDF.** No LaTeX toolchain was available in this
-   sandboxed environment (no `pdflatex`/`bibtex`/working `apptainer` module), so this
-   pass is a rigorous source-level audit (braces, labels, refs, citations, figure paths
-   all verified programmatically) but **not** a compiled/visual proof. Compile via
-   Overleaf or a local TeX installation before submitting, and check for overfull/underfull
-   boxes, page breaks inside tables, and font embedding in the final PDF.
-4. **Enter declarations via the KAIS submission portal** as well as in the manuscript
+1. **Enter declarations via the KAIS submission portal** as well as in the manuscript
    text -- Springer's guidelines state Author Contribution and Competing Interest
    information must be provided through the submission interface, and only that
    interface version is used in the final published record.
-5. **Decide on the standalone `title.tex` / `highlights.tex` / `declaration-of-interest.tex`
+2. **Decide on the standalone `title.tex` / `highlights.tex` / `declaration-of-interest.tex`
    files.** None are required for KAIS (all their content is already folded into
    `main.tex`); include them only if the submission system specifically asks for a
    separate title page.
+3. **Double-check the corresponding-author postal address.** The `sn-jnl` title-block
+   template requires a `\street{}` field that the original `elsarticle` `\address` did
+   not have; it is now filled in as "University Heights" (NJIT's official general
+   mailing-address designation, verified against njit.edu's own contact/maps pages
+   during this pass, zip 07102-1982). Replace with your department's specific street
+   address/building if you prefer a more specific one on the title page.
 
 ## File manifest
 
 | File | Role |
 |------|------|
-| `main.tex` | Full manuscript (title, abstract, keywords, body, Declarations, bibliography command) |
-| `references.bib` | Cleaned bibliography (20 entries, all cited) |
-| `elsarticle.cls`, `elsarticle-num.bst` | Interim LaTeX class/style (see Open Item 2) |
+| `main.tex` | Full manuscript (title, abstract, keywords, body, Declarations, bibliography command) -- **sn-jnl.cls-based** |
+| `main.pdf` | Compiled output of the current `main.tex` (36 pages) |
+| `references.bib` | Bibliography (23 entries, all cited) |
+| `sn-jnl.cls`, `sn-basic.bst` | Official Springer Nature template files (see header comment in `main.tex` for provenance) |
+| `elsarticle.cls`, `elsarticle-num.bst` | Retained only for the optional standalone `title.tex`; not used by `main.tex` |
 | `figures/nlp4lp_instantiation_pipeline_v2.png` | Figure 1 (pipeline overview) |
-| `figures/figure3_engineering_validation_comparison.pdf` | Figure 2 (new: engineering subset) |
-| `figures/figure4_final_solver_backed_subset.pdf` | Figure 3 (new: solver-backed subset) |
+| `figures/figure3_engineering_validation_comparison.pdf` | Figure 2 (engineering subset; regenerated to drop a duplicate baked-in title) |
+| `figures/figure4_final_solver_backed_subset.pdf` | Figure 3 (solver-backed subset; regenerated to drop a duplicate baked-in title) |
 | `cover-letter.tex` | KAIS-targeted cover letter |
-| `title.tex`, `highlights.tex`, `declaration-of-interest.tex` | Optional supplementary files (see Open Item 5) |
+| `title.tex`, `highlights.tex`, `declaration-of-interest.tex` | Optional supplementary files (see Open Item 2) |

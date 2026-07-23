@@ -23,9 +23,17 @@ manuscript source**; the zip is kept as-is for provenance.
 See [`manuscript/MANUSCRIPT_README.md`](../manuscript/MANUSCRIPT_README.md) for the full
 list of changes made during the KAIS adaptation pass (bibliography style, Declarations
 section, new tables/figures added from already-committed camera-ready artifacts, bib
-cleanup, a naming-bug fix, etc.) and for open items that still require manual action
-(peer-review blinding policy confirmation, official Springer template conversion, PDF
-compile verification).
+cleanup, a naming-bug fix, etc.).
+
+**2026-07-23 (final preparation pass):** a second, deeper pass converted the manuscript to
+the official Springer Nature LaTeX template (`sn-jnl.cls`, downloaded directly from
+Springer Nature's own resource host), confirmed KAIS's peer-review policy is
+single-anonymous (so author identity stays in the manuscript), fixed a real
+`InstantiationReady` metric-definition/implementation mismatch, added three verified
+recent references, standardized table formatting, regenerated two figures with a
+duplicated/mismatched baked-in title, and added a dedicated Limitations subsection. Full
+details in [`docs/KAIS_FINAL_PREPARATION_REPORT.md`](KAIS_FINAL_PREPARATION_REPORT.md).
+The manuscript now compiles cleanly to a 36-page PDF (`manuscript/main.pdf`).
 
 ## Benchmark facts (unchanged from the EAAI-era documents; still authoritative)
 
