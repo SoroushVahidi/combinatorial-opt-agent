@@ -1,0 +1,8 @@
+{
+  "run_id": "903088",
+  "time_utc": "2026-04-04T02:59:32.857525+00:00",
+  "mistral_model": "",
+  "nlp4lp_output_dir": "/mmfs1/home/sv96/combinatorial-opt-agent/results/rerun/mistral/run_903088/paper",
+  "rerun_root": "/mmfs1/home/sv96/combinatorial-opt-agent/results/rerun/mistral/run_903088",
+  "orig_only": "1"
+}

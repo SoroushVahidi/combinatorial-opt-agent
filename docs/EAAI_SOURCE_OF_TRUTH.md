@@ -1,7 +1,13 @@
 # EAAI Source of Truth
 
+> **2026-07-23 update:** The manuscript is now targeted at *Knowledge and Information
+> Systems* (KAIS), not EAAI. See **[`docs/KAIS_SOURCE_OF_TRUTH.md`](KAIS_SOURCE_OF_TRUTH.md)**
+> for the current venue and manuscript-source pointer (`manuscript/main.tex`). The
+> benchmark facts below (numbers, subset sizes, blockers) are unchanged and remain
+> authoritative; only the venue-specific framing in this file is superseded.
+
 **Created:** 2026-03-30  
-**Status:** Authoritative — supersedes older broad repo framing docs for manuscript purposes
+**Status:** Authoritative for benchmark facts — supersedes older broad repo framing docs for manuscript purposes
 
 **Concise companion:** **[`docs/CURRENT_STATUS.md`](CURRENT_STATUS.md)** (reviewer-facing status + headline metrics pointer).  
 **Reviewer entry:** **[`docs/REVIEWER_GUIDE.md`](REVIEWER_GUIDE.md)**.

@@ -1,0 +1,2 @@
+variant,baseline,schema_R1,param_coverage,type_match,exact5_on_hits,exact20_on_hits,param_coverage_hits,param_coverage_miss,type_match_hits,type_match_miss,key_overlap,key_overlap_hits,key_overlap_miss,instantiation_ready,n
+orig,mistral,0.5166163141993958,0.47708962739174215,0.48338368580060426,0.9090814882216158,0.9101430593468812,0.9059454191033138,0.01875,0.9181286549707602,0.01875,0.5232232772262985,0.9908103592314119,0.023489583333333335,0.4652567975830816,331

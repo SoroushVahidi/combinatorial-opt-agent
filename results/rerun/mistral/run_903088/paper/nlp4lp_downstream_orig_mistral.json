@@ -1,0 +1,27 @@
+{
+  "config": {
+    "variant": "orig",
+    "baseline": "mistral",
+    "k": 1,
+    "random_control": false
+  },
+  "aggregate": {
+    "variant": "orig",
+    "baseline": "mistral",
+    "schema_R1": 0.5166163141993958,
+    "param_coverage": 0.47708962739174215,
+    "type_match": 0.48338368580060426,
+    "exact5_on_hits": 0.9090814882216158,
+    "exact20_on_hits": 0.9101430593468812,
+    "param_coverage_hits": 0.9059454191033138,
+    "param_coverage_miss": 0.01875,
+    "type_match_hits": 0.9181286549707602,
+    "type_match_miss": 0.01875,
+    "key_overlap": 0.5232232772262985,
+    "key_overlap_hits": 0.9908103592314119,
+    "key_overlap_miss": 0.023489583333333335,
+    "instantiation_ready": 0.4652567975830816,
+    "n": 331
+  },
+  "resume_merged": false
+}
