@@ -926,3 +926,160 @@ firmer footing for the specific Table 4/12 claim. Outstanding: (1) re-verify wit
 real `pdflatex`+`bibtex` compile outside this sandbox; (2) human review of the
 newly-disclosed TF-IDF-vs-BM25 significance flip (Sec. 3.5, inline TODO comment);
 (3) enter ORCID and confirm author metadata in the KAIS portal per Section 19.20.
+
+## 21. FINAL NARROW VERIFICATION (2026-07-23, seventh session, HPC/Slurm)
+
+This was a narrow, non-interactive verification pass (no new experiments, no broad
+edits) against Section 20's HEAD, run on the paper's HPC cluster with all compute-heavy
+work submitted through Slurm rather than run on the login node, per instruction.
+
+**Branch sync.** `git fetch origin` confirmed `origin/kais-final-submission-prep` at
+`4e0635f` (Section 20's commit); local checkout fast-forwarded to match. No merge into
+`main`.
+
+**Stale canonical-value audit.** Searched `manuscript/main.tex` for every literal
+occurrence of the three stale InstantiationReady values from before Section 20's fix:
+
+- `0.5257` — 4 occurrences, all belong to **TFIDF-AR** (`tfidf_acceptance_rerank`),
+  whose corrected value independently is 0.5257 (up from a stale 0.5227); none are a
+  leftover reference to TFIDF-TG's old value. Verified against the regenerated
+  `results/eswa_revision/15_significance/confidence_intervals.csv`.
+- `0.4985` — 3 occurrences, all belong to **RAL-Basic** (`tfidf_relation_aware_basic`),
+  independently verified at `0.4985` in the regenerated `confidence_intervals.csv`
+  (`orig,tfidf_relation_aware_basic,InstReady,0.4985,...`); not a leftover reference to
+  LSA-TG's old value.
+- `0.5650` — 0 occurrences. The old Oracle-TG value was fully replaced by `0.5680`
+  everywhere.
+
+No blind replacements were made; every hit was individually attributed to its correct
+method before being left in place. No edits were needed for this item.
+
+**TF-IDF vs. BM25 significance wording.** Confirmed Table 9 (`tab:nlp4lp-significance`)
+and Sec. 3.5 prose report `p = 0.088` (not significant at α = 0.05) for the TF-IDF-vs-BM25
+`Schema_R@1` comparison, with explicit neutral wording ("no longer statistically
+significant at conventional levels") and an explicit note that this differs from a
+previously reported `p = 0.022` based on the stale snapshot. No occurrences of the old
+`p = 0.022` remain unqualified.
+
+**TODO comment removed.** The single `% TODO(final-pass)` LaTeX comment (line 516 of
+both `manuscript/main.tex` and `manuscript/submission_package/main.tex`) has been
+deleted; the substantive disclosure it flagged was already present as reader-facing
+prose on the next line and is unaffected. Full-source search for `TODO`, `FIXME`,
+`XXX`, `final-pass` across `main.tex`, `submission_package/main.tex`, and
+`cover-letter.tex` now returns zero matches.
+
+**Table 4 / Table 11 (this branch's numbering for the former "Table 12") provenance,
+independently re-verified from scratch:**
+
+| Method | Table 4 (confidence_intervals.csv, regenerated) | Table 11 non-strict column (recomputed directly from per-query CSVs) |
+|---|---|---|
+| TFIDF-TG | 0.5287 | 0.5287 |
+| BM25-TG | 0.5196 | 0.5196 |
+| LSA-TG | 0.5076 | 0.5076 |
+| Oracle-TG | 0.5680 | 0.5680 |
+
+Both columns were computed independently in this session (one read from the committed
+`confidence_intervals.csv`, the other recomputed directly from
+`results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_*.csv`
+with fresh Python, not by re-reading the manuscript) and agree exactly. The paired
+bootstrap TFIDF-TG vs. Oracle-TG comparison was also independently recomputed from the
+same live files: diff = −0.0393, 95% CI [−0.0665, −0.0151], p = 0.004 — identical to
+the manuscript's reported values, confirming no drift.
+
+**Production `pdflatex`+`bibtex` build via Slurm.** Four jobs were required to reach a
+working build, all on the `debug` partition/QoS (1 CPU, ≤4 GB, ≤30 min, account
+`ikoutis`), because this HPC environment exposed three consecutive non-obvious
+failure modes, each fixed before resubmitting:
+
+1. **Job 1130484/1130485** — `#SBATCH --output` and script `LOGDIR` pointed at a path
+   under this session's `/tmp`, which is node-local and invisible to the compute node
+   the job actually ran on; the job "completed" but wrote nothing anywhere inspectable.
+   Fixed by moving all logs/outputs to the shared `/mmfs1` filesystem.
+2. **Job 1130488/1130489** — with logs now visible, `module load GCC/14.2.0
+   texlive/20250308` produced no error but never put `pdflatex`/`bibtex` on `PATH`; a
+   `command -v` guard caught this cleanly (exit 90) rather than silently falling back
+   to a stale PDF. Root cause: the non-interactive batch shell never sourced this
+   cluster's site-specific module bootstrap, because `~/.bashrc` begins with the
+   standard `case $- in *i*) ;; *) return;; esac` interactive-only guard, which a
+   plain `#!/bin/bash -l` login shell does not bypass for a non-interactive script.
+3. **Job 1130491/1130492 (diagnostics) → 1130493 (real build)** — even after fixing
+   (2) by sourcing `/etc/profile.d/modules.sh` and confirming via minimal diagnostic
+   jobs that `module load` worked in isolation, the real build script still failed.
+   Root cause: `module load ... | tee -a "$STATUS"` piped `module load`'s output
+   through `tee`, which runs the first pipeline stage in a subshell — Lmod's `module`
+   function mutates the *current* shell's `PATH`/`MODULEPATH`, so those mutations were
+   silently discarded when the subshell exited. Fixed by redirecting with `>>` instead
+   of piping through `tee`.
+
+**Job 1130493 (final, successful): COMPLETED, exit 0:0.** Results:
+
+| | `manuscript/` | `manuscript/submission_package/` |
+|---|---|---|
+| pdflatex/bibtex/pdflatex/pdflatex passes | all exit 0 | all exit 0 |
+| Page count | 38 | 38 |
+| Undefined citations | 0 | 0 |
+| Undefined references | 0 | 0 |
+| Overfull `\hbox` | 0 | 0 |
+| LaTeX errors | 0 | 0 |
+| Fonts not embedded | 0 | 0 |
+| SHA-256 | `8a4774cdfd207c72dd399499e91c1825c27d5c979f2bc8146aa7fcc22582c5d2` | `ad55b0573a0d660fbed19557ecb24a3a3cda8896a648e31f50b570e12241ebb2` |
+
+**Byte-identical: NO** — but `pdftotext` extraction of both PDFs is **character-for-character
+identical**, and `pdfinfo` shows the only difference is `CreationDate`/`ModDate`
+(the two builds ran ~2.5 minutes apart in the same job). The two manuscripts represent
+identical document content; the hash difference is a compile-timestamp artifact, not a
+content divergence. Both PDFs were installed to `manuscript/main.pdf` and
+`manuscript/submission_package/main.pdf`, replacing the previous Tectonic-built PDFs —
+this is now a genuine production-toolchain (`pdflatex`+`bibtex`) build, not a substitute
+engine.
+
+**Targeted visual spot-check** (rendered at 100 dpi from the production PDF; all pages
+inspected as images, not inferred from source): title/author/ORCID area (p.1) —
+ORCID cleanly embedded in the corresponding-author metadata line, no isolated line
+before Section 1; pages 8–9 — the previous forced-break/blank-space defect remains
+fixed, text flows continuously; Table 4 (p.21), Table 5 (p.22), Table 7 (p.25),
+Table 8 (p.26), Table 9 (p.26), Table 10 (p.27), Table 11 (p.28), Table 12 (p.29),
+Table 13 / Table 14 (p.30) — all comfortably sized, `\small` (not `\scriptsize`),
+no cramped columns, no large surrounding whitespace, engineering-validation metric
+definitions present once before Sec. 3.6 as specified; Figure 1 (p.12), Figure 2
+(p.29), Figure 3 (p.31) — legends below/outside plot areas, no overlap, readable;
+Declarations/Acknowledgements (p.34) — clean, no orphaned development text. No
+defects found; no layout changes were made in this pass beyond the TODO-comment
+removal.
+
+**ORCID.** Confirmed embedded as `\email{sv96@njit.edu \textnormal{(ORCID:
+0000-0003-1934-6282)}}` directly in the `\author*` metadata block — not a standalone
+line before Section 1. `sn-jnl.cls` does provide a native `\orcid{URL}` macro (renders
+a clickable ORCID logo via `Orcidlogo.eps`), which was not adopted because the required
+image asset is not bundled with this template copy and using it untested would risk a
+compile break; the current placement satisfies the substantive requirement (attached to
+author metadata, not isolated) without that risk. Manual step remains: ORCID
+0000-0003-1934-6282 must still be entered/authenticated in the KAIS submission portal.
+
+**Commit and push.** Changes in this pass: removal of the two `% TODO(final-pass)`
+comments (`main.tex`, `submission_package/main.tex`) and installation of the two
+production-toolchain PDFs. Committed as `fix(manuscript): finalize canonical metrics
+and production-build checks` and pushed to `origin/kais-final-submission-prep`
+(fast-forward, no force).
+
+**Summary of verification results:**
+- Table 4 canonical values: TFIDF-TG=0.5287, BM25-TG=0.5196, LSA-TG=0.5076, Oracle-TG=0.5680
+- Table 11 non-strict column: identical, independently re-verified
+- TF-IDF vs. BM25 Schema_R@1: p=0.088 (not significant), correctly and consistently reported
+- TFIDF-TG vs. Oracle-TG: diff=-0.0393, p=0.004, independently reproduced
+- Stale-number audit: clean (all remaining 0.5257/0.4985 occurrences belong to other methods; zero 0.5650 remain)
+- TODO/FIXME/XXX/final-pass audit: clean (one TODO found and removed)
+- Production Slurm job: 1130493, COMPLETED, exit 0:0 (three prior jobs failed and were diagnosed/fixed: 1130484/1130485 node-local /tmp, 1130488/1130489 module-bootstrap not sourced in non-interactive shell, 1130491–93 module-load-through-pipe subshell issue)
+- Final page count: 38 (both manuscript/ and submission_package/)
+- Undefined citations/references: 0/0; overfull hboxes: 0; LaTeX errors: 0
+- Final PDF SHA-256: `8a4774cdfd207c72dd399499e91c1825c27d5c979f2bc8146aa7fcc22582c5d2`
+- Submission-package verification: 38 pages, 0/0/0/0 same as above, text content identical to main manuscript (byte difference is compile-timestamp only)
+- Visual spot-check: passed, no defects, no layout changes needed
+- ORCID: cleanly embedded in author metadata; portal entry still required (manual, unavoidable)
+
+**Final readiness status: READY WITH MINOR MANUAL CHECKS.** Remaining items are
+purely administrative/human: (1) enter and authenticate ORCID in the KAIS submission
+portal; (2) a final human skim of the TF-IDF-vs-BM25 significance-flip disclosure
+(Sec. 3.5) is still advisable before submission even though it is now fully and
+neutrally reported in-text with no dangling TODOs. No scientific, layout, or
+compilation blocker remains.
