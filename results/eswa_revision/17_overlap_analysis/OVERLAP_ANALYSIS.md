@@ -34,7 +34,7 @@ N = 331 test queries, orig variant.
 | Overlap bucket | N | Mean Jaccard | TF-IDF Schema_R@1 |
 |---------------|---|--------------|-------------------|
 | medium | 4 | 0.0922 | 0.0000 |
-| high | 327 | 0.4307 | 0.9205 |
+| high | 327 | 0.4307 | 0.9174 |
 
 ---
 
@@ -42,10 +42,10 @@ N = 331 test queries, orig variant.
 
 | Sanitize variant | BM25 | TF-IDF | LSA |
 |-----------------|------|--------|-----|
-| baseline | 0.8852 | 0.9063 | 0.7734 |
-| no_numbers | 0.8973 | 0.9063 | 0.7734 |
-| stopword_stripped | 0.9063 | 0.9124 | 0.8731 |
-| no_numbers_plus_stopwords | 0.9063 | 0.9124 | 0.8731 |
+| baseline | 0.8852 | 0.9063 | 0.8459 |
+| no_numbers | 0.8973 | 0.9063 | 0.8459 |
+| stopword_stripped | 0.9063 | 0.9124 | 0.9184 |
+| no_numbers_plus_stopwords | 0.9063 | 0.9124 | 0.9184 |
 
 ---
 

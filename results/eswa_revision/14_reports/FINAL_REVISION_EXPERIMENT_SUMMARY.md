@@ -79,12 +79,14 @@ _★ = newly added method family_
 
 | Sanitize Variant | TF-IDF Schema R@1 | BM25 Schema R@1 | LSA Schema R@1 |
 |-----------------|-------------------|-----------------|----------------|
-| baseline | 0.9063 | 0.8852 | 0.7734 |
-| no_numbers | 0.9063 | 0.8973 | 0.7734 |
-| no_numbers_plus_stopwords | 0.9124 | 0.9063 | 0.8731 |
-| stopword_stripped | 0.9124 | 0.9063 | 0.8731 |
+| baseline | 0.9063 | 0.8852 | 0.8459 |
+| no_numbers | 0.9063 | 0.8973 | 0.8459 |
+| no_numbers_plus_stopwords | 0.9124 | 0.9063 | 0.9184 |
+| stopword_stripped | 0.9124 | 0.9063 | 0.9184 |
 
-**Interpretation**: TF-IDF and BM25 performance is *stable or slightly improves* when numbers and stopwords are removed, indicating that retrieval success is driven by structural/semantic term overlap (parameter names, units, domain keywords) rather than exact numeric matching.
+**Interpretation**: TF-IDF and BM25 performance is *stable or slightly improves* when numbers and stopwords are removed, indicating that retrieval success is driven by structural/semantic term overlap (parameter names, units, domain keywords) rather than exact numeric matching. LSA is likewise stable-to-higher under sanitization.
+
+**Correction (2026-07-23):** the LSA column above was regenerated after fixing a diagnostic-script bug in `tools/run_overlap_analysis.py` that capped LSA's SVD latent dimensionality at 100 components instead of the canonical pipeline's 256 (`retrieval/baselines.py`, `LSABaseline`). The corrected `baseline` LSA value (0.8459) exactly reproduces the canonical Table 3 / `retrieval_main.csv` LSA value; the previously reported 0.7734 was a diagnostic-script configuration artifact, not a property of LSA retrieval. See `manuscript/KAIS_FINAL_PREPARATION_REPORT.md` for full provenance.
 
 ## 7. Conclusions for Paper Revision
 

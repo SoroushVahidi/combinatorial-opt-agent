@@ -17,6 +17,18 @@ Outputs (written to results/eswa_revision/15_significance/):
   confidence_intervals.csv
   paired_significance.csv
   SIGNIFICANCE_SUMMARY.md
+
+IMPORTANT: manuscript/main.tex Table 4 (tab:nlp4lp-downstream-main) and the
+significance tables are populated directly from the output of this script.
+This script's outputs are a *derived report*, not a source of truth in
+themselves -- if the per-query CSVs under 02_downstream_postfix/ change,
+re-run this script and re-sync the manuscript tables, or the committed
+confidence_intervals.csv / paired_significance.csv will silently go stale
+(as happened once already during manuscript preparation: a frozen copy of
+this output no longer matched a re-run against the currently committed
+per-query files, which caused Table 4 to disagree with the
+StrictInstantiationReady sensitivity table's non-strict column until both
+were traced back to this script and regenerated).
 """
 from __future__ import annotations
 

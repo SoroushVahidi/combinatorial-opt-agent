@@ -293,7 +293,15 @@ def _run_retrieval_ablation(
             from sklearn.decomposition import TruncatedSVD
             vec2 = TfidfVectorizer(ngram_range=(1, 2), min_df=1)
             X = vec2.fit_transform(schema_texts_san)
-            n_comp = min(100, X.shape[1], X.shape[0] - 1)
+            # n_components must match the canonical LSABaseline default
+            # (retrieval/baselines.py, n_components=256); this diagnostic
+            # script previously capped it at 100, which understated LSA's
+            # canonical retrieval accuracy substantially (SVD truncated to
+            # a lower-rank latent space discards more of the corpus's
+            # variance). Matching the canonical value here is what lets the
+            # "baseline" (no sanitization) row of this ablation reproduce
+            # the canonical Table 3 LSA value instead of diverging from it.
+            n_comp = min(256, X.shape[1], X.shape[0] - 1)
             svd = TruncatedSVD(n_components=max(1, n_comp), random_state=42)
             # Suppress the RuntimeWarning that TruncatedSVD emits when computing
             # explained_variance_ratio_ on a very small / low-variance corpus.

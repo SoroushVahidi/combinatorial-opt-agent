@@ -1,5 +1,18 @@
 # Manuscript: KAIS Submission Package
 
+**UPDATE (final KAIS submission-prep pass, `kais-final-submission-prep` branch):** the
+"Verified consistent" InstantiationReady/Coverage/TypeMatch numbers cited below
+(`0.8639`/`0.7513`/`0.5257` for TFIDF-TG, `0.9151`/`0.8030`/`0.5650` for Oracle-TG, etc.)
+were themselves traced to a **stale** frozen intermediate file
+(`results/eswa_revision/15_significance/confidence_intervals.csv`) that no longer
+reproduced from the currently committed per-query CSVs. That file — and every
+manuscript value derived from it (Table 4, the significance tables, and related
+prose) — was regenerated from the canonical per-query artifacts and corrected to
+`0.8609`/`0.7453`/`0.5287` (TFIDF-TG) and `0.9151`/`0.7998`/`0.5680` (Oracle-TG); see
+`manuscript/KAIS_FINAL_PREPARATION_REPORT.md` for the full root-cause writeup. The
+historical log below is left unedited as a record of that earlier (now superseded)
+verification pass.
+
 **Target journal:** *Knowledge and Information Systems* (KAIS), Springer Nature.
 **Status:** Adapted from an EAAI/Elsevier (`elsarticle`) draft uploaded to the repository
 on 2026-07-23 (`Retrieval_Assisted_Instantiation_of_Natural_Language_Optimization_Problems.zip`,

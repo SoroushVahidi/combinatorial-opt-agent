@@ -161,6 +161,91 @@ def build_figure2_main_benchmark() -> None:
     _save_both(img, "figure2_main_benchmark_comparison")
 
 
+_BAR_COLORS = ["#4C78A8", "#F58518", "#54A24B", "#E45756", "#B279A2"]
+
+
+def _draw_grouped_bars_mpl(
+    methods: Sequence[str],
+    metrics: Sequence[str],
+    values: list[list[float]],
+    stem: str,
+    y_max: float = 1.0,
+) -> None:
+    """Grouped bar chart with the legend placed outside the plot area
+    (centered below the axes, single horizontal row), rendered with
+    matplotlib so the PDF output is genuine vector graphics rather than a
+    rasterized image wrapped in a PDF container. Replaces the PIL-based
+    _draw_grouped_bars for the two figures actually used in the manuscript
+    (figure3_engineering_validation_comparison,
+    figure4_final_solver_backed_subset), whose in-plot top-right legend
+    visually crowded and, for the 4-metric case, overlapped the bar-value
+    annotations.
+    """
+    import matplotlib
+
+    matplotlib.use("Agg")
+    # Embed fonts as TrueType/Type 42 rather than matplotlib's default Type 3
+    # in the vector PDF output, for cleaner publication-grade font embedding.
+    matplotlib.rcParams["pdf.fonttype"] = 42
+    matplotlib.rcParams["ps.fonttype"] = 42
+    import matplotlib.pyplot as plt
+    import matplotlib.ticker as mticker
+
+    n_methods = len(methods)
+    n_metrics = len(metrics)
+    group_w = 0.86
+    bar_w = group_w / n_metrics
+
+    fig_w = max(5.5, 1.15 * n_methods * n_metrics)
+    fig, ax = plt.subplots(figsize=(fig_w, 4.2))
+
+    x = list(range(n_methods))
+    for ki, metric in enumerate(metrics):
+        offsets = [xi + (ki - (n_metrics - 1) / 2) * bar_w for xi in x]
+        heights = [values[mi][ki] for mi in range(n_methods)]
+        bars = ax.bar(
+            offsets,
+            heights,
+            width=bar_w * 0.88,
+            label=metric,
+            color=_BAR_COLORS[ki % len(_BAR_COLORS)],
+            edgecolor="black",
+            linewidth=0.8,
+        )
+        ax.bar_label(bars, fmt="%.2f", fontsize=12, padding=3)
+
+    ax.set_xticks(x)
+    ax.set_xticklabels(methods, fontsize=15)
+    ax.set_ylim(0, y_max * 1.12)
+    ax.yaxis.set_major_locator(mticker.MultipleLocator(0.2 if y_max <= 1.0 else None))
+    ax.tick_params(axis="y", labelsize=14)
+    ax.grid(axis="y", color="#dddddd", linewidth=0.8, zorder=0)
+    ax.set_axisbelow(True)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+
+    # Legend outside the plot area: centered below the axes, single
+    # horizontal row (preferred placement per the visual-quality fix).
+    ax.legend(
+        loc="upper center",
+        bbox_to_anchor=(0.5, -0.16),
+        ncol=n_metrics,
+        frameon=False,
+        fontsize=14,
+        handlelength=1.4,
+        columnspacing=1.4,
+    )
+
+    fig.tight_layout()
+    png_path = OUT_DIR / f"{stem}.png"
+    pdf_path = OUT_DIR / f"{stem}.pdf"
+    fig.savefig(png_path, dpi=300, bbox_inches="tight", facecolor="white")
+    fig.savefig(pdf_path, bbox_inches="tight", facecolor="white")
+    plt.close(fig)
+    print(f"Wrote {png_path}")
+    print(f"Wrote {pdf_path}")
+
+
 def build_figure3_engineering() -> None:
     t2 = _read_csv(TABLE_DIR / "table2_engineering_structural_subset.csv")
     rows = []
@@ -176,8 +261,7 @@ def build_figure3_engineering() -> None:
     methods = [r["method"] for r in rows]
     metrics = ["structural valid", "inst. complete"]
     vals = [[r["structural_valid"], r["instantiation_complete"]] for r in rows]
-    img = _draw_grouped_bars(None, methods, metrics, vals, y_max=1.0)
-    _save_both(img, "figure3_engineering_validation_comparison")
+    _draw_grouped_bars_mpl(methods, metrics, vals, "figure3_engineering_validation_comparison", y_max=1.0)
 
 
 def build_figure4_solver_subset() -> None:
@@ -197,8 +281,7 @@ def build_figure4_solver_subset() -> None:
     methods = [r["method"] for r in rows]
     metrics = ["executable", "solver success", "feasible", "objective"]
     vals = [[r["executable"], r["solver_success"], r["feasible"], r["objective"]] for r in rows]
-    img = _draw_grouped_bars(None, methods, metrics, vals, y_max=1.0)
-    _save_both(img, "figure4_final_solver_backed_subset")
+    _draw_grouped_bars_mpl(methods, metrics, vals, "figure4_final_solver_backed_subset", y_max=1.0)
 
 
 def build_figure5_failure() -> None:
