@@ -32,7 +32,7 @@ single-anonymous (so author identity stays in the manuscript), fixed a real
 `InstantiationReady` metric-definition/implementation mismatch, added three verified
 recent references, standardized table formatting, regenerated two figures with a
 duplicated/mismatched baked-in title, and added a dedicated Limitations subsection. Full
-details in [`docs/KAIS_FINAL_PREPARATION_REPORT.md`](KAIS_FINAL_PREPARATION_REPORT.md).
+details in [`manuscript/KAIS_FINAL_PREPARATION_REPORT.md`](../manuscript/KAIS_FINAL_PREPARATION_REPORT.md).
 The manuscript now compiles cleanly to a 36-page PDF (`manuscript/main.pdf`).
 
 ## Benchmark facts (unchanged from the EAAI-era documents; still authoritative)
