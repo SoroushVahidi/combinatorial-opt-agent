@@ -592,3 +592,254 @@ narrative contradictions a skeptical reviewer would most likely flag, and the ce
 finding has been stress-tested against its most probable metric-definition objection
 and survived. Remaining items are the same administrative/portal actions listed in
 Section 14 (nothing new).
+
+---
+
+## 19. FINAL COMPRESSION AND LAYOUT PASS (2026-07-23, fifth session)
+
+This section reports a targeted compression, readability, and layout pass. No numerical
+results were invented or altered; the only value-provenance work was reconciling the
+Table 4 / Table 12 InstantiationReady discrepancy (item 6), which is a bookkeeping/
+provenance clarification, not a new experiment.
+
+### 19.1 New commit SHA(s)
+
+Content commits this session (on `kais-final-submission-prep`, oldest first):
+
+```
+acad975  consolidate contributions, reframe pre/post-fix, fix ORCID, remove repo/debug language
+0e44f38  explain Table 4/12 discrepancy, define engineering metrics once, trim Table 14, fix Table 11 wording
+539892f  further de-repetition, remove residual rerun/newly-added phrasing
+223893f  improve table readability
+3061005  reduce legacy engineering-oriented framing
+fd595f5  sync submission_package, rebuild PDFs, ignore submission_package aux files
+9d9c547  compress redundant Evaluation-Oriented Design and Downstream closing paragraphs
+```
+
+The final HEAD is the commit that adds this report section (created immediately after
+`9d9c547`); its SHA is recorded in the agent's closing summary.
+
+### 19.2 Final page count
+
+**37 pages** (down from 39). Reduction came entirely from de-repetition, table
+consolidation, and float behavior -- no margin, font-size, or line-spacing compression
+was used.
+
+### 19.3 Approximate word count before/after
+
+Body-text estimate (LaTeX markup stripped): **~14,690 -> ~13,780 words (~6% net
+reduction)**. Gross de-repetition was larger (~8-9%) but partly offset by two
+deliberate *additions*: the precise Table 4/12 discrepancy explanation (item 6) and the
+one-time Boolean definitions of the engineering-validation metrics (item 12).
+
+### 19.4 Sections substantially shortened or merged
+
+- **Section 1.3 (Problem Scope and Proposed Perspective):** cut from seven paragraphs to
+  two; it is now the single, precise scope statement for the Introduction. Redundant
+  content overlapping 1.1, 2.1, and 2.4 was removed, not relocated (it already existed
+  in those sections).
+- **Section 1.4 (Contributions):** six fragmented contributions consolidated into four
+  coherent ones (see item 3 / Section 19.5).
+- **Section 2.2 (Retrieval):** removed a duplicated error-propagation restatement and a
+  duplicated bottleneck-thesis restatement.
+- **Section 2.4 (Evaluation-Oriented Design Choices):** cut from seven paragraphs to
+  five; the repeated re-justification of the scalar-only / solver-free / deterministic
+  restrictions (already argued in 1.3 and 2.1) was condensed, while the oracle-control
+  disclaimer and the metric-interpretation caveats were preserved verbatim in substance.
+- **Section 3.3 (Downstream Utility):** condensed the closing "interpretation" paragraph
+  (the "not a complete compiler" framing is now stated once in the Introduction and once
+  in the Conclusion, not a third time here).
+
+### 19.5 Repetitions removed (the six recurring points)
+
+Each of the six flagged recurring claims is now stated strongly once in its natural home
+and removed elsewhere:
+
+| Recurring claim | Primary home retained |
+|---|---|
+| Not a full NL-to-optimization compiler | Intro 1.3 scope (once) + Conclusion (once, bookend) |
+| Restricted to scalar parameters | Methodology 2.1 (three-restriction paragraph) |
+| Retrieval uses a fixed schema catalog | Methodology 2.2 |
+| Pipeline is deterministic and transparent | Intro 1.3 + Methodology 2.4 (condensed) |
+| Retrieval strong, grounding is the bottleneck | Results interpretation (Section 3.3/3.4) |
+| Solver-backed validation is restricted | Methodology 2.4 + Limitations |
+
+Contributions consolidated 6 -> 4: (1) problem formulation & evaluation framework;
+(2) transparent deterministic methodology (typed grounding + role/admissibility layer);
+(3) comprehensive empirical diagnosis (oracle controls, strict-metric sensitivity,
+numeric-type ablation, significance tests, overlap robustness, negative results, error
+taxonomy); (4) reproducibility & downstream (structural + solver-backed) validation.
+
+### 19.6 Table 4 / Table 12 InstantiationReady discrepancy: root cause and resolution
+
+**Root cause (data-verified).** Table 4 (canonical downstream results) is generated from
+the *frozen* table-generation run committed at
+`results/eswa_revision/13_tables/deterministic_method_comparison_orig.csv`
+(TF-IDF Schema_R@1 = 0.9094). Table 12's non-strict InstantiationReady column, and the
+StrictInstantiationReady analysis, are computed by `tools/run_strict_instantiation_ready.py`
+from the *live* per-query artifacts in `results/eswa_revision/02_downstream_postfix/`
+(TF-IDF Schema_R@1 = 0.9063). These two runs use slightly different schema-text
+construction -- **the same offset already disclosed for Schema_R@1 in Table 11**
+(TF-IDF 0.9063 vs 0.9094; BM25 0.8852 vs 0.8822). Because InstantiationReady is
+schema-conditioned (eligible slots come from the predicted schema, and the parameter
+inventory P(s-hat) is read from the schema text even for Oracle), that retrieval offset
+propagates into Coverage, TypeMatch, and InstantiationReady, producing:
+
+| Method | Table 4 (frozen) | Table 12 non-strict (live) | diff |
+|---|---|---|---|
+| TFIDF-TG | 0.5257 | 0.5287 | 0.0030 |
+| BM25-TG  | 0.5196 | 0.5196 | 0.0000 |
+| LSA-TG   | 0.4985 | 0.5076 | 0.0091 |
+| Oracle-TG| 0.5650 | 0.5680 | 0.0030 |
+
+Direct recomputation confirmed that the live per-query CSVs reproduce the JSON aggregates
+(0.5287/0.5196/0.5076/0.5680) exactly, and that the frozen aggregate CSV holds the
+Table 4 values exactly.
+
+**Why exact reconciliation is impossible with committed artifacts.** The frozen run that
+produced Table 4 has no committed per-query breakdown (only the aggregate CSV); the
+committed per-query files (`02_downstream_postfix/`, and `results/paper/`) all yield the
+live values or an unrelated older metric definition. Recomputing the strict metric from
+"the exact same outputs underlying Table 4" is therefore not possible from what is in the
+repo, and rerunning the pipeline on live NLP4LP is out of scope (gated dataset, no new
+experiments). Forcing agreement would be fabrication.
+
+**Resolution (transparent explanation, per Task 1 option 4).** The text and caption at
+Table 12 were revised to state the exact source and numeric correspondence: the non-strict
+column is from the live significance-analysis artifacts, differs from Table 4 by at most
+0.009, and this is the *same* schema-text-construction offset disclosed for Schema_R@1 in
+Table 11, which -- being consistent across paired methods -- cancels out of the paired
+TF-IDF-vs-Oracle bootstrap difference (reproducing the significance-table result
+Delta=-0.0393, CI=[-0.0665,-0.0151], p=0.004 exactly). The discrepancy is **not**
+attributed to the Table 11 LSA 100-vs-256-SVD issue; that was a separate diagnostic-script
+matter and no causal link to the downstream offset exists in the data. It is now
+disclosed, not silently coexisting.
+
+### 19.7 ORCID placement resolution
+
+The isolated `\noindent\textit{ORCID: ...}` line that floated between the keywords and
+Section 1 was removed. The ORCID (0000-0003-1934-6282) is now attached to the author's
+metadata via the `\email{}` footnote (`sv96@njit.edu (ORCID: 0000-0003-1934-6282)`),
+which renders in the author/title footnote block on page 1 -- a proper metadata location.
+The class's own `\orcid{}` macro was deliberately *not* used: it requires an
+`Orcidlogo.eps` asset (absent from the repo and TeX tree) and renders only a logo, not
+the ID text, so using it would either break the build or drop the visible identifier.
+**Manual check for the submission portal:** the ORCID must still be entered in the KAIS
+submission system's author-metadata fields regardless of the manuscript rendering.
+
+### 19.8 Page 8-9 pagination fix
+
+The originally reported large blank region at the bottom of page 8 with a mid-sentence
+split ("...such as lists," / "vectors, or dictionaries.") no longer exists: the
+de-repetition re-paginated the document and that sentence now flows naturally within a
+full page. Verified by rendering pages 8-9 of the final build -- both are full with a
+natural paragraph break, no forced whitespace. No `\clearpage`/`\newpage`/`[H]` hacks
+were introduced.
+
+### 19.9 Float-placement fixes
+
+All tables and figures use `[t]` floats and now sit on or adjacent to the page of their
+first textual reference; the earlier partial-page whitespace around the results tables is
+gone after de-repetition and the removal of the redundant narrow table (item 10). A
+full-document render (37 pages) shows no half-empty pages, no table appearing far from its
+reference, and no orphaned headings. No float parameters (`\topfraction` etc.) needed
+tuning, and no forced breaks were added.
+
+### 19.10 Tables enlarged / redesigned / split / moved
+
+- **Removed the redundant narrow "new-families InstantiationReady" table** (old Table 5):
+  every value in it already appeared both in the Section 3.3 prose and in the fuller
+  new-families comparison table (now Table 8, with per-method deltas and notes). This
+  eliminated the awkward tiny table and its cramped, one-token-per-line caption/abbrev
+  block. No value was lost.
+- **Upgraded dense tables from `\scriptsize` to `\small`:** cross-variant downstream
+  summary, numeric-type compatibility ablation, experimental-blocks summary, and paired
+  significance table -- all now at consistent, comfortable `\small` with widened column
+  separation, verified to produce zero overfull hboxes.
+- **Widened the error-taxonomy description column** (4.7cm -> 6.2cm) so entries such as
+  "Float ambiguity with many candidate values" fit on one line.
+- **Trimmed the 269-instance executable-attempt table** (item 11) to its meaningful
+  columns.
+
+### 19.11 Table 14 (269-instance all-zero blocker) final disposition
+
+**Option A chosen.** The all-zero `Exec./Solver/Feas./Obj.` column was removed from the
+table (now Table 13); the table retains schema-hit, structural-validity, and
+instantiation-completeness rates. The uniform zero result and its cause (missing
+`gurobipy` runtime -- an environment blocker, not a scientific result) are stated in the
+adjacent prose and caption, so the negative information is preserved without giving an
+environment failure a full results column. The 20-instance SciPy HiGHS solver-backed
+table (now Table 14) remains the main solver-execution evidence in the main text.
+
+### 19.12 Engineering-metric definitions added
+
+Precise, reproducible per-instance Boolean definitions of **structural validity,
+instantiation completeness, executable, solver success, feasible,** and **objective
+produced** are now given once, at the start of the Structural-and-Solver-Backed
+Validation subsection, and the previously scattered inline re-definitions were removed.
+
+### 19.13 Repository/debugging language removed
+
+Removed throughout the main text: "current/updated repository rerun", "we added three new
+method families", "these additions produced 33 new result files", "reran all 11 new
+variants", the internal `data/catalogs/...jsonl` path, and the
+`retrieval/baselines.py`/`LSABaseline` 100-vs-256-SVD debugging narrative. The Table 11
+LSA point is now stated scientifically ("All sanitization experiments were run using the
+canonical retrieval configuration, including 256-dimensional LSA, so the LSA baseline row
+reproduces the canonical value exactly"). The "pre-fix vs post-fix" framing was renamed
+throughout to the **numeric-type compatibility ablation**, with the underlying correction
+(float-slot compatibility) explained exactly once in Methodology. Detailed provenance
+remains in the repo markdown docs, not the paper.
+
+### 19.14 Oracle terminology cleanup
+
+Audited the whole manuscript for "upper" applied to Oracle. The remaining "upper
+reference" label in the new-families comparison table was changed to "oracle control".
+The Section 2.4 passage that already *disclaims* a formal upper bound was preserved (it
+explicitly argues Oracle is not an upper bound and cites the 20-instance counterexample).
+No proven upper-bound property exists, so no "upper" wording remains attached to Oracle.
+
+### 19.15 Bibliography validation result
+
+All 26 entries in `references.bib` were mechanically checked: DOIs (Springer
+`10.1007/...`, Elsevier `10.1016/...`, ACL `10.18653/v1/...`, arXiv `10.48550/arXiv...`,
+Wiley SICI, Foundations & Trends), arXiv IDs (2407.19633, 2503.10642, 2506.06052 -- all
+valid YYMM.NNNNN), ISBNs, and conference/publisher URLs (aclanthology, mlr.press,
+openreview, ijcai, huggingface, sciencedirect, link.springer, doi.org). **No malformed
+identifiers were found; no changes were required.** The Deerwester Wiley SICI DOI
+contains `<`, `>`, `;` characters that are legitimate parts of that DOI (not errors) and
+were left unchanged. BibTeX compiles with zero warnings and zero undefined citations.
+
+### 19.16 Figure-regression check result
+
+Re-inspected all figures in the final build: **no regression.** Figure 1 (pipeline)
+retains its spacing fix and is legible; Figures 2 and 3 retain legends outside the plot
+axes, readable labels, no overlap, and vector PDF output. `pdffonts` confirms all 33
+fonts embedded, including the DejaVuSans **CID TrueType (Identity-H)** subset from the
+matplotlib figures (Type 42 / CID TrueType embedding intact).
+
+### 19.17 Clean compilation status
+
+`pdflatex + bibtex + pdflatex x2` from `manuscript/`: **zero undefined citations, zero
+undefined references, zero overfull hboxes > 15pt, zero bibtex warnings.** Independent
+build from `manuscript/submission_package/` produces a byte-identical 37-page PDF.
+
+### 19.18 Final PDF path
+
+`manuscript/main.pdf` (37 pages).
+
+### 19.19 Submission-package path
+
+`manuscript/submission_package/` (`main.tex`, `references.bib`, `sn-jnl.cls`,
+`sn-basic.bst`, `figures/`, `cover-letter.tex`, and a byte-identical `main.pdf`
+independently verified to compile from that directory alone).
+
+### 19.20 Readiness status
+
+**READY WITH MINOR MANUAL CHECKS.** The manuscript is shorter (37 pp.), less repetitive,
+more readable, visually balanced, and internally consistent, with the Table 4/12
+provenance discrepancy now transparently explained rather than silently coexisting. The
+only items requiring a human are administrative/portal actions, unchanged from Section 14
+plus the ORCID-in-portal note (item 7): enter the ORCID in the KAIS submission system's
+author-metadata fields, and confirm author/affiliation details in the portal. No
+scientific or layout blocker remains.
