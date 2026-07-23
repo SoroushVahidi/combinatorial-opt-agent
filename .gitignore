@@ -279,3 +279,14 @@ data/external/cardinal_nl4opt/
 data/external/industryor/
 data/processed/grounding_training_pairs_*.jsonl
 data/processed/grounding_training_pairs_summary.json
+
+# LaTeX build artifacts (manuscript/)
+manuscript/*.aux
+manuscript/*.log
+manuscript/*.out
+manuscript/*.spl
+manuscript/*.blg
+manuscript/*.bbl
+manuscript/*.fls
+manuscript/*.fdb_latexmk
+manuscript/*.synctex.gz

@@ -1,76 +1,47 @@
 %% Prepared for submission to Knowledge and Information Systems (Springer Nature).
-%% NOTE ON TEMPLATE: Springer Nature's own submission guidance for this journal states
-%% that LaTeX, Word, or PDF are all accepted at initial submission, and that authors who
-%% do not use the official Springer Nature LaTeX template ("sn-jnl.cls") may instead
-%% "follow the relevant guide to ensure your manuscript is precisely prepared." This file
-%% therefore keeps a correct, freely redistributable, and verified-compilable LaTeX class
-%% (elsarticle) as the vehicle, but reformats citations, structure, and metadata to match
-%% Springer/KAIS conventions (numbered references, Declarations section, etc.). Before
-%% final acceptance, port this content into the official Springer Nature LaTeX template
-%% (freely downloadable from Springer Nature's author resources site) and its sn-basic.bst
-%% bibliography style; that template file was not fabricated here to avoid introducing an
-%% incorrect or outdated proprietary class file.
+%% Built on the official Springer Nature LaTeX authoring template (sn-jnl.cls,
+%% December 2024 version), downloaded directly from Springer Nature's own
+%% resource host; see manuscript/sn-template/README.md for provenance. Class
+%% options [sn-basic,Numbered] select the "Basic Springer Nature Reference
+%% Style" with numbered bracketed citations and the sn-basic.bst bibliography
+%% style, per KAIS's own submission guidelines (References section).
 
-\documentclass[preprint,12pt]{elsarticle}
+\documentclass[pdflatex,sn-basic,Numbered]{sn-jnl}
 
-
-\usepackage{amssymb}
-%% The amsmath package provides various useful equation environments.
-\usepackage{amsmath}
-\usepackage{url}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{algorithm}
 \usepackage{algorithmicx}
 \usepackage{algpseudocode}
-%% The amsthm package provides extended theorem environments
-%% \usepackage{amsthm}
 
-%% The lineno packages adds line numbers. Start line numbering with
-%% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
-%% for the whole article with \linenumbers.
-%% \usepackage{lineno}
+\raggedbottom
 
 \begin{document}
 
-\begin{frontmatter}
+\title[Retrieval-Assisted Instantiation of Optimization Problems]{Retrieval-Assisted Instantiation of Natural-Language Optimization Problems}
 
+\author*[1]{\fnm{Soroush} \sur{Vahidi}}\email{sv96@njit.edu}
 
-\title{Retrieval-Assisted Instantiation of Natural-Language Optimization Problems} %% Article title
+\affil*[1]{\orgdiv{Ying Wu College of Computing}, \orgname{New Jersey Institute of Technology}, \orgaddress{\street{323 Dr Martin Luther King Jr Blvd}, \city{Newark}, \postcode{07102}, \state{NJ}, \country{USA}}}
 
-\author{Soroush Vahidi\corref{cor1}}
-\ead{sv96@njit.edu}
-\cortext[cor1]{Corresponding author. ORCID: 0000-0003-1934-6282}
-\address{Ying Wu College of Computing, New Jersey Institute of Technology, Newark, NJ 07102, USA}
+\abstract{Many engineering optimization problems are first described in natural language and only later translated into formal mathematical models, but this translation remains difficult to automate reliably. Rather than targeting full solver-ready generation, this paper studies a narrower intermediate task: retrieval-assisted optimization problem instantiation, viewed as a knowledge-processing problem of grounding natural-language numeric evidence into a structured, typed optimization schema. The contribution is a transparent and reproducible framework that first retrieves the most compatible optimization schema from a fixed catalog and then deterministically instantiates that schema's scalar parameters from numeric evidence in the text, combining lexical schema retrieval, rule-based numeric extraction, coarse type inference, and deterministic compatibility-based slot assignment. We evaluate the framework on the NLP4LP benchmark of natural-language optimization problems, together with complementary engineering-oriented validation subsets. Schema retrieval is already strong across query variants, with term frequency--inverse document frequency (TF--IDF) retrieval achieving the best average top-1 schema accuracy (Schema R@1 $=0.9094$ on original-text queries). The strongest non-oracle method reaches an InstantiationReady score of $0.5257$, while an oracle upper bound with perfect schema retrieval reaches only $0.5650$: this modest oracle gain shows that the main remaining bottleneck is downstream number-to-slot grounding rather than schema retrieval itself. A pre-fix versus post-fix ablation supports this conclusion: correcting numeric type-handling logic, especially for float-valued slots, yields large improvements in type consistency and query-level readiness. Restricted structural and solver-backed subset studies further suggest downstream optimization-oriented usefulness on compatible cases, without claiming benchmark-wide solver readiness.}
 
-%% NOTE: Knowledge and Information Systems' peer-review blinding policy (single- vs.
-%% double-anonymous) could not be confirmed from the publicly accessible Springer Nature
-%% pages at the time of this pass -- see the accompanying MANUSCRIPT_README.md. Author
-%% identity is included here on the assumption of single-blind review, consistent with
-%% the journal's Editorial-Manager-based workflow; confirm at submission and remove the
-%% \author/\address block above (leaving only \title and \ead) if double-anonymous review
-%% is required.
+\keywords{natural language processing, optimization modeling, knowledge representation, information retrieval, semantic grounding, intelligent information systems}
 
-%% Abstract
-\begin{abstract}
-Many engineering optimization problems are first described in natural language and only later translated into formal mathematical models, but this translation remains difficult to automate reliably. Rather than targeting full solver-ready generation, this paper studies a narrower intermediate task: retrieval-assisted optimization problem instantiation, viewed as a knowledge-processing problem of grounding natural-language numeric evidence into a structured, typed optimization schema. The contribution is a transparent and reproducible framework that first retrieves the most compatible optimization schema from a fixed catalog and then deterministically instantiates that schema's scalar parameters from numeric evidence in the text, combining lexical schema retrieval, rule-based numeric extraction, coarse type inference, and deterministic compatibility-based slot assignment.
+\maketitle
 
-We evaluate the framework on the \textsc{NLP4LP} benchmark of natural-language optimization problems, together with complementary engineering-oriented validation subsets. Schema retrieval is already strong across query variants, with term frequency--inverse document frequency (TF--IDF) retrieval achieving the best average top-1 schema accuracy (Schema R@1 $=0.9094$ on original-text queries). The strongest non-oracle method reaches an InstantiationReady score of $0.5257$, while an oracle upper bound with perfect schema retrieval reaches only $0.5650$: this modest oracle gain shows that the main remaining bottleneck is downstream number-to-slot grounding rather than schema retrieval itself. A pre-fix versus post-fix ablation supports this conclusion: correcting numeric type-handling logic, especially for float-valued slots, yields large improvements in type consistency and query-level readiness. Restricted structural and solver-backed subset studies further suggest downstream optimization-oriented usefulness on compatible cases, without claiming benchmark-wide solver readiness.
-\end{abstract}
+\noindent\textit{ORCID: 0000-0003-1934-6282}
 
-\begin{keyword}
-natural language processing \sep optimization modeling \sep knowledge representation \sep information retrieval \sep semantic grounding \sep intelligent information systems
-\end{keyword}
+%% NOTE: KAIS's ethics-and-disclosures page states peer review for this journal
+%% is single-anonymous (reviewers see author identity; authors do not see
+%% reviewer identity), confirmed at
+%% https://link.springer.com/journal/10115/ethics-and-disclosures during this
+%% pass. Author identity is therefore included in the title block above; no
+%% anonymized variant is required for initial submission.
 
-\end{frontmatter}
-
-%% Add \usepackage{lineno} before \begin{document} and uncomment 
-%% following line to enable line numbers
-%% \linenumbers
-
-%% main text
-%%
-
-%% Use \section commands to start a section
 \section{Introduction}
 
 \subsection{Background and Motivation}
@@ -188,13 +159,13 @@ This formulation emphasizes retrieval as \emph{schema grounding} rather than ful
 \label{tab:retrieval_backbones}
 \small
 \begin{tabularx}{\linewidth}{l l X}
-\hline
+\toprule
 Method & Representation & Role in pipeline \\
-\hline
+\midrule
 BM25 & Probabilistic lexical weighting & Sparse lexical baseline \\
 TF--IDF & Weighted bag-of-words cosine similarity & Main deterministic retrieval backbone \\
 LSA & Latent projection of TF--IDF features & Lower-dimensional lexical-semantic baseline \\
-\hline
+\botrule
 \end{tabularx}
 \end{table}
 
@@ -330,10 +301,10 @@ All experiments are deterministic and primarily CPU-based. The implementation us
 \caption{Summary of the experimental blocks used in the paper.}
 \label{tab:exp_blocks}
 \scriptsize
-\begin{tabularx}{\linewidth}{l l X}
-\hline
+\begin{tabularx}{\linewidth}{X X X}
+\toprule
 Block & Primary purpose & Main outputs \\
-\hline
+\midrule
 Main benchmark & Retrieval and scalar grounding on \textsc{NLP4LP} & Schema\_R@1, Coverage, TypeMatch, Exact20\_on\_hits, InstantiationReady \\
 Robustness analyses & Sensitivity to degraded input and lexical overlap & Orig / noisy / short comparisons, overlap-based stress tests \\
 Pre/post ablation & Isolate effect of corrected type handling & TypeMatch and InstantiationReady changes \\
@@ -341,7 +312,7 @@ Significance testing & Assess whether reported gaps are statistically robust & P
 Engineering subset validation (60 inst.) & Assess downstream structural usefulness & Structural-validity and instantiation-completeness rates \\
 Executable-attempt subset (269 inst.) & Document restricted downstream executability and blockers & Executable, solver-success, feasibility, and objective-produced rates \\
 Final solver-backed subset (20 inst.) & Real, restricted solver execution via SciPy HiGHS shim & Executable, solver-success, feasible, and objective-produced rates \\
-\hline
+\botrule
 \end{tabularx}
 \end{table}
 
@@ -365,19 +336,16 @@ Across all three variants, TF--IDF again achieves the best average retrieval acc
   \caption{Schema retrieval accuracy across query variants, reported as \textit{Schema\_R@1}. Each value is computed over all 331 test queries in the corresponding variant. The random baseline is the theoretical top-1 chance rate under uniform schema selection over the 335 candidate schemas used in the current repository rerun, i.e., $1/335 \approx 0.0030$. Best result in each column is shown in bold.}
   \label{tab:nlp4lp-retrieval-main}
   \small
-  \setlength{\tabcolsep}{4pt}
-  \resizebox{\linewidth}{!}{%
   \begin{tabular}{lcccc}
-    \hline
+    \toprule
     Baseline & Orig & Noisy & Short & Avg. \\
-    \hline
+    \midrule
     Random  & 0.0030 & 0.0030 & 0.0030 & 0.0030 \\
     LSA     & 0.8459 & 0.8882 & 0.7644 & 0.8328 \\
     BM25    & 0.8822 & 0.8912 & 0.7674 & 0.8469 \\
     TF--IDF & \textbf{0.9094} & \textbf{0.9033} & \textbf{0.7795} & \textbf{0.8641} \\
-    \hline
-  \end{tabular}%
-  }
+    \botrule
+  \end{tabular}
 \end{table}
 
 
@@ -404,12 +372,12 @@ Taken together, these results support a narrower but more defensible interpretat
   \centering
   \caption{Main post-fix downstream results on the \emph{orig} queries for the original deterministic grounding family. \textit{Coverage}, \textit{TypeMatch}, and \textit{InstantiationReady} use the full 331-query denominator. \textit{Exact20\_on\_hits} is conditional on eligible schema-hit cases with comparable numeric values. Best non-oracle result in each column is bold.}
   \label{tab:nlp4lp-downstream-main}
-  \scriptsize
+  \small
   \setlength{\tabcolsep}{3.8pt}
   \begin{tabular}{lcccc}
-    \hline
+    \toprule
     Method & Coverage & TypeMatch & Exact20 & InstReady \\
-    \hline
+    \midrule
     TFIDF-TG  & \textbf{0.8639} & 0.7513 & 0.1991 & \textbf{0.5257} \\
     BM25-TG   & 0.8509 & 0.7386 & 0.2057 & 0.5196 \\
     LSA-TG    & 0.8176 & 0.7028 & 0.2048 & 0.4985 \\
@@ -419,7 +387,7 @@ Taken together, these results support a narrower but more defensible interpretat
     TFIDF-ORR & 0.8248 & 0.7036 & 0.2847 & 0.4411 \\
     TFIDF-AR  & 0.8332 & 0.7340 & 0.1994 & 0.5227 \\
     TFIDF-HAR & 0.8121 & 0.7146 & 0.2003 & 0.5136 \\
-    \hline
+    \botrule
   \end{tabular}
 
   \vspace{2mm}
@@ -432,12 +400,12 @@ Taken together, these results support a narrower but more defensible interpretat
   \centering
   \caption{Representative \emph{orig}-query \textit{InstantiationReady} results for the newly added downstream families. None of the new deterministic grounding families surpasses the original \texttt{tfidf\_typed\_greedy} baseline.}
   \label{tab:nlp4lp-downstream-newfamilies}
-  \scriptsize
+  \small
   \setlength{\tabcolsep}{4pt}
   \begin{tabular}{lc}
-    \hline
+    \toprule
     Method & InstReady \\
-    \hline
+    \midrule
     TFIDF-TG                      & \textbf{0.5257} \\
     TFIDF-AR                      & 0.5227 \\
     Oracle-TG                     & 0.5650 \\
@@ -445,13 +413,13 @@ Taken together, these results support a narrower but more defensible interpretat
     GCG-Full                      & 0.4320 \\
     AAG-Beam                      & 0.4230 \\
     AAG-Abstain                   & 0.0272 \\
-    \hline
+    \botrule
   \end{tabular}
 
   \vspace{2mm}
   \raggedright
   \footnotesize
-  Abbreviations: GCG-Full = \texttt{tfidf\_global\_compat\_full}, RAL-Basic = \texttt{tfidf\_relation\_aware\_basic}, and AAG-Beam/AAG-Abstain = \texttt{tfidf\_ambiguity\_aware\_beam}/\texttt{tfidf\_ambiguity\_aware\_abstain}.
+  Abbreviations: GCG-Full = \texttt{tfidf\_global\_compat\_full}, RAL-Basic = \texttt{tfidf\_relation\_aware\_basic}, AAG-Beam = \texttt{tfidf\_ambiguity\_aware\_beam}, and AAG-Abstain = \texttt{tfidf\_ambiguity\_aware\_abstain}.
 \end{table}
 
 \begin{table}[t]
@@ -461,14 +429,14 @@ Taken together, these results support a narrower but more defensible interpretat
   \scriptsize
   \setlength{\tabcolsep}{3.2pt}
   \begin{tabular}{lcccccc}
-    \hline
+    \toprule
     Method & O-Cov & N-Cov & S-Cov & O-IR & N-IR & S-IR \\
-    \hline
+    \midrule
     TFIDF-TG  & 0.8639 & 0.7693 & 0.1050 & 0.5257 & 0.0393 & 0.0151 \\
     BM25-TG   & 0.8509 & 0.7620 & 0.1062 & 0.5196 & 0.0423 & 0.0151 \\
     TFIDF-AR  & 0.8332 & 0.7312 & 0.1130 & 0.5227 & 0.0423 & \textbf{0.0211} \\
     Oracle-TG & 0.9151 & 0.8196 & 0.1258 & \textbf{0.5650} & 0.0423 & 0.0151 \\
-    \hline
+    \botrule
   \end{tabular}
 
   \vspace{2mm}
@@ -505,9 +473,9 @@ Overall, the error analysis and ablation studies reinforce the central conclusio
   \small
   \setlength{\tabcolsep}{4pt}
   \begin{tabular}{p{4.7cm}c}
-    \hline
+    \toprule
     Error type & Count \\
-    \hline
+    \midrule
     Wrong schema retrieval & $\approx 30$ \\
     Missing numeric extraction & 5 \\
     Wrong type assignment (mainly float-related) & 230 \\
@@ -517,7 +485,7 @@ Overall, the error analysis and ablation studies reinforce the central conclusio
     Percent vs.\ absolute confusion & 15 \\
     Float ambiguity with many candidate values & 25 \\
     Unsupported schema & 0 \\
-    \hline
+    \botrule
   \end{tabular}
 \end{table}
 
@@ -528,24 +496,24 @@ Overall, the error analysis and ablation studies reinforce the central conclusio
   \scriptsize
   \setlength{\tabcolsep}{3.2pt}
   \begin{tabular}{llcccccc}
-    \hline
+    \toprule
     Var. & Method & Type$_{\text{pre}}$ & Type$_{\text{post}}$ & $\Delta$Type & IR$_{\text{pre}}$ & IR$_{\text{post}}$ & $\Delta$IR \\
-    \hline
+    \midrule
     orig  & TFIDF-TG  & 0.2595 & 0.7513 & 0.4918 & 0.0695 & 0.5257 & 0.4562 \\
     orig  & TFIDF-ORR & 0.2716 & 0.7036 & 0.4320 & 0.0665 & 0.4411 & 0.3746 \\
     orig  & TFIDF-HAR & 0.2593 & 0.7146 & 0.4553 & 0.0785 & 0.5136 & 0.4351 \\
     orig  & Oracle-TG & 0.2885 & 0.8030 & 0.5145 & 0.0785 & 0.5650 & 0.4865 \\
-    \hline
+    \midrule
     noisy & TFIDF-TG  & 0.0583 & 0.1414 & 0.0831 & 0.0211 & 0.0393 & 0.0182 \\
     noisy & TFIDF-ORR & 0.0000 & 0.0000 & 0.0000 & 0.0000 & 0.0000 & 0.0000 \\
     noisy & TFIDF-HAR & 0.0647 & 0.1380 & 0.0733 & 0.0242 & 0.0423 & 0.0181 \\
     noisy & Oracle-TG & 0.0703 & 0.1524 & 0.0821 & 0.0211 & 0.0423 & 0.0212 \\
-    \hline
+    \midrule
     short & TFIDF-TG  & 0.0962 & 0.2286 & 0.1324 & 0.0060 & 0.0151 & 0.0091 \\
     short & TFIDF-ORR & 0.0438 & 0.0725 & 0.0287 & 0.0060 & 0.0060 & 0.0000 \\
     short & TFIDF-HAR & 0.1133 & 0.2261 & 0.1128 & 0.0091 & 0.0211 & 0.0120 \\
     short & Oracle-TG & 0.1133 & 0.2709 & 0.1576 & 0.0030 & 0.0151 & 0.0121 \\
-    \hline
+    \botrule
   \end{tabular}
 
   \vspace{2mm}
@@ -561,9 +529,9 @@ Overall, the error analysis and ablation studies reinforce the central conclusio
   \small
   \setlength{\tabcolsep}{4pt}
   \begin{tabular}{lccc}
-    \hline
+    \toprule
     Method & InstReady & $\Delta$ vs.\ TFIDF-TG & Note \\
-    \hline
+    \midrule
     TFIDF-TG    & 0.5257 & 0.0000  & baseline \\
     TFIDF-AR    & 0.5227 & -0.0030 & near tie \\
     RAL-Basic   & 0.4985 & -0.0272 & below baseline \\
@@ -571,7 +539,7 @@ Overall, the error analysis and ablation studies reinforce the central conclusio
     AAG-Beam    & 0.4230 & -0.1027 & markedly lower \\
     AAG-Abstain & 0.0272 & -0.4985 & overly conservative \\
     Oracle-TG   & 0.5650 & +0.0393 & upper reference \\
-    \hline
+    \botrule
   \end{tabular}
 
   \vspace{2mm}
@@ -596,9 +564,9 @@ To test whether strong lexical retrieval mainly reflects benchmark-specific nume
 \scriptsize
 \setlength{\tabcolsep}{4pt}
 \begin{tabular}{lccc}
-  \hline
+  \toprule
   Comparison (metric) & Diff & 95\% CI & $p$ \\
-  \hline
+  \midrule
   TFIDF vs.\ BM25 (Schema\_R@1) & +0.0272 & [+0.0060, +0.0514] & 0.022 \\
   TFIDF-TG vs.\ Oracle-TG (InstReady) & -0.0393 & [-0.0665, -0.0151] & 0.004 \\
   TFIDF-TG vs.\ TFIDF-AR (InstReady) & +0.0030 & [-0.0181, +0.0211] & 0.890 \\
@@ -606,7 +574,7 @@ To test whether strong lexical retrieval mainly reflects benchmark-specific nume
   TFIDF-TG vs.\ GCG-Full (InstReady) & +0.0937 & [+0.0483, +0.1420] & $<0.001$ \\
   TFIDF-TG vs.\ RAL-Basic (InstReady) & +0.0272 & [-0.0091, +0.0665] & 0.218 \\
   TFIDF-TG vs.\ AAG-Beam (InstReady) & +0.1027 & [+0.0514, +0.1511] & $<0.001$ \\
-  \hline
+  \botrule
 \end{tabular}
 \end{table}
 
@@ -616,14 +584,14 @@ To test whether strong lexical retrieval mainly reflects benchmark-specific nume
 \label{tab:nlp4lp-overlap}
 \small
 \begin{tabular}{lccc}
-  \hline
+  \toprule
   Sanitization & TF--IDF & BM25 & LSA \\
-  \hline
+  \midrule
   None (baseline)               & 0.9063 & 0.8852 & 0.7734 \\
   Numbers removed               & 0.9063 & 0.8973 & 0.7734 \\
   Stopwords removed             & 0.9124 & 0.9063 & 0.8731 \\
   Numbers \& stopwords removed  & 0.9124 & 0.9063 & 0.8731 \\
-  \hline
+  \botrule
 \end{tabular}
 \end{table}
 
@@ -640,13 +608,13 @@ The benchmark above is deliberately solver-free: no feasibility test or objectiv
 \label{tab:eng-structural}
 \small
 \begin{tabular}{lccc}
-  \hline
+  \toprule
   Baseline & Schema Hit & Structural Valid & Inst.\ Complete \\
-  \hline
+  \midrule
   TF--IDF & 0.9333 & 0.7500 & 0.7500 \\
   BM25    & 0.9000 & 0.7333 & 0.7333 \\
   Oracle  & 1.0000 & 0.7667 & 0.7833 \\
-  \hline
+  \botrule
 \end{tabular}
 \end{table}
 
@@ -666,13 +634,13 @@ The benchmark above is deliberately solver-free: no feasibility test or objectiv
 \scriptsize
 \setlength{\tabcolsep}{3.5pt}
 \begin{tabular}{lcccc}
-  \hline
+  \toprule
   Baseline & Schema Hit & Structural Valid & Inst.\ Complete & Exec./Solver/Feas./Obj.\ \\
-  \hline
+  \midrule
   TF--IDF & 0.9368 & 0.8141 & 0.6654 & 0.0 / 0.0 / 0.0 / 0.0 \\
   BM25    & 0.9257 & 0.8104 & 0.6580 & 0.0 / 0.0 / 0.0 / 0.0 \\
   Oracle  & 1.0000 & 0.8253 & 0.6840 & 0.0 / 0.0 / 0.0 / 0.0 \\
-  \hline
+  \botrule
 \end{tabular}
 \end{table}
 
@@ -684,12 +652,12 @@ The benchmark above is deliberately solver-free: no feasibility test or objectiv
 \label{tab:eng-solver}
 \small
 \begin{tabular}{lcccc}
-  \hline
+  \toprule
   Baseline & Executable & Solver Success & Feasible & Objective Produced \\
-  \hline
+  \midrule
   TF--IDF & 0.95 & 0.80 & 0.80 & 0.80 \\
   Oracle  & 0.95 & 0.75 & 0.75 & 0.75 \\
-  \hline
+  \botrule
 \end{tabular}
 \end{table}
 
@@ -721,6 +689,12 @@ Several directions for future research follow naturally from these findings. The
 
 More broadly, the results suggest that intermediate capabilities such as schema retrieval, schema-conditioned slot selection, and partial structured instantiation deserve independent attention in the design of transparent optimization support systems. Full natural-language-to-optimization automation remains difficult, but intermediate systems can already provide useful support by narrowing candidate problem structure and recovering part of the quantitative content needed for formal modeling. At the same time, the present results make clear that robust quantity-to-role grounding remains unresolved even when retrieval is strong. This makes the intermediate task studied here both practically relevant and scientifically valuable as a benchmarked subproblem in natural-language-to-optimization research.
 
+\backmatter
+
+\bmhead{Acknowledgements}
+
+The author thanks Professor Ioannis Koutis for his support and guidance, and for suggesting the research direction explored in this study.
+
 \section*{Declarations}
 
 \noindent\textbf{Funding.} This research received no specific grant from any funding agency in the public, commercial, or not-for-profit sectors.
@@ -729,22 +703,15 @@ More broadly, the results suggest that intermediate capabilities such as schema 
 
 \noindent\textbf{Ethics approval and consent to participate.} Not applicable; this study did not involve human participants, human data, or animals.
 
-\noindent\textbf{Data availability.} The benchmark used in this paper, \textsc{NLP4LP} (\texttt{udell-lab/NLP4LP} on Hugging Face), is a gated third-party dataset that requires an approved Hugging Face account and access token; it is not redistributed by the author. The committed camera-ready tables, figures, and analysis reports summarizing results computed from this dataset are available at \url{https://github.com/SoroushVahidi/combinatorial-opt-agent} (see \texttt{results/} and \texttt{analysis/}).
+\noindent\textbf{Data availability.} The benchmark used in this paper, NLP4LP (\texttt{udell-lab/NLP4LP} on Hugging Face), is a gated third-party dataset that requires an approved Hugging Face account and access token; it is not redistributed by the author. The committed camera-ready tables, figures, and analysis reports summarizing results computed from this dataset are available at \url{https://github.com/SoroushVahidi/combinatorial-opt-agent} (see \texttt{results/} and \texttt{analysis/}).
 
-\noindent\textbf{Code availability.} The retrieval, grounding, evaluation, and figure/table-generation code used in this paper is available at \url{https://github.com/SoroushVahidi/combinatorial-opt-agent}. Reading the committed tables and figures, and running the test suite, do not require Hugging Face dataset access; reproducing a full end-to-end rerun on \textsc{NLP4LP} (retrieval and grounding on the live benchmark) requires the gated dataset access described above.
+\noindent\textbf{Code availability.} The retrieval, grounding, evaluation, and figure/table-generation code used in this paper is available at \url{https://github.com/SoroushVahidi/combinatorial-opt-agent}. Reading the committed tables and figures, and running the test suite, do not require Hugging Face dataset access; reproducing a full end-to-end rerun on NLP4LP (retrieval and grounding on the live benchmark) requires the gated dataset access described above.
 
 \noindent\textbf{Author contributions.} Soroush Vahidi: Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data curation, Writing -- original draft, Writing -- review \& editing, Visualization.
 
-\noindent\textbf{Acknowledgements.} The author thanks Professor Ioannis Koutis for his support and guidance, and for suggesting the research direction explored in this study.
-
 \noindent\textbf{Generative AI and AI-assisted technologies.} During the preparation of this work, the author used ChatGPT and Gemini to assist with aspects of manuscript writing and used Cursor and GitHub Copilot to assist with coding. The author carefully reviewed, verified, and edited all generated content and takes full responsibility for the content of the publication. No generative-AI tool is listed as an author, consistent with Springer Nature's authorship policy.
 
-\bibliographystyle{elsarticle-num}
 \bibliography{references}
+
 \end{document}
-
-\endinput
-%%
-%% End of file `elsarticle-template-harv.tex'.
-
 
