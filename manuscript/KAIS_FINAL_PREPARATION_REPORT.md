@@ -1265,3 +1265,69 @@ not read from a prior cached report) rather than assumed from earlier passes.
     a submission-portal metadata action that cannot be performed by editing the
     manuscript (see the checklist above). No manuscript-level KAIS compliance blocker
     remains.
+
+## 23. SMALL FINAL COMPRESSION PASS (2026-07-23, ninth session, HPC/Slurm)
+
+Narrow prose-only compression against Section 22's HEAD (`a8f896d`). No experiments,
+tables, figures, equations, references, or numerical values changed; Acknowledgments,
+AI-disclosure, and ORCID placements from Sections 21-22 untouched.
+
+**Sections shortened:**
+- Sec. 1.1 (Background and Motivation) and Sec. 1.2 (Related Work close): removed a
+  restatement of the core retrieval/instantiation framing that repeated across two
+  adjacent paragraphs, and an early foreshadowing of the "retrieval strong / grounding
+  bottleneck" finding stated three times before any results are shown.
+- Sec. 1.3 (Problem Scope): the three-restriction list (scalar-only, deterministic,
+  no full model synthesis) was stated near-verbatim in Sec. 2.1; trimmed to a forward
+  reference, keeping the unique interpretive framing.
+- Sec. 2.2/2.4: the oracle-control and random-reference definitions were given in full
+  twice (Sec. 2.2 and Sec. 2.4); kept the full definition in 2.2 and trimmed 2.4 to
+  only its unique content (the "not a formal upper bound" caveat).
+- Sec. 3.3-3.4 (Downstream Utility, Error Analysis): removed four redundant
+  restatements of "the bottleneck is grounding, not retrieval" within a single
+  subsection, and one duplicate number restatement already given two paragraphs
+  earlier.
+- Sec. 3.5 (Statistical Significance): the long Table 4/Table 11 provenance paragraph
+  was compressed substantially -- the stale-snapshot explanation, correction
+  magnitude, and retrieval-offset partial explanation are preserved, but the
+  self-referential forward/backward pointers and one redundant "recomputing
+  reproduces the values exactly" sentence (already established two sentences earlier)
+  were removed. The corrected TF-IDF-vs-BM25 $p=0.088$ result and all
+  InstantiationReady values are unchanged and still stated in full.
+- Conclusion: trimmed a paragraph that repeated the Contributions section's
+  "practical implications" framing almost verbatim, and lightly tightened the
+  structural/solver-backed validation summary (same facts, fewer words).
+
+**Approximate word reduction:** 14,572 -> 14,040 words in `main.tex` source (~3.7%,
+532 words). This came in modestly under the 5-8% target band; further cuts in the
+targeted sections were evaluated and rejected because they would have required either
+removing a still-load-bearing caveat or paraphrasing past the point of clarity, which
+the instructions for this pass explicitly rule out. The realized compression is safe
+and fully justified in every case by an identifiable duplicate passage, not by
+arbitrary trimming.
+
+**Old and new page count:** 38 -> **37 pages** (both `manuscript/main.pdf` and
+`manuscript/submission_package/main.pdf`), a 1-page reduction, within the requested
+1-2 page target.
+
+**Slurm job ID/status:** 1130510, COMPLETED, exit 0:0. Zero undefined citations,
+zero undefined references, zero overfull hboxes, all fonts embedded, in both
+`manuscript/` and `submission_package/`. The two PDFs are not byte-identical (differ
+only in embedded compile timestamp); `pdftotext` extraction of both is
+character-for-character identical.
+
+**Visual spot-check:** re-rendered all 37 pages at 100 dpi and confirmed: p.1 (title/
+ORCID unaffected), p.2 (Acknowledgements still correctly placed under Keywords, no
+regression), p.7 (the historical pagination-defect phrase pair -- "such as lists," /
+"vectors, or dictionaries" -- remains together on one page, now shifted from p.8 to
+p.7 as a natural consequence of the earlier compression, not a new defect), p.14 (AI
+disclosure in Methodology unaffected), Tables 4-14 (still in correct sequence, just
+shifted up by one page; no float-placement regression), Declarations (still clean,
+no duplication). No layout regression found; no compression was reverted.
+
+**Final commit SHA:** see `git log -1` on `kais-final-submission-prep` immediately
+after this report commit.
+
+**Readiness: READY WITH MINOR MANUAL CHECKS**, unchanged from Section 22 -- this pass
+was prose-only and did not touch any compliance or scientific item. The same manual
+KAIS-portal checklist in Section 22, item 24 still applies.
