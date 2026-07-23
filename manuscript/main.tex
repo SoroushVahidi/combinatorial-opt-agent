@@ -289,7 +289,7 @@ All experiments are deterministic and primarily CPU-based. The implementation us
 \centering
 \caption{Summary of the experimental blocks used in the paper.}
 \label{tab:exp_blocks}
-\scriptsize
+\small
 \begin{tabularx}{\linewidth}{X X X}
 \toprule
 Block & Primary purpose & Main outputs \\
@@ -349,7 +349,7 @@ Second, the best conditional value-accuracy score does not coincide with the bes
 
 Third, the oracle control confirms that retrieval matters but is not the dominant remaining source of error within this benchmark. Replacing \texttt{tfidf\_typed\_greedy} with \texttt{oracle\_typed\_greedy} increases \textit{Coverage} from $0.8639$ to $0.9151$, \textit{TypeMatch} from $0.7513$ to $0.8030$, and \textit{InstantiationReady} from $0.5257$ to $0.5650$. These gains are meaningful but still modest relative to the remaining gap to perfect instantiation. Even when the correct schema is supplied, substantial difficulty remains in deciding which extracted quantity should fill which scalar slot. This is the central benchmark-level empirical point of the paper: on \textsc{NLP4LP}, schema retrieval is already comparatively strong, whereas downstream number-to-slot grounding remains the main unresolved source of error.
 
-To test whether richer deterministic grounding can materially improve this stage, we evaluate three additional downstream method families: global compatibility grounding (GCG), relation-aware linking (RAL), and ambiguity-aware grounding (AAG), spanning eleven variants across the three query forms. The most important outcome is negative but informative: none of these families surpasses the simple \texttt{tfidf\_typed\_greedy} baseline on the original benchmark. Table~\ref{tab:nlp4lp-downstream-newfamilies} summarizes representative results. The best representative, \texttt{tfidf\_relation\_aware\_basic}, reaches \textit{InstantiationReady} $=0.4985$, still below the typed-greedy baseline. The strongest tested global-compatibility and ambiguity-aware representatives, \texttt{tfidf\_global\_compat\_full} and \texttt{tfidf\_ambiguity\_aware\_beam}, perform substantially worse at $0.4320$ and $0.4230$, respectively, while the abstention-heavy ambiguity variant becomes overly conservative ($0.0272$). These results therefore strengthen the paper's main conclusion: the bottleneck is not merely the absence of additional deterministic structure or more careful search. Rather, the underlying quantity-to-role grounding problem remains difficult even after adding richer assignment families.
+To test whether richer deterministic grounding can materially improve this stage, we evaluate three additional downstream method families: global compatibility grounding (GCG), relation-aware linking (RAL), and ambiguity-aware grounding (AAG), spanning eleven variants across the three query forms. The most important outcome is negative but informative: none of these families surpasses the simple \texttt{tfidf\_typed\_greedy} baseline on the original benchmark (Table~\ref{tab:nlp4lp-newfamily-errorcheck} in Section~\ref{subsec:exp_error} reports the representative results with per-method deltas). The best representative, \texttt{tfidf\_relation\_aware\_basic}, reaches \textit{InstantiationReady} $=0.4985$, still below the typed-greedy baseline. The strongest tested global-compatibility and ambiguity-aware representatives, \texttt{tfidf\_global\_compat\_full} and \texttt{tfidf\_ambiguity\_aware\_beam}, perform substantially worse at $0.4320$ and $0.4230$, respectively, while the abstention-heavy ambiguity variant becomes overly conservative ($0.0272$). These results therefore strengthen the paper's main conclusion: the bottleneck is not merely the absence of additional deterministic structure or more careful search. Rather, the underlying quantity-to-role grounding problem remains difficult even after adding richer assignment families.
 
 A related observation is that several of the strongest original non-oracle methods perform very similarly on \emph{orig}. The gap among TFIDF-TG ($0.5257$), TFIDF-AR ($0.5227$), BM25-TG ($0.5196$), and TFIDF-HAR ($0.5136$) is small. The additional families do not change this picture. Instead, they suggest that once schema retrieval is already strong, incremental changes to local assignment, compatibility scoring, beam search, or conservative abstention produce only limited gains unless they resolve the deeper semantic ambiguity of quantity-to-role matching. Put differently, the main downstream opportunity is not simply choosing among nearby deterministic search strategies, but improving how extracted numbers are semantically anchored to the correct parameter roles.
 
@@ -385,38 +385,13 @@ Taken together, these results support a narrower but more defensible interpretat
   Abbreviations: TFIDF-TG = \texttt{tfidf\_typed\_greedy}, BM25-TG = \texttt{bm25\_typed\_greedy}, LSA-TG = \texttt{lsa\_typed\_greedy}, Oracle-TG = \texttt{oracle\_typed\_greedy}, TFIDF-CON = \texttt{tfidf\_constrained}, TFIDF-SIR = \texttt{tfidf\_semantic\_ir\_repair}, TFIDF-ORR = \texttt{tfidf\_optimization\_role\_repair}, TFIDF-AR = \texttt{tfidf\_acceptance\_rerank}, and TFIDF-HAR = \texttt{tfidf\_hierarchical\_acceptance\_rerank}.
 \end{table}
 
-\begin{table}[t]
-  \centering
-  \caption{Representative \emph{orig}-query \textit{InstantiationReady} results for the three additional downstream families. None of them surpasses the original \texttt{tfidf\_typed\_greedy} baseline.}
-  \label{tab:nlp4lp-downstream-newfamilies}
-  \small
-  \setlength{\tabcolsep}{4pt}
-  \begin{tabular}{lc}
-    \toprule
-    Method & InstReady \\
-    \midrule
-    TFIDF-TG                      & \textbf{0.5257} \\
-    TFIDF-AR                      & 0.5227 \\
-    Oracle-TG                     & 0.5650 \\
-    RAL-Basic                     & 0.4985 \\
-    GCG-Full                      & 0.4320 \\
-    AAG-Beam                      & 0.4230 \\
-    AAG-Abstain                   & 0.0272 \\
-    \botrule
-  \end{tabular}
-
-  \vspace{2mm}
-  \raggedright
-  \footnotesize
-  Abbreviations: GCG-Full = \texttt{tfidf\_global\_compat\_full}, RAL-Basic = \texttt{tfidf\_relation\_aware\_basic}, AAG-Beam = \texttt{tfidf\_ambiguity\_aware\_beam}, and AAG-Abstain = \texttt{tfidf\_ambiguity\_aware\_abstain}.
-\end{table}
 
 \begin{table}[t]
   \centering
   \caption{Cross-variant downstream summary for representative original methods. The \emph{noisy} variant should be interpreted cautiously because masked numeric values make exact grounding structurally difficult even when the schema is correct.}
   \label{tab:nlp4lp-downstream-variants}
-  \scriptsize
-  \setlength{\tabcolsep}{3.2pt}
+  \small
+  \setlength{\tabcolsep}{4.5pt}
   \begin{tabular}{lcccccc}
     \toprule
     Method & O-Cov & N-Cov & S-Cov & O-IR & N-IR & S-IR \\
@@ -461,7 +436,7 @@ Overall, the error analysis and ablation studies reinforce the central conclusio
   \label{tab:nlp4lp-error-taxonomy}
   \small
   \setlength{\tabcolsep}{4pt}
-  \begin{tabular}{p{4.7cm}c}
+  \begin{tabular}{p{6.2cm}c}
     \toprule
     Error type & Count \\
     \midrule
@@ -482,8 +457,8 @@ Overall, the error analysis and ablation studies reinforce the central conclusio
   \centering
   \caption{Numeric-type compatibility ablation on four representative methods across the three query variants, comparing downstream metrics before and after the numeric-type compatibility correction. The correction mainly affects \textit{TypeMatch} and \textit{InstantiationReady}, while leaving extraction-dependent quantities much less changed.}
   \label{tab:nlp4lp-prefix-postfix}
-  \scriptsize
-  \setlength{\tabcolsep}{3.2pt}
+  \small
+  \setlength{\tabcolsep}{4pt}
   \begin{tabular}{llcccccc}
     \toprule
     Var. & Method & Type$_{\text{before}}$ & Type$_{\text{after}}$ & $\Delta$Type & IR$_{\text{before}}$ & IR$_{\text{after}}$ & $\Delta$IR \\
@@ -550,7 +525,7 @@ To test whether strong lexical retrieval mainly reflects benchmark-specific nume
 \centering
 \caption{Paired bootstrap significance tests ($B=1{,}000$ resamples, \emph{orig} queries) for selected retrieval and downstream comparisons. Diff is method A minus method B on the stated metric.}
 \label{tab:nlp4lp-significance}
-\scriptsize
+\small
 \setlength{\tabcolsep}{4pt}
 \begin{tabular}{lccc}
   \toprule
