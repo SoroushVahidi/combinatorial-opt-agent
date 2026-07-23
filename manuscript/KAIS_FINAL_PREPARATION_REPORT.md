@@ -843,3 +843,86 @@ only items requiring a human are administrative/portal actions, unchanged from S
 plus the ORCID-in-portal note (item 7): enter the ORCID in the KAIS submission system's
 author-metadata fields, and confirm author/affiliation details in the portal. No
 scientific or layout blocker remains.
+
+## 20. TABLE 4/12 CORRECTION FOLLOW-UP (2026-07-23, sixth session)
+
+**This section supersedes Section 19's item 6 (Table 4/12 discrepancy) and Section
+19.5's characterization of it.** A concurrent orchestrating session independently
+traced the same Table 4/Table 12 discrepancy to its root cause and gave an explicit,
+non-negotiable instruction: *correct* Table 4 to match Table 12's non-strict column
+exactly (by regenerating the stale intermediate significance file from the canonical
+per-query artifacts), not merely *explain* the gap as a disclosed offset. Section 19
+(previous session, same branch) took the latter approach: it left
+`results/eswa_revision/15_significance/confidence_intervals.csv` untouched (still the
+original, stale snapshot from commit `7f913a0`) and instead added prose attributing
+the up-to-0.009 Table 4/Table 12 gap to "the same small schema-text-construction
+offset" already disclosed for `Schema_R@1` in the overlap-ablation table. This session
+verified that attribution does not hold up: recomputing `confidence_intervals.csv`
+directly from `tools/run_confidence_intervals.py` against the currently committed
+per-query CSVs gives different numbers than the committed file (confirming it actually
+was stale, not merely "offset by construction"), and the retrieval-offset explanation,
+even where superficially plausible for TF-IDF/BM25, does not extend to LSA (whose
+schema-hit rate embedded in the per-query files, 0.8550, does not match either the
+stale or the corrected retrieval numbers). This session therefore executed the
+originally-specified fix: regenerated `confidence_intervals.csv`,
+`paired_significance.csv`, `SIGNIFICANCE_SUMMARY.md`, and
+`results/eswa_revision/14_reports/downstream_comparison_all_methods.csv` from the
+canonical per-query artifacts (stale originals preserved as `*.csv.stale`), and
+updated every dependent value in `main.tex`, `cover-letter.tex`,
+`tools/run_confidence_intervals.py`, and `tools/run_strict_instantiation_ready.py`
+accordingly. Table 4 and the non-strict column of the StrictInstantiationReady
+sensitivity table (Table 11 in this branch's current numbering) now agree **exactly**
+(TFIDF-TG/BM25-TG/LSA-TG/Oracle-TG InstantiationReady = 0.5287/0.5196/0.5076/0.5680 in
+both), rather than merely up to a disclosed 0.009 offset.
+
+**Before -> after (this session's corrections on top of Section 19's already-compressed
+text):**
+
+| Method | Metric | Section 19 value (stale) | This session (corrected) |
+|---|---|---|---|
+| TFIDF-TG | Coverage / TypeMatch / Exact20 / InstReady | 0.8639 / 0.7513 / 0.1991 / 0.5257 | 0.8609 / 0.7453 / 0.1834 / **0.5287** |
+| BM25-TG | Coverage / TypeMatch / Exact20 / InstReady | 0.8509 / 0.7386 / 0.2057 / 0.5196 | 0.8509 / 0.7336 / 0.1884 / 0.5196 (unchanged) |
+| LSA-TG | Coverage / TypeMatch / Exact20 / InstReady | 0.8176 / 0.7028 / 0.2048 / 0.4985 | 0.8267 / 0.7054 / 0.1822 / **0.5076** |
+| Oracle-TG | Coverage / TypeMatch / Exact20 / InstReady | 0.9151 / 0.8030 / 0.1882 / 0.5650 | 0.9151 / 0.7998 / 0.1745 / **0.5680** |
+| TFIDF-AR | Coverage / TypeMatch / Exact20 / InstReady | 0.8332 / 0.7340 / 0.1994 / 0.5227 | 0.8302 / 0.7261 / 0.1768 / **0.5257** |
+| TFIDF-HAR | Coverage / TypeMatch / Exact20 / InstReady | 0.8121 / 0.7146 / 0.2003 / 0.5136 | 0.8121 / 0.7097 / 0.1771 / **0.5196** |
+| TFIDF-CON/SIR/ORR | Exact20 only | 0.3293 / 0.2843 / 0.2847 | 0.3239 / 0.2734 / 0.3036 |
+| Numeric-type-compatibility ablation (Table 7, orig) | Type\_before/after, IR\_before/after | TFIDF-TG 0.2595/0.7513/0.0695/0.5257; TFIDF-HAR 0.2593/0.7146/0.0785/0.5136; Oracle-TG 0.2885/0.8030/0.0785/0.5650 | TFIDF-TG 0.2497/0.7453/0.0695/0.5287; TFIDF-HAR 0.2478/0.7097/0.0785/0.5196; Oracle-TG 0.2777/0.7998/0.0785/0.5680 (source: already-correct, independently dated `results/eswa_revision/13_tables/prefix_vs_postfix_ablation.csv`) |
+
+**Newly disclosed conclusion-level change (not present in Section 19's text):**
+recomputing the TF-IDF-vs-BM25 `Schema_R@1` significance test from the corrected data
+flips it from marginally significant (diff=+0.0272, p=0.022, as reported through
+Section 19) to **not significant** (diff=+0.0211, 95% CI [-0.0030,+0.0453], p=0.088).
+This is disclosed explicitly in the manuscript text (Sec. 3.5) with an inline
+`% TODO(final-pass)` LaTeX comment marking the exact location, per the instruction to
+flag rather than silently update conclusion-level changes. The paper's central
+significance claim (TFIDF-TG vs. Oracle-TG on InstReady) is unchanged: diff=-0.0393,
+95% CI [-0.0665,-0.0151], p=0.004, identical before and after this correction.
+
+**Files touched in this follow-up (all on top of Section 19's HEAD,
+`9d9c547` + the report commit):**
+- `manuscript/main.tex` (Table 4, the ablation table, Table 9/10/11 in this branch's
+  numbering, the discrepancy-narrative paragraph, abstract, contributions, Table 2,
+  Conclusion)
+- `manuscript/cover-letter.tex` (same InstReady values, "pre-fix/post-fix" ->
+  "numeric-type-compatibility ablation")
+- `manuscript/MANUSCRIPT_README.md` (provenance note added; historical log preserved)
+- `tools/run_confidence_intervals.py`, `tools/run_strict_instantiation_ready.py`
+  (docstrings updated to remove now-false "small offset" claims)
+- `results/eswa_revision/15_significance/{confidence_intervals,paired_significance}.csv`,
+  `SIGNIFICANCE_SUMMARY.md`, `results/eswa_revision/14_reports/downstream_comparison_all_methods.csv`
+  (regenerated; stale originals preserved as `*.csv.stale`)
+- `manuscript/submission_package/` (re-synced: `main.tex`, `main.pdf`, `cover-letter.tex`)
+
+**Compilation:** recompiled with Tectonic 0.16.9 (`pdflatex`/`bibtex` unavailable in
+this sandboxed session; see Section 19's own toolchain notes if present, or note here
+that this is a substitute engine, not the production Springer Nature toolchain).
+**38 pages**, zero undefined references/citations, zero overfull hboxes, all fonts
+embedded. Figures 1-3 re-verified unchanged (legends outside axes, vector PDF,
+Type 42/CID fonts intact) since this follow-up did not touch any figure source.
+
+**Readiness status: READY WITH MINOR MANUAL CHECKS**, same category as Section 19, on
+firmer footing for the specific Table 4/12 claim. Outstanding: (1) re-verify with a
+real `pdflatex`+`bibtex` compile outside this sandbox; (2) human review of the
+newly-disclosed TF-IDF-vs-BM25 significance flip (Sec. 3.5, inline TODO comment);
+(3) enter ORCID and confirm author metadata in the KAIS portal per Section 19.20.
