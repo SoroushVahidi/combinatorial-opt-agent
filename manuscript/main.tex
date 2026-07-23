@@ -33,6 +33,10 @@
 
 \maketitle
 
+\bmhead{Acknowledgements}
+
+The author is deeply grateful to his mother for her continuous emotional support. The author also thanks his PhD advisor, Professor Ioannis Koutis, for his support, guidance, and encouragement.
+
 %% NOTE: KAIS's ethics-and-disclosures page states peer review for this journal
 %% is single-anonymous (reviewers see author identity; authors do not see
 %% reviewer identity), confirmed at
@@ -229,6 +233,8 @@ The oracle and random references serve the same interpretive purpose. The oracle
 The core study is intentionally solver-free and fully deterministic: no feasibility test, optimization run, or objective-level verification enters the core metrics, and the pipeline uses no large language model, learned retriever, or learned extractor. This keeps the central evaluation transparent and reproducible and lets the experiments answer a focused question -- how much structured instantiation utility deterministic retrieval and rule-based grounding can provide -- while downstream executability is examined separately on the restricted subsets of Section~\ref{subsec:exp_engineering}.
 
 These choices also determine how the metrics should be read. \textit{InstantiationReady} is a diagnostic readiness criterion based on coverage and type consistency, not a guarantee of model correctness or solver compatibility; strong schema retrieval is not full optimization-model recovery; and successful scalar assignment is not feasibility- or optimality-verified instantiation. The framework is best viewed as a retrieval-assisted deterministic instantiation system that quantifies how schema grounding affects structured parameter recovery, with the restricted subset analyses addressing the separate question of downstream executable behavior on compatible cases.
+
+\noindent\textbf{Note on generative-AI assistance.} The retrieval-and-grounding pipeline studied in this paper is itself fully deterministic and uses no large language model, learned retriever, or learned extractor (see above). Separately, during preparation of this work the author used ChatGPT and Gemini to assist with aspects of manuscript writing and used Cursor and GitHub Copilot to assist with coding; the author reviewed, verified, and edited all generated content and takes full responsibility for the content of the publication. No generative-AI tool is listed as an author, consistent with Springer Nature's authorship policy.
 
 \section{Experiments}
 \label{sec:experiments}
@@ -701,10 +707,6 @@ More broadly, the results suggest that intermediate capabilities such as schema 
 
 \backmatter
 
-\bmhead{Acknowledgements}
-
-The author is deeply grateful to his mother for her continuous emotional support. The author also thanks his PhD advisor, Professor Ioannis Koutis, for his support, guidance, and encouragement.
-
 \section*{Declarations}
 
 \noindent\textbf{Funding.} This research received no specific grant from any funding agency in the public, commercial, or not-for-profit sectors.
@@ -718,8 +720,6 @@ The author is deeply grateful to his mother for her continuous emotional support
 \noindent\textbf{Code availability.} The retrieval, grounding, evaluation, and figure/table-generation code used in this paper is available at \url{https://github.com/SoroushVahidi/combinatorial-opt-agent}. Reading the committed tables and figures, and running the test suite, do not require Hugging Face dataset access; reproducing a full end-to-end rerun on NLP4LP (retrieval and grounding on the live benchmark) requires the gated dataset access described above.
 
 \noindent\textbf{Author contributions.} Soroush Vahidi: Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data curation, Writing -- original draft, Writing -- review \& editing, Visualization.
-
-\noindent\textbf{Generative AI and AI-assisted technologies.} During the preparation of this work, the author used ChatGPT and Gemini to assist with aspects of manuscript writing and used Cursor and GitHub Copilot to assist with coding. The author carefully reviewed, verified, and edited all generated content and takes full responsibility for the content of the publication. No generative-AI tool is listed as an author, consistent with Springer Nature's authorship policy.
 
 \bibliography{references}
 

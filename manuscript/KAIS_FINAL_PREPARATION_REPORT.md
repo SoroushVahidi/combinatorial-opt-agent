@@ -1083,3 +1083,185 @@ portal; (2) a final human skim of the TF-IDF-vs-BM25 significance-flip disclosur
 (Sec. 3.5) is still advisable before submission even though it is now fully and
 neutrally reported in-text with no dangling TODOs. No scientific, layout, or
 compilation blocker remains.
+
+## 22. FINAL KAIS SUBMISSION-COMPLIANCE PASS (2026-07-23, eighth session, HPC/Slurm)
+
+Narrow compliance pass against Section 21's HEAD (`1775f0f`), checked directly against
+the **current live** KAIS submission-guidelines page
+(`link.springer.com/journal/10115/submission-guidelines`, fetched fresh this session,
+not read from a prior cached report) rather than assumed from earlier passes.
+
+1. **Official KAIS guidelines checked: YES.** Fetched live and confirmed, verbatim,
+   the requirements acted on below: "Acknowledgments of people, grants, funds, etc.
+   should be placed in a separate section on the title page"; "Use of an LLM should be
+   properly documented in the Methods section (and if a Methods section is not
+   available, in a suitable alternative part)"; title-page author/affiliation/
+   corresponding-email/16-digit-ORCID requirements; abstract 150-250 words; 4-6
+   keywords; Statements and Declarations contents (Competing Interests, Funding,
+   Ethics approval, Data availability statement, Author contributions, Code
+   availability); numbered-bracket in-text citations with full DOI links in the
+   reference list; mandatory submission of all editable LaTeX source files alongside
+   the compiled PDF.
+
+2. **Acknowledgments final location:** moved from `\backmatter` (immediately before
+   `Declarations`, at the very end of the manuscript) to the front matter, immediately
+   after `\maketitle` and its associated peer-review-policy note, before Section 1
+   (Introduction) — i.e., on the title-page block (rendered on p.2, directly under
+   Keywords, since the title/author/affiliation/abstract already fill p.1). Uses the
+   same `\bmhead{Acknowledgements}` macro as before (confirmed in `sn-jnl.cls` to be a
+   generic `\@startsection`-based heading with no `\backmatter`-only dependency, so
+   reusing it in the front matter is safe and stylistically consistent). Wording
+   preserved verbatim (mother's emotional support; PhD advisor Professor Ioannis
+   Koutis). The old end-of-manuscript copy was deleted — no duplicate remains
+   (confirmed by `grep -i acknowledg` returning exactly one hit in `main.tex`, and by
+   page-by-page text search of the rendered PDF finding "Acknowledgements" only on
+   p.2). No overcrowding or excessive whitespace on p.1: the front-matter block now
+   spans two pages the same way it already did before this edit.
+
+3. **AI-disclosure final location:** moved from the end-of-manuscript
+   `\section*{Declarations}` block into Section 2 (Methodology), as a labeled
+   `\noindent\textbf{Note on generative-AI assistance.}` paragraph at the very end of
+   Section 2.1 (`subsec:method_design`), immediately before Section 3 (Experiments;
+   rendered on p.14, right after Figure 1). The paragraph explicitly distinguishes the
+   scientific pipeline (deterministic, no LLM/learned retriever/learned extractor —
+   already stated one sentence above) from the separate, factual disclosure that
+   ChatGPT/Gemini assisted with manuscript writing and Cursor/GitHub Copilot with
+   coding, that the author reviewed/verified/edited all generated content and takes
+   full responsibility, and that no generative-AI tool is listed as an author. All
+   factual content from the original disclosure was preserved verbatim in substance;
+   nothing was overstated or removed. The old Declarations-section copy was deleted —
+   no duplicate remains (confirmed by `grep -i generative` returning exactly one hit
+   in `main.tex`, and by page-by-page search of the rendered PDF).
+
+4. **ORCID final location:** unchanged from Section 20/21 — still embedded inline in
+   the `\author*` metadata block (`\email{sv96@njit.edu \textnormal{(ORCID:
+   0000-0003-1934-6282)}}`), not an isolated line before Section 1. No template
+   commands were invented; the only native alternative (`\orcid{URL}`, which requires
+   a bundled `Orcidlogo.eps` not present in this template copy) was again not adopted
+   for the same compile-risk reason documented in Section 21.
+
+5. **Abstract word count:** 241 words (programmatically counted from the `\abstract{}`
+   source, math tokens excluded), within the required 150-250 range. No undefined
+   abbreviations found (TF-IDF is defined inline at first use; InstantiationReady is
+   the paper's own named metric, defined in-text and standard to leave unglossed in an
+   abstract). Not rewritten — no compliance issue existed.
+
+6. **Number of keywords:** 6 (natural language processing, optimization modeling,
+   knowledge representation, information retrieval, semantic grounding, intelligent
+   information systems), within the required 4-6 range. Unchanged.
+
+7. **Statements/Declarations status:** present, complete, and internally consistent —
+   Funding, Competing interests, Ethics approval and consent to participate (correctly
+   states no human participants/human data/animals were involved), Data availability,
+   Code availability, Author contributions. Section heading is `Declarations` per the
+   KAIS-required heading. No declaration was removed; only the AI-disclosure line was
+   relocated (see item 3).
+
+8. **Data Availability status:** present; correctly states NLP4LP is a gated
+   third-party Hugging Face dataset not redistributed by the author, and points to the
+   committed camera-ready tables/figures/reports in the repository as the available
+   artifact given that restriction.
+
+9. **Code Availability status:** present; GitHub URL verified correct:
+   `https://github.com/SoroushVahidi/combinatorial-opt-agent`.
+
+10. **Author Contributions status:** present (CRediT-style taxonomy terms), unchanged.
+
+11. **Competing Interests status:** present, unchanged ("no known competing financial
+    interests or personal relationships").
+
+12. **Table-number/cross-reference audit:** all 14 table captions use `\label{tab:...}`
+    and every in-text reference uses `\ref{tab:...}` — zero hardcoded literal "Table N"
+    strings exist anywhere in `main.tex` (mechanically verified by grep), so table
+    numbers are entirely LaTeX-resolved and cannot silently drift out of sync with
+    prose. Re-verified against the freshly rendered production PDF that the physical
+    sequence still reads Table 4 (downstream main) / Table 9 (significance) / Table 10
+    (sanitization) / Table 11 (StrictInstantiationReady sensitivity) / Table 12
+    (structural subset) / Table 13 (executable-attempt subset) / Table 14 (solver-backed
+    subset), matching the expected final structure exactly; no reference anywhere
+    still calls the sensitivity table "Table 12."
+
+13. **Bibliography mechanical audit:** re-inspected every `doi =`/`url =` field in
+    `references.bib` (28 entries); all DOI prefixes, arXiv DOI/ID formatting
+    (`10.48550/arXiv.YYMM.NNNNN`), ACL Anthology DOIs, and Springer chapter DOI
+    (`10.1007/978-3-032-08327-2_3`) are well-formed. No entry was changed — none were
+    demonstrably malformed at the source level.
+
+14. **Development-artifact audit:** zero occurrences of `TODO`, `FIXME`, `XXX`, or
+    `final-pass` in `main.tex`, `submission_package/main.tex`, or `cover-letter.tex`.
+    Two occurrences of "stale" found, both legitimate scientific disclosure prose about
+    the Table 4/12 provenance correction (intentionally retained, not dev notes); one
+    occurrence of "debug" found in legitimate related-work prose describing what an
+    LLM-agent system does ("formulate, implement, debug, and solve"); zero occurrences
+    of "temporary." Nothing removed from this category this session — everything
+    found was legitimate content, correctly distinguished from development artifacts.
+
+15. **Production-build Slurm job ID:** 1130502.
+
+16. **Slurm final status and exit code:** COMPLETED, exit 0:0 (single successful
+    submission this session — no failures, since the module-load and pipe-subshell
+    fixes from Section 21 were already in place in `build.sh`).
+
+17. **Undefined citation count:** 0 (both `manuscript/` and `submission_package/`).
+
+18. **Undefined reference count:** 0 (both).
+
+19. **Overfull hbox count:** 0 (both).
+
+20. **Final page count:** 38 (both `manuscript/main.pdf` and
+    `manuscript/submission_package/main.pdf`).
+
+21. **Final PDF SHA-256:**
+    `manuscript/main.pdf` = `873ecc4071ceb6432badb86c72b9ba20c0079d28e5461545f7fe00e3e88b3339`;
+    `manuscript/submission_package/main.pdf` = `21ae655f09278cfdd2a37c01508e306ded928e21eb9e3e4fb4507ba23fdc4a64`.
+    Not byte-identical (differ only in embedded `CreationDate`/`ModDate`, ~2 minutes
+    apart in the same job); `pdftotext` extraction of both is character-for-character
+    identical, confirming equivalent rendered content.
+
+22. **Submission-package verification:** contains all editable source needed to
+    compile independently (`main.tex`, `references.bib`, `sn-jnl.cls`, `sn-basic.bst`,
+    `cover-letter.tex`, `figures/`), plus the compiled `main.pdf`; verified via its own
+    independent Slurm build (job 1130502) with identical zero-defect results to
+    `manuscript/`. Swept for secrets (`hf_[A-Za-z0-9]{20,}`, `HF_TOKEN`, API-key/private-key
+    patterns) across the entire `manuscript/` tree, including `submission_package/`:
+    zero matches. Stray local build artifacts (`main.aux`/`.bbl`/`.blg`/`.log`/`.out`)
+    left over from a prior test build were deleted from
+    `submission_package/` (these are `.gitignore`d and were never committed, but were
+    cleaned from the working tree for tidiness).
+
+23. **Visual inspection result:** rendered all 38 pages at 100 dpi from the production
+    PDF and inspected: p.1 (title/author/affiliation/ORCID/abstract, clean, no
+    crowding), p.2 (Keywords directly followed by the new front-matter
+    Acknowledgements paragraph, then Section 1 — natural, no awkward whitespace), p.8
+    (the historical "such as lists, / vectors, or dictionaries" pagination defect
+    remains fixed — both phrases now fall on the same page, together, with no forced
+    break), p.14 (Section 2's new AI-disclosure paragraph reads cleanly right before
+    the "3 Experiments" heading, clearly distinguished from the adjacent
+    no-LLM-in-the-pipeline sentence, no orphaned heading), Tables 6-14 (pp.24-31, all
+    comfortably sized, correctly numbered in sequence), Figures 1-3 (legends
+    outside/below plot areas, no overlap), p.35 (Declarations: exactly the required
+    six items, no Acknowledgements heading, no AI-disclosure line — confirming no
+    duplication), References (numbered brackets, DOI links present). No title-page
+    overcrowding, no duplicate acknowledgments, no duplicate AI disclosures, no
+    excessive blank space, no broken floats, no unreadably small tables, no clipped
+    text, no figure overlap, no orphan headings, no broken page flow. No layout
+    redesign was performed beyond the two relocations described above.
+
+24. **Manual KAIS portal checklist** (author action required; not performed by this
+    session):
+    - [ ] Enter/authenticate ORCID `0000-0003-1934-6282` in the KAIS submission portal.
+    - [ ] Enter Author Contribution information in the submission interface (already
+      stated in-manuscript; portal may require it re-entered in structured form).
+    - [ ] Enter Competing Interest information in the submission interface.
+    - [ ] Enter Funding information if requested by the interface (manuscript states
+      "no specific grant").
+    - [ ] Confirm the corresponding-author email (`sv96@njit.edu`).
+    - [ ] Confirm all title/author/affiliation metadata in the portal exactly matches
+      the manuscript (Soroush Vahidi; Ying Wu College of Computing, New Jersey
+      Institute of Technology, University Heights, Newark, NJ 07102-1982, USA).
+
+25. **Final readiness: READY WITH MINOR MANUAL CHECKS.** All items in this pass that
+    could be resolved in the manuscript source were resolved; every remaining item is
+    a submission-portal metadata action that cannot be performed by editing the
+    manuscript (see the checklist above). No manuscript-level KAIS compliance blocker
+    remains.
