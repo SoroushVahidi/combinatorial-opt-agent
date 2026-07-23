@@ -290,3 +290,8 @@ manuscript/*.bbl
 manuscript/*.fls
 manuscript/*.fdb_latexmk
 manuscript/*.synctex.gz
+manuscript/submission_package/*.aux
+manuscript/submission_package/*.log
+manuscript/submission_package/*.out
+manuscript/submission_package/*.blg
+manuscript/submission_package/*.bbl
