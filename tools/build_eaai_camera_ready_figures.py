@@ -184,6 +184,10 @@ def _draw_grouped_bars_mpl(
     import matplotlib
 
     matplotlib.use("Agg")
+    # Embed fonts as TrueType/Type 42 rather than matplotlib's default Type 3
+    # in the vector PDF output, for cleaner publication-grade font embedding.
+    matplotlib.rcParams["pdf.fonttype"] = 42
+    matplotlib.rcParams["ps.fonttype"] = 42
     import matplotlib.pyplot as plt
     import matplotlib.ticker as mticker
 

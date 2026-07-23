@@ -1,0 +1,5 @@
+method,n,Schema_R1,InstantiationReady,StrictInstantiationReady,delta_standard_minus_strict,n_queries_differing
+TFIDF-TG,331,0.9063,0.5287,0.5045,0.0242,8
+BM25-TG,331,0.8852,0.5196,0.4924,0.0272,9
+LSA-TG,331,0.855,0.5076,0.4864,0.0211,7
+Oracle-TG,331,1.0,0.568,0.568,0.0,0
