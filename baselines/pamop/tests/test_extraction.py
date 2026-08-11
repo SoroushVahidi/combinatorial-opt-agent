@@ -144,7 +144,7 @@ def test_extract_structured_problem_succeeds_on_first_valid_response(config):
     assert result.validation_attempts == 1
     assert len(result.structured_problem.constraints) == 2
     assert len(result.structured_problem.variables) == 2
-    assert result.structured_problem.source == "llm_extraction:scripted:gpt-4o"
+    assert result.structured_problem.source == f"llm_extraction:scripted:{config.llm.model}"
 
 
 def test_extract_structured_problem_retries_on_malformed_json_then_succeeds(config):

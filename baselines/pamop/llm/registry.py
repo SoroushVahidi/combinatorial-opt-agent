@@ -10,6 +10,7 @@ from .base import LLMProvider
 
 _PROVIDER_IMPORTERS = {
     "openai": ("baselines.pamop.llm.openai_provider", "OpenAIProvider"),
+    "azure_openai": ("baselines.pamop.llm.azure_openai_provider", "AzureOpenAIProvider"),
     "gemini": ("baselines.pamop.llm.gemini_provider", "GeminiProvider"),
     "cohere": ("baselines.pamop.llm.cohere_provider", "CohereProvider"),
     "fireworks": ("baselines.pamop.llm.fireworks_provider", "FireworksProvider"),

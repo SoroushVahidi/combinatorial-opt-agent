@@ -21,32 +21,46 @@ citation: >
 llm:
   # HIGH-CONFIDENCE INFERENCE: the paper names "GPT-4", "GPT-3.5-turbo", and
   # "Llama-3.3-70b" as its three tested base models -- all OpenAI-published
-  # names for the first two -- so "openai" as the provider for the GPT-4
+  # names for the first two -- so an OpenAI-family provider for the GPT-4
   # condition is about as safe an inference as this codebase makes anywhere,
-  # even though the paper never writes the word "OpenAI".
-  provider: openai
-  # REPRODUCTION CHOICE (not paper-stated): exact snapshot. The paper says
-  # only "GPT-4", no version string. gpt-4-0613 is the closest surviving
-  # "plain GPT-4" model as of this investigation (shuts down 2026-10-23 --
-  # see docs/PAMOP_REPRODUCTION_PLAN.md section 7.2); gpt-4-turbo is the
-  # other plausible candidate and shuts down the same date. Document, don't
-  # silently guess: this field records a specific, reasoned choice, not "the
-  # paper's model" -- see the "GPT model decision" section of
-  # docs/PAMOP_REPRODUCTION_PLAN.md for the full rationale.
+  # even though the paper never writes the word "OpenAI" or "Azure".
   #
-  # ENVIRONMENT NOTE (this workstation, verified during this milestone): the
-  # OPENAI_API_KEY configured here is actually a CloudRift-issued key
-  # (OPENAI_BASE_URL is also set to CloudRift's endpoint) -- there is
-  # currently NO working OpenAI credential on this machine, so this
-  # provider/model pair cannot be executed live here today. It remains the
-  # documented paper-faithful choice for whichever environment does have
-  # real OpenAI access.
-  model: gpt-4-0613
+  # PRIMARY REPRODUCTION PATH (as of this milestone): azure_openai. This
+  # workstation has verified, working Microsoft Azure OpenAI access (see
+  # docs/PAMOP_REPRODUCTION_PLAN.md section 16) but NO genuine direct-OpenAI
+  # credential (its OPENAI_API_KEY is actually a CloudRift key aliased
+  # through OpenAI's env-var names, confirmed section 15). Per task policy:
+  # the paper-faithful path uses whichever GPT-4-family access actually
+  # works, and does NOT silently fall back to a non-GPT-4-family provider if
+  # that access fails.
+  provider: azure_openai
+  # REPRODUCTION CHOICE (not paper-stated): exact model/deployment. The
+  # paper says only "GPT-4", no version string, and definitely does not
+  # mention "GPT-4.1" (a materially later model generation than plain
+  # "GPT-4"). This workstation's only confirmed GPT-4-family Azure
+  # deployment is "gpt-4.1-mini" (resolves live to the underlying snapshot
+  # "gpt-4.1-mini-2025-04-14" -- Azure echoes this back per call). This is
+  # the CLOSEST AVAILABLE GPT-4-FAMILY REPRODUCTION CONFIGURATION on this
+  # workstation, explicitly NOT a claim of exact reproduction: it is a
+  # smaller ("mini") tier from a newer model generation than the paper's own
+  # "GPT-4", not the specific model the authors used. Deployment enumeration
+  # beyond the two names present as environment variables
+  # (AZURE_OPENAI_DEPLOYMENT, AZURE_OPENAI_STRONG_DEPLOYMENT) was not
+  # possible with the available inference-plane credential (no
+  # management-plane access) -- a larger/older GPT-4-family deployment may
+  # exist on this Azure resource without being independently discoverable
+  # here. See docs/PAMOP_REPRODUCTION_PLAN.md section 16 for the direct
+  # (non-Azure) OpenAI gpt-4-0613 alternative recorded previously, which
+  # remains the documented choice for an environment with genuine direct
+  # OpenAI access instead.
+  model: gpt-4.1-mini
   temperature: 0.2          # PAPER-SPECIFIED: "we set the model's temperature to 0.2"
   max_correction_iterations: 5   # PAPER-SPECIFIED: "the maximum number of failed iterations to 5"
   top_p: null                # UNSPECIFIED
   max_tokens: null           # UNSPECIFIED
   extraction_max_retries: null   # UNSPECIFIED: paper doesn't discuss G_extr-specific retries at all
+  modeling_max_retries: null     # UNSPECIFIED: paper doesn't discuss G_mod-specific retries at all
+  vague_threshold: null          # UNSPECIFIED: paper says vague constraints get parent/sibling context but gives no numeric vagueness_score cutoff
 
 partitioning:
   embedding_source: null              # paper names GloVe (Wikipedia 2014) but not a swappable "source" abstraction -- mechanism is paper-specified, this field is left null pending a real GloVe integration

@@ -1,4 +1,4 @@
-# PaMOP -- current-model variant configuration (Fireworks AI).
+# PaMOP -- current-model variant configuration (Microsoft Azure OpenAI).
 #
 # NOT PaMOP reproduction. This is a robustness/portability variant of
 # configs/reconstructed_default.yaml with a different LLM provider/model.
@@ -17,8 +17,8 @@ citation: >
   DOI: 10.24963/ijcai.2025/296.
 
 llm:
-  provider: fireworks
-  model: accounts/fireworks/models/llama-v3p1-70b-instruct  # REPRODUCTION CHOICE placeholder -- not live-tested, verify model id is still current before use
+  provider: azure_openai
+  model: gpt-4.1-mini  # this workstation's confirmed GPT-4-family Azure deployment; same as paper_faithful.yaml (this workstation's best available GPT-4-family path)
   temperature: 0.2
   max_correction_iterations: 5
   top_p: 1.0
@@ -26,10 +26,12 @@ llm:
   extraction_max_retries: 2
   modeling_max_retries: 2
   vague_threshold: 0.5
-  # STATUS on this workstation (verified this milestone): FIREWORKS_API_KEY
-  # is present and well-formed; the provider was NOT exercised with a live
-  # call (task scope already covered by the azure_openai/cohere/cloudrift
-  # configs) -- verify the model id above before relying on this config.
+  # STATUS on this workstation (verified this milestone, live call
+  # succeeded): working. This is currently the SAME as
+  # reconstructed_default.yaml's primary llm block -- kept as its own file
+  # for symmetry with the other four provider variants and so a future
+  # AZURE_OPENAI_STRONG_DEPLOYMENT-based non-GPT-4-family variant can be
+  # added here without touching reconstructed_default.yaml.
 
 partitioning:
   # REPRODUCTION CHOICE: no GloVe vectors are provisioned on this workstation

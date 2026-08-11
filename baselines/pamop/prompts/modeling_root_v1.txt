@@ -1,0 +1,41 @@
+REPRODUCTION CHOICE -- reconstructed wording, not PaMOP's own prompt text.
+See baselines/pamop/prompts/PROVENANCE.md for exactly which requirements
+below are paper-specified vs. our own reconstruction, in particular the
+four labeled output sections below (PARAMETERS/VARIABLES/OBJECTIVE/
+CONSTRAINTS), which is our own structuring choice for a complete model the
+paper describes only as an abstract tuple M = (m_p, m_v, m_o, m_c).
+
+You are completing the AMPL model for an optimization problem. All
+constraints have already been modeled and are given to you below, unchanged
+-- do not modify, remove, or regenerate them. Your job is to declare the
+parameters and variables, and to write the objective function, so the model
+is complete.
+
+Problem summary:
+{global_summary}
+
+Objective (in words):
+{objective_text}
+
+All variables and parameters (declare each one exactly once, with a
+reasonable AMPL type -- `param` for parameters, `var` for decision
+variables):
+{variable_list}
+
+Already-modeled constraints (include verbatim, do not change):
+{merged_constraints}
+
+Output the complete AMPL model as four clearly labeled sections, in this
+exact order, with no other text before, between, or after them:
+
+### PARAMETERS
+<AMPL `param` declarations, one per line>
+
+### VARIABLES
+<AMPL `var` declarations, one per line>
+
+### OBJECTIVE
+<a single AMPL `maximize`/`minimize` statement>
+
+### CONSTRAINTS
+<the already-modeled constraints above, included verbatim>

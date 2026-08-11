@@ -110,9 +110,9 @@ def test_get_env_token_treats_empty_string_as_unset(monkeypatch):
     assert get_env_token("FAKE_EMPTY_KEY") == ""
 
 
-def test_registry_lists_all_five_providers():
+def test_registry_lists_all_six_providers():
     assert list_providers() == sorted(
-        ["openai", "gemini", "cohere", "fireworks", "cloudrift"]
+        ["openai", "azure_openai", "gemini", "cohere", "fireworks", "cloudrift"]
     )
 
 
@@ -121,7 +121,7 @@ def test_registry_rejects_unknown_provider():
         get_provider("not-a-real-provider")
 
 
-@pytest.mark.parametrize("name", ["openai", "gemini", "cohere", "fireworks", "cloudrift"])
+@pytest.mark.parametrize("name", ["openai", "azure_openai", "gemini", "cohere", "fireworks", "cloudrift"])
 def test_registry_instantiates_every_provider(name):
     provider = get_provider(name)
     assert provider.name == name
@@ -198,3 +198,114 @@ def test_llm_response_never_has_a_field_that_looks_like_a_secret():
     names = {f.name for f in fields(LLMResponse)}
     assert not any("api_key" in n or "secret" in n or "password" in n for n in names)
     assert not any(n.endswith("_token") for n in names)  # a lone "*_token" (not "*_tokens") would be suspicious
+
+
+# ---------------------------------------------------------------------
+# Azure OpenAI provider
+# ---------------------------------------------------------------------
+
+
+def test_azure_provider_raises_auth_error_without_key_or_endpoint(monkeypatch):
+    for var in ("AZURE_OPENAI_API_KEY", "AZURE_API_KEY", "AZURE_OPENAI_ENDPOINT", "AZURE_API_BASE"):
+        monkeypatch.delenv(var, raising=False)
+    from baselines.pamop.llm.azure_openai_provider import AzureOpenAIProvider
+
+    with pytest.raises(ProviderAuthError):
+        AzureOpenAIProvider()._client()
+
+
+def test_azure_provider_raises_auth_error_with_key_but_no_endpoint(monkeypatch):
+    monkeypatch.setenv("AZURE_OPENAI_API_KEY", "fake-key-for-test")
+    for var in ("AZURE_OPENAI_ENDPOINT", "AZURE_API_BASE"):
+        monkeypatch.delenv(var, raising=False)
+    from baselines.pamop.llm.azure_openai_provider import AzureOpenAIProvider
+
+    with pytest.raises(ProviderAuthError):
+        AzureOpenAIProvider()._client()
+
+
+def test_azure_provider_accepts_generic_azure_api_env_var_names(monkeypatch):
+    """This workstation exposes the same credential under two naming
+    conventions (AZURE_OPENAI_* and generic AZURE_API_*, confirmed
+    byte-identical this milestone) -- the provider must accept either."""
+    monkeypatch.delenv("AZURE_OPENAI_API_KEY", raising=False)
+    monkeypatch.delenv("AZURE_OPENAI_ENDPOINT", raising=False)
+    monkeypatch.setenv("AZURE_API_KEY", "fake-key-for-test")
+    monkeypatch.setenv("AZURE_API_BASE", "https://fake-resource.openai.azure.com/openai/v1")
+    from baselines.pamop.llm.azure_openai_provider import AzureOpenAIProvider
+
+    client = AzureOpenAIProvider()._client()  # must not raise
+    assert "fake-resource" in str(client.base_url)
+
+
+def test_azure_provider_prefers_azure_openai_prefixed_vars(monkeypatch):
+    monkeypatch.setenv("AZURE_OPENAI_API_KEY", "primary-key")
+    monkeypatch.setenv("AZURE_OPENAI_ENDPOINT", "https://primary-resource.openai.azure.com/openai/v1")
+    monkeypatch.setenv("AZURE_API_KEY", "fallback-key")
+    monkeypatch.setenv("AZURE_API_BASE", "https://fallback-resource.openai.azure.com/openai/v1")
+    from baselines.pamop.llm.azure_openai_provider import AzureOpenAIProvider
+
+    client = AzureOpenAIProvider()._client()
+    assert "primary-resource" in str(client.base_url)
+
+
+class _FakeAzureResponse:
+    def __init__(self, content, model="gpt-4.1-mini-2025-04-14"):
+        choice = type("Choice", (), {"message": type("Msg", (), {"content": content})(), "finish_reason": "stop"})()
+        self.choices = [choice]
+        self.usage = type("Usage", (), {"prompt_tokens": 5, "completion_tokens": 3, "total_tokens": 8})()
+        self.model = model
+
+
+def test_azure_provider_falls_back_to_max_completion_tokens(monkeypatch):
+    """Regression test for a real finding on this workstation: this Azure
+    resource's non-GPT-4-family deployment rejects `max_tokens` and
+    requires `max_completion_tokens` instead. The adapter must retry once
+    with the renamed parameter, transparently, without the caller needing
+    to know which convention a given deployment uses."""
+    from baselines.pamop.llm.azure_openai_provider import AzureOpenAIProvider
+
+    calls = []
+
+    def fake_create(**kwargs):
+        calls.append(kwargs)
+        if "max_tokens" in kwargs:
+            raise Exception(
+                "Error code: 400 - Unsupported parameter: 'max_tokens' is not supported "
+                "with this model. Use 'max_completion_tokens' instead."
+            )
+        return _FakeAzureResponse("OK")
+
+    provider = AzureOpenAIProvider()
+    fake_client = type("C", (), {"chat": type("Chat", (), {"completions": type("Compl", (), {"create": staticmethod(fake_create)})()})()})()
+    monkeypatch.setattr(provider, "_client", lambda: fake_client)
+
+    from baselines.pamop.llm.types import ModelConfig
+
+    result = provider._call("hi", ModelConfig(provider="azure_openai", model="gpt-5.4", temperature=0.2, max_tokens=10))
+    assert result["text"] == "OK"
+    assert len(calls) == 2
+    assert "max_tokens" in calls[0] and "max_completion_tokens" not in calls[0]
+    assert "max_completion_tokens" in calls[1] and "max_tokens" not in calls[1]
+
+
+def test_azure_provider_records_underlying_model_in_response(monkeypatch):
+    from baselines.pamop.llm.azure_openai_provider import AzureOpenAIProvider
+    from baselines.pamop.llm.types import ModelConfig
+
+    def fake_create(**kwargs):
+        return _FakeAzureResponse("OK", model="gpt-4.1-mini-2025-04-14")
+
+    provider = AzureOpenAIProvider()
+    fake_client = type("C", (), {"chat": type("Chat", (), {"completions": type("Compl", (), {"create": staticmethod(fake_create)})()})()})()
+    monkeypatch.setattr(provider, "_client", lambda: fake_client)
+
+    response = provider.generate("hi", ModelConfig(provider="azure_openai", model="gpt-4.1-mini", temperature=0.2))
+    assert response.model == "gpt-4.1-mini"  # the requested deployment name
+    assert response.underlying_model == "gpt-4.1-mini-2025-04-14"  # the actual served snapshot
+
+
+def test_underlying_model_defaults_to_none_for_providers_that_dont_report_it():
+    provider = _EchoProvider()
+    response = provider.generate("hi", _config())
+    assert response.underlying_model is None

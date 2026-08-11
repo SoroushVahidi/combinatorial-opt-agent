@@ -71,12 +71,41 @@ needs:
   `partition.build_partition_tree` — verified wired end-to-end, live and in
   tests.
 
+**Milestone 3 — self-augmented leaf modeling (`G_mod`, eq. 3) and bottom-up
+merge (eq. 4), paper section 3.3**, plus a first-class **Azure OpenAI**
+provider:
+
+- `llm/azure_openai_provider.py` — Microsoft Azure OpenAI, same
+  `generate()` contract as every other provider; handles this workstation's
+  `.../openai/v1`-style endpoint and a `max_tokens`-vs-`max_completion_tokens`
+  parameter quirk transparently. **This is now the primary paper-faithful
+  LLM path** (a working GPT-4-family credential, unlike direct OpenAI —
+  see "LLM providers" below).
+- `modeling.py` — `model_leaf`/`model_all_leaves` (eq. 3: global summary +
+  full variable list + this leaf's own constraints -> AMPL constraint
+  text, with parent/sibling context augmentation for vague constraints),
+  `merge_bottom_up` (paper: "directly merge... layer by layer from the
+  bottom up" — literal concatenation, no LLM call at internal tree nodes),
+  `model_root_objective` (eq. 4: the one additional call, at the root, that
+  produces the objective and completes the model), and
+  `build_merged_model` orchestrating all three into one `MergedModel`.
+- `prompts/modeling_leaf_v1.txt`, `prompts/modeling_root_v1.txt` — two more
+  reconstructed, versioned, hashed templates (same `PROVENANCE.md`
+  discipline as `G_extr`'s).
+- `ampl_interface.py` — the consumption contract the next milestone's AMPL
+  renderer must implement (`AmplRenderer` Protocol, no implementation) —
+  see "AMPL readiness" below.
+
+Verified wired end-to-end, live, on one real NLP4LP problem: `G_extr` ->
+partition tree -> `G_mod` (all leaves) -> merge -> eq. 4 root completion.
+No AMPL generation yet.
+
 ## Not implemented yet
 
-- Self-augmented leaf-node modeling (`G_mod`) and its bottom-up merge into a
-  complete model (eq. 4) — the next milestone.
-- AMPL generation.
-- The three-layer correction loop (basic inspection, solver-debug `G_exe`,
+- AMPL generation (rendering `MergedModel` into an actual `.mod`/`.dat`
+  file AMPL can run) — the next milestone; interface boundary only exists
+  so far (`ampl_interface.py`).
+- The error-correction loop (basic inspection, solver-debug `G_exe`,
   reverse translation `G_rev`/`G_comp`/`G_remod`).
 - Gurobi execution/validation of a generated model.
 - Any evaluation against PaMOP's published Accuracy / Execution-Rate / CE /
@@ -84,13 +113,14 @@ needs:
 
 ## LLM providers: what actually works, checked, not assumed
 
-| Provider | Env var(s) | Status (verified this milestone) |
+| Provider | Env var(s) | Status (verified) |
 |---|---|---|
-| OpenAI | `OPENAI_API_KEY` | **Not usable for OpenAI** — the key present here is byte-identical to `CLOUDRIFT_API_KEY` (a CloudRift key aliased into OpenAI's env-var names); `openai_provider.py` always forces the real `api.openai.com` URL, which correctly then rejects this key with HTTP 401 |
+| **Azure OpenAI** | `AZURE_OPENAI_API_KEY`/`AZURE_API_KEY` + `AZURE_OPENAI_ENDPOINT`/`AZURE_API_BASE` | **Working** — live-verified, GPT-4-family (`gpt-4.1-mini`, resolves to underlying snapshot `gpt-4.1-mini-2025-04-14`). **Primary paper-faithful path as of Milestone 3.** |
+| OpenAI (direct) | `OPENAI_API_KEY` | **Not usable for OpenAI** — the key present here is byte-identical to `CLOUDRIFT_API_KEY` (a CloudRift key aliased into OpenAI's env-var names); `openai_provider.py` always forces the real `api.openai.com` URL, which correctly then rejects this key with HTTP 401 |
 | Gemini | `GEMINI_API_KEY` / `GOOGLE_API_KEY` | **Not usable** — both variables exist but `GOOGLE_API_KEY`'s value is an empty string; `get_env_token()` correctly treats that as unset |
 | Cohere | `COHERE_API_KEY` / `CO_API_KEY` | **Working** — live-verified |
-| Fireworks AI | `FIREWORKS_API_KEY` | Present, well-formed, **not live-tested** this milestone |
-| CloudRift AI | `CLOUDRIFT_API_KEY` | **Working** — live-verified (same key as the "OpenAI" one above, correctly used against CloudRift's own endpoint this time) |
+| Fireworks AI | `FIREWORKS_API_KEY` | Present, well-formed, **not live-tested** |
+| CloudRift AI | `CLOUDRIFT_API_KEY` | **Working** — live-verified (same key as the "direct OpenAI" one above, correctly used against CloudRift's own endpoint this time) |
 
 None of this is a code defect — every provider's `ProviderAuthError` (key
 absent) fires correctly, and the empty-Gemini-key case has a dedicated
@@ -98,6 +128,10 @@ regression test (`test_llm.py::test_get_env_token_treats_empty_string_as_unset`)
 precisely because it's the kind of thing that's easy to assume away.
 **Check your own environment's actual state before trusting this table** —
 it describes one workstation at one point in time, not a permanent fact.
+Full deployment enumeration on the Azure resource was not possible with the
+available (inference-plane only) credential — only the two deployments
+named in environment variables (`gpt-4.1-mini`, and `gpt-5.4` which is
+**not** GPT-4-family) were confirmed to exist.
 
 ## Prompt status: reconstructed, never claimed as the authors' wording
 
@@ -198,6 +232,12 @@ sections 2 and 9. Summary for what's actually implemented here:
 | Per-layer similarity weights | "different [weights] to different layers", none given | `root` vs `default` weight sets in config | Two-tier scheme distinguishing the first split from deeper ones |
 | Clustering algorithm | Distance metric given (eq. 2), clustering rule not named | Agglomerative, average linkage, cut at the leaf-similarity threshold | Assigns every point to *some* cluster — matches the paper's explicit "noise points... treated as potentially relevant... rather than removed" |
 | Leaf stop conditions | "a small number of constraints" / "highly similar ones", no numbers | `leaf_stop_min_constraints: 3`, `leaf_stop_similarity_threshold: 0.6` | Documented placeholders pending any better-justified values |
+| `G_mod` (eq. 3) prompt wording | LLM call, prompt not given | `prompts/modeling_leaf_v1.txt` — full reconstruction; requests plain AMPL text output, not JSON (paper: "we directly generate code... instead of formulas") | See `prompts/PROVENANCE.md`; the three input categories (g, full t_v, node-local t_c) and AMPL-as-output are paper-specified, the wording is ours |
+| Vague-constraint augmentation threshold | "when modeling nodes containing vague constraints" — no numeric cutoff on `vagueness_score` | `vague_threshold: 0.5` | Midpoint of the `[0,1]` scale (itself already a reproduction choice from `G_extr`) |
+| Vague-constraint augmentation content | "incorporate information from... parent and sibling nodes" — form not specified | Parent's + siblings' constraint *descriptions* | Already-modeled sibling *output* isn't reliably available under a bottom-up call order; descriptions are always available from `G_extr` |
+| Eq. 4 root output structure | `M = (m_p, m_v, m_o, m_c)`, an abstract tuple — no output *format* mandated | Four labeled `### SECTION` blocks (`PARAMETERS`/`VARIABLES`/`OBJECTIVE`/`CONSTRAINTS`) | Gives the future AMPL renderer reliable section boundaries to parse |
+| Merge conflict handling | Paper assumes "minimal conflict," does not describe handling any | Diagnostic-only (`MergedModel.symbol_conflicts`) for unresolved references, duplicate leaf labels, and leaf-side declarations; duplicate root declarations are rejected; never auto-repaired | "Improve on PaMOP" is out of scope for the paper-faithful path; only the paper's own literal "directly merge" is implemented |
+| `G_mod`/eq.-4-specific retry count | Not discussed (distinct from `max_correction_iterations`, the later solver-debug loop) | `modeling_max_retries: 2` | Same rationale as `extraction_max_retries` |
 
 ## Running it
 
@@ -224,7 +264,8 @@ The `llm`/`extraction` test suites are entirely mocked (fake in-process
 providers) and never make a network or API call, by design — a tiny live
 LLM smoke test was run manually for this milestone instead (not part of the
 default test suite, since it costs real API tokens); see
-`docs/PAMOP_REPRODUCTION_PLAN.md` §15.5 for its results.
+`docs/PAMOP_REPRODUCTION_PLAN.md` §16.11 for the latest full-pipeline
+Azure smoke result.
 
 ## Known limitation (fixed) and its actual root cause
 
@@ -251,11 +292,28 @@ failure. See `baselines/pamop/tests/test_data.py` for both a mocked
 regression test of the resolution logic and a live regression test
 (`@pytest.mark.requires_network`) pinned to these exact 6 ids.
 
+## AMPL readiness: interface prepared, not implemented
+
+`MergedModel` (from `modeling.build_merged_model`) already provides four
+AMPL-flavored text fields (`parameters_text`/`variables_text`/
+`objective_text`/`constraints_text`) — by construction of
+`modeling_root_v1.txt`'s four labeled sections, not by parsing real AMPL.
+`ampl_interface.py`'s `AmplRenderer` Protocol documents exactly this
+consumption contract for the next milestone, with **no implementation**
+(`render`/`solve` method signatures only). **AMPL/`amplpy` were not
+installed** this milestone — nothing built so far needed to actually
+execute a model, only to construct and validate its text heuristically (no
+real AMPL parser exists yet, so none of these four fields are guaranteed
+syntactically valid AMPL).
+
 ## Next milestone
 
 See [`docs/PAMOP_REPRODUCTION_PLAN.md`](../../docs/PAMOP_REPRODUCTION_PLAN.md)
-sections 14 and 15 for implementation status. Next: self-augmented
-leaf-node modeling (`G_mod`, eq. 3) and its bottom-up merge (eq. 4) — the
-last stage before AMPL generation becomes meaningful, reusing the `llm/`
-provider abstraction and `prompts/` versioning built this milestone
-unchanged.
+sections 14, 15, and 16 for implementation status. Next: the error-
+correction loop (paper §3.3) — basic inspection, the solver-debug loop
+(`G_exe`, eq. 5), and reverse translation (`G_rev`/`G_comp`/`G_remod`,
+eq. 6). This is where AMPL/`amplpy` acquisition becomes a genuine blocker
+(need to actually execute a model), where `ampl_interface.py`'s
+`AmplRenderer` gets its first real implementation, and where
+`paper_faithful.yaml`'s `max_correction_iterations: 5` (PAPER-SPECIFIED)
+finally gets used by running code.

@@ -24,11 +24,13 @@ llm:
   top_p: 1.0
   max_tokens: 4096
   extraction_max_retries: 2
+  modeling_max_retries: 2
+  vague_threshold: 0.5
   # STATUS on this workstation (verified this milestone, live call
-  # succeeded): working. Used for this milestone's live G_extr smoke test
+  # succeeded): working. Used for the Milestone 2 live G_extr smoke test
   # (docs/PAMOP_REPRODUCTION_PLAN.md section 15) precisely because it is a
   # genuinely distinct, working credential -- unlike this workstation's
-  # OpenAI/Gemini configs.
+  # direct-OpenAI/Gemini configs.
 
 partitioning:
   # REPRODUCTION CHOICE: no GloVe vectors are provisioned on this workstation

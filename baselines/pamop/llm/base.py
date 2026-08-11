@@ -84,6 +84,7 @@ class LLMProvider(ABC):
                     retry_count=retry_count,
                     prompt_hash=prompt_hash(prompt),
                     finish_reason=raw.get("finish_reason"),
+                    underlying_model=raw.get("underlying_model"),
                 )
             except ProviderAuthError:
                 raise  # never worth retrying -- the key is missing/invalid

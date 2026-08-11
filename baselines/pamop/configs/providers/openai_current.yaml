@@ -24,11 +24,14 @@ llm:
   top_p: 1.0
   max_tokens: 4096
   extraction_max_retries: 2
+  modeling_max_retries: 2
+  vague_threshold: 0.5
   # STATUS on this workstation (verified this milestone): NOT currently
   # runnable -- OPENAI_API_KEY here is actually a CloudRift-issued key
   # (same value as CLOUDRIFT_API_KEY), so a real OpenAI call fails
-  # authentication. Use openai_current.yaml only in an environment with a
-  # genuine OpenAI key.
+  # authentication. Use azure_openai_current.yaml instead on this
+  # workstation, or openai_current.yaml in an environment with a genuine
+  # direct OpenAI key.
 
 partitioning:
   # REPRODUCTION CHOICE: no GloVe vectors are provisioned on this workstation

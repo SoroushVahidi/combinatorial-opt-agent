@@ -21,19 +21,21 @@ citation: >
   DOI: 10.24963/ijcai.2025/296.
 
 llm:
-  # REPRODUCTION CHOICE: modern GPT-4-class model via OpenAI. Aspirational/
-  # portable default -- requires genuine OpenAI credentials, which this
-  # particular workstation does NOT currently have (see paper_faithful.yaml's
-  # "ENVIRONMENT NOTE"). See configs/providers/*.yaml for variants pointed at
-  # providers with a verified-working key on this workstation
-  # (cohere, cloudrift) as of this milestone.
-  provider: openai
-  model: gpt-4o
+  # REPRODUCTION CHOICE: GPT-4-family model via Azure OpenAI -- the provider
+  # with a verified-working GPT-4-family credential on this workstation (see
+  # paper_faithful.yaml's provider note and docs/PAMOP_REPRODUCTION_PLAN.md
+  # section 16). See configs/providers/*.yaml for variants pointed at every
+  # other provider (openai, gemini, cohere, fireworks, cloudrift), each
+  # labeled with its own live-verified status.
+  provider: azure_openai
+  model: gpt-4.1-mini
   temperature: 0.2                 # PAPER-SPECIFIED
   max_correction_iterations: 5     # PAPER-SPECIFIED
   top_p: 1.0                       # REPRODUCTION CHOICE: provider default, paper silent
   max_tokens: 4096                 # REPRODUCTION CHOICE: headroom for an AMPL model + prompt context
   extraction_max_retries: 2        # REPRODUCTION CHOICE: paper doesn't specify; 2 retries (3 attempts total) balances catching transient malformed JSON against runaway cost
+  modeling_max_retries: 2          # REPRODUCTION CHOICE: same rationale as extraction_max_retries, applied to G_mod
+  vague_threshold: 0.5             # REPRODUCTION CHOICE: midpoint of the [0,1] vagueness_score scale (itself already a reproduction choice, see extraction prompt)
 
 partitioning:
   # REPRODUCTION CHOICE: no GloVe vectors are provisioned on this workstation

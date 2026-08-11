@@ -38,6 +38,13 @@ empty strings despite both env vars being present — documented, not hidden.
 See
 [§15 Implementation Status: Milestone 2](#15-implementation-status-milestone-2-llm-extraction-stage).
 
+**Update, 2026-08-11 (same day, fourth follow-up):** Milestone 3 implemented
+— `G_mod` (eq. 3), the bottom-up merge (eq. 4), and a working Azure OpenAI
+provider (`gpt-4.1-mini`, confirmed live, now the primary paper-faithful
+path). Full pipeline (`G_extr` → partition → `G_mod` → merge) verified live
+on one real NLP4LP problem in this pass, no AMPL yet. See
+[§16 Implementation Status: Milestone 3](#16-implementation-status-milestone-3-self-augmented-modeling-and-merge).
+
 ---
 
 ## 1. Does official public PaMOP code exist?
@@ -1472,3 +1479,326 @@ question (still blocked on installing `amplpy`, §13.10/§15.10) becomes live
 at that point, not before. Should ship with its own reconstructed prompt
 (`prompts/leaf_modeling_v1.txt`, same PROVENANCE.md discipline as this
 milestone) and reuse the existing `llm/` provider abstraction unchanged.
+
+---
+
+## 16. Implementation Status: Milestone 3, Self-Augmented Modeling and Merge
+
+**Follow-up implementation pass, 2026-08-11 (fourth same-day follow-up).**
+Implements `G_mod` (eq. 3), the bottom-up merge (eq. 4), and a first-class
+Azure OpenAI provider. No manuscript file touched, no benchmark result
+changed, no AMPL generation/execution implemented, no full 269-block run.
+
+### 16.1 Azure OpenAI environment status
+
+**Authentication: PASS.** This workstation has a real, working Microsoft
+Azure OpenAI resource, distinct from the CloudRift-aliased "OpenAI" key
+found in Milestone 2 (§15.1) — confirmed by a live call, not assumed.
+
+| Item | Value |
+|---|---|
+| Endpoint found | YES — `AZURE_OPENAI_ENDPOINT` (also mirrored as the generic `AZURE_API_BASE`), an OpenAI-compatible `.../openai/v1` path |
+| Deployment(s) found | YES, two, both live-verified: `gpt-4.1-mini` (env `AZURE_OPENAI_DEPLOYMENT`) and `gpt-5.4` (env `AZURE_OPENAI_STRONG_DEPLOYMENT`) |
+| GPT-4-family deployment exists | YES — `gpt-4.1-mini` |
+| Underlying model/version | Discoverable and confirmed live: the API itself echoes back the exact served snapshot in its response — `gpt-4.1-mini` resolves to **`gpt-4.1-mini-2025-04-14`**; `gpt-5.4` resolves to `gpt-5.4-2026-03-05` (not GPT-4-family, recorded for completeness only) |
+| API version | Two candidate env vars found, `AZURE_OPENAI_API_VERSION=2024-10-21` and `AZURE_API_VERSION=2024-12-01-preview`; the OpenAI-compatible `.../openai/v1` endpoint style used here did not require passing either explicitly and worked without it |
+| Full deployment enumeration | **Not possible** with the available credential — the standard `/openai/deployments?api-version=...` listing endpoint returned HTTP 404 with this inference-plane key (deployment listing typically needs management-plane/ARM access, which was not sought). Only the two deployments named in environment variables were confirmed to exist; others may exist on this Azure resource without being independently discoverable here. |
+| Credential aliasing | `AZURE_API_KEY` and `AZURE_OPENAI_API_KEY` are the same value (confirmed via hash comparison, never printed) — two naming conventions for one credential, both supported by the new provider |
+
+**No secret value was printed, logged, or committed at any point in this
+investigation.**
+
+### 16.2 Azure OpenAI as a first-class provider
+
+`baselines/pamop/llm/azure_openai_provider.py` (`AzureOpenAIProvider`,
+registered as `"azure_openai"`): same `generate(prompt, ModelConfig) ->
+LLMResponse` contract as every other provider. Two things needed to be
+solved specifically for this workstation's resource, both covered by
+regression tests:
+
+1. **Endpoint style**: this resource's endpoint already includes
+   `/openai/v1`, matching the OpenAI-compatible client style already used
+   for Fireworks/CloudRift (`OpenAI(api_key=..., base_url=...)`), not the
+   older `AzureOpenAI(azure_endpoint=...)` client shape (which would double
+   up the path). Verified live before committing to this design.
+2. **`max_tokens` vs. `max_completion_tokens`**: `gpt-5.4` (not GPT-4-family,
+   found incidentally while checking the "strong" deployment) rejects the
+   standard `max_tokens` parameter and requires `max_completion_tokens`.
+   The provider tries `max_tokens` first and transparently retries once
+   with the renamed parameter on that specific error, so callers never need
+   to know which convention a given deployment uses. `gpt-4.1-mini` (the
+   paper-faithful deployment) accepts plain `max_tokens` — the fallback
+   exists for robustness, not because the primary path needs it.
+
+`LLMResponse` gained a new field, `underlying_model` (`None` for providers
+that don't echo one back), populated here with the exact served snapshot
+(`gpt-4.1-mini-2025-04-14`) — this is the mechanism that makes "underlying
+GPT model/version if discoverable" an actual recorded fact per call, not
+just a one-time investigation note.
+
+### 16.3 Paper-faithful model decision (revised from Milestone 2)
+
+**Superseded**: §15.9's `gpt-4-0613` via direct OpenAI is **no longer the
+active `paper_faithful.yaml` choice** — that workstation had no working
+direct-OpenAI credential at all (§15.1), so it could never execute. It
+remains documented, unchanged, as the choice for an environment with
+genuine direct OpenAI access instead (`paper_faithful.yaml` inline comment
+points there).
+
+**New primary reproduction path**: `provider: azure_openai`, `model:
+gpt-4.1-mini`, per task policy (verified GPT-4-family access takes
+priority, no silent fallback to a non-GPT-4-family provider). Classified
+explicitly as a **closest available GPT-4-family reproduction
+configuration** — not exact reproduction:
+
+- The paper says only "GPT-4," no version. "GPT-4.1" is a materially later
+  model generation than plain "GPT-4," and "mini" is explicitly a smaller
+  tier within that generation — this is the closest thing to a GPT-4-family
+  model this workstation can actually call, not a match to what the authors
+  used.
+- A larger/older GPT-4-family Azure deployment may exist on this resource
+  without being discoverable given the available credential (§16.1) — this
+  choice reflects what could be *confirmed*, not necessarily everything
+  that *exists*.
+- `temperature: 0.2` (PAPER-SPECIFIED) is preserved unchanged.
+
+### 16.4 `G_mod` implementation (eq. 3)
+
+`baselines/pamop/modeling.py::model_leaf` / `model_all_leaves`:
+
+- Inputs exactly as eq. 3 specifies: global summary `g`, the **full**
+  global variable/parameter list `t_v` (not filtered to the node), and only
+  this leaf's own constraint descriptions.
+- Output is requested as plain AMPL text (not JSON, unlike `G_extr` —
+  deliberately, since the paper describes eq. 3's output as code, "we
+  directly generate code in the modeling language instead of formulas,"
+  not structured multi-field data).
+- **Vague-constraint augmentation** (paper: "when modeling nodes containing
+  vague constraints, we can incorporate information from their parent and
+  sibling nodes"): triggered per leaf when any of its constraints'
+  `vagueness_score` (from `G_extr`, Milestone 2) is at or above
+  `config.llm.vague_threshold` — REPRODUCTION CHOICE (paper gives no
+  number). Augmentation content is the parent's and siblings' constraint
+  *descriptions* (also a reproduction choice — paper doesn't specify the
+  exact form; passing already-modeled sibling output isn't reliably
+  available under a bottom-up traversal order, so descriptions were chosen
+  over attempting to sequence sibling calls to guarantee available output).
+- **Validation** (`validate_leaf_output`): minimal, explicitly heuristic —
+  non-empty, contains at least one `;`. No AMPL parser exists this
+  milestone (§16.7). Failure retries (asking again) up to
+  `config.llm.modeling_max_retries` — REPRODUCTION CHOICE, paper doesn't
+  specify a modeling-stage retry count either (distinct from
+  `extraction_max_retries`, Milestone 2, and from `max_correction_iterations`,
+  the paper's own later solver-debug loop, not yet implemented).
+- **Unresolved-reference diagnostic** (`_find_unresolved_references`):
+  heuristic, non-fatal scan for identifier-shaped tokens in a leaf's output
+  that match neither a declared variable/parameter name nor a common AMPL
+  keyword — excludes AMPL constraint labels (`subject to c1: ...`) by
+  construction, a false-positive source caught and fixed during this
+  milestone's own smoke testing (§16.9). This is diagnostic only, never a
+  hard validation failure or an attempt at automatic repair.
+- **Serializable symbol provenance**: each `LeafModelResult` records
+  `referenced_global_symbols`, the declared `t_v` names that appear in the
+  generated fragment. This is a lightweight downstream aid, not an AMPL
+  parse and not a validation gate.
+
+### 16.5 Bottom-up merge (paper mechanism, no LLM call)
+
+`baselines/pamop/modeling.py::merge_bottom_up`: the paper is explicit that
+this step is **not** an LLM call at internal tree layers — "we can directly
+merge the modeled formulas" — implemented here as a genuine recursive
+tree-walk (not a flattened leaf-order concatenation, even though the two
+would produce identical text under a fixed traversal order) so the
+procedure mirrors the paper's own "layer by layer from the bottom up"
+description and stays auditable per internal node. Confirms directly, per
+task's specific questions:
+
+- **What's passed upward**: each leaf's modeled AMPL text, verbatim.
+- **Concatenated, summarized, regenerated, or reconciled?** Concatenated —
+  the paper explicitly relies on a "minimal conflict" assumption rather
+  than reconciling anything.
+- **Do parent (non-root, non-leaf) nodes invoke the LLM?** No — only leaves
+  (eq. 3) and the root's own final step (eq. 4) do.
+- **Are variables/parameters deduplicated?** Not applicable at this stage —
+  leaves never declare variables/parameters in this design (only reference
+  them); declarations happen once, at the root, in eq. 4.
+- **How are conflicts handled?** Not reconciled automatically (matching the
+  paper's own assumption) — only surfaced as diagnostics
+  (`MergedModel.symbol_conflicts`) for unresolved references, duplicate
+  leaf constraint labels, and leaf fragments that contain `param`/`var`
+  declarations even though leaf `G_mod` should emit constraints only. The
+  root Eq. 4 parser also rejects duplicate `param`/`var` declarations where
+  detectable in its reconstructed four-section output. None of these checks
+  rewrites or repairs model text. This is a deliberately conservative
+  REPRODUCTION CHOICE: "improve on PaMOP" was explicitly out of scope for
+  the paper-faithful path per task instructions.
+- **Are objective pieces merged incrementally?** No — the objective is
+  handled exactly once, at the root (eq. 4); eq. 3's leaves never touch it.
+
+### 16.6 Root completion (eq. 4)
+
+`baselines/pamop/modeling.py::model_root_objective`: one additional call
+with `(g, t_v, t_o, m_c)` — global summary, full variable list, objective
+text, and the already-merged constraint text — producing the complete
+`M = (m_p, m_v, m_o, m_c)`. Output is requested as four labeled sections
+(`### PARAMETERS` / `VARIABLES` / `OBJECTIVE` / `CONSTRAINTS`) — an
+explicit **REPRODUCTION CHOICE** structuring decision (the paper describes
+`M` only as an abstract tuple, never mandates an output format), made
+specifically to give the next milestone's AMPL renderer reliable section
+boundaries to consume (§16.7). Validation requires all four headers present
+in order and non-empty `OBJECTIVE`/`CONSTRAINTS` sections; retries up to
+`modeling_max_retries` on failure, same policy as leaf modeling.
+
+### 16.7 AMPL interface boundary (prepared, not implemented)
+
+`baselines/pamop/ampl_interface.py`: an `AmplRenderer` `Protocol` (`render`
+/ `solve` method signatures only, no implementation) documenting exactly
+what the next milestone must consume from `MergedModel` — its four
+AMPL-flavored text fields — and stating plainly that none of them are
+validated as syntactically correct AMPL yet (no parser exists this
+milestone). A `naive_concatenation_preview` helper exists only for
+human/debug inspection, explicitly **not** a renderer.
+
+**AMPL/`amplpy` were not installed** — every check this milestone needed
+(prompt construction, section parsing, heuristic reference-checking)
+operates on plain text and required no AMPL runtime; installation becomes
+necessary only once something needs to actually *execute* a model, which
+is the next milestone's job.
+
+### 16.8 Prompt provenance
+
+Two new reconstructed templates, same discipline as Milestone 2's
+`extraction_v1.txt`: `prompts/modeling_leaf_v1.txt` (eq. 3) and
+`prompts/modeling_root_v1.txt` (eq. 4), both version/content-hashed via the
+existing `prompts.load_prompt` mechanism, both documented in
+`prompts/PROVENANCE.md` with an explicit per-template
+paper-specified-vs-reconstructed breakdown (§16.4/§16.6 above summarize the
+same table). No new prompt text was recoverable from any source this
+milestone — re-reading the official IJCAI paper and the already-audited
+local source trail exposed no author-supplied prompt wording, and no new
+lead specific to `G_mod`/eq. 4 emerged.
+
+### 16.9 A real bug found and fixed during this milestone's own testing
+
+The first smoke test of the symbol-conflict diagnostic
+(`_find_unresolved_references`) flagged AMPL constraint labels (e.g. `c1`
+in `subject to c1: ...`) as "unresolved variable references" — a genuine
+false-positive class, not a hypothetical one (surfaced immediately on the
+very first hand-written test problem). Fixed by excluding tokens matching
+the `identifier:` label pattern before scanning for unresolved references
+(`_CONSTRAINT_LABEL_RE`); a dedicated regression test
+(`test_model_leaf_does_not_flag_constraint_labels_as_unresolved`) now
+covers this. Documented here per this project's practice of surfacing real
+issues found during work rather than only reporting a clean final state.
+
+### 16.10 Mocked test results
+
+`baselines/pamop/tests/test_modeling.py` (25 tests), `test_ampl_interface.py`
+(3 tests), and Azure-specific tests in `test_llm.py` — all
+network-free, synthetic problems and hand-built partition trees only
+(never gated NLP4LP text). Full suite: **134/134 passed** (up from 98 at
+commit `f472542`), 0 skipped in this environment (network reachable).
+Coverage against the task's explicit checklist: `G_mod` prompt construction
+✅, leaf-node serialization ✅, malformed LLM output ✅, retry handling ✅,
+one-leaf case ✅, two-leaf merge ✅, multi-level (3-leaf, 2-internal-node)
+tree merge ✅ (hand-built tree, so the merge order is exactly known and
+independent of `partition.py`'s own clustering behavior), unresolved-
+reference handling ✅ (including the constraint-label false-positive fix,
+§16.9), deterministic merge order ✅, provider metadata preservation ✅,
+Azure provider configuration parsing with mocked credentials ✅, no secret
+leakage ✅ (`MergedModel.to_dict()` and `LLMResponse` both checked),
+duplicate leaf label handling ✅, leaf-declaration conflict diagnostics ✅,
+and duplicate root declaration rejection ✅.
+
+### 16.11 Tiny live Azure smoke test — full pipeline, no AMPL
+
+Ran the complete `G_extr -> partition tree -> G_mod -> merge` pipeline live
+against one real NLP4LP problem (id 1, from `pamop_possible_269`), using
+`reconstructed_default.yaml`'s selected paper-faithful provider/deployment
+(`azure_openai`, `gpt-4.1-mini`, temperature 0.2). **AMPL generation was
+never invoked.** No raw problem text appears below or in any committed
+file.
+
+| Problem id | Status | Underlying model | Constraints | Leaves | Symbol conflicts | Total latency (s) |
+|---|---|---|---:|---:|---:|---:|
+| 1 | success | `gpt-4.1-mini-2025-04-14` | 4 | 4 | 0 | 11.756 |
+
+The extraction and root-completion calls both succeeded on the first
+validation attempt.
+
+**Token/cost summary** (one-problem total, both directions):
+extraction 1,009 tokens; leaf-modeling 1,564 tokens; root-completion 794
+tokens — **3,367 tokens total** across the full pipeline. The Azure
+inference API did not report actual cost, and no pricing API was queried.
+No `sbatch` job was needed (the full pipeline completed in under 12
+seconds of aggregate LLM latency).
+
+### 16.12 Suspicious prior-work overlap check — repeated for this milestone, **nothing concerning found**
+
+Extended the same audit (§14.6, §15.8) to `G_mod`/merge-specific surface
+area: self-augmented leaf modeling, parent/sibling vague-context
+augmentation, bottom-up text merge, and the symbol-conflict/unresolved-
+reference heuristic.
+
+- **Self-augmented modeling vs. schema-conditioned scalar instantiation**:
+  mechanically opposite. `G_mod` *generates* fresh AMPL text per constraint
+  group via an LLM call, conditioned on a growing textual context (global
+  summary + full variable list + optionally parent/sibling descriptions);
+  our manuscript's scalar instantiation *assigns* already-extracted numeric
+  mentions to slots of an already-*retrieved* fixed schema — no generative
+  step, no LLM, no textual-context augmentation concept anywhere in that
+  pipeline. No mechanism overlap.
+- **Structural verification**: `G_mod`'s unresolved-reference heuristic and
+  our `formulation/verify.py` are both instances of the generic,
+  independently-obvious "sanity-check before solving" pattern (same
+  conclusion as §14.6's "basic inspection" comparison) — not a distinctive
+  shared mechanism.
+- **"Deterministic repair"** (explicitly asked about this milestone): no
+  counterpart exists in PaMOP's `G_mod`/merge stage to compare against our
+  pipeline's actual deterministic-repair layers (no-reuse compatibility
+  slot assignment, lexicon-based role/admissibility refinement) — this
+  milestone's merge is literal, unmodified concatenation (§16.5) and the
+  symbol-conflict check never repairs anything, only flags it. There is no
+  shared mechanism here, only a shared checklist term.
+- **Grounding-bottleneck analysis / unusual metric design**: no counterpart
+  in `G_mod`/merge at all — this stage produces model text, not evaluation
+  metrics (that remains a future, unimplemented stage). No overlap.
+- **Chronology**: unchanged from §14.6/§15.8.
+
+**Conclusion: no concerning overlap found**, consistent with both prior
+milestones. No accusation, implicit or explicit, is made in either
+direction.
+
+### 16.13 Files added/changed (this pass)
+
+Added: `baselines/pamop/llm/azure_openai_provider.py`,
+`baselines/pamop/modeling.py`, `baselines/pamop/ampl_interface.py`,
+`baselines/pamop/prompts/modeling_leaf_v1.txt`,
+`baselines/pamop/prompts/modeling_root_v1.txt`,
+`baselines/pamop/configs/providers/azure_openai_current.yaml`,
+`baselines/pamop/tests/{test_modeling.py, test_ampl_interface.py}`.
+Changed: `baselines/pamop/llm/{types.py, base.py, registry.py}`
+(`underlying_model` field, Azure registration), `baselines/pamop/config.py`
+(`modeling_max_retries`, `vague_threshold` fields),
+`baselines/pamop/configs/{paper_faithful,reconstructed_default}.yaml`
+(§16.3), all 5 pre-existing `configs/providers/*.yaml` (new fields added
+for consistency), `baselines/pamop/prompts/PROVENANCE.md` (two new
+template entries), `baselines/pamop/tests/{test_llm.py, test_extraction.py}`
+(Azure tests; one hardcoded-model-string test fixed to track config instead),
+`baselines/pamop/README.md`, `docs/PAMOP_REPRODUCTION_PLAN.md` (this
+section). No other file in the repository was touched.
+
+### 16.14 Exact next milestone
+
+The error-correction loop (paper §3.3, "Error correction"): basic
+inspection (regex syntax check + parameter-vs-data verification, not yet
+implemented — no AMPL parser exists, §16.7), the solver-debug loop (`G_exe`,
+eq. 5 — requires actually executing a model, which requires AMPL/`amplpy`
+acquisition, still deferred per §13.10), and reverse translation
+(`G_rev`/`G_comp`/`G_remod`, eq. 6). This is also the point where
+`ampl_interface.py`'s `AmplRenderer` Protocol (§16.7) needs its first real
+implementation, and where the `max_correction_iterations: 5`
+(PAPER-SPECIFIED) budget from `paper_faithful.yaml` finally gets used by
+running code rather than just being validated as loadable. AMPL/`amplpy`
+acquisition becomes a genuine blocker starting at this milestone, not
+before.

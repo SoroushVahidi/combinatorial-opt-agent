@@ -44,6 +44,11 @@ class LLMResponse:
     retry_count: int
     prompt_hash: str
     finish_reason: str | None = None
+    # The exact served model snapshot, when the API echoes one back and it
+    # can differ from ``model`` (e.g. an Azure deployment name like
+    # "gpt-4.1-mini" resolving to "gpt-4.1-mini-2025-04-14"). None for
+    # providers where ``model`` already is the exact snapshot.
+    underlying_model: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

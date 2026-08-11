@@ -46,6 +46,15 @@ class LlmConfig:
     # (the paper's later solver-debug/reverse-translation loop, section 3.3).
     # Paper does not specify an extraction-specific retry count.
     extraction_max_retries: int | None = None
+    # Retries for the G_mod leaf-modeling call (eq. 3/4) specifically --
+    # paper does not specify a modeling-stage retry count either.
+    modeling_max_retries: int | None = None
+    # Threshold on ConstraintInfo.vagueness_score (from G_extr, [0,1]) above
+    # which a leaf's G_mod call is augmented with parent/sibling context.
+    # Paper: "when modeling nodes containing vague constraints, we can
+    # incorporate information from their parent and sibling nodes" -- no
+    # numeric cutoff given.
+    vague_threshold: float | None = None
 
 
 @dataclass(frozen=True)

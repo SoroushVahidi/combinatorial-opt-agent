@@ -24,6 +24,8 @@ llm:
   top_p: 1.0
   max_tokens: 4096
   extraction_max_retries: 2
+  modeling_max_retries: 2
+  vague_threshold: 0.5
   # STATUS on this workstation (verified this milestone): NOT currently
   # runnable -- both GEMINI_API_KEY and GOOGLE_API_KEY are present as
   # environment variable *names* but their values are empty strings, so
