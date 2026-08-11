@@ -22,6 +22,13 @@ NLP4LP access, Gurobi) and NLP4LP subset-alignment analysis added — see
 Both original blockers (HF access, Gurobi) are **resolved**; the exact-subset
 question is now precisely characterized (not fully resolved — see §13.5).
 
+**Update, 2026-08-11 (same day, second follow-up):** Milestone 1 implemented
+— non-LLM question-partitioning scaffold under `baselines/pamop/`, 35 passing
+unit tests, a live smoke run against `pamop_possible_269`, and a
+suspicious-overlap check against our own manuscript (nothing concerning
+found) — see
+[§14 Implementation Status: Milestone 1](#14-implementation-status-milestone-1-non-llm-partitioning-scaffold).
+
 ---
 
 ## 1. Does official public PaMOP code exist?
@@ -976,3 +983,188 @@ acquisition (§13.10) can proceed in parallel and gates only the later
 `modeling/`/`correction/`/`validation/` stages.
 
 ---
+
+## 14. Implementation Status: Milestone 1, Non-LLM Partitioning Scaffold
+
+**Follow-up implementation pass, 2026-08-11 (same day, second follow-up).**
+Builds the first concrete milestone identified in §13.12. No manuscript file
+touched, no existing benchmark result changed, no LLM/AMPL/solver call
+implemented.
+
+### 14.1 What was built
+
+`baselines/pamop/` — an independent, unofficial reproduction scaffold:
+
+| File | Status | Content |
+|---|---|---|
+| `README.md` | Done | Disclosure, citation, published-numbers-are-not-our-numbers rule, dataset-scope rule, reconstructed-choices table |
+| `config.py` | Done | Typed config schema; `PamopConfig.require()` raises `UnspecifiedPaperDetailError` rather than silently defaulting |
+| `configs/paper_faithful.yaml` | Done | Paper-stated values only (`temperature=0.2`, `max_correction_iterations=5`, `generation_target=AMPL`, `solver_backend=gurobi_via_ampl`); everything else `null` |
+| `configs/reconstructed_default.yaml` | Done | Every field filled, each non-paper-specified value tagged `# REPRODUCTION CHOICE` with a one-line reason |
+| `representations.py` | Done | `StructuredProblem`/`ConstraintInfo`/`VariableInfo` (the paper's t_o/t_c/t_v/g root-node content); built from NLP4LP's own structured fields, not an LLM call |
+| `data.py` | Done | NLP4LP loader restricted to `SUBSET_POSSIBLE_269` (ids 1–269 only); `assert_not_post_pamop()` guard; no `"pamop_67"` subset exists anywhere |
+| `partition.py` | Done | Independent-set separation (root) + constraint clustering (deeper layers), eq. (2) distance formula exact, `PartitionTree`/`PartitionNode` with `to_dict`/`from_dict`/`to_json` |
+| `run_partitioning.py` | Done | Diagnostics-only CLI; never writes raw problem text |
+| `tests/test_config.py`, `tests/test_data.py`, `tests/test_partition.py` | Done | 35 tests, synthetic data only, no gated text committed |
+
+### 14.2 PaMOP stages now implemented
+
+Only **paper section 3.2, "Construction of the Partition Tree"**, minus its
+own LLM-based structured-extraction sub-step:
+
+- Independent-set separation at the root (bipartite constraint–variable
+  graph, keyword-match-confidence edges, connected components).
+- Constraint clustering at deeper layers (eq. 2 distance formula, exact;
+  three-signal combined similarity — adjacency, TF-IDF keyword overlap,
+  embedding cosine — with configurable per-layer weights).
+- Recursive leaf-stop condition ("small number of constraints or highly
+  similar ones," both thresholds configurable).
+
+**Not implemented:** structured extraction via LLM (`G_extr`), vagueness
+scoring, self-augmented leaf modeling (`G_mod`), AMPL generation, the full
+correction loop (`G_exe`/`G_rev`/`G_comp`/`G_remod`), solver execution, and
+all four published evaluation metrics (Accuracy/Execution-Rate/CE-rate/
+RE-rate) — see `baselines/pamop/README.md` "Not implemented yet".
+
+### 14.3 Paper-faithful vs. reconstructed, by equation/component
+
+| Component | Fidelity |
+|---|---|
+| Eq. (2) distance formula (`d_ij = 1/(s_ij+eps) - 1/(1+eps)`) | **Exact**, paper-specified |
+| Independent-set separation mechanism (bipartite graph, keyword-confidence edges) | **Exact mechanism**, paper-specified |
+| Clustering distance metric inputs (adjacency, TF-IDF keyword overlap, embedding cosine) | **Exact three signals**, paper-specified |
+| Independent-set graph-search algorithm (which one) | Reconstruction choice: connected components |
+| Clustering algorithm consuming the distance matrix | Reconstruction choice: agglomerative, average linkage |
+| Vector-similarity source | Reconstruction choice: TF-IDF-cosine fallback (paper: GloVe, unavailable locally) |
+| `epsilon`, `tfidf_top_k`, per-layer weights, leaf-stop thresholds, bipartite edge threshold | Reconstruction choices, all in `reconstructed_default.yaml`, all `null` (and load-time-erroring) in `paper_faithful.yaml` |
+| Structured-representation source (t_o/t_c/t_v/g) | Reconstruction choice: NLP4LP's own fields, not `G_extr` |
+
+### 14.4 Unresolved parameters (unchanged from §9/§13, not affected by this milestone)
+
+Exact PaMOP 67-problem membership; all LLM prompt templates
+(`G_extr`/`G_mod`/`G_exe`/`G_rev`/`G_comp`/`G_remod`); exact GPT-4 snapshot;
+GloVe variant; correctness-check tolerance; correction-loop iteration scope.
+None of these block *this* milestone (which touches none of the LLM/AMPL/
+solver stages) — they block the *next* one.
+
+### 14.5 Validation results
+
+- **Unit tests:** `python -m pytest baselines/pamop/tests -v` → **35 passed**,
+  0 failed, 0 skipped, ~0.8s. Covers: deterministic partitioning (identical
+  output across repeated builds), valid parent/child relationships, no
+  cycles + full reachability from root, every constraint assigned to exactly
+  one leaf, independent-set separation actually splitting disjoint synthetic
+  blocks, trivial single-leaf collapse, non-decreasing depth, JSON
+  serialization round-trip, no raw constraint text leaking into the
+  serialized tree, config loading (both configs), `paper_faithful.yaml`
+  correctly raising `UnspecifiedPaperDetailError`, the `pamop_possible_269`
+  id range, `PostPamopIdError` on ids ≥ 270, and — explicitly — that
+  `"pamop_67"` is rejected as an unknown subset name.
+- **Smoke run** (`run_partitioning.py`, live HF-authenticated NLP4LP access,
+  `reconstructed_default.yaml`, `--subset pamop_possible_269`):
+  - n=12: 12/12 succeeded, 0 failures, 0 determinism mismatches, avg tree
+    depth 0.33, avg node count 2.08, avg leaf count 1.75.
+  - n=40: 39/40 succeeded (3.9s wall time), 1 failure
+    (`RemoteEntryNotFoundError`), 0 determinism mismatches, avg tree depth
+    0.26, avg node count 1.79, avg leaf count 1.54.
+  - The one failure is a **known, documented loader gap**, not an algorithm
+    bug: a handful of ids in 1–269 exist on HF only under a suffixed path
+    (e.g. `3-infeasible`, `28-unsolved`) that `data.py` does not yet resolve
+    — recorded in `baselines/pamop/README.md` "Known limitation."
+  - Shallow average tree depth reflects real NLP4LP data (most "easy"
+    problems have few enough constraints to satisfy the leaf-stop condition
+    immediately) — this is honest output, not a tuning artifact.
+  - No raw NLP4LP problem text was written to any committed file; smoke-run
+    JSON output was written only to a local scratch path, never git-added.
+
+### 14.6 Suspiciously-close prior-work overlap check — **nothing concerning found**
+
+Checked the PaMOP paper against this repository's own manuscript
+(`manuscript/main.tex`) and pipeline design for the specific overlap axes
+requested: retrieval-assisted schema selection, typed numeric grounding,
+schema-conditioned scalar instantiation, structural verification,
+retrieval-vs-grounding bottleneck analysis, evaluation metrics, and
+distinctive terminology/pipeline decomposition.
+
+- **Mechanism-level comparison:** our manuscript's own Related Work section
+  (`manuscript/main.tex`, §"Related Work") already explicitly groups and
+  distinguishes itself from the *family* PaMOP belongs to — LLM-generative,
+  end-to-end optimization modeling (it names OptiMUS, OptLLM,
+  Chain-of-Experts, and LLMOPT by name in this role) — stating our method
+  instead does "a narrower intermediate task: retrieval-assisted schema
+  grounding followed by scalar parameter instantiation," fully
+  deterministic, no LLM component in the benchmarked pipeline. PaMOP itself
+  is not cited there (plausibly missed during Related Work drafting, not
+  evidence of anything), but it is mechanically a member of exactly the
+  generative-family group already being contrasted against, not an
+  individually-borrowed idea.
+- **"Structured representation" vs. "schema retrieval":** superficially
+  similar phrasing, mechanically opposite: PaMOP *generates* a fresh
+  structured representation per problem via an LLM call (`G_extr`), with no
+  fixed catalog and no retrieval step; our pipeline *retrieves* from a fixed
+  335-entry schema catalog via TF-IDF/BM25/LSA, with no generative step at
+  all in the benchmarked path. Not the same idea wearing different words.
+- **"Basic inspection" vs. structural verification:** PaMOP's regex-based
+  syntax/parameter check before solving and our `formulation/verify.py`
+  structural LP-consistency check are both instances of the generic,
+  independently-obvious idea "sanity-check before an expensive solve" — a
+  common pattern across this entire subfield (OptiMUS does the same via
+  `execute_and_debug`'s pre-solve checks), not a distinctive borrowed
+  mechanism.
+- **Retrieval-vs-grounding bottleneck analysis:** this specific analytical
+  contribution (isolating whether schema retrieval or scalar grounding is
+  the dominant bottleneck, with an oracle-schema ablation) is unique to our
+  manuscript; PaMOP's ablation studies a different axis entirely (module
+  contribution to solver-outcome accuracy: prompt-only vs. +partition vs.
+  +correction). No overlap.
+- **Evaluation metrics:** disjoint families by construction — PaMOP's
+  Accuracy/Execution-Rate/CE-rate/RE-rate are solver-outcome metrics; ours
+  (Schema R@1/Coverage/TypeMatch/InstantiationReady) are retrieval-and-
+  grounding metrics. No shared definitions or naming.
+- **Chronology:** PaMOP was published at IJCAI 2025 (main track, Aug 2025).
+  Our manuscript's current KAIS-targeted form postdates that (retargeted
+  from EAAI to KAIS in July 2026, per `docs/KAIS_SOURCE_OF_TRUTH.md`), so if
+  anything the chronological question runs the other direction (could our
+  work have been influenced by PaMOP, not the reverse) — and given the
+  mechanism differences documented above, the answer is that both papers
+  independently target the same public benchmark (NLP4LP) and the same
+  general problem domain (NL-to-optimization), which is expected and
+  unremarkable in this crowded, active subfield (also shared by OptiMUS,
+  Chain-of-Experts, LLMOPT, OPT2CODE, Ner4Opt, and others our own Related
+  Work already cites) — not evidence of idea appropriation in either
+  direction.
+
+**Conclusion: no concerning overlap found.** The only overlap is at the
+generic shared-benchmark/shared-problem-domain level, already disclosed and
+contextualized in our own manuscript's Related Work section. No accusation,
+implicit or explicit, is being made in either direction.
+
+### 14.7 Files added/changed (this pass)
+
+Added: `baselines/__init__.py`, `baselines/pamop/__init__.py`,
+`baselines/pamop/README.md`, `baselines/pamop/config.py`,
+`baselines/pamop/representations.py`, `baselines/pamop/data.py`,
+`baselines/pamop/partition.py`, `baselines/pamop/run_partitioning.py`,
+`baselines/pamop/configs/paper_faithful.yaml`,
+`baselines/pamop/configs/reconstructed_default.yaml`,
+`baselines/pamop/tests/__init__.py`, `baselines/pamop/tests/test_config.py`,
+`baselines/pamop/tests/test_data.py`, `baselines/pamop/tests/test_partition.py`.
+Changed: `docs/PAMOP_REPRODUCTION_PLAN.md` (this section).
+No other file in the repository was touched.
+
+### 14.8 Exact next milestone
+
+Per §13.12's recommendation, now that the partitioning scaffold exists: the
+**LLM-based structured-extraction stage (`G_extr`)** that turns raw NLP4LP
+free text into a `StructuredProblem` the way the paper actually describes
+(rather than this milestone's NLP4LP-native-fields bridge), gated behind an
+explicit model-selection decision between `pamop_paper_faithful`
+(`gpt-4-0613`, time-boxed — shuts down 2026-10-23, §7.2) and
+`pamop_current_model` (`gpt-4o`, already the `reconstructed_default.yaml`
+placeholder). This should ship with its own prompt file(s) under a new
+`baselines/pamop/prompts/` directory, each explicitly marked
+reconstructed (no original prompt text exists to copy, §1/§2.3), and
+its own test suite using mocked/recorded LLM responses so tests stay
+network- and API-key-free. AMPL/`amplpy` acquisition (§13.10) and the manual
+archived-dataset retrieval (§13.5, `nlp4lp.vercel.app` / OpenReview) can
+proceed in parallel and are not blocking for this next step either.

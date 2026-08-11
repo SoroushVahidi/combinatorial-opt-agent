@@ -1,0 +1,62 @@
+# PaMOP -- paper-faithful configuration.
+#
+# Every value below is either PAPER-SPECIFIED (a number/string the IJCAI 2025
+# paper actually states) or `null` (the paper does not specify it). Loading
+# this config and asking the partitioning/correction code for a `null` value
+# raises UnspecifiedPaperDetailError -- it will NOT silently substitute a
+# guess. Use reconstructed_default.yaml for anything that needs to actually
+# run end to end today.
+#
+# See docs/PAMOP_REPRODUCTION_PLAN.md sections 2, 7, and 9 for the full
+# per-field sourcing and the A/B/C (explicit/inferable/unspecified)
+# classification this file follows.
+
+config_kind: paper_faithful
+citation: >
+  Xiaotian Pan, Junhao Fang, Feng Wu, Sijia Zhang, Yi-Xiang Hu, Shaoang Li,
+  Xiang-Yang Li. "Guiding Large Language Models in Modeling Optimization
+  Problems via Question Partitioning." IJCAI 2025, pp. 2657-2665.
+  DOI: 10.24963/ijcai.2025/296.
+
+llm:
+  # Paper says only "GPT-4", no snapshot. gpt-4-0613 is the closest surviving
+  # "plain GPT-4" model as of this investigation (shuts down 2026-10-23 --
+  # see docs/PAMOP_REPRODUCTION_PLAN.md section 7.2) but this is a best-guess
+  # substitution, not something the paper states, so it stays `null` here by
+  # the letter of "paper-faithful = paper-stated only". Set explicitly before
+  # running the (future, not-yet-implemented) LLM stage.
+  model: null
+  temperature: 0.2          # PAPER-SPECIFIED: "we set the model's temperature to 0.2"
+  max_correction_iterations: 5   # PAPER-SPECIFIED: "the maximum number of failed iterations to 5"
+  top_p: null                # UNSPECIFIED
+  max_tokens: null           # UNSPECIFIED
+
+partitioning:
+  embedding_source: null              # paper names GloVe (Wikipedia 2014) but not a swappable "source" abstraction -- mechanism is paper-specified, this field is left null pending a real GloVe integration
+  glove_variant: null                 # UNSPECIFIED: Pennington et al. released 50/100/200/300d x 6B/42B/840B variants; paper does not say which
+  tfidf_top_k: null                   # UNSPECIFIED: "common keywords in the top k" -- k not given
+  epsilon: null                       # UNSPECIFIED: eq. (2) "epsilon denotes a small fixed value" -- no number given
+  similarity_weights_by_layer: null   # UNSPECIFIED: "weighted averages ... different [weights] to different layers" -- no numbers given
+  clustering_algorithm: null          # UNSPECIFIED: paper gives the distance metric (eq. 2) only, not the clustering rule that consumes it
+  independent_set_algorithm: null     # UNSPECIFIED: "we then apply graph search algorithms" -- which algorithm is not named
+  bipartite_edge_confidence_threshold: null  # UNSPECIFIED
+  leaf_stop_min_constraints: null     # UNSPECIFIED: "a small number of constraints" -- no threshold given
+  leaf_stop_similarity_threshold: null  # UNSPECIFIED: "highly similar ones" -- no threshold given
+  deterministic_seed: null            # not discussed by the paper
+
+correction:
+  correctness_tolerance: null         # UNSPECIFIED: "optimal solution that meets the problem's requirements" -- no tolerance given
+  iteration_scope: null               # UNSPECIFIED: whether max_correction_iterations is global or per-node/per-constraint is not stated
+  reverse_translation_scope: null     # UNSPECIFIED: whether reverse translation runs on all constraints or only ones flagged vague at extraction is not stated in prose (Fig. 2 suggests vague-only but this is not confirmed text)
+
+execution:
+  generation_target: AMPL             # PAPER-SPECIFIED: "we use AMPL for modeling"
+  solver_backend: gurobi_via_ampl     # PAPER-SPECIFIED: "we use AMPL to call Gurobi to solve the model"
+
+dataset:
+  # PaMOP's own evaluation subset (54 LP + 13 MILP, 67 problems, the NLP4LP
+  # release dated 2024-05-13) is NOT identifiable in our currently accessible
+  # NLP4LP snapshot -- see docs/PAMOP_REPRODUCTION_PLAN.md section 13. This
+  # is the best-available, evidence-bounded superset proxy, never the exact
+  # PaMOP set. Deliberately NOT named "pamop_67" anywhere in this codebase.
+  subset: pamop_possible_269
