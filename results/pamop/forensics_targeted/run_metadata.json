@@ -1,0 +1,20 @@
+{
+  "ampl_python": "/home/soroush/.venvs/gurobi/bin/python",
+  "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
+  "created_at_utc": "2026-08-11T18:25:22Z",
+  "cwd": "/home/soroush/combinatorial-opt-agent",
+  "deployment": "gpt-4.1-mini",
+  "execution_mode": "local",
+  "git_commit": "7250792bfcb274673290a3feb5a1a77291bbaac4",
+  "max_correction_iterations": 5,
+  "message": "",
+  "provider": "azure_openai",
+  "required_slurm": false,
+  "run_id": "pamop-forensics-targeted-20260811T182355Z",
+  "secrets_policy": "No API keys, HF tokens, AMPL/Gurobi licenses, or gated problem text are written.",
+  "slurm_job_id": null,
+  "slurm_job_name": null,
+  "source_state_note": "Run used the forensics-fix working tree based on the recorded git_commit before these fixes/results were committed.",
+  "status": "COMPLETED",
+  "temperature": 0.2
+}

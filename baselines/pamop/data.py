@@ -169,6 +169,51 @@ def _resolve_problem_info_path(problem_id: int, token: str | None) -> str:
     )
 
 
+def _resolve_problem_file_path(problem_id: int, filename: str, token: str | None) -> str:
+    """Return a downloaded local path to a problem file.
+
+    Uses the same bare-id then suffixed-directory lookup as
+    ``_resolve_problem_info_path``. This is used for raw prompt text such as
+    ``description.txt``; callers must not write returned content to committed
+    artifacts.
+    """
+    from huggingface_hub import HfApi, hf_hub_download
+    from huggingface_hub.errors import EntryNotFoundError
+
+    try:
+        return hf_hub_download(
+            DATASET_ID,
+            f"data/{problem_id}/{filename}",
+            repo_type="dataset",
+            token=token,
+        )
+    except EntryNotFoundError:
+        pass
+
+    api = HfApi(token=token)
+    all_files = api.list_repo_files(DATASET_ID, repo_type="dataset")
+    prefix = f"data/{problem_id}-"
+    suffixed_dirs = sorted(
+        {f.split("/")[1] for f in all_files if f.startswith(prefix)}
+    )
+    for dirname in suffixed_dirs:
+        try:
+            return hf_hub_download(
+                DATASET_ID,
+                f"data/{dirname}/{filename}",
+                repo_type="dataset",
+                token=token,
+            )
+        except EntryNotFoundError:
+            continue
+
+    raise FileNotFoundError(
+        f"NLP4LP problem id {problem_id} has no {filename!r} under "
+        f"data/{problem_id}/ or any suffixed variant "
+        f"({suffixed_dirs or 'none found'})."
+    )
+
+
 def load_problem_record(problem_id: int) -> dict[str, Any]:
     """Fetch one NLP4LP problem's structured fields (gated; requires HF access).
 
@@ -189,6 +234,20 @@ def load_problem_record(problem_id: int) -> dict[str, Any]:
 
     with open(path, encoding="utf-8") as fh:
         return json.load(fh)
+
+
+def load_problem_text(problem_id: int) -> str:
+    """Fetch the original NLP4LP ``description.txt`` for prompt input.
+
+    This gated raw problem text is loaded only in memory. It must not be
+    written to committed traces, reports, or result artifacts.
+    """
+    assert_not_post_pamop(problem_id)
+
+    token = _get_hf_token() or None
+    path = _resolve_problem_file_path(problem_id, "description.txt", token)
+    with open(path, encoding="utf-8") as fh:
+        return fh.read()
 
 
 def iter_subset(subset: str = SUBSET_POSSIBLE_269, limit: int | None = None) -> Iterator[tuple[int, dict[str, Any]]]:

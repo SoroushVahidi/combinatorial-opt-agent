@@ -18,8 +18,8 @@ Objective (in words):
 {objective_text}
 
 All variables and parameters (declare each one exactly once, with a
-reasonable AMPL type -- `param` for parameters, `var` for decision
-variables):
+reasonable AMPL type -- `set` for index sets when indexed notation is
+needed, `param` for parameters, `var` for decision variables):
 {variable_list}
 
 Already-modeled constraints (include verbatim, do not change):
@@ -29,7 +29,9 @@ Output the complete AMPL model as four clearly labeled sections, in this
 exact order, with no other text before, between, or after them:
 
 ### PARAMETERS
-<AMPL `param` declarations, one per line>
+<AMPL `set` and `param` declarations, one per line. When a scalar numeric
+parameter value is present in the problem text, include it with `:= value`
+or `default value`. Do not emit incomplete AMPL `param:` table syntax.>
 
 ### VARIABLES
 <AMPL `var` declarations, one per line>
@@ -39,3 +41,10 @@ exact order, with no other text before, between, or after them:
 
 ### CONSTRAINTS
 <the already-modeled constraints above, included verbatim>
+
+Use valid AMPL syntax only. Bind every local index in the corresponding
+statement or summation, declare every index set before using it, and do not
+leave free `i`, `j`, or similar index symbols in algebra fields. Do not
+duplicate any symbol declaration. Do not invent data that is not present in
+the problem text. Do not include Markdown fences, prose, Python-style
+pseudocode, or explanatory comments in any output section.

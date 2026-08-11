@@ -50,3 +50,18 @@ def test_extraction_prompt_requests_the_four_paper_specified_fields():
     template = load_prompt("extraction_v1.txt")
     for required in ("global_summary", "objective_text", "constraints", "variables", "vagueness_score"):
         assert required in template.text
+
+
+def test_modeling_prompts_constrain_indexed_ampl_syntax():
+    for prompt_name in ("modeling_leaf_v1.txt", "modeling_root_v1.txt", "correction_remodel_v1.txt"):
+        text = load_prompt(prompt_name).text
+        assert "Bind every local index" in text or "bind\nevery local index" in text
+        assert "valid AMPL syntax" in text or "valid AMPL model text" in text
+        assert "Markdown fences" in text
+
+
+def test_root_prompt_allows_sets_and_preserves_scalar_parameter_values():
+    text = load_prompt("modeling_root_v1.txt").text
+    assert "`set` for index sets" in text
+    assert "`:= value`" in text
+    assert "Do not emit incomplete AMPL `param:` table syntax" in text

@@ -77,6 +77,31 @@ def test_ampl_validator_accepts_integer_and_binary_declarations():
     assert not [d for d in diagnostics if d.severity == DiagnosticSeverity.ERROR]
 
 
+def test_ampl_validator_accepts_indexed_set_model():
+    text = """
+    set ITEMS;
+    param availability {ITEMS};
+    param profit {ITEMS};
+    var make {ITEMS} >= 0;
+    maximize obj: sum {i in ITEMS} profit[i] * make[i];
+    subject to cap {i in ITEMS}: make[i] <= availability[i];
+    """
+    diagnostics = validate_ampl_model(text)
+    assert not [d for d in diagnostics if d.severity == DiagnosticSeverity.ERROR]
+
+
+def test_ampl_validator_flags_unbound_index_outside_statement_scope():
+    text = """
+    set ITEMS;
+    param availability {ITEMS};
+    var make {ITEMS} >= 0;
+    maximize obj: sum {i in ITEMS} make[i];
+    subject to cap: make[i] <= availability[i];
+    """
+    diagnostics = validate_ampl_model(text)
+    assert any(d.code == "unresolved_symbol" and d.symbol == "i" for d in diagnostics)
+
+
 def test_ampl_validator_flags_duplicate_symbols():
     diagnostics = validate_ampl_model(
         "param cap; var cap >= 0; maximize obj: cap; subject to c: cap <= 1;"

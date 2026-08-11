@@ -114,6 +114,22 @@ def test_resolve_problem_info_path_raises_missing_structured_data_when_nothing_m
         data._resolve_problem_info_path(28, token=None)
 
 
+def test_load_problem_text_reads_description_txt_not_structured_metadata(monkeypatch, tmp_path):
+    description = tmp_path / "description.txt"
+    description.write_text("A safe synthetic LP has 3 widgets and 7 hours.\n", encoding="utf-8")
+    calls = []
+
+    def fake_resolve(problem_id, filename, token):
+        calls.append((problem_id, filename, token))
+        return str(description)
+
+    monkeypatch.setattr(data, "_get_hf_token", lambda: "hf-token")
+    monkeypatch.setattr(data, "_resolve_problem_file_path", fake_resolve)
+
+    assert data.load_problem_text(14) == "A safe synthetic LP has 3 widgets and 7 hours.\n"
+    assert calls == [(14, "description.txt", "hf-token")]
+
+
 def _entry_not_found():
     from huggingface_hub.errors import EntryNotFoundError
 

@@ -42,6 +42,7 @@ from baselines.pamop.data import (
     _get_hf_token,
     list_ids_for_subset,
     load_alignment_manifest,
+    load_problem_text,
     load_problem_record,
 )
 from baselines.pamop.extraction import ExtractionValidationError, extract_structured_problem
@@ -558,7 +559,7 @@ def run_problem(meta: SliceMeta, out_dir: Path, args: argparse.Namespace, config
     gold = run_gold_model(meta.problem_id) if args.run_gold else {"gold_comparison_eligible": False, "gold_reason": "disabled"}
     try:
         record = load_problem_record(meta.problem_id)
-        raw_text = record.get("parametrized_description") or ""
+        raw_text = load_problem_text(meta.problem_id)
         extraction = extract_structured_problem(str(meta.problem_id), raw_text, provider, config)
         responses.append(extraction.llm_response)
         tree = build_partition_tree(extraction.structured_problem, config)
@@ -870,6 +871,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--ampl-python", default="/home/soroush/.venvs/gurobi/bin/python")
     parser.add_argument("--ampl-timeout", type=int, default=60)
     parser.add_argument("--run-gold", action="store_true", default=True)
+    parser.add_argument(
+        "--ids",
+        default="",
+        help="Comma-separated selected problem ids to run from the existing selected_ids.json.",
+    )
     return parser.parse_args()
 
 
@@ -878,6 +884,13 @@ def main() -> int:
     out_dir = args.output_dir
     out_dir.mkdir(parents=True, exist_ok=True)
     selected = load_or_select_slice(out_dir, args.target_count)
+    if args.ids.strip():
+        requested = [int(part.strip()) for part in args.ids.split(",") if part.strip()]
+        selected_by_id = {meta.problem_id: meta for meta in selected}
+        missing = [pid for pid in requested if pid not in selected_by_id]
+        if missing:
+            raise ValueError(f"--ids contains ids not present in selected_ids.json: {missing}")
+        selected = [selected_by_id[pid] for pid in requested]
     ensure_artifact_headers(out_dir)
     run_id = os.environ.get("PAMOP_PILOT_RUN_ID") or f"pamop-pilot-local-{time.strftime('%Y%m%dT%H%M%SZ', time.gmtime())}-{uuid.uuid4().hex[:8]}"
     os.environ["PAMOP_PILOT_RUN_ID"] = run_id

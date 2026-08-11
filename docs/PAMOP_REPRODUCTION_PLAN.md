@@ -2179,3 +2179,73 @@ Do not start a larger run yet. The exact next action is to inspect the failed
 and feasible-but-wrong generated models using safe, non-gated paraphrases and
 metadata, then address systematic AMPL rendering/modeling/correction failure
 modes before expanding beyond the pilot slice.
+
+---
+
+## 19. Pilot Failure Forensics and Targeted Fix Pass
+
+**Update, 2026-08-11 (same day, eighth follow-up):** the failure-forensics
+pass found a dominant deterministic reproduction error before attributing the
+pilot result to the LLM. The benchmark runner had fed
+`problem_info.json:parametrized_description` to `G_extr` instead of the
+original NLP4LP `description.txt`. That input source removed concrete numeric
+grounding before extraction and affected all 18 pilot cases.
+
+Additional deterministic finding: the lightweight AMPL preflight validator
+did not understand valid indexed AMPL constructs such as `set` declarations,
+indexed parameter/variable declarations, and indexed `subject to ... {i in
+SET}:` headers. This inflated the apparent render/static-failure signal, but
+no true renderer serialization bug was isolated.
+
+Fixes made:
+
+- load raw `description.txt` for `G_extr`, in memory only;
+- add a safe `description.txt` loader with the existing bare-id/suffixed-id
+  Hugging Face lookup behavior;
+- update the AMPL validator for indexed AMPL and statement-local index scope;
+- tighten reconstructed modeling/correction prompts around AMPL-only output,
+  set declarations, bound indices, duplicate declarations, and scalar numeric
+  values;
+- add synthetic regression tests for each deterministic fix.
+
+The 18-case pilot was **not** rerun. Instead, a targeted six-case diagnostic
+subset from the same selected ids was run:
+
+```text
+14, 23, 34, 72, 84, 88
+```
+
+Selection rationale: prior render failures (`23`, `84`), prior parse
+failures (`72`, `88`), and prior feasible-but-semantically-wrong cases
+(`14`, `34`).
+
+Targeted rerun results:
+
+| Metric | Before | After |
+|---|---:|---:|
+| Initial execution success | 0 / 6 | 2 / 6 |
+| Final execution success | 2 / 6 | 6 / 6 |
+| Semantic correctness by comparable gold objective | 0 / 2 | 1 / 6 |
+| Mean correction iterations | 4.50 | 0.67 |
+| Total LLM tokens | 81,968 | 24,194 |
+
+Interpretation:
+
+- deterministic implementation correctness improved substantially;
+- correction burden dropped sharply;
+- semantic correctness remains poor after executable AMPL is obtained;
+- feasible AMPL execution still must not be treated as PaMOP accuracy.
+
+Model-fidelity risk for Azure `gpt-4.1-mini-2025-04-14`: **HIGH**. This is
+not used to excuse deterministic bugs; it is the remaining risk after the
+input-source and AMPL-validation issues were fixed.
+
+Decision after targeted rerun: **C. IMPLEMENTATION SOUND, MODEL/PROMPT IS
+PRIMARY LIMITATION**.
+
+Do not automatically launch the 18-case rerun. The next step is a tiny
+model-fidelity/prompt-fidelity diagnostic on the same six ids, using a closer
+GPT-4-class Azure deployment if available, or otherwise a manual safe-metadata
+audit of `G_extr`/`G_mod` structured outputs against gold structure.
+
+Detailed report: `docs/PAMOP_PILOT_FAILURE_FORENSICS.md`.

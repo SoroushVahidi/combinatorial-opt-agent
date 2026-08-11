@@ -12,9 +12,9 @@ import re
 
 from .types import AmplDiagnostic, DiagnosticSeverity
 
-_DECL_RE = re.compile(r"\b(param|var)\s+([A-Za-z_][A-Za-z0-9_]*)\b([^;]*);")
+_DECL_RE = re.compile(r"\b(param|var|set)\s+([A-Za-z_][A-Za-z0-9_]*)\b([^;]*);")
 _CONSTRAINT_RE = re.compile(
-    r"\b(?:subject\s+to|s\.t\.)\s+([A-Za-z_][A-Za-z0-9_]*)\s*:([^;]*);",
+    r"\b(?:subject\s+to|s\.t\.)\s+([A-Za-z_][A-Za-z0-9_]*)\s*(?:\{[^;:]*\}\s*)?:([^;]*);",
     re.IGNORECASE | re.MULTILINE | re.DOTALL,
 )
 _OBJECTIVE_RE = re.compile(
@@ -23,6 +23,11 @@ _OBJECTIVE_RE = re.compile(
 )
 _IDENT_RE = re.compile(r"\b[A-Za-z_][A-Za-z0-9_]*\b")
 _COMMENT_RE = re.compile(r"#.*?$", re.MULTILINE)
+_INDEX_BLOCK_RE = re.compile(r"\{([^{};]*)\}")
+_INDEX_BINDING_RE = re.compile(
+    r"\b([A-Za-z_][A-Za-z0-9_]*)\s+in\s+([A-Za-z_][A-Za-z0-9_]*)\b",
+    re.IGNORECASE,
+)
 
 _AMPL_KEYWORDS = {
     "abs",
@@ -54,6 +59,7 @@ _AMPL_KEYWORDS = {
     "then",
     "to",
     "var",
+    "within",
 }
 
 
@@ -61,14 +67,36 @@ def _strip_comments(text: str) -> str:
     return _COMMENT_RE.sub("", text)
 
 
+def _remove_index_blocks(text: str) -> str:
+    return _INDEX_BLOCK_RE.sub(" ", text)
+
+
+def _index_scope(text: str) -> tuple[set[str], set[str]]:
+    """Return ``(local_index_names, referenced_set_names)`` from AMPL index blocks."""
+    locals_: set[str] = set()
+    set_refs: set[str] = set()
+    for block in _INDEX_BLOCK_RE.findall(text):
+        for local, set_name in _INDEX_BINDING_RE.findall(block):
+            locals_.add(local)
+            set_refs.add(set_name)
+    return locals_, set_refs
+
+
 def _tokens_in_expressions(text: str) -> set[str]:
-    stripped = _strip_comments(text)
-    for regex in (_DECL_RE, _CONSTRAINT_RE, _OBJECTIVE_RE):
-        stripped = regex.sub(" ", stripped)
-    exprs = [m.group(3) for m in _DECL_RE.finditer(text)]
-    exprs.extend(m.group(2) for m in _CONSTRAINT_RE.finditer(text))
-    exprs.extend(m.group(3) for m in _OBJECTIVE_RE.finditer(text))
-    return set(_IDENT_RE.findall("\n".join(exprs)))
+    tokens: set[str] = set()
+    for match in _DECL_RE.finditer(text):
+        expr = match.group(3)
+        local_indices, set_refs = _index_scope(expr)
+        tokens |= (set(_IDENT_RE.findall(_remove_index_blocks(expr))) | set_refs) - local_indices
+    for match in _CONSTRAINT_RE.finditer(text):
+        expr = match.group(2)
+        local_indices, set_refs = _index_scope(match.group(0))
+        tokens |= (set(_IDENT_RE.findall(_remove_index_blocks(expr))) | set_refs) - local_indices
+    for match in _OBJECTIVE_RE.finditer(text):
+        expr = match.group(3)
+        local_indices, set_refs = _index_scope(expr)
+        tokens |= (set(_IDENT_RE.findall(_remove_index_blocks(expr))) | set_refs) - local_indices
+    return tokens
 
 
 def declared_symbols(text: str) -> dict[str, str]:
