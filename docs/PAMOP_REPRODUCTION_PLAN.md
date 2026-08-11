@@ -2077,3 +2077,94 @@ Next milestone: run a small, explicitly non-67, non-full-269 evaluation
 slice and report execution/correction metrics from the new trace schema.
 Do not claim PaMOP's published 67-problem result until exact subset,
 historical GPT-4 identity, and prompt uncertainty are resolved.
+
+---
+
+## 18. Pilot Benchmark Status: Controlled Small Slice
+
+**Update, 2026-08-11 (same day, sixth follow-up):** the first controlled
+pilot benchmark slice has been defined, but the benchmark did **not** execute
+because this shell has no Slurm `sbatch` command on `PATH`. No local fallback
+was used.
+
+### 18.1 Exact Pilot Slice
+
+Selected from `pamop_possible_269`, excluding the six known missing structured
+data ids (`28`, `51`, `57`, `123`, `126`, `135`):
+
+```text
+14, 23, 34, 59, 69, 72, 84, 88, 96, 117, 190, 202, 208, 219, 232, 237, 254, 262
+```
+
+The selection is deterministic (`pamop-pilot-v1`) and uses only non-gated
+metadata: LP/MILP, objective sense, variable/parameter/constraint counts,
+numeric-mention count, partition node count/depth, gold-code availability,
+and stable SHA-256 tie-breaking. It deliberately covers LP and MILP,
+maximize/minimize objectives, simple and multi-constraint cases, low/high
+numeric-mention buckets, and small/large partition trees.
+
+Committed artifacts:
+
+- `results/pamop/pilot/selected_ids.json`
+- `results/pamop/pilot/per_problem.csv`
+- `results/pamop/pilot/summary.json`
+- `results/pamop/pilot/failure_analysis.csv`
+- `results/pamop/pilot/correction_analysis.csv`
+- `results/pamop/pilot/comparison_with_ours.csv`
+- `results/pamop/pilot/run_metadata.json`
+- `docs/PAMOP_PILOT_BENCHMARK.md`
+
+No gated raw NLP4LP text, API keys, HF tokens, or AMPL/Gurobi license
+material are included.
+
+### 18.2 Execution and Correction Behavior
+
+Attempted submission:
+
+```bash
+sbatch batch/pamop/run_pamop_pilot.sbatch
+```
+
+Observed result:
+
+```text
+sbatch: command not found
+```
+
+Therefore no selected problem was evaluated. Execution/correction metrics are
+all zero or not evaluable in this blocked attempt:
+
+- selected problems: 18
+- evaluated problems: 0
+- initial AMPL execution success rate: 0.0
+- final execution success rate: 0.0
+- correction rescue count: 0
+- total LLM tokens: 0
+- semantic correctness: not evaluable
+
+This is an environment failure, not a PaMOP model failure.
+
+### 18.3 Remaining Reproduction Uncertainties
+
+Unresolved uncertainties remain unchanged:
+
+- PaMOP's exact 67 NLP4LP problem ids are still unknown.
+- The historical GPT-4 snapshot/deployment used by PaMOP is still unknown.
+- The original PaMOP prompt wording is not public.
+- Feasible AMPL execution must not be treated as semantic accuracy.
+- Gold comparison can provide solver/objective evidence where `optimus-code.py`
+  is available, but full model-structure equivalence is not yet established.
+
+### 18.4 Larger Evaluation Recommendation
+
+Decision gate: **B. FIX SYSTEMATIC ISSUE FIRST**.
+
+Do not start a larger run until the controlled pilot can execute through
+Slurm and produce per-problem PaMOP/correction/gold-comparison metrics. The
+next exact action is to run:
+
+```bash
+sbatch batch/pamop/run_pamop_pilot.sbatch
+```
+
+from a Slurm login node with Azure OpenAI, HF, AMPL, and Gurobi configured.

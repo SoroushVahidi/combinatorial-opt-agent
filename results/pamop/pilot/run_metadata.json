@@ -1,0 +1,23 @@
+{
+  "ampl_python": "/home/soroush/.venvs/gurobi/bin/python",
+  "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
+  "created_at_utc": "2026-08-11T17:43:44Z",
+  "cwd": "/home/soroush/combinatorial-opt-agent",
+  "deployment": "gpt-4.1-mini",
+  "git_commit": "710775216da803421877af0e5dc6a8499c8e162d",
+  "max_correction_iterations": 5,
+  "message": "Refusing to run PaMOP pilot outside Slurm; submit with sbatch.",
+  "provider": "azure_openai",
+  "required_slurm": true,
+  "secrets_policy": "No API keys, HF tokens, AMPL/Gurobi licenses, or gated problem text are written.",
+  "sbatch_submission": {
+    "command": "sbatch batch/pamop/run_pamop_pilot.sbatch",
+    "return_code": 127,
+    "stderr": "sbatch: command not found",
+    "stdout": ""
+  },
+  "slurm_job_id": null,
+  "slurm_job_name": null,
+  "status": "ENVIRONMENT_FAILURE",
+  "temperature": 0.2
+}
