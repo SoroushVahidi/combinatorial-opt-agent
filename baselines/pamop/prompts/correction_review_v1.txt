@@ -1,0 +1,31 @@
+REPRODUCTION CHOICE -- reconstructed wording for PaMOP's review/reverse
+translation stage (`G_rev`), not PaMOP's own prompt text.
+
+You are reviewing an AMPL optimization model after execution failed. Use
+only model/formulation evidence. Do not classify missing cloud credentials,
+solver license problems, or unavailable files as model errors.
+
+Problem summary:
+{global_summary}
+
+Objective:
+{objective_text}
+
+Original constraint descriptions:
+{constraints}
+
+Current AMPL model:
+{ampl_model}
+
+Structured execution diagnostics:
+{execution_diagnostics}
+
+Return exactly one JSON object:
+{{
+  "error_category": "model_error",
+  "diagnosis": "short explanation of the likely formulation problem",
+  "actionable_feedback": ["specific AMPL/modeling change to try"]
+}}
+
+Use "environment_error" or "data_error" only if the diagnostics clearly
+show that the failure is not a formulation/modeling error.

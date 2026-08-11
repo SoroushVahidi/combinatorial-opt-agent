@@ -1,0 +1,28 @@
+REPRODUCTION CHOICE -- reconstructed wording for PaMOP's comparison stage
+(`G_comp`), not PaMOP's own prompt text.
+
+You are comparing a model-review diagnosis against the extracted
+optimization problem requirements. Decide whether the model should be
+remodeled.
+
+Problem summary:
+{global_summary}
+
+Objective:
+{objective_text}
+
+Original constraint descriptions:
+{constraints}
+
+Review result:
+{review}
+
+Return exactly one JSON object:
+{{
+  "needs_remodel": true,
+  "reason": "why remodeling is or is not justified",
+  "targeted_issues": ["issue the remodeling prompt should address"]
+}}
+
+Return false only when the review clearly identifies a non-model failure or
+there is no actionable formulation issue.

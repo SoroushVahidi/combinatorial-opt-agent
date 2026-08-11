@@ -98,16 +98,28 @@ provider:
 
 Verified wired end-to-end, live, on one real NLP4LP problem: `G_extr` ->
 partition tree -> `G_mod` (all leaves) -> merge -> eq. 4 root completion.
-No AMPL generation yet.
+
+**Milestone 4 — AMPL execution and correction loop**, paper section 3.3:
+
+- `ampl/renderer.py` — renders `MergedModel` into AMPL text.
+- `ampl/validator.py` — reconstructed static checks for duplicate symbols,
+  unresolved references, missing objective/variables/constraints, and
+  malformed expressions.
+- `ampl/executor.py` — `G_exe` execution wrapper around AMPL/Gurobi, with
+  structured parse/load/solve status and model/data/environment failure
+  classification.
+- `correction.py` — correction trace and reconstructed `G_rev`, `G_comp`,
+  and `G_remod` JSON-prompt stages, capped by the paper-specified
+  `max_correction_iterations: 5`.
+- `prompts/correction_{review,compare,remodel}_v1.txt` — reconstructed,
+  versioned, hashed correction prompts.
+
+Live infrastructure and tiny NLP4LP smoke tests pass with Azure OpenAI
+`gpt-4.1-mini` and AMPL/Gurobi. This is still not an exact reproduction of
+PaMOP's 67-problem result.
 
 ## Not implemented yet
 
-- AMPL generation (rendering `MergedModel` into an actual `.mod`/`.dat`
-  file AMPL can run) — the next milestone; interface boundary only exists
-  so far (`ampl_interface.py`).
-- The error-correction loop (basic inspection, solver-debug `G_exe`,
-  reverse translation `G_rev`/`G_comp`/`G_remod`).
-- Gurobi execution/validation of a generated model.
 - Any evaluation against PaMOP's published Accuracy / Execution-Rate / CE /
   RE metrics.
 
@@ -292,28 +304,35 @@ failure. See `baselines/pamop/tests/test_data.py` for both a mocked
 regression test of the resolution logic and a live regression test
 (`@pytest.mark.requires_network`) pinned to these exact 6 ids.
 
-## AMPL readiness: interface prepared, not implemented
+## AMPL execution and correction
 
-`MergedModel` (from `modeling.build_merged_model`) already provides four
-AMPL-flavored text fields (`parameters_text`/`variables_text`/
-`objective_text`/`constraints_text`) — by construction of
-`modeling_root_v1.txt`'s four labeled sections, not by parsing real AMPL.
-`ampl_interface.py`'s `AmplRenderer` Protocol documents exactly this
-consumption contract for the next milestone, with **no implementation**
-(`render`/`solve` method signatures only). **AMPL/`amplpy` were not
-installed** this milestone — nothing built so far needed to actually
-execute a model, only to construct and validate its text heuristically (no
-real AMPL parser exists yet, so none of these four fields are guaranteed
-syntactically valid AMPL).
+AMPL is installed user-locally in `~/.venvs/gurobi` via `amplpy` modules
+(`base`, `highs`, `gurobi`). The default unit tests do not require AMPL or
+network access; live execution uses:
+
+```bash
+PAMOP_AMPLPY_PYTHON=/home/soroush/.venvs/gurobi/bin/python
+```
+
+`ampl/executor.py` classifies failures as:
+
+- `model_error` — syntax/formulation/solver-status failures that may enter
+  the PaMOP correction loop.
+- `data_error` — missing external data files or dataset records; not
+  remodeled.
+- `environment_error` — missing AMPL/amplpy, solver/license failures,
+  provider/auth failures, or timeouts; not remodeled.
+
+Correction trace entries record the AMPL hash, execution status, prompt
+hashes, provider/model metadata, token counts, latency, review/comparison
+results, remodeling status, and final success/failure. No raw credentials
+or gated NLP4LP text are serialized by these trace types.
 
 ## Next milestone
 
 See [`docs/PAMOP_REPRODUCTION_PLAN.md`](../../docs/PAMOP_REPRODUCTION_PLAN.md)
-sections 14, 15, and 16 for implementation status. Next: the error-
-correction loop (paper §3.3) — basic inspection, the solver-debug loop
-(`G_exe`, eq. 5), and reverse translation (`G_rev`/`G_comp`/`G_remod`,
-eq. 6). This is where AMPL/`amplpy` acquisition becomes a genuine blocker
-(need to actually execute a model), where `ampl_interface.py`'s
-`AmplRenderer` gets its first real implementation, and where
-`paper_faithful.yaml`'s `max_correction_iterations: 5` (PAPER-SPECIFIED)
-finally gets used by running code.
+sections 14–17 for implementation status. Next: a deliberately small
+benchmark evaluation on the `pamop_possible_269` superset, excluding the
+six known `MissingStructuredDataError` ids from model-failure counts, and
+reporting execution/correction metrics without claiming PaMOP's exact
+67-problem result.

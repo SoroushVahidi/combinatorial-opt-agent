@@ -45,6 +45,13 @@ path). Full pipeline (`G_extr` → partition → `G_mod` → merge) verified liv
 on one real NLP4LP problem in this pass, no AMPL yet. See
 [§16 Implementation Status: Milestone 3](#16-implementation-status-milestone-3-self-augmented-modeling-and-merge).
 
+**Update, 2026-08-11 (same day, fifth follow-up):** Final core execution
+milestone implemented — AMPL rendering/execution, `G_exe`, reconstructed
+`G_rev`/`G_comp`/`G_remod`, and the bounded correction loop. AMPL/Gurobi
+works through a user-local `amplpy` install, and a one-problem live NLP4LP
+smoke test solved after one correction iteration. See
+[§17 Implementation Status: Milestone 4](#17-implementation-status-milestone-4-ampl-execution-and-correction-loop).
+
 ---
 
 ## 1. Does official public PaMOP code exist?
@@ -1802,3 +1809,271 @@ implementation, and where the `max_correction_iterations: 5`
 running code rather than just being validated as loadable. AMPL/`amplpy`
 acquisition becomes a genuine blocker starting at this milestone, not
 before.
+
+---
+
+## 17. Implementation Status: Milestone 4, AMPL Execution and Correction Loop
+
+**Follow-up implementation pass, 2026-08-11 (fifth same-day follow-up).**
+Implements the final core PaMOP execution/correction milestone: AMPL
+rendering from `MergedModel`, AMPL/Gurobi execution (`G_exe` in this
+scaffold), reconstructed `G_rev`/`G_comp`/`G_remod`, and a bounded
+correction trace. No manuscript file touched, no full 269-block run, and no
+claim of exact PaMOP 67-problem reproduction.
+
+### 17.1 Paper-specified vs reconstructed details
+
+- **PAPER-SPECIFIED:** AMPL is the generated modeling language; AMPL calls
+  Gurobi; generated model + original data are solved; modeling is correct
+  only when the solver returns an optimal solution that meets the problem
+  requirements; maximum failed correction iterations is 5; solver errors
+  are fed back during correction; reverse translation/comparison/remodeling
+  use `G_rev`, `G_comp`, and `G_remod`.
+- **HIGH-CONFIDENCE INFERENCE:** execution failures should be separated from
+  environment/data failures so unavailable AMPL, solver/license problems,
+  HF failures, and Azure authentication failures are not counted as model
+  failures.
+- **REPRODUCTION CHOICE:** exact regex/static checks, all correction prompt
+  wording, JSON response schemas, subprocess-based AMPL invocation,
+  `model_error`/`data_error`/`environment_error` categories, and the
+  correction trace schema.
+
+### 17.2 AMPL environment status
+
+Installed user-locally into the existing Gurobi venv:
+
+```bash
+/home/soroush/.venvs/gurobi/bin/python -m pip install --upgrade amplpy
+/home/soroush/.venvs/gurobi/bin/python -m amplpy.modules install highs gurobi
+```
+
+No repository file stores licenses or credentials. AMPL module install
+status:
+
+| Item | Status |
+|---|---|
+| AMPL available | YES — AMPL module `base`, version `20260809` |
+| `amplpy` available | YES — in `/home/soroush/.venvs/gurobi` |
+| AMPL parse/load check | PASS |
+| AMPL→Gurobi trivial solve | PASS — objective `12.0`, `solve_result=solved` |
+| AMPL→HiGHS | Installed but one timed solve check hit the timeout; Gurobi is the paper-faithful backend and works, so HiGHS was not used further |
+
+Live execution commands set:
+
+```bash
+PAMOP_AMPLPY_PYTHON=/home/soroush/.venvs/gurobi/bin/python
+```
+
+### 17.3 Renderer and static validation
+
+Added `baselines/pamop/ampl/`:
+
+- `renderer.py`: renders the four fields of `MergedModel`
+  (`parameters_text`, `variables_text`, `objective_text`, `constraints_text`)
+  into a single AMPL text artifact. It removes markdown fences/section
+  headers and preserves generated AMPL content; it does not semantically
+  rewrite the model.
+- `validator.py`: reconstructed "basic inspection" checks for non-empty
+  model text, duplicate `param`/`var` declarations, missing variables,
+  missing/multiple objectives, missing/duplicate constraints, unresolved
+  symbols, malformed expressions, and unparsed semicolon statements.
+- `types.py`: serializable diagnostics and render/execution result types.
+
+The validator is intentionally not a full AMPL parser. AMPL itself remains
+the execution authority.
+
+### 17.4 `G_exe` execution
+
+`baselines/pamop/ampl/executor.py::AmplExecutor` runs AMPL through:
+
+```bash
+python -m amplpy.modules run ampl model.run
+```
+
+It records:
+
+- parse/model-load/solver-invocation success;
+- solver status (`solve_result`);
+- objective value when displayed;
+- runtime;
+- structured diagnostics;
+- stdout/stderr tails only, not full logs;
+- `model_error`, `data_error`, or `environment_error`.
+
+Only `model_error` enters the correction loop. Environment/data failures
+stop the trace and are not sent to `G_remod`.
+
+### 17.5 `G_rev`, `G_comp`, `G_remod`, and correction loop
+
+Added `baselines/pamop/correction.py` plus reconstructed prompts:
+
+- `prompts/correction_review_v1.txt` (`G_rev`-style review): reviews the
+  AMPL model and execution diagnostics, returning a JSON diagnosis and
+  actionable feedback.
+- `prompts/correction_compare_v1.txt` (`G_comp`): returns a binary
+  `needs_remodel` decision and targeted issues.
+- `prompts/correction_remodel_v1.txt` (`G_remod`): returns a full corrected
+  AMPL model and a changes list.
+
+The loop is:
+
+```text
+MergedModel -> render -> G_exe
+if model_error and corrections_used < 5:
+  G_rev -> G_comp -> G_remod -> G_exe
+stop on success, non-model failure, comparison decline, or max=5
+```
+
+Each `CorrectionIteration` records iteration number, AMPL hash, execution
+status/category, review/comparison/remodel metadata, prompt hashes,
+provider/model/underlying-model metadata, tokens, and latency. `CorrectionTrace`
+serializes the complete run without credentials or gated problem text.
+
+### 17.6 Metrics prepared for future evaluation
+
+The trace/result schema now supports the eventual PaMOP comparison metrics:
+
+- AMPL generation/render success;
+- execution rate;
+- correction-needed rate;
+- mean correction iterations;
+- solver success;
+- feasibility/solver status;
+- objective produced;
+- final model success;
+- token usage;
+- API cost if externally priced;
+- latency.
+
+PaMOP's published values remain literature facts only: **62.3% accuracy**
+and **86.8% execution rate**. They are not reproduced results from this
+codebase.
+
+### 17.7 Mocked tests and static checks
+
+Added network-free tests for AMPL rendering, LP objective rendering, MILP
+variable declarations, bounds, duplicate symbols, unresolved symbols,
+malformed expressions, execution-result parsing, infeasible-result parsing,
+environment/model classification, correction-loop success on the initial
+attempt, correction-loop success after retry, max-5 termination, no
+correction on environment failure, `G_rev` prompt construction, `G_comp`,
+`G_remod` parsing, and correction-trace serialization.
+
+Full PaMOP suite: **152/152 passed**.
+
+Additional static checks:
+
+```bash
+python -m ruff check baselines/pamop --ignore E402
+python -m compileall -q baselines/pamop
+git diff --check
+```
+
+`ruff` still needs `--ignore E402` because the existing test files use a
+local `sys.path` bootstrap before imports.
+
+### 17.8 Live infrastructure smoke
+
+Trivial AMPL model:
+
+```ampl
+var x >= 0;
+var y >= 0;
+maximize profit: 3*x + 2*y;
+subject to cap: x + y <= 4;
+```
+
+Result through AMPL→Gurobi:
+
+| Field | Value |
+|---|---|
+| Parse success | YES |
+| Model load success | YES |
+| Solver invocation success | YES |
+| Solver status | `solved` |
+| Objective | `12.0` |
+| Runtime | `0.047s` |
+
+### 17.9 Tiny live NLP4LP smoke test
+
+Ran one accessible NLP4LP item, id `1`, using raw `description.txt` in
+memory only (not committed), Azure OpenAI `gpt-4.1-mini`, temperature
+`0.2`, and AMPL/Gurobi execution.
+
+Pipeline:
+
+```text
+problem -> G_extr -> partition tree -> G_mod -> bottom-up merge
+-> AMPL render -> G_exe -> G_rev/G_comp/G_remod -> G_exe
+```
+
+Result:
+
+| Field | Value |
+|---|---|
+| Initial render static validation | PASS |
+| Initial execution | model failure requiring correction |
+| Correction iterations | 1 |
+| Final parse/model load/solver invocation | PASS / PASS / PASS |
+| Final solver status | `solved` |
+| Objective produced | `5016000000.0` |
+| Final success | YES, execution-level only |
+| Total LLM tokens | `4070` |
+| Correction-stage tokens | `2235` |
+| LLM latency | `15.932s` |
+| Final AMPL runtime | `0.061s` |
+| Cost | not reported by Azure API |
+
+Important limitation: this is a smoke test of infrastructure and correction
+plumbing, not a semantic correctness claim. The objective value is recorded
+as solver output, not validated against the original problem requirement.
+
+### 17.10 Our-method comparison preserved
+
+The comparison dimension is now sharper:
+
+- Our main method remains external-LLM-free at inference time: retrieval,
+  deterministic scalar grounding, and verification.
+- PaMOP reproduction now demonstrably uses multiple LLM calls, AMPL/Gurobi
+  execution, model-version-dependent Azure access, correction-loop tokens,
+  and per-query API latency/cost exposure.
+
+This is documentation for a future manuscript revision only. The manuscript
+was not modified.
+
+### 17.11 Overlap check — nothing concerning found
+
+Repeated the narrow overlap audit for execution/correction:
+
+- **Structural verification:** generic overlap only. PaMOP's basic
+  inspection checks AMPL text before solver execution; our method's
+  structural verification checks schema/grounding readiness. Same broad
+  engineering idea, different artifacts and purpose.
+- **Correction/repair:** generic overlap only. PaMOP correction is LLM-based
+  remodeling from AMPL/solver diagnostics. Our deterministic grounding
+  repair/refinement assigns numeric evidence to schema slots without a
+  generative model.
+- **Retrieval-assisted instantiation / deterministic grounding:** no
+  distinctive PaMOP counterpart in this stage.
+- **Evaluation metrics:** generic overlap only. Execution rate and solver
+  success are standard for generated optimization models; our
+  InstantiationReady/Coverage/TypeMatch metrics target scalar grounding.
+
+Conclusion: **no suspicious overlap found**.
+
+### 17.12 Readiness and next milestone
+
+The reproduction is ready for a deliberately small benchmark evaluation
+over a handful of `pamop_possible_269` ids, with strict exclusion/accounting
+for:
+
+- known `MissingStructuredDataError` ids (`28`, `51`, `57`, `123`, `126`,
+  `135`);
+- HF access/data failures;
+- Azure auth/provider failures;
+- AMPL/amplpy/Gurobi/license failures.
+
+Next milestone: run a small, explicitly non-67, non-full-269 evaluation
+slice and report execution/correction metrics from the new trace schema.
+Do not claim PaMOP's published 67-problem result until exact subset,
+historical GPT-4 identity, and prompt uncertainty are resolved.
