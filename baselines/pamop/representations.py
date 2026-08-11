@@ -123,6 +123,38 @@ def from_nlp4lp_record(problem_id: str, record: dict[str, Any]) -> StructuredPro
     )
 
 
+def from_llm_extraction(problem_id: str, extracted: dict[str, Any], *, model_tag: str) -> StructuredProblem:
+    """Build a StructuredProblem from ``G_extr``'s validated JSON output.
+
+    ``extracted`` must already have passed
+    ``baselines.pamop.extraction.validate_extraction`` -- this function does
+    not re-validate; it only reshapes already-trusted data into the paper's
+    (t_o, t_c, t_v, g) structure. ``model_tag`` (e.g. ``"openai:gpt-4-0613"``)
+    is recorded in ``source`` so every downstream artifact can be traced back
+    to exactly which provider/model produced the extraction.
+    """
+    constraints = tuple(
+        ConstraintInfo(
+            index=i,
+            description=c["description"],
+            vagueness_score=float(c["vagueness_score"]),
+        )
+        for i, c in enumerate(extracted["constraints"])
+    )
+    variables = tuple(
+        VariableInfo(name=v["name"], description=v["description"], var_type=v.get("type"))
+        for v in extracted["variables"]
+    )
+    return StructuredProblem(
+        problem_id=problem_id,
+        global_summary=extracted["global_summary"],
+        objective_text=extracted["objective_text"],
+        constraints=constraints,
+        variables=variables,
+        source=f"llm_extraction:{model_tag}",
+    )
+
+
 def synthetic_structured_problem(
     problem_id: str,
     *,

@@ -55,6 +55,87 @@ def test_load_problem_record_rejects_post_pamop_id_before_any_network_call():
         data.load_problem_record(300)
 
 
+def test_missing_structured_data_error_is_a_file_not_found_error():
+    """MissingStructuredDataError should be catchable as FileNotFoundError
+    too, so generic file-handling code doesn't need a special case."""
+    assert issubclass(data.MissingStructuredDataError, FileNotFoundError)
+
+
+def test_resolve_problem_info_path_uses_bare_id_when_present(monkeypatch):
+    calls = []
+
+    def fake_hf_hub_download(repo_id, filename, **kwargs):
+        calls.append(filename)
+        if filename == "data/5/problem_info.json":
+            return "/fake/path/problem_info.json"
+        raise _entry_not_found()
+
+    monkeypatch.setattr("huggingface_hub.hf_hub_download", fake_hf_hub_download)
+    path = data._resolve_problem_info_path(5, token=None)
+    assert path == "/fake/path/problem_info.json"
+    assert calls == ["data/5/problem_info.json"]  # never had to list the repo
+
+
+def test_resolve_problem_info_path_falls_back_to_suffixed_variant(monkeypatch):
+    """Regression test for the loader gap: an id with no bare
+    problem_info.json but a suffixed sibling (e.g. "28-unsolved") that DOES
+    have one should still resolve, without a network call for every id."""
+
+    def fake_hf_hub_download(repo_id, filename, **kwargs):
+        if filename == "data/28-unsolved/problem_info.json":
+            return "/fake/path/28-unsolved/problem_info.json"
+        raise _entry_not_found()
+
+    def fake_list_repo_files(self, repo_id, **kwargs):
+        return [
+            "data/28-unsolved/description.txt",
+            "data/28-unsolved/problem_info.json",
+            "data/29/description.txt",
+        ]
+
+    monkeypatch.setattr("huggingface_hub.hf_hub_download", fake_hf_hub_download)
+    monkeypatch.setattr("huggingface_hub.HfApi.list_repo_files", fake_list_repo_files)
+
+    path = data._resolve_problem_info_path(28, token=None)
+    assert path == "/fake/path/28-unsolved/problem_info.json"
+
+
+def test_resolve_problem_info_path_raises_missing_structured_data_when_nothing_matches(monkeypatch):
+    def fake_hf_hub_download(repo_id, filename, **kwargs):
+        raise _entry_not_found()
+
+    def fake_list_repo_files(self, repo_id, **kwargs):
+        return ["data/28/description.txt", "data/28/metadata.json"]  # no problem_info.json anywhere
+
+    monkeypatch.setattr("huggingface_hub.hf_hub_download", fake_hf_hub_download)
+    monkeypatch.setattr("huggingface_hub.HfApi.list_repo_files", fake_list_repo_files)
+
+    with pytest.raises(data.MissingStructuredDataError):
+        data._resolve_problem_info_path(28, token=None)
+
+
+def _entry_not_found():
+    from huggingface_hub.errors import EntryNotFoundError
+
+    return EntryNotFoundError("404 (mocked)")
+
+
+@pytest.mark.requires_network
+@pytest.mark.parametrize("problem_id", [28, 51, 57, 123, 126, 135])
+def test_known_missing_ids_raise_missing_structured_data_error_live(problem_id):
+    """Live regression test for the exact ids discovered to have no
+    problem_info.json anywhere (bare or suffixed) in the current HF
+    snapshot -- see MissingStructuredDataError's docstring."""
+    with pytest.raises(data.MissingStructuredDataError):
+        data.load_problem_record(problem_id)
+
+
+@pytest.mark.requires_network
+def test_known_good_id_still_loads_live():
+    record = data.load_problem_record(1)
+    assert "parametrized_description" in record
+
+
 def test_alignment_manifest_matches_selector():
     manifest = data.load_alignment_manifest()
     possible = [r for r in manifest if r["mapping_confidence"] == "POSSIBLE_MATCH"]

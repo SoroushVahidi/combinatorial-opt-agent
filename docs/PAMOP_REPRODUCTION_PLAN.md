@@ -29,6 +29,15 @@ suspicious-overlap check against our own manuscript (nothing concerning
 found) — see
 [§14 Implementation Status: Milestone 1](#14-implementation-status-milestone-1-non-llm-partitioning-scaffold).
 
+**Update, 2026-08-11 (same day, third follow-up):** Milestone 2 implemented
+— LLM-based structured-extraction stage (`G_extr`), a provider-agnostic LLM
+interface (OpenAI/Gemini/Cohere/Fireworks/CloudRift), a fixed NLP4LP loader
+gap, and a tiny live smoke test. Found that this workstation's "OpenAI"
+credentials are actually a CloudRift key and its Gemini credentials are
+empty strings despite both env vars being present — documented, not hidden.
+See
+[§15 Implementation Status: Milestone 2](#15-implementation-status-milestone-2-llm-extraction-stage).
+
 ---
 
 ## 1. Does official public PaMOP code exist?
@@ -1168,3 +1177,298 @@ its own test suite using mocked/recorded LLM responses so tests stay
 network- and API-key-free. AMPL/`amplpy` acquisition (§13.10) and the manual
 archived-dataset retrieval (§13.5, `nlp4lp.vercel.app` / OpenReview) can
 proceed in parallel and are not blocking for this next step either.
+
+---
+
+## 15. Implementation Status: Milestone 2, LLM Extraction Stage
+
+**Follow-up implementation pass, 2026-08-11 (third same-day follow-up).**
+Adds the LLM-based structured-extraction stage (`G_extr`) and a
+provider-agnostic LLM interface on top of Milestone 1's partitioning
+scaffold. No manuscript file touched, no existing benchmark result changed,
+AMPL generation and solver execution still not implemented.
+
+### 15.1 LLM/API environment status (verified, not assumed)
+
+This required more care than expected — two real, non-obvious findings:
+
+| Provider | Env var(s) checked | Status | Finding |
+|---|---|---|---|
+| OpenAI | `OPENAI_API_KEY` | **Present but not usable for OpenAI** | The 64-char value is byte-identical to `CLOUDRIFT_API_KEY` (confirmed via SHA-256 comparison, values never printed) and has a `rift_...` prefix — it is a CloudRift-issued key aliased into the OpenAI env-var names, presumably so other OpenAI-SDK-based tooling in this environment transparently targets CloudRift. `OPENAI_BASE_URL` is likewise set to `https://inference.cloudrift.ai/v1`. **There is no genuine OpenAI credential on this workstation.** A live call to the real `api.openai.com` endpoint with this key correctly returns HTTP 401 (verified, §15.5). |
+| Gemini | `GEMINI_API_KEY`, `GOOGLE_API_KEY` | **Present as names, not usable** | Both variables exist in the environment but `GOOGLE_API_KEY`'s value is an **empty string** (`len() == 0`) and `GEMINI_API_KEY` is unset. `get_env_token()` correctly treats an empty string as "not configured" (§15.5's regression test covers exactly this). |
+| Cohere | `COHERE_API_KEY`, `CO_API_KEY` | **Working** | 40-char key, verified with a real live call (§15.5). |
+| Fireworks AI | `FIREWORKS_API_KEY` | **Present, not live-tested** | 25-char key looks well-formed; not exercised this milestone (task scope called for "a tiny adapter smoke test," already satisfied by Cohere + CloudRift) — verify before relying on `configs/providers/fireworks_current.yaml`. |
+| CloudRift AI | `CLOUDRIFT_API_KEY`, `CLOUDRIFT_BASE_URL`, `CLOUDRIFT_MODEL` | **Working** | 64-char key, verified with a real live call (§15.5); this is the *same* key aliased as `OPENAI_API_KEY` above. |
+| Hugging Face (`udell-lab/NLP4LP`) | — | **Working** (unchanged from §13) | Not a blocker. |
+| Gurobi | — | **Working** (unchanged from §13) | Not a blocker. |
+
+Practical consequence: **2 of 5 target providers (OpenAI, Gemini) do not
+currently have usable credentials on this workstation**, despite both
+having been described as "already configured." Neither is a code bug —
+`get_env_token` and the per-provider `ProviderAuthError` checks correctly
+detect and report both conditions rather than silently proceeding or
+crashing unhelpfully. This is reported here rather than worked around
+because §7's original guidance ("do not silently choose a snapshot," "do
+not ask for keys unless a real auth failure occurs") implies the same
+standard for reporting what actually happened.
+
+### 15.2 Provider-agnostic LLM interface
+
+`baselines/pamop/llm/`:
+
+| File | Role |
+|---|---|
+| `types.py` | `ModelConfig`, `LLMResponse` (text, provider, model, timestamp, temperature/top_p/max_tokens, prompt/completion/total tokens, latency, retry count, prompt hash, finish reason — no field ever holds a secret), `ProviderAuthError`, `ProviderCallError` |
+| `base.py` | `LLMProvider` ABC — subclasses implement only `_call`; `generate()` handles timing, retry-with-backoff, and building the common `LLMResponse`. `ProviderAuthError` is deliberately never retried (§15.6 notes one gap here). `prompt_hash()`, `get_env_token()` shared helpers |
+| `openai_provider.py` | Always passes an explicit `base_url="https://api.openai.com/v1"` — **deliberately ignores** the ambient `OPENAI_BASE_URL`, precisely because of the CloudRift-aliasing finding above |
+| `gemini_provider.py` | Checks `GEMINI_API_KEY` then `GOOGLE_API_KEY` (google-genai `Client`, Developer API) |
+| `cohere_provider.py` | Checks `COHERE_API_KEY` then `CO_API_KEY` (Cohere `ClientV2.chat`) |
+| `fireworks_provider.py`, `cloudrift_provider.py`, `_openai_compatible.py` | Both target OpenAI-compatible REST endpoints via the `openai` SDK (no separate `fireworks-ai` package required); each provider's own base URL/key is explicit and never cross-wired with `openai_provider.py`'s |
+| `registry.py` | `get_provider(name)` / `list_providers()`, lazy per-provider SDK import |
+
+### 15.3 Prompt recovery — targeted re-check, still nothing found
+
+Per task scope, this was a targeted re-check, not a repeat of §1's full
+search: one new web search for `G_extr`-specific terminology, and one retry
+of the previously-unreachable USTC corresponding-author page
+(`staff.ustc.edu.cn/~xiangyangli/publication.html`) — still
+`ECONNREFUSED` from this network. No new information. §1's "no official
+code" conclusion stands; `baselines/pamop/prompts/extraction_v1.txt` is a
+full reconstruction, explicitly marked as such both in-file and in
+`prompts/PROVENANCE.md`, which separates the paper-specified requirements
+(four output fields `t_o`/`t_c`/`t_v`/`g` and a per-constraint vagueness
+score, section 3.2) from the reconstructed wording (everything else,
+including the vagueness-score numeric scale, which the paper never states —
+this template asks for `[0, 1]`, a reproduction choice).
+
+### 15.4 `G_extr` implementation
+
+`baselines/pamop/extraction.py`:
+
+- `validate_extraction(raw)` — strict schema validation (required fields,
+  non-empty strings, `vagueness_score ∈ [0,1]`, variable name is a valid
+  identifier with no duplicates, `type` in the allowed enum or absent).
+  Rejects and reports a specific reason; **never repairs or fills in
+  content** — PaMOP's own repair mechanisms are the separate, later,
+  not-yet-implemented correction loop (section 3.3), not part of `G_extr`.
+- `extract_structured_problem(problem_id, raw_text, provider, config)` —
+  renders the prompt, calls the provider, parses JSON (tolerating a stray
+  ```` ```json ```` fence, not tolerating actually-malformed JSON), validates,
+  and retries (asking again, not patching) up to
+  `config.llm.extraction_max_retries` times on failure. Returns an
+  `ExtractionResult` bundling the `StructuredProblem`, the raw
+  `LLMResponse`, the `PromptTemplate` used, and the attempt count.
+- `representations.from_llm_extraction()` reshapes validated output into the
+  same `StructuredProblem` Milestone 1's `partition.build_partition_tree`
+  already consumes — verified wired end-to-end, live (§15.5) and in tests
+  (`test_extraction.py::test_extraction_wires_into_partition_tree`).
+
+### 15.5 Tiny live API smoke test
+
+Per task instructions: attempted the paper-faithful OpenAI path first, then
+fell back to a provider with a verified-working credential, on 3 NLP4LP
+problems (ids 1, 2, 5) from the `pamop_possible_269` subset. No raw problem
+text appears in this document, any committed file, or the smoke script's
+output — only counts, token usage, hashes, and timing.
+
+**Step 1 — `paper_faithful` config, OpenAI, `gpt-4-0613`:** failed as
+predicted by §15.1 — `ProviderCallError` after retries, underlying cause an
+HTTP 401 from `api.openai.com` (the CloudRift-aliased key does not
+authenticate against the real OpenAI API). This is the expected, correctly
+surfaced outcome given no genuine OpenAI credential exists here — not a
+code defect.
+
+**Step 2 — `cohere_current` config (explicitly NOT paper-faithful),
+`command-r7b-12-2024`:**
+
+| Problem id | Status | Attempts | Constraints extracted | Variables extracted | Latency (s) | Prompt tokens | Completion tokens |
+|---|---|---|---|---|---|---|---|
+| 1 | success | 1 | 4 | 7 | 5.52 | 536 | 456 |
+| 2 | success | 1 | 2 | 5 | 4.14 | 536 | 300 |
+| 5 | success | 1 | 4 | 8 | 6.70 | 550 | 498 |
+
+All three succeeded on the **first** attempt (no retries needed — the model
+produced schema-valid JSON immediately every time), `finish_reason:
+COMPLETE` for all three. Total for the 3-problem smoke test: ~2,626 tokens
+across both directions. **Cost:** not tracked via a pricing API this
+milestone; at Cohere's published per-token rates for a `command-r7b`-class
+model this is on the order of a fraction of a US cent for the whole
+3-problem test — not a meaningful cost signal either way, consistent with
+"tiny." No `sbatch` job was needed (each call completed in single-digit
+seconds).
+
+### 15.6 A real gap found during the smoke test, documented rather than hidden
+
+The OpenAI 401 in step 1 was retried twice before `generate()` gave up
+(3 attempts total, ~unnoticeable extra latency here since it fails fast).
+`LLMProvider.generate()` only skips retries for `ProviderAuthError`, which
+is raised when a key is **absent**; a key that is *present but rejected by
+the endpoint* (this case) surfaces as the SDK's own exception type
+(`openai.AuthenticationError`) inside the generic `except Exception` retry
+branch instead. This is not a correctness bug — the failure is still
+reported clearly as `ProviderCallError` with an accurate retry count — but
+it is a minor missed optimization (retrying a definite auth rejection is
+pointless) worth fixing in a future pass by mapping each provider SDK's own
+auth-error type to `ProviderAuthError` at the call site, not just at client
+construction.
+
+### 15.7 LLM-dependency comparison: PaMOP vs. our main pipeline
+
+For future manuscript-revision use (manuscript itself **not** touched this
+pass):
+
+- **PaMOP requires an LLM at inference/modeling time**, for every stage this
+  reproduction has touched so far and every stage still to come: structured
+  extraction (`G_extr`, this milestone), self-augmented leaf modeling
+  (`G_mod`, not yet implemented), and the correction loop (`G_exe`/`G_rev`/
+  `G_comp`/`G_remod`, not yet implemented). Every one of those calls is a
+  network round-trip to a third-party API, with the accuracy/cost/latency
+  characteristics that implies (§15.5's ~5-second, few-hundred-token calls
+  are representative of a *single* extraction call for a *small* NLP4LP
+  problem — the full pipeline issues many such calls per problem, per §10 of
+  this document).
+- **Our main retrieval-assisted instantiation pipeline does not require an
+  external generative LLM/API at inference time.** Its benchmarked path
+  (schema retrieval via TF-IDF/BM25/LSA, deterministic scalar-slot
+  grounding, structural verification) runs entirely locally and
+  deterministically, as already documented in `manuscript/main.tex`'s
+  Problem Scope section ("a fully deterministic pipeline ... with no
+  learned or large-language-model components").
+- This gives our pipeline several potential, genuinely real advantages
+  worth naming precisely — **without overselling them as proof of general
+  superiority**, and without ever describing our pipeline as using "no
+  AI" (it is a deterministic, rule-based *system*, not an absence of any
+  computational technique; TF-IDF/BM25/LSA are themselves standard
+  information-retrieval methods, and calling a system that uses them
+  "no AI" would be an inaccurate simplification, not a modest one):
+  - **Reproducibility**: identical input always produces identical output;
+    PaMOP's temperature-0.2 sampling and multi-stage LLM pipeline do not
+    have this property without extra seeding/variance-control work (§5 of
+    this document already flags this as an open axis to measure if
+    pursued).
+  - **Cost**: no per-query API spend; PaMOP's cost is nonzero and scales
+    with both problem count and problem complexity (§10).
+  - **Model-version stability**: nothing in our benchmarked path depends on
+    a vendor's model catalog remaining available — directly relevant given
+    §7.2's finding that PaMOP's own base model (plain "GPT-4") is
+    mid-deprecation as of this investigation.
+  - **Offline/restricted-deployment feasibility**: a fully local pipeline
+    can run without external network access or a third-party API
+    dependency at all; PaMOP's architecture cannot, by construction, at any
+    of its LLM-touching stages.
+  - **Privacy**: no problem text leaves the local environment in our
+    benchmarked path; every PaMOP stage that touches an LLM sends the
+    problem text (or a derived structured form of it) to a third-party API.
+  - The other side of this comparison is equally real and already stated in
+    our own manuscript's Problem Scope: our pipeline's task is narrower
+    (schema retrieval + scalar grounding, not full model generation), so
+    this is a difference in **what each system is trying to do**, not
+    simply a win on every axis — a narrower, non-generative task is
+    *easier* to make deterministic and local than PaMOP's full NL-to-model
+    generation task is.
+- **This section is written for a future manuscript revision to draw on if
+  useful — the manuscript itself was not modified in this pass.**
+
+### 15.8 Suspicious prior-work overlap check — repeated for this milestone, **nothing concerning found**
+
+Extended the same audit (§14.6) to this milestone's new surface area
+specifically: LLM-based structured extraction, JSON-schema validation of
+LLM output, vagueness scoring, and the provider-abstraction/config-driven
+paper-faithful-vs-reconstructed design pattern itself.
+
+- **Structured extraction with JSON-schema validation**: PaMOP's `G_extr`
+  produces a *fresh* structured representation per problem via an LLM call,
+  validated here against a JSON schema we wrote (not the paper's, which
+  doesn't exist — §15.3). Our manuscript's schema-retrieval stage does the
+  structurally opposite thing: it *matches* an incoming query against a
+  **fixed, pre-existing** catalog of 335 schemas; it never generates a new
+  schema from scratch and has no analogous "extraction validation" concept
+  at all. No mechanism overlap.
+- **Vagueness scoring**: unique to PaMOP among everything checked; nothing
+  resembling a per-constraint ambiguity score exists anywhere in our
+  manuscript or pipeline (our closest concept, `TypeMatch`/`Coverage`, scores
+  *slot-assignment* quality against a schema, not *linguistic ambiguity* of
+  a constraint description — a different axis entirely).
+- **Provider-abstraction pattern** (`baselines/pamop/llm/`, this milestone's
+  own architecture): this is *our own* design choice for building the
+  reproduction, not something drawn from the PaMOP paper (which describes
+  no such abstraction — it names only "GPT-4" as its runtime). Not a
+  candidate for overlap analysis in either direction; noted here only for
+  completeness since the task asked to repeat the audit "while reading
+  PaMOP deeply" during this milestone.
+- **Chronology**: unchanged from §14.6 — PaMOP (Aug 2025) predates this
+  repository's current manuscript work; no direction of influence is
+  plausible beyond both papers targeting the same public benchmark, already
+  disclosed in our manuscript's Related Work.
+
+**Conclusion: no concerning overlap found**, consistent with §14.6. No
+accusation, implicit or explicit, is made in either direction.
+
+### 15.9 Configuration changes
+
+- `config.py`: `LlmConfig` gained `provider` (which of the 5 registered
+  providers) and `extraction_max_retries` (G_extr-specific retry budget,
+  distinct from `max_correction_iterations`, the paper's later
+  solver-debug-loop budget — paper doesn't specify either for extraction).
+- `configs/paper_faithful.yaml`: `llm.provider: openai` added as a
+  **high-confidence inference** (paper never says "OpenAI" but names only
+  OpenAI model families as its base models); `llm.model` changed from
+  `null` to `gpt-4-0613`, explicitly commented as a **reproduction choice**
+  (closest surviving plain-"GPT-4" snapshot, not a paper-stated fact) with
+  the CloudRift-aliasing environment note inline. `extraction_max_retries`
+  stays `null` (genuinely unspecified) — **the config still fails loudly**
+  (`UnspecifiedPaperDetailError`) if that field is read without being set,
+  exactly as before; only the two fields with an actual documented
+  resolution path changed.
+- `configs/reconstructed_default.yaml`: `llm.provider: openai`,
+  `extraction_max_retries: 2` added (reproduction choice, documented).
+- **New** `configs/providers/{openai,gemini,cohere,fireworks,cloudrift}_current.yaml`
+  — one per provider, identical partitioning/correction/execution/dataset
+  sections to `reconstructed_default.yaml`, each with an inline `STATUS on
+  this workstation` comment stating plainly whether it is currently
+  runnable here (openai: no: gemini: no; cohere: yes, live-verified;
+  fireworks: untested; cloudrift: yes, live-verified) — see §15.1.
+
+### 15.10 Updated blocker list
+
+| Item | Classification | Status |
+|---|---|---|
+| Hugging Face NLP4LP access | — | **RESOLVED** (§13.2, unchanged) |
+| Gurobi | — | **RESOLVED** (§13.3, unchanged) |
+| NLP4LP loader suffixed/missing-file ids | — | **RESOLVED** this milestone (§15 loader fix; 6 genuinely-missing ids now raise a clean `MissingStructuredDataError` instead of a generic error) |
+| Provider abstraction + `G_extr` | — | **RESOLVED** this milestone |
+| Real OpenAI credentials on this workstation | **BLOCKER** (for `pamop_paper_faithful` execution specifically) | Not resolvable by this investigation — requires a genuine OpenAI key to be configured somewhere this pipeline runs; the paper-faithful *design decision* (§7.2/§15.9) is unaffected and stands regardless |
+| Real Gemini credentials on this workstation | NON-BLOCKING (Gemini is one of five current-model variants, not required for any milestone) | `GOOGLE_API_KEY`/`GEMINI_API_KEY` present as names, empty as values |
+| AMPL / `amplpy` | **BLOCKER** (for paper-faithful generation/execution, unchanged from §13.10) | Still not installed; not needed until the modeling/execution stage |
+| Exact identity of PaMOP's 67 problems | NON-BLOCKING UNCERTAINTY (unchanged from §13) | — |
+| Auth-error-vs-generic-error retry gap (§15.6) | NON-BLOCKING, minor | Documented, not fixed this pass |
+| Missing prompt templates for `G_mod`/`G_exe`/`G_rev`/`G_comp`/`G_remod` | IMPLEMENTATION CHOICE | Next milestone |
+
+### 15.11 Files added/changed (this pass)
+
+Added: `baselines/pamop/llm/{__init__.py, base.py, types.py, registry.py,
+openai_provider.py, gemini_provider.py, cohere_provider.py,
+fireworks_provider.py, cloudrift_provider.py, _openai_compatible.py}`,
+`baselines/pamop/prompts/{__init__.py, PROVENANCE.md, extraction_v1.txt}`,
+`baselines/pamop/extraction.py`,
+`baselines/pamop/configs/providers/{openai,gemini,cohere,fireworks,cloudrift}_current.yaml`,
+`baselines/pamop/tests/{test_llm.py, test_prompts.py, test_extraction.py}`.
+Changed: `baselines/pamop/config.py` (§15.9), `baselines/pamop/data.py`
+(loader fix, §15's own section above), `baselines/pamop/configs/{paper_faithful,reconstructed_default}.yaml`
+(§15.9), `baselines/pamop/representations.py` (`from_llm_extraction`),
+`baselines/pamop/README.md`, `baselines/pamop/tests/test_data.py`
+(loader-fix regression tests), `docs/PAMOP_REPRODUCTION_PLAN.md` (this
+section). No other file in the repository was touched.
+
+### 15.12 Exact next milestone
+
+Self-augmented leaf-node modeling (`G_mod`, paper eq. 3) and its bottom-up
+merge into a complete model (eq. 4): another LLM-touching stage, consuming
+Milestone 1's partition tree + Milestone 2's `StructuredProblem`/vagueness
+scores as input, producing per-leaf constraint formulas. This is the last
+stage before AMPL generation becomes meaningful (the paper generates AMPL
+text directly as the leaf-modeling output, §2.5/§13.10), so the AMPL/Gurobi
+question (still blocked on installing `amplpy`, §13.10/§15.10) becomes live
+at that point, not before. Should ship with its own reconstructed prompt
+(`prompts/leaf_modeling_v1.txt`, same PROVENANCE.md discipline as this
+milestone) and reuse the existing `llm/` provider abstraction unchanged.

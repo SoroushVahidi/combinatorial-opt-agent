@@ -19,17 +19,34 @@ citation: >
   DOI: 10.24963/ijcai.2025/296.
 
 llm:
-  # Paper says only "GPT-4", no snapshot. gpt-4-0613 is the closest surviving
+  # HIGH-CONFIDENCE INFERENCE: the paper names "GPT-4", "GPT-3.5-turbo", and
+  # "Llama-3.3-70b" as its three tested base models -- all OpenAI-published
+  # names for the first two -- so "openai" as the provider for the GPT-4
+  # condition is about as safe an inference as this codebase makes anywhere,
+  # even though the paper never writes the word "OpenAI".
+  provider: openai
+  # REPRODUCTION CHOICE (not paper-stated): exact snapshot. The paper says
+  # only "GPT-4", no version string. gpt-4-0613 is the closest surviving
   # "plain GPT-4" model as of this investigation (shuts down 2026-10-23 --
-  # see docs/PAMOP_REPRODUCTION_PLAN.md section 7.2) but this is a best-guess
-  # substitution, not something the paper states, so it stays `null` here by
-  # the letter of "paper-faithful = paper-stated only". Set explicitly before
-  # running the (future, not-yet-implemented) LLM stage.
-  model: null
+  # see docs/PAMOP_REPRODUCTION_PLAN.md section 7.2); gpt-4-turbo is the
+  # other plausible candidate and shuts down the same date. Document, don't
+  # silently guess: this field records a specific, reasoned choice, not "the
+  # paper's model" -- see the "GPT model decision" section of
+  # docs/PAMOP_REPRODUCTION_PLAN.md for the full rationale.
+  #
+  # ENVIRONMENT NOTE (this workstation, verified during this milestone): the
+  # OPENAI_API_KEY configured here is actually a CloudRift-issued key
+  # (OPENAI_BASE_URL is also set to CloudRift's endpoint) -- there is
+  # currently NO working OpenAI credential on this machine, so this
+  # provider/model pair cannot be executed live here today. It remains the
+  # documented paper-faithful choice for whichever environment does have
+  # real OpenAI access.
+  model: gpt-4-0613
   temperature: 0.2          # PAPER-SPECIFIED: "we set the model's temperature to 0.2"
   max_correction_iterations: 5   # PAPER-SPECIFIED: "the maximum number of failed iterations to 5"
   top_p: null                # UNSPECIFIED
   max_tokens: null           # UNSPECIFIED
+  extraction_max_retries: null   # UNSPECIFIED: paper doesn't discuss G_extr-specific retries at all
 
 partitioning:
   embedding_source: null              # paper names GloVe (Wikipedia 2014) but not a swappable "source" abstraction -- mechanism is paper-specified, this field is left null pending a real GloVe integration

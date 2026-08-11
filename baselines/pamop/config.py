@@ -35,11 +35,17 @@ class UnspecifiedPaperDetailError(RuntimeError):
 
 @dataclass(frozen=True)
 class LlmConfig:
+    provider: str | None = None  # one of baselines.pamop.llm.registry.list_providers()
     model: str | None = None
     temperature: float | None = None
     max_correction_iterations: int | None = None
     top_p: float | None = None
     max_tokens: int | None = None
+    # Retries for the G_extr structured-extraction call specifically (schema
+    # validation failure -> ask again), distinct from max_correction_iterations
+    # (the paper's later solver-debug/reverse-translation loop, section 3.3).
+    # Paper does not specify an extraction-specific retry count.
+    extraction_max_retries: int | None = None
 
 
 @dataclass(frozen=True)

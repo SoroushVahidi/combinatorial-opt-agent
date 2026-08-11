@@ -29,9 +29,9 @@ DOI: [10.24963/ijcai.2025/296](https://doi.org/10.24963/ijcai.2025/296).
 > which exist yet, see "Not implemented yet" below) is built, run on a
 > confirmed-equivalent problem subset, and explicitly labeled as such.
 
-## What is implemented in this milestone
+## What is implemented so far
 
-Only the **non-LLM question-partitioning stage** (paper section 3.2):
+**Milestone 1 — non-LLM question-partitioning stage** (paper section 3.2):
 
 - `representations.py` — the `StructuredProblem` data structure (the
   paper's root-node content: objective text, constraint texts, variable/
@@ -52,23 +52,87 @@ Only the **non-LLM question-partitioning stage** (paper section 3.2):
 - `run_partitioning.py` — a diagnostics-only CLI for running the pipeline
   over a live subset (no gated text is ever written to a committed file).
 
+**Milestone 2 — LLM-based structured extraction (`G_extr`), paper section
+3.2** and the provider abstraction it (and every future LLM-touching stage)
+needs:
+
+- `llm/` — a provider-agnostic interface (`generate(prompt, ModelConfig) ->
+  LLMResponse`) with adapters for **OpenAI, Google Gemini, Cohere,
+  Fireworks AI, and CloudRift AI**. See "LLM providers" below for which of
+  these actually have a working credential on any given workstation — that
+  is an environment fact, checked at runtime, not something to assume.
+- `prompts/` — versioned, content-hashed prompt templates. See "Prompt
+  status" below.
+- `extraction.py` — calls a provider with the extraction prompt, strictly
+  validates the JSON response against the paper's four required fields
+  (`t_o`/`t_c`/`t_v`/`g`) plus a per-constraint vagueness score, and retries
+  (asking again, never silently repairing content) on validation failure.
+  Produces a `StructuredProblem` that feeds directly into Milestone 1's
+  `partition.build_partition_tree` — verified wired end-to-end, live and in
+  tests.
+
 ## Not implemented yet
 
-Deliberately out of scope for this milestone (interfaces are not even
-stubbed beyond what `config.py`'s `execution`/`correction`/`llm` sections
-declare):
-
-- The LLM-based "structured extraction" call (`G_extr`) that the paper uses
-  to *produce* a `StructuredProblem` from raw free text. This milestone
-  instead builds `StructuredProblem` directly from NLP4LP's own pre-existing
-  structured fields (see "Reconstructed choices" below) so partitioning can
-  be built and tested without an LLM call.
-- Self-augmented leaf-node modeling (`G_mod`) and AMPL generation.
+- Self-augmented leaf-node modeling (`G_mod`) and its bottom-up merge into a
+  complete model (eq. 4) — the next milestone.
+- AMPL generation.
 - The three-layer correction loop (basic inspection, solver-debug `G_exe`,
   reverse translation `G_rev`/`G_comp`/`G_remod`).
-- AMPL generation and Gurobi execution/validation.
+- Gurobi execution/validation of a generated model.
 - Any evaluation against PaMOP's published Accuracy / Execution-Rate / CE /
   RE metrics.
+
+## LLM providers: what actually works, checked, not assumed
+
+| Provider | Env var(s) | Status (verified this milestone) |
+|---|---|---|
+| OpenAI | `OPENAI_API_KEY` | **Not usable for OpenAI** — the key present here is byte-identical to `CLOUDRIFT_API_KEY` (a CloudRift key aliased into OpenAI's env-var names); `openai_provider.py` always forces the real `api.openai.com` URL, which correctly then rejects this key with HTTP 401 |
+| Gemini | `GEMINI_API_KEY` / `GOOGLE_API_KEY` | **Not usable** — both variables exist but `GOOGLE_API_KEY`'s value is an empty string; `get_env_token()` correctly treats that as unset |
+| Cohere | `COHERE_API_KEY` / `CO_API_KEY` | **Working** — live-verified |
+| Fireworks AI | `FIREWORKS_API_KEY` | Present, well-formed, **not live-tested** this milestone |
+| CloudRift AI | `CLOUDRIFT_API_KEY` | **Working** — live-verified (same key as the "OpenAI" one above, correctly used against CloudRift's own endpoint this time) |
+
+None of this is a code defect — every provider's `ProviderAuthError` (key
+absent) fires correctly, and the empty-Gemini-key case has a dedicated
+regression test (`test_llm.py::test_get_env_token_treats_empty_string_as_unset`)
+precisely because it's the kind of thing that's easy to assume away.
+**Check your own environment's actual state before trusting this table** —
+it describes one workstation at one point in time, not a permanent fact.
+
+## Prompt status: reconstructed, never claimed as the authors' wording
+
+No PaMOP prompt text exists in any public source (`docs/PAMOP_REPRODUCTION_PLAN.md`
+§1, re-checked this milestone in §15.3 — still nothing). Every file under
+`prompts/` is a full reconstruction; `prompts/PROVENANCE.md` separates, per
+template, exactly which output *fields* are paper-specified (for
+`extraction_v1.txt`: the four fields `t_o`/`t_c`/`t_v`/`g` and the
+vagueness score, section 3.2) from the wording used to ask for them (all
+reconstructed). Every template is content-hashed at load time
+(`prompts.load_prompt`), and every `LLMResponse` produced from a call using
+it carries that hash — so any future prompt-wording change is traceable in
+run outputs, and no two differently-worded runs can be silently confused
+with each other.
+
+## Reproducibility metadata policy
+
+Every LLM call, through every provider, returns the same `LLMResponse`
+shape: provider, exact model id, timestamp, temperature/top_p/max_tokens,
+prompt/completion/total token counts, latency, retry count, prompt hash,
+finish reason. **No field ever holds an API key, token, or other secret**
+(`test_llm.py::test_llm_response_never_has_a_field_that_looks_like_a_secret`
+enforces this structurally). This is the metadata every future run's
+results table should be built from — never hand-recorded or approximated.
+
+## Our method's non-LLM inference distinction
+
+PaMOP requires an LLM at inference time for every stage of its pipeline —
+extraction, modeling, and correction alike. This repository's own
+benchmarked pipeline (schema retrieval + deterministic scalar grounding,
+see `manuscript/main.tex`) does not call an external generative LLM/API at
+inference time at all. See `docs/PAMOP_REPRODUCTION_PLAN.md` §15.7 for the
+fuller, carefully-hedged comparison (reproducibility, cost, model-version
+stability, offline feasibility, privacy) — written for a future manuscript
+revision to draw on, not a claim that either design is simply "better."
 
 ## Dataset scope: `pamop_possible_269`, never "PaMOP's 67"
 
@@ -124,7 +188,9 @@ sections 2 and 9. Summary for what's actually implemented here:
 
 | Detail | Paper says | This milestone's choice | Why |
 |---|---|---|---|
-| Structured extraction (`G_extr`) | LLM call, prompt not given | Read directly from NLP4LP's own `objective`/`constraints`/`variables`/`parameters` fields | Bridges the paper's LLM extraction step with data the dataset already ships, so partitioning can be tested without implementing the LLM stage yet. **Not** a reproduction of `G_extr` itself. |
+| Structured extraction (`G_extr`) prompt wording | LLM call, prompt not given | `prompts/extraction_v1.txt` — full reconstruction | See `prompts/PROVENANCE.md`; the four output fields and the vagueness score are paper-specified, the wording is ours |
+| Vagueness score scale | "assign a vagueness score to each constraint" — no scale given | `[0, 1]` float | Simplest bounded scale consistent with "score" |
+| `representations.from_nlp4lp_record` (Milestone 1's non-LLM bridge) | — | Still present, used only where no LLM call is wanted (e.g. `run_partitioning.py`'s smoke run) | Kept alongside `from_llm_extraction`, not replaced by it — the two are separate, clearly-named construction paths for `StructuredProblem` |
 | Independent-set graph-search algorithm | "we apply graph search algorithms" (unnamed) | Connected components over the bipartite constraint–variable graph | Simplest algorithm consistent with "separate independent subgraphs" |
 | Vector-similarity source | GloVe (Wikipedia 2014), variant unspecified | TF-IDF cosine similarity (`embedding_source: tfidf_fallback`) | No GloVe vectors are provisioned on this workstation yet; pluggable `VectorSimilarityProvider` interface so a real GloVe provider can be swapped in later without touching call sites |
 | Keyword top-k (`k`) | "top k", value not given | `tfidf_top_k: 10` | Common default for top-k keyword schemes |
@@ -136,7 +202,7 @@ sections 2 and 9. Summary for what's actually implemented here:
 ## Running it
 
 ```bash
-# Unit tests (synthetic data only, no network/gated access needed):
+# Unit tests (mocked/synthetic data only, no network/gated/API access needed):
 python -m pytest baselines/pamop/tests -v
 
 # Diagnostics-only smoke run against a small live sample of the 269-block
@@ -147,22 +213,49 @@ python -m baselines.pamop.run_partitioning \
     --subset pamop_possible_269 \
     --limit 20 \
     --out /tmp/pamop_smoke_summary.json
+
+# A handful of tests hit the live, gated NLP4LP dataset (not an LLM API) and
+# are marked @pytest.mark.requires_network -- included by default when
+# network is reachable, auto-skipped otherwise (see tests/conftest.py):
+python -m pytest baselines/pamop/tests -v -m requires_network
 ```
 
-## Known limitation surfaced by the smoke run
+The `llm`/`extraction` test suites are entirely mocked (fake in-process
+providers) and never make a network or API call, by design — a tiny live
+LLM smoke test was run manually for this milestone instead (not part of the
+default test suite, since it costs real API tokens); see
+`docs/PAMOP_REPRODUCTION_PLAN.md` §15.5 for its results.
 
-A handful of ids in the 1–269 range (e.g. `3`, `28`, `51`, ...) exist in the
-Hugging Face dataset only under a suffixed form (`3-infeasible`,
-`28-unsolved`, ...), not the bare numeric id `data.py` currently fetches.
-The smoke run correctly counts these as per-problem failures rather than
-crashing (see `run_partitioning.py`'s failure tracking) — this is a known,
-minor loader gap, not a partitioning-algorithm bug. A future milestone
-should resolve suffixed ids to their real path before counting them as
-`PostPamopIdError`-eligible or not.
+## Known limitation (fixed) and its actual root cause
+
+An earlier version of this milestone reported a loader failure and
+attributed it to bare-vs-suffixed id paths (e.g. `3` vs `3-infeasible`) in
+an older, cached dataset snapshot. Re-checking the **current live**
+`udell-lab/NLP4LP` snapshot found that upstream's 2026-04-20 "Final revision
+cleanup" commit already renamed every suffixed directory back to a bare
+numeric id (0 suffixed directories remain). `data.py` still resolves
+suffixed variants defensively (`_resolve_problem_info_path`, in case a
+future snapshot reintroduces them), but that was not the actual failure.
+
+The **real** cause: 6 of the 269 pre-PaMOP ids — **28, 51, 57, 123, 126,
+135** — have a problem directory (`description.txt`, `metadata.json`,
+`optimus-code.py`) but genuinely **no `problem_info.json` anywhere**, bare
+or suffixed. These are almost certainly the dataset's own historical
+"-infeasible"/"-unsolved" entries, renamed by the cleanup commit without
+ever having had a structured formulation generated. There is no data to
+recover for these 6 ids — `data.py` now raises a distinct
+`MissingStructuredDataError` (a `FileNotFoundError` subclass) for them
+instead of leaking a generic `RemoteEntryNotFoundError`, so callers can
+count and report this cleanly rather than mistake it for an auth/network
+failure. See `baselines/pamop/tests/test_data.py` for both a mocked
+regression test of the resolution logic and a live regression test
+(`@pytest.mark.requires_network`) pinned to these exact 6 ids.
 
 ## Next milestone
 
 See [`docs/PAMOP_REPRODUCTION_PLAN.md`](../../docs/PAMOP_REPRODUCTION_PLAN.md)
-section 14 for implementation status and the exact next step (the LLM-based
-`G_extr` structured-extraction stage, gated behind acquiring an LLM API
-configuration decision per report section 7.3).
+sections 14 and 15 for implementation status. Next: self-augmented
+leaf-node modeling (`G_mod`, eq. 3) and its bottom-up merge (eq. 4) — the
+last stage before AMPL generation becomes meaningful, reusing the `llm/`
+provider abstraction and `prompts/` versioning built this milestone
+unchanged.

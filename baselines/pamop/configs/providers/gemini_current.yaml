@@ -1,17 +1,13 @@
-# PaMOP -- reconstructed-default configuration.
+# PaMOP -- current-model variant configuration (Google Gemini).
 #
-# Fills every field the paper leaves unspecified with a documented,
-# reproducible choice so development/testing can run end to end today. Every
-# value below that is not paper-specified is tagged REPRODUCTION CHOICE with
-# a one-line justification. See docs/PAMOP_REPRODUCTION_PLAN.md sections 2, 6,
-# and 9 for the fuller rationale, and baselines/pamop/README.md for the
-# summary table.
-#
-# This config's numeric results must never be captioned as reproducing the
-# PaMOP paper's own published numbers (62.3% accuracy / 86.8% code
-# executability) -- it is an independent reimplementation under
-# reconstructed choices, evaluated (for now) only through the non-LLM
-# partitioning stage.
+# NOT PaMOP reproduction. This is a robustness/portability variant of
+# configs/reconstructed_default.yaml with a different LLM provider/model.
+# Its results must never be captioned as reproducing PaMOP's published
+# numbers (62.3% accuracy / 86.8% code executability), nor as "the paper's
+# GPT-4 condition" -- see baselines/pamop/README.md and
+# docs/PAMOP_REPRODUCTION_PLAN.md for the full paper-faithful vs.
+# reconstructed-vs-current-model distinction. Partitioning/correction/
+# execution/dataset sections are identical to reconstructed_default.yaml.
 
 config_kind: reconstructed_default
 citation: >
@@ -21,19 +17,18 @@ citation: >
   DOI: 10.24963/ijcai.2025/296.
 
 llm:
-  # REPRODUCTION CHOICE: modern GPT-4-class model via OpenAI. Aspirational/
-  # portable default -- requires genuine OpenAI credentials, which this
-  # particular workstation does NOT currently have (see paper_faithful.yaml's
-  # "ENVIRONMENT NOTE"). See configs/providers/*.yaml for variants pointed at
-  # providers with a verified-working key on this workstation
-  # (cohere, cloudrift) as of this milestone.
-  provider: openai
-  model: gpt-4o
-  temperature: 0.2                 # PAPER-SPECIFIED
-  max_correction_iterations: 5     # PAPER-SPECIFIED
-  top_p: 1.0                       # REPRODUCTION CHOICE: provider default, paper silent
-  max_tokens: 4096                 # REPRODUCTION CHOICE: headroom for an AMPL model + prompt context
-  extraction_max_retries: 2        # REPRODUCTION CHOICE: paper doesn't specify; 2 retries (3 attempts total) balances catching transient malformed JSON against runaway cost
+  provider: gemini
+  model: gemini-2.5-flash-lite  # matches this repo's existing Gemini default (configs/llm_baselines.yaml)
+  temperature: 0.2
+  max_correction_iterations: 5
+  top_p: 1.0
+  max_tokens: 4096
+  extraction_max_retries: 2
+  # STATUS on this workstation (verified this milestone): NOT currently
+  # runnable -- both GEMINI_API_KEY and GOOGLE_API_KEY are present as
+  # environment variable *names* but their values are empty strings, so
+  # baselines.pamop.llm.GeminiProvider correctly raises ProviderAuthError.
+  # Needs a real key set to use this config.
 
 partitioning:
   # REPRODUCTION CHOICE: no GloVe vectors are provisioned on this workstation

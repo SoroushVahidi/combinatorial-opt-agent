@@ -52,6 +52,22 @@ class PostPamopIdError(ValueError):
     """Raised when code tries to treat a post-2026-02 NLP4LP id as PaMOP-relevant."""
 
 
+class MissingStructuredDataError(FileNotFoundError):
+    """Raised when an NLP4LP problem id has no ``problem_info.json`` anywhere.
+
+    As of this investigation, 6 of the 269 pre-PaMOP ids (28, 51, 57, 123,
+    126, 135) have a problem directory (description.txt, metadata.json,
+    optimus-code.py) but genuinely no ``problem_info.json`` -- these appear
+    to be the dataset's own historical "-infeasible"/"-unsolved" entries,
+    renamed back to bare numeric ids by the upstream "Final revision
+    cleanup" commit (2026-04-20) without ever having had a structured
+    formulation generated. This is not a loader bug to route around
+    silently: there is no structured record to recover, so this error is
+    raised distinctly (not a generic 404) precisely so callers can count and
+    report it rather than mistake it for an auth/network failure.
+    """
+
+
 def list_ids_for_subset(subset: str) -> list[int]:
     """Return the HF NLP4LP problem ids belonging to ``subset``."""
     if subset not in _VALID_SUBSETS:
@@ -103,24 +119,72 @@ def load_alignment_manifest() -> list[dict[str, Any]]:
         return [json.loads(line) for line in fh if line.strip()]
 
 
+def _resolve_problem_info_path(problem_id: int, token: str | None) -> str:
+    """Return a downloaded local path to ``problem_id``'s ``problem_info.json``.
+
+    Tries the bare numeric id first (the current, cleaned-up snapshot layout
+    -- verified live as of this investigation to cover all 361 problem
+    directories). Falls back to listing ``data/`` for a suffixed variant
+    (``{id}-infeasible``, ``{id}-unsolved``, ...) in case an older or future
+    snapshot reintroduces that layout -- this is the "handle suffixed ids
+    robustly" half of the fix. Raises ``MissingStructuredDataError`` only
+    after both the bare id and every suffix variant have been checked and
+    none has a ``problem_info.json``.
+    """
+    from huggingface_hub import HfApi, hf_hub_download
+    from huggingface_hub.errors import EntryNotFoundError
+
+    try:
+        return hf_hub_download(
+            DATASET_ID,
+            f"data/{problem_id}/problem_info.json",
+            repo_type="dataset",
+            token=token,
+        )
+    except EntryNotFoundError:
+        pass  # bare id has no problem_info.json -- try suffixed variants below
+
+    api = HfApi(token=token)
+    all_files = api.list_repo_files(DATASET_ID, repo_type="dataset")
+    prefix = f"data/{problem_id}-"
+    suffixed_dirs = sorted(
+        {f.split("/")[1] for f in all_files if f.startswith(prefix)}
+    )
+    for dirname in suffixed_dirs:
+        try:
+            return hf_hub_download(
+                DATASET_ID,
+                f"data/{dirname}/problem_info.json",
+                repo_type="dataset",
+                token=token,
+            )
+        except EntryNotFoundError:
+            continue
+
+    raise MissingStructuredDataError(
+        f"NLP4LP problem id {problem_id} has no problem_info.json under "
+        f"data/{problem_id}/ or any suffixed variant "
+        f"({suffixed_dirs or 'none found'}). See MissingStructuredDataError "
+        f"docstring for known affected ids."
+    )
+
+
 def load_problem_record(problem_id: int) -> dict[str, Any]:
     """Fetch one NLP4LP problem's structured fields (gated; requires HF access).
 
-    Returns the ``problem_info.json`` content for ``problem_id``. Raises
-    ``PostPamopIdError`` before attempting any network access if the id is
-    known to postdate PaMOP's publication.
+    Returns the ``problem_info.json`` content for ``problem_id``, resolving
+    bare-numeric and suffixed (``{id}-infeasible``, ``{id}-unsolved``, ...)
+    directory layouts transparently (see ``_resolve_problem_info_path``).
+    Raises ``PostPamopIdError`` before attempting any network access if the
+    id is known to postdate PaMOP's publication, and
+    ``MissingStructuredDataError`` if no ``problem_info.json`` exists for
+    this id under any layout.
     """
     assert_not_post_pamop(problem_id)
 
-    from huggingface_hub import hf_hub_download
-
     token = _get_hf_token() or None  # huggingface_hub reads HF_TOKEN itself if None
-    path = hf_hub_download(
-        DATASET_ID,
-        f"data/{problem_id}/problem_info.json",
-        repo_type="dataset",
-        token=token,
-    )
+    path = _resolve_problem_info_path(problem_id, token)
+
     import json
 
     with open(path, encoding="utf-8") as fh:
