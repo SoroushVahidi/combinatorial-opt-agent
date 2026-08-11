@@ -2083,9 +2083,15 @@ historical GPT-4 identity, and prompt uncertainty are resolved.
 ## 18. Pilot Benchmark Status: Controlled Small Slice
 
 **Update, 2026-08-11 (same day, sixth follow-up):** the first controlled
-pilot benchmark slice has been defined, but the benchmark did **not** execute
-because this shell has no Slurm `sbatch` command on `PATH`. No local fallback
-was used.
+pilot benchmark slice was defined. The first launch attempt evaluated 0
+problems because it incorrectly required Slurm `sbatch` in a local
+workstation environment where Slurm is not installed. That 0/0 attempt is
+superseded and is not a scientific result.
+
+**Update, 2026-08-11 (same day, seventh follow-up):** the same 18-problem
+slice was executed locally on `al-khwarizmi` in a detached `tmux`
+checkpoint run using Azure OpenAI `gpt-4.1-mini`, temperature `0.2`, and
+AMPL -> Gurobi.
 
 ### 18.1 Exact Pilot Slice
 
@@ -2119,30 +2125,37 @@ material are included.
 
 ### 18.2 Execution and Correction Behavior
 
-Attempted submission:
+Actual local pilot results:
 
-```bash
-sbatch batch/pamop/run_pamop_pilot.sbatch
-```
+| Metric | Count / value |
+|---|---:|
+| Selected problems | 18 |
+| Evaluated problems | 18 |
+| Initial execution successes | 0 / 18 (0.0%) |
+| Final execution successes | 6 / 18 (33.3%) |
+| Success without correction | 0 |
+| Success after correction | 6 |
+| Correction rescue count | 6 |
+| Correction harm count | 0 |
+| Mean correction iterations, all correction-invoked cases | 4.39 |
+| Solver-feasible models | 6 / 18 (33.3%) |
+| Objective produced | 6 / 18 (33.3%) |
+| Total LLM calls | 304 |
+| Total LLM tokens | 260,774 |
+| Mean tokens/problem | 14,487.44 |
 
-Observed result:
+Terminal categories:
 
-```text
-sbatch: command not found
-```
+| Category | Count |
+|---|---:|
+| `B. SUCCESS_AFTER_CORRECTION` | 6 |
+| `D. AMPL_RENDER_FAILURE` | 7 |
+| `E. AMPL_PARSE_FAILURE` | 4 |
+| `H. SOLVER_RUNTIME_ERROR` | 1 |
 
-Therefore no selected problem was evaluated. Execution/correction metrics are
-all zero or not evaluable in this blocked attempt:
-
-- selected problems: 18
-- evaluated problems: 0
-- initial AMPL execution success rate: 0.0
-- final execution success rate: 0.0
-- correction rescue count: 0
-- total LLM tokens: 0
-- semantic correctness: not evaluable
-
-This is an environment failure, not a PaMOP model failure.
+Correction provides real executability value in this slice: execution success
+improves from 0/18 to 6/18. However, every final success required correction,
+and most cases still exhausted the correction loop.
 
 ### 18.3 Remaining Reproduction Uncertainties
 
@@ -2151,7 +2164,10 @@ Unresolved uncertainties remain unchanged:
 - PaMOP's exact 67 NLP4LP problem ids are still unknown.
 - The historical GPT-4 snapshot/deployment used by PaMOP is still unknown.
 - The original PaMOP prompt wording is not public.
-- Feasible AMPL execution must not be treated as semantic accuracy.
+- Feasible AMPL execution must not be treated as semantic accuracy. In this
+  pilot, 5 generated feasible models had comparable gold objectives and all
+  5 disagreed with gold. One additional feasible generated model lacked a
+  comparable gold objective in the available gold output.
 - Gold comparison can provide solver/objective evidence where `optimus-code.py`
   is available, but full model-structure equivalence is not yet established.
 
@@ -2159,12 +2175,7 @@ Unresolved uncertainties remain unchanged:
 
 Decision gate: **B. FIX SYSTEMATIC ISSUE FIRST**.
 
-Do not start a larger run until the controlled pilot can execute through
-Slurm and produce per-problem PaMOP/correction/gold-comparison metrics. The
-next exact action is to run:
-
-```bash
-sbatch batch/pamop/run_pamop_pilot.sbatch
-```
-
-from a Slurm login node with Azure OpenAI, HF, AMPL, and Gurobi configured.
+Do not start a larger run yet. The exact next action is to inspect the failed
+and feasible-but-wrong generated models using safe, non-gated paraphrases and
+metadata, then address systematic AMPL rendering/modeling/correction failure
+modes before expanding beyond the pilot slice.

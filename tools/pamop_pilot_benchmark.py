@@ -19,6 +19,7 @@ import subprocess
 import sys
 import tempfile
 import time
+import uuid
 from collections import Counter
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -45,7 +46,7 @@ from baselines.pamop.data import (
 )
 from baselines.pamop.extraction import ExtractionValidationError, extract_structured_problem
 from baselines.pamop.llm.registry import get_provider
-from baselines.pamop.llm.types import LLMResponse
+from baselines.pamop.llm.types import LLMResponse, ProviderAuthError, ProviderCallError
 from baselines.pamop.modeling import ModelingValidationError, build_merged_model
 from baselines.pamop.partition import build_partition_tree
 
@@ -309,6 +310,24 @@ def write_selected_ids(out_dir: Path, selected: list[SliceMeta]) -> None:
     safe_write_json(out_dir / "selected_ids.json", payload)
 
 
+def load_or_select_slice(out_dir: Path, target: int) -> list[SliceMeta]:
+    selected_path = out_dir / "selected_ids.json"
+    if not selected_path.exists():
+        selected = select_slice(target)
+        write_selected_ids(out_dir, selected)
+        return selected
+    data = json.loads(selected_path.read_text(encoding="utf-8"))
+    problems = data.get("problems") or []
+    if not problems:
+        raise RuntimeError(f"{selected_path} exists but contains no selected problem metadata")
+    selected = [SliceMeta(**item) for item in problems]
+    ids = [m.problem_id for m in selected]
+    recorded_ids = data.get("selected_ids")
+    if recorded_ids and ids != recorded_ids:
+        raise RuntimeError(f"{selected_path} selected_ids do not match problems metadata")
+    return selected
+
+
 def llm_usage(responses: list[LLMResponse]) -> dict[str, Any]:
     def total(attr: str) -> int:
         return sum(int(getattr(r, attr) or 0) for r in responses)
@@ -345,6 +364,10 @@ def map_failure_category(trace: CorrectionTrace | None, exc: Exception | None, r
     if exc is not None:
         if isinstance(exc, MissingStructuredDataError):
             return "J. DATA_FAILURE"
+        if isinstance(exc, ProviderAuthError):
+            return "K. ENVIRONMENT_FAILURE"
+        if isinstance(exc, ProviderCallError):
+            return "K. ENVIRONMENT_FAILURE"
         if isinstance(exc, ExtractionValidationError):
             return "C. MODEL_PARSE_FAILURE"
         if isinstance(exc, ModelingValidationError):
@@ -729,10 +752,18 @@ def write_summary(out_dir: Path, selected: list[SliceMeta], status: str, slurm_j
     latencies = [float(r.get("latency_seconds") or 0.0) for r in rows]
     failures = Counter(r.get("failure_category") for r in rows)
     rescue = 0
+    harm = 0
     corr_path = out_dir / "correction_analysis.csv"
     if corr_path.exists():
         with corr_path.open(encoding="utf-8") as fh:
-            rescue = sum(truthy(r.get("rescued_by_correction")) for r in csv.DictReader(fh))
+            correction_rows = list(csv.DictReader(fh))
+            rescue = sum(truthy(r.get("rescued_by_correction")) for r in correction_rows)
+            harm = sum(truthy(r.get("harmed_by_correction")) for r in correction_rows)
+    semantic_evaluable = [
+        r for r in rows
+        if r.get("objective_match_with_gold") in {"True", "true", "False", "false"}
+    ]
+    semantic_correct = sum(r.get("objective_match_with_gold") in {"True", "true"} for r in semantic_evaluable)
     decision_gate = "B. FIX SYSTEMATIC ISSUE FIRST"
     if status == "COMPLETED" and n and (final_success / n) >= 0.7:
         decision_gate = "A. PROCEED TO LARGER RUN"
@@ -750,12 +781,16 @@ def write_summary(out_dir: Path, selected: list[SliceMeta], status: str, slurm_j
         "success_without_correction": no_corr,
         "success_after_correction": after_corr,
         "correction_rescue_count": rescue,
+        "correction_harm_count": harm,
         "mean_correction_iterations_among_corrected": (sum(correction_iters) / len(correction_iters)) if correction_iters else 0.0,
         "solver_feasible_count": feasible,
         "solver_feasible_rate": feasible / n if n else 0.0,
         "objective_produced_count": objective,
         "objective_produced_rate": objective / n if n else 0.0,
-        "semantic_correct_evaluable_count": sum(r.get("objective_match_with_gold") in {"True", "true"} for r in rows),
+        "semantic_evaluable_count": len(semantic_evaluable),
+        "semantic_correct_count": semantic_correct,
+        "semantic_correct_rate": semantic_correct / len(semantic_evaluable) if semantic_evaluable else 0.0,
+        "semantic_correct_evaluable_count": semantic_correct,
         "semantically_wrong_but_feasible_count": sum(r.get("semantically_wrong_but_feasible") in {"True", "true"} for r in rows),
         "failure_categories": dict(failures),
         "total_tokens": tokens,
@@ -778,6 +813,8 @@ def write_run_metadata(out_dir: Path, args: argparse.Namespace, status: str, mes
         {
             "status": status,
             "message": message,
+            "run_id": os.environ.get("PAMOP_PILOT_RUN_ID", ""),
+            "execution_mode": "local" if args.allow_local else "slurm_required",
             "created_at_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             "cwd": str(ROOT),
             "git_commit": subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True, capture_output=True).stdout.strip(),
@@ -791,6 +828,33 @@ def write_run_metadata(out_dir: Path, args: argparse.Namespace, status: str, mes
             "ampl_python": args.ampl_python,
             "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
             "secrets_policy": "No API keys, HF tokens, AMPL/Gurobi licenses, or gated problem text are written.",
+        },
+    )
+
+
+def write_checkpoint_state(
+    out_dir: Path,
+    *,
+    run_id: str,
+    selected: list[SliceMeta],
+    status: str,
+    execution_mode: str,
+    session_name: str | None = None,
+) -> None:
+    rows = read_per_problem(out_dir / "per_problem.csv")
+    completed = [int(r["problem_id"]) for r in rows if r.get("problem_id")]
+    selected_ids = [m.problem_id for m in selected]
+    safe_write_json(
+        out_dir / "local_run_state.json",
+        {
+            "run_id": run_id,
+            "status": status,
+            "execution_mode": execution_mode,
+            "pid": os.getpid(),
+            "tmux_session": session_name or os.environ.get("PAMOP_PILOT_TMUX_SESSION", ""),
+            "updated_at_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            "completed_ids": completed,
+            "remaining_ids": [pid for pid in selected_ids if pid not in set(completed)],
         },
     )
 
@@ -813,18 +877,21 @@ def main() -> int:
     args = parse_args()
     out_dir = args.output_dir
     out_dir.mkdir(parents=True, exist_ok=True)
-    selected = select_slice(args.target_count)
-    write_selected_ids(out_dir, selected)
+    selected = load_or_select_slice(out_dir, args.target_count)
     ensure_artifact_headers(out_dir)
+    run_id = os.environ.get("PAMOP_PILOT_RUN_ID") or f"pamop-pilot-local-{time.strftime('%Y%m%dT%H%M%SZ', time.gmtime())}-{uuid.uuid4().hex[:8]}"
+    os.environ["PAMOP_PILOT_RUN_ID"] = run_id
 
     if args.select_only:
         write_run_metadata(out_dir, args, "SELECTED_ONLY")
+        write_checkpoint_state(out_dir, run_id=run_id, selected=selected, status="SELECTED_ONLY", execution_mode="select_only")
         write_ours_comparison(out_dir, selected, read_per_problem(out_dir / "per_problem.csv"))
         write_summary(out_dir, selected, "SELECTED_ONLY", os.environ.get("SLURM_JOB_ID"))
         return 0
 
     if not args.allow_local and not os.environ.get("SLURM_JOB_ID"):
         write_run_metadata(out_dir, args, "ENVIRONMENT_FAILURE", "Refusing to run PaMOP pilot outside Slurm; submit with sbatch.")
+        write_checkpoint_state(out_dir, run_id=run_id, selected=selected, status="ENVIRONMENT_FAILURE", execution_mode="slurm_required")
         write_ours_comparison(out_dir, selected, read_per_problem(out_dir / "per_problem.csv"))
         write_summary(out_dir, selected, "ENVIRONMENT_FAILURE", None)
         return 2
@@ -835,6 +902,7 @@ def main() -> int:
         raise RuntimeError("This pilot is pinned to Azure OpenAI gpt-4.1-mini at temperature 0.2; config mismatch.")
     provider = get_provider("azure_openai")
     write_run_metadata(out_dir, args, "RUNNING")
+    write_checkpoint_state(out_dir, run_id=run_id, selected=selected, status="RUNNING", execution_mode="local")
     rows = []
     done = {int(r["problem_id"]) for r in read_per_problem(out_dir / "per_problem.csv") if r.get("problem_id")}
     for meta in selected:
@@ -842,10 +910,12 @@ def main() -> int:
             continue
         rows.append(run_problem(meta, out_dir, args, config, provider))
         write_summary(out_dir, selected, "RUNNING", os.environ.get("SLURM_JOB_ID"))
+        write_checkpoint_state(out_dir, run_id=run_id, selected=selected, status="RUNNING", execution_mode="local")
     all_rows = read_per_problem(out_dir / "per_problem.csv")
     write_ours_comparison(out_dir, selected, all_rows)
     write_run_metadata(out_dir, args, "COMPLETED")
     write_summary(out_dir, selected, "COMPLETED", os.environ.get("SLURM_JOB_ID"))
+    write_checkpoint_state(out_dir, run_id=run_id, selected=selected, status="COMPLETED", execution_mode="local")
     return 0
 
 

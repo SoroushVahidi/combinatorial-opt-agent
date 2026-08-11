@@ -1,1 +1,21 @@
 problem_id,failure_category,primary_reason,issue_tags,diagnostic_codes
+23,D. AMPL_RENDER_FAILURE,Model contains semicolon-terminated text not recognized by the lightweight validator.,,missing_constraint;unparsed_statement;unresolved_symbol
+72,E. AMPL_PARSE_FAILURE,Model contains semicolon-terminated text not recognized by the lightweight validator.,,duplicate_symbol;unparsed_statement
+84,D. AMPL_RENDER_FAILURE,Model contains semicolon-terminated text not recognized by the lightweight validator.,,missing_constraint;unparsed_statement;unresolved_symbol
+88,E. AMPL_PARSE_FAILURE,"Error at _cmdno 3 executing ""solve"" command
+(file /tmp/pamop_ampl_ua31besc/model.run, line 28, offset 891):
+error processing constraint MinVintageProduction:
+	no value for MinVintageBottles
+Error: Exit code 2",,ampl_process_failed
+96,D. AMPL_RENDER_FAILURE,Model contains semicolon-terminated text not recognized by the lightweight validator.,,unparsed_statement;unresolved_symbol
+117,D. AMPL_RENDER_FAILURE,Model contains semicolon-terminated text not recognized by the lightweight validator.,,unparsed_statement;unresolved_symbol
+190,D. AMPL_RENDER_FAILURE,Model contains semicolon-terminated text not recognized by the lightweight validator.,,missing_constraint;unparsed_statement;unresolved_symbol
+202,D. AMPL_RENDER_FAILURE,Model contains semicolon-terminated text not recognized by the lightweight validator.,,missing_constraint;unparsed_statement;unresolved_symbol
+219,E. AMPL_PARSE_FAILURE,"Error at _cmdno 3 executing ""solve"" command
+(file /tmp/pamop_ampl_bo_pbbg_/model.run, line 32, offset 1064):
+error processing constraint CoolingCapacityRequirement:
+	no value for TotalCoolingRequired
+Error: Exit code 2",,ampl_process_failed
+232,D. AMPL_RENDER_FAILURE,Expression references undeclared symbol 'i'.,,unresolved_symbol
+254,E. AMPL_PARSE_FAILURE,"Symbol 'SpecializedCostPerHour' is declared multiple times as ['param', 'param'].",,duplicate_symbol
+262,H. SOLVER_RUNTIME_ERROR,Model contains semicolon-terminated text not recognized by the lightweight validator.,,unparsed_statement
