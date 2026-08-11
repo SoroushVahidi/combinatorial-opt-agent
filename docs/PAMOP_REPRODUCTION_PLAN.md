@@ -16,6 +16,12 @@ Science and Technology of China (USTC).
 `https://github.com/SoroushVahidi/combinatorial-opt-agent` (local clone:
 `~/combinatorial-opt-agent`, branch `main`).
 
+**Update, 2026-08-11 (same day, follow-up pass):** environment verification (HF
+NLP4LP access, Gurobi) and NLP4LP subset-alignment analysis added — see
+[§13 NLP4LP Subset Alignment and Environment Verification](#13-nlp4lp-subset-alignment-and-environment-verification).
+Both original blockers (HF access, Gurobi) are **resolved**; the exact-subset
+question is now precisely characterized (not fully resolved — see §13.5).
+
 ---
 
 ## 1. Does official public PaMOP code exist?
@@ -526,14 +532,12 @@ local PaMOP-architecture reimplementation, run under configuration X."
   silently picking one.) This is compatible with a research reproduction baseline but
   **not** with any commercial redistribution of PaMOP-generated artifacts derived from
   it.
-- **Open item, not yet resolved:** whether PaMOP's self-reported "54 LP + 13 MILP = 67
-  problems" (§2.11) is identifiable as a specific named split/subfolder inside the
-  current `udell-lab/NLP4LP` HF snapshot, or whether it corresponds to an earlier,
-  smaller NLP4LP release (the OptiMUS lineage grew from an initial ~67-problem set in
-  the 2023/2024 OptiMUS v1 paper up to ~269 problems by OptiMUS v0.3) that predates the
-  dataset now hosted on HF. This must be checked by actually pulling the dataset and
-  counting LP/MILP-tagged problems before any "same subset" comparison claim is made
-  (§5).
+- **Resolved (was "open item"), see §13:** PaMOP's "54 LP + 13 MILP = 67 problems"
+  (§2.11) is now identified precisely as the NLP4LP release dated **2024-05-13** (named
+  and dated on the dataset's own version-history page, and matching OptiMUS v2's exact
+  wording verbatim). It predates, and is not a labeled split of, the current
+  `udell-lab/NLP4LP` HF snapshot (361 problems as of this investigation). §13 works out
+  exactly which of our 331 catalog entries could vs. could not contain it.
 
 ---
 
@@ -552,8 +556,8 @@ local PaMOP-architecture reimplementation, run under configuration X."
 | Correction: reverse translation | Mechanism + equations given, prompt/scope missing | Moderate | Exact prompts for `G_rev`/`G_comp`/`G_remod`; whether it runs on all constraints or vague-only | Reconstruct; default to vague-only per Fig. 2 implication, configurable |
 | Stopping criteria / hyperparameters | Temperature and max-iterations explicit | High (for these two) | `top_p`, `max_tokens`, correctness-check tolerance | Use provider defaults for unspecified decoding params; require exact-objective-match unless configured otherwise; document |
 | LLM identity | "GPT-4" only, no snapshot | Low | Exact snapshot unrecoverable; base model itself sunsetting 2026-10-23 | Ship two configs (§7.3); never claim exact reproduction |
-| Modeling language / solver | AMPL + Gurobi, explicit | High (spec) / Low (local availability) | Neither AMPL nor Gurobi is installed on this workstation | Acquire AMPL (Community Edition) + Gurobi (academic) licenses, or document a HiGHS/CBC-via-`amplpy` deviation explicitly, consistent with how this repo already documents its own SciPy-HiGHS deviation from Gurobi |
-| NLP4LP subset identity | Problem count given (67), exact split unclear | Moderate | Whether 67-problem set is recoverable from current HF snapshot | Pull dataset, enumerate LP/MILP-tagged problems, attempt to match counts before claiming subset alignment |
+| Modeling language / solver | AMPL + Gurobi, explicit | High (spec) / **Gurobi: High (verified working, §13.2, no longer a blocker) / AMPL: Low (still not installed, §13.6)** | Whether AMPL itself is essential to the *method* (yes, per §13.6) vs. replaceable for solving only | Install AMPL Community Edition (free, sufficient for NLP4LP-scale problems), or document a direct-`gurobipy` deviation explicitly for the leaf/merge generation target, consistent with how this repo already documents its own SciPy-HiGHS deviation from Gurobi |
+| NLP4LP subset identity | Problem count given (67), exact split unclear | **Now precisely characterized, §13** — Moderate | *Which* 67 of the 269 structurally-possible catalog entries; original 2024-05-13 archived release is behind two interactive-only walls (reCAPTCHA, OpenReview bot-challenge) | Use the 269-entry `POSSIBLE_MATCH` block in `data/baselines/pamop/nlp4lp_pamop_subset.jsonl` as an evidence-bounded proxy (protocol **C**, §13.7); attempt manual archived-snapshot retrieval to upgrade to exact IDs |
 | Real-world Table 2 evaluation | Scale numbers only, no reproducible text | Not reproducible | Problem text never released | Explicitly exclude from any reproduction claim |
 | Metric definitions (Accuracy/ExecRate/CE/RE) | Explicit prose definitions | High | Objective-match tolerance unspecified | Implement as defined; default to exact match with a configurable tolerance, document choice |
 
@@ -612,20 +616,30 @@ NLP4LP HF dataset.
 
 ## 12. Exact next implementation steps
 
-1. **Resolve the one open code-search lead**: retry
+1. **Resolve the open leads, now three of them**: (a) retry
    `staff.ustc.edu.cn/~xiangyangli/publication.html` from a different network path (the
-   `ECONNREFUSED` seen here may be workstation/network-specific, not a dead host), and
-   check the personal pages of the other six authors if locatable via USTC directory or
-   Google Scholar, specifically looking for a code/data availability note not present in
-   the camera-ready PDF. If this turns up nothing, the "no official code" conclusion in
-   §1 should be treated as final.
-2. **Pull `udell-lab/NLP4LP` locally** (token already available, §8) and enumerate its
-   LP/MILP-tagged problems to determine whether PaMOP's 67-problem subset (54 LP + 13
-   MILP) is identifiable inside the current HF snapshot, and whether it overlaps with
-   the 331-query `orig` variant this repo already evaluates on. This gates every
-   claim in §5 about "the same compatible subset."
-3. **Acquire AMPL (Community Edition) + a solver** — Gurobi (academic license) to match
-   the paper exactly, or explicitly adopt a HiGHS/CBC-via-`amplpy` deviation consistent
+   `ECONNREFUSED` seen here may be workstation/network-specific, not a dead host); (b)
+   manually (interactively, solving the human-verification challenge) retrieve the
+   archived 2024-05-13 "67 instances" NLP4LP release from
+   `nlp4lp.vercel.app` (client-rendered, reCAPTCHA-gated — not fetchable by this
+   automated investigation, §13.5); (c) manually retrieve the OpenReview supplementary
+   material at `openreview.net/forum?id=HobyL1B9CZ` (bot-challenge-gated, same
+   limitation). (b) or (c) succeeding would let us exactly identify PaMOP's 67 problems
+   by content-matching against our catalog, upgrading §13's "POSSIBLE_MATCH" rows to
+   real matches. If all three turn up nothing, the "no official code" conclusion in §1
+   stands, and the manifest in §13 (269 possible / 62 no-match, 0 exact) becomes the
+   permanent ceiling on subset-alignment precision.
+2. ~~Pull `udell-lab/NLP4LP` locally and enumerate its LP/MILP-tagged problems~~ —
+   **done, see §13.** Result: PaMOP's 67-problem subset traces to a specific named,
+   dated NLP4LP release (2024-05-13, 54 LP + 13 MILP, per OptiMUS v2) that is **not**
+   recoverable by ID from the current HF snapshot; 269 of our 331 catalog entries are
+   structurally eligible to contain it (existed pre-publication), the other 62 are
+   provably excluded (added 2026-02, after PaMOP was published). Exact membership
+   within the 269 remains unresolved pending manual retrieval of the archived release
+   (§13.5, §13.9 step 1).
+3. **Acquire AMPL (Community Edition)** — Gurobi is **already installed and verified**
+   (§13.2; not a blocker), but AMPL/`amplpy` itself is still absent (§13.6). Install it,
+   or explicitly adopt the direct-`gurobipy` deviation described in §13.6, consistent
    with this repo's already-documented Gurobi→SciPy-HiGHS substitution pattern for its
    own paper-core results. Decide and document before writing any solver-execution code.
 4. **Draft `baselines/pamop/README.md`'s exact-vs-reconstructed table** from §2/§9 of
@@ -636,12 +650,329 @@ NLP4LP HF dataset.
    `pamop_paper_faithful` prioritized given the `gpt-4-0613`/`gpt-4-turbo` shutdown date
    of 2026-10-23 — if this reproduction is wanted at all under something resembling the
    original model, the window to do so is closing.
-6. **Only after (1)–(5)**: run both configurations on the confirmed-overlapping NLP4LP
-   subset from step 2, report our own measured Accuracy/ExecutionRate/CE/RE numbers
-   (never captioned as "PaMOP's numbers"), and separately compute the
+6. **Only after (1)–(5)**: run both configurations on the 269-entry
+   `POSSIBLE_MATCH` block from `data/baselines/pamop/nlp4lp_pamop_subset.jsonl`
+   (catalog indices 0–268 / HF ids 1–269 — the best-available, evidence-bounded proxy
+   for PaMOP's actual 67, per protocol classification **C** in §13.7) *and* on the full
+   331-query canonical benchmark, report our own measured Accuracy/ExecutionRate/CE/RE
+   numbers on both (never captioned as "PaMOP's numbers"), and separately compute the
    parameter-grounding cross-metric described in §5 (parse PaMOP-generated AMPL+data
    back into scalar values, score with our own `Coverage`/`TypeMatch`/
    `InstantiationReady`) as the one genuinely apples-to-apples comparison point against
    our existing paper-core pipeline.
 7. Do **not** implement a speculative approximation of PaMOP for numeric comparison
-   purposes before steps 1–4 are complete, per the original task's explicit instruction.
+   purposes before steps 1, 3, and 4 are complete, per the original task's explicit
+   instruction.
+
+---
+
+## 13. NLP4LP Subset Alignment and Environment Verification
+
+**Follow-up investigation, 2026-08-11.** Data-alignment and environment-verification
+pass only — no PaMOP code implemented, no manuscript file touched, no existing
+benchmark result changed. This section is additive to §§1–12 above; where it changes an
+earlier conclusion, the original section was edited in place with a pointer back here.
+
+### 13.1 Machine / repository state
+
+- Hostname: `al-khwarizmi` (same local workstation as the original investigation).
+- Repository: `~/combinatorial-opt-agent`, branch `main`, working tree clean before this
+  pass began, up to date with `origin/main` (`git fetch` confirmed no upstream changes).
+- No reset, discard, or destructive git operation was used.
+
+### 13.2 Hugging Face NLP4LP access — PASS
+
+- **Local HF dataset cache checked first:** no `NLP4LP` entry existed under
+  `~/.cache/huggingface/{datasets,hub}` — nothing was cached, so a fresh metadata pull
+  was necessary (metadata/listing only, not a bulk file download).
+- **Authentication:** the workstation's existing `HF_TOKEN` (already configured, not
+  touched, never printed) successfully authenticated against `HfApi().dataset_info(...)`
+  for `udell-lab/NLP4LP`. **No token value was read, echoed, or logged anywhere in this
+  investigation.**
+- **Current snapshot (`sha af17e517...`, last modified 2026-04-20):** 2,127 files → **361
+  distinct problem directories** (`data/1/` … `data/361/`, gaps filled by
+  `-infeasible`/`-unsolved` suffixed variants), plus a root-level aggregated
+  `train.jsonl` (361 rows, one per problem) with fields
+  `id, type, description, parametrized_description, keywords, parameters, problem_info,
+  optimus_code, solution`.
+- **License (from the live HF dataset card):** **CC BY-NC-SA 4.0**, non-commercial
+  research use, gated behind a click-through contact-info agreement — consistent with
+  §8's original finding, now directly re-confirmed via the API rather than a page
+  fetch.
+- **Difficulty/type labels:** `metadata.json`'s `type` field is a *difficulty* label
+  (`easy` / `hard` / `case study`), **not** an LP/MILP label — LP vs. MILP is only
+  recoverable from a `# Problem type: LP|MIP` comment embedded in each problem's
+  `optimus-code.py` / `optimus_code` field. Across the current 361-problem snapshot:
+  LP = 134, MIP = 169, no-comment/`UNKNOWN` = 58 (mostly `hard`/`case study` items).
+
+### 13.3 Gurobi verification — PASS
+
+Gurobi was **not** on the default `python3` (a `modal-venv`), which is why a naive
+`import gurobipy` looked like "not installed." A dedicated environment was found and
+used instead: `~/.venvs/gurobi` (Python 3.12, `gurobipy==13.0.2`), plus a license file
+at `~/gurobi.lic` (permissions `600`, contents never read or printed).
+
+| Check | Result |
+|---|---|
+| Installed | **YES** (`~/.venvs/gurobi`) |
+| Python import works | **YES** |
+| License works | **YES** — WLS Academic license, ID printed by Gurobi itself at solve time (non-commercial use only); no license file contents were read or echoed by this investigation |
+| Trivial solve works | **YES** — `max x+y s.t. x+y<=5, x,y in [0,10]` solved to `Status=OPTIMAL`, `ObjVal=5.0` |
+| Version | **13.0.2** |
+
+**Gurobi is removed from the PaMOP blocker list** (§13.9). It was never actually
+missing — the original report's "neither Gurobi nor amplpy importable" check (§9 of the
+original pass) had simply run against the wrong Python environment.
+
+### 13.4 What PaMOP's "67 problems" precisely means — resolved
+
+PaMOP's Table/§4.3 text ("54 LP problems and 13 MILP problems") is a **verbatim
+citation**, not an independent count. Cross-checking the actual OptiMUS v2 paper text
+(`arXiv:2402.10172`, downloaded and converted with `pdftotext`, since PaMOP cites
+"[AhmadiTeshnizi et al., 2024]" for NLP4LP) finds the identical phrase:
+
+> "...create NLP4LP (Natural Language Processing for Linear Programming), a benchmark
+> consisting of **54 LP and 13 MILP problems (67 instances in total)**." — OptiMUS v2,
+> §"NLP4LP" (arXiv:2402.10172, lines 399–403 of the extracted text)
+
+This is corroborated independently by the dataset's own (now largely dead, JS-rendered)
+version-history page, `nlp4lp.vercel.app`, whose captured text describes three
+historical releases:
+
+| Date | Total instances | Note |
+|---|---|---|
+| 2023-09 | 40 | initial release |
+| 2023-10 | 51 | +11 from a Linear and Convex Optimization textbook |
+| **2024-05-13** | **67** | +16 more (page text also mentions ComplexOR/NL4OPT components alongside this release — unverified secondary detail, see caveat below) |
+
+**Conclusion:** PaMOP's "67 problems" = **the NLP4LP dataset exactly as it existed on
+2024-05-13** (54 LP + 13 MILP), the version OptiMUS v2 itself introduced and evaluated
+on. It is a **named, dated, external** release — not a split label inside the dataset
+repository, and not something PaMOP's own authors selected or filtered themselves.
+PaMOP simply reused the dataset as OptiMUS v2 had already defined and sized it. There is
+no train/test split distinction at this size (67 was the *entire* dataset at that
+point); "test" as a split name only appears later, once the dataset grew past its
+original single-block form.
+
+*Caveat:* the `nlp4lp.vercel.app` page is a client-rendered SPA behind reCAPTCHA;
+WebFetch could only recover its rendered text, not its underlying download links or raw
+markup (confirmed via direct `curl`, which returned only a reCAPTCHA loader with no
+usable content). The "plus ComplexOR and NL4OPT components" phrase attached to the
+2024-05-13 row in the fetched summary could not be independently verified against raw
+HTML and is flagged here as a lower-confidence secondary detail — it does not affect the
+54/13/67 figure itself, which is independently confirmed by the OptiMUS v2 paper text
+verbatim.
+
+### 13.5 Attempted retrieval of the original 67-problem release — blocked, not abandoned
+
+Two possible sources for the exact archived 2024-05-13 file set were identified and
+attempted:
+
+1. **`nlp4lp.vercel.app`** — confirmed to be a Next.js SPA; `curl` against it returns only
+   `recaptcha/api.js` and an Amazon textbook link, no dataset content or API endpoint in
+   the static HTML. Downloading requires a real browser and passing a reCAPTCHA
+   challenge — **not achievable by this automated, non-interactive investigation.**
+2. **OpenReview supplementary material**, `openreview.net/forum?id=HobyL1B9CZ`
+   (referenced by OptiMUS's own `optimus-v0.2` branch README as a second, alternate
+   distribution channel for the original NLP4LP + ComplexOR data) — confirmed to return
+   an OpenReview bot-challenge page (`ChallengeRequiredError`, HTTP 403) from both
+   `curl` and the OpenReview API directly. Also **not achievable non-interactively.**
+
+Both are **legitimate, likely-live leads for a human to pursue manually** (retry with an
+authenticated interactive browser session), not dead ends — they are listed as the
+first next step in the updated §12.
+
+### 13.6 Our current 331-query pipeline, traced exactly
+
+The claim in the original report (§5) that our 331 "queries" might represent multiple
+*query variants* per underlying problem was **incorrect and is corrected here**: they
+are one-query-per-problem, same granularity as PaMOP. Specifically:
+
+- Canonical catalog: `data/catalogs/nlp4lp_catalog.jsonl`, 335 rows total = **331 rows
+  with `meta.split == "test"`** (`doc_id` = `nlp4lp_test_0` … `nlp4lp_test_330`,
+  sequential `meta.index` 0–330) **+ 4 rows with `meta.split == "handcrafted"`**
+  (`product_mix_lp`, `diet_lp`, `investment_lp`, `transportation_lp` — public-source,
+  non-NLP4LP entries added post-manuscript, per `docs/RESULTS_PROVENANCE.md`). The
+  manuscript's "331-entry catalog" = exactly this `test` block.
+- Each `test` entry's `text` field is the problem's **parametrized description**
+  (named-placeholder form, e.g. `"Maximize the sum of ProfitPerDollarCondos..."`), not
+  the raw natural-language description — confirmed by direct comparison against the HF
+  `problem_info.json:parametrized_description` field for several ids (below).
+- **Exact index-to-HF-id mapping** (established by direct text comparison at 8 points
+  spanning the full range — indices 0, 1, 50, 100, 150, 200, 268, 269, 270, 300, 320,
+  329, 330 — all consistent with a single two-piece arithmetic rule, no exceptions
+  found):
+
+  ```
+  catalog index i,   0 <= i <= 268   ->  HF problem id (i + 1)     [ids   1 .. 269]
+  catalog index i, 269 <= i <= 330   ->  HF problem id (i + 24)    [ids 293 .. 354]
+  ```
+
+  i.e. our 331-query catalog = HF ids **{1..269} ∪ {293..354}**, explicitly **excluding**
+  HF ids 270–292 (a 23-problem "dev" split) and 355–361 (a 7-problem "case study" set).
+  This reproduces 269 + 62 = 331 exactly and was verified, not merely arithmetically
+  inferred: catalog index 268 and HF id 269 both start "A dessert shop produces..."; index
+  269 and HF id 293 both start "A daycare center has children..."; index 100/HF id 101
+  ("crab cakes and lobster rolls"); index 200/HF id 201 ("laminate planks"); etc.
+- **Timing, from the HF repo's own commit history** (`api.list_repo_commits`, 53 commits
+  total): ids 1–269 existed continuously from the dataset's initial HF upload
+  (2024-11-02) onward — i.e. throughout PaMOP's entire research-and-publication window.
+  Ids 270–292 ("Add dev split with 23 instances") and 293–354 ("Add 62 new test
+  instances... with full problem formulations") were both added **2026-02-12**; ids
+  355–361 ("Add case study instances") were added **2026-02-27** — all six months **after**
+  PaMOP's IJCAI 2025 publication (Aug 2025). **These 62+23+7 = 92 newer problems cannot,
+  under any interpretation, be part of PaMOP's evaluation set.**
+- Implication: **269 of our 331 catalog entries (indices 0–268) are structurally
+  old enough to possibly contain PaMOP's 67; the other 62 (indices 269–330) provably
+  cannot.**
+
+### 13.7 Mapping PaMOP's 67 to our data — manifest and match counts
+
+A reproducible script, `tools/pamop_nlp4lp_alignment.py`, was written to generate the
+mapping deterministically (not by hand), producing
+`data/baselines/pamop/nlp4lp_pamop_subset.jsonl` (331 rows, one per catalog `test`
+entry; **no gated NLP4LP text included** — only ids, indices, and structural provenance
+fields per row: `pamop_problem_identifier`, `current_nlp4lp_catalog_doc_id`,
+`current_nlp4lp_catalog_index`, `current_nlp4lp_hf_problem_id`, `lp_or_milp`,
+`text_match_status`, `schema_match_status`, `optimus_code_available`,
+`mapping_confidence`, `evidence`, `notes`).
+
+Because §13.5's two retrieval attempts were both blocked, **no content-level matching
+against PaMOP's actual 67 problems was possible** — `lp_or_milp` and
+`pamop_problem_identifier` are left `null`/unresolved throughout, and every row's
+`text_match_status`/`schema_match_status` is `NOT_ATTEMPTED` (there is nothing to match
+*against* yet). What the manifest **does** establish, per the task's required
+classification scheme:
+
+| Classification | Count | Meaning |
+|---|---|---|
+| **EXACT MATCH** | **0** | No archived 2024-05-13 snapshot was retrievable to confirm any single problem's identity |
+| **HIGH-CONFIDENCE MATCH** | **0** | Same reason |
+| **POSSIBLE MATCH** | **269** | Catalog indices 0–268 (HF ids 1–269) — old enough to possibly be one of PaMOP's 67; membership not further narrowed |
+| **NO MATCH** | **62** | Catalog indices 269–330 (HF ids 293–354) — added 2026-02, six months after PaMOP was published; provably not PaMOP's problems |
+| **UNRESOLVED** | *(not a row count — an open question)* | Exactly *which* 67 of the 269 possible entries are PaMOP's; requires either the archived 2024-05-13 file set (§13.5) or a direct research-question to the authors |
+
+### 13.8 Relationship between PaMOP's 67 and our 331 — explicit answers
+
+- **Are PaMOP's 67 a subset of our 331 test queries?** Almost certainly **partially**,
+  and possibly **entirely**, but not confirmed exactly. All 67 must be drawn from HF ids
+  ≤ 354 that existed pre-publication — i.e. from within the 269-id block ids 1–269 (our
+  indices 0–268) — since that block has existed unchanged since before PaMOP's dataset
+  even reached 269 total problems (it grew from the original 40→51→67→…→269 sequence
+  entirely before the Nov 2024 HF upload). We cannot rule out that a small number of the
+  original 67 were later renamed, deduplicated, or dropped somewhere in that growth
+  process (some churn is visible in the `-infeasible`/`-unsolved` suffix pattern at ids
+  like 3, 28, 51, 58 etc.), so "possibly all 67, likely most" is the honest statement,
+  not a guaranteed 67-for-67 subset.
+- **Does each PaMOP problem correspond to multiple query variants?** **No** — both
+  benchmarks are one-query-per-problem; this corrects the original report's speculative
+  claim to the contrary (§13.6).
+- **Is there a one-to-many or many-to-one mapping?** No — it is a straightforward
+  problem-to-problem correspondence where one exists at all.
+- **Are the 67 from a different NLP4LP version?** **Yes, precisely characterized**: the
+  named 2024-05-13 release, a strict, much smaller predecessor of the current 361-problem
+  snapshot (§13.4).
+- **Are any problems missing from the currently accessible snapshot?** Cannot be ruled
+  out — see the churn caveat above — but the dataset's growth pattern (versions only ever
+  add, historically) makes wholesale removal unlikely; partial renumbering/relabeling
+  (e.g. `id` → `id-infeasible`) is the more probable form of "missing," and such
+  relabeled entries are still present in the snapshot, just not under their original bare
+  numeric id.
+- **Quantified:** 0 exact, 0 high-confidence, 269 possible, 62 no-match, "which 67 of the
+  269" unresolved.
+
+### 13.9 Fair-comparison protocol classification
+
+Per the task's A/B/C/D scheme: **C — only partial overlap** (a bounded superset of the
+true overlap is known; the exact overlap is not).
+
+Following the task's instruction for classification C, **both** protocols are defined,
+using `data/baselines/pamop/nlp4lp_pamop_subset.jsonl`:
+
+1. **Matched-subset comparison (proxy, not exact):** run/evaluate on the 269
+   `POSSIBLE_MATCH` rows only (catalog indices 0–268). This is a **superset** of PaMOP's
+   actual 67 — any comparison run on it should be captioned "PaMOP-era-eligible subset
+   (n=269), a superset bound on PaMOP's actual 67-problem evaluation set, not the exact
+   set" — never captioned as "the same 67 problems."
+2. **Our full canonical 331-query evaluation** — unchanged, continues to be the
+   manuscript's authoritative benchmark, unaffected by any of this PaMOP-alignment work.
+
+Numeric results from (1) must **never** be presented as directly reproducing or
+matching PaMOP's published Table 1 numbers (62.3% / 86.8%) — per §5's existing rule,
+different task, different metric, and now also confirmed: different (larger,
+superset) problem count.
+
+### 13.10 Is AMPL actually required?
+
+Re-reading §2.5/§2.9/§2.7 of this report's own paper extraction with this specific
+question in mind:
+
+- AMPL is **not** merely PaMOP's execution/validation environment — it is the
+  **explicit generation target for the LLM itself**, adopted for a stated
+  methodological reason: *"LLMs treat mathematical formulas, modeling languages, and
+  programming languages as different 'languages'... we directly generate code in the
+  modeling language instead of formulas."* The leaf-node modeling step (`G_mod`, eq. 3)
+  and the merge step (eq. 4) both target AMPL syntax directly, and the paper's
+  Compile-Error-rate / Runtime-Error-rate metrics are specifically about AMPL-vs-Gurobi
+  compile/runtime failures.
+- Because of that, swapping AMPL for direct `gurobipy` Python generation is **not** a
+  transparent, fidelity-neutral substitution — it changes what the LLM is asked to
+  produce (AMPL model statements vs. Python API calls), which plausibly changes the
+  error taxonomy the CE-rate/RE-rate metrics are measuring, even if the two
+  representations are mathematically equivalent once correct.
+- Solving itself has no such constraint: once a valid model exists, Gurobi can solve an
+  AMPL-formulated model (via `amplpy` + the AMPL executable driving Gurobi, matching the
+  paper) or a `gurobipy`-native model with identical mathematical content, with identical
+  final objective values.
+
+**AMPL required: YES for a paper-faithful (`pamop_paper_faithful`) reproduction** — it is
+a deliberate part of the method, not an incidental tooling choice, and dropping it would
+compromise comparability of the CE-rate/RE-rate metrics specifically (not necessarily
+final Accuracy, which only depends on the objective value once a model is valid).
+**NO — replaceable — for a `pamop_current_model` variant**, where direct `gurobipy`
+generation is an acceptable, clearly-labeled deviation if `amplpy`/AMPL licensing proves
+inconvenient, at the cost of CE-rate/RE-rate not being strictly comparable to the
+paper's own breakdown (Accuracy and Execution-Rate remain comparable in spirit, since
+those depend on final solve success, not on which language got there).
+
+AMPL was **not installed** as part of this investigation, per the task's explicit
+instruction not to install/reconfigure software beyond what's needed to answer the
+question — the above is an assessment, not an implementation.
+
+### 13.11 Updated blocker list
+
+| Item | Classification | Status |
+|---|---|---|
+| Hugging Face NLP4LP access | ~~Blocker~~ | **RESOLVED** — auth confirmed working (§13.2) |
+| Gurobi | ~~Blocker~~ | **RESOLVED** — installed, licensed, verified with a trivial solve (§13.3) |
+| AMPL / `amplpy` | **BLOCKER** (for `pamop_paper_faithful` only) | Still not installed; required for methodological fidelity per §13.10; not required for `pamop_current_model` |
+| Exact identity of PaMOP's 67 problems | **NON-BLOCKING UNCERTAINTY** | Bounded to 269 possible candidates (§13.7); does not block starting implementation, only blocks claiming an exact-subset comparison until §13.5's leads are pursued manually |
+| Missing prompt templates (`G_extr`, `G_mod`, `G_exe`, `G_rev`, `G_comp`, `G_remod`) | **IMPLEMENTATION CHOICE** | Must be reconstructed and documented per §6/§9; not blocking, just requires disclosure |
+| Exact GPT-4 snapshot | **IMPLEMENTATION CHOICE** (time-boxed) | Two configs already specified (§7.3); `gpt-4-0613`/`gpt-4-turbo` shut down 2026-10-23 |
+| Clustering constants (`ε`, layer weights, TF-IDF `k`, GloVe variant, clustering algorithm, stop thresholds) | **IMPLEMENTATION CHOICE** | Must be configurable per §6; document defaults |
+| Correctness-check tolerance | **IMPLEMENTATION CHOICE** | Default to exact match, configurable |
+| Correction-loop iteration scope (global vs. per-node) | **IMPLEMENTATION CHOICE** | Default to global per paper's literal wording (§2.8) |
+
+### 13.12 Can implementation now begin with scientifically defensible fidelity?
+
+**YES — MODERATE confidence.**
+
+Not HIGH, because the exact 67-problem evaluation set is still unresolved (§13.7) and
+several prompt-level and clustering-constant details remain reconstructions rather than
+verified originals (unchanged from §9's original assessment). Not NO, because every
+remaining item is now either resolved (HF access, Gurobi) or classified as a
+documentable implementation choice / non-blocking uncertainty — nothing on the list
+requires information that is fundamentally unobtainable to *start* building, only to
+claim exact numeric reproduction.
+
+**Recommended first implementation milestone:** build
+`baselines/pamop/README.md` (the exact-vs-reconstructed table, §6/§9/§13.11 consolidated)
+and `baselines/pamop/config/*.yaml` skeletons first — zero solver/LLM dependency, pure
+documentation-as-code — followed immediately by `partitioning/structured_extraction.py`
+and `partitioning/constraint_clustering.py` against the **269-entry `POSSIBLE_MATCH`
+block**, since that is the only part of the pipeline that has no AMPL/Gurobi dependency
+at all and can be fully unit-tested today without installing anything further. AMPL
+acquisition (§13.10) can proceed in parallel and gates only the later
+`modeling/`/`correction/`/`validation/` stages.
+
+---
