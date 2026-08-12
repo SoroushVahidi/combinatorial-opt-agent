@@ -18,7 +18,7 @@
 | **Archives** | `docs/archive/`, `docs/archive_internal_status/`, `docs/provenance/`, `analysis/archive/` — **provenance only** |
 | **External validation (non–paper-core)** | **Text2Zinc** + **CP-Bench** (DCP-Bench-Open): adapters + staging docs — **no new camera-ready metrics** until runs exist ([`docs/DATASET_EXPANSION_STATUS.md`](docs/DATASET_EXPANSION_STATUS.md)) |
 
-**Table 1 headline** (TF-IDF + typed greedy, `orig`): Schema R@1 **0.9094**; Coverage **0.8609**; TypeMatch **0.7453**; InstantiationReady **0.5287** — matches `manuscript/main.tex`. **Correction (2026-08-11):** `results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv` (previously cited here) contains stale pre-correction values (Coverage 0.8639, TypeMatch 0.7513, InstReady 0.5257) — the manuscript itself documents regenerating this table from live per-query artifacts during final KAIS preparation. See [`PROJECT_STATUS.md`](PROJECT_STATUS.md) §3 for the full explanation and the currently-correct source files.
+**Table 1 headline** (TF-IDF + typed greedy, `orig`): Schema R@1 **0.9094**; Coverage **0.8609**; TypeMatch **0.7453**; InstantiationReady **0.5287** — matches `manuscript/main.tex`. `results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv` was found stale on 2026-08-11 and has since been regenerated (`tools/build_camera_ready_table1.py`) from the corrected canonical sources; see [`PROJECT_STATUS.md`](PROJECT_STATUS.md) §3 and [`results/CANONICAL_RESULTS.md`](results/CANONICAL_RESULTS.md) for the full provenance record.
 
 ---
 
