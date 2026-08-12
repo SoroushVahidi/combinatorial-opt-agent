@@ -20,10 +20,13 @@ combinatorial-opt-agent/
 │
 ├── ★ manuscript/                      KAIS manuscript source (main.tex, authoritative) + PDFs
 │
-├──   baselines/pamop/                 PaMOP (IJCAI 2025) reproduction — IN PROGRESS
-├──   results/pamop/                   PaMOP pilot + forensics results
+├──   baselines/pamop/                 PaMOP (IJCAI 2025) reproduction — IN PROGRESS, fidelity gate resolved
+├──   baselines/orlm/                  ORLM baseline — SCAFFOLD ONLY, no model call (no GPU/weights here)
+├──   results/pamop/                   PaMOP pilot + forensics + fidelity diagnostic results
+├──   results/baseline_staleness_audit_2026-08-12/  Fresh 12-method comparison (Phase 4 critical finding)
+├──   results/max_weight_matching_validation/       Mechanism/error analysis for the retracted MWM claim
 │
-├── ★ results/paper/                   Camera-ready EAAI-era tables and figures (edit only via tools/build_camera_ready_table1.py; table1 was stale, now fixed, see note above)
+├── ★ results/paper/                   Camera-ready EAAI-era tables and figures (edit only via tools/build_camera_ready_table1.py; table1's underlying source no longer reproduces from current code — see docs/BASELINE_STALENESS_AUDIT_2026-08-12.md before touching this)
 │   ├── eaai_camera_ready_tables/      Tables 1–5 CSV files
 │   ├── eaai_camera_ready_figures/     Figures 1–5 PNG/PDF files
 │   └── (other CSV/JSON)               Downstream utility summaries — see RESULTS_PROVENANCE
