@@ -13,25 +13,28 @@ EAAI companion codebase.
 ### 1.1 Downstream grounding leaves ~47% of queries not fully instantiation-ready
 
 **Symptom:** The joint metric `InstantiationReady` (coverage ≥ 0.8 **and**
-type_match ≥ 0.8) is 0.5257 for TF-IDF typed greedy — meaning roughly half of
+type_match ≥ 0.8) is 0.5287 for TF-IDF typed greedy — meaning roughly half of
 queries reach the joint threshold, but the remaining ~47% still fall short.
 
-**Canonical values** (source: `results/eswa_revision/13_tables/deterministic_method_comparison_orig.csv`):
+**Canonical values** (source: `results/CANONICAL_RESULTS.md` §B; **2026-08-11:
+corrected** — this table previously carried stale pre-correction values,
+Coverage 0.8639/TypeMatch 0.7513/InstReady 0.5257, see `PROJECT_STATUS.md` §3):
 
 | Method | Schema R@1 | Coverage | TypeMatch | InstantiationReady |
 |--------|------------|----------|-----------|-------------------|
-| Typed Greedy (TF-IDF) | 0.9094 | 0.8639 | 0.7513 | 0.5257 |
-| Typed Greedy (Oracle) | 1.0000 | 0.9151 | 0.8030 | 0.5650 |
-| Constrained (TF-IDF) | 0.9094 | 0.8112 | 0.7113 | 0.4230 |
+| Typed Greedy (TF-IDF) | 0.9094 | 0.8609 | 0.7453 | 0.5287 |
+| Typed Greedy (Oracle) | 1.0000 | 0.9151 | 0.7998 | 0.5680 |
+| Constrained (TF-IDF) | 0.9094 | 0.8082 | 0.7093 | 0.4230 |
 
 > **Historical note:** Earlier exploratory runs (pre float-type-match fix) showed
 > InstantiationReady ≤ 0.082 and TypeMatch ≈ 0.226. Those values reflected five
 > code-level bugs since resolved (see §4.2). The table above is the current
-> canonical state.
+> canonical state (see also `docs/CURRENT_BOTTLENECK_ANALYSIS.md` for the
+> current, post-fix ranked breakdown of what's left).
 
 **Root cause (remaining):** The joint threshold requires both coverage ≥ 0.8 and
-TypeMatch ≥ 0.8 simultaneously. Typed greedy fills most slots (Coverage 0.8639)
-and matches types well (TypeMatch 0.7513), but the intersection still leaves ~47%
+TypeMatch ≥ 0.8 simultaneously. Typed greedy fills most slots (Coverage 0.8609)
+and matches types well (TypeMatch 0.7453), but the intersection still leaves ~47%
 of queries below the joint bar.
 
 **Status:** ⚠️ Open research problem. Float type-match bugs are resolved; the

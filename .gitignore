@@ -241,6 +241,9 @@ results/*
 # Exception: Gemini (and other) explicit rerun bundles under results/rerun/
 !results/rerun/
 !results/rerun/**
+# Exception: canonical results manifest (Phase 2 repository-polish, 2026-08-11)
+!results/CANONICAL_RESULTS.md
+!results/canonical_results_manifest.json
 # Scratch exports under a run (partial CSV/JSON/interrupt); not curated rerun bundles
 results/rerun/gemini/*/paper/
 

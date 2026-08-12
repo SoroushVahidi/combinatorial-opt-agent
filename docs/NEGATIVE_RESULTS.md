@@ -1,0 +1,233 @@
+# Negative Results Ledger
+
+**Purpose:** prevent future agents from repeatedly rebuilding ideas that were
+already tried and did not materially improve the primary metric
+(`InstantiationReady`, `orig` variant, TF-IDF retrieval unless noted).
+
+All values below are canonical, corrected values (see `results/CANONICAL_RESULTS.md`)
+— none are hand-invented. Statistical evidence is from
+`results/eswa_revision/15_significance/SIGNIFICANCE_SUMMARY.md` (paired
+bootstrap, B=1000, seed=42, two-sided). Baseline: `tfidf_typed_greedy`,
+InstReady = **0.5287**.
+
+---
+
+## Central finding
+
+**Richer deterministic grounding does not reliably outperform typed greedy.**
+Every richer deterministic method that was actually evaluated on real NLP4LP
+gold data either ties typed greedy (not statistically distinguishable) or
+loses to it, several significantly (p<0.001). See `docs/METHOD_INVENTORY.md`
+Part 2 for the full method-by-method table this ledger summarizes.
+
+---
+
+## NR1: Constrained (1-to-1) matching
+
+- **Hypothesis:** enforcing a hard 1-to-1 constraint between mentions and
+  slots (no mention reused across slots) reduces slot-disambiguation errors.
+- **Implementation:** `_constrained_assignment` in `tools/nlp4lp_downstream_utility.py`.
+- **Expected benefit:** higher Coverage/InstReady by preventing greedy
+  double-assignment of the same numeric mention.
+- **Actual result:** InstReady 0.4230 vs. 0.5287 baseline — a large drop.
+- **Statistical evidence:** not directly in the paired-significance table
+  (only InstReady deltas for TF-IDF vs. named comparators are tabulated
+  there), but the magnitude (-0.1057) is far larger than any
+  not-significant comparison in this ledger.
+- **Interpretation:** the hard constraint apparently forces the assignment
+  algorithm away from otherwise-good greedy choices more often than it
+  prevents genuine double-assignment errors.
+- **Worth revisiting?** Only as a *component* combined with a better local
+  scorer (§ "P0" in `docs/ALGORITHM_IMPROVEMENT_ROADMAP.md"), not as a
+  standalone fix.
+
+## NR2: Semantic IR repair
+
+- **Hypothesis:** semantic tag-based repair (detecting operator/unit tags,
+  re-scoring with `_score_mention_slot_ir`) resolves float/percent
+  confusion better than plain typed greedy.
+- **Implementation:** `_run_semantic_ir_repair`, `tools/nlp4lp_downstream_utility.py`.
+- **Actual result:** InstReady 0.4864 vs. 0.5287 baseline.
+- **Interpretation:** the hand-engineered semantic tag vocabulary does not
+  capture enough of the actual ambiguity to net-improve over greedy.
+- **Worth revisiting?** The mechanism (semantic tags) is a reasonable
+  *feature* for a learned scorer, but the deterministic repair-rule version
+  is not worth further tuning on its own.
+
+## NR3: Optimization-role repair
+
+- **Hypothesis:** lexicon-based role cues (capacity, cost, cardinality-bound
+  language) resolve "total vs. per-unit" and role-confusion errors.
+- **Actual result:** InstReady 0.4411 vs. 0.5287 baseline.
+- **Interpretation:** role-cue lexicons are brittle; likely both false
+  positives (misapplied role cues) and false negatives (missed cues) offset
+  the intended gains.
+- **Worth revisiting?** The *role-tag features* (`_compute_primary_role`,
+  `_compute_bound_role`) remain available as input features for a learned
+  scorer (H4 in `docs/RESEARCH_HYPOTHESES.md`), independent of whether the
+  deterministic repair rule built on top of them is used.
+
+## NR4: Acceptance reranking / hierarchical acceptance reranking
+
+- **Hypothesis:** reranking top-k retrieved schemas by an acceptance score
+  (optionally hierarchical) recovers cases where top-1 retrieval is wrong
+  but a nearby candidate is right.
+- **Actual result:** InstReady 0.5257 (acceptance rerank) and 0.5196
+  (hierarchical), both near the 0.5287 baseline.
+- **Statistical evidence:** TFIDF-TG vs. TFIDF-AR: diff=0.0030, p=0.89
+  (not significant). TFIDF-TG vs. TFIDF-HAR: diff=0.0091, p=0.58 (not
+  significant).
+- **Interpretation:** statistically indistinguishable from the baseline —
+  neither a proven win nor a proven loss. Given retrieval R@1 is already
+  ~0.91, there is limited room for reranking to matter on `orig`.
+- **Worth revisiting?** Possibly more informative on `noisy`/`short`
+  variants where retrieval is weaker (not verified in this pass — check
+  `results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_{noisy,short}_tfidf_acceptance_rerank.json`
+  before assuming either way).
+
+## NR5: Global compatibility grounding (GCG, `global_compat_*`)
+
+- **Hypothesis:** beam search with pairwise global-consistency penalties
+  (duplicate reuse, bound inversion, total-vs-per-unit mismatch) jointly
+  resolves errors that local scoring misses.
+- **Actual result:** `global_compat_full` InstReady = 0.4320 vs. 0.5287.
+- **Statistical evidence:** TFIDF-TG vs. GCG-Full: diff=0.0967, 95% CI
+  [0.0544, 0.1420], **p<0.001 (robust)**.
+- **Interpretation:** a statistically robust negative result — global
+  consistency penalties, as currently scored, actively hurt more than they
+  help on this benchmark.
+- **Worth revisiting?** Not in its current hand-engineered-penalty form. A
+  learned local scorer feeding into (not replacing) this global-assignment
+  machinery is the recommended next test (H2 in `RESEARCH_HYPOTHESES.md`),
+  since the failure may be in the local pairwise scores the beam search
+  optimizes over, not the beam search itself.
+
+## NR6: Relation-aware linking (basic/ops/semantic/full)
+
+- **Hypothesis:** explicit mention-mention and slot-slot relation features
+  (four increasing ablation levels) improve disambiguation beyond
+  pairwise-only scoring.
+- **Actual result:** `relation_aware_basic` InstReady = 0.4985 (closest
+  competitor to baseline in this ledger); `relation_aware_full` = 0.4169
+  (worst of the four levels).
+- **Statistical evidence:** TFIDF-TG vs. RAL-Basic: diff=0.0302, p=0.15
+  (not significant — the only relation-aware variant that isn't a proven
+  loss). TFIDF-TG vs. RAL-Full: diff=0.1118, p<0.001 (robust loss).
+  RAL-Basic vs. Oracle-TG: diff=-0.0695, p=0.006 (RAL-Basic is
+  significantly worse than oracle too).
+- **Interpretation:** more relation features monotonically hurt in this
+  implementation (basic > ops > semantic > full in performance, worst to
+  best inverted) — each added feature family introduces more noise than
+  signal under the current hand-engineered scoring.
+- **Worth revisiting?** Yes, with a caveat: the module's own docstring
+  (`tools/relation_aware_linking.py`) states "a learned scorer can be
+  plugged in" — this is the most natural integration point for the §P0
+  local learned scorer (`RESEARCH_HYPOTHESES.md` H2), since the relation
+  *feature extraction* infrastructure already exists and only the scoring
+  function would change.
+
+## NR7: Ambiguity-aware grounding (candidate-greedy/beam/abstain/full)
+
+- **Hypothesis:** explicit modeling of competing candidates, ambiguity
+  signals (margin/entropy), and confidence-gated abstention improves
+  precision on ambiguous slots.
+- **Actual result:** `ambiguity_aware_beam` InstReady = 0.4230;
+  `ambiguity_aware_full` = 0.4199; `ambiguity_aware_abstain` collapses
+  Coverage to 0.2207 (over-abstains far more than it helps).
+- **Statistical evidence:** TFIDF-TG vs. AAG-Beam: diff=0.1057, p<0.001.
+  TFIDF-TG vs. AAG-Full: diff=0.1088, p<0.001. TFIDF-TG vs. AAG-Abstain
+  (Coverage): diff=0.6402, p<0.001 — an extreme, robust loss.
+- **Interpretation:** the abstention threshold is far too conservative as
+  tuned, and the beam/full variants lose more from search overhead or
+  mis-scored competition than they gain from explicit ambiguity modeling.
+- **Worth revisiting?** The abstention *mechanism* (confidence + margin
+  gating) is architecturally relevant to future calibration work (P4 in
+  `ALGORITHM_IMPROVEMENT_ROADMAP.md`), but only after a better base scorer
+  exists — abstaining well on a bad score doesn't help much.
+
+## NR8: Sample-size / benchmark-bias checks (not a grounding method, but a ruled-out explanation)
+
+- **Hypothesis:** strong retrieval (R@1≈0.91) is driven by lexical overlap
+  (queries reusing schema-description words) rather than genuine schema
+  understanding.
+- **Actual result:** retrieval performance is *preserved or improved* after
+  stripping numbers/stopwords (LSA improves from 0.8459 to 0.9184 under
+  stopword removal).
+- **Interpretation:** this concern is **ruled out** — retrieval success is
+  attributable to structural/domain-term overlap, not numeric-value
+  leakage or superficial lexical shortcuts.
+- **Worth revisiting?** No — this is a closed, resolved question, not an
+  open negative result.
+
+## NR9: Sample-size explanation for the retrieval R@1 offset
+
+- **Not a grounding-method negative result** — flagged here to prevent
+  confusion with NR1-NR7. The 0.9094-vs-0.9063 Schema R@1 offset (see
+  `results/CANONICAL_RESULTS.md` §A) is a **disclosed, unresolved, minor**
+  catalog-vintage artifact (331 vs. 335 documents), not a failed
+  improvement attempt. Do not list it as a negative result in future
+  updates to this file — it belongs in provenance notes, not here.
+
+---
+
+## NR10: Learned pairwise mention-slot ranker (real-data-only, text-only)
+
+- **This is the single most important entry in this ledger for anyone
+  planning to build a learned local scorer — read it before starting.**
+- **Hypothesis:** a fine-tuned transformer pairwise ranker (`distilroberta-base`)
+  over (mention context, slot) text pairs would outperform the hand-engineered
+  rule scorer, trained and evaluated entirely on real NLP4LP data with a
+  clean, leak-free split (no synthetic/GAMS auxiliary data).
+- **Implementation:** `src/learning/` + `training/` infrastructure; corpus
+  built via instance-level 70/15/15 split (230 train / 50 dev / 50 test
+  instances; 9,729 / 2,230 / 2,339 pairwise pairs), split integrity verified
+  by `verify_split_integrity` (distinct SHA-256 hashes per split, no
+  instance-level overlap). Training: 500 steps, batch size 8, lr 2e-5, 1
+  epoch-ish, seed 42. Full record: `docs/learning_runs/real_data_only_learning_check.md`.
+- **Actual result (job 854626):** learned model **lost on every metric** to
+  the same-split rule baseline: pairwise_accuracy 0.197 vs 0.247,
+  slot_selection_accuracy 0.182 vs 0.229, exact_slot_fill_accuracy **0.000**
+  vs 0.022, type_match_after_decoding 0.068 vs 0.125.
+- **Two earlier, even worse variants** (also negative, do not revive as-is):
+  GAMS weak-label auxiliary training (`docs/learning_runs/gams_aux_vs_nlp4lp_only.md`)
+  — TypeMatch collapsed; targeted synthetic auxiliary training
+  (`docs/learning_runs/targeted_synth_vs_nlp4lp_only.md`) — TypeMatch
+  collapsed when scaled.
+- **Interpretation — why this likely failed, not just "learning doesn't
+  work":** (a) 500 steps × batch 8 ≈ 4,000 examples seen, well under one
+  full epoch over 9,729 training pairs — likely severely undertrained; (b)
+  **text-only** input — none of the rich hand-engineered features already
+  computed elsewhere in this codebase (type tags, operator/unit cues,
+  relation-aware features from `tools/relation_aware_linking.py`,
+  optimization-role tags) were given to the learned model as auxiliary
+  input, so it had to relearn from ~10K examples what the rule scorer
+  encodes as a prior; (c) a feature-augmented variant
+  (`nlp4lp_pairwise_text_plus_features`, planned in the "Stage 3" round,
+  `docs/EXPERIMENTS.md` §5.4) was **never actually run** — that round
+  reported "no learned runs completed (torch/transformers not available in
+  run environment)," so the feature-augmented hypothesis remains untested,
+  not falsified.
+- **Statistical evidence:** none reported (single run, no significance test) — treat the negative result as directionally strong (loses on *every* metric, including a catastrophic exact-match collapse to 0.000) but not statistically characterized.
+- **Explicit prior decision:** `docs/learning_runs/real_data_only_learning_check.md`
+  §8 already recorded "[x] Stop and keep learning as future work" for *this
+  specific formulation*.
+- **Worth revisiting?** **Yes, but not by repeating this exact setup.** Any
+  future learned-local-scorer attempt (see `docs/RESEARCH_HYPOTHESES.md` H1/H2)
+  MUST differ from this one in at least: (1) inject existing hand-engineered
+  features as auxiliary input rather than text-only; (2) train substantially
+  longer / more data-efficiently (contrastive or hard-negative-mining
+  objectives, not 500 steps of plain cross-entropy); (3) reuse the existing
+  leak-free split/infra (`artifacts/learning_ranker_data/nlp4lp/`,
+  `src/learning/verify_split_integrity`) rather than rebuilding it. A
+  same-setup rerun should be treated as **already answered**.
+
+## What this ledger does NOT cover
+
+- **PaMOP fidelity** (semantic correctness 1/6 despite 6/6 execution
+  success) is a *reproduction-fidelity* finding, not a negative result
+  about our own grounding methods — see `PROJECT_STATUS.md` §10 instead.
+- **`max_weight_matching`, `search_structured_grounding*`,
+  `hierarchical_structured_grounding*`** are *not* negative results — they
+  are simply unevaluated (see `docs/METHOD_INVENTORY.md`). Do not assume
+  they would fail like their cousins; evaluating them is cheap (existing
+  code + tests) and should happen before writing them off.
