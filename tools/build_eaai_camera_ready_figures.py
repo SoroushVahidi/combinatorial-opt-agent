@@ -7,6 +7,16 @@ from typing import Sequence
 
 from PIL import Image, ImageDraw, ImageFont
 
+# Pillow lazily registers each format plugin only when that exact format is
+# saved/opened; PdfImagePlugin embeds RGB images as JPEG streams internally
+# and expects Image.SAVE["JPEG"] to already be registered, which a
+# PNG-only save does not do. Without this, `.save(*.pdf)` after only ever
+# calling `.save(*.png)` raises KeyError: 'JPEG' (see
+# docs/LEARNED_GROUNDING_P0.md "Figure regeneration" / commit history for
+# the 2026-08 diagnosis). Image.init() eagerly registers every built-in
+# plugin (PNG, JPEG, PDF, ...) once, up front.
+Image.init()
+
 ROOT = Path(__file__).resolve().parent.parent
 TABLE_DIR = ROOT / "results" / "paper" / "eaai_camera_ready_tables"
 OUT_DIR = ROOT / "results" / "paper" / "eaai_camera_ready_figures"
@@ -25,10 +35,22 @@ def _font(size: int):
 
 
 def _save_both(img: Image.Image, stem: str) -> None:
+    """Render PNG+PDF to temporary paths first, then move into place only
+    once both succeed -- a mid-render failure (e.g. a missing codec) can
+    then never leave a truncated file at the tracked canonical path."""
     png = OUT_DIR / f"{stem}.png"
     pdf = OUT_DIR / f"{stem}.pdf"
-    img.save(png)
-    img.convert("RGB").save(pdf)
+    png_tmp = png.with_name(png.name + ".tmp.png")
+    pdf_tmp = pdf.with_name(pdf.name + ".tmp.pdf")
+    try:
+        img.save(png_tmp)
+        img.convert("RGB").save(pdf_tmp)
+    except Exception:
+        png_tmp.unlink(missing_ok=True)
+        pdf_tmp.unlink(missing_ok=True)
+        raise
+    png_tmp.replace(png)
+    pdf_tmp.replace(pdf)
 
 
 def _write_source_csv(name: str, rows: list[dict[str, object]]) -> None:
