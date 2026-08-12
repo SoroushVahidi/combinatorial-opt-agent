@@ -1,11 +1,14 @@
 # External Baseline Implementation Roadmap
 
-**Status:** Phase 3 (2026-08-12), research/planning only. None of ORLM,
-OptMATH, DeepOR, or OR-R1 are implemented in this repository. This document
-records what implementing each would require and in what order, so a
-future phase can act without repeating this research. See `PROJECT_STATUS.md`
-§9 for the current status summary and `baselines/pamop/` for the one
-baseline that IS implemented (in progress).
+**Status:** Phase 3 (2026-08-12), research/planning only, **updated Phase 4
+(2026-08-12): ORLM re-verified against primary sources and scaffolded**
+(`baselines/orlm/` — interfaces only, no model call, no GPU/weights
+available). OptMATH, DeepOR, and OR-R1 remain research/planning only, not
+implemented. This document records what implementing each would require
+and in what order, so a future phase can act without repeating this
+research. See `PROJECT_STATUS.md` §9 for the current status summary and
+`baselines/pamop/` for the one baseline with an executed pilot (in
+progress) and `baselines/orlm/` for the newest scaffold.
 
 ---
 
@@ -47,16 +50,23 @@ baseline that IS implemented (in progress).
   milestone is the fidelity diagnostic recommended in
   `docs/PAMOP_PILOT_FAILURE_FORENSICS.md`.
 
-## 2. ORLM
+## 2. ORLM — **SCAFFOLDED 2026-08-12 (Phase 4), see `baselines/orlm/`**
 
 - **Citation:** Huang et al., "ORLM: A Customizable Framework in Training
   Large Language Models for Automated Optimization Modeling," arXiv:2405.17743
-  (2024); accepted at *Operations Research*.
-- **Official code available:** **YES** -- [github.com/Cardinal-Operations/ORLM](https://github.com/Cardinal-Operations/ORLM), Apache-2.0.
-- **Model weights available:** **YES** -- multiple fine-tuned checkpoints
-  on HuggingFace (~7-8B parameter models: Mistral-7B, DeepSeek-Math-7B,
-  LLaMA-3-8B variants fine-tuned via their "OR-Instruct" synthetic-data
-  pipeline).
+  (2024, v5 April 2025); accepted at *Operations Research* (2025).
+- **Official code available:** **YES, re-verified 2026-08-12** —
+  [github.com/Cardinal-Operations/ORLM](https://github.com/Cardinal-Operations/ORLM),
+  public, active (272 stars, last push Sept 2025), Apache-2.0, default
+  branch `master`.
+- **Model weights available: PARTIALLY, corrected 2026-08-12.** Only
+  **`CardinalOperations/ORLM-LLaMA-3-8B`** (8.03B, bf16, `llama3` license)
+  is confirmed publicly retrievable on HuggingFace. The Mistral-7B and
+  DeepSeek-Math-7B checkpoints named in the paper/README do **not**
+  resolve as public HF repos under any checked path — the original
+  "multiple fine-tuned checkpoints... public" claim in this document was
+  not independently verified when first written; it is confirmed for one
+  of three, not all three.
 - **Task overlap with ours:** High -- same task family (NL optimization
   problem -> formal model), but ORLM targets full model+code generation,
   not schema retrieval + scalar grounding; comparison would be at the
@@ -66,36 +76,53 @@ baseline that IS implemented (in progress).
   benchmarks. Running ORLM against NLP4LP would require adapting our own
   evaluation harness to score ORLM's generated models/code, not a
   plug-and-play comparison.
-- **Environment requirements:** `transformers`/`torch`, HuggingFace model
-  download (~15-30GB depending on checkpoint).
-- **GPU requirement:** **Yes** -- 7-8B parameter local inference is not
-  practical CPU-only at reasonable latency; this is a meaningful
-  environment-cost difference from the current CPU-only pipeline.
-- **API requirement:** No (self-hosted weights).
-- **Licensing/access issues:** Apache-2.0 code; base-model licenses
-  (Mistral/DeepSeek-Math/LLaMA-3) vary and would need individual review
-  before redistribution of any fine-tuned checkpoint, though local
-  research use is standard.
-- **Expected implementation difficulty:** Medium -- code and weights are
-  public and documented, but adapting NLP4LP problems into ORLM's expected
-  input format and adapting its code-generation output into our
-  Coverage/TypeMatch/InstantiationReady metric family (or an ORLM-native
-  metric) is nontrivial glue work.
+- **Environment requirements:** `transformers`/`torch`, upstream pins
+  `vllm==0.3.2` (old — likely needs an isolated env) and legacy
+  `openai==0.28.1` (only for optional GPT-baseline comparison scripts,
+  not ORLM inference itself). **`coptpy`** (Cardinal Operations' own COPT
+  solver) is an additional, previously-undocumented dependency — ORLM's
+  official generation target is COPT solver code, not Pyomo/GurobiPy/
+  plain LP. A COPT license (community/academic tier likely available, not
+  independently verified) is required to *execute* generated code,
+  separate from running the LLM.
+- **GPU requirement:** **Yes** — 8B params in bf16 ≈16GB weights; a single
+  24GB-class GPU (RTX 3090/4090, A5000) is plausible for inference (not
+  training). **Not currently provisioned on this workstation.**
+- **API requirement:** No (self-hosted weights, fully local/offline once
+  downloaded).
+- **Fine-tuning required:** No — published weights usable directly.
+- **Licensing/access issues:** Apache-2.0 code; `llama3` license for the
+  one confirmed checkpoint (a Meta license term, review before any
+  redistribution — local research use is standard).
+- **Expected implementation difficulty:** Medium — code and (one)
+  checkpoint are public and documented, but adapting NLP4LP problems into
+  ORLM's expected input format and adapting its code-generation output
+  into our Coverage/TypeMatch/InstantiationReady metric family (or an
+  ORLM-native metric) is nontrivial glue work. **Interface scaffold now
+  exists** (`baselines/orlm/{config,data_adapter,runner,output_normalizer}.py`)
+  — the prompt-wrapping and output-parsing interfaces are defined and
+  unit-tested (`baselines/orlm/tests/`), but the actual model call
+  (`runner.py`) deliberately raises `NotImplementedError` since no
+  GPU/weights/COPT license are available in this environment.
 - **Fairness concerns:** ORLM is a full generative pipeline (LLM writes
   the entire model + solver code), fundamentally different in
   computational cost and scope from this repo's retrieval + scalar-
   grounding pipeline -- any comparison must clearly caveat this is
   "full auto-formulation" vs. "grounding into a fixed catalog," not an
-  apples-to-apples method comparison.
+  apples-to-apples method comparison. See `baselines/orlm/README.md`
+  "Fair comparison caveats" for the full dimension-by-dimension table.
 - **Comparable metrics:** Execution/solve success rate, objective
   accuracy vs. gold, wall-clock/token cost (directly comparable to
-  PaMOP's existing metric family).
+  PaMOP's existing metric family) — **not** directly comparable to
+  InstantiationReady/Coverage/TypeMatch.
 - **Priority:** **1st** among the four non-PaMOP baselines.
-- **First implementation milestone:** Stand up ORLM inference (a single
-  published checkpoint, e.g. `ORLM-LLaMA-3-8B`) on a small (10-20 instance)
-  NLP4LP pilot subset, GPU available, and manually verify at least one
-  end-to-end generated model executes -- matching the same pilot-before-
-  scale discipline already used for PaMOP.
+- **First implementation milestone (scaffolded, not executed):** provision
+  a GPU + COPT license, verify `baselines/orlm/config.py`'s reconstructed
+  prompt template against the upstream repo's actual prompt file, then
+  run a single NLP4LP query through the reference generation script and
+  verify the output at least parses as valid `coptpy` code — see
+  `baselines/orlm/README.md` for the exact numbered milestone sequence.
+  Matches the same pilot-before-scale discipline already used for PaMOP.
 
 ## 3. OptMATH
 
