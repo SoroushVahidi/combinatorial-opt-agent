@@ -10,17 +10,28 @@ used for current bottleneck claims — its dominant "float type mismatch (~230
 cases)" finding is largely resolved (TypeMatch rose from ~0.23 to 0.7453
 after the fix; see `docs/METHOD_INVENTORY.md` for the fix itself).
 
-**2026-08-12 (Phase 3) update:** this table's scope remains
-`typed_greedy`-specific and is now understood to be the bottleneck profile
-of a since-superseded method. `max_weight_matching` (InstantiationReady
-0.7432, see `results/unevaluated_methods_evaluation/`) closes most of the
-gap this table documents by construction (exact global assignment directly
-addresses the rank-1/2 "type mismatch on an otherwise-good decision"
-categories, which are exactly the kind of locally-good-but-globally-
-suboptimal greedy mistakes exact assignment avoids). A fresh, equivalent
-bottleneck breakdown FOR `max_weight_matching` specifically has not yet
-been computed — that is `docs/ALGORITHM_IMPROVEMENT_ROADMAP.md` P1's
-"error analysis" sub-task, not yet done as of this pass.
+**2026-08-12 (Phase 3) update, RETRACTED same day (Phase 4):** this note
+originally claimed `max_weight_matching` "closes most of the gap this
+table documents" and superseded `typed_greedy` as the canonical method.
+That claim compared `max_weight_matching`'s fresh number against a
+typed-greedy baseline (0.5287) that turned out to be **stale relative to
+current code** — a fresh rerun of plain typed greedy gives 0.7764, which
+significantly *beats* `max_weight_matching` (0.7432, p=0.042). Full
+correction: `docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`. Typed greedy
+is **not** superseded; it remains the strongest known non-oracle method.
+
+**Open question this raises, not yet resolved (2026-08-12, Phase 4):**
+the `per_instance_diagnostics.csv` this document's counts are derived from
+was itself generated against `typed_greedy` at some earlier codebase
+state, and has **not** been re-verified to reproduce from current code the
+way `postfix_main_metrics.csv` was found not to (see the staleness audit).
+It is plausible (though not confirmed) that the specific bottleneck
+*counts* below (82/331 type mismatch, etc.) are also somewhat stale, even
+though the file's own retrieval numbers (Schema R@1 ≈0.91) are consistent
+with the fresh, current-code family. Treat the *ranking* of bottleneck
+categories below as directionally informative but the exact counts as
+unverified against current code until someone re-derives them fresh (a
+concrete next step — see `NEXT_STEPS.md`).
 
 ---
 

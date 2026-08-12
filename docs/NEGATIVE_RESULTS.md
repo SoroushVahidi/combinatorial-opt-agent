@@ -7,8 +7,19 @@ already tried and did not materially improve the primary metric
 All values below are canonical, corrected values (see `results/CANONICAL_RESULTS.md`)
 — none are hand-invented. Statistical evidence is from
 `results/eswa_revision/15_significance/SIGNIFICANCE_SUMMARY.md` (paired
-bootstrap, B=1000, seed=42, two-sided). Baseline: `tfidf_typed_greedy`,
-InstReady = **0.5287**.
+bootstrap, B=1000, seed=42, two-sided). Baseline (as submitted /
+NR1-NR9): `tfidf_typed_greedy`, InstReady = **0.5287**.
+
+**2026-08-12 (Phase 4) — read `docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`
+before citing the 0.5287 baseline above for any *new* comparison.** That
+number does not reproduce from the current codebase (fresh rerun: 0.7764).
+NR1-NR9's own *conclusions* (richer greedy/repair/global methods lose to
+typed greedy) are not overturned by this — see NR12 below, which shows the
+gap direction holds and if anything strengthens under fresh numbers — but
+the exact margins/p-values for NR1-NR9 were computed against the stale
+baseline and have not all been individually re-verified fresh. Any new
+method proposed after 2026-08-12 must be compared against a **freshly
+rerun** `tfidf_typed_greedy`, not the committed 0.5287.
 
 ---
 
@@ -18,7 +29,11 @@ InstReady = **0.5287**.
 Every richer deterministic method that was actually evaluated on real NLP4LP
 gold data either ties typed greedy (not statistically distinguishable) or
 loses to it, several significantly (p<0.001). See `docs/METHOD_INVENTORY.md`
-Part 2 for the full method-by-method table this ledger summarizes.
+Part 2 for the full method-by-method table this ledger summarizes. **This
+finding is now stronger than originally stated**: it also holds for the
+three global-assignment methods (`max_weight_matching`,
+`search_structured_grounding`, `hierarchical_structured_grounding`) that
+were briefly (same day, 2026-08-12) believed to be exceptions — see NR12.
 
 ---
 
@@ -256,16 +271,75 @@ Part 2 for the full method-by-method table this ledger summarizes.
   model still struggles with the same multi-slot, weak-slot-name-cue
   disambiguation cases that motivated it in the first place.
 - **Worth revisiting?** Not with this exact feature/classifier/decode
-  combination (decision gate C). The single most important finding to
-  carry forward: **`max_weight_matching`, using the SAME
-  `_score_mention_slot_opt` feature family but with NO learning at all**,
-  reaches InstantiationReady **0.7432** on the full 331-query benchmark
-  (see `results/unevaluated_methods_evaluation/`) -- dramatically higher
-  than either P0 or typed greedy. Any future learned-scorer attempt should
-  be benchmarked against `max_weight_matching`, not typed greedy, and
-  should investigate why exact global assignment over the unlearned rule
-  score already outperforms every learned/greedy/repair variant tried so
-  far, before assuming more learning is the fix.
+  combination (decision gate C). **Correction (2026-08-12, Phase 4):** the
+  paragraph originally here claimed `max_weight_matching` (also over the
+  `_score_mention_slot_opt` feature family, no learning) reached 0.7432,
+  "dramatically higher than either P0 or typed greedy," and should be the
+  new benchmark for future learned-scorer attempts. That comparison used a
+  stale typed-greedy number (0.5287); see NR12 below.
+  `max_weight_matching` (0.7432) in fact loses to a fresh typed-greedy
+  rerun (0.7764, p=0.042). Any future learned-scorer attempt should be
+  benchmarked against a **freshly rerun** `tfidf_typed_greedy`, which
+  remains the strongest known non-oracle method in this repository as of
+  2026-08-12.
+
+## NR12: `max_weight_matching`, `search_structured_grounding`,
+`hierarchical_structured_grounding` (Phase 3 claim, corrected same-day
+in Phase 4)
+
+- **Original claim (Phase 3, 2026-08-12, morning/midday):** these three
+  global-assignment methods, evaluated for the first time, scored
+  0.70-0.74 InstantiationReady on `orig` — compared against the committed
+  `tfidf_typed_greedy` = 0.5287, this looked like a dramatic, statistically
+  significant (p<0.001) breakthrough, "the strongest results ever found in
+  this repository," exceeding even Oracle-TG.
+- **What was actually wrong:** the 0.5287 comparison baseline is stale.
+  `results/eswa_revision/13_tables/postfix_main_metrics.csv` (source of
+  0.5287) was last generated at commit `3fffe68`; 49 subsequent commits to
+  `tools/nlp4lp_downstream_utility.py` improved candidate extraction and
+  type-matching (the machinery typed greedy's `_choose_token` depends on)
+  without the table ever being regenerated. A fresh, same-code rerun of
+  plain `tfidf_typed_greedy` gives **0.7764** — a drift of +0.2477, larger
+  than the entire claimed gain.
+- **Fair, same-code comparison (`orig`, 331 queries, paired bootstrap
+  B=1000 seed=42):**
+
+  | Method | Fresh InstReady | vs. fresh typed greedy (0.7764) |
+  |---|---|---|
+  | `max_weight_matching` | 0.7432 | −0.0332, p=0.042 (significantly worse) |
+  | `search_structured_grounding` | 0.7039 | −0.0725, p<0.001 (significantly worse) |
+  | `hierarchical_structured_grounding` | 0.7039 | −0.0725, p<0.001 (significantly worse) |
+
+  All three also lose to fresh Oracle-TG (0.8248, p<0.001) — the "exceeds
+  Oracle-TG" claim does not hold either.
+- **Mechanism (why the original comparison looked so dramatic):** the
+  three methods were evaluated fresh, against current code, in the same
+  Phase-3 session (correct). They were then compared against a committed
+  number that was 49 commits stale (incorrect) instead of a freshly rerun
+  typed-greedy baseline. The magnitude of code drift (+0.2477) happened to
+  exceed the methods' own (real, but negative) gap to fresh typed greedy
+  (−0.03 to −0.07), producing an apparent positive result that was, in
+  net, actually negative.
+- **Interpretation:** this does not mean `max_weight_matching`'s exact
+  bipartite-matching decode is a bad idea in the abstract — the underlying
+  local score (`_score_mention_slot_opt`) is the *same* score typed
+  greedy's richer sibling methods use, and exact assignment is a
+  reasonable decode strategy. It means that, given how much stronger this
+  particular local score's *rival*, `_choose_token`'s much simpler
+  type-preference heuristic, has become after 49 rounds of targeted
+  fixing, there is currently no realized benefit to the extra
+  global-assignment machinery on this benchmark. Full mechanism/error
+  analysis: `results/max_weight_matching_validation/`.
+- **Worth revisiting?** Only if `_score_mention_slot_opt`'s own local
+  accuracy is substantially improved first (its residual errors — same-
+  type ambiguity, total/per-unit confusion — are the dominant failure
+  modes even under exact assignment; see
+  `results/max_weight_matching_validation/mechanism_and_error_analysis_summary.json`).
+  Applying exact assignment on top of a stronger local score than
+  currently exists is untested and could plausibly help; applying it to
+  the *current* score does not.
+- **Full record:** `docs/BASELINE_STALENESS_AUDIT_2026-08-12.md` (primary
+  source for this entry).
 
 ## What this ledger does NOT cover
 

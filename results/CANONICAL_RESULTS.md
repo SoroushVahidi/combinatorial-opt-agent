@@ -73,12 +73,12 @@ the truth lives*, not what every number is.
 - **Generator:** `tools/run_eaai_final_solver_attempt.py`
 - **Status:** **CURRENT** — verified against manuscript (TF-IDF 0.95/0.80/0.80/0.80, Oracle 0.95/0.75/0.75/0.75; solver = SciPy HiGHS shim, not Gurobi)
 
-## J. PaMOP reproduction / pilot / forensics
+## J. PaMOP reproduction / pilot / forensics / fidelity diagnostic
 
-- **Authoritative artifact:** `results/pamop/forensics_targeted/summary.json` (post-bug-fix forensics pass), `results/pamop/pilot/summary.json` (earlier pilot)
-- **Generator:** `baselines/pamop/` pipeline (see `baselines/pamop/README.md`)
-- **Status:** **RUNNING/IN PROGRESS** — 6-problem deterministic pilot subset (IDs 14, 23, 34, 72, 84, 88), verified: initial execution 2/6, final execution 6/6, semantic correctness 1/6, total tokens 24,194, decision gate `"A. PROCEED TO LARGER RUN"`. Not a full-scale PaMOP reproduction.
-- **Superseded:** none — this is the current state, not a correction of a prior claim
+- **Authoritative artifact:** `results/pamop/forensics_targeted/summary.json` (C1, post-bug-fix forensics pass, `gpt-4.1-mini`), `results/pamop/fidelity_diagnostic_gpt5/` (C3, 2026-08-12, `gpt-5.4`), `results/pamop/pilot/summary.json` (earlier pilot)
+- **Generator:** `baselines/pamop/` pipeline (see `baselines/pamop/README.md`); fidelity diagnostic via `scripts/pamop_fidelity_diagnostic.py`
+- **Status:** **RUNNING/IN PROGRESS**, decision gate **RESOLVED to `B. MODEL_LIMITED`** (2026-08-12, Phase 4). 6-problem deterministic pilot subset (IDs 14, 23, 34, 72, 84, 88). C1 (`gpt-4.1-mini`): initial execution 2/6, final execution 6/6, semantic correctness 1/6, total tokens 24,194. C3 (`gpt-5.4`, same prompts, same ids): initial execution 5/6, final execution 5/6, **semantic correctness 4/5 evaluable (0.8)** — model swap alone recovers most of the semantic-correctness gap. Not a full-scale PaMOP reproduction; no 18- or 269-case rerun launched.
+- **Superseded:** the Phase 3 `FIDELITY_DIAGNOSTIC_REQUIRED` gate is resolved, not a correction of a prior claim — see `results/pamop/fidelity_diagnostic_gpt5/README.md` for the full record.
 
 ## K. Baseline-comparison artifacts (external LLM baselines: OpenAI/Gemini/Mistral)
 
@@ -86,22 +86,30 @@ the truth lives*, not what every number is.
 - **Status:** **AUXILIARY, NOT PAPER-CORE** — infrastructure exists for Gemini/Mistral reruns but no committed `results/rerun/{gemini,mistral}/` artifacts prove a completed full benchmark rerun as of this pass; do not assert completion without checking those directories directly
 - **Not to be confused with:** the baseline-*roadmap* in `PROJECT_STATUS.md` §9 (ORLM/OptMATH/DeepOR/OR-R1/PaMOP), which is about implementing entirely different published methods as comparison baselines, not about optional LLM backends for our own retrieval pipeline
 
-## L. Newly-evaluated grounding methods (max-weight matching, search-structured, hierarchical-structured) -- 2026-08-12
+## L. Newly-evaluated grounding methods (max-weight matching, search-structured, hierarchical-structured) -- 2026-08-12, CORRECTED same day
 
-- **Authoritative artifact:** `results/unevaluated_methods_evaluation/` (`nlp4lp_downstream_orig_tfidf_{method}.json`, per-query CSVs, `significance.json`)
+- **Authoritative artifact:** `results/unevaluated_methods_evaluation/` (`nlp4lp_downstream_orig_tfidf_{method}.json`, per-query CSVs, `significance.json`) -- **superseded interpretation**, see §N below for the corrected status
 - **Generator:** unmodified canonical CLI, `python3 -m tools.nlp4lp_downstream_utility --variant orig --baseline tfidf --assignment-mode {max_weight_matching,search_structured_grounding,hierarchical_structured_grounding}`
 - **Benchmark variant / denominator:** `orig`, full 331 queries (not a subsample)
-- **Status:** **NEWLY VALIDATED, STRONG POSITIVE RESULT.** `max_weight_matching` reaches InstantiationReady **0.7432** (+0.2145 over typed greedy's 0.5287, p<0.001); `search_structured_grounding` and `hierarchical_structured_grounding` each reach **0.7039** (+0.1752, p<0.001). All three exceed Oracle-TG (0.5680), the previous highest value recorded anywhere in this repository's evaluated-method history.
-- **Not yet in:** `results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv` or the manuscript -- this is a repository-internal finding pending a deliberate future manuscript-integration decision (see `docs/ALGORITHM_IMPROVEMENT_ROADMAP.md` P1).
-- **Superseded artifact:** none -- this is new evidence, not a correction.
+- **Status:** **NEGATIVE RESULT (corrected 2026-08-12, same day, Phase 4).** The raw numbers below are still accurate and independently reproduced (`max_weight_matching` InstantiationReady **0.7432**; `search_structured_grounding`/`hierarchical_structured_grounding` **0.7039** each) -- but the "+0.2145 over typed greedy, exceeds Oracle-TG" framing compared them against a **stale** committed typed-greedy number (0.5287). A fresh, same-code typed-greedy rerun scores **0.7764**, significantly beating all three (p<0.05). See §N and `docs/BASELINE_STALENESS_AUDIT_2026-08-12.md` for the full correction, and `docs/NEGATIVE_RESULTS.md` NR12.
+- **Not integrated into:** `results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv` or the manuscript, and per the correction above, should not be, absent a genuine future improvement.
+- **Superseded artifact:** the *interpretation* in this section (not the raw numbers) is superseded by §N below.
 
 ## M. P0 learned local grounding scorer -- 2026-08-12
 
 - **Authoritative artifact:** `results/learned_grounding_p0/` (`test_results.csv`, `significance.json`, `ablation_results.csv`, `error_analysis.csv`, `split_metadata.json`)
 - **Generator:** `scripts/learning/{build_p0_corpus,train_p0_classifier,eval_p0_grounding}.py` (see `docs/LEARNED_GROUNDING_P0.md` "Training Procedure" for exact commands)
 - **Benchmark variant / denominator:** `orig`, oracle-schema 50-instance test subsample (NOT the full 331-query retrieval-conditioned benchmark -- see caveat in `docs/LEARNED_GROUNDING_P0.md` "Evaluation Protocol")
-- **Status:** **NEGATIVE RESULT, decision gate C.** No P0 configuration beat the canonical oracle+typed-greedy baseline on the same subsample (0.80 best vs. 0.86); the gap is not statistically significant at n=50 (p=0.44). See `docs/NEGATIVE_RESULTS.md` NR11 for the full ledger entry.
-- **Superseded artifact:** none -- this is a new, documented negative result, not a correction of a prior claim.
+- **Status:** **NEGATIVE RESULT, decision gate C.** No P0 configuration beat the canonical oracle+typed-greedy baseline on the same subsample (0.80 best vs. 0.86); the gap is not statistically significant at n=50 (p=0.44). See `docs/NEGATIVE_RESULTS.md` NR11 for the full ledger entry. **Unaffected by the §N correction** -- this comparison used a fresh M0 baseline computed directly for this pass, not the stale committed number.
+
+## N. Baseline staleness audit -- 2026-08-12 (Phase 4)
+
+- **Authoritative artifact:** `docs/BASELINE_STALENESS_AUDIT_2026-08-12.md` (primary document), `results/baseline_staleness_audit_2026-08-12/` (fresh 12-method `orig`+`noisy`+`short` reruns and significance tests), `results/max_weight_matching_validation/` (mechanism/error analysis)
+- **Finding:** `results/eswa_revision/13_tables/postfix_main_metrics.csv` (source of the manuscript's headline `tfidf_typed_greedy` InstantiationReady = 0.5287) does not reproduce from the current codebase. A fresh rerun via the identical harness function (`run_single_setting()`) gives **0.7764** -- a drift of +0.2477, caused by 49 commits of grounding fixes landing after the table was last generated and never being propagated into a regeneration.
+- **Consequence:** plain typed greedy is the strongest known non-oracle method in this repository as of 2026-08-12, beating every richer alternative evaluated (constrained, semantic-IR repair, optimization-role repair, hierarchical acceptance-rerank, `max_weight_matching`, `search_structured_grounding`, `hierarchical_structured_grounding`), all significantly except two statistically-tied retrieval variants (BM25, TF-IDF-acceptance-rerank).
+- **Status:** `results/eswa_revision/13_tables/postfix_main_metrics.csv` and everything downstream of it (Table 1, `robustness_by_variant.csv`, `docs/NEGATIVE_RESULTS.md`/`docs/METHOD_INVENTORY.md`'s Phase-1/2-era numbers) is flagged **STALE_RELATIVE_TO_CURRENT_CODE**. The file itself is left unmodified (it is what the submitted manuscript was built from); fresh numbers live alongside it in `results/baseline_staleness_audit_2026-08-12/`.
+- **Manuscript:** NOT modified. See `docs/MANUSCRIPT_INTEGRATION_DECISION_2026-08-12.md` for the formal M1/M2/M3 classification and why this is left to the paper's author.
+- **Superseded artifact:** none in the destructive sense -- `postfix_main_metrics.csv` is not deleted or overwritten, only flagged.
 
 ---
 

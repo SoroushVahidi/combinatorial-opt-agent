@@ -256,6 +256,19 @@ results/*
 !results/learned_grounding_p0/**
 !results/unevaluated_methods_evaluation/
 !results/unevaluated_methods_evaluation/**
+# Exception: PaMOP pilot/forensics/fidelity-diagnostic results (small CSV/
+# JSON operational metrics + per-problem traces, no gated NLP4LP text, no
+# API keys -- some subdirectories here were already tracked from earlier
+# phases; this exception makes that consistent and covers new ones, e.g.
+# results/pamop/fidelity_diagnostic_gpt5/ (Phase 4, 2026-08-12).
+!results/pamop/
+!results/pamop/**
+# Exception: baseline-staleness audit + max-weight-matching mechanism/error
+# analysis (Phase 4 repository-polish, 2026-08-12) -- small CSV/JSON only.
+!results/baseline_staleness_audit_2026-08-12/
+!results/baseline_staleness_audit_2026-08-12/**
+!results/max_weight_matching_validation/
+!results/max_weight_matching_validation/**
 # Scratch exports under a run (partial CSV/JSON/interrupt); not curated rerun bundles
 results/rerun/gemini/*/paper/
 

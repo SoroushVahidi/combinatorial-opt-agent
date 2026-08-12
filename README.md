@@ -18,15 +18,16 @@
 | **Archives** | `docs/archive/`, `docs/archive_internal_status/`, `docs/provenance/`, `analysis/archive/` — **provenance only** |
 | **External validation (non–paper-core)** | **Text2Zinc** + **CP-Bench** (DCP-Bench-Open): adapters + staging docs — **no new camera-ready metrics** until runs exist ([`docs/DATASET_EXPANSION_STATUS.md`](docs/DATASET_EXPANSION_STATUS.md)) |
 
-**Table 1 headline** (TF-IDF + typed greedy, `orig`): Schema R@1 **0.9094**; Coverage **0.8609**; TypeMatch **0.7453**; InstantiationReady **0.5287** — matches `manuscript/main.tex`. `results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv` was found stale on 2026-08-11 and has since been regenerated (`tools/build_camera_ready_table1.py`) from the corrected canonical sources; see [`PROJECT_STATUS.md`](PROJECT_STATUS.md) §3 and [`results/CANONICAL_RESULTS.md`](results/CANONICAL_RESULTS.md) for the full provenance record.
+**Table 1 headline** (TF-IDF + typed greedy, `orig`): Schema R@1 **0.9094**; Coverage **0.8609**; TypeMatch **0.7453**; InstantiationReady **0.5287** — matches `manuscript/main.tex` **as submitted**. **This number does not reproduce from the current codebase** (2026-08-12 finding): a fresh rerun of the identical method gives InstantiationReady **0.7764**, because 49 commits of grounding fixes landed after `results/eswa_revision/13_tables/postfix_main_metrics.csv` was last generated and it was never regenerated. Full audit: [`docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`](docs/BASELINE_STALENESS_AUDIT_2026-08-12.md) — **read this before citing 0.5287 as a current-code baseline for anything.** `manuscript/main.tex` and the camera-ready tables were **not** modified; see [`docs/MANUSCRIPT_INTEGRATION_DECISION_2026-08-12.md`](docs/MANUSCRIPT_INTEGRATION_DECISION_2026-08-12.md).
 
-**Not yet in Table 1 (2026-08-12):** an existing, already-implemented assignment mode (`max_weight_matching`) reaches InstantiationReady **0.7432** when actually evaluated — see [`results/unevaluated_methods_evaluation/README.md`](results/unevaluated_methods_evaluation/README.md) and [`docs/LEARNED_GROUNDING_P0.md`](docs/LEARNED_GROUNDING_P0.md) for the full record and why this hasn't been folded into the manuscript yet.
+**Correction (2026-08-12, same day):** an earlier note here claimed an existing assignment mode (`max_weight_matching`) reaches InstantiationReady 0.7432 and beats typed greedy. That comparison used the stale 0.5287 baseline above; against a freshly rerun typed greedy (0.7764), `max_weight_matching` **loses** (p=0.042), as do `search_structured_grounding`/`hierarchical_structured_grounding`. These are negative results — see [`docs/NEGATIVE_RESULTS.md`](docs/NEGATIVE_RESULTS.md) NR12 and the staleness audit above for the full correction.
 
 ---
 
 ## Read these first (repo map)
 
 0. [`PROJECT_STATUS.md`](PROJECT_STATUS.md) — **start here**: goal, pipeline, authoritative results, what's implemented/failed, PaMOP status, next steps
+0a. [`docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`](docs/BASELINE_STALENESS_AUDIT_2026-08-12.md) — **read second**: the manuscript's headline number does not reproduce from current code
 1. [`docs/REVIEWER_GUIDE.md`](docs/REVIEWER_GUIDE.md) — what is official vs auxiliary  
 2. [`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md) — validated vs experimental, limitations  
 3. [`docs/KAIS_SOURCE_OF_TRUTH.md`](docs/KAIS_SOURCE_OF_TRUTH.md) — current manuscript authority / scope (see also [`docs/EAAI_SOURCE_OF_TRUTH.md`](docs/EAAI_SOURCE_OF_TRUTH.md) for unchanged benchmark facts)  
@@ -36,6 +37,7 @@
 7. [`docs/REPO_STRUCTURE.md`](docs/REPO_STRUCTURE.md) / [`docs/REPOSITORY_MAP.md`](docs/REPOSITORY_MAP.md) — annotated tree (canonical vs demo vs archive)
 8. [`docs/PAMOP_REPRODUCTION_PLAN.md`](docs/PAMOP_REPRODUCTION_PLAN.md) — current external-baseline work in progress
 9. [`docs/BASELINE_IMPLEMENTATION_ROADMAP.md`](docs/BASELINE_IMPLEMENTATION_ROADMAP.md) — ORLM/OptMATH/DeepOR/OR-R1 planning (not started)
+10. [`docs/SCIENTIFIC_STATE.md`](docs/SCIENTIFIC_STATE.md) / [`NEXT_STEPS.md`](NEXT_STEPS.md) — detailed scientific handoff and the operational execution queue
 
 **Index:** [`docs/README.md`](docs/README.md) · **External datasets plan:** [`docs/DATASET_EXPANSION_PLAN.md`](docs/DATASET_EXPANSION_PLAN.md) · **Doc check:** `python scripts/check_docs_integrity.py`
 

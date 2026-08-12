@@ -1,0 +1,304 @@
+# Baseline Staleness Audit — 2026-08-12 (Phase 4)
+
+**Status: CRITICAL FINDING. Read this before trusting any InstantiationReady
+number below ~0.7 that is attributed to `tfidf_typed_greedy` anywhere else
+in this repository, including the manuscript.**
+
+**One-line summary:** the manuscript's headline `tfidf_typed_greedy`
+InstantiationReady (**0.5287**, `results/eswa_revision/13_tables/postfix_main_metrics.csv`)
+does not reproduce from the current codebase. A fresh run of the exact same
+method, same harness function, same catalog, same gold cache gives
+**0.7764** — a drift of **+0.2477**. This drift is *larger than* the entire
+"`max_weight_matching` beats typed greedy by +0.2145" claim from Phase 3.
+Under a fair, same-day, same-code comparison, **plain typed greedy
+significantly outperforms `max_weight_matching`, `search_structured_grounding`,
+and `hierarchical_structured_grounding`** (all p<0.05, paired bootstrap,
+B=1000, seed=42). Phase 3's "strongest result ever found in this
+repository" claim is **invalidated** — not because `max_weight_matching`
+is broken or leaking (it isn't; see verification below), but because it
+was compared against a stale baseline number instead of a fresh one.
+
+---
+
+## 1. How this was found
+
+Phase 4 §2 required independently reproducing `max_weight_matching` "from
+canonical input artifacts," not by reusing final summary CSVs. That
+reproduction succeeded exactly (0.743202416918429, bit-identical to the
+committed artifact — see §2 below). As a secondary check (Phase 4 §4:
+"verify max_weight_matching is scored using EXACTLY the same metric
+definitions as typed greedy"), the *same* CLI was run with
+`--assignment-mode typed` to get a fresh typed-greedy number for direct
+comparison, instead of trusting the committed `0.5287`. It returned
+**0.7764**, not 0.5287. This was not expected and warranted a full
+investigation before proceeding with any manuscript-integration decision
+for `max_weight_matching`.
+
+## 2. `max_weight_matching` itself: independently reproduced, clean
+
+This part of Phase 3's work holds up completely under audit:
+
+- **Reproduced independently**, twice, in fresh Python processes, from the
+  canonical eval file (`data/processed/nlp4lp_eval_orig.jsonl`, 331 rows)
+  and gold cache (`results/eswa_revision/00_env/nlp4lp_gold_cache.json`),
+  not from any committed summary CSV as input:
+  `instantiation_ready = 0.743202416918429` both times, matching the
+  committed `results/unevaluated_methods_evaluation/nlp4lp_downstream_orig_tfidf_max_weight_matching.json`
+  exactly. Per-query `schema_hit`/`n_expected_scalar`/`n_filled`/
+  `param_coverage`/`type_match` matched the committed artifact on all
+  331/331 queries with zero mismatches.
+- **No leakage.** `_run_max_weight_matching_grounding` →
+  `_opt_role_global_assignment` builds its cost matrix entirely from
+  `_score_mention_slot_opt(mention, slot)`, where mentions come from
+  `_extract_opt_role_mentions(query, variant)` (query text only) and slots
+  come from `_build_slot_opt_irs(expected_scalar)` (`expected_scalar` is
+  the *predicted* schema's own parameter-name list, computed identically
+  for every assignment mode before the mode-specific branch). Grepped the
+  full body of `_score_mention_slot_opt`, `_extract_opt_role_mentions`, and
+  `_build_slot_opt_irs` for any reference to `gold`/`answer`/`label`:
+  zero matches. Every signal used is category A (available at inference,
+  from query text) or B (derived from the predicted schema's own key
+  list) — never category C (gold/eval-only).
+- **Metric parity confirmed.** `max_weight_matching`'s per-query
+  `Coverage`/`TypeMatch`/`InstantiationReady` are computed by the exact
+  same shared code block (`tools/nlp4lp_downstream_utility.py` ~line 6426)
+  that every other assignment mode — including typed greedy's own `else`
+  branch — flows through. Same `expected_scalar` denominator, same
+  `coverage>=0.8 and type_match>=0.8` threshold, no special-casing.
+- **Deterministic where it matters.** Two fresh processes gave
+  bit-identical `InstantiationReady`, `Coverage`, and `TypeMatch` (and
+  every other row-level value) every time. The only non-determinism found
+  was in the secondary `exact5_on_hits`/`exact20_on_hits` diagnostics
+  (which are *not* part of `InstantiationReady`), caused by Python's
+  default per-process hash randomization affecting tie-breaking among
+  candidate mentions with literally identical local scores — confirmed
+  fixed by pinning `PYTHONHASHSEED=0`. See §6.
+
+**None of this is in question.** The problem is entirely on the
+comparison side, not the `max_weight_matching` measurement side.
+
+## 3. The real problem: `postfix_main_metrics.csv` predates ~49 commits of grounding fixes
+
+`results/eswa_revision/13_tables/postfix_main_metrics.csv` — the source of
+the manuscript's Table 1 `Coverage`/`TypeMatch`/`InstReady` columns via
+`tools/build_camera_ready_table1.py` — was last generated by
+`training/external/run_full_downstream_benchmark.py` at commit `3fffe68`
+(2026-03-29) or earlier. Since then, **49 commits have modified
+`tools/nlp4lp_downstream_utility.py`** (`git log 3fffe68..HEAD --
+tools/nlp4lp_downstream_utility.py`), including (non-exhaustive, by commit
+title):
+
+- `3d74575` fix: resolve float type match — 3 root causes in
+  `_expected_type`, `_is_type_match`, and all 4 scoring functions
+- `8fad5dd` fix: `_choose_token` currency pref, ILP formulation test,
+  binary domain check
+- `6962adb` fix: enforce min≤max numeric ordering in
+  `_is_partial_admissible`
+- `49161ea` fix: 4 GCG grounding bugs — entity anchor, utilisation, rate
+  type, cost/profit semantics
+- `f925d3f` / `626d4d2` feat: strengthen percent vs int/float type
+  incompatibility in grounding pipeline
+- `4835b0b` / `67fde36` feat: add bound-role annotation layer for min/max
+  disambiguation
+- `7ebfdc3` feat: add multi-token word-number extraction and percent
+  typing
+- `f416468`, `5307f83`, `226331e`, `38b54f9`, `b3db74c`, `71a0bf7`
+  — the "harder grounding" / "Group 1" / "Group 3" distractor-suppression
+  and clause-parallel-structure series
+- `90d2909` Add type-consistent assignment, max-weight matching, and
+  exhaustive DP grounding modes (this is the commit that *introduced*
+  `max_weight_matching` itself)
+
+None of these are individually suspicious — they read as exactly the kind
+of incremental grounding-accuracy fixes this project's commit history is
+full of. The problem is not any single commit; it is that
+`postfix_main_metrics.csv` (and everything downstream of it: Table 1,
+`results/eswa_revision/13_tables/robustness_by_variant.csv`, the
+`docs/NEGATIVE_RESULTS.md` comparison numbers, `docs/METHOD_INVENTORY.md`'s
+InstReady column for the Phase-1/2-era methods) was **never regenerated**
+after any of these 49 commits landed, while `max_weight_matching`,
+`search_structured_grounding`, and `hierarchical_structured_grounding`
+**were** evaluated fresh in Phase 3 (2026-08-12) — i.e. against
+current code. Comparing a fresh number to a 49-commits-stale number and
+calling the difference a "finding" was the mistake.
+
+**This was not caught by Phases 1–3's staleness checks** because those
+checks verified *internal consistency* (does this committed CSV match the
+manuscript's committed text?) and *provenance* (which script generated
+this file?), never *reproducibility* (does re-running that script today
+give the same numbers?). Phase 2's Table 1 fix (2026-08-11) corrected a
+different, earlier staleness (an intermediate pre-correction snapshot vs.
+the already-committed `postfix_main_metrics.csv`) — it was a real, valid
+fix at the time, but it inherited `postfix_main_metrics.csv`'s own
+drift from current code as a ceiling it could not have detected without
+re-running the generator, which was outside that phase's scope.
+
+## 4. Fair, current-code comparison (`orig`, 331 queries, all methods)
+
+Regenerated **all 12 methods** in the original harness's method list
+(the 9 methods `training/external/run_full_downstream_benchmark.py` runs,
+plus `max_weight_matching`/`search_structured_grounding`/
+`hierarchical_structured_grounding`) via the exact same `run_single_setting()`
+function the harness calls — same catalog (`data/catalogs/nlp4lp_catalog.jsonl`,
+335 entries), same gold cache, same eval file, same day, same code
+revision (`0f0b24e`), `PYTHONHASHSEED=0` for full determinism:
+
+| Method | InstantiationReady (fresh, `orig`) | vs. fresh typed greedy | p (paired bootstrap) |
+|---|---|---|---|
+| `oracle_typed_greedy` | 0.8248 | +0.0483 | <0.001 (significantly better — expected, retrieval upper bound) |
+| **`tfidf_typed_greedy`** | **0.7764** | — (reference) | — |
+| `bm25_typed_greedy` | 0.7644 | −0.0121 | 0.322 (n.s.) |
+| `tfidf_acceptance_rerank` | 0.7644 | −0.0121 | 0.328 (n.s.) |
+| `tfidf_constrained` | 0.7492 | −0.0272 | 0.050 (borderline n.s.) |
+| `max_weight_matching` | 0.7432 | −0.0332 | **0.042 (significantly worse)** |
+| `tfidf_optimization_role_repair` | 0.7372 | −0.0393 | 0.020 (significantly worse) |
+| `lsa_typed_greedy` | 0.7341 | −0.0423 | <0.001 (significantly worse) |
+| `tfidf_hierarchical_acceptance_rerank` | 0.7190 | −0.0574 | <0.001 (significantly worse) |
+| `tfidf_semantic_ir_repair` | 0.7160 | −0.0604 | <0.001 (significantly worse) |
+| `search_structured_grounding` | 0.7039 | −0.0725 | <0.001 (significantly worse) |
+| `hierarchical_structured_grounding` | 0.7039 | −0.0725 | <0.001 (significantly worse) |
+
+**Plain `tfidf_typed_greedy` is now the strongest non-oracle method in
+this repository**, beating every richer alternative (constrained,
+semantic-IR repair, optimization-role repair, both acceptance-rerank
+variants, `max_weight_matching`, `search_structured_grounding`,
+`hierarchical_structured_grounding`) except two statistically-tied
+retrieval variants (BM25, TF-IDF-acceptance-rerank).
+
+This is, if anything, a *cleaner and more coherent* version of Phase 2's
+original negative-results narrative, not a reversal of it: **richer
+scoring/assignment machinery still does not help** (this was already
+Phase 2's conclusion) — what changed is that the *plain* baseline itself
+got dramatically better through 49 commits of targeted extraction/
+type-matching fixes, to the point that it now also beats the two
+global-assignment methods (`max_weight_matching`,
+`search_structured_grounding`/`hierarchical_structured_grounding`) that
+Phase 3 mistakenly believed had leapfrogged it.
+
+### Robustness (`noisy`, `short` variants, fresh)
+
+`max_weight_matching` does **not** show a consistent advantage under
+sanitized/degraded input either:
+
+| Variant | `tfidf_typed_greedy` | `max_weight_matching` | `search_structured_grounding` |
+|---|---|---|---|
+| `noisy` | 0.0393 | 0.0242 (worse) | 0.0211 (worse) |
+| `short` | 0.0272 | 0.0634 (better) | 0.0695 (better) |
+
+Absolute values are low and close to floor on both degraded variants
+(consistent with prior documentation that `noisy`/`short` are hard
+variants generally); the sign of the `max_weight_matching` vs. typed-greedy
+comparison flips between `noisy` and `short`, so no robust directional
+claim is supported either way at this sample size. This is reported for
+completeness, not as a second independent confirmation of anything.
+
+## 5. Mechanism-analysis reframing
+
+Phase 3 asked "why does exact global assignment help so much more here
+than it helped GCG/relation-aware/ambiguity-aware?" The honest answer,
+now that the comparison is fair, is: **it doesn't, on `orig`.** All three
+"global assignment" methods (`max_weight_matching`,
+`search_structured_grounding`, `hierarchical_structured_grounding`) trail
+plain typed greedy by 0.03–0.07 InstantiationReady, all significant. A
+query-level transition analysis (typed-greedy-ready vs.
+`max_weight_matching`-ready, `n=331`, fresh numbers) shows:
+
+- both ready: 239
+- typed-greedy ready, `max_weight_matching` not: **18**
+- `max_weight_matching` ready, typed greedy not: **7**
+- neither ready: 67
+
+Typed greedy rescues more than twice as many queries as
+`max_weight_matching` rescues in the other direction. The residual-failure
+taxonomy computed over `max_weight_matching`'s own assignments (per-slot,
+331 queries) is dominated by `same_type_ambiguity` (335 slot-level
+instances) and `total_perunit_confusion` (166) — i.e. `max_weight_matching`'s
+*exact* global optimization is still only as good as the *local* pairwise
+score it optimizes over, and that local score has the same
+same-type/total-vs-coefficient confusions that motivated the (also
+negative-result) P0 learned scorer. Full counts:
+`results/max_weight_matching_validation/mechanism_and_error_analysis_summary.json`.
+
+## 6. Minor, separate finding: `exact5`/`exact20` tie-breaking nondeterminism
+
+Independent of the staleness issue: two fresh, back-to-back
+`max_weight_matching` runs (default Python hash randomization) gave
+bit-identical `InstantiationReady`/`Coverage`/`TypeMatch` but *different*
+`exact5_on_hits`/`exact20_on_hits` (0.4789/0.5113 vs. 0.4932/0.5272 vs. the
+originally-committed 0.4905/0.5202 — three different values across three
+runs). Root cause: when multiple candidate mentions tie exactly on local
+score for a slot, which one the Hungarian algorithm picks depends on
+mention list order, which depends on Python's per-process string-hash
+randomization somewhere upstream in mention extraction/deduplication. With
+`PYTHONHASHSEED=0` fixed, two runs are byte-identical, including
+`exact5`/`exact20`. **Recommendation:** always set `PYTHONHASHSEED=0` (or
+any fixed value) when reproducing this repository's results, and note
+this in `docs/HOW_TO_REPRODUCE.md`. This does not affect
+`InstantiationReady` and does not change any conclusion in this document
+or `results/CANONICAL_RESULTS.md`.
+
+## 7. What this changes
+
+- **`max_weight_matching`, `search_structured_grounding`,
+  `hierarchical_structured_grounding` are demoted from "CANONICAL —
+  STRONG POSITIVE RESULT" back to negative results** (they lose to fresh
+  typed greedy, significantly on `orig`). See updated
+  `docs/METHOD_INVENTORY.md`, `docs/NEGATIVE_RESULTS.md`.
+- **The Phase 3 "reframing" of §8 in `PROJECT_STATUS.md`
+  ("most promising direction is no longer a learned scorer, it's
+  understanding `max_weight_matching`") is retracted.** P0's original
+  negative result (`docs/LEARNED_GROUNDING_P0.md`, NR11) stands unaffected
+  — it was compared against a apples-to-apples *oracle-schema 50-instance
+  subsample* run fresh in Phase 3, not against the stale
+  `postfix_main_metrics.csv` number, so it does not share this bug.
+- **The manuscript's own headline number (0.5287) is what's actually
+  stale relative to current code**, not a correction that this repository
+  should silently apply. This is a far more consequential finding than
+  "one experimental method doesn't hold up" — it means the *submitted
+  paper's reported baseline result* no longer reproduces from the
+  current codebase. **This document does NOT modify
+  `manuscript/main.tex`, `results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv`,
+  or any other camera-ready/submitted artifact.** That decision requires
+  the paper's author to decide how to handle a post-submission
+  discrepancy between a frozen, submitted result and the current
+  codebase (issue an erratum, treat current code as a "v2" ablation,
+  revert the 49 commits' effect on typed greedy for reproducibility
+  purposes, etc.) — not something to resolve unilaterally in a
+  repository-polish pass. See `docs/MANUSCRIPT_INTEGRATION_DECISION_2026-08-12.md`
+  for the formal M1/M2/M3 classification and recommended next step.
+- `results/eswa_revision/13_tables/postfix_main_metrics.csv` and its
+  dependents (Table 1, `robustness_by_variant.csv`, the Phase-1/2-era
+  method-comparison numbers in `docs/NEGATIVE_RESULTS.md`/
+  `docs/METHOD_INVENTORY.md`) are now flagged
+  **STALE_RELATIVE_TO_CURRENT_CODE** in
+  `results/canonical_results_manifest.json`, alongside the fresh
+  numbers captured in this audit
+  (`results/baseline_staleness_audit_2026-08-12/`). The stale file itself
+  is left in place, unmodified, per the repository's own
+  `.stale`-supersession convention and because it is what the *submitted
+  manuscript* was built from — deleting or silently overwriting it would
+  destroy the paper's own provenance trail.
+
+## 8. Reproduction
+
+```bash
+export NLP4LP_GOLD_CACHE=results/eswa_revision/00_env/nlp4lp_gold_cache.json
+export PYTHONHASHSEED=0
+
+# Fresh typed greedy (compare this to the committed 0.5287):
+python3 -m tools.nlp4lp_downstream_utility --variant orig --baseline tfidf \
+    --assignment-mode typed --output-dir /tmp/fresh_typed
+
+# Fresh max_weight_matching (reproduces committed 0.7432 exactly):
+python3 -m tools.nlp4lp_downstream_utility --variant orig --baseline tfidf \
+    --assignment-mode max_weight_matching --output-dir /tmp/fresh_mwm
+
+# Full 12-method / 3-variant regeneration + mechanism/error analysis used
+# for this document:
+python3 scripts/analysis/mwm_full_analysis.py
+```
+
+Artifacts: `results/baseline_staleness_audit_2026-08-12/` (12-method fresh
+`orig` results + significance vs. fresh typed greedy),
+`results/max_weight_matching_validation/` (mechanism/error analysis,
+per-query transition CSV).

@@ -68,24 +68,30 @@ the downstream grounding metrics that matter. See NR11 in
 
 ## H2: Combining a working local scorer (from H1) with the existing global assignment will outperform either alone
 
-**Status (2026-08-12, Phase 3): INCONCLUSIVE for learned scores; a related
-but distinct claim is now STRONGLY SUPPORTED for non-learned scores.** H2
+**Status (2026-08-12, Phase 4 — supersedes the Phase 3 version of this
+status): NOT SUPPORTED for either learned or non-learned scores.** H2
 as literally framed presupposes "a working local scorer from H1" — since H1
 was not supported, H2's own precondition was not met, so the learned-score
 half of this hypothesis remains untested in the form it was framed (P0 + a
 frozen embedding + global assignment (M3/M4) did not beat P0 + greedy (M2)
 either, but this is a weaker test since H1's scorer itself was not strong).
-**Separately and unexpectedly**, this phase found that combining the
+**Phase 3 briefly (same day) believed** it had found that combining the
 EXISTING NON-LEARNED opt-role score with exact global assignment
-(`max_weight_matching`) is dramatically valuable: InstantiationReady 0.7432
-vs. typed greedy's 0.5287 (p<0.001) — see
-`results/unevaluated_methods_evaluation/`. This suggests H2's underlying
-intuition (global assignment adds value once the local score is good
-enough) is correct, but the "good enough" bar was already cleared by the
-existing hand-engineered score, not by P0's learned score. Re-test H2 in a
-future phase using `max_weight_matching`'s score source as the "working
-local scorer," or by first improving P0 enough to close its gap to the
-hand-engineered score.
+(`max_weight_matching`) was dramatically valuable (InstantiationReady 0.7432
+vs. typed greedy's 0.5287, p<0.001). **This was retracted the same day**:
+the 0.5287 comparison baseline was found to be stale relative to current
+code (see `docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`); against a fresh
+typed-greedy rerun (0.7764), `max_weight_matching` (0.7432) loses
+significantly (p=0.042). H2's underlying intuition (global assignment adds
+value once the local score is good enough) is **not supported** by any
+evidence gathered so far — the existing hand-engineered local score,
+combined with exact global assignment, still does not beat a strong
+greedy baseline. If H2 is re-tested in a future phase, it must be against
+a **freshly rerun** typed-greedy baseline, and would need either a
+genuinely improved local score (not yet available) or evidence that the
+current local score's own error modes (same-type ambiguity, total/per-unit
+confusion — see `results/max_weight_matching_validation/`) are the actual
+bottleneck for global assignment specifically.
 
 - **Motivation:** `docs/METHOD_INVENTORY.md` Part 1 already separates local
   scoring (stages 8-12) from global assignment (stages 13-16); the negative
@@ -125,13 +131,14 @@ hand-engineered score.
 
 ## H3: Dependency/syntactic features will particularly improve min/max and same-sentence multi-number cases
 
-**Status (2026-08-12, Phase 3): NOT TESTED.** Out of scope for this phase
-(requires a new dependency, spaCy or similar, and a prerequisite per-type
-error breakdown that was not computed). Prioritized appropriately: with
-`max_weight_matching` now the strongest known method (0.7432, no learning
-or dependency parsing involved), this hypothesis's relative priority should
-be reassessed against the much larger, more direct gain already available
-from decode-strategy changes.
+**Status (2026-08-12, Phase 4 note): NOT TESTED.** Out of scope for this
+phase (requires a new dependency, spaCy or similar, and a prerequisite
+per-type error breakdown that was not computed). The Phase 3 note
+de-prioritizing this in favor of `max_weight_matching`-based decode-strategy
+changes has been retracted (`max_weight_matching` is a negative result —
+see `docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`); this hypothesis's
+priority should be assessed on its own merits, not relative to that
+retracted claim.
 
 - **Motivation:** user-identified failure categories (bound/polarity
   confusion, multi-numeric ambiguity) map to `_compute_bound_role`,
@@ -192,12 +199,13 @@ standalone ablation isolating just these features was not run.
 
 ## H5: Joint top-k schema + grounding reranking may improve strict readiness more than top-1 retrieval alone
 
-**Status (2026-08-12, Phase 3): NOT TESTED.** Out of scope for this phase.
-Re-prioritize: H5's upper-bound estimate (≤8/331, 2.4%) was computed against
-typed greedy's 0.5287; against `max_weight_matching`'s 0.7432, schema
-retrieval (already ~0.91 R@1) is an even smaller share of the remaining
-gap, so this hypothesis's expected value is now lower relative to other
-open work, not higher.
+**Status (2026-08-12, Phase 4 note): NOT TESTED.** Out of scope for this
+phase. H5's upper-bound estimate (≤8/331, 2.4%) was computed against typed
+greedy's committed 0.5287; that number is stale (fresh rerun: 0.7764, see
+`docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`), so the upper-bound estimate
+should be recomputed against the fresh baseline before this hypothesis is
+prioritized either up or down. The Phase 3 note reprioritizing this
+relative to `max_weight_matching` is retracted along with that claim.
 
 - **Motivation:** `docs/CURRENT_BOTTLENECK_ANALYSIS.md` rank 3 (schema
   retrieval miss, 30/331 = 9.1%) is a comparatively small but nonzero

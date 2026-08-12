@@ -274,8 +274,14 @@ configuration exceeded M0's point estimate either. Full record:
 - The `max_weight_matching`/`search_structured_grounding`/`hierarchical_structured_grounding`
   discovery (see `results/unevaluated_methods_evaluation/`) was made
   *after* P0's decision gate was reached and is not folded into this
-  document's frozen M0-M4 comparison; a future phase should evaluate P0
-  against `max_weight_matching` (not typed greedy) as the real bar to beat.
+  document's frozen M0-M4 comparison. **Correction (2026-08-12, Phase 4):**
+  that discovery was itself later found to rest on a stale typed-greedy
+  comparison baseline and is now a negative result — see
+  `docs/BASELINE_STALENESS_AUDIT_2026-08-12.md` and NR12 in
+  `docs/NEGATIVE_RESULTS.md`. A future P0-successor should be benchmarked
+  against a **freshly rerun** `tfidf_typed_greedy` (0.7764 on the full
+  331-query benchmark as of 2026-08-12), which remains the strongest known
+  non-oracle method — not `max_weight_matching`.
 
 ## Decision Gate
 
@@ -297,9 +303,12 @@ Move to the next established family from
 `docs/ALGORITHM_IMPROVEMENT_ROADMAP.md`'s literature review (structured
 cross-encoder with joint text+feature input, i.e. roadmap architecture #2,
 or top-k retrieval-grounding joint reranking, H5) -- but **first**,
-re-anchor against the newly-discovered `max_weight_matching` baseline
-(InstantiationReady 0.7432 on the full 331-query benchmark, see
-`results/unevaluated_methods_evaluation/`), since it is now the strongest
-known local method and the correct target for any future comparison, not
-typed greedy. See `docs/ALGORITHM_IMPROVEMENT_ROADMAP.md` for the updated
-roadmap.
+re-anchor against a **freshly rerun** `tfidf_typed_greedy` baseline
+(InstantiationReady 0.7764 on the full 331-query benchmark as of
+2026-08-12 — always rerun this, never trust a committed number without
+checking `docs/BASELINE_STALENESS_AUDIT_2026-08-12.md` first), since it
+is the strongest known non-oracle method and the correct target for any
+future comparison. (An earlier version of this section pointed at
+`max_weight_matching` as the bar to beat; that was a same-day error,
+corrected in Phase 4 — see the staleness audit.) See
+`docs/ALGORITHM_IMPROVEMENT_ROADMAP.md` for the updated roadmap.

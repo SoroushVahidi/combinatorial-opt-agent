@@ -166,17 +166,24 @@ reused, not rebuilt.**
 
 ## Prioritized roadmap
 
-**Updated 2026-08-12 (Phase 3) with two major pieces of new evidence:**
-(1) P0 was implemented and evaluated -- **DONE, decision gate C (does not
-improve)**, see `docs/LEARNED_GROUNDING_P0.md`; (2) three previously-
-unevaluated methods were run for the first time and turned out to be the
-**strongest methods in this repository's history**
-(`max_weight_matching`: InstantiationReady 0.7432 vs. typed greedy's
-0.5287, p<0.001 -- see `results/unevaluated_methods_evaluation/`). This
-second finding was not anticipated by the roadmap as originally written
-and materially reprioritizes everything below it: **the highest-value next
-step is no longer "build a better learned scorer" but "understand and
-extend the exact-global-assignment finding."**
+**Updated 2026-08-12 (Phase 4) — supersedes the Phase 3 version of this
+section.** Phase 3 (same day, earlier) believed it had found two major
+pieces of new evidence: (1) P0 implemented and evaluated — DONE, decision
+gate C (does not improve), unaffected by this update, see
+`docs/LEARNED_GROUNDING_P0.md`; (2) three previously-unevaluated methods
+(`max_weight_matching`, `search_structured_grounding`,
+`hierarchical_structured_grounding`) were the "strongest methods in this
+repository's history." **Finding (2) has been retracted** — it compared
+fresh numbers against a typed-greedy baseline (0.5287) that turned out to
+be stale relative to current code by 49 commits. A fresh, same-code typed
+greedy rerun scores 0.7764, significantly beating all three. Full
+correction: `docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`. **The entire
+former P1-P6 restructuring built around the max-weight-matching finding is
+withdrawn.** The roadmap below returns to (and sharpens) the original
+Phase 2 prioritization, now informed by the mechanism/error analysis that
+was done for `max_weight_matching` before the retraction (it remains
+useful evidence about the local score's own weaknesses, even though the
+method built on top of it does not win).
 
 ### P0 — Establish a working learned local scorer, cheaply — **DONE (2026-08-12)**
 
@@ -192,104 +199,106 @@ extend the exact-global-assignment finding."**
   `docs/NEGATIVE_RESULTS.md`.
 - **Consequence per stop criterion:** do not escalate to roadmap
   architecture #2/#3 (cross-encoder, bi-encoder) without first re-examining
-  the feature set / decode strategy — and given P1 below now supersedes
-  this whole line of investigation in expected value, that re-examination
-  should happen only after P1 is complete.
+  the feature set / decode strategy.
 
-### P1 (NEW, was not in the original roadmap) — Understand and extend the max-weight-matching finding — **NEXT, highest priority**
+### P1 (RETRACTED, 2026-08-12 Phase 4) — ~~Understand and extend the max-weight-matching finding~~
 
-- **Why:** `max_weight_matching` (exact Hungarian assignment over the
-  existing, non-learned `_score_mention_slot_opt` scores) reaches
-  InstantiationReady 0.7432 on the full 331-query benchmark — a +0.2145
-  absolute, p<0.001 gain over typed greedy, and the best result ever
-  recorded in this repository, including beating Oracle-TG (0.5680).
-  `search_structured_grounding` and `hierarchical_structured_grounding`
-  independently corroborate this (0.7039 each) using a different decode
-  mechanism (beam search) over related scores. This is now unambiguously
-  the highest-value open thread.
-- **Prerequisite:** none — the result already exists
-  (`results/unevaluated_methods_evaluation/`).
-- **Expected output (three sub-tasks, roughly in order):**
-  1. **Mechanism analysis:** why does exact assignment help so much more
-     here than it helped GCG/relation-aware/ambiguity-aware (which also
-     used global/beam search but performed poorly, NR5-NR7)? Hypothesis to
-     test: those methods added *extra* consistency-penalty terms on top of
-     already-adequate local scores, actively hurting; `max_weight_matching`
-     uses the *unmodified* opt-role score, letting the assignment algorithm
-     alone do the work. Verify by inspecting whether GCG's pairwise-penalty
-     terms are net-negative in isolation.
-  2. **Error analysis:** what does `max_weight_matching` still get wrong,
-     on the ~26% of queries where it isn't InstantiationReady? Apply the
-     same per-query methodology `docs/LEARNED_GROUNDING_P0.md` "Error
-     Analysis" used, at full 331-query scale this time.
-  3. **Manuscript-integration decision:** this result is not yet in
-     `results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv`
-     or the manuscript text — a future phase must explicitly decide
-     whether/how to integrate it (new table row? revised headline claim?),
-     which is a manuscript-writing decision this phase deliberately did not
-     make (`results/unevaluated_methods_evaluation/README.md`).
-- **Success criterion:** a documented, evidence-backed explanation for the
-  mechanism, plus a decision recorded on manuscript integration.
-- **Stop criterion:** n/a — this is now the default next task, not a
-  conditional experiment.
+- Withdrawn. `max_weight_matching`, `search_structured_grounding`, and
+  `hierarchical_structured_grounding` are negative results (lose to fresh
+  typed greedy, p<0.05 on `orig`); see NR12 in `docs/NEGATIVE_RESULTS.md`.
+  The mechanism/error analysis that was already done for this line of work
+  (`results/max_weight_matching_validation/`) is retained as evidence for
+  P2 below, since it characterizes the *local score's* own weaknesses
+  independent of which decode strategy sits on top of it.
 
-### P2 (was P1) — Learned score + existing global assignment (H2) — **CONDITIONAL, re-scoped**
+### P1 (was P3) — Verify and, if needed, refresh the remaining Phase-1/2 negative-result numbers — **NEW, highest priority**
 
-- **Why:** H2's original framing (learned-local + global assignment) is
-  now supersedable by testing the *existing, non-learned* score + global
-  assignment first (which is exactly `max_weight_matching`, already done —
-  see P1 above). The learned-score version of H2 remains open but lower
-  priority, since P0's learned score did not clear the bar the non-learned
-  score already clears easily.
-- **Prerequisite:** P1's mechanism analysis (to know whether a *better*
-  learned score, not just any learned score, is the missing ingredient).
-- **Stop criterion (updated):** do not pursue a learned-score + global-
-  assignment combination until P0's specific learned-score weaknesses
-  (identified in P1's mechanism analysis and `docs/LEARNED_GROUNDING_P0.md`
-  "Error Analysis") are understood well enough to target them directly,
-  rather than repeating H1/P0's architecture with minor variations.
+- **Why:** the staleness audit regenerated fresh numbers for 12 of the ~16
+  methods in `docs/METHOD_INVENTORY.md` Part 2. Three families —
+  `global_compat_*` (GCG), `relation_aware_*`, `ambiguity_aware_*` — were
+  **not** regenerated (time-bounded in Phase 4) and still show only their
+  original, now-confirmed-stale numbers (0.42-0.50 range) compared against
+  the also-stale 0.5287 typed-greedy baseline. It is very likely (given the
+  pattern in the 12 already-checked methods) that these three families'
+  numbers have also drifted upward, but this has not been confirmed.
+- **Prerequisite:** none — this is a cheap rerun (~1-2s per setting per
+  the timings in `docs/BASELINE_STALENESS_AUDIT_2026-08-12.md` §8),
+  identical procedure to what was just done for the other 9 methods.
+- **Expected output:** fresh `orig` (and ideally `noisy`/`short`) numbers
+  for `global_compat_full`, `relation_aware_full` (and the other ablation
+  levels), and `ambiguity_aware_full`/`beam`/`abstain`, each compared via
+  paired bootstrap against a **freshly rerun** `tfidf_typed_greedy`
+  (0.7764), not the stale 0.5287.
+- **Success criterion:** every row in `docs/METHOD_INVENTORY.md` Part 2 has
+  a fresh, same-code, mutually comparable number, closing the "not yet
+  regenerated fresh" gaps this phase left open.
+- **Stop criterion:** n/a — low-cost, high-value data-quality task.
 
-### P3 (was P2) — Add richer semantic-role/unit/domain features (H4) — **CONDITIONAL, deprioritized**
+### P2 (was P2, re-scoped) — Improve the local pairwise score directly, targeting its known error modes
 
-- **Status:** NOT TESTED (`docs/RESEARCH_HYPOTHESES.md` H4). Deprioritized
-  further by P1's discovery — richer features were never the bottleneck for
-  `max_weight_matching`, which uses the SAME feature set P0 already had
-  access to and still wins by a wide margin through decode strategy alone.
-- **Prerequisite:** P1 and P2 (only revisit if a future learned scorer,
-  informed by P1/P2, shows a feature-attributable gap).
+- **Why:** the retracted `max_weight_matching` work still produced a
+  useful byproduct: a full 331-query slot-level error taxonomy for
+  `_score_mention_slot_opt`, the local score every richer method (learned
+  and non-learned) has depended on and failed to beat typed greedy with.
+  Dominant residual categories (`results/max_weight_matching_validation/mechanism_and_error_analysis_summary.json`):
+  same-type ambiguity (335 slot-level instances), total/per-unit confusion
+  (166), missing mentions (156), objective/constraint confusion (124).
+  These are the same categories P0's feature set targeted and failed to
+  resolve through *learning* — the open question is whether they are
+  resolvable through further *deterministic* feature engineering (in the
+  style of the 49 commits that improved `_choose_token`) instead.
+- **Prerequisite:** P1 (confirm the full current method-comparison picture
+  first, so any local-score improvement is evaluated against accurate
+  baselines).
+- **Falsification criterion:** if targeted fixes to same-type-ambiguity /
+  total-per-unit-confusion detection in `_score_mention_slot_opt` do not
+  move `optimization_role_repair`/`max_weight_matching`'s own numbers
+  (freshly rerun) closer to typed greedy's, the local score is not the
+  gating factor for those methods and this line should stop.
+- **Novelty status:** ESTABLISHED_ADAPTATION (same class of fix as the 49
+  commits already in this repository's history; not a new technique).
 
-### P4 (was P3) — Top-k retrieval + grounding joint reranking (H5) — **CONDITIONAL, deprioritized further**
+### P3 (was P3/H4) — Add richer semantic-role/unit/domain features to `_choose_token` itself (H4, re-targeted)
 
-- **Status:** NOT TESTED. `max_weight_matching`'s 0.7432 makes the
-  remaining schema-retrieval-miss share of the gap even smaller in
-  relative terms than when H5 was first framed against typed greedy's
-  0.5287 (see H5's updated status in `docs/RESEARCH_HYPOTHESES.md`).
-- **Prerequisite:** P1 complete first — no reason to invest in retrieval-
-  side reranking before understanding why the grounding-side gain was so
-  large.
+- **Status:** NOT TESTED (`docs/RESEARCH_HYPOTHESES.md` H4). Originally
+  framed as input to a learned scorer (P0, negative result); **re-targeted**
+  here at `_choose_token` (typed greedy's own simple heuristic), given that
+  49 commits of exactly this kind of incremental, deterministic feature
+  refinement are what took typed greedy from 0.5287 to 0.7764 in the first
+  place. This is now the most evidence-backed lever in the roadmap: the
+  technique (targeted deterministic fixes to the simple baseline) has a
+  demonstrated track record in this exact codebase, unlike any of the
+  richer-architecture alternatives tried so far.
+- **Prerequisite:** P1 (accurate current baselines).
 
-### P5 (was P4) — Confidence calibration / abstention — **CONDITIONAL**
+### P4 (was P4/H5) — Top-k retrieval + grounding joint reranking (H5)
+
+- **Status:** NOT TESTED. H5's upper-bound estimate needs recomputing
+  against the fresh typed-greedy baseline (0.7764) rather than the stale
+  0.5287 — schema retrieval miss (30/331, 9.1%) is a similar *relative*
+  share of the gap either way, so this is likely still a smaller-value
+  lever than P2/P3, but should be re-estimated, not assumed.
+- **Prerequisite:** P1.
+
+### P5 (was P5) — Confidence calibration / abstention — **CONDITIONAL**
 
 - **Why:** `docs/NEGATIVE_RESULTS.md` NR7 shows the current abstention
-  threshold (ambiguity-aware grounding) is badly miscalibrated. Now more
-  naturally framed as calibration on top of `max_weight_matching`'s scores
-  (which are known-good) rather than on top of a not-yet-working learned
-  scorer.
-- **Prerequisite:** P1 (use `max_weight_matching`'s error analysis to
-  target calibration where it would actually help).
+  threshold (ambiguity-aware grounding) is badly miscalibrated. Frame
+  against a **freshly rerun** typed-greedy baseline, not
+  `max_weight_matching`'s scores (that method is a negative result, not a
+  "known-good" score source).
+- **Prerequisite:** P1.
 
-### P6 (was P5) — Only then, design a genuinely new combinatorial grounding algorithm, if established methods plateau
+### P6 (was P6) — Only then, design a genuinely new combinatorial grounding algorithm, if established methods plateau
 
 - **Why:** per the task's own framing — established techniques should be
-  exhausted first. This bar is now considerably higher than when the
-  roadmap was first written: `max_weight_matching` alone closed most of
-  the gap to a perfect score using entirely established techniques (exact
-  bipartite matching, no learning). A new algorithm is even less clearly
-  warranted now than before P1's discovery.
+  exhausted first. Nothing in Phase 3-4's evidence lowers this bar: every
+  richer scoring, repair, and global-assignment technique tried so far has
+  lost to a simple, iteratively-refined greedy baseline. If anything this
+  strengthens the case for continuing to invest in P2/P3-style incremental
+  deterministic refinement before considering a new algorithm class.
 - **Prerequisite:** P1-P5 all attempted with documented stop/success
-  outcomes, AND `max_weight_matching`'s remaining ~26% failure mode
-  (from P1's error analysis) is shown to require something beyond
-  established assignment/reranking/calibration techniques.
+  outcomes.
 - **Expected output:** a written case for *why* a new algorithm class is
   needed, citing which specific established technique failed and why,
   before any new implementation begins.

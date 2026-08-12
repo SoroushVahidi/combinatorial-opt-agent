@@ -1,0 +1,83 @@
+{
+  "bm25_typed_greedy": {
+    "diff_vs_fresh_typed_greedy": -0.012084592145015116,
+    "ci_lo": -0.03323262839879154,
+    "ci_hi": 0.00906344410876133,
+    "p": 0.322,
+    "mean": 0.7643504531722054
+  },
+  "lsa_typed_greedy": {
+    "diff_vs_fresh_typed_greedy": -0.04229607250755285,
+    "ci_lo": -0.06646525679758308,
+    "ci_hi": -0.01812688821752266,
+    "p": 0.0,
+    "mean": 0.7341389728096677
+  },
+  "oracle_typed_greedy": {
+    "diff_vs_fresh_typed_greedy": 0.048338368580060465,
+    "ci_lo": 0.021148036253776436,
+    "ci_hi": 0.0755287009063444,
+    "p": 0.0,
+    "mean": 0.824773413897281
+  },
+  "tfidf_constrained": {
+    "diff_vs_fresh_typed_greedy": -0.027190332326283984,
+    "ci_lo": -0.054380664652567974,
+    "ci_hi": -0.0030211480362537764,
+    "p": 0.05,
+    "mean": 0.7492447129909365
+  },
+  "tfidf_semantic_ir_repair": {
+    "diff_vs_fresh_typed_greedy": -0.06042296072507547,
+    "ci_lo": -0.09063444108761329,
+    "ci_hi": -0.030211480362537766,
+    "p": 0.0,
+    "mean": 0.716012084592145
+  },
+  "tfidf_optimization_role_repair": {
+    "diff_vs_fresh_typed_greedy": -0.0392749244712991,
+    "ci_lo": -0.06948640483383686,
+    "ci_hi": -0.00906344410876133,
+    "p": 0.02,
+    "mean": 0.7371601208459214
+  },
+  "tfidf_acceptance_rerank": {
+    "diff_vs_fresh_typed_greedy": -0.012084592145015116,
+    "ci_lo": -0.03323262839879154,
+    "ci_hi": 0.00906344410876133,
+    "p": 0.328,
+    "mean": 0.7643504531722054
+  },
+  "tfidf_hierarchical_acceptance_rerank": {
+    "diff_vs_fresh_typed_greedy": -0.05740181268882172,
+    "ci_lo": -0.08761329305135952,
+    "ci_hi": -0.027190332326283987,
+    "p": 0.0,
+    "mean": 0.7190332326283988
+  },
+  "max_weight_matching": {
+    "diff_vs_fresh_typed_greedy": -0.033232628398791486,
+    "ci_lo": -0.06042296072507553,
+    "ci_hi": -0.0030211480362537764,
+    "p": 0.042,
+    "mean": 0.743202416918429
+  },
+  "search_structured_grounding": {
+    "diff_vs_fresh_typed_greedy": -0.07250755287009059,
+    "ci_lo": -0.11178247734138973,
+    "ci_hi": -0.03323262839879154,
+    "p": 0.0,
+    "mean": 0.7039274924471299
+  },
+  "hierarchical_structured_grounding": {
+    "diff_vs_fresh_typed_greedy": -0.07250755287009059,
+    "ci_lo": -0.11178247734138973,
+    "ci_hi": -0.03323262839879154,
+    "p": 0.0,
+    "mean": 0.7039274924471299
+  },
+  "tfidf_typed_greedy": {
+    "mean": 0.7764350453172205,
+    "note": "baseline (reference)"
+  }
+}

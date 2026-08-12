@@ -1,14 +1,18 @@
 # Project Status
 
-**Last verified:** 2026-08-12 (Phase 3: executed the roadmap, evaluated
-previously-unevaluated methods, fixed remaining stale artifacts). This file
-is the primary entry point for a new agent or contributor; it stays concise
-and links out for detail. See
+**Last verified:** 2026-08-12 (Phase 4: validated and RETRACTED Phase 3's
+headline claim after discovering the comparison baseline was stale; full
+audit in `docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`). This file is the
+primary entry point for a new agent or contributor; it stays concise and
+links out for detail. See
 [`docs/KAIS_SOURCE_OF_TRUTH.md`](docs/KAIS_SOURCE_OF_TRUTH.md) for
 manuscript-specific authority, [`docs/REPO_STRUCTURE.md`](docs/REPO_STRUCTURE.md) /
 [`docs/REPOSITORY_MAP.md`](docs/REPOSITORY_MAP.md) for the directory map, and
 these documents for full scientific detail:
 
+- [`docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`](docs/BASELINE_STALENESS_AUDIT_2026-08-12.md) — **read this first.** The manuscript's headline typed-greedy number does not reproduce from current code; this changes everything below it.
+- [`docs/SCIENTIFIC_STATE.md`](docs/SCIENTIFIC_STATE.md) — detailed scientific handoff (research question, current best method, why it works, full weakness/strength classification, open questions)
+- [`NEXT_STEPS.md`](NEXT_STEPS.md) — short, operational execution queue; start here for "what do I do right now"
 - [`results/CANONICAL_RESULTS.md`](results/CANONICAL_RESULTS.md) — where the truth lives for every result family
 - [`docs/METHOD_INVENTORY.md`](docs/METHOD_INVENTORY.md) — pipeline decomposition + every grounding method implemented
 - [`docs/NEGATIVE_RESULTS.md`](docs/NEGATIVE_RESULTS.md) — everything already tried that didn't work (read before proposing a new method)
@@ -16,14 +20,20 @@ these documents for full scientific detail:
 - [`docs/RESEARCH_HYPOTHESES.md`](docs/RESEARCH_HYPOTHESES.md) — testable hypotheses (H1-H5), status-tagged
 - [`docs/ALGORITHM_IMPROVEMENT_ROADMAP.md`](docs/ALGORITHM_IMPROVEMENT_ROADMAP.md) — literature review + prioritized roadmap (DONE/NEXT/CONDITIONAL)
 - [`docs/LEARNED_GROUNDING_P0.md`](docs/LEARNED_GROUNDING_P0.md) — the P0 learned-scorer experiment (negative result, decision gate C)
-- [`results/unevaluated_methods_evaluation/README.md`](results/unevaluated_methods_evaluation/README.md) — **the most important Phase 3 finding**, read this first
+- [`docs/MANUSCRIPT_INTEGRATION_DECISION_2026-08-12.md`](docs/MANUSCRIPT_INTEGRATION_DECISION_2026-08-12.md) — why the manuscript was NOT touched despite the staleness finding, and what the author should do next
 - [`docs/BASELINE_IMPLEMENTATION_ROADMAP.md`](docs/BASELINE_IMPLEMENTATION_ROADMAP.md) — ORLM/OptMATH/DeepOR/OR-R1 implementation planning
 
-**Headline change since Phase 2:** the strongest known method in this
-repository is no longer `tfidf_typed_greedy` (0.5287). Running three
-already-implemented-but-never-evaluated methods found
-`max_weight_matching` reaches InstantiationReady **0.7432** (+0.2145,
-p<0.001) — see §3-4 below.
+**Headline change since Phase 3 (retraction, same day, 2026-08-12):**
+Phase 3 believed `tfidf_typed_greedy` (committed at 0.5287) had been
+beaten by `max_weight_matching` (0.7432). This was found to be an
+apples-to-oranges comparison: 0.5287 is **stale** — it predates 49 commits
+of grounding fixes and does not reproduce from current code. A fresh
+rerun of plain typed greedy gives **0.7764**, which significantly beats
+`max_weight_matching`, `search_structured_grounding`, and
+`hierarchical_structured_grounding` (all p<0.05). **`tfidf_typed_greedy`
+is the strongest known non-oracle method in this repository as of
+2026-08-12** — see §3-4 below and
+`docs/BASELINE_STALENESS_AUDIT_2026-08-12.md` for the full audit.
 
 ---
 
@@ -106,50 +116,68 @@ silently prevented regeneration in Phase 2) and has been fixed and
 regenerated — see §14 "Things a New Agent Must NOT Do" for the specific
 bug and its fix.
 
-**IMPORTANT — table above is the manuscript's own headline table, and it
-is NOT the strongest result in this repository as of Phase 3 (see §4).**
+**IMPORTANT — table above is the manuscript's own headline table**, and
+**it does not reproduce from the current codebase** (see the staleness
+finding immediately below). It remains the manuscript's own reported
+authority for the submitted paper, but a new agent should not assume a
+fresh rerun will reproduce these exact numbers.
 
 ## 4. Main Scientific Finding
 
-**Manuscript-level finding (unchanged, still valid for the submitted
-paper):** retrieval is strong (TF-IDF Schema R@1 ≈ 0.91); the oracle-vs-
-TF-IDF gap on InstantiationReady is modest (0.5680 vs 0.5287) under the
-manuscript's `typed_greedy` method. **The primary bottleneck for that
-specific method is downstream semantic number-to-schema-slot grounding,
-not schema retrieval.**
+**Manuscript-level finding (qualitatively still supported by fresh
+evidence, even though the exact numbers below have drifted — see the
+staleness note):** retrieval is strong (TF-IDF Schema R@1 ≈ 0.91); the
+oracle-vs-TF-IDF gap on InstantiationReady is modest under the
+manuscript's `typed_greedy` method (0.5680 vs 0.5287 as submitted; 0.8248
+vs 0.7764 under a fresh rerun — the gap stays small either way). **The
+primary bottleneck for that specific method is downstream semantic
+number-to-schema-slot grounding, not schema retrieval — this conclusion
+holds under both the submitted and the fresh numbers.**
 
-**Repository-internal finding (NEW, 2026-08-12, not yet in the manuscript):**
-that bottleneck is **not fundamental** — it is substantially specific to
-`typed_greedy`'s *greedy* decode strategy. Three methods that were
-implemented and unit-tested but never before run against real NLP4LP data
-turned out to dramatically outperform `typed_greedy` once actually
-evaluated:
+**CRITICAL FINDING (2026-08-12, Phase 4):
+`results/eswa_revision/13_tables/postfix_main_metrics.csv` — the source of
+the manuscript's headline `tfidf_typed_greedy` = 0.5287 — does not
+reproduce from the current codebase.** A fresh, same-code rerun of the
+identical method gives **InstantiationReady = 0.7764** (drift +0.2477),
+because 49 commits of grounding-accuracy fixes landed after that table was
+last generated and it was never regenerated. Full audit, root cause, and
+exact reproduction commands:
+[`docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`](docs/BASELINE_STALENESS_AUDIT_2026-08-12.md).
+**Consequence: `tfidf_typed_greedy`, freshly rerun, is the strongest known
+non-oracle method in this repository — it beats every richer alternative
+evaluated, including the three "unevaluated methods" below.**
 
-| Method | InstantiationReady | vs. typed greedy | p-value |
+**Phase 3 (earlier the same day) believed it had found the opposite** —
+that three methods implemented but never before run against real NLP4LP
+data (`max_weight_matching`, `search_structured_grounding`,
+`hierarchical_structured_grounding`) dramatically outperformed typed
+greedy. **This was retracted the same day** once the comparison baseline
+was found stale:
+
+| Method | InstantiationReady (raw, still reproducible) | vs. **fresh** typed greedy (0.7764) | p-value |
 |---|---|---|---|
-| `max_weight_matching` (exact Hungarian assignment) | **0.7432** | +0.2145 | <0.001 |
-| `search_structured_grounding` (beam search) | 0.7039 | +0.1752 | <0.001 |
-| `hierarchical_structured_grounding` (region-decomposed beam search) | 0.7039 | +0.1752 | <0.001 |
+| `max_weight_matching` (exact Hungarian assignment) | 0.7432 | **−0.0332 (loses)** | 0.042 |
+| `search_structured_grounding` (beam search) | 0.7039 | **−0.0725 (loses)** | <0.001 |
+| `hierarchical_structured_grounding` (region-decomposed beam search) | 0.7039 | **−0.0725 (loses)** | <0.001 |
 
-All three use the SAME hand-engineered pairwise scoring function
-(`_score_mention_slot_opt`) `optimization_role_repair` already used and
-which only reached 0.4411 with a repair-based decode. **The decode
-strategy — exact/near-exact global assignment instead of greedy or local
-repair — is what was actually limiting InstantiationReady, not the
-richness of the scoring function or a fundamental grounding difficulty.**
-Full record and important caveats (not yet integrated into the manuscript,
-331-query full benchmark not a subsample):
-[`results/unevaluated_methods_evaluation/README.md`](results/unevaluated_methods_evaluation/README.md).
-This reframes §8's "most promising improvement direction" — see below.
+All three raw numbers are independently reproduced and leakage-free (the
+*measurement* was sound) — only the *comparison* was invalid (fresh vs.
+stale). See `docs/NEGATIVE_RESULTS.md` NR12 and
+[`results/unevaluated_methods_evaluation/README.md`](results/unevaluated_methods_evaluation/README.md)
+(now superseded interpretation, numbers still accurate). §8's "most
+promising improvement direction" below reflects the corrected picture, not
+the retracted one.
 
 ## 5. Current Grounding Methods Already Implemented
 
 Do **not** reinvent these — full inventory with CLI dispatch names, mechanism,
 and evaluated-or-not status in [`docs/METHOD_INVENTORY.md`](docs/METHOD_INVENTORY.md).
-Evaluated and CANONICAL: typed greedy (baseline, 0.5287), **max-weight
-bipartite matching (0.7432, strongest known method), search-structured
-grounding (0.7039), hierarchical-structured grounding (0.7039)**. Evaluated
-and NEGATIVE_RESULT: constrained matching, semantic IR repair,
+Evaluated and CANONICAL: **typed greedy — baseline, fresh InstantiationReady
+0.7764 as of 2026-08-12, the strongest known non-oracle method** (committed
+Table 1 shows 0.5287, which is stale — see §4). Evaluated and
+NEGATIVE_RESULT: max-weight bipartite matching (0.7432), search-structured
+grounding (0.7039), hierarchical-structured grounding (0.7039) — all lose
+to fresh typed greedy; constrained matching, semantic IR repair,
 optimization-role repair, acceptance/hierarchical-acceptance reranking,
 global compatibility grounding (`global_compat_{local,pairwise,full}`),
 relation-aware linking (`relation_aware_{basic,ops,semantic,full}`),
@@ -158,87 +186,103 @@ ambiguity-aware grounding (4 variants), P0 learned scorer (see §6).
 ## 6. What Did NOT Work / Negative Results
 
 Full ledger with statistical evidence: [`docs/NEGATIVE_RESULTS.md`](docs/NEGATIVE_RESULTS.md).
-**Headline finding:** none of the evaluated richer *greedy or repair-based*
-deterministic grounding families (GCG, relation-aware, ambiguity-aware)
-beat plain `tfidf_typed_greedy` (0.5287) on `orig` InstantiationReady;
-several lose significantly (p<0.001, paired bootstrap). **This does NOT
-mean richer scoring itself doesn't help** — see §4: the same scoring
-family, decoded with exact global assignment instead of greedy/repair,
-massively outperforms. The scoring function was never the sole limitation.
+**Headline finding (strengthened 2026-08-12, Phase 4):** none of the
+evaluated richer deterministic grounding families — greedy/repair-based
+(GCG, relation-aware, ambiguity-aware) **or global-assignment-based**
+(`max_weight_matching`, `search_structured_grounding`,
+`hierarchical_structured_grounding`) — beat plain `tfidf_typed_greedy`
+(freshly rerun: 0.7764) on `orig` InstantiationReady; most lose
+significantly (p<0.05, paired bootstrap). **A same-day Phase 3 claim that
+exact global assignment was the exception has been retracted** — it
+compared against a stale typed-greedy baseline; see §4 and
+`docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`.
 
 **Critical, easy to miss:** a learned **local mention-slot scorer was
 already tried twice**, both times unsuccessfully. NR10 (Phase pre-2): a
 text-only `distilroberta-base` pairwise ranker, lost on every metric to
 the rule baseline (exact-fill accuracy collapsed to 0.000). NR11 (Phase 3,
-this pass, `docs/LEARNED_GROUNDING_P0.md`): a feature-augmented classifier
-over the SAME rich features `max_weight_matching` uses, plus a frozen
-sentence embedding — still did not beat either canonical typed greedy or
-even a pure rule-only decode over the same features (not statistically
-significant, p=0.44, but no configuration showed a nominal gain either).
-**Read NR10 AND NR11 in full before proposing "try a learned scorer"** —
-two well-executed, differently-scoped attempts have both failed to show a
-gain; any third attempt needs a concrete, evidenced reason to expect a
-different outcome (see §8).
+`docs/LEARNED_GROUNDING_P0.md`): a feature-augmented classifier over rich
+hand-engineered features plus a frozen sentence embedding — still did not
+beat canonical typed greedy or even a pure rule-only decode over the same
+features (not statistically significant, p=0.44, but no configuration
+showed a nominal gain either; this specific comparison used a fresh M0
+baseline computed for that pass and is unaffected by the §4 staleness
+finding). **Read NR10 AND NR11 in full before proposing "try a learned
+scorer"** — two well-executed, differently-scoped attempts have both
+failed to show a gain; any third attempt needs a concrete, evidenced
+reason to expect a different outcome, and must be benchmarked against a
+**freshly rerun** typed greedy (see §8).
 
 ## 7. Current Weaknesses
 
 Full three-way classification (architectural / benchmark-data /
 evaluation-evidence) and a ranked, per-query-derived bottleneck table:
 [`docs/CURRENT_BOTTLENECK_ANALYSIS.md`](docs/CURRENT_BOTTLENECK_ANALYSIS.md).
-**Headline bottleneck, `typed_greedy`-specific (post-fix, derived from 331
-real per-query rows):** type mismatch on otherwise-fully-covered decisions
-— 82/331 queries (24.8%), 60.7% of all "schema-hit but not ready" cases.
-Schema retrieval miss (9.1%) and coverage gaps (6.6-9.1%) are real but
-smaller contributors. **As of Phase 3, this bottleneck profile is known to
-be largely specific to greedy decoding** — `max_weight_matching` closes
-most of this gap by construction (see §4); a fresh bottleneck breakdown
-for `max_weight_matching` itself has not yet been computed (open task, see
-§13 P1).
+**Headline bottleneck, `typed_greedy`-specific:** type mismatch on
+otherwise-fully-covered decisions — 82/331 queries (24.8%) under the
+originally-measured (now-flagged-stale) `per_instance_diagnostics.csv`;
+schema retrieval miss (9.1%) and coverage gaps (6.6-9.1%) are real but
+smaller contributors. **This bottleneck table has not been re-derived
+against current code** (open item, see `NEXT_STEPS.md`) — treat category
+*ranking* as informative, exact counts as unverified. The Phase 3 claim
+that `max_weight_matching` "closes most of this gap" is **retracted**
+(§4) — `max_weight_matching` is a negative result, not a superior method.
 
-**Root-caused in Phase 3:** the "20/331 zero-expected-scalar-slot" item
-previously listed as a fifth bottleneck category is **not independent** —
-19/20 (95%) are a downstream artifact of schema-retrieval misses (the
-`n_expected_scalar` metric is computed from the *predicted*, not gold,
-schema); only 1/331 (`nlp4lp_test_293`) is a genuine case, and it is a
-vector/matrix-parameter problem the scalar-only architecture cannot
-represent regardless. See `docs/CURRENT_BOTTLENECK_ANALYSIS.md` rank 5 for
-detail. No canonical numbers were changed by this finding (it explains an
-existing correctly-computed number, it does not correct a bug).
+**Root-caused in Phase 3 (unaffected by the §4 staleness finding):** the
+"20/331 zero-expected-scalar-slot" item previously listed as a fifth
+bottleneck category is **not independent** — 19/20 (95%) are a downstream
+artifact of schema-retrieval misses (the `n_expected_scalar` metric is
+computed from the *predicted*, not gold, schema); only 1/331
+(`nlp4lp_test_293`) is a genuine case, and it is a vector/matrix-parameter
+problem the scalar-only architecture cannot represent regardless. See
+`docs/CURRENT_BOTTLENECK_ANALYSIS.md` rank 5 for detail.
 
 ## 8. Most Promising Improvement Direction
 
-**Reframed by the Phase 3 discovery in §4.** The most promising direction
-is **no longer** "build a better learned local scorer" — it is
-**understanding and extending the `max_weight_matching` finding**:
-1. Why does exact global assignment help so much more here than it helped
-   the negative-result global/beam methods (GCG, relation-aware,
-   ambiguity-aware)? Working hypothesis: those methods added *extra*
-   consistency-penalty terms that hurt; `max_weight_matching` uses the
-   *unmodified* opt-role score.
-2. What does `max_weight_matching` still get wrong (~26% of queries)? No
-   full-scale error analysis for this specific method exists yet.
-3. A deliberate decision on manuscript integration (this is new evidence,
-   not yet in Table 1 or the manuscript text).
+**Reframed twice on 2026-08-12: Phase 3's reframing (toward
+`max_weight_matching`) is retracted; the original Phase 2 direction is
+restored and sharpened by Phase 4's evidence.** The most promising
+direction is targeted, deterministic feature engineering on the *local*
+pairwise score / typed-greedy's own candidate-selection logic
+(`_choose_token`) — the same class of fix that produced the 49-commit,
++0.2477 InstantiationReady improvement documented in
+`docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`. This has a demonstrated
+track record in this exact codebase; no richer-architecture alternative
+(learned scorer, global assignment, beam search, repair rules) has beaten
+it. Concretely (see `docs/ALGORITHM_IMPROVEMENT_ROADMAP.md` P1-P3):
+1. Verify/refresh the remaining Phase-1/2 negative-result numbers
+   (`global_compat_*`, `relation_aware_*`, `ambiguity_aware_*` were not
+   regenerated fresh in Phase 4 — likely also stale, not yet confirmed).
+2. Target `_score_mention_slot_opt`'s dominant residual error modes
+   (same-type ambiguity, total/per-unit confusion — quantified in
+   `results/max_weight_matching_validation/`) with further deterministic
+   fixes, in the style of the 49 commits already in this repository's
+   history.
+3. Re-target H4 (richer semantic-role features) at `_choose_token` itself
+   rather than a learned scorer.
 
 The P0 feature-augmented learned scorer (the direction recommended in
-Phase 2) WAS built and evaluated this phase and did **not** improve over
+Phase 2) WAS built and evaluated in Phase 3 and did **not** improve over
 typed greedy (`docs/LEARNED_GROUNDING_P0.md`, decision gate C) — see §6.
-Do not re-attempt it without first reading why it failed. Full detail and
-next steps: [`docs/ALGORITHM_IMPROVEMENT_ROADMAP.md`](docs/ALGORITHM_IMPROVEMENT_ROADMAP.md).
+Do not re-attempt it without first reading why it failed, and benchmark
+any future attempt against a **freshly rerun** typed greedy, not a
+committed number. Full detail and next steps:
+[`docs/ALGORITHM_IMPROVEMENT_ROADMAP.md`](docs/ALGORITHM_IMPROVEMENT_ROADMAP.md).
 
 ## 9. External Baseline Roadmap
 
 | Baseline | Status |
 |---|---|
-| **PaMOP** (IJCAI 2025) | **IN PROGRESS** — independent reproduction, no official code available. See §10. |
-| **ORLM** | **NOT STARTED** — code+weights public; ranked 1st of the remaining four |
+| **PaMOP** (IJCAI 2025) | **IN PROGRESS**, fidelity gate RESOLVED (`B. MODEL_LIMITED`) — independent reproduction, no official code available. See §10. |
+| **ORLM** | **SCAFFOLDED (2026-08-12)** — interfaces only (`baselines/orlm/`), no GPU/weights/COPT license available; code+one checkpoint confirmed public (re-verified against primary sources); ranked 1st of the remaining four |
 | **OptMATH** | **NOT STARTED** — code+weights public; ranked 2nd |
 | **DeepOR** | **NOT STARTED, code unconfirmed** — very recent (AAAI 2026); monitor for release |
 | **OR-R1** | **NOT STARTED, code unconfirmed** — very recent (Nov 2025 preprint); monitor for release |
 
-Verified by directory listing: `baselines/` currently contains only
-`baselines/pamop/`. Full research (citations, code/weight availability,
-GPU/environment requirements, ranked order and rationale):
+Verified by directory listing: `baselines/` contains `baselines/pamop/`
+(pilot executed) and `baselines/orlm/` (scaffold only, 2026-08-12). Full
+research (citations, code/weight availability, GPU/environment
+requirements, ranked order and rationale):
 [`docs/BASELINE_IMPLEMENTATION_ROADMAP.md`](docs/BASELINE_IMPLEMENTATION_ROADMAP.md).
 
 ## 10. PaMOP Reproduction Status
@@ -265,26 +309,31 @@ the correction loop, semantic correctness 1/6 (0.167), mean correction
 iterations = 1.0 among the 4 corrected problems (0.67 averaged across all 6),
 total tokens = 24,194.
 
-**Decision gate (updated 2026-08-12, Phase 3): `FIDELITY_DIAGNOSTIC_REQUIRED`,
-NOT "proceed to larger run."** The `summary.json` artifact's own
-`decision_gate` field says `"A. PROCEED TO LARGER RUN"`, but that reading is
-execution-focused (6/6 execution success). The deeper analysis in
-`docs/PAMOP_PILOT_FAILURE_FORENSICS.md` — written before this pass, and
-reconfirmed here as still authoritative — reaches decision **"C.
-IMPLEMENTATION SOUND, MODEL/PROMPT IS PRIMARY LIMITATION"** and explicitly
-states: **"Do not automatically rerun all 18 yet. The exact next step is a
-tiny model-fidelity/prompt-fidelity diagnostic before any larger
-benchmark."** Given semantic correctness is only 1/6 despite 6/6 execution
-success, and the task's own instruction is that semantic correctness (not
-executability) is the primary concern, this phase adopts the
-fidelity-focused reading as authoritative. **Do not launch an 18- or
-269-case PaMOP rerun** until that diagnostic (compare the same six ids
-under a closer GPT-4-class deployment, or manually audit `G_extr`/`G_mod`
-structured outputs against gold structure) has been done.
+**Decision gate (RESOLVED 2026-08-12, Phase 4): `B. MODEL_LIMITED`.** The
+fidelity diagnostic required by Phase 3's `FIDELITY_DIAGNOSTIC_REQUIRED`
+gate has been run:
+[`results/pamop/fidelity_diagnostic_gpt5/README.md`](results/pamop/fidelity_diagnostic_gpt5/README.md).
+Same 6 problem ids, same reconstructed prompts, only the Azure deployment
+changed from `gpt-4.1-mini-2025-04-14` to `gpt-5.4` (the strongest
+deployment available on this workstation). Result: semantic correctness
+jumped from 1/6 to **4/5 evaluable (0.8)** with zero prompt changes.
+**This is model-limited, not prompt-limited** — the reconstructed
+pipeline and prompts are not the primary bottleneck. `docs/PAMOP_PILOT_FAILURE_FORENSICS.md`'s
+prior "C. IMPLEMENTATION SOUND, MODEL/PROMPT IS PRIMARY LIMITATION" reading
+is now sharpened: it is the *model*, not the prompt, that was primarily
+limiting.
 
-**Current next action:** run the model/prompt-fidelity diagnostic described
-above on the same 6 problem ids (14, 23, 34, 72, 84, 88) — not a larger-
-scale rerun — before any scale-up decision.
+**Recommendation, not yet executed:** any future scale-up (18- or
+269-case rerun) should use `gpt-5.4` or the strongest available deployment,
+not `gpt-4.1-mini`. **This diagnostic does not itself authorize a
+scale-up** — per this phase's explicit instruction, no 18- or 269-case
+PaMOP rerun was launched. That remains a deliberate future decision, now
+informed by evidence about which deployment to use when it happens.
+
+**Caveat:** n=5 evaluable problems is a small sample (4/5 vs 1/6 is
+suggestive, not rigorously powered). A C2/C4 (prompt-strengthening)
+comparison was not run — this diagnostic isolated the model axis only,
+a deliberate scope reduction given time constraints.
 
 ## 11. Data / Solver / API Environment
 
@@ -327,9 +376,13 @@ High-level only, no secrets:
 - **Learned-grounding infra (existing, reusable):** `src/learning/`,
   `artifacts/learning_ranker_data/nlp4lp/` (leak-free 230/50/50 split, see
   `docs/ALGORITHM_IMPROVEMENT_ROADMAP.md` "Training supervision feasibility")
-- **Strongest known method (2026-08-12):** `max_weight_matching` assignment
-  mode, `tools/nlp4lp_downstream_utility.py` (no new file — an existing
-  CLI flag); results in `results/unevaluated_methods_evaluation/`
+- **Strongest known method (2026-08-12, Phase 4):** plain `typed_greedy`
+  (default `assignment_mode`), `tools/nlp4lp_downstream_utility.py` —
+  freshly rerun InstantiationReady 0.7764 on `orig`, beats every richer
+  alternative evaluated. See `docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`.
+  (`max_weight_matching` was briefly, incorrectly, believed to hold this
+  title earlier the same day — see `results/unevaluated_methods_evaluation/`
+  for the raw numbers, now reinterpreted as a negative result.)
 - **P0 learned-scorer implementation (negative result):**
   `tools/learned_local_scorer.py`, `scripts/learning/build_p0_corpus.py`,
   `scripts/learning/train_p0_classifier.py`, `scripts/learning/eval_p0_grounding.py`;
@@ -342,37 +395,57 @@ High-level only, no secrets:
 
 ## 13. Immediate Next Steps
 
-Full prioritized roadmap with prerequisites/success/stop criteria:
+**See [`NEXT_STEPS.md`](NEXT_STEPS.md) for the short, operational execution
+queue — this section gives the same picture at a higher level.** Full
+prioritized roadmap with prerequisites/success/stop criteria:
 [`docs/ALGORITHM_IMPROVEMENT_ROADMAP.md`](docs/ALGORITHM_IMPROVEMENT_ROADMAP.md)
-(now DONE/NEXT/CONDITIONAL-tagged, P0-P6).
+(P0-P6, rewritten 2026-08-12 Phase 4 after the `max_weight_matching`
+retraction).
 
 **P0 (algorithm improvement) — DONE, negative result.** P0 learned scorer
 built and evaluated; did not improve over typed greedy (`docs/LEARNED_GROUNDING_P0.md`).
 
-**P1 (algorithm improvement) — NEXT, highest priority, NEW as of Phase 3:**
-- Understand *why* `max_weight_matching` (0.7432) so dramatically
-  outperforms typed greedy (0.5287) and the other global/beam methods that
-  previously failed (GCG, relation-aware, ambiguity-aware) — mechanism
-  analysis, per `docs/ALGORITHM_IMPROVEMENT_ROADMAP.md` P1.
-- Run a full-scale (331-query) error analysis for `max_weight_matching`,
-  matching the methodology already used for typed greedy
-  (`docs/CURRENT_BOTTLENECK_ANALYSIS.md`).
-- Make a deliberate decision on manuscript integration for this result
-  (not yet in Table 1 or the manuscript text).
+**P1 (was "understand max_weight_matching") — RETRACTED (2026-08-12,
+Phase 4).** That finding was an artifact of a stale comparison baseline;
+see `docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`. Do not resume this
+line of work as originally framed.
 
-**P2 (PaMOP, per the corrected decision gate — see §10):**
-- Run the model/prompt-fidelity diagnostic on the same 6 problem ids.
-  **Do NOT** proceed to an 18- or 269-case rerun before this.
+**P1 (NEW, replaces the retracted one) — verify/refresh the remaining
+stale method numbers:**
+- `global_compat_*`, `relation_aware_*`, `ambiguity_aware_*` were not
+  regenerated fresh in Phase 4 (time-bounded) — rerun them via
+  `run_single_setting()` against a freshly rerun typed greedy, the same
+  procedure already used for the other 9 methods
+  (`docs/BASELINE_STALENESS_AUDIT_2026-08-12.md` §8).
 
-**P3 (algorithm improvement, conditional on P1):**
-- Re-test H2 (learned score + global assignment) using insight from P1's
-  mechanism analysis, rather than repeating P0's architecture.
+**P2 (PaMOP — DONE, resolved 2026-08-12, see §10):** fidelity diagnostic
+run; gate is `B. MODEL_LIMITED`. **A future 18- or 269-case rerun, if
+undertaken, should use `gpt-5.4` (or the strongest available deployment),
+not `gpt-4.1-mini`** — this was not itself authorized or launched in this
+phase.
 
-**P4 (baseline coverage):**
+**P3 (algorithm improvement):**
+- Target `_score_mention_slot_opt`'s and `_choose_token`'s known residual
+  error modes (same-type ambiguity, total/per-unit confusion — see
+  `results/max_weight_matching_validation/`) with further deterministic
+  fixes, in the style of the 49 commits documented in the staleness audit.
+  This has a demonstrated track record; no richer architecture has beaten
+  it so far.
+
+**P4 (manuscript, requires author decision — see
+`docs/MANUSCRIPT_INTEGRATION_DECISION_2026-08-12.md`):**
+- Decide how to handle the submitted manuscript's headline number not
+  reproducing from current code (erratum, pin the exact submission
+  commit, or a "v2" revision with regenerated numbers).
+
+**P5 (baseline coverage):**
 - Begin ORLM baseline scaffolding (highest-priority of the four
   not-yet-started baselines — see `docs/BASELINE_IMPLEMENTATION_ROADMAP.md`
   for the full ranked list and rationale), following the `baselines/pamop/`
-  structure as a template. Requires GPU access not currently provisioned.
+  structure as a template. Requires GPU access not currently provisioned
+  (verified 2026-08-12: needs a single 24GB-class GPU for the 8B ORLM
+  checkpoint, plus a COPT/`coptpy` solver license — neither is currently
+  set up on this workstation).
 - Evaluate Ner4Opt (Kadıoğlu et al. 2024, pretrained models on HuggingFace)
   against our numeric-extraction stage — an existing, published, locally-
   runnable model in the same problem family that we do not currently compare
@@ -380,23 +453,36 @@ built and evaluated; did not improve over typed greedy (`docs/LEARNED_GROUNDING_
 
 ## 14. Things a New Agent Must NOT Do
 
+- **Do not trust any committed InstantiationReady number without first
+  checking `docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`.** The
+  manuscript's own headline number (0.5287) does not reproduce from
+  current code (fresh: 0.7764). Always rerun `tfidf_typed_greedy` fresh
+  before using it as a comparison baseline for any new method — see the
+  audit doc §8 for the exact commands.
+- **Do not re-propose `max_weight_matching` / `search_structured_grounding`
+  / `hierarchical_structured_grounding` as positive results** — they are
+  negative results (lose to fresh typed greedy, p<0.05 on `orig`; see
+  NR12 in `docs/NEGATIVE_RESULTS.md`). A same-day Phase 3 claim to the
+  contrary has been retracted.
 - Do not treat archived metrics under `docs/archive/`, `docs/archive_internal_status/`,
   `docs/provenance/`, or `results/eswa_revision/` (except the specific files
-  named in §3/§12 as corrected sources) as current authoritative numbers.
+  named in §3/§12 as corrected sources) as current authoritative numbers —
+  and even the "corrected sources" named there
+  (`postfix_main_metrics.csv`) are now known to not reproduce from current
+  code; see the staleness audit.
 - Do not reinvent GCG, relation-aware linking, or ambiguity-aware grounding
   — they exist and have been benchmarked (§5), with documented negative
-  results (§6). **Do not, however, treat `max_weight_matching`,
-  `search_structured_grounding`, or `hierarchical_structured_grounding` as
-  negative results** — as of Phase 3 they are the strongest known methods
-  (§4-5); they are canonical positive results, already implemented, ready
-  to build on.
+  results (§6), though their exact numbers have not been re-verified fresh
+  (see `docs/ALGORITHM_IMPROVEMENT_ROADMAP.md` P1).
 - Do not claim exact PaMOP reproduction — this is an independent, admittedly
   imperfect reproduction with named unresolved details (model, prompts,
   67-problem subset identity).
-- **Do not launch a PaMOP 18- or 269-case rerun** without first running the
-  model/prompt-fidelity diagnostic (§10) — the underlying artifact's own
-  `decision_gate` field says "proceed," but the deeper analysis says
-  otherwise, and this repository's official position (§10) is the latter.
+- **Do not launch a PaMOP 18- or 269-case rerun without deciding to** —
+  the fidelity diagnostic is now done (§10, gate `B. MODEL_LIMITED`), and
+  a scale-up is technically informed (use `gpt-5.4`), but launching one
+  was explicitly out of scope for this phase and remains a deliberate
+  future decision, not something to do automatically just because the
+  gate is resolved.
 - Do not expose gated NLP4LP data or redistribute it outside HuggingFace's
   own access-control terms.
 - Do not expose API keys, tokens, or the Gurobi/AMPL license contents in
@@ -429,18 +515,29 @@ built and evaluated; did not improve over typed greedy (`docs/LEARNED_GROUNDING_
   they're there; see `tests/test_camera_ready_figures.py` for the
   regression tests.
 - Do not modify the manuscript's scientific claims without separately
-  verifying the underlying data supports the change (Phases 1-3 of this
-  repository-polish effort explicitly did not touch manuscript claims,
-  **including** the major `max_weight_matching` finding in §4, which is
-  real, statistically significant, repository-internal evidence but is
-  deliberately NOT yet reflected in `manuscript/main.tex` or Table 1 —
-  that integration decision is left to a future, dedicated phase).
+  verifying the underlying data supports the change. Phases 1-4 of this
+  repository-polish effort explicitly did not touch `manuscript/main.tex`
+  or `results/paper/eaai_camera_ready_tables/`, **even after discovering
+  that the manuscript's own headline number does not reproduce from
+  current code** (§4) — that decision is deliberately left to the paper's
+  author; see `docs/MANUSCRIPT_INTEGRATION_DECISION_2026-08-12.md`.
 - **Do not propose "train a learned local mention-slot scorer" as if it
   were untested** — two attempts (NR10, NR11/P0) have both failed to show
   a gain, for different, specific, documented reasons. Read both entries
   in `docs/NEGATIVE_RESULTS.md` and `docs/LEARNED_GROUNDING_P0.md` before
-  building a third attempt, and prefer investigating `max_weight_matching`
-  first (§8) — it already works, without any learning.
+  building a third attempt, and benchmark any new attempt against a
+  **freshly rerun** typed greedy (§8), not `max_weight_matching` (a
+  negative result, not a working baseline to build on).
+- **Do not implement `max_weight_matching` again** — it already exists
+  (`_run_max_weight_matching_grounding`), was independently re-verified
+  clean (no leakage, deterministic, correct metrics) in Phase 4, and is a
+  documented negative result. Re-implementing it would be pure waste.
+- **Do not manually edit generated numerical artifacts** —
+  `results/eswa_revision/13_tables/postfix_main_metrics.csv` in particular
+  should never be hand-edited to "fix" the staleness finding; regenerate
+  it through its generator (`training/external/run_full_downstream_benchmark.py`
+  or `run_single_setting()`) if and when the author decides to, per
+  `docs/MANUSCRIPT_INTEGRATION_DECISION_2026-08-12.md`.
 - Do not rebuild the learned-grounding train/dev/test split from scratch —
   a leak-free, hash-verified 230/50/50 instance-level split already exists
   (`artifacts/learning_ranker_data/nlp4lp/`, see
