@@ -20,6 +20,8 @@
 
 **Table 1 headline** (TF-IDF + typed greedy, `orig`): Schema R@1 **0.9094**; Coverage **0.8609**; TypeMatch **0.7453**; InstantiationReady **0.5287** — matches `manuscript/main.tex`. `results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv` was found stale on 2026-08-11 and has since been regenerated (`tools/build_camera_ready_table1.py`) from the corrected canonical sources; see [`PROJECT_STATUS.md`](PROJECT_STATUS.md) §3 and [`results/CANONICAL_RESULTS.md`](results/CANONICAL_RESULTS.md) for the full provenance record.
 
+**Not yet in Table 1 (2026-08-12):** an existing, already-implemented assignment mode (`max_weight_matching`) reaches InstantiationReady **0.7432** when actually evaluated — see [`results/unevaluated_methods_evaluation/README.md`](results/unevaluated_methods_evaluation/README.md) and [`docs/LEARNED_GROUNDING_P0.md`](docs/LEARNED_GROUNDING_P0.md) for the full record and why this hasn't been folded into the manuscript yet.
+
 ---
 
 ## Read these first (repo map)
@@ -33,6 +35,7 @@
 6. [`docs/KNOWN_ISSUES.md`](docs/KNOWN_ISSUES.md) — blockers and design tensions  
 7. [`docs/REPO_STRUCTURE.md`](docs/REPO_STRUCTURE.md) / [`docs/REPOSITORY_MAP.md`](docs/REPOSITORY_MAP.md) — annotated tree (canonical vs demo vs archive)
 8. [`docs/PAMOP_REPRODUCTION_PLAN.md`](docs/PAMOP_REPRODUCTION_PLAN.md) — current external-baseline work in progress
+9. [`docs/BASELINE_IMPLEMENTATION_ROADMAP.md`](docs/BASELINE_IMPLEMENTATION_ROADMAP.md) — ORLM/OptMATH/DeepOR/OR-R1 planning (not started)
 
 **Index:** [`docs/README.md`](docs/README.md) · **External datasets plan:** [`docs/DATASET_EXPANSION_PLAN.md`](docs/DATASET_EXPANSION_PLAN.md) · **Doc check:** `python scripts/check_docs_integrity.py`
 

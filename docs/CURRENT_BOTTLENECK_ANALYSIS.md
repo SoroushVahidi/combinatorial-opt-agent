@@ -10,6 +10,18 @@ used for current bottleneck claims — its dominant "float type mismatch (~230
 cases)" finding is largely resolved (TypeMatch rose from ~0.23 to 0.7453
 after the fix; see `docs/METHOD_INVENTORY.md` for the fix itself).
 
+**2026-08-12 (Phase 3) update:** this table's scope remains
+`typed_greedy`-specific and is now understood to be the bottleneck profile
+of a since-superseded method. `max_weight_matching` (InstantiationReady
+0.7432, see `results/unevaluated_methods_evaluation/`) closes most of the
+gap this table documents by construction (exact global assignment directly
+addresses the rank-1/2 "type mismatch on an otherwise-good decision"
+categories, which are exactly the kind of locally-good-but-globally-
+suboptimal greedy mistakes exact assignment avoids). A fresh, equivalent
+bottleneck breakdown FOR `max_weight_matching` specifically has not yet
+been computed — that is `docs/ALGORITHM_IMPROVEMENT_ROADMAP.md` P1's
+"error analysis" sub-task, not yet done as of this pass.
+
 ---
 
 ## Ranked bottleneck table (current, post-fix)
@@ -20,7 +32,7 @@ after the fix; see `docs/METHOD_INVENTORY.md` for the fix itself).
 | 2 | **Combined type mismatch + incomplete coverage** | same file: `schema_hit=1 & inst_ready=0 & any_type_mismatch=1 & full_coverage=0` | 30 (9.1% of all queries; 22.2% of hit-but-not-ready cases) | Compounds two failure sources on the same query | None specific — same repair machinery as ranks 1 and 3 | Likely the hardest subset (two independent things must both be fixed) |
 | 3 | **Schema retrieval miss** | `schema_hit=0` | 30 (9.1% of all queries) | InstReady forced to 0 regardless of downstream quality (retrieval-dependent eligible-slot design) | TF-IDF R@1 already ≈0.91; Oracle control isolates this as a *small* contributor to the overall gap (Oracle InstReady 0.5680 vs TF-IDF 0.5287, a 0.039 gap — see `docs/CANONICAL_RESULTS.md` §E) | Diminishing returns — retrieval is already comparatively strong; this is not the dominant lever |
 | 4 | **Coverage gap only (missing slots, correct types on filled ones)** | `schema_hit=1 & inst_ready=0 & any_type_mismatch=0 & full_coverage=0` | 22 (6.6% of all queries; 16.3% of hit-but-not-ready cases) | Directly reduces Coverage and zeroes `inst_ready` | Numeric/word-number/enumeration extraction stages (`docs/METHOD_INVENTORY.md` Part 1, stages 3-5) | Likely extraction misses (mention never found) rather than mis-assignment — a *different* fix target than ranks 1-2 |
-| 5 | **Zero-expected-scalar-slot queries** | `n_expected_scalar=0` | 20 (6.0% of all queries) | These queries structurally cannot be "ready" in the usual sense (edge case in the eligible-slot computation) | None identified | Not yet root-caused in this pass — flagged as an open data/schema-mapping question, not assumed to be a grounding failure |
+| 5 | **Zero-expected-scalar-slot queries** | `n_expected_scalar=0` | 20 (6.0% of all queries) | These queries structurally cannot be "ready" in the usual sense (edge case in the eligible-slot computation) | None identified | **Root-caused 2026-08-12 (Phase 3): NOT an independent failure mode.** 19/20 (95%) have `schema_hit=0` -- `n_expected_scalar` is computed from the query's *predicted* (not gold) schema's own gold-parameter structure (`_run_setting`'s `pred_scalar_keys` logic), so a wrong retrieval can point to a schema whose own template/gold-value structure happens to yield zero fillable scalar slots. This is a **downstream consequence of rank-3 (schema miss)**, not a fifth independent bottleneck. Only 1/20 is genuine: `nlp4lp_test_293`, a multi-industry manpower-allocation problem whose parameters are almost entirely vector/matrix-valued (`ManpowerOne`, `Stock`, `Capacity`, `InputOne`, etc.) -- a real instance of the "scalar-only grounding" architectural weakness (§A above), not a metric bug. No canonical numbers were regenerated; this is a correctly-computed, now-explained interaction, not an evaluation bug. |
 
 **Sanity check:** ranks 1+2+4 (135) + rank 3 (30) accounts for 165/331
 (49.9%) of all queries as some form of non-readiness; the remaining ~50%

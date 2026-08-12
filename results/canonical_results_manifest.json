@@ -1,6 +1,7 @@
 {
   "document_type": "canonical_results_manifest",
   "verified_date": "2026-08-11",
+  "last_updated": "2026-08-12 (Phase 3: added families L, M; updated PaMOP decision_gate)",
   "verification_method": "direct comparison against manuscript/main.tex unless noted",
   "families": [
     {
@@ -96,13 +97,45 @@
       "final_execution_success": "6/6",
       "semantic_correctness": "1/6",
       "total_tokens": 24194,
-      "decision_gate": "A. PROCEED TO LARGER RUN"
+      "decision_gate_in_artifact_json": "A. PROCEED TO LARGER RUN",
+      "decision_gate_phase3_2026_08_12": "FIDELITY_DIAGNOSTIC_REQUIRED",
+      "decision_gate_note": "the summary.json's own decision_gate field ('A. PROCEED TO LARGER RUN') is execution-focused (6/6 execution success); docs/PAMOP_PILOT_FAILURE_FORENSICS.md's deeper analysis (decision 'C. IMPLEMENTATION SOUND, MODEL/PROMPT IS PRIMARY LIMITATION') recommends a model/prompt-fidelity diagnostic BEFORE scaling to 18 or 269 cases, given semantic correctness is only 1/6 despite 6/6 execution -- Phase 3 adopts the fidelity-focused reading as authoritative per explicit task instruction that semantic correctness, not executability, is the primary concern"
     },
     {
       "id": "K",
       "name": "external_llm_baseline_comparison_artifacts",
       "status": "AUXILIARY_NOT_PAPER_CORE",
       "notes": "not the same as the ORLM/OptMATH/DeepOR/OR-R1/PaMOP external-baseline roadmap in PROJECT_STATUS.md section 9"
+    },
+    {
+      "id": "L",
+      "name": "newly_evaluated_grounding_methods",
+      "authoritative_artifact": "results/unevaluated_methods_evaluation/",
+      "generator": "unmodified tools/nlp4lp_downstream_utility.py CLI, --assignment-mode {max_weight_matching,search_structured_grounding,hierarchical_structured_grounding}",
+      "variant": "orig",
+      "denominator": 331,
+      "status": "NEWLY_VALIDATED_STRONG_POSITIVE",
+      "date": "2026-08-12",
+      "results": {
+        "max_weight_matching": {"instantiation_ready": 0.7432, "diff_vs_typed_greedy": 0.2145, "p_value": 0.0},
+        "search_structured_grounding": {"instantiation_ready": 0.7039, "diff_vs_typed_greedy": 0.1752, "p_value": 0.0},
+        "hierarchical_structured_grounding": {"instantiation_ready": 0.7039, "diff_vs_typed_greedy": 0.1752, "p_value": 0.0}
+      },
+      "not_yet_integrated_into": "results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv or the manuscript -- pending future manuscript-integration decision",
+      "superseded_by": null
+    },
+    {
+      "id": "M",
+      "name": "p0_learned_local_grounding_scorer",
+      "authoritative_artifact": "results/learned_grounding_p0/",
+      "generator": "scripts/learning/{build_p0_corpus,train_p0_classifier,eval_p0_grounding}.py",
+      "variant": "orig",
+      "denominator": 50,
+      "denominator_note": "oracle-schema test subsample, NOT the full 331-query retrieval-conditioned benchmark",
+      "status": "NEGATIVE_RESULT_DECISION_GATE_C",
+      "date": "2026-08-12",
+      "negative_results_ledger_entry": "NR11",
+      "superseded_by": null
     }
   ],
   "regeneration_command": "python tools/build_camera_ready_table1.py"

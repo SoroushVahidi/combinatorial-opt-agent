@@ -166,94 +166,130 @@ reused, not rebuilt.**
 
 ## Prioritized roadmap
 
-### P0 — Establish a working learned local scorer, cheaply
+**Updated 2026-08-12 (Phase 3) with two major pieces of new evidence:**
+(1) P0 was implemented and evaluated -- **DONE, decision gate C (does not
+improve)**, see `docs/LEARNED_GROUNDING_P0.md`; (2) three previously-
+unevaluated methods were run for the first time and turned out to be the
+**strongest methods in this repository's history**
+(`max_weight_matching`: InstantiationReady 0.7432 vs. typed greedy's
+0.5287, p<0.001 -- see `results/unevaluated_methods_evaluation/`). This
+second finding was not anticipated by the roadmap as originally written
+and materially reprioritizes everything below it: **the highest-value next
+step is no longer "build a better learned scorer" but "understand and
+extend the exact-global-assignment finding."**
 
-- **Why:** `docs/NEGATIVE_RESULTS.md` NR10 is the only prior attempt, and
-  it was both undertrained and text-only. Architecture #1 above directly
-  addresses both weaknesses at minimal cost.
-- **Prerequisite:** none blocking — training data, split, and feature
-  infrastructure all already exist.
-- **Expected output:** a trained classifier + its H1 falsification-criterion
-  result (beats or does not beat rule baseline on pairwise_accuracy and
-  type_match_after_decoding, same held-out test split as NR10 for direct
-  comparability).
-- **Success criterion:** beats the rule baseline (pairwise_accuracy > 0.247,
-  type_match_after_decoding > 0.125) on the same test split NR10 used.
-- **Stop criterion:** if architecture #1 does not beat the rule baseline
-  after reasonable hyperparameter search, do not escalate to architecture
-  #2/#3 without first re-examining whether the feature set itself (not the
-  model class) is the limiting factor.
+### P0 — Establish a working learned local scorer, cheaply — **DONE (2026-08-12)**
 
-### P1 — Learned score + existing global assignment (H2)
+- **Result:** implemented (`tools/learned_local_scorer.py`, feature-
+  augmented classifier per architecture #1 above). Decision gate:
+  **C — does not improve.** Best P0 configuration (greedy decode) reached
+  InstantiationReady 0.80 on a 50-instance oracle-schema test subset vs.
+  canonical M0's 0.86 (not statistically significant, p=0.44) and vs. a
+  **pure rule-only decode over the same feature set's 0.84** (P0's learned
+  scores underperformed the unlearned rule score on this test set, despite
+  a real gain on the internal dev proxy metric). Full record:
+  `docs/LEARNED_GROUNDING_P0.md`, ledger entry NR11 in
+  `docs/NEGATIVE_RESULTS.md`.
+- **Consequence per stop criterion:** do not escalate to roadmap
+  architecture #2/#3 (cross-encoder, bi-encoder) without first re-examining
+  the feature set / decode strategy — and given P1 below now supersedes
+  this whole line of investigation in expected value, that re-examination
+  should happen only after P1 is complete.
 
-- **Why:** isolates whether the bottleneck is local scoring or global
-  assignment, per H2's staged design.
-- **Prerequisite:** P0 succeeds (a working local scorer exists).
-- **Expected output:** InstantiationReady comparison across {typed-greedy,
-  max-weight-matching, search-structured, hierarchical-structured} × {rule
-  scores, learned scores from P0}.
-- **Success criterion:** learned-local + best-global beats both learned-local
-  + typed-greedy and hand-engineered-local + best-global, per H2's
-  falsification criterion.
-- **Stop criterion:** if no combination beats P0 alone, treat local scoring
-  and global assignment as non-complementary for now and do not pursue
-  further global-assignment engineering.
+### P1 (NEW, was not in the original roadmap) — Understand and extend the max-weight-matching finding — **NEXT, highest priority**
 
-### P2 — Add richer semantic-role/unit/domain features, only if P0 error analysis motivates them (H4)
+- **Why:** `max_weight_matching` (exact Hungarian assignment over the
+  existing, non-learned `_score_mention_slot_opt` scores) reaches
+  InstantiationReady 0.7432 on the full 331-query benchmark — a +0.2145
+  absolute, p<0.001 gain over typed greedy, and the best result ever
+  recorded in this repository, including beating Oracle-TG (0.5680).
+  `search_structured_grounding` and `hierarchical_structured_grounding`
+  independently corroborate this (0.7039 each) using a different decode
+  mechanism (beam search) over related scores. This is now unambiguously
+  the highest-value open thread.
+- **Prerequisite:** none — the result already exists
+  (`results/unevaluated_methods_evaluation/`).
+- **Expected output (three sub-tasks, roughly in order):**
+  1. **Mechanism analysis:** why does exact assignment help so much more
+     here than it helped GCG/relation-aware/ambiguity-aware (which also
+     used global/beam search but performed poorly, NR5-NR7)? Hypothesis to
+     test: those methods added *extra* consistency-penalty terms on top of
+     already-adequate local scores, actively hurting; `max_weight_matching`
+     uses the *unmodified* opt-role score, letting the assignment algorithm
+     alone do the work. Verify by inspecting whether GCG's pairwise-penalty
+     terms are net-negative in isolation.
+  2. **Error analysis:** what does `max_weight_matching` still get wrong,
+     on the ~26% of queries where it isn't InstantiationReady? Apply the
+     same per-query methodology `docs/LEARNED_GROUNDING_P0.md` "Error
+     Analysis" used, at full 331-query scale this time.
+  3. **Manuscript-integration decision:** this result is not yet in
+     `results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv`
+     or the manuscript text — a future phase must explicitly decide
+     whether/how to integrate it (new table row? revised headline claim?),
+     which is a manuscript-writing decision this phase deliberately did not
+     make (`results/unevaluated_methods_evaluation/README.md`).
+- **Success criterion:** a documented, evidence-backed explanation for the
+  mechanism, plus a decision recorded on manuscript integration.
+- **Stop criterion:** n/a — this is now the default next task, not a
+  conditional experiment.
 
-- **Why:** avoid adding complexity speculatively; only justified by a
-  concrete post-P0 error analysis showing a specific feature-attributable
-  failure pattern.
-- **Prerequisite:** P0 complete, with per-slot-type error breakdown computed
-  (the finer breakdown flagged as not yet computed in
-  `docs/CURRENT_BOTTLENECK_ANALYSIS.md`).
-- **Expected output:** ablation of role/semantic-tag features in/out of
-  the P0 classifier.
-- **Success criterion:** measurable per-type TypeMatch improvement from the
-  ablated features, per H4.
-- **Stop criterion:** no measurable per-type improvement — features are not
-  carrying the claimed signal.
+### P2 (was P1) — Learned score + existing global assignment (H2) — **CONDITIONAL, re-scoped**
 
-### P3 — Top-k retrieval + grounding joint reranking (H5)
+- **Why:** H2's original framing (learned-local + global assignment) is
+  now supersedable by testing the *existing, non-learned* score + global
+  assignment first (which is exactly `max_weight_matching`, already done —
+  see P1 above). The learned-score version of H2 remains open but lower
+  priority, since P0's learned score did not clear the bar the non-learned
+  score already clears easily.
+- **Prerequisite:** P1's mechanism analysis (to know whether a *better*
+  learned score, not just any learned score, is the missing ingredient).
+- **Stop criterion (updated):** do not pursue a learned-score + global-
+  assignment combination until P0's specific learned-score weaknesses
+  (identified in P1's mechanism analysis and `docs/LEARNED_GROUNDING_P0.md`
+  "Error Analysis") are understood well enough to target them directly,
+  rather than repeating H1/P0's architecture with minor variations.
 
-- **Why:** rank-3 bottleneck (schema miss, 9.1%) is real but small; only
-  worth the k-fold inference cost if P0-P2 have plateaued on the larger
-  rank-1/2 bottleneck.
-- **Prerequisite:** P0 (need a working grounding scorer worth reranking
-  against) — this is why it's P3, not P0, despite retrieval being
-  "upstream" architecturally.
-- **Expected output:** InstantiationReady with joint top-k reranking vs.
-  top-1.
-- **Success criterion:** gain approaching the ≤8/331 (2.4%) StrictInstantiationReady
-  upper bound (H5's falsification criterion).
-- **Stop criterion:** gain far below that bound relative to added k-fold
-  inference cost.
+### P3 (was P2) — Add richer semantic-role/unit/domain features (H4) — **CONDITIONAL, deprioritized**
 
-### P4 — Confidence calibration / abstention
+- **Status:** NOT TESTED (`docs/RESEARCH_HYPOTHESES.md` H4). Deprioritized
+  further by P1's discovery — richer features were never the bottleneck for
+  `max_weight_matching`, which uses the SAME feature set P0 already had
+  access to and still wins by a wide margin through decode strategy alone.
+- **Prerequisite:** P1 and P2 (only revisit if a future learned scorer,
+  informed by P1/P2, shows a feature-attributable gap).
+
+### P4 (was P3) — Top-k retrieval + grounding joint reranking (H5) — **CONDITIONAL, deprioritized further**
+
+- **Status:** NOT TESTED. `max_weight_matching`'s 0.7432 makes the
+  remaining schema-retrieval-miss share of the gap even smaller in
+  relative terms than when H5 was first framed against typed greedy's
+  0.5287 (see H5's updated status in `docs/RESEARCH_HYPOTHESES.md`).
+- **Prerequisite:** P1 complete first — no reason to invest in retrieval-
+  side reranking before understanding why the grounding-side gain was so
+  large.
+
+### P5 (was P4) — Confidence calibration / abstention — **CONDITIONAL**
 
 - **Why:** `docs/NEGATIVE_RESULTS.md` NR7 shows the current abstention
-  threshold (ambiguity-aware grounding) is badly miscalibrated (Coverage
-  collapses to 0.2207). A properly calibrated version, built on a *working*
-  scorer from P0, is architecturally motivated even though the current
-  version failed.
-- **Prerequisite:** P0 (calibrating a bad scorer's confidence doesn't help).
-- **Expected output:** a precision/coverage trade-off curve for abstention
-  on top of the P0 scorer.
-- **Success criterion:** a usable operating point exists where abstaining
-  on low-confidence predictions improves precision without collapsing
-  coverage the way NR7's abstain variant did.
-- **Stop criterion:** no such operating point exists at any reasonable
-  threshold.
+  threshold (ambiguity-aware grounding) is badly miscalibrated. Now more
+  naturally framed as calibration on top of `max_weight_matching`'s scores
+  (which are known-good) rather than on top of a not-yet-working learned
+  scorer.
+- **Prerequisite:** P1 (use `max_weight_matching`'s error analysis to
+  target calibration where it would actually help).
 
-### P5 — Only then, design a genuinely new combinatorial grounding algorithm, if established methods plateau
+### P6 (was P5) — Only then, design a genuinely new combinatorial grounding algorithm, if established methods plateau
 
 - **Why:** per the task's own framing — established techniques should be
-  exhausted first. `docs/NEGATIVE_RESULTS.md` already shows 9 deterministic
-  ideas and 1 learned idea (NR1-NR10) have not beaten typed greedy; P0-P4
-  represent the next established techniques to try before concluding a
-  fundamentally new algorithm is warranted.
-- **Prerequisite:** P0-P4 all attempted with documented stop/success
-  outcomes.
+  exhausted first. This bar is now considerably higher than when the
+  roadmap was first written: `max_weight_matching` alone closed most of
+  the gap to a perfect score using entirely established techniques (exact
+  bipartite matching, no learning). A new algorithm is even less clearly
+  warranted now than before P1's discovery.
+- **Prerequisite:** P1-P5 all attempted with documented stop/success
+  outcomes, AND `max_weight_matching`'s remaining ~26% failure mode
+  (from P1's error analysis) is shown to require something beyond
+  established assignment/reranking/calibration techniques.
 - **Expected output:** a written case for *why* a new algorithm class is
   needed, citing which specific established technique failed and why,
   before any new implementation begins.

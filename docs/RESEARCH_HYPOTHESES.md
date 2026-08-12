@@ -16,6 +16,18 @@ literature search — treat as a weak claim, not a strong one).
 
 ## H1: A feature-augmented local scorer will beat both the rule baseline and the prior text-only learned scorer
 
+**Status (2026-08-12, Phase 3): NOT SUPPORTED.** Implemented and evaluated
+as P0 (`docs/LEARNED_GROUNDING_P0.md`). P0's best configuration (greedy
+decode) did NOT beat either the rule baseline (0.80 vs. rule-only 0.84) or
+canonical typed greedy (0.80 vs. 0.86) on InstantiationReady, though it did
+beat both on the internal dev proxy metric (slot-selection accuracy). The
+M0-vs-P0 gap itself was not statistically significant at n=50 (p=0.44), so
+this is a soft, not a decisive, non-support — but the falsification
+criterion specified ("must beat the rule baseline on pairwise_accuracy AND
+type_match_after_decoding on the same held-out test split") was not met on
+the downstream grounding metrics that matter. See NR11 in
+`docs/NEGATIVE_RESULTS.md`.
+
 - **Motivation:** `docs/NEGATIVE_RESULTS.md` NR10 shows a text-only learned
   pairwise ranker lost to the rule baseline; it never had access to the
   hand-engineered features (type tags, operator/unit cues, relation-aware
@@ -56,6 +68,25 @@ literature search — treat as a weak claim, not a strong one).
 
 ## H2: Combining a working local scorer (from H1) with the existing global assignment will outperform either alone
 
+**Status (2026-08-12, Phase 3): INCONCLUSIVE for learned scores; a related
+but distinct claim is now STRONGLY SUPPORTED for non-learned scores.** H2
+as literally framed presupposes "a working local scorer from H1" — since H1
+was not supported, H2's own precondition was not met, so the learned-score
+half of this hypothesis remains untested in the form it was framed (P0 + a
+frozen embedding + global assignment (M3/M4) did not beat P0 + greedy (M2)
+either, but this is a weaker test since H1's scorer itself was not strong).
+**Separately and unexpectedly**, this phase found that combining the
+EXISTING NON-LEARNED opt-role score with exact global assignment
+(`max_weight_matching`) is dramatically valuable: InstantiationReady 0.7432
+vs. typed greedy's 0.5287 (p<0.001) — see
+`results/unevaluated_methods_evaluation/`. This suggests H2's underlying
+intuition (global assignment adds value once the local score is good
+enough) is correct, but the "good enough" bar was already cleared by the
+existing hand-engineered score, not by P0's learned score. Re-test H2 in a
+future phase using `max_weight_matching`'s score source as the "working
+local scorer," or by first improving P0 enough to close its gap to the
+hand-engineered score.
+
 - **Motivation:** `docs/METHOD_INVENTORY.md` Part 1 already separates local
   scoring (stages 8-12) from global assignment (stages 13-16); the negative
   results in `docs/NEGATIVE_RESULTS.md` NR5-NR7 show that improving *only*
@@ -94,6 +125,14 @@ literature search — treat as a weak claim, not a strong one).
 
 ## H3: Dependency/syntactic features will particularly improve min/max and same-sentence multi-number cases
 
+**Status (2026-08-12, Phase 3): NOT TESTED.** Out of scope for this phase
+(requires a new dependency, spaCy or similar, and a prerequisite per-type
+error breakdown that was not computed). Prioritized appropriately: with
+`max_weight_matching` now the strongest known method (0.7432, no learning
+or dependency parsing involved), this hypothesis's relative priority should
+be reassessed against the much larger, more direct gain already available
+from decode-strategy changes.
+
 - **Motivation:** user-identified failure categories (bound/polarity
   confusion, multi-numeric ambiguity) map to `_compute_bound_role`,
   `_find_range_annotations` in the existing code — currently pattern-based,
@@ -121,6 +160,12 @@ literature search — treat as a weak claim, not a strong one).
 
 ## H4: Richer semantic role typing will improve float/int/percent/coefficient-vs-total cases
 
+**Status (2026-08-12, Phase 3): NOT TESTED.** Out of scope for this phase
+(a follow-up ablation contingent on H1, which was not supported). Note the
+semantic-role features H4 targets ARE already present in P0's feature set
+and did not, in combination, produce a working scorer (see H1) — a
+standalone ablation isolating just these features was not run.
+
 - **Motivation:** `docs/NEGATIVE_RESULTS.md` NR3 (optimization-role repair)
   and NR2 (semantic IR repair) both failed as *deterministic rules*, but
   their underlying *feature extraction* (`_compute_primary_role`,
@@ -146,6 +191,13 @@ literature search — treat as a weak claim, not a strong one).
 - **Novelty status:** **ESTABLISHED_ADAPTATION**.
 
 ## H5: Joint top-k schema + grounding reranking may improve strict readiness more than top-1 retrieval alone
+
+**Status (2026-08-12, Phase 3): NOT TESTED.** Out of scope for this phase.
+Re-prioritize: H5's upper-bound estimate (≤8/331, 2.4%) was computed against
+typed greedy's 0.5287; against `max_weight_matching`'s 0.7432, schema
+retrieval (already ~0.91 R@1) is an even smaller share of the remaining
+gap, so this hypothesis's expected value is now lower relative to other
+open work, not higher.
 
 - **Motivation:** `docs/CURRENT_BOTTLENECK_ANALYSIS.md` rank 3 (schema
   retrieval miss, 30/331 = 9.1%) is a comparatively small but nonzero

@@ -86,6 +86,23 @@ the truth lives*, not what every number is.
 - **Status:** **AUXILIARY, NOT PAPER-CORE** — infrastructure exists for Gemini/Mistral reruns but no committed `results/rerun/{gemini,mistral}/` artifacts prove a completed full benchmark rerun as of this pass; do not assert completion without checking those directories directly
 - **Not to be confused with:** the baseline-*roadmap* in `PROJECT_STATUS.md` §9 (ORLM/OptMATH/DeepOR/OR-R1/PaMOP), which is about implementing entirely different published methods as comparison baselines, not about optional LLM backends for our own retrieval pipeline
 
+## L. Newly-evaluated grounding methods (max-weight matching, search-structured, hierarchical-structured) -- 2026-08-12
+
+- **Authoritative artifact:** `results/unevaluated_methods_evaluation/` (`nlp4lp_downstream_orig_tfidf_{method}.json`, per-query CSVs, `significance.json`)
+- **Generator:** unmodified canonical CLI, `python3 -m tools.nlp4lp_downstream_utility --variant orig --baseline tfidf --assignment-mode {max_weight_matching,search_structured_grounding,hierarchical_structured_grounding}`
+- **Benchmark variant / denominator:** `orig`, full 331 queries (not a subsample)
+- **Status:** **NEWLY VALIDATED, STRONG POSITIVE RESULT.** `max_weight_matching` reaches InstantiationReady **0.7432** (+0.2145 over typed greedy's 0.5287, p<0.001); `search_structured_grounding` and `hierarchical_structured_grounding` each reach **0.7039** (+0.1752, p<0.001). All three exceed Oracle-TG (0.5680), the previous highest value recorded anywhere in this repository's evaluated-method history.
+- **Not yet in:** `results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv` or the manuscript -- this is a repository-internal finding pending a deliberate future manuscript-integration decision (see `docs/ALGORITHM_IMPROVEMENT_ROADMAP.md` P1).
+- **Superseded artifact:** none -- this is new evidence, not a correction.
+
+## M. P0 learned local grounding scorer -- 2026-08-12
+
+- **Authoritative artifact:** `results/learned_grounding_p0/` (`test_results.csv`, `significance.json`, `ablation_results.csv`, `error_analysis.csv`, `split_metadata.json`)
+- **Generator:** `scripts/learning/{build_p0_corpus,train_p0_classifier,eval_p0_grounding}.py` (see `docs/LEARNED_GROUNDING_P0.md` "Training Procedure" for exact commands)
+- **Benchmark variant / denominator:** `orig`, oracle-schema 50-instance test subsample (NOT the full 331-query retrieval-conditioned benchmark -- see caveat in `docs/LEARNED_GROUNDING_P0.md` "Evaluation Protocol")
+- **Status:** **NEGATIVE RESULT, decision gate C.** No P0 configuration beat the canonical oracle+typed-greedy baseline on the same subsample (0.80 best vs. 0.86); the gap is not statistically significant at n=50 (p=0.44). See `docs/NEGATIVE_RESULTS.md` NR11 for the full ledger entry.
+- **Superseded artifact:** none -- this is a new, documented negative result, not a correction of a prior claim.
+
 ---
 
 ## Regenerating table1

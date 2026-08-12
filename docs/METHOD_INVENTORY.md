@@ -26,21 +26,26 @@ result files in `results/eswa_revision/02_downstream_postfix/`.
 | 11 | Relation-aware scoring | `MentionOptIR`/`SlotOptIR` pairs | Local + relation features (4 ablation modes: basic/ops/semantic/full) | `tools/relation_aware_linking.py` — mention-mention and slot-slot relation tables | Deterministic; **module docstring explicitly notes "a learned scorer can be plugged in"** | See docstring note — this is the most natural integration point for §8's proposed learned scorer |
 | 12 | Ambiguity-aware scoring | Candidate sets per slot | Top-K candidates, ambiguity signals (margin/entropy), abstention | `tools/ambiguity_aware_grounding.py` | Deterministic | Abstention threshold is hand-tuned |
 | 13 | Global assignment (greedy) | Scored (mention, slot) pairs | Final one-to-one assignment | Typed greedy (default `assignment_mode="typed"`) | Deterministic | Baseline; no global optimality guarantee |
-| 14 | Global assignment (bipartite) | Scored pairs | Optimal one-to-one assignment under scores | `_run_max_weight_matching_grounding` (maximum-weight bipartite matching) | Deterministic (exact combinatorial optimization over the scored graph) | Not part of the official evaluated method set (see Part 2) — optimal only w.r.t. the (still hand-engineered) pairwise scores |
-| 15 | Global assignment (search) | Scored pairs, partial assignment states | Assignment via deterministic beam search | `tools/search_structured_grounding.py` — beam search with global-consistency penalties and NULL abstention | Deterministic | Implemented + unit-tested, **not part of the official evaluated method set** |
-| 16 | Global assignment (hierarchical/regions) | Query-region decomposition, relation-aware + search-structured scoring | Assignment with region-role compatibility | `tools/hierarchical_structured_grounding.py` | Deterministic | Implemented + unit-tested, **not part of the official evaluated method set** |
+| 14 | Global assignment (bipartite) | Scored pairs | Optimal one-to-one assignment under scores | `_run_max_weight_matching_grounding` (maximum-weight bipartite matching) | Deterministic (exact combinatorial optimization over the scored graph) | **Evaluated 2026-08-12: InstantiationReady 0.7432, the strongest method found so far** (see Part 2) — optimal only w.r.t. the (still hand-engineered) pairwise scores, which is apparently sufficient |
+| 15 | Global assignment (search) | Scored pairs, partial assignment states | Assignment via deterministic beam search | `tools/search_structured_grounding.py` — beam search with global-consistency penalties and NULL abstention | Deterministic | **Evaluated 2026-08-12: InstantiationReady 0.7039**, strong positive result |
+| 16 | Global assignment (hierarchical/regions) | Query-region decomposition, relation-aware + search-structured scoring | Assignment with region-role compatibility | `tools/hierarchical_structured_grounding.py` | Deterministic | **Evaluated 2026-08-12: InstantiationReady 0.7039**, strong positive result, identical to stage 15 on this benchmark |
 | 17 | Validation / repair | Candidate assignment | Repaired assignment or rejection | `_validation_and_repair`, `_opt_role_validate_and_repair`, `_bound_swap_repair`, `_total_perunit_swap_repair` | Deterministic, rule-based | Repair rules are hand-written per failure family |
 | 18 | Acceptance reranking | Top-k retrieved schemas | Reranked/accepted schema | `_acceptance_score`, `make_rerank_rank_fn`, optional hierarchy (`use_hierarchy`) | Deterministic scoring over retrieval candidates | Operates on retrieval output, not on grounding itself |
 | 19 | Structural verification | Instantiated LP | Pass/fail structural checks (no live solver) | `formulation/verify.py` | Deterministic | Catches structural errors only, not semantic correctness |
 | 20 | Solver-backed validation (restricted) | Structurally valid LP, 20-instance compatibility-filtered subset | Solve outcome | SciPy HiGHS shim | Deterministic (classical solver) | Restricted subset (20/331), compatibility-filtered not random |
 
 **Main/canonical vs. experimental:** stages 1-10, 13, 17-20 are part of the
-canonical `typed_greedy` pipeline used for the manuscript's headline numbers.
-Stages 11-12 and their downstream evaluated variants (relation-aware,
-ambiguity-aware) are canonical *as separately benchmarked methods* (Part 2).
-Stages 14-16 (max-weight matching, search-structured, hierarchical-structured)
-are implemented and unit-tested but **not part of the official NLP4LP
-benchmark comparison** — treat as experimental until evaluated.
+canonical `typed_greedy` pipeline used for the manuscript's headline numbers
+(0.5287 InstantiationReady). Stages 11-12 and their downstream evaluated
+variants (relation-aware, ambiguity-aware) are canonical *as separately
+benchmarked methods* (Part 2), and are negative results. **Stages 14-16
+(max-weight matching, search-structured, hierarchical-structured) were
+evaluated for the first time on 2026-08-12 and are now the
+highest-InstantiationReady methods in this repository** (0.70-0.74,
+vs. 0.5287 for the manuscript's own headline method) — not yet integrated
+into the manuscript's Table 1, but canonical evidence within this
+repository's internal evidence base. See
+`results/unevaluated_methods_evaluation/`.
 
 ---
 
@@ -48,10 +53,14 @@ benchmark comparison** — treat as experimental until evaluated.
 
 Columns: **CLI dispatch** = `--assignment-mode` value (or `--baseline` value
 for acceptance-rerank variants) in `tools/nlp4lp_downstream_utility.py`.
-**Evaluated** = a result file exists under
-`results/eswa_revision/02_downstream_postfix/` for this exact method.
-**Beats typed greedy?** = InstantiationReady vs. `tfidf_typed_greedy` (0.5287),
-`orig` variant, per `results/eswa_revision/14_reports/downstream_comparison_all_methods.csv`.
+**Evaluated** = a result file exists either under
+`results/eswa_revision/02_downstream_postfix/` (Phase-1/2-era methods) or
+`results/unevaluated_methods_evaluation/` (three methods newly evaluated in
+Phase 3, 2026-08-12) for this exact method. **Beats typed greedy?** =
+InstantiationReady vs. `tfidf_typed_greedy` (0.5287), `orig` variant, per
+`results/eswa_revision/14_reports/downstream_comparison_all_methods.csv`
+(Phase-1/2 methods) or `results/unevaluated_methods_evaluation/significance.json`
+(Phase-3 methods).
 
 | Method | CLI dispatch | Impl. path | Mechanism | Evaluated? | InstReady (orig) | Beats typed greedy? | Status |
 |---|---|---|---|---|---|---|---|
@@ -64,18 +73,29 @@ for acceptance-rerank variants) in `tools/nlp4lp_downstream_utility.py`.
 | Global compatibility grounding (local/pairwise/full) | `global_compat_local`/`global_compat_pairwise`/`global_compat_full` | same file, `_run_global_compatibility_grounding`, `_gcgp_beam_search` | Beam search with pairwise global-consistency penalties | Yes | full: 0.4320 | No (full is significantly worse, p<0.001) | **NEGATIVE_RESULT** |
 | Relation-aware linking (basic/ops/semantic/full) | `relation_aware_basic/ops/semantic/full` | `tools/relation_aware_linking.py` | Mention-mention + slot-slot relation features, 4 ablation levels | Yes | basic: 0.4985; full: 0.4169 | No (basic not significant, p=0.15; full significantly worse, p<0.001) | **NEGATIVE_RESULT** (basic is the closest competitor, still not significant) |
 | Ambiguity-aware grounding (candidate-greedy/beam/abstain/full) | `ambiguity_candidate_greedy`/`ambiguity_aware_beam`/`ambiguity_aware_abstain`/`ambiguity_aware_full` | `tools/ambiguity_aware_grounding.py` | Top-K candidates + competition-aware beam + abstention | Yes | beam: 0.4230; full: 0.4199; abstain: much lower (Coverage 0.2207, over-abstains) | No (beam/full significantly worse, p<0.001; abstain catastrophically over-conservative) | **NEGATIVE_RESULT** |
-| Maximum-weight bipartite matching | `max_weight_matching` | same file, `_run_max_weight_matching_grounding` | Exact optimal bipartite matching over pairwise scores | **No** | n/a | n/a | **EXPERIMENTAL** — implemented, not in the official comparison |
+| Maximum-weight bipartite matching | `max_weight_matching` | same file, `_run_max_weight_matching_grounding` | Exact optimal bipartite matching (Hungarian, `scipy.optimize.linear_sum_assignment`) over the same opt-role pairwise scores | **Yes (2026-08-12)** | **0.7432** | **YES — by +0.2145, p<0.001 (robust)**, and exceeds Oracle-TG (0.5680) too | **CANONICAL — STRONG POSITIVE RESULT.** The single best-performing method in this repository's evaluated history. See `results/unevaluated_methods_evaluation/` |
 | Global consistency grounding (original/superseded GCG) | `global_consistency_grounding` | same file, `_run_global_consistency_grounding` | 6 hand-engineered consistency signals | Only a **synthetic** evaluation exists (`docs/archive/GCG_FINAL_EVAL_REPORT.md`) — real HF-gated benchmark was blocked at the time | n/a | n/a | **SUPERSEDED** by `global_compat_*` (which was properly evaluated on real gold data); do not conflate the two "GCG"-named methods |
-| Search-structured grounding | `search_structured_grounding`/`_no_global`/`_counterfactual` | `tools/search_structured_grounding.py` | Deterministic beam search over partial assignments with abstention | **No** | n/a | n/a | **EXPERIMENTAL** — implemented + unit-tested, never benchmarked on NLP4LP |
-| Hierarchical structured grounding | `hierarchical_structured_grounding`/`_no_regions`/`_no_search` | `tools/hierarchical_structured_grounding.py` | Query-region decomposition + search-structured assignment | **No** | n/a | n/a | **EXPERIMENTAL** — implemented + unit-tested, never benchmarked on NLP4LP |
+| Search-structured grounding | `search_structured_grounding`/`_no_global`/`_counterfactual` | `tools/search_structured_grounding.py` | Deterministic beam search over partial assignments with abstention | **Yes (2026-08-12)** | **0.7039** | **YES — by +0.1752, p<0.001 (robust)** | **CANONICAL — STRONG POSITIVE RESULT.** See `results/unevaluated_methods_evaluation/` |
+| Hierarchical structured grounding | `hierarchical_structured_grounding`/`_no_regions`/`_no_search` | `tools/hierarchical_structured_grounding.py` | Query-region decomposition + search-structured assignment | **Yes (2026-08-12)** | **0.7039** (identical to search-structured on this benchmark — the region-decomposition layer did not change decisions on these 331 queries) | **YES — by +0.1752, p<0.001 (robust)** | **CANONICAL — STRONG POSITIVE RESULT.** See `results/unevaluated_methods_evaluation/` |
 | Optimization-role relation repair / anchor linking / bottom-up beam repair / entity-semantic beam repair | `optimization_role_relation_repair`, `optimization_role_anchor_linking`, `optimization_role_bottomup_beam_repair`, `optimization_role_entity_semantic_beam_repair` | same file | Various repair/beam extensions of the optimization-role family | **No** (last three explicitly marked "Experimental/archived (not in default focused eval)" in the CLI help text itself) | n/a | n/a | **EXPERIMENTAL/SUPERSEDED** |
 | Untyped assignment | `untyped` | same file | Assignment without type gating (diagnostic lower bound) | Not found in the official comparison set | n/a | n/a | **DIAGNOSTIC** (likely a deliberate ablation/lower-bound tool, not a candidate method) |
 
-**Bottom line for future agents:** every richer deterministic method that
-*was* evaluated on real NLP4LP data underperforms or ties `typed_greedy` on
-`orig` InstantiationReady (see `docs/NEGATIVE_RESULTS.md` for the full
-statistical evidence). Three additional method families (max-weight
-matching, search-structured grounding, hierarchical-structured grounding)
-are implemented and tested but have **never been run against the real
-benchmark** — evaluating them first is lower-cost than reimplementing them,
-and higher-value than assuming they'd fail like their cousins.
+**Bottom line for future agents (updated 2026-08-12, Phase 3):** the
+methods evaluated in Phase 2 confirmed that richer *greedy or repair-based*
+deterministic grounding underperforms or ties `typed_greedy` on `orig`
+InstantiationReady (see `docs/NEGATIVE_RESULTS.md`). But three method
+families flagged in Phase 2 as "implemented and tested, never run against
+the real benchmark" turned out, once actually run, to be the **strongest
+methods in this repository's evaluated history** —
+`max_weight_matching` reaches InstantiationReady **0.7432** (vs. typed
+greedy's 0.5287 and even Oracle-TG's 0.5680), by decoding the same
+opt-role pairwise scores with an **exact global assignment** instead of a
+greedy or repair-based decode. This flips the prior "richer scoring
+doesn't help" narrative on its head: the scoring function was never the
+sole problem -- greedy/repair decoding strategies were leaving large,
+recoverable gains on the table. See
+`results/unevaluated_methods_evaluation/README.md` for the full record and
+`PROJECT_STATUS.md` §3-4 for how this reframes the project's headline
+narrative going forward. **`max_weight_matching` is now the strongest known
+method and the correct baseline for any future comparison** (including any
+future learned-scorer attempt, see `docs/LEARNED_GROUNDING_P0.md`).

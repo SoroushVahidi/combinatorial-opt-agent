@@ -221,6 +221,52 @@ Part 2 for the full method-by-method table this ledger summarizes.
   `src/learning/verify_split_integrity`) rather than rebuilding it. A
   same-setup rerun should be treated as **already answered**.
 
+## NR11: P0 feature-augmented local scorer (Phase 3, differs from NR10 as prescribed)
+
+- **Hypothesis:** a small classifier (logistic regression / gradient-
+  boosted trees) over ~24 already-computed hand-engineered pairwise
+  features (from `_score_mention_slot_opt`) plus a frozen sentence-
+  embedding similarity feature would outperform both the deterministic
+  rule score and NR10's failed text-only transformer, addressing NR10's
+  two diagnosed weaknesses (no structured features, undertrained).
+- **Implementation:** `tools/learned_local_scorer.py` (new module),
+  `scripts/learning/{build_p0_corpus,train_p0_classifier,eval_p0_grounding}.py`.
+  Reused NR10's exact instance-level split (230/50/50, seed 42); verified
+  schema-level leakage is impossible for this dataset (330 instances, 330
+  unique schemas). Model selected on dev only (logistic regression over
+  gradient-boosted trees, 0.4694 vs. 0.4653 dev slot-selection accuracy).
+  Full detail: `docs/LEARNED_GROUNDING_P0.md`.
+- **Actual result:** on a 50-instance oracle-schema test subset, canonical
+  oracle+typed-greedy (M0) reaches InstantiationReady 0.86; P0's best
+  configuration (M2, greedy decode) reaches 0.80. **Pure rule-only greedy
+  decoding over the identical richer feature set (no learning at all)**
+  reaches 0.84, beating every P0 (learned) configuration. Global assignment
+  (M3) and validate/repair (M4) do not help on top of P0's scores (0.78
+  each, below M2).
+- **Statistical evidence:** paired bootstrap (B=1000, seed=42), M0 vs. M2:
+  diff=0.06 (favors M0), 95% CI=[-0.06, 0.18], p=0.44 -- **not significant**
+  at n=50.
+- **Interpretation:** unlike NR10 (catastrophic collapse to 0.000 exact-
+  match), P0 is a functioning method that trains normally and shows a real
+  gain on the internal dev proxy metric (slot-selection accuracy) -- but
+  that proxy-metric gain did not transfer to the downstream grounding-
+  quality metrics. This is a genuine proxy/target mismatch, not a
+  reproduction of NR10's specific failure mode. Error analysis
+  (`docs/LEARNED_GROUNDING_P0.md` "Error Analysis") shows the learned
+  model still struggles with the same multi-slot, weak-slot-name-cue
+  disambiguation cases that motivated it in the first place.
+- **Worth revisiting?** Not with this exact feature/classifier/decode
+  combination (decision gate C). The single most important finding to
+  carry forward: **`max_weight_matching`, using the SAME
+  `_score_mention_slot_opt` feature family but with NO learning at all**,
+  reaches InstantiationReady **0.7432** on the full 331-query benchmark
+  (see `results/unevaluated_methods_evaluation/`) -- dramatically higher
+  than either P0 or typed greedy. Any future learned-scorer attempt should
+  be benchmarked against `max_weight_matching`, not typed greedy, and
+  should investigate why exact global assignment over the unlearned rule
+  score already outperforms every learned/greedy/repair variant tried so
+  far, before assuming more learning is the fix.
+
 ## What this ledger does NOT cover
 
 - **PaMOP fidelity** (semantic correctness 1/6 despite 6/6 execution
