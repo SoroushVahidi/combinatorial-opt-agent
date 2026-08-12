@@ -1,0 +1,7 @@
+problem_id,initial_success,final_success,rescued_by_correction,harmed_by_correction,correction_iterations,correction_calls,correction_tokens,correction_latency_seconds
+14,True,True,False,False,0,0,0,0
+23,True,True,False,False,0,0,0,0
+34,True,True,False,False,0,0,0,0
+72,True,True,False,False,0,0,0,0
+84,False,False,False,False,0,2,1524,8.978293
+88,True,True,False,False,0,0,0,0

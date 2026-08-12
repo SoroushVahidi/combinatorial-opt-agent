@@ -1,0 +1,173 @@
+{
+  "exception_message": "",
+  "exception_type": "",
+  "gold": {
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_latency_seconds": 0.039764,
+    "gold_objective": 400000.0,
+    "gold_reason": "",
+    "gold_returncode": 0,
+    "gold_solver_success": true
+  },
+  "metadata": {
+    "constraint_count": 2,
+    "doc_id": "nlp4lp_test_33",
+    "family_proxy": "LP|maximize|v2|p8|c2|tree3x1",
+    "lp_or_milp": "LP",
+    "numeric_mentions": 8,
+    "objective_sense": "maximize",
+    "optimus_code_available": true,
+    "parameter_count": 8,
+    "partition_depth": 1,
+    "partition_node_count": 3,
+    "problem_id": 34,
+    "selection_bucket": "LP|simple|high_numeric|large_tree|maximize",
+    "variable_count": 2
+  },
+  "per_problem_row": {
+    "completion_tokens": 1215,
+    "correction_calls": 3,
+    "correction_invoked": true,
+    "correction_iterations": 1,
+    "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
+    "deployment": "gpt-4.1-mini",
+    "estimated_cost_usd": "",
+    "failure_category": "B. SUCCESS_AFTER_CORRECTION",
+    "final_ampl_hash": "79cf68a6643837d1",
+    "final_ampl_parse_success": true,
+    "final_feasible": true,
+    "final_solver_status": "solved",
+    "g_extr_calls": 1,
+    "g_mod_calls": 2,
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_objective": 400000.0,
+    "gold_solver_success": true,
+    "initial_ampl_parse_success": false,
+    "initial_feasible_status": false,
+    "initial_generation_valid": "YES",
+    "initial_solver_success": false,
+    "latency_seconds": 17.834998,
+    "lp_or_milp": "LP",
+    "objective_match_with_gold": false,
+    "objective_produced": true,
+    "objective_value": 75000.0,
+    "partition_depth": 1,
+    "partition_node_count": 3,
+    "problem_id": 34,
+    "prompt_hashes": "074dbdde99c52d1e;1d1926f9a2cf3660;2c4159ac9456c225;3ae5f7564fb5070a;43973f76e9e33b8f;5b2875299fb59d11",
+    "prompt_tokens": 3856,
+    "provider": "azure_openai",
+    "semantic_correctness_status": "PARTIAL_GOLD_OBJECTIVE_STATUS_ONLY",
+    "semantically_wrong_but_feasible": true,
+    "temperature": 0.2,
+    "total_llm_calls": 6,
+    "total_tokens": 5071,
+    "underlying_model": "gpt-4.1-mini-2025-04-14"
+  },
+  "problem_id": 34,
+  "trace": {
+    "correction_iterations_observed": 1,
+    "final_ampl_hash": "79cf68a6643837d1",
+    "final_success": true,
+    "initial_ampl_hash": "a10e6a3e9e282a70",
+    "iterations": [
+      {
+        "ampl_hash": "a10e6a3e9e282a70",
+        "comparison": {
+          "latency_seconds": 1.6392288600327447,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "43973f76e9e33b8f",
+          "provider": "azure_openai",
+          "reason": "The model lacks assigned numeric values for critical parameters such as profit_per_scooter and design_hours_per_scooter, causing the solver to fail. Remodeling is justified to ensure all parameters are properly defined and assigned values before solving.",
+          "targeted_issues": [
+            "missing parameter value assignments",
+            "incomplete data section",
+            "parameter loading and accessibility"
+          ],
+          "total_tokens": 524,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl__p6ohm97/model.run, line 27, offset 837):\nerror processing objective total_profit:\n\tno value for profit_per_scooter\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "a10e6a3e9e282a70",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.04360476497095078,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl__p6ohm97/model.run, line 27, offset 837):\nerror processing objective total_profit:\n\tno value for profit_per_scooter\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 0,
+        "remodel": {
+          "ampl_hash": "79cf68a6643837d1",
+          "changes": [
+            "Added numeric assignments to all parameters with example values",
+            "Replaced hardcoded resource limits in constraints with parameter names for consistency"
+          ],
+          "latency_seconds": 3.114123595005367,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "2c4159ac9456c225",
+          "provider": "azure_openai",
+          "total_tokens": 1133,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that all parameters (e.g., profit_per_scooter, profit_per_bike, design_hours_per_scooter, etc.) are assigned numeric values before solving the model.",
+            "Add 'param' value assignments in the data section or provide a data file with these parameter values.",
+            "Verify that the parameter values are correctly loaded and accessible to the model at runtime."
+          ],
+          "diagnosis": "The model declares parameters such as profit_per_scooter but does not assign values to them, causing the solver to fail when evaluating the objective.",
+          "error_category": "model_error",
+          "latency_seconds": 2.4617793660145253,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "1d1926f9a2cf3660",
+          "provider": "azure_openai",
+          "total_tokens": 851,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "79cf68a6643837d1",
+        "comparison": null,
+        "execution": {
+          "diagnostics": [],
+          "error_category": "none",
+          "model_hash": "79cf68a6643837d1",
+          "model_load_success": true,
+          "objective_value": 75000.0,
+          "parse_success": true,
+          "runtime_seconds": 0.04982292000204325,
+          "solver_invocation_success": true,
+          "solver_status": "solved",
+          "stderr_tail": "",
+          "stdout_tail": "Gurobi 13.0.2:   tech:outlev = 0\nGurobi 13.0.2: optimal solution; objective 75000\n0 simplex iterations\nsolve_result = solved\n\ntotal_profit = 75000",
+          "success": true,
+          "timed_out": false
+        },
+        "iteration_number": 1,
+        "remodel": null,
+        "review": null
+      }
+    ],
+    "problem_id": "34",
+    "stopped_reason": "execution_success",
+    "total_tokens": 2508
+  }
+}

@@ -1,0 +1,376 @@
+{
+  "exception_message": "",
+  "exception_type": "",
+  "gold": {
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_latency_seconds": 0.038389,
+    "gold_objective": 20.0,
+    "gold_reason": "",
+    "gold_returncode": 0,
+    "gold_solver_success": true
+  },
+  "metadata": {
+    "constraint_count": 4,
+    "doc_id": "nlp4lp_test_68",
+    "family_proxy": "MILP|minimize|v2|p7|c4|tree5x1",
+    "lp_or_milp": "MILP",
+    "numeric_mentions": 7,
+    "objective_sense": "minimize",
+    "optimus_code_available": true,
+    "parameter_count": 7,
+    "partition_depth": 1,
+    "partition_node_count": 5,
+    "problem_id": 69,
+    "selection_bucket": "MILP|multi_constraint|low_numeric|large_tree|minimize",
+    "variable_count": 2
+  },
+  "per_problem_row": {
+    "completion_tokens": 3249,
+    "correction_calls": 12,
+    "correction_invoked": true,
+    "correction_iterations": 4,
+    "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
+    "deployment": "gpt-4.1-mini",
+    "estimated_cost_usd": "",
+    "failure_category": "B. SUCCESS_AFTER_CORRECTION",
+    "final_ampl_hash": "e8f32496452d25a0",
+    "final_ampl_parse_success": true,
+    "final_feasible": true,
+    "final_solver_status": "solved",
+    "g_extr_calls": 1,
+    "g_mod_calls": 4,
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_objective": 20.0,
+    "gold_solver_success": true,
+    "initial_ampl_parse_success": false,
+    "initial_feasible_status": false,
+    "initial_generation_valid": "YES",
+    "initial_solver_success": false,
+    "latency_seconds": 47.707218,
+    "lp_or_milp": "MILP",
+    "objective_match_with_gold": false,
+    "objective_produced": true,
+    "objective_value": 3.0,
+    "partition_depth": 1,
+    "partition_node_count": 5,
+    "problem_id": 69,
+    "prompt_hashes": "17a8bfacf3ce0931;19db16280379a4c7;1b883f458697e660;29faa7e3671f6dfd;2e63fe06b750e9be;49994929ec8fbcba;4a44148677cda760;4ce0a47d1860fac3;744fa1e52b7e3adf;76a81e16606013f3;8f236da2b10d6ea9;b8436a772225996e;b84a1715cc3dfd65;bf27d23a730ae08b;f051cca20cb29045;f0efeeee0e34597c;fa8ebef4b6784cd7",
+    "prompt_tokens": 11530,
+    "provider": "azure_openai",
+    "semantic_correctness_status": "PARTIAL_GOLD_OBJECTIVE_STATUS_ONLY",
+    "semantically_wrong_but_feasible": true,
+    "temperature": 0.2,
+    "total_llm_calls": 17,
+    "total_tokens": 14779,
+    "underlying_model": "gpt-4.1-mini-2025-04-14"
+  },
+  "problem_id": 69,
+  "trace": {
+    "correction_iterations_observed": 4,
+    "final_ampl_hash": "e8f32496452d25a0",
+    "final_success": true,
+    "initial_ampl_hash": "6a85f2f1d75d4eb8",
+    "iterations": [
+      {
+        "ampl_hash": "6a85f2f1d75d4eb8",
+        "comparison": {
+          "latency_seconds": 2.2073348890407942,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "4a44148677cda760",
+          "provider": "azure_openai",
+          "reason": "The model references a parameter, CrepeMixPerChocolateCrepe, that is declared but never assigned a value, leading to an undefined parameter error in the objective function. This is a fundamental modeling issue that prevents the model from solving correctly and must be addressed by ensuring all parameters are properly defined and assigned.",
+          "targeted_issues": [
+            "undefined parameter values",
+            "missing parameter assignments",
+            "incomplete data specification"
+          ],
+          "total_tokens": 556,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_355yfx9v/model.run, line 31, offset 1217):\nerror processing objective TotalCrepeMixUsed:\n\tno value for CrepeMixPerChocolateCrepe\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "6a85f2f1d75d4eb8",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.04528595297597349,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_355yfx9v/model.run, line 31, offset 1217):\nerror processing objective TotalCrepeMixUsed:\n\tno value for CrepeMixPerChocolateCrepe\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 0,
+        "remodel": {
+          "ampl_hash": "fcb83e0b37a05ef6",
+          "changes": [
+            "Added default values (1) to CrepeMixPerChocolateCrepe and CrepeMixPerPeanutButterCrepe parameters to ensure they are defined if not assigned externally.",
+            "Replaced strict inequality '>' in PeanutButterMoreThanChocolate constraint with equivalent linear form 'num_peanut_butter_crepes >= num_chocolate_crepes + 1' to comply with AMPL syntax."
+          ],
+          "latency_seconds": 3.967052349005826,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "2e63fe06b750e9be",
+          "provider": "azure_openai",
+          "total_tokens": 1319,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that all parameters, including CrepeMixPerChocolateCrepe, are assigned values before solving the model.",
+            "Provide a data section or data file that defines CrepeMixPerChocolateCrepe and all other parameters used in the model."
+          ],
+          "diagnosis": "The model fails because the parameter CrepeMixPerChocolateCrepe is declared but not assigned any value, causing the objective function to reference an undefined parameter.",
+          "error_category": "model_error",
+          "latency_seconds": 2.083972611988429,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "b8436a772225996e",
+          "provider": "azure_openai",
+          "total_tokens": 970,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "fcb83e0b37a05ef6",
+        "comparison": {
+          "latency_seconds": 1.8867794869584031,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "4ce0a47d1860fac3",
+          "provider": "azure_openai",
+          "reason": "The model fails to assign a value to the parameter MinimumProportionChocolateCrepes, causing the related constraint to fail during execution. Remodeling is justified to ensure that all parameters, especially those critical to constraints, are properly defined and assigned values before solving.",
+          "targeted_issues": [
+            "undefined parameter MinimumProportionChocolateCrepes",
+            "parameter assignment in model data or param sections"
+          ],
+          "total_tokens": 541,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_o85ti3hg/model.run, line 30, offset 1241):\nerror processing constraint MinimumProportionChocolateCrepesConstraint:\n\tno value for MinimumProportionChocolateCrepes\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "fcb83e0b37a05ef6",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.039510247006546706,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_o85ti3hg/model.run, line 30, offset 1241):\nerror processing constraint MinimumProportionChocolateCrepesConstraint:\n\tno value for MinimumProportionChocolateCrepes\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 1,
+        "remodel": {
+          "ampl_hash": "69ea03228c3a83f8",
+          "changes": [
+            "Added a default value (0.1) to the parameter MinimumProportionChocolateCrepes to ensure it is always defined."
+          ],
+          "latency_seconds": 3.512851211009547,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "29faa7e3671f6dfd",
+          "provider": "azure_openai",
+          "total_tokens": 1261,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Assign a numeric value to the parameter MinimumProportionChocolateCrepes before solving the model.",
+            "Ensure that all parameters used in constraints have defined values in the data section or via param assignments."
+          ],
+          "diagnosis": "The parameter MinimumProportionChocolateCrepes is declared but not assigned any value, causing the constraint MinimumProportionChocolateCrepesConstraint to fail during model execution.",
+          "error_category": "model_error",
+          "latency_seconds": 1.4288094399962574,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "1b883f458697e660",
+          "provider": "azure_openai",
+          "total_tokens": 968,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "69ea03228c3a83f8",
+        "comparison": {
+          "latency_seconds": 1.7122974409721792,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "76a81e16606013f3",
+          "provider": "azure_openai",
+          "reason": "The model contains an uninitialized parameter (ChocolateSpreadPerChocolateCrepe) that causes a constraint evaluation failure, indicating incomplete or incorrect model formulation that must be fixed to ensure solvability.",
+          "targeted_issues": [
+            "uninitialized parameter ChocolateSpreadPerChocolateCrepe",
+            "missing parameter value assignment",
+            "constraint evaluation failure due to missing data"
+          ],
+          "total_tokens": 550,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_eaxk_pes/model.run, line 30, offset 1253):\nerror processing constraint ChocolateSpreadLimit:\n\tno value for ChocolateSpreadPerChocolateCrepe\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "69ea03228c3a83f8",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.040015009988565,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_eaxk_pes/model.run, line 30, offset 1253):\nerror processing constraint ChocolateSpreadLimit:\n\tno value for ChocolateSpreadPerChocolateCrepe\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 2,
+        "remodel": {
+          "ampl_hash": "1ecaf0901c85f5e9",
+          "changes": [
+            "Added default value 1 to parameter ChocolateSpreadPerChocolateCrepe to ensure it is initialized."
+          ],
+          "latency_seconds": 4.06902540003648,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "744fa1e52b7e3adf",
+          "provider": "azure_openai",
+          "total_tokens": 1279,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that the parameter ChocolateSpreadPerChocolateCrepe is assigned a valid numeric value before solving the model.",
+            "Check the data section or data file to provide a value for ChocolateSpreadPerChocolateCrepe.",
+            "Alternatively, provide a default value for ChocolateSpreadPerChocolateCrepe in the model declaration if appropriate."
+          ],
+          "diagnosis": "The parameter ChocolateSpreadPerChocolateCrepe is declared but not assigned any value, causing the constraint ChocolateSpreadLimit to fail during evaluation.",
+          "error_category": "model_error",
+          "latency_seconds": 2.584217459021602,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "17a8bfacf3ce0931",
+          "provider": "azure_openai",
+          "total_tokens": 983,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "1ecaf0901c85f5e9",
+        "comparison": {
+          "latency_seconds": 2.0482903129886836,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "19db16280379a4c7",
+          "provider": "azure_openai",
+          "reason": "The model contains an uninitialized parameter TotalAvailableChocolateSpread, which causes the ChocolateSpreadLimit constraint to fail during execution. Remodeling is justified to ensure all parameters are properly assigned values and the model can be solved correctly.",
+          "targeted_issues": [
+            "uninitialized parameter TotalAvailableChocolateSpread",
+            "parameter value assignment",
+            "constraint feasibility"
+          ],
+          "total_tokens": 517,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_gvyiht6h/model.run, line 30, offset 1273):\nerror processing constraint ChocolateSpreadLimit:\n\tno value for TotalAvailableChocolateSpread\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "1ecaf0901c85f5e9",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.038664950989186764,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_gvyiht6h/model.run, line 30, offset 1273):\nerror processing constraint ChocolateSpreadLimit:\n\tno value for TotalAvailableChocolateSpread\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 3,
+        "remodel": {
+          "ampl_hash": "e8f32496452d25a0",
+          "changes": [
+            "Added default values to parameters TotalAvailableChocolateSpread and TotalAvailablePeanutButterSpread to ensure they are initialized."
+          ],
+          "latency_seconds": 3.529563040996436,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "f0efeeee0e34597c",
+          "provider": "azure_openai",
+          "total_tokens": 1265,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Assign a value to the parameter TotalAvailableChocolateSpread before solving the model.",
+            "Ensure all parameters used in constraints have defined values in the data section or via param statements."
+          ],
+          "diagnosis": "The parameter TotalAvailableChocolateSpread is declared but not assigned any value, causing the constraint ChocolateSpreadLimit to fail during model execution.",
+          "error_category": "model_error",
+          "latency_seconds": 2.3854960189783014,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "f051cca20cb29045",
+          "provider": "azure_openai",
+          "total_tokens": 963,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "e8f32496452d25a0",
+        "comparison": null,
+        "execution": {
+          "diagnostics": [],
+          "error_category": "none",
+          "model_hash": "e8f32496452d25a0",
+          "model_load_success": true,
+          "objective_value": 3.0,
+          "parse_success": true,
+          "runtime_seconds": 0.05167451605666429,
+          "solver_invocation_success": true,
+          "solver_status": "solved",
+          "stderr_tail": "",
+          "stdout_tail": "Gurobi 13.0.2:   tech:outlev = 0\nGurobi 13.0.2: optimal solution; objective 3\n0 simplex iterations\nsolve_result = solved\n\nTotalCrepeMixUsed = 3",
+          "success": true,
+          "timed_out": false
+        },
+        "iteration_number": 4,
+        "remodel": null,
+        "review": null
+      }
+    ],
+    "problem_id": "69",
+    "stopped_reason": "execution_success",
+    "total_tokens": 11172
+  }
+}

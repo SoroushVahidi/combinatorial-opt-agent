@@ -1,0 +1,454 @@
+{
+  "exception_message": "",
+  "exception_type": "",
+  "gold": {
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_latency_seconds": 0.039223,
+    "gold_objective": 240.0,
+    "gold_reason": "",
+    "gold_returncode": 0,
+    "gold_solver_success": true
+  },
+  "metadata": {
+    "constraint_count": 3,
+    "doc_id": "nlp4lp_test_231",
+    "family_proxy": "MILP|minimize|v1|p7|c3|tree1x0",
+    "lp_or_milp": "MILP",
+    "numeric_mentions": 9,
+    "objective_sense": "minimize",
+    "optimus_code_available": true,
+    "parameter_count": 7,
+    "partition_depth": 0,
+    "partition_node_count": 1,
+    "problem_id": 232,
+    "selection_bucket": "MILP|simple|high_numeric|small_tree|minimize",
+    "variable_count": 1
+  },
+  "per_problem_row": {
+    "completion_tokens": 4601,
+    "correction_calls": 15,
+    "correction_invoked": true,
+    "correction_iterations": 5,
+    "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
+    "deployment": "gpt-4.1-mini",
+    "estimated_cost_usd": "",
+    "failure_category": "D. AMPL_RENDER_FAILURE",
+    "final_ampl_hash": "d60bb849bcd9270c",
+    "final_ampl_parse_success": false,
+    "final_feasible": false,
+    "final_solver_status": null,
+    "g_extr_calls": 1,
+    "g_mod_calls": 2,
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_objective": 240.0,
+    "gold_solver_success": true,
+    "initial_ampl_parse_success": false,
+    "initial_feasible_status": false,
+    "initial_generation_valid": "NO",
+    "initial_solver_success": false,
+    "latency_seconds": 73.511109,
+    "lp_or_milp": "MILP",
+    "objective_match_with_gold": "",
+    "objective_produced": false,
+    "objective_value": null,
+    "partition_depth": 0,
+    "partition_node_count": 1,
+    "problem_id": 232,
+    "prompt_hashes": "00098e311efd26bd;11a42e0523b2fdb4;1fde9a50e543e382;396af448716fb462;579fafdaf1d00d48;7adcbae3723330d5;7c3bed7a263f5a0f;8c38efd34f965d1a;97143a3c7f829661;9c84f95d0be9cc7f;a7819dba4469e3c4;ac6dc1b83a1392f9;b8d34d44a708da5c;bdd80d9df979a51b;c3a4d341ef04d0a5;d59a29e752dc489f;f42dbf2127c56399;fb0d80e2f5ae77cc",
+    "prompt_tokens": 12942,
+    "provider": "azure_openai",
+    "semantic_correctness_status": "NOT_EVALUABLE",
+    "semantically_wrong_but_feasible": "",
+    "temperature": 0.2,
+    "total_llm_calls": 18,
+    "total_tokens": 17543,
+    "underlying_model": "gpt-4.1-mini-2025-04-14"
+  },
+  "problem_id": 232,
+  "trace": {
+    "correction_iterations_observed": 5,
+    "final_ampl_hash": "d60bb849bcd9270c",
+    "final_success": false,
+    "initial_ampl_hash": "ae0c6be778e155fb",
+    "iterations": [
+      {
+        "ampl_hash": "ae0c6be778e155fb",
+        "comparison": {
+          "latency_seconds": 4.135072301025502,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "579fafdaf1d00d48",
+          "provider": "azure_openai",
+          "reason": "The current model contains a constraint referencing the index variable 'i' outside of a proper summation or indexing context, resulting in 'i' being undefined. This causes a fundamental modeling error that prevents correct evaluation of the EggProportionLimit constraint. Additionally, the use of 'BowlsPerMeal' instead of the decision variable 'BowlsConsumed[i]' further misrepresents the problem variables. Remodeling is necessary to correctly define indexing and summations, ensuring all variables and indices are properly scoped and the constraint accurately enforces the egg proportion limit.",
+          "targeted_issues": [
+            "Undefined index variable 'i' in EggProportionLimit constraint",
+            "Improper use of 'if' expression outside summation/indexing context",
+            "Incorrect use of 'BowlsPerMeal' instead of decision variable 'BowlsConsumed[i]'",
+            "Lack of proper summation and indexing over 'i' in constraints"
+          ],
+          "total_tokens": 732,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'i'.",
+              "severity": "error",
+              "symbol": "i"
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "ae0c6be778e155fb",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 0,
+        "remodel": {
+          "ampl_hash": "42ca563ef0912159",
+          "changes": [
+            "Replaced all occurrences of 'BowlsPerMeal' with the decision variable 'BowlsConsumed[i]' to correctly represent meal counts.",
+            "Rewrote the EggProportionLimit constraint to use proper summations over 'i' with the 'if' expression inside the summation to correctly identify egg meals (i=1).",
+            "Ensured all summations and indexing over 'i' are properly defined and scoped within constraints."
+          ],
+          "latency_seconds": 6.053275069978554,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "a7819dba4469e3c4",
+          "provider": "azure_openai",
+          "total_tokens": 1522,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Rewrite EggProportionLimit to use a proper summation with indexing over 'i', for example: sum {i in 1..NumFoodTypes} (CaloriePerBowl[i] * BowlsConsumed[i] * (if i = 1 then 1 else 0)) <= MaxMealProportionEggs * sum {i in 1..NumFoodTypes} (CaloriePerBowl[i] * BowlsConsumed[i])",
+            "Replace 'BowlsPerMeal' with 'BowlsConsumed[i]' in all constraints to correctly represent the decision variables rather than a parameter.",
+            "Ensure all summations and expressions referencing 'i' are within a defined index set."
+          ],
+          "diagnosis": "The constraint EggProportionLimit uses an 'if' expression referencing the index variable 'i' outside of a proper summation or indexing context, causing 'i' to be undefined.",
+          "error_category": "model_error",
+          "latency_seconds": 2.238043388002552,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "c3a4d341ef04d0a5",
+          "provider": "azure_openai",
+          "total_tokens": 916,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "42ca563ef0912159",
+        "comparison": {
+          "latency_seconds": 2.6122113519813865,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "b8d34d44a708da5c",
+          "provider": "azure_openai",
+          "reason": "The diagnosis identifies a clear model error where the index variable 'i' is used outside of a proper indexing context, making it undefined and causing the constraint to be invalid. Remodeling is justified to correct the indexing scope and properly implement the EggProportionLimit constraint using a valid summation with conditional expressions or indexed sets.",
+          "targeted_issues": [
+            "undefined index variable 'i' in EggProportionLimit constraint",
+            "improper use of 'if' expression outside summation indexing",
+            "need for properly scoped summation with conditional logic or indexed sets"
+          ],
+          "total_tokens": 648,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'i'.",
+              "severity": "error",
+              "symbol": "i"
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "42ca563ef0912159",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 1,
+        "remodel": {
+          "ampl_hash": "8383e0e53730667a",
+          "changes": [
+            "Rewrote EggProportionLimit constraint to use a properly scoped summation with a conditional expression (i = 1) inside the sum instead of an 'if' expression outside indexing."
+          ],
+          "latency_seconds": 5.553697040013503,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "8c38efd34f965d1a",
+          "provider": "azure_openai",
+          "total_tokens": 1386,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Rewrite the EggProportionLimit constraint to use a proper indexed sum with a conditional expression inside the summation, for example: sum {i in 1..NumFoodTypes} (CaloriePerBowl[i] * BowlsConsumed[i] * (if i = 1 then 1 else 0)) <= MaxMealProportionEggs * sum {i in 1..NumFoodTypes} (CaloriePerBowl[i] * BowlsConsumed[i]);",
+            "Alternatively, define a parameter or set identifying egg meal types and sum over that set instead of using an inline 'if' inside the sum.",
+            "Ensure all index variables are declared within the scope of summations or constraints."
+          ],
+          "diagnosis": "The constraint EggProportionLimit uses an 'if' expression with the index variable 'i' outside of a proper indexing context, causing 'i' to be undefined in that scope.",
+          "error_category": "model_error",
+          "latency_seconds": 2.936158209980931,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "00098e311efd26bd",
+          "provider": "azure_openai",
+          "total_tokens": 913,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "8383e0e53730667a",
+        "comparison": {
+          "latency_seconds": 2.383873719954863,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "7c3bed7a263f5a0f",
+          "provider": "azure_openai",
+          "reason": "The model contains an invalid AMPL syntax error due to the use of (i = 1) inside a sum expression, which causes an unresolved symbol error. This issue prevents the model from compiling and running correctly, so remodeling is necessary to fix the conditional indexing by using proper if-then-else expressions or defining a set for egg meal types.",
+          "targeted_issues": [
+            "invalid conditional indexing syntax in EggProportionLimit constraint"
+          ],
+          "total_tokens": 582,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'i'.",
+              "severity": "error",
+              "symbol": "i"
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "8383e0e53730667a",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 2,
+        "remodel": {
+          "ampl_hash": "e2a54ddab94c81fc",
+          "changes": [
+            "Replaced invalid conditional expression (i = 1) inside sum with a valid if-then-else expression (if i = 1 then 1 else 0) in the EggProportionLimit constraint."
+          ],
+          "latency_seconds": 4.392690826032776,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "396af448716fb462",
+          "provider": "azure_openai",
+          "total_tokens": 1316,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Replace the expression (i = 1) with a proper conditional indicator, such as using an if-then-else expression: sum {i in 1..NumFoodTypes} CaloriePerBowl[i] * BowlsConsumed[i] * (if i = 1 then 1 else 0);",
+            "Alternatively, define a set or parameter identifying egg meal types and sum over that set instead of using (i = 1)."
+          ],
+          "diagnosis": "The constraint EggProportionLimit uses the expression (i = 1) inside the sum, which is not valid AMPL syntax for conditional indexing and causes an unresolved symbol error for 'i'.",
+          "error_category": "model_error",
+          "latency_seconds": 4.747847074992023,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "f42dbf2127c56399",
+          "provider": "azure_openai",
+          "total_tokens": 859,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "e2a54ddab94c81fc",
+        "comparison": {
+          "latency_seconds": 2.457649699994363,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "d59a29e752dc489f",
+          "provider": "azure_openai",
+          "reason": "The model contains an unresolved symbol error due to the use of the index variable 'i' outside its defined scope within the EggProportionLimit constraint. This indexing misuse causes the model to be invalid and unexecutable. Remodeling is justified to correctly define the indexing context and properly implement the conditional summation over egg meals.",
+          "targeted_issues": [
+            "unresolved_symbol error from improper use of index variable 'i' in EggProportionLimit constraint"
+          ],
+          "total_tokens": 635,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'i'.",
+              "severity": "error",
+              "symbol": "i"
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "e2a54ddab94c81fc",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 3,
+        "remodel": {
+          "ampl_hash": "492c18631b96f9c7",
+          "changes": [
+            "Rewrote EggProportionLimit constraint to use a conditional index filter 'i = 1' in the summation instead of an inline 'if' expression referencing 'i' outside its scope, fixing the unresolved symbol error."
+          ],
+          "latency_seconds": 4.413152948953211,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "1fde9a50e543e382",
+          "provider": "azure_openai",
+          "total_tokens": 1365,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Rewrite the EggProportionLimit constraint to use a proper indexed summation with a conditional expression inside the sum, for example: sum {i in 1..NumFoodTypes} CaloriePerBowl[i] * BowlsConsumed[i] * (if i = 1 then 1 else 0) <= MaxMealProportionEggs * sum {i in 1..NumFoodTypes} CaloriePerBowl[i] * BowlsConsumed[i];",
+            "Alternatively, define a parameter or set identifying egg meal indices and use it to sum only over egg meals, avoiding inline 'if' expressions referencing 'i' outside their scope."
+          ],
+          "diagnosis": "The model uses the index variable 'i' outside of a defined indexing context, causing an 'unresolved_symbol' error because 'i' is not declared in the scope of the 'if' expression within the EggProportionLimit constraint.",
+          "error_category": "model_error",
+          "latency_seconds": 4.001060377981048,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "11a42e0523b2fdb4",
+          "provider": "azure_openai",
+          "total_tokens": 913,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "492c18631b96f9c7",
+        "comparison": {
+          "latency_seconds": 2.3680411580135114,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "97143a3c7f829661",
+          "provider": "azure_openai",
+          "reason": "The model contains invalid syntax by using 'i' in the condition 'i = 1' inside the summation index set, causing 'i' to be undefined and the constraint to be improperly specified. This syntax error directly affects the correctness of the EggProportionLimit constraint and must be corrected to ensure proper model formulation.",
+          "targeted_issues": [
+            "invalid use of index variable 'i' in summation condition",
+            "clarify and correctly define the egg meal indices in constraints",
+            "ensure proper declaration and scoping of index variables in summations"
+          ],
+          "total_tokens": 721,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'i'.",
+              "severity": "error",
+              "symbol": "i"
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "492c18631b96f9c7",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 4,
+        "remodel": {
+          "ampl_hash": "d60bb849bcd9270c",
+          "changes": [
+            "Corrected EggProportionLimit constraint to sum over BowlsConsumed instead of calories for proportion calculation.",
+            "Fixed summation index condition to 'i = 1' properly within the summation index set.",
+            "Reformulated EggProportionLimit to limit the number of egg meals (index 1) as a proportion of total meals consumed."
+          ],
+          "latency_seconds": 4.851822298951447,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "9c84f95d0be9cc7f",
+          "provider": "azure_openai",
+          "total_tokens": 1462,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Replace 'sum {i in 1..NumFoodTypes: i = 1} ...' with 'sum {i in 1..NumFoodTypes: i = 1} ...' corrected to 'sum {i in 1..NumFoodTypes: i = 1}' or simply 'sum {i in 1..NumFoodTypes: i = 1}' is valid but better to write 'sum {i in 1..NumFoodTypes: i = 1}' as 'sum {i in 1..NumFoodTypes: i = 1}' is redundant; instead, use 'sum {i in 1..NumFoodTypes: i = 1}' or more simply 'sum {i in 1..NumFoodTypes: i = 1}' to select the egg meal type. Alternatively, define a parameter or set to identify egg meal indices and use that in the sum.",
+            "Ensure the index variable 'i' is properly declared and used only within the summation index set or loop constructs."
+          ],
+          "diagnosis": "The constraint EggProportionLimit uses 'i' in the condition 'i = 1' inside the index set, which is invalid syntax and causes 'i' to be undefined in that context.",
+          "error_category": "model_error",
+          "latency_seconds": 4.75507671100786,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "7adcbae3723330d5",
+          "provider": "azure_openai",
+          "total_tokens": 976,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "d60bb849bcd9270c",
+        "comparison": null,
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'i'.",
+              "severity": "error",
+              "symbol": "i"
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "d60bb849bcd9270c",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 5,
+        "remodel": null,
+        "review": null
+      }
+    ],
+    "problem_id": "232",
+    "stopped_reason": "max_correction_iterations",
+    "total_tokens": 14946
+  }
+}

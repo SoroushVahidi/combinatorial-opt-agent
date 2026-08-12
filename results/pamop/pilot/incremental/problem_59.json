@@ -1,0 +1,172 @@
+{
+  "exception_message": "",
+  "exception_type": "",
+  "gold": {
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_latency_seconds": 0.038861,
+    "gold_objective": 26.000000000000007,
+    "gold_reason": "",
+    "gold_returncode": 0,
+    "gold_solver_success": true
+  },
+  "metadata": {
+    "constraint_count": 4,
+    "doc_id": "nlp4lp_test_58",
+    "family_proxy": "LP|minimize|v2|p8|c4|tree4x1",
+    "lp_or_milp": "LP",
+    "numeric_mentions": 7,
+    "objective_sense": "minimize",
+    "optimus_code_available": true,
+    "parameter_count": 8,
+    "partition_depth": 1,
+    "partition_node_count": 4,
+    "problem_id": 59,
+    "selection_bucket": "LP|multi_constraint|low_numeric|large_tree|minimize",
+    "variable_count": 2
+  },
+  "per_problem_row": {
+    "completion_tokens": 1345,
+    "correction_calls": 3,
+    "correction_invoked": true,
+    "correction_iterations": 1,
+    "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
+    "deployment": "gpt-4.1-mini",
+    "estimated_cost_usd": "",
+    "failure_category": "B. SUCCESS_AFTER_CORRECTION",
+    "final_ampl_hash": "7059439f840e3ef7",
+    "final_ampl_parse_success": true,
+    "final_feasible": true,
+    "final_solver_status": "solved",
+    "g_extr_calls": 1,
+    "g_mod_calls": 4,
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_objective": 26.000000000000007,
+    "gold_solver_success": true,
+    "initial_ampl_parse_success": false,
+    "initial_feasible_status": false,
+    "initial_generation_valid": "YES",
+    "initial_solver_success": false,
+    "latency_seconds": 19.094941,
+    "lp_or_milp": "LP",
+    "objective_match_with_gold": false,
+    "objective_produced": true,
+    "objective_value": 3.0,
+    "partition_depth": 1,
+    "partition_node_count": 4,
+    "problem_id": 59,
+    "prompt_hashes": "0f4ddd9715bec87c;2d12a57ef3f4ec64;3d7eac846893dbc7;a58db63a4af409cf;b8000f5db058122e;c1b71113cd584e6b;e4547c6651b67eff;f74614aa79fd3589",
+    "prompt_tokens": 4476,
+    "provider": "azure_openai",
+    "semantic_correctness_status": "PARTIAL_GOLD_OBJECTIVE_STATUS_ONLY",
+    "semantically_wrong_but_feasible": true,
+    "temperature": 0.2,
+    "total_llm_calls": 8,
+    "total_tokens": 5821,
+    "underlying_model": "gpt-4.1-mini-2025-04-14"
+  },
+  "problem_id": 59,
+  "trace": {
+    "correction_iterations_observed": 1,
+    "final_ampl_hash": "7059439f840e3ef7",
+    "final_success": true,
+    "initial_ampl_hash": "6662eba1c1550e97",
+    "iterations": [
+      {
+        "ampl_hash": "6662eba1c1550e97",
+        "comparison": {
+          "latency_seconds": 2.078452031011693,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "b8000f5db058122e",
+          "provider": "azure_openai",
+          "reason": "The model lacks assigned numeric values for key parameters such as FiberPerBrownie and others, which prevents the solver from executing. Remodeling is justified to explicitly include parameter value assignments or defaults to ensure the model is complete and solvable.",
+          "targeted_issues": [
+            "missing parameter values",
+            "lack of default parameter assignments",
+            "incomplete data provision for parameters"
+          ],
+          "total_tokens": 591,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_j7eycb31/model.run, line 30, offset 880):\nerror processing objective TotalFiberUsage:\n\tno value for FiberPerBrownie\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "6662eba1c1550e97",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.03991520102135837,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_j7eycb31/model.run, line 30, offset 880):\nerror processing objective TotalFiberUsage:\n\tno value for FiberPerBrownie\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 0,
+        "remodel": {
+          "ampl_hash": "7059439f840e3ef7",
+          "changes": [
+            "Added default values to all parameters to ensure they have numeric values if not provided externally."
+          ],
+          "latency_seconds": 3.6680416809977032,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "3d7eac846893dbc7",
+          "provider": "azure_openai",
+          "total_tokens": 1139,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure all parameters such as FiberPerBrownie, FiberPerLemonSquare, ChocolateMixPerBrownie, LemonMixPerLemonSquare, MinBrowniePercentage, TotalChocolateMix, and TotalLemonMix are assigned numeric values before solving.",
+            "Add 'param ... default <value>;' statements or provide a data section with explicit values for all parameters.",
+            "Verify that the data file or data block is correctly loaded and matches the parameter names used in the model."
+          ],
+          "diagnosis": "The model references parameters (e.g., FiberPerBrownie) without assigned values, causing the solver to fail due to missing data for these parameters.",
+          "error_category": "model_error",
+          "latency_seconds": 3.2715131860459223,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "a58db63a4af409cf",
+          "provider": "azure_openai",
+          "total_tokens": 914,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "7059439f840e3ef7",
+        "comparison": null,
+        "execution": {
+          "diagnostics": [],
+          "error_category": "none",
+          "model_hash": "7059439f840e3ef7",
+          "model_load_success": true,
+          "objective_value": 3.0,
+          "parse_success": true,
+          "runtime_seconds": 0.04681854002410546,
+          "solver_invocation_success": true,
+          "solver_status": "solved",
+          "stderr_tail": "",
+          "stdout_tail": "Gurobi 13.0.2:   tech:outlev = 0\nGurobi 13.0.2: optimal solution; objective 3\n0 simplex iterations\nsolve_result = solved\n\nTotalFiberUsage = 3",
+          "success": true,
+          "timed_out": false
+        },
+        "iteration_number": 1,
+        "remodel": null,
+        "review": null
+      }
+    ],
+    "problem_id": "59",
+    "stopped_reason": "execution_success",
+    "total_tokens": 2644
+  }
+}

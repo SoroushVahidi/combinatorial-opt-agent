@@ -1,0 +1,583 @@
+{
+  "exception_message": "",
+  "exception_type": "",
+  "gold": {
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_latency_seconds": 0.284946,
+    "gold_objective": 8.0,
+    "gold_reason": "",
+    "gold_returncode": 0,
+    "gold_solver_success": true
+  },
+  "metadata": {
+    "constraint_count": 2,
+    "doc_id": "nlp4lp_test_71",
+    "family_proxy": "MILP|minimize|v2|p6|c2|tree3x1",
+    "lp_or_milp": "MILP",
+    "numeric_mentions": 6,
+    "objective_sense": "minimize",
+    "optimus_code_available": true,
+    "parameter_count": 6,
+    "partition_depth": 1,
+    "partition_node_count": 3,
+    "problem_id": 72,
+    "selection_bucket": "MILP|simple|low_numeric|large_tree|minimize",
+    "variable_count": 2
+  },
+  "per_problem_row": {
+    "completion_tokens": 3206,
+    "correction_calls": 15,
+    "correction_invoked": true,
+    "correction_iterations": 5,
+    "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
+    "deployment": "gpt-4.1-mini",
+    "estimated_cost_usd": "",
+    "failure_category": "E. AMPL_PARSE_FAILURE",
+    "final_ampl_hash": "6cb4effcce4f8903",
+    "final_ampl_parse_success": false,
+    "final_feasible": false,
+    "final_solver_status": null,
+    "g_extr_calls": 1,
+    "g_mod_calls": 2,
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_objective": 8.0,
+    "gold_solver_success": true,
+    "initial_ampl_parse_success": false,
+    "initial_feasible_status": false,
+    "initial_generation_valid": "YES",
+    "initial_solver_success": false,
+    "latency_seconds": 55.165143,
+    "lp_or_milp": "MILP",
+    "objective_match_with_gold": "",
+    "objective_produced": false,
+    "objective_value": null,
+    "partition_depth": 1,
+    "partition_node_count": 3,
+    "problem_id": 72,
+    "prompt_hashes": "15bacbc35c5efed1;21aaea73be443837;2f189f687917d4b9;32525d5684dbba36;351846550198743c;441faa522e265bdd;456985bcf1f96511;49a04feb1c916c18;4c502ef6c045ae65;8a6fe8bdc03f478c;95d127a85980a157;9a303947b31b977e;b40420e48d1de1cd;c001df1212d08164;cf02398c5d34bfe3;e632b7e8b6ca7618;f50367c641d004de;ffd7fb98f73191bd",
+    "prompt_tokens": 11838,
+    "provider": "azure_openai",
+    "semantic_correctness_status": "NOT_EVALUABLE",
+    "semantically_wrong_but_feasible": "",
+    "temperature": 0.2,
+    "total_llm_calls": 18,
+    "total_tokens": 15044,
+    "underlying_model": "gpt-4.1-mini-2025-04-14"
+  },
+  "problem_id": 72,
+  "trace": {
+    "correction_iterations_observed": 5,
+    "final_ampl_hash": "6cb4effcce4f8903",
+    "final_success": false,
+    "initial_ampl_hash": "84a4f3a31c028a4c",
+    "iterations": [
+      {
+        "ampl_hash": "84a4f3a31c028a4c",
+        "comparison": {
+          "latency_seconds": 4.0913626120309345,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "21aaea73be443837",
+          "provider": "azure_openai",
+          "reason": "The model is missing critical parameter assignments, specifically HotDogsPerSmallShop, which causes key constraints to be undefined and the model to fail. Remodeling is justified to ensure the prompt explicitly requires all necessary parameters to be assigned valid numeric values and initialized properly.",
+          "targeted_issues": [
+            "missing parameter assignments",
+            "undefined constraints due to uninitialized parameters",
+            "lack of explicit parameter initialization instructions"
+          ],
+          "total_tokens": 542,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_oprm0qn5/model.run, line 25, offset 762):\nerror processing constraint HotDogProductionRequirement:\n\tno value for HotDogsPerSmallShop\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "84a4f3a31c028a4c",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.04358983400743455,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_oprm0qn5/model.run, line 25, offset 762):\nerror processing constraint HotDogProductionRequirement:\n\tno value for HotDogsPerSmallShop\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 0,
+        "remodel": {
+          "ampl_hash": "38dc7eb9368c0e3d",
+          "changes": [
+            "Added nonnegative lower bounds (>= 0) to all parameter declarations to enforce valid numeric initialization."
+          ],
+          "latency_seconds": 3.555531403981149,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "b40420e48d1de1cd",
+          "provider": "azure_openai",
+          "total_tokens": 1028,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that all parameters, especially HotDogsPerSmallShop, HotDogsPerLargeShop, WorkersPerSmallShop, WorkersPerLargeShop, MinimumHotDogsPerDay, and AvailableWorkers, are assigned valid numeric values before solving the model.",
+            "Check the data input file or data section to confirm that these parameters are properly initialized.",
+            "Add default values or parameter declarations with initial values if appropriate."
+          ],
+          "diagnosis": "The model failed because the parameter HotDogsPerSmallShop is not assigned any value, causing the constraint HotDogProductionRequirement to be undefined.",
+          "error_category": "model_error",
+          "latency_seconds": 2.1408757339813747,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "49a04feb1c916c18",
+          "provider": "azure_openai",
+          "total_tokens": 838,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "38dc7eb9368c0e3d",
+        "comparison": {
+          "latency_seconds": 2.198116454994306,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "f50367c641d004de",
+          "provider": "azure_openai",
+          "reason": "The model fails to assign values to critical parameters required for the constraints, causing the model to be unsolvable as is. Remodeling is justified to explicitly include parameter value assignments or data input instructions to ensure the model can be correctly instantiated and solved.",
+          "targeted_issues": [
+            "missing parameter value assignments",
+            "lack of data section or data file specification",
+            "insufficient guidance on data input linkage"
+          ],
+          "total_tokens": 551,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_3efhli_r/model.run, line 24, offset 791):\nerror processing constraint HotDogProductionRequirement:\n\tno value for HotDogsPerSmallShop\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "38dc7eb9368c0e3d",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.043630316038616,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_3efhli_r/model.run, line 24, offset 791):\nerror processing constraint HotDogProductionRequirement:\n\tno value for HotDogsPerSmallShop\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 1,
+        "remodel": {
+          "ampl_hash": "6e304f4c9eb00e80",
+          "changes": [
+            "Added a data section with explicit example values for all parameters to ensure they are assigned before solving the model."
+          ],
+          "latency_seconds": 4.382132655009627,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "95d127a85980a157",
+          "provider": "azure_openai",
+          "total_tokens": 1134,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that all parameters (e.g., HotDogsPerSmallShop, HotDogsPerLargeShop, WorkersPerSmallShop, WorkersPerLargeShop, MinimumHotDogsPerDay, AvailableWorkers) are assigned values before solving the model.",
+            "Provide a data section or separate data file with explicit values for these parameters.",
+            "Verify that the data input step is correctly executed and linked to the model."
+          ],
+          "diagnosis": "The model declares parameters such as HotDogsPerSmallShop but does not assign any values to them, causing the constraint HotDogProductionRequirement to fail due to missing parameter values.",
+          "error_category": "model_error",
+          "latency_seconds": 3.4954991610138677,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "ffd7fb98f73191bd",
+          "provider": "azure_openai",
+          "total_tokens": 861,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "6e304f4c9eb00e80",
+        "comparison": {
+          "latency_seconds": 1.8827736640232615,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "2f189f687917d4b9",
+          "provider": "azure_openai",
+          "reason": "The model contains duplicate parameter declarations causing parsing errors that prevent loading and solving the problem. Remodeling is justified to eliminate these duplicates and ensure a valid, parsable model.",
+          "targeted_issues": [
+            "duplicate parameter declarations",
+            "parameter declaration location conflicts",
+            "model and data file concatenation errors"
+          ],
+          "total_tokens": 482,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'AvailableWorkers' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "AvailableWorkers"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'HotDogsPerLargeShop' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "HotDogsPerLargeShop"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'HotDogsPerSmallShop' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "HotDogsPerSmallShop"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'MinimumHotDogsPerDay' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "MinimumHotDogsPerDay"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'WorkersPerLargeShop' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "WorkersPerLargeShop"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'WorkersPerSmallShop' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "WorkersPerSmallShop"
+            },
+            {
+              "category": "model_error",
+              "code": "unparsed_statement",
+              "message": "Model contains semicolon-terminated text not recognized by the lightweight validator.",
+              "severity": "warning",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "6e304f4c9eb00e80",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 2,
+        "remodel": {
+          "ampl_hash": "38dc7eb9368c0e3d",
+          "changes": [
+            "Removed the data section from the model file to avoid duplicate parameter declarations",
+            "Kept only parameter declarations in the model section",
+            "Ensured no repeated parameter declarations to fix parsing errors"
+          ],
+          "latency_seconds": 3.4394648890011013,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "4c502ef6c045ae65",
+          "provider": "azure_openai",
+          "total_tokens": 1084,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Remove duplicate parameter declarations so each parameter is declared exactly once.",
+            "Ensure that parameters are declared only in the model section or only in the data section, not both.",
+            "Verify that the model and data files are not concatenated or duplicated causing repeated declarations."
+          ],
+          "diagnosis": "The model declares the same parameters multiple times, causing duplicate symbol errors that prevent parsing and loading.",
+          "error_category": "model_error",
+          "latency_seconds": 1.879219125956297,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "15bacbc35c5efed1",
+          "provider": "azure_openai",
+          "total_tokens": 1140,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "38dc7eb9368c0e3d",
+        "comparison": {
+          "latency_seconds": 1.886482207046356,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "e632b7e8b6ca7618",
+          "provider": "azure_openai",
+          "reason": "The model fails because parameters are declared but not assigned values, leading to constraint failures. Remodeling is justified to ensure that the prompt explicitly requires providing all necessary parameter data before solving the model.",
+          "targeted_issues": [
+            "missing parameter values",
+            "lack of data assignment instructions"
+          ],
+          "total_tokens": 484,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_rd90c6hg/model.run, line 24, offset 791):\nerror processing constraint HotDogProductionRequirement:\n\tno value for HotDogsPerSmallShop\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "38dc7eb9368c0e3d",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.03958185203373432,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_rd90c6hg/model.run, line 24, offset 791):\nerror processing constraint HotDogProductionRequirement:\n\tno value for HotDogsPerSmallShop\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 3,
+        "remodel": {
+          "ampl_hash": "6cb4effcce4f8903",
+          "changes": [
+            "Added a data section with example assignments for all parameters to ensure parameter values are provided before solving."
+          ],
+          "latency_seconds": 4.379307610972319,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "9a303947b31b977e",
+          "provider": "azure_openai",
+          "total_tokens": 1085,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Provide data values for all parameters (e.g., HotDogsPerSmallShop, HotDogsPerLargeShop, WorkersPerSmallShop, WorkersPerLargeShop, MinimumHotDogsPerDay, AvailableWorkers) before solving the model."
+          ],
+          "diagnosis": "The model declares parameters but does not assign values to them, causing the constraint HotDogProductionRequirement to fail due to missing parameter values.",
+          "error_category": "model_error",
+          "latency_seconds": 1.9939794950187206,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "cf02398c5d34bfe3",
+          "provider": "azure_openai",
+          "total_tokens": 823,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "6cb4effcce4f8903",
+        "comparison": {
+          "latency_seconds": 1.8646851180237718,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "456985bcf1f96511",
+          "provider": "azure_openai",
+          "reason": "The model contains duplicate parameter declarations causing parsing errors, which directly prevent successful model loading and execution. Remodeling is justified to eliminate these duplicates and ensure the model is syntactically correct and functional.",
+          "targeted_issues": [
+            "duplicate parameter declarations",
+            "removal of repeated 'param' statements",
+            "correct separation of parameter declaration and data assignment"
+          ],
+          "total_tokens": 485,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'AvailableWorkers' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "AvailableWorkers"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'HotDogsPerLargeShop' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "HotDogsPerLargeShop"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'HotDogsPerSmallShop' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "HotDogsPerSmallShop"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'MinimumHotDogsPerDay' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "MinimumHotDogsPerDay"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'WorkersPerLargeShop' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "WorkersPerLargeShop"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'WorkersPerSmallShop' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "WorkersPerSmallShop"
+            },
+            {
+              "category": "model_error",
+              "code": "unparsed_statement",
+              "message": "Model contains semicolon-terminated text not recognized by the lightweight validator.",
+              "severity": "warning",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "6cb4effcce4f8903",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 4,
+        "remodel": {
+          "ampl_hash": "6cb4effcce4f8903",
+          "changes": [
+            "Removed any duplicate parameter declarations to ensure each parameter is declared only once",
+            "Kept parameter declarations separate from the data section which only assigns values",
+            "Ensured no repeated 'param' statements appear in the model file"
+          ],
+          "latency_seconds": 5.310752281977329,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "441faa522e265bdd",
+          "provider": "azure_openai",
+          "total_tokens": 1198,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure each parameter is declared only once in the model file.",
+            "Remove any repeated 'param' declarations for the same symbol.",
+            "Check that the data section only assigns values and does not redeclare parameters."
+          ],
+          "diagnosis": "The model declares the same parameters multiple times, causing duplicate symbol errors that prevent successful parsing and loading.",
+          "error_category": "model_error",
+          "latency_seconds": 1.6692611229955219,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "351846550198743c",
+          "provider": "azure_openai",
+          "total_tokens": 1144,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "6cb4effcce4f8903",
+        "comparison": null,
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'AvailableWorkers' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "AvailableWorkers"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'HotDogsPerLargeShop' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "HotDogsPerLargeShop"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'HotDogsPerSmallShop' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "HotDogsPerSmallShop"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'MinimumHotDogsPerDay' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "MinimumHotDogsPerDay"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'WorkersPerLargeShop' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "WorkersPerLargeShop"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'WorkersPerSmallShop' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "WorkersPerSmallShop"
+            },
+            {
+              "category": "model_error",
+              "code": "unparsed_statement",
+              "message": "Model contains semicolon-terminated text not recognized by the lightweight validator.",
+              "severity": "warning",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "6cb4effcce4f8903",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 5,
+        "remodel": null,
+        "review": null
+      }
+    ],
+    "problem_id": "72",
+    "stopped_reason": "max_correction_iterations",
+    "total_tokens": 12879
+  }
+}

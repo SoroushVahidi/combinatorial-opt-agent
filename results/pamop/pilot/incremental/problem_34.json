@@ -1,0 +1,371 @@
+{
+  "exception_message": "",
+  "exception_type": "",
+  "gold": {
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_latency_seconds": 0.039273,
+    "gold_objective": 400000.0,
+    "gold_reason": "",
+    "gold_returncode": 0,
+    "gold_solver_success": true
+  },
+  "metadata": {
+    "constraint_count": 2,
+    "doc_id": "nlp4lp_test_33",
+    "family_proxy": "LP|maximize|v2|p8|c2|tree3x1",
+    "lp_or_milp": "LP",
+    "numeric_mentions": 8,
+    "objective_sense": "maximize",
+    "optimus_code_available": true,
+    "parameter_count": 8,
+    "partition_depth": 1,
+    "partition_node_count": 3,
+    "problem_id": 34,
+    "selection_bucket": "LP|simple|high_numeric|large_tree|maximize",
+    "variable_count": 2
+  },
+  "per_problem_row": {
+    "completion_tokens": 2323,
+    "correction_calls": 9,
+    "correction_invoked": true,
+    "correction_iterations": 3,
+    "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
+    "deployment": "gpt-4.1-mini",
+    "estimated_cost_usd": "",
+    "failure_category": "B. SUCCESS_AFTER_CORRECTION",
+    "final_ampl_hash": "92929c8e98eead38",
+    "final_ampl_parse_success": true,
+    "final_feasible": true,
+    "final_solver_status": "solved",
+    "g_extr_calls": 1,
+    "g_mod_calls": 2,
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_objective": 400000.0,
+    "gold_solver_success": true,
+    "initial_ampl_parse_success": false,
+    "initial_feasible_status": false,
+    "initial_generation_valid": "YES",
+    "initial_solver_success": false,
+    "latency_seconds": 36.721248,
+    "lp_or_milp": "LP",
+    "objective_match_with_gold": false,
+    "objective_produced": true,
+    "objective_value": 1600.0,
+    "partition_depth": 1,
+    "partition_node_count": 3,
+    "problem_id": 34,
+    "prompt_hashes": "5e8d125153080f42;75db983609e1854c;7e4a24249aa30f5e;95b4838ffc2f6ea1;973db4df2b10e644;b74fa044303da9ce;cbd08cd2206cc80d;cdc8fa82954ea147;e254ae575bcc274f;e86bacd7c1f866a6;f6036907fb90695b;f789cf028ffabda2",
+    "prompt_tokens": 7937,
+    "provider": "azure_openai",
+    "semantic_correctness_status": "PARTIAL_GOLD_OBJECTIVE_STATUS_ONLY",
+    "semantically_wrong_but_feasible": true,
+    "temperature": 0.2,
+    "total_llm_calls": 12,
+    "total_tokens": 10260,
+    "underlying_model": "gpt-4.1-mini-2025-04-14"
+  },
+  "problem_id": 34,
+  "trace": {
+    "correction_iterations_observed": 3,
+    "final_ampl_hash": "92929c8e98eead38",
+    "final_success": true,
+    "initial_ampl_hash": "ea5e8aadebb9a8a7",
+    "iterations": [
+      {
+        "ampl_hash": "ea5e8aadebb9a8a7",
+        "comparison": {
+          "latency_seconds": 2.4259465919458307,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "5e8d125153080f42",
+          "provider": "azure_openai",
+          "reason": "The model is missing assigned values for critical parameters ProfitPerScooter and ProfitPerBike, which causes the objective function to fail evaluation. Remodeling is justified to explicitly include or ensure parameter value assignments in the model or data input to enable successful optimization.",
+          "targeted_issues": [
+            "missing parameter value assignments",
+            "incomplete data input for parameters",
+            "objective function evaluation failure due to undefined parameters"
+          ],
+          "total_tokens": 501,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_lop0qroh/model.run, line 28, offset 857):\nerror processing objective TotalProfit:\n\tno value for ProfitPerScooter\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "ea5e8aadebb9a8a7",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.039313714019954205,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_lop0qroh/model.run, line 28, offset 857):\nerror processing objective TotalProfit:\n\tno value for ProfitPerScooter\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 0,
+        "remodel": {
+          "ampl_hash": "3f312f5f1b53bae3",
+          "changes": [
+            "Added a data statement at the end of the model assigning example values to all parameters, including ProfitPerScooter and ProfitPerBike, to ensure parameters are defined before solving."
+          ],
+          "latency_seconds": 4.760231936001219,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "b74fa044303da9ce",
+          "provider": "azure_openai",
+          "total_tokens": 1097,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that all parameters, especially ProfitPerScooter and ProfitPerBike, are assigned values before solving the model.",
+            "Add data statements or a data file providing values for all declared parameters.",
+            "Verify that parameter values are correctly loaded and accessible in the model environment."
+          ],
+          "diagnosis": "The model fails because the parameter ProfitPerScooter is declared but not assigned any value, causing the objective function evaluation to fail.",
+          "error_category": "model_error",
+          "latency_seconds": 1.6668721440364607,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "f789cf028ffabda2",
+          "provider": "azure_openai",
+          "total_tokens": 810,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "3f312f5f1b53bae3",
+        "comparison": {
+          "latency_seconds": 2.170767121016979,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "95b4838ffc2f6ea1",
+          "provider": "azure_openai",
+          "reason": "The review identifies a syntax error in the data section due to incorrect use of the 'param:' keyword with multiple parameters assigned at once, which is invalid in AMPL. This is a model formulation issue that requires remodeling to correct the parameter assignment syntax.",
+          "targeted_issues": [
+            "incorrect parameter assignment syntax in data section"
+          ],
+          "total_tokens": 549,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "unparsed_statement",
+              "message": "Model contains semicolon-terminated text not recognized by the lightweight validator.",
+              "severity": "warning",
+              "symbol": null
+            },
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "/tmp/pamop_ampl_ea6uaurk/model.run, line 29 (offset 920):\n\tsyntax error\ncontext:   >>> param:  <<< ProfitPerScooter ProfitPerBike DesignHoursPerScooter EngineeringHoursPerScooter DesignHoursPerBike EngineeringHoursPerBike TotalDesignHoursAvailable TotalEngineeringHoursAvailable :=\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "3f312f5f1b53bae3",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.04623480001464486,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "/tmp/pamop_ampl_ea6uaurk/model.run, line 29 (offset 920):\n\tsyntax error\ncontext:   >>> param:  <<< ProfitPerScooter ProfitPerBike DesignHoursPerScooter EngineeringHoursPerScooter DesignHoursPerBike EngineeringHoursPerBike TotalDesignHoursAvailable TotalEngineeringHoursAvailable :=\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 1,
+        "remodel": {
+          "ampl_hash": "e05a6571125b8560",
+          "changes": [
+            "Replaced the invalid combined 'param:' line assigning multiple parameters at once with individual parameter assignments using ':=' for each parameter."
+          ],
+          "latency_seconds": 5.304115968989208,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "cbd08cd2206cc80d",
+          "provider": "azure_openai",
+          "total_tokens": 1219,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Replace the combined 'param:' line with individual parameter assignments, for example:",
+            "param ProfitPerScooter := 50;",
+            "param ProfitPerBike := 40;",
+            "param DesignHoursPerScooter := 2;",
+            "param EngineeringHoursPerScooter := 3;",
+            "param DesignHoursPerBike := 1;",
+            "param EngineeringHoursPerBike := 2;",
+            "param TotalDesignHoursAvailable := 100;",
+            "param TotalEngineeringHoursAvailable := 80;"
+          ],
+          "diagnosis": "The data section uses incorrect syntax for assigning multiple parameter values at once. The 'param:' keyword with multiple parameters followed by ':=' is invalid in AMPL, causing a syntax error.",
+          "error_category": "model_error",
+          "latency_seconds": 3.3192298029898666,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "973db4df2b10e644",
+          "provider": "azure_openai",
+          "total_tokens": 1028,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "e05a6571125b8560",
+        "comparison": {
+          "latency_seconds": 1.6535383720183745,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "75db983609e1854c",
+          "provider": "azure_openai",
+          "reason": "The model contains duplicate parameter declarations causing symbol conflicts, which is a clear formulation error that prevents correct model execution. Remodeling is justified to remove these duplicates and ensure each parameter is declared exactly once with proper value assignment.",
+          "targeted_issues": [
+            "duplicate parameter declarations",
+            "parameter value assignment conflicts",
+            "repeated parameter names"
+          ],
+          "total_tokens": 476,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'DesignHoursPerBike' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "DesignHoursPerBike"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'DesignHoursPerScooter' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "DesignHoursPerScooter"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'EngineeringHoursPerBike' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "EngineeringHoursPerBike"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'EngineeringHoursPerScooter' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "EngineeringHoursPerScooter"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'ProfitPerBike' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "ProfitPerBike"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'ProfitPerScooter' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "ProfitPerScooter"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'TotalDesignHoursAvailable' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "TotalDesignHoursAvailable"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'TotalEngineeringHoursAvailable' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "TotalEngineeringHoursAvailable"
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "e05a6571125b8560",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 2,
+        "remodel": {
+          "ampl_hash": "92929c8e98eead38",
+          "changes": [
+            "Removed duplicate param declarations by combining parameter declarations and assignments into single lines.",
+            "Assigned parameter values directly in their declarations to avoid repeated declarations and separate data sections."
+          ],
+          "latency_seconds": 3.7727825170150027,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "7e4a24249aa30f5e",
+          "provider": "azure_openai",
+          "total_tokens": 1105,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Remove the duplicate param declarations so that each parameter is declared exactly once.",
+            "Ensure that parameter values are assigned only once, either in the param declaration or in a separate data section.",
+            "Check the model and data files to avoid repeated declarations of the same parameter names."
+          ],
+          "diagnosis": "The model declares the same parameter symbols multiple times, causing duplicate symbol errors.",
+          "error_category": "model_error",
+          "latency_seconds": 2.5089683780097403,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "cdc8fa82954ea147",
+          "provider": "azure_openai",
+          "total_tokens": 1198,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "92929c8e98eead38",
+        "comparison": null,
+        "execution": {
+          "diagnostics": [],
+          "error_category": "none",
+          "model_hash": "92929c8e98eead38",
+          "model_load_success": true,
+          "objective_value": 1600.0,
+          "parse_success": true,
+          "runtime_seconds": 0.047510930977296084,
+          "solver_invocation_success": true,
+          "solver_status": "solved",
+          "stderr_tail": "",
+          "stdout_tail": "Gurobi 13.0.2:   tech:outlev = 0\nGurobi 13.0.2: optimal solution; objective 1600\n0 simplex iterations\nsolve_result = solved\n\nTotalProfit = 1600",
+          "success": true,
+          "timed_out": false
+        },
+        "iteration_number": 3,
+        "remodel": null,
+        "review": null
+      }
+    ],
+    "problem_id": "34",
+    "stopped_reason": "execution_success",
+    "total_tokens": 7983
+  }
+}

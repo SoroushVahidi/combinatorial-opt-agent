@@ -1,0 +1,137 @@
+{
+  "exception_message": "",
+  "exception_type": "",
+  "gold": {
+    "gold_comparison_eligible": true,
+    "gold_feasible": false,
+    "gold_latency_seconds": 0.017424,
+    "gold_objective": null,
+    "gold_reason": "Traceback (most recent call last):\n  File \"/tmp/pamop_gold_84_my40tzim/optimus-code.py\", line 15, in <module>\n    from gurobipy import *\nModuleNotFoundError: No module named 'gurobipy'\n",
+    "gold_returncode": 1,
+    "gold_solver_success": false
+  },
+  "metadata": {
+    "constraint_count": 2,
+    "doc_id": "nlp4lp_test_83",
+    "family_proxy": "LP|maximize|v1|p5|c2|tree1x0",
+    "lp_or_milp": "LP",
+    "numeric_mentions": 8,
+    "objective_sense": "maximize",
+    "optimus_code_available": true,
+    "parameter_count": 5,
+    "partition_depth": 0,
+    "partition_node_count": 1,
+    "problem_id": 84,
+    "selection_bucket": "LP|simple|high_numeric|small_tree|maximize",
+    "variable_count": 1
+  },
+  "per_problem_row": {
+    "completion_tokens": 1107,
+    "correction_calls": 2,
+    "correction_invoked": false,
+    "correction_iterations": 0,
+    "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
+    "deployment": "gpt-5.4",
+    "estimated_cost_usd": "",
+    "failure_category": "E. AMPL_PARSE_FAILURE",
+    "final_ampl_hash": "94a5b5be45f80db8",
+    "final_ampl_parse_success": false,
+    "final_feasible": false,
+    "final_solver_status": null,
+    "g_extr_calls": 1,
+    "g_mod_calls": 2,
+    "gold_comparison_eligible": true,
+    "gold_feasible": false,
+    "gold_objective": null,
+    "gold_solver_success": false,
+    "initial_ampl_parse_success": false,
+    "initial_feasible_status": false,
+    "initial_generation_valid": "YES",
+    "initial_solver_success": false,
+    "latency_seconds": 20.402227,
+    "lp_or_milp": "LP",
+    "objective_match_with_gold": "",
+    "objective_produced": false,
+    "objective_value": null,
+    "partition_depth": 0,
+    "partition_node_count": 1,
+    "problem_id": 84,
+    "prompt_hashes": "33f119f6beafd657;410a060e8e221138;49d53fda2f4691cf;4b5d6ac489660bf9;c5cf75cadee28205",
+    "prompt_tokens": 3151,
+    "provider": "azure_openai",
+    "semantic_correctness_status": "NOT_EVALUABLE",
+    "semantically_wrong_but_feasible": "",
+    "temperature": 0.2,
+    "total_llm_calls": 5,
+    "total_tokens": 4258,
+    "underlying_model": "gpt-5.4-2026-03-05"
+  },
+  "problem_id": 84,
+  "trace": {
+    "correction_iterations_observed": 0,
+    "final_ampl_hash": "94a5b5be45f80db8",
+    "final_success": false,
+    "initial_ampl_hash": "94a5b5be45f80db8",
+    "iterations": [
+      {
+        "ampl_hash": "94a5b5be45f80db8",
+        "comparison": {
+          "latency_seconds": 3.2214709280524403,
+          "model": "gpt-5.4",
+          "needs_remodel": false,
+          "prompt_hash": "4b5d6ac489660bf9",
+          "provider": "azure_openai",
+          "reason": "The review identifies missing parameter data rather than a flaw in the optimization formulation. The objective and resource constraints described are structurally appropriate for the problem; AMPL cannot solve only because required coefficient values were not provided. This is a data/input issue, not something that requires remodeling the model.",
+          "targeted_issues": [
+            "Provide numeric values or a data file for rare_compound_per_A, rare_compound_per_B, rare_inert_gas_per_A, rare_inert_gas_per_B, treated_water_per_A, and treated_water_per_B before solve."
+          ],
+          "total_tokens": 613,
+          "underlying_model": "gpt-5.4-2026-03-05"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_5vkh10op/model.run, line 27, offset 857):\nerror processing objective TotalRareCompoundProduced:\n\tno value for rare_compound_per_A\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "94a5b5be45f80db8",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.040902427048422396,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_5vkh10op/model.run, line 27, offset 857):\nerror processing objective TotalRareCompoundProduced:\n\tno value for rare_compound_per_A\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 0,
+        "remodel": null,
+        "review": {
+          "actionable_feedback": [
+            "Provide numeric data for all declared parameters before calling solve, especially rare_compound_per_A, rare_compound_per_B, rare_inert_gas_per_A, rare_inert_gas_per_B, treated_water_per_A, and treated_water_per_B.",
+            "If these values should come from a data file, add/load the corresponding .dat file or include explicit param assignments in the model/run script.",
+            "Keep the formulation as is if these coefficients are intended inputs; the immediate issue is missing parameter values, not the objective/constraint structure."
+          ],
+          "diagnosis": "The model declares several required parameters (including rare_compound_per_A, and likely the per-reaction resource coefficients) without assigning values or providing data, so AMPL cannot evaluate the objective or constraints at solve time.",
+          "error_category": "model_error",
+          "latency_seconds": 5.7568220240063965,
+          "model": "gpt-5.4",
+          "prompt_hash": "33f119f6beafd657",
+          "provider": "azure_openai",
+          "total_tokens": 911,
+          "underlying_model": "gpt-5.4-2026-03-05"
+        }
+      }
+    ],
+    "problem_id": "84",
+    "stopped_reason": "comparison_declined_remodel",
+    "total_tokens": 1524
+  }
+}

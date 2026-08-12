@@ -1,0 +1,379 @@
+{
+  "exception_message": "",
+  "exception_type": "",
+  "gold": {
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_latency_seconds": 0.040584,
+    "gold_objective": 486.0,
+    "gold_reason": "",
+    "gold_returncode": 0,
+    "gold_solver_success": true
+  },
+  "metadata": {
+    "constraint_count": 5,
+    "doc_id": "nlp4lp_test_13",
+    "family_proxy": "LP|maximize|v2|p13|c5|tree5x1",
+    "lp_or_milp": "LP",
+    "numeric_mentions": 12,
+    "objective_sense": "maximize",
+    "optimus_code_available": true,
+    "parameter_count": 13,
+    "partition_depth": 1,
+    "partition_node_count": 5,
+    "problem_id": 14,
+    "selection_bucket": "LP|multi_constraint|high_numeric|large_tree|maximize",
+    "variable_count": 2
+  },
+  "per_problem_row": {
+    "completion_tokens": 3263,
+    "correction_calls": 12,
+    "correction_invoked": true,
+    "correction_iterations": 4,
+    "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
+    "deployment": "gpt-4.1-mini",
+    "estimated_cost_usd": "",
+    "failure_category": "B. SUCCESS_AFTER_CORRECTION",
+    "final_ampl_hash": "52095249e4004a5c",
+    "final_ampl_parse_success": true,
+    "final_feasible": true,
+    "final_solver_status": "solved",
+    "g_extr_calls": 1,
+    "g_mod_calls": 3,
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_objective": 486.0,
+    "gold_solver_success": true,
+    "initial_ampl_parse_success": false,
+    "initial_feasible_status": false,
+    "initial_generation_valid": "YES",
+    "initial_solver_success": false,
+    "latency_seconds": 51.959321,
+    "lp_or_milp": "LP",
+    "objective_match_with_gold": false,
+    "objective_produced": true,
+    "objective_value": 0.0,
+    "partition_depth": 1,
+    "partition_node_count": 5,
+    "problem_id": 14,
+    "prompt_hashes": "039e0ddc9c8c79c0;03a475108beb5527;044f4ecbe1f755bd;10e8ca6e0abbafbc;18983409964fbcef;2ded0178c022713b;34935be27a8768f3;64f1d22a52c5a7a3;7facdddbb7bb40af;923d7776a6c6fff5;9888e2732c2f7ccc;d25ef83f5676ab4b;e04b1c7a7cc65273;e49f53348060297e;eca6fba00db4db85;fd6f57822e12cb9d",
+    "prompt_tokens": 10913,
+    "provider": "azure_openai",
+    "semantic_correctness_status": "PARTIAL_GOLD_OBJECTIVE_STATUS_ONLY",
+    "semantically_wrong_but_feasible": true,
+    "temperature": 0.2,
+    "total_llm_calls": 16,
+    "total_tokens": 14176,
+    "underlying_model": "gpt-4.1-mini-2025-04-14"
+  },
+  "problem_id": 14,
+  "trace": {
+    "correction_iterations_observed": 4,
+    "final_ampl_hash": "52095249e4004a5c",
+    "final_success": true,
+    "initial_ampl_hash": "f64a765821c103fd",
+    "iterations": [
+      {
+        "ampl_hash": "f64a765821c103fd",
+        "comparison": {
+          "latency_seconds": 1.5047385990037583,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "e49f53348060297e",
+          "provider": "azure_openai",
+          "reason": "The model references parameters 'ProfitLarge' and 'ProfitSmall' in the objective function without assigning them any values, resulting in an undefined objective. Remodeling is justified to ensure all parameters are properly defined and assigned before solving the model.",
+          "targeted_issues": [
+            "undefined parameters",
+            "missing parameter values",
+            "incomplete data assignment for objective function"
+          ],
+          "total_tokens": 566,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_tk3d2lui/model.run, line 41, offset 1033):\nerror processing objective TotalProfit:\n\tno value for ProfitLarge\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "f64a765821c103fd",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.04038931702962145,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_tk3d2lui/model.run, line 41, offset 1033):\nerror processing objective TotalProfit:\n\tno value for ProfitLarge\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 0,
+        "remodel": {
+          "ampl_hash": "564cf9f9142507da",
+          "changes": [
+            "Added 'default 0' to parameters 'ProfitLarge' and 'ProfitSmall' to ensure they have defined values if not assigned explicitly"
+          ],
+          "latency_seconds": 4.319074366998393,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "044f4ecbe1f755bd",
+          "provider": "azure_openai",
+          "total_tokens": 1166,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that all parameters, including 'ProfitLarge' and 'ProfitSmall', are assigned values before solving the model.",
+            "Check the data section or data file to confirm that 'ProfitLarge' and 'ProfitSmall' have valid numeric values.",
+            "If using separate data files, verify they are correctly loaded and contain these parameter definitions."
+          ],
+          "diagnosis": "The model failed because the parameter 'ProfitLarge' is declared but not assigned any value, causing the objective function to reference an undefined parameter.",
+          "error_category": "model_error",
+          "latency_seconds": 2.1415067510097288,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "fd6f57822e12cb9d",
+          "provider": "azure_openai",
+          "total_tokens": 913,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "564cf9f9142507da",
+        "comparison": {
+          "latency_seconds": 2.1419353960081935,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "7facdddbb7bb40af",
+          "provider": "azure_openai",
+          "reason": "The model fails because it references a parameter (PaintPerLarge) without assigning it a value, indicating incomplete or missing data definitions. Remodeling is justified to explicitly ensure all required parameters are defined and assigned values, preventing solver failures due to missing data.",
+          "targeted_issues": [
+            "missing parameter value assignment",
+            "incomplete data definitions for resource usage parameters",
+            "ensuring parameter values are included or properly linked in the model"
+          ],
+          "total_tokens": 579,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_qyiw8ty5/model.run, line 41, offset 1053):\nerror processing constraint PaintLimit:\n\tno value for PaintPerLarge\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "564cf9f9142507da",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.04417109303176403,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_qyiw8ty5/model.run, line 41, offset 1053):\nerror processing constraint PaintLimit:\n\tno value for PaintPerLarge\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 1,
+        "remodel": {
+          "ampl_hash": "753038922d8ce4db",
+          "changes": [
+            "Added default 0 values to all resource usage parameters (PaintPerLarge, GlitterPerLarge, GluePerLarge, PaintPerSmall, GlitterPerSmall, GluePerSmall) to ensure they have defined values if not assigned externally."
+          ],
+          "latency_seconds": 5.778323182021268,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "eca6fba00db4db85",
+          "provider": "azure_openai",
+          "total_tokens": 1226,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that all required parameters, including PaintPerLarge, are assigned values before solving the model.",
+            "Check the data section or data file to confirm that PaintPerLarge and other resource usage parameters are properly defined and loaded.",
+            "If using separate data files, verify they are correctly linked or included during model execution."
+          ],
+          "diagnosis": "The model references the parameter PaintPerLarge in the PaintLimit constraint, but no value has been assigned to this parameter, causing the solver to fail.",
+          "error_category": "model_error",
+          "latency_seconds": 2.3732094800216146,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "d25ef83f5676ab4b",
+          "provider": "azure_openai",
+          "total_tokens": 921,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "753038922d8ce4db",
+        "comparison": {
+          "latency_seconds": 2.2260669840034097,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "64f1d22a52c5a7a3",
+          "provider": "azure_openai",
+          "reason": "The model fails to assign values to critical parameters such as AvailablePaint, causing the solve command to fail. Remodeling is justified to explicitly ensure that all required resource availability parameters are properly defined and assigned values within the model or accompanying data, preventing execution errors.",
+          "targeted_issues": [
+            "missing parameter assignments for resource availability",
+            "ensuring parameter values are included in the model or data",
+            "clarifying data loading requirements"
+          ],
+          "total_tokens": 581,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_40nhze7t/model.run, line 41, offset 1113):\nerror processing constraint PaintLimit:\n\tno value for AvailablePaint\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "753038922d8ce4db",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.04299259005347267,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_40nhze7t/model.run, line 41, offset 1113):\nerror processing constraint PaintLimit:\n\tno value for AvailablePaint\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 2,
+        "remodel": {
+          "ampl_hash": "30251ab12ea4afcc",
+          "changes": [
+            "Added default 0 to AvailablePaint, AvailableGlitter, and AvailableGlue parameters to ensure they have defined values if not assigned externally"
+          ],
+          "latency_seconds": 4.572446041973308,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "039e0ddc9c8c79c0",
+          "provider": "azure_openai",
+          "total_tokens": 1244,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that all required parameters, especially AvailablePaint, are assigned values before solving the model.",
+            "Check the data section or data file to confirm that AvailablePaint and other resource availability parameters (AvailableGlitter, AvailableGlue) have valid numeric values.",
+            "If using separate data files, verify they are correctly loaded into the AMPL environment prior to model execution."
+          ],
+          "diagnosis": "The model references the parameter AvailablePaint in the PaintLimit constraint but no value has been assigned to AvailablePaint, causing the solve command to fail.",
+          "error_category": "model_error",
+          "latency_seconds": 3.604204807023052,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "923d7776a6c6fff5",
+          "provider": "azure_openai",
+          "total_tokens": 941,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "30251ab12ea4afcc",
+        "comparison": {
+          "latency_seconds": 1.6434584310045466,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "03a475108beb5527",
+          "provider": "azure_openai",
+          "reason": "The model contains a critical error where the parameter MinLarge is declared but not assigned any value, causing the minimum production constraint for large art pieces to fail. This missing parameter value prevents the model from being solved correctly and must be addressed by remodeling to ensure proper parameter assignment and data inclusion.",
+          "targeted_issues": [
+            "missing parameter value for MinLarge",
+            "assignment of parameter values in data section",
+            "ensuring all constraints have valid inputs"
+          ],
+          "total_tokens": 566,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_3extwni1/model.run, line 41, offset 1143):\nerror processing constraint MinLargeProduction:\n\tno value for MinLarge\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "30251ab12ea4afcc",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.03967561700847,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_3extwni1/model.run, line 41, offset 1143):\nerror processing constraint MinLargeProduction:\n\tno value for MinLarge\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 3,
+        "remodel": {
+          "ampl_hash": "52095249e4004a5c",
+          "changes": [
+            "Added default values (0) to parameters MinLarge and MinSmall to ensure they have defined values if not assigned externally"
+          ],
+          "latency_seconds": 3.9628497310332023,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "2ded0178c022713b",
+          "provider": "azure_openai",
+          "total_tokens": 1231,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that the parameter MinLarge is assigned a valid numeric value before solving the model.",
+            "Provide data for MinLarge in the data section or via a data file to satisfy the minimum production constraint.",
+            "Alternatively, assign a default value to MinLarge if appropriate."
+          ],
+          "diagnosis": "The parameter MinLarge is declared but not assigned any value, causing the constraint MinLargeProduction to fail due to a missing parameter value.",
+          "error_category": "model_error",
+          "latency_seconds": 2.4268331830389798,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "9888e2732c2f7ccc",
+          "provider": "azure_openai",
+          "total_tokens": 930,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "52095249e4004a5c",
+        "comparison": null,
+        "execution": {
+          "diagnostics": [],
+          "error_category": "none",
+          "model_hash": "52095249e4004a5c",
+          "model_load_success": true,
+          "objective_value": 0.0,
+          "parse_success": true,
+          "runtime_seconds": 0.04044387803878635,
+          "solver_invocation_success": true,
+          "solver_status": "solved",
+          "stderr_tail": "",
+          "stdout_tail": "All relevant variables fixed;\nobjective TotalProfit = 0.\nsolve_result = solved\n\nTotalProfit = 0",
+          "success": true,
+          "timed_out": false
+        },
+        "iteration_number": 4,
+        "remodel": null,
+        "review": null
+      }
+    ],
+    "problem_id": "14",
+    "stopped_reason": "execution_success",
+    "total_tokens": 10864
+  }
+}

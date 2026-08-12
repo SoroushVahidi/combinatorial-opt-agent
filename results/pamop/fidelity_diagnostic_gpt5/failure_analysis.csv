@@ -1,0 +1,6 @@
+problem_id,failure_category,primary_reason,issue_tags,diagnostic_codes
+84,E. AMPL_PARSE_FAILURE,"Error at _cmdno 3 executing ""solve"" command
+(file /tmp/pamop_ampl_5vkh10op/model.run, line 27, offset 857):
+error processing objective TotalRareCompoundProduced:
+	no value for rare_compound_per_A
+Error: Exit code 2",,ampl_process_failed

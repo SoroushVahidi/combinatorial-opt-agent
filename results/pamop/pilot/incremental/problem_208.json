@@ -1,0 +1,464 @@
+{
+  "exception_message": "",
+  "exception_type": "",
+  "gold": {
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_latency_seconds": 0.051553,
+    "gold_objective": 217.0,
+    "gold_reason": "",
+    "gold_returncode": 0,
+    "gold_solver_success": true
+  },
+  "metadata": {
+    "constraint_count": 5,
+    "doc_id": "nlp4lp_test_207",
+    "family_proxy": "LP|maximize|v2|p5|c5|tree4x1",
+    "lp_or_milp": "LP",
+    "numeric_mentions": 6,
+    "objective_sense": "maximize",
+    "optimus_code_available": true,
+    "parameter_count": 5,
+    "partition_depth": 1,
+    "partition_node_count": 4,
+    "problem_id": 208,
+    "selection_bucket": "LP|multi_constraint|low_numeric|large_tree|maximize",
+    "variable_count": 2
+  },
+  "per_problem_row": {
+    "completion_tokens": 2647,
+    "correction_calls": 12,
+    "correction_invoked": true,
+    "correction_iterations": 4,
+    "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
+    "deployment": "gpt-4.1-mini",
+    "estimated_cost_usd": "",
+    "failure_category": "B. SUCCESS_AFTER_CORRECTION",
+    "final_ampl_hash": "fa44d23dbfbf9fdc",
+    "final_ampl_parse_success": true,
+    "final_feasible": true,
+    "final_solver_status": "solved",
+    "g_extr_calls": 1,
+    "g_mod_calls": 4,
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_objective": 217.0,
+    "gold_solver_success": true,
+    "initial_ampl_parse_success": false,
+    "initial_feasible_status": false,
+    "initial_generation_valid": "YES",
+    "initial_solver_success": false,
+    "latency_seconds": 51.176454,
+    "lp_or_milp": "LP",
+    "objective_match_with_gold": false,
+    "objective_produced": true,
+    "objective_value": 495.0,
+    "partition_depth": 1,
+    "partition_node_count": 4,
+    "problem_id": 208,
+    "prompt_hashes": "05417f774604d207;1ff554b569fcec1f;45eee3e84b70d51a;67cc63b318098af0;72f1735c0ea62162;745e5e4155914138;772fad1aea83db36;78fbfad3c419ac17;87974c1d774f6a7e;a682ccf4b11f5ded;b3b211b388aa88e1;b50c51436fd8366b;bd0697380d5017d6;bf4e25fe00659cfb;f2398e5970f4ebb1;f408a024fe87f64a",
+    "prompt_tokens": 10744,
+    "provider": "azure_openai",
+    "semantic_correctness_status": "PARTIAL_GOLD_OBJECTIVE_STATUS_ONLY",
+    "semantically_wrong_but_feasible": true,
+    "temperature": 0.2,
+    "total_llm_calls": 17,
+    "total_tokens": 13391,
+    "underlying_model": "gpt-4.1-mini-2025-04-14"
+  },
+  "problem_id": 208,
+  "trace": {
+    "correction_iterations_observed": 4,
+    "final_ampl_hash": "fa44d23dbfbf9fdc",
+    "final_success": true,
+    "initial_ampl_hash": "c5002182dfe53c7f",
+    "iterations": [
+      {
+        "ampl_hash": "c5002182dfe53c7f",
+        "comparison": {
+          "latency_seconds": 2.79760301602073,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "87974c1d774f6a7e",
+          "provider": "azure_openai",
+          "reason": "The model lacks assigned values for critical parameters used in the objective function, specifically 'ProfitPerRegularTaco', which prevents the model from being solved correctly. Remodeling is justified to ensure that all parameters are properly declared and assigned values, enabling a complete and solvable optimization formulation.",
+          "targeted_issues": [
+            "missing parameter value assignments",
+            "incomplete parameter declarations",
+            "lack of data input for parameters"
+          ],
+          "total_tokens": 576,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_g0ue7b5_/model.run, line 28, offset 690):\nerror processing objective TotalProfit:\n\tno value for ProfitPerRegularTaco\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "c5002182dfe53c7f",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.039895754016470164,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_g0ue7b5_/model.run, line 28, offset 690):\nerror processing objective TotalProfit:\n\tno value for ProfitPerRegularTaco\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 0,
+        "remodel": {
+          "ampl_hash": "cfc2a817545edfa0",
+          "changes": [
+            "Added a data section with example values for all parameters to ensure the model is solvable",
+            "Kept all original parameter declarations and constraints unchanged",
+            "Ensured parameters used in the objective function have assigned values"
+          ],
+          "latency_seconds": 4.192019638023339,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "745e5e4155914138",
+          "provider": "azure_openai",
+          "total_tokens": 1175,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that all parameters, including 'ProfitPerRegularTaco', 'ProfitPerDeluxeTaco', 'MaxDemandRegularTacos', 'MaxDemandDeluxeTacos', and 'MaxTotalSupplyTacos', are properly defined and assigned values before solving the model.",
+            "Add data statements or a data file providing values for these parameters.",
+            "Verify that parameter declarations and data input are consistent and complete."
+          ],
+          "diagnosis": "The model failed because the parameter 'ProfitPerRegularTaco' used in the objective function is not assigned any value.",
+          "error_category": "model_error",
+          "latency_seconds": 2.850803076988086,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "78fbfad3c419ac17",
+          "provider": "azure_openai",
+          "total_tokens": 882,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "cfc2a817545edfa0",
+        "comparison": {
+          "latency_seconds": 1.3523171850247309,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "bd0697380d5017d6",
+          "provider": "azure_openai",
+          "reason": "The model contains duplicate parameter declarations causing symbol conflicts, which is a clear formulation error that must be corrected to ensure the model runs properly.",
+          "targeted_issues": [
+            "duplicate parameter declarations",
+            "parameter definition placement"
+          ],
+          "total_tokens": 478,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'MaxDemandDeluxeTacos' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "MaxDemandDeluxeTacos"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'MaxDemandRegularTacos' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "MaxDemandRegularTacos"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'MaxTotalSupplyTacos' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "MaxTotalSupplyTacos"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'ProfitPerDeluxeTaco' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "ProfitPerDeluxeTaco"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'ProfitPerRegularTaco' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "ProfitPerRegularTaco"
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "cfc2a817545edfa0",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 1,
+        "remodel": {
+          "ampl_hash": "e66cccae46d36c11",
+          "changes": [
+            "Removed redundant non-negativity constraints since variables are declared with lower bounds.",
+            "Moved all parameter declarations to the model section only, removing duplicate param keywords from the data section.",
+            "Kept parameter assignments in the data section without redeclaring parameters."
+          ],
+          "latency_seconds": 4.806083303003106,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "772fad1aea83db36",
+          "provider": "azure_openai",
+          "total_tokens": 1133,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Remove duplicate param declarations; define each parameter only once before using them in the model.",
+            "Ensure that parameter definitions in the data section do not repeat the param keyword if already declared in the model section."
+          ],
+          "diagnosis": "The model declares the same parameters multiple times, causing duplicate symbol errors.",
+          "error_category": "model_error",
+          "latency_seconds": 1.8440017440007068,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "b50c51436fd8366b",
+          "provider": "azure_openai",
+          "total_tokens": 1041,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "e66cccae46d36c11",
+        "comparison": {
+          "latency_seconds": 1.9405428059981205,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "bf4e25fe00659cfb",
+          "provider": "azure_openai",
+          "reason": "The model contains duplicate parameter declarations causing symbol conflicts, which is a fundamental modeling error that must be corrected to ensure a valid and executable optimization model.",
+          "targeted_issues": [
+            "duplicate parameter declarations",
+            "parameter declaration location conflicts",
+            "removal of redundant declarations"
+          ],
+          "total_tokens": 498,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'MaxDemandDeluxeTacos' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "MaxDemandDeluxeTacos"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'MaxDemandRegularTacos' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "MaxDemandRegularTacos"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'MaxTotalSupplyTacos' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "MaxTotalSupplyTacos"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'ProfitPerDeluxeTaco' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "ProfitPerDeluxeTaco"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'ProfitPerRegularTaco' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "ProfitPerRegularTaco"
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "e66cccae46d36c11",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 2,
+        "remodel": {
+          "ampl_hash": "e66cccae46d36c11",
+          "changes": [
+            "Removed duplicate parameter declarations by keeping param declarations only once at the top of the model section",
+            "Ensured parameter values are assigned only in the data section without redeclaring parameters"
+          ],
+          "latency_seconds": 4.4088953350437805,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "f2398e5970f4ebb1",
+          "provider": "azure_openai",
+          "total_tokens": 1115,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Remove duplicate param declarations so each parameter is declared exactly once.",
+            "Ensure that parameters are declared only in the model section or only in the data section, not both.",
+            "Check that the data section assigns values to parameters without redeclaring them."
+          ],
+          "diagnosis": "The model declares the same parameters multiple times, causing duplicate symbol errors.",
+          "error_category": "model_error",
+          "latency_seconds": 1.9835944240330718,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "1ff554b569fcec1f",
+          "provider": "azure_openai",
+          "total_tokens": 1027,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "e66cccae46d36c11",
+        "comparison": {
+          "latency_seconds": 1.4443395659909584,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "72f1735c0ea62162",
+          "provider": "azure_openai",
+          "reason": "The model contains duplicate parameter declarations causing symbol conflicts, which is a clear formulation error that must be corrected to ensure a valid and executable optimization model.",
+          "targeted_issues": [
+            "duplicate parameter declarations",
+            "parameter assignment conflicts"
+          ],
+          "total_tokens": 471,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'MaxDemandDeluxeTacos' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "MaxDemandDeluxeTacos"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'MaxDemandRegularTacos' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "MaxDemandRegularTacos"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'MaxTotalSupplyTacos' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "MaxTotalSupplyTacos"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'ProfitPerDeluxeTaco' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "ProfitPerDeluxeTaco"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'ProfitPerRegularTaco' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "ProfitPerRegularTaco"
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "e66cccae46d36c11",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 3,
+        "remodel": {
+          "ampl_hash": "fa44d23dbfbf9fdc",
+          "changes": [
+            "Removed duplicate parameter declarations by combining parameter declaration and assignment into single lines in the parameter section."
+          ],
+          "latency_seconds": 4.391745433968026,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "b3b211b388aa88e1",
+          "provider": "azure_openai",
+          "total_tokens": 1010,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Remove duplicate parameter declarations so each parameter is declared exactly once.",
+            "Ensure that parameter values are assigned only once in the data section or inline with the parameter declaration."
+          ],
+          "diagnosis": "The model declares the same parameters multiple times, causing duplicate symbol errors.",
+          "error_category": "model_error",
+          "latency_seconds": 1.953300402034074,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "1ff554b569fcec1f",
+          "provider": "azure_openai",
+          "total_tokens": 1009,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "fa44d23dbfbf9fdc",
+        "comparison": null,
+        "execution": {
+          "diagnostics": [],
+          "error_category": "none",
+          "model_hash": "fa44d23dbfbf9fdc",
+          "model_load_success": true,
+          "objective_value": 495.0,
+          "parse_success": true,
+          "runtime_seconds": 0.04960313800256699,
+          "solver_invocation_success": true,
+          "solver_status": "solved",
+          "stderr_tail": "",
+          "stdout_tail": "Gurobi 13.0.2:   tech:outlev = 0\nGurobi 13.0.2: optimal solution; objective 495\n1 simplex iteration\nsolve_result = solved\n\nTotalProfit = 495",
+          "success": true,
+          "timed_out": false
+        },
+        "iteration_number": 4,
+        "remodel": null,
+        "review": null
+      }
+    ],
+    "problem_id": "208",
+    "stopped_reason": "execution_success",
+    "total_tokens": 10415
+  }
+}

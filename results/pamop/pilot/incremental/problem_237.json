@@ -1,0 +1,308 @@
+{
+  "exception_message": "",
+  "exception_type": "",
+  "gold": {
+    "gold_comparison_eligible": true,
+    "gold_feasible": false,
+    "gold_latency_seconds": 0.288247,
+    "gold_objective": null,
+    "gold_reason": "\"/tmp/pamop_gold_237_z92_g7iy/optimus-code.py\", line 73, in <module>\n    variables['NumberOfSmallPacketSets'] = NumberOfSmallPacketSets.x\n                                           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"src/gurobipy/var.pxi\", line 128, in gurobipy._core.Var.__getattr__\n  File \"src/gurobipy/var.pxi\", line 156, in gurobipy._core.Var.getAttr\n  File \"src/gurobipy/_attrutil.pyx\", line 119, in gurobipy._attrutil._getattr\nAttributeError: Unable to retrieve attribute 'x'. Did you mean: 'X'?\n",
+    "gold_returncode": 1,
+    "gold_solver_success": false
+  },
+  "metadata": {
+    "constraint_count": 5,
+    "doc_id": "nlp4lp_test_236",
+    "family_proxy": "MILP|maximize|v4|p5|c5|tree6x1",
+    "lp_or_milp": "MILP",
+    "numeric_mentions": 4,
+    "objective_sense": "maximize",
+    "optimus_code_available": true,
+    "parameter_count": 5,
+    "partition_depth": 1,
+    "partition_node_count": 6,
+    "problem_id": 237,
+    "selection_bucket": "MILP|multi_constraint|low_numeric|large_tree|maximize",
+    "variable_count": 4
+  },
+  "per_problem_row": {
+    "completion_tokens": 2018,
+    "correction_calls": 9,
+    "correction_invoked": true,
+    "correction_iterations": 3,
+    "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
+    "deployment": "gpt-4.1-mini",
+    "estimated_cost_usd": "",
+    "failure_category": "B. SUCCESS_AFTER_CORRECTION",
+    "final_ampl_hash": "a29e441a356f8132",
+    "final_ampl_parse_success": true,
+    "final_feasible": true,
+    "final_solver_status": "solved",
+    "g_extr_calls": 1,
+    "g_mod_calls": 2,
+    "gold_comparison_eligible": true,
+    "gold_feasible": false,
+    "gold_objective": null,
+    "gold_solver_success": false,
+    "initial_ampl_parse_success": false,
+    "initial_feasible_status": false,
+    "initial_generation_valid": "YES",
+    "initial_solver_success": false,
+    "latency_seconds": 36.122531,
+    "lp_or_milp": "MILP",
+    "objective_match_with_gold": "",
+    "objective_produced": true,
+    "objective_value": 42.0,
+    "partition_depth": 1,
+    "partition_node_count": 6,
+    "problem_id": 237,
+    "prompt_hashes": "175f47f398e423fc;560d336e54842abe;6c9fe2f64025ffc8;75478ef70d3ee6e6;7d7993c08f23e6c5;89af846a682e6a06;8f47663616e8e906;9ff53a309f3f9d0f;aff72d437d94eb24;b100d971f0ee5f29;da9292453b0bb066;f257f6cdd00af531",
+    "prompt_tokens": 7470,
+    "provider": "azure_openai",
+    "semantic_correctness_status": "FEASIBLE_NOT_SEMANTICALLY_EVALUATED",
+    "semantically_wrong_but_feasible": "",
+    "temperature": 0.2,
+    "total_llm_calls": 12,
+    "total_tokens": 9488,
+    "underlying_model": "gpt-4.1-mini-2025-04-14"
+  },
+  "problem_id": 237,
+  "trace": {
+    "correction_iterations_observed": 3,
+    "final_ampl_hash": "a29e441a356f8132",
+    "final_success": true,
+    "initial_ampl_hash": "0677e3f5049c03c4",
+    "iterations": [
+      {
+        "ampl_hash": "0677e3f5049c03c4",
+        "comparison": {
+          "latency_seconds": 1.8043412970146164,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "aff72d437d94eb24",
+          "provider": "azure_openai",
+          "reason": "The parameter MinJugRatio is declared but not assigned a value, causing the related constraint to fail during model execution. Remodeling is justified to ensure that MinJugRatio is properly initialized or assigned a value, preventing model errors and enabling successful solving.",
+          "targeted_issues": [
+            "uninitialized parameter MinJugRatio",
+            "parameter assignment for MinJugRatio",
+            "constraint JugRatioConstraint failure due to missing parameter value"
+          ],
+          "total_tokens": 546,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_zu_j4hvz/model.run, line 27, offset 738):\nerror processing constraint JugRatioConstraint:\n\tno value for MinJugRatio\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "0677e3f5049c03c4",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.04335895099211484,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_zu_j4hvz/model.run, line 27, offset 738):\nerror processing constraint JugRatioConstraint:\n\tno value for MinJugRatio\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 0,
+        "remodel": {
+          "ampl_hash": "a801cc1abd9c6a86",
+          "changes": [
+            "Assigned a default value (0.5) to the parameter MinJugRatio to ensure it is initialized and prevent constraint failure."
+          ],
+          "latency_seconds": 3.954642452998087,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "175f47f398e423fc",
+          "provider": "azure_openai",
+          "total_tokens": 1036,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that the parameter MinJugRatio is assigned a valid numeric value before solving the model.",
+            "Add a data section or external data file that provides a value for MinJugRatio.",
+            "Alternatively, initialize MinJugRatio with a default value in the model declaration if appropriate."
+          ],
+          "diagnosis": "The parameter MinJugRatio is declared but not assigned a value, causing the constraint JugRatioConstraint to fail during model execution.",
+          "error_category": "model_error",
+          "latency_seconds": 1.8879108750261366,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "560d336e54842abe",
+          "provider": "azure_openai",
+          "total_tokens": 841,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "a801cc1abd9c6a86",
+        "comparison": {
+          "latency_seconds": 1.96361934999004,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "f257f6cdd00af531",
+          "provider": "azure_openai",
+          "reason": "The parameter MinSmallPackets is declared but not assigned a value, causing a constraint failure during model execution. Remodeling is justified to ensure the parameter is properly initialized and the constraint can be correctly enforced.",
+          "targeted_issues": [
+            "uninitialized parameter MinSmallPackets",
+            "parameter initialization in data section",
+            "constraint enforcement for MinSmallPacketsConstraint"
+          ],
+          "total_tokens": 516,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_ai45ip0e/model.run, line 26, offset 770):\nerror processing constraint MinSmallPacketsConstraint:\n\tno value for MinSmallPackets\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "a801cc1abd9c6a86",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.04011481098132208,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_ai45ip0e/model.run, line 26, offset 770):\nerror processing constraint MinSmallPacketsConstraint:\n\tno value for MinSmallPackets\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 1,
+        "remodel": {
+          "ampl_hash": "4db79b4aa089da4f",
+          "changes": [
+            "Assigned a default value of 1 to parameter MinSmallPackets to ensure it is initialized and the MinSmallPacketsConstraint can be enforced."
+          ],
+          "latency_seconds": 3.8347628220217302,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "89af846a682e6a06",
+          "provider": "azure_openai",
+          "total_tokens": 1022,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Assign a valid numeric value to the parameter MinSmallPackets before solving the model.",
+            "Ensure the data section or parameter initialization includes MinSmallPackets with a non-negative integer value."
+          ],
+          "diagnosis": "The parameter MinSmallPackets is declared but not assigned a value, causing the constraint MinSmallPacketsConstraint to fail during model execution.",
+          "error_category": "model_error",
+          "latency_seconds": 1.8490132479928434,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "8f47663616e8e906",
+          "provider": "azure_openai",
+          "total_tokens": 832,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "4db79b4aa089da4f",
+        "comparison": {
+          "latency_seconds": 2.275580404966604,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "9ff53a309f3f9d0f",
+          "provider": "azure_openai",
+          "reason": "The model contains an unassigned parameter (SmallPacketCapacity) that causes a key constraint (TotalJamConstraint) to fail, indicating incomplete model specification. Remodeling is justified to ensure all parameters are properly defined and assigned values before solving.",
+          "targeted_issues": [
+            "unassigned parameter SmallPacketCapacity",
+            "parameter value assignment in constraints",
+            "completeness of parameter definitions"
+          ],
+          "total_tokens": 525,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_1ud_ruen/model.run, line 26, offset 775):\nerror processing constraint TotalJamConstraint:\n\tno value for SmallPacketCapacity\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "4db79b4aa089da4f",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.046774647023994476,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_1ud_ruen/model.run, line 26, offset 775):\nerror processing constraint TotalJamConstraint:\n\tno value for SmallPacketCapacity\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 2,
+        "remodel": {
+          "ampl_hash": "a29e441a356f8132",
+          "changes": [
+            "Assigned positive numeric values to parameters SmallPacketCapacity, JugCapacity, and TotalJam to ensure constraints are well-defined and the model is solvable."
+          ],
+          "latency_seconds": 4.0883596170460805,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "7d7993c08f23e6c5",
+          "provider": "azure_openai",
+          "total_tokens": 1071,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Assign a positive numeric value to the parameter SmallPacketCapacity before solving the model.",
+            "Ensure all parameters used in constraints have defined values in the data section or via param assignments."
+          ],
+          "diagnosis": "The parameter SmallPacketCapacity is declared but not assigned any value, causing the constraint TotalJamConstraint to fail due to a missing parameter value.",
+          "error_category": "model_error",
+          "latency_seconds": 2.2271355830016546,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "6c9fe2f64025ffc8",
+          "provider": "azure_openai",
+          "total_tokens": 835,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "a29e441a356f8132",
+        "comparison": null,
+        "execution": {
+          "diagnostics": [],
+          "error_category": "none",
+          "model_hash": "a29e441a356f8132",
+          "model_load_success": true,
+          "objective_value": 42.0,
+          "parse_success": true,
+          "runtime_seconds": 0.04857796698343009,
+          "solver_invocation_success": true,
+          "solver_status": "solved",
+          "stderr_tail": "",
+          "stdout_tail": "Gurobi 13.0.2:   tech:outlev = 0\nGurobi 13.0.2: optimal solution; objective 42\n1 simplex iteration\n1 branching node\nsolve_result = solved\n\nTotalUnitsSold = 42",
+          "success": true,
+          "timed_out": false
+        },
+        "iteration_number": 3,
+        "remodel": null,
+        "review": null
+      }
+    ],
+    "problem_id": "237",
+    "stopped_reason": "execution_success",
+    "total_tokens": 7224
+  }
+}

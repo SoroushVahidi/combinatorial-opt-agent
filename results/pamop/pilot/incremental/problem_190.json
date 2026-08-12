@@ -1,0 +1,738 @@
+{
+  "exception_message": "",
+  "exception_type": "",
+  "gold": {
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_latency_seconds": 0.296935,
+    "gold_objective": 342857.14285714284,
+    "gold_reason": "",
+    "gold_returncode": 0,
+    "gold_solver_success": true
+  },
+  "metadata": {
+    "constraint_count": 1,
+    "doc_id": "nlp4lp_test_189",
+    "family_proxy": "LP|maximize|v1|p5|c1|tree1x0",
+    "lp_or_milp": "LP",
+    "numeric_mentions": 7,
+    "objective_sense": "maximize",
+    "optimus_code_available": true,
+    "parameter_count": 5,
+    "partition_depth": 0,
+    "partition_node_count": 1,
+    "problem_id": 190,
+    "selection_bucket": "LP|simple|low_numeric|small_tree|maximize",
+    "variable_count": 1
+  },
+  "per_problem_row": {
+    "completion_tokens": 3296,
+    "correction_calls": 15,
+    "correction_invoked": true,
+    "correction_iterations": 5,
+    "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
+    "deployment": "gpt-4.1-mini",
+    "estimated_cost_usd": "",
+    "failure_category": "D. AMPL_RENDER_FAILURE",
+    "final_ampl_hash": "fe633dd6fb10b4ea",
+    "final_ampl_parse_success": false,
+    "final_feasible": false,
+    "final_solver_status": null,
+    "g_extr_calls": 1,
+    "g_mod_calls": 2,
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_objective": 342857.14285714284,
+    "gold_solver_success": true,
+    "initial_ampl_parse_success": false,
+    "initial_feasible_status": false,
+    "initial_generation_valid": "NO",
+    "initial_solver_success": false,
+    "latency_seconds": 56.13201,
+    "lp_or_milp": "LP",
+    "objective_match_with_gold": "",
+    "objective_produced": false,
+    "objective_value": null,
+    "partition_depth": 0,
+    "partition_node_count": 1,
+    "problem_id": 190,
+    "prompt_hashes": "02cc04d3ffd483ec;0fbe7962d083a206;108fc6c0a9e7924a;159f8ef3e644799f;21bdb729f701e6d6;3109afeef36e51fb;3ffc070abbe49e5c;40101844d0db80d2;4510dc3a872bb431;46ad4e49f4fb60ea;4834881c0a692401;6839a456fa3b5923;84a3846d72cc5550;b630c65177a499d8;ddedf8e86d69c17a;e5605a80c083d9c5;e727c7222a926b2e;ea08a56d7586fd17",
+    "prompt_tokens": 12251,
+    "provider": "azure_openai",
+    "semantic_correctness_status": "NOT_EVALUABLE",
+    "semantically_wrong_but_feasible": "",
+    "temperature": 0.2,
+    "total_llm_calls": 18,
+    "total_tokens": 15547,
+    "underlying_model": "gpt-4.1-mini-2025-04-14"
+  },
+  "problem_id": 190,
+  "trace": {
+    "correction_iterations_observed": 5,
+    "final_ampl_hash": "fe633dd6fb10b4ea",
+    "final_success": false,
+    "initial_ampl_hash": "2db7ca355a673cf9",
+    "iterations": [
+      {
+        "ampl_hash": "2db7ca355a673cf9",
+        "comparison": {
+          "latency_seconds": 2.3272826970205642,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "21bdb729f701e6d6",
+          "provider": "azure_openai",
+          "reason": "The model contains fundamental indexing errors, such as using the index variable 'p' without defining its indexing set, and lacks proper declaration of constraints with the 'subject to' keyword. These issues prevent the model from being correctly parsed and solved, justifying a remodel to explicitly define sets, properly scope indexing variables, and correctly declare constraints.",
+          "targeted_issues": [
+            "undefined indexing sets",
+            "improper use of index variables outside defined contexts",
+            "missing 'subject to' constraint declarations",
+            "incorrect constraint block scoping"
+          ],
+          "total_tokens": 596,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "missing_constraint",
+              "message": "AMPL model has no subject-to constraint.",
+              "severity": "error",
+              "symbol": null
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'p'.",
+              "severity": "error",
+              "symbol": "p"
+            },
+            {
+              "category": "model_error",
+              "code": "unparsed_statement",
+              "message": "Model contains semicolon-terminated text not recognized by the lightweight validator.",
+              "severity": "warning",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "2db7ca355a673cf9",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 0,
+        "remodel": {
+          "ampl_hash": "7c9ef3391112ebd4",
+          "changes": [
+            "Defined sets Machines and Products explicitly.",
+            "Replaced numeric index ranges with these sets in parameters, variables, objective, and constraints.",
+            "Declared the constraint with the 'subject to' keyword and properly scoped indexing variables.",
+            "Ensured all indexing variables are declared in their corresponding block headers."
+          ],
+          "latency_seconds": 2.553778790985234,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "4834881c0a692401",
+          "provider": "azure_openai",
+          "total_tokens": 1064,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Define indexing sets explicitly, e.g., 'set Machines;' and 'set Products;'.",
+            "Replace numeric index ranges (1..NumMachines, 1..NumProducts) with these sets in parameters, variables, objective, and constraints.",
+            "Declare the constraint with the 'subject to' keyword and ensure the indexing variable is properly scoped, e.g., 'subject to MachineTimeLimit {m in Machines}: ...'.",
+            "Check that all indexing variables used in expressions are declared in the corresponding block headers."
+          ],
+          "diagnosis": "The model uses index variable 'p' outside of a defined indexing context, causing unresolved symbol errors. Additionally, the constraint block is not properly recognized as a 'subject to' constraint, leading to the 'no subject-to constraint' error.",
+          "error_category": "model_error",
+          "latency_seconds": 3.4311694020288996,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "e5605a80c083d9c5",
+          "provider": "azure_openai",
+          "total_tokens": 837,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "7c9ef3391112ebd4",
+        "comparison": {
+          "latency_seconds": 1.8214830220094882,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "4510dc3a872bb431",
+          "provider": "azure_openai",
+          "reason": "The model lacks declarations for key sets and parameters (Machines, Products, p), resulting in unresolved symbols and invalid constraints. Remodeling is justified to ensure all sets and parameters are properly declared and defined, and constraints correctly reference these elements.",
+          "targeted_issues": [
+            "missing set declarations for Machines and Products",
+            "undefined parameters (TimeRequired, MaxHours, ProfitPerBatch)",
+            "incorrect or missing data file linkage",
+            "improper constraint declaration and indexing"
+          ],
+          "total_tokens": 562,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "missing_constraint",
+              "message": "AMPL model has no subject-to constraint.",
+              "severity": "error",
+              "symbol": null
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'Machines'.",
+              "severity": "error",
+              "symbol": "Machines"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'Products'.",
+              "severity": "error",
+              "symbol": "Products"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'p'.",
+              "severity": "error",
+              "symbol": "p"
+            },
+            {
+              "category": "model_error",
+              "code": "unparsed_statement",
+              "message": "Model contains semicolon-terminated text not recognized by the lightweight validator.",
+              "severity": "warning",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "7c9ef3391112ebd4",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 1,
+        "remodel": {
+          "ampl_hash": "fe633dd6fb10b4ea",
+          "changes": [
+            "Added explicit declarations for sets Machines and Products",
+            "Ensured all parameters (TimeRequired, MaxHours, ProfitPerBatch) are declared with indexing over the declared sets",
+            "Confirmed constraint MachineTimeLimit is declared within a 'subject to' block with correct indexing variables matching declared sets"
+          ],
+          "latency_seconds": 3.458078370022122,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "ddedf8e86d69c17a",
+          "provider": "azure_openai",
+          "total_tokens": 965,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that the sets Machines and Products are properly declared and populated before use.",
+            "Verify that all parameters (TimeRequired, MaxHours, ProfitPerBatch) are defined with data corresponding to the declared sets.",
+            "Check that the model file includes or is accompanied by a data file that defines these sets and parameters.",
+            "Confirm that the constraint MachineTimeLimit is correctly declared within a 'subject to' block and that the indexing variables (m, p) correspond to declared sets."
+          ],
+          "diagnosis": "The model references sets and parameters (Machines, Products, p) that are not declared or defined in the AMPL environment, causing unresolved symbol errors and no valid constraints being recognized.",
+          "error_category": "model_error",
+          "latency_seconds": 2.274337104987353,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "02cc04d3ffd483ec",
+          "provider": "azure_openai",
+          "total_tokens": 872,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "fe633dd6fb10b4ea",
+        "comparison": {
+          "latency_seconds": 2.502307900984306,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "ea08a56d7586fd17",
+          "provider": "azure_openai",
+          "reason": "The model references sets and parameters that are not declared or defined in the input data, leading to unresolved symbol errors and missing constraints. Remodeling is justified to ensure proper declaration and population of sets and parameters, enabling the model to be correctly recognized and solved.",
+          "targeted_issues": [
+            "undeclared sets Machines and Products",
+            "undefined parameters p (ProfitPerBatch), TimeRequired, MaxHours",
+            "missing data definitions for sets and parameters"
+          ],
+          "total_tokens": 528,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "missing_constraint",
+              "message": "AMPL model has no subject-to constraint.",
+              "severity": "error",
+              "symbol": null
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'Machines'.",
+              "severity": "error",
+              "symbol": "Machines"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'Products'.",
+              "severity": "error",
+              "symbol": "Products"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'p'.",
+              "severity": "error",
+              "symbol": "p"
+            },
+            {
+              "category": "model_error",
+              "code": "unparsed_statement",
+              "message": "Model contains semicolon-terminated text not recognized by the lightweight validator.",
+              "severity": "warning",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "fe633dd6fb10b4ea",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 2,
+        "remodel": {
+          "ampl_hash": "2c15f8d3859a9ac2",
+          "changes": [
+            "Added explicit declarations and example data for sets Machines and Products",
+            "Provided example data for parameters TimeRequired, MaxHours, and ProfitPerBatch",
+            "Ensured all sets and parameters are properly defined to avoid unresolved symbol errors"
+          ],
+          "latency_seconds": 6.270242425031029,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "40101844d0db80d2",
+          "provider": "azure_openai",
+          "total_tokens": 1068,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that the sets Machines and Products are properly declared and populated with data before the model is solved.",
+            "Verify that all parameters (TimeRequired, MaxHours, ProfitPerBatch) have corresponding data entries for the declared sets.",
+            "Check that the data file or data section includes definitions for Machines and Products to avoid unresolved symbol errors."
+          ],
+          "diagnosis": "The model references sets and parameters (Machines, Products, p) that are not declared or defined in the input data, causing unresolved symbol errors and no constraints to be recognized.",
+          "error_category": "model_error",
+          "latency_seconds": 1.658494991948828,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "84a3846d72cc5550",
+          "provider": "azure_openai",
+          "total_tokens": 825,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "2c15f8d3859a9ac2",
+        "comparison": {
+          "latency_seconds": 1.9214093339978717,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "e727c7222a926b2e",
+          "provider": "azure_openai",
+          "reason": "The diagnosis indicates fundamental model parsing failures due to missing or incorrect declarations of sets, parameters, and variables, which prevent the model from being recognized or executed. Remodeling is justified to ensure proper AMPL syntax, complete and correct declarations, and a valid model structure that aligns with the problem requirements.",
+          "targeted_issues": [
+            "missing or incomplete set and parameter declarations",
+            "incorrect or invalid AMPL syntax",
+            "improper model file structure causing unresolved symbols"
+          ],
+          "total_tokens": 557,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "missing_constraint",
+              "message": "AMPL model has no subject-to constraint.",
+              "severity": "error",
+              "symbol": null
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'M1'.",
+              "severity": "error",
+              "symbol": "M1"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'M2'.",
+              "severity": "error",
+              "symbol": "M2"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'M3'.",
+              "severity": "error",
+              "symbol": "M3"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'Machines'.",
+              "severity": "error",
+              "symbol": "Machines"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'P1'.",
+              "severity": "error",
+              "symbol": "P1"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'P2'.",
+              "severity": "error",
+              "symbol": "P2"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'P3'.",
+              "severity": "error",
+              "symbol": "P3"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'Products'.",
+              "severity": "error",
+              "symbol": "Products"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'p'.",
+              "severity": "error",
+              "symbol": "p"
+            },
+            {
+              "category": "model_error",
+              "code": "unparsed_statement",
+              "message": "Model contains semicolon-terminated text not recognized by the lightweight validator.",
+              "severity": "warning",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "2c15f8d3859a9ac2",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 3,
+        "remodel": {
+          "ampl_hash": "4cd80a3cf44d76b9",
+          "changes": [
+            "Separated model declarations and data into distinct sections",
+            "Declared sets and parameters without initial values in the model section",
+            "Moved all set and parameter values into a proper 'data;' section",
+            "Added 'end;' statement to properly terminate the model",
+            "Ensured correct AMPL syntax with semicolons and no extraneous characters"
+          ],
+          "latency_seconds": 4.824326205009129,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "b630c65177a499d8",
+          "provider": "azure_openai",
+          "total_tokens": 1247,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure the AMPL model file includes all set and parameter declarations before they are referenced.",
+            "Verify that the model file uses correct AMPL syntax, including proper semicolon placement and no extraneous characters.",
+            "Check that the model is loaded correctly and completely, without truncation or corruption.",
+            "Try running a minimal model with just set and param declarations to confirm the environment parses symbols correctly."
+          ],
+          "diagnosis": "The model fails to parse because the sets, parameters, and variables are not properly declared or recognized, likely due to missing or incorrect model file structure or syntax errors causing all symbols (Machines, Products, M1, P1, etc.) to be unresolved.",
+          "error_category": "model_error",
+          "latency_seconds": 3.470273229992017,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "6839a456fa3b5923",
+          "provider": "azure_openai",
+          "total_tokens": 1313,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "4cd80a3cf44d76b9",
+        "comparison": {
+          "latency_seconds": 2.176252185017802,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "3109afeef36e51fb",
+          "provider": "azure_openai",
+          "reason": "The diagnosis identifies multiple duplicate declarations and improper separation of model and data sections, causing symbol conflicts and unresolved symbols. These fundamental structural issues prevent the model from functioning correctly and must be addressed by remodeling.",
+          "targeted_issues": [
+            "duplicate declarations of parameters",
+            "improper separation of model and data sections",
+            "repeated declarations causing symbol conflicts",
+            "incorrect placement of model statements in data section",
+            "inconsistent or multiple declarations of sets"
+          ],
+          "total_tokens": 588,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'MaxHours' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "MaxHours"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'ProfitPerBatch' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "ProfitPerBatch"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'TimeRequired' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "TimeRequired"
+            },
+            {
+              "category": "model_error",
+              "code": "missing_constraint",
+              "message": "AMPL model has no subject-to constraint.",
+              "severity": "error",
+              "symbol": null
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'M1'.",
+              "severity": "error",
+              "symbol": "M1"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'M2'.",
+              "severity": "error",
+              "symbol": "M2"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'M3'.",
+              "severity": "error",
+              "symbol": "M3"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'Machines'.",
+              "severity": "error",
+              "symbol": "Machines"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'P1'.",
+              "severity": "error",
+              "symbol": "P1"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'P2'.",
+              "severity": "error",
+              "symbol": "P2"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'P3'.",
+              "severity": "error",
+              "symbol": "P3"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'Products'.",
+              "severity": "error",
+              "symbol": "Products"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'p'.",
+              "severity": "error",
+              "symbol": "p"
+            },
+            {
+              "category": "model_error",
+              "code": "unparsed_statement",
+              "message": "Model contains semicolon-terminated text not recognized by the lightweight validator.",
+              "severity": "warning",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "4cd80a3cf44d76b9",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 4,
+        "remodel": {
+          "ampl_hash": "fe633dd6fb10b4ea",
+          "changes": [
+            "Removed the data section from the model file to separate model and data clearly",
+            "Ensured sets and parameters are declared only once in the model section",
+            "Eliminated duplicate declarations of parameters and sets",
+            "Kept only model declarations and constraints in the model file"
+          ],
+          "latency_seconds": 3.020671960024629,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "108fc6c0a9e7924a",
+          "provider": "azure_openai",
+          "total_tokens": 1100,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that the model (.mod) and data (.dat) sections are separated into distinct files or clearly separated within the same file using the 'data;' keyword only once.",
+            "Remove any duplicate declarations of parameters such as 'MaxHours', 'ProfitPerBatch', and 'TimeRequired' to avoid symbol conflicts.",
+            "Verify that sets 'Machines' and 'Products' are declared only once and referenced consistently.",
+            "Check that the data section correctly follows the model section and that no model statements appear in the data section.",
+            "Avoid redeclaring parameters or sets in the data section; only provide data values there."
+          ],
+          "diagnosis": "The model file contains multiple duplicate declarations of parameters and the sets and parameters are not properly recognized, likely due to mixing model and data sections or repeated declarations causing symbol conflicts and unresolved symbols.",
+          "error_category": "model_error",
+          "latency_seconds": 5.491940860985778,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "46ad4e49f4fb60ea",
+          "provider": "azure_openai",
+          "total_tokens": 1487,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "fe633dd6fb10b4ea",
+        "comparison": null,
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "missing_constraint",
+              "message": "AMPL model has no subject-to constraint.",
+              "severity": "error",
+              "symbol": null
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'Machines'.",
+              "severity": "error",
+              "symbol": "Machines"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'Products'.",
+              "severity": "error",
+              "symbol": "Products"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'p'.",
+              "severity": "error",
+              "symbol": "p"
+            },
+            {
+              "category": "model_error",
+              "code": "unparsed_statement",
+              "message": "Model contains semicolon-terminated text not recognized by the lightweight validator.",
+              "severity": "warning",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "fe633dd6fb10b4ea",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 5,
+        "remodel": null,
+        "review": null
+      }
+    ],
+    "problem_id": "190",
+    "stopped_reason": "max_correction_iterations",
+    "total_tokens": 13609
+  }
+}

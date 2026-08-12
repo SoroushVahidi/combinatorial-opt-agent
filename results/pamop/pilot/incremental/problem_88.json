@@ -1,0 +1,454 @@
+{
+  "exception_message": "",
+  "exception_type": "",
+  "gold": {
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_latency_seconds": 0.041768,
+    "gold_objective": 142.0,
+    "gold_reason": "",
+    "gold_returncode": 0,
+    "gold_solver_success": true
+  },
+  "metadata": {
+    "constraint_count": 3,
+    "doc_id": "nlp4lp_test_87",
+    "family_proxy": "MILP|maximize|v2|p5|c3|tree3x1",
+    "lp_or_milp": "MILP",
+    "numeric_mentions": 5,
+    "objective_sense": "maximize",
+    "optimus_code_available": true,
+    "parameter_count": 5,
+    "partition_depth": 1,
+    "partition_node_count": 3,
+    "problem_id": 88,
+    "selection_bucket": "MILP|simple|low_numeric|large_tree|maximize",
+    "variable_count": 2
+  },
+  "per_problem_row": {
+    "completion_tokens": 2912,
+    "correction_calls": 15,
+    "correction_invoked": true,
+    "correction_iterations": 5,
+    "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
+    "deployment": "gpt-4.1-mini",
+    "estimated_cost_usd": "",
+    "failure_category": "E. AMPL_PARSE_FAILURE",
+    "final_ampl_hash": "7c15baa30229ec16",
+    "final_ampl_parse_success": false,
+    "final_feasible": false,
+    "final_solver_status": null,
+    "g_extr_calls": 1,
+    "g_mod_calls": 2,
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_objective": 142.0,
+    "gold_solver_success": true,
+    "initial_ampl_parse_success": false,
+    "initial_feasible_status": false,
+    "initial_generation_valid": "YES",
+    "initial_solver_success": false,
+    "latency_seconds": 52.653399,
+    "lp_or_milp": "MILP",
+    "objective_match_with_gold": "",
+    "objective_produced": false,
+    "objective_value": null,
+    "partition_depth": 1,
+    "partition_node_count": 3,
+    "problem_id": 88,
+    "prompt_hashes": "048be2573989ad06;33496eb8e4d4c271;5e9070b691289636;71c46ac4c9bf4057;724eb76278a51cd7;79aceece0fd1e43b;7d256b1f326b2bd2;81c1890db8ddbc0e;8cce5d4bc5fcd236;9156d5301c2b792a;9c7f6a30cb58c2e4;9fbbcee0dae76666;b43bcb85baf5992a;bced33d4d9647425;c3bfb269660810d2;e33506038d269da4;e5a1c5e7cf150367;fc021704f827c07a",
+    "prompt_tokens": 11196,
+    "provider": "azure_openai",
+    "semantic_correctness_status": "NOT_EVALUABLE",
+    "semantically_wrong_but_feasible": "",
+    "temperature": 0.2,
+    "total_llm_calls": 18,
+    "total_tokens": 14108,
+    "underlying_model": "gpt-4.1-mini-2025-04-14"
+  },
+  "problem_id": 88,
+  "trace": {
+    "correction_iterations_observed": 5,
+    "final_ampl_hash": "7c15baa30229ec16",
+    "final_success": false,
+    "initial_ampl_hash": "205f0bcf324a15c0",
+    "iterations": [
+      {
+        "ampl_hash": "205f0bcf324a15c0",
+        "comparison": {
+          "latency_seconds": 2.0625285459682345,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "b43bcb85baf5992a",
+          "provider": "azure_openai",
+          "reason": "The model fails due to an unassigned parameter (VintageBottleCapacity) that causes a key constraint (VineVolumeLimit) to be undefined. This indicates incomplete or missing parameter initialization in the model formulation, which must be addressed to ensure correctness and solvability.",
+          "targeted_issues": [
+            "parameter initialization and assignment",
+            "definition and usage of VintageBottleCapacity",
+            "ensuring all constraints have fully defined parameters"
+          ],
+          "total_tokens": 532,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_i42mephc/model.run, line 27, offset 770):\nerror processing constraint VineVolumeLimit:\n\tno value for VintageBottleCapacity\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "205f0bcf324a15c0",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.03979578596772626,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_i42mephc/model.run, line 27, offset 770):\nerror processing constraint VineVolumeLimit:\n\tno value for VintageBottleCapacity\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 0,
+        "remodel": {
+          "ampl_hash": "0ca2a516eb05298a",
+          "changes": [
+            "Added a default value of 1 to the parameter VintageBottleCapacity to ensure it is always assigned."
+          ],
+          "latency_seconds": 3.6212258089799434,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "fc021704f827c07a",
+          "provider": "azure_openai",
+          "total_tokens": 1012,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that all parameters, especially VintageBottleCapacity, are assigned values before solving the model.",
+            "Check the data section or data file to confirm VintageBottleCapacity is defined and loaded correctly.",
+            "If using external data sources, verify that the parameter names match exactly and that the data is accessible."
+          ],
+          "diagnosis": "The model failed because the parameter VintageBottleCapacity is not assigned a value, causing the VineVolumeLimit constraint to be undefined.",
+          "error_category": "model_error",
+          "latency_seconds": 2.6271692540030926,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "c3bfb269660810d2",
+          "provider": "azure_openai",
+          "total_tokens": 821,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "0ca2a516eb05298a",
+        "comparison": {
+          "latency_seconds": 2.0654631400248036,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "71c46ac4c9bf4057",
+          "provider": "azure_openai",
+          "reason": "The model contains an uninitialized parameter RegularBottleCapacity, which causes a critical constraint to fail during evaluation. This is a formulation error that must be fixed by assigning a proper value to the parameter before solving. Remodeling is justified to ensure all parameters are correctly defined and the model constraints are valid.",
+          "targeted_issues": [
+            "uninitialized parameter RegularBottleCapacity",
+            "parameter value assignment",
+            "constraint evaluation failure"
+          ],
+          "total_tokens": 509,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_n5albr1m/model.run, line 26, offset 779):\nerror processing constraint VineVolumeLimit:\n\tno value for RegularBottleCapacity\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "0ca2a516eb05298a",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.04466985398903489,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_n5albr1m/model.run, line 26, offset 779):\nerror processing constraint VineVolumeLimit:\n\tno value for RegularBottleCapacity\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 1,
+        "remodel": {
+          "ampl_hash": "22c86519e7919588",
+          "changes": [
+            "Assigned a default value of 1 to the parameter RegularBottleCapacity to ensure it is initialized before use."
+          ],
+          "latency_seconds": 3.472916864033323,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "8cce5d4bc5fcd236",
+          "provider": "azure_openai",
+          "total_tokens": 996,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Assign a numeric value to the parameter RegularBottleCapacity before solving the model.",
+            "Ensure all parameters used in constraints have defined values in the data section or via param statements."
+          ],
+          "diagnosis": "The parameter RegularBottleCapacity is declared but not assigned any value, causing the constraint VineVolumeLimit to fail during evaluation.",
+          "error_category": "model_error",
+          "latency_seconds": 1.8887666019727476,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "9c7f6a30cb58c2e4",
+          "provider": "azure_openai",
+          "total_tokens": 799,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "22c86519e7919588",
+        "comparison": {
+          "latency_seconds": 2.072152269014623,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "724eb76278a51cd7",
+          "provider": "azure_openai",
+          "reason": "The model fails to solve because the parameter TotalAvailableVine is not assigned any value, which is a critical data omission affecting the VineVolumeLimit constraint. Remodeling is justified to ensure that the prompt explicitly requires the assignment and validation of this parameter to prevent such failures.",
+          "targeted_issues": [
+            "missing parameter assignment for TotalAvailableVine",
+            "data validation for critical parameters"
+          ],
+          "total_tokens": 531,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_m5l1hpha/model.run, line 26, offset 789):\nerror processing constraint VineVolumeLimit:\n\tno value for TotalAvailableVine\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "22c86519e7919588",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.047116227040532976,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_m5l1hpha/model.run, line 26, offset 789):\nerror processing constraint VineVolumeLimit:\n\tno value for TotalAvailableVine\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 2,
+        "remodel": {
+          "ampl_hash": "97bb1ebf502156b1",
+          "changes": [
+            "Added a non-negativity lower bound (>= 0) to the parameter TotalAvailableVine to enforce that it must be assigned a valid numeric value before solving."
+          ],
+          "latency_seconds": 4.409922827035189,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "e33506038d269da4",
+          "provider": "azure_openai",
+          "total_tokens": 1051,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that the parameter TotalAvailableVine is assigned a valid numeric value before solving the model.",
+            "Check the data section or data file to confirm that TotalAvailableVine is properly defined and loaded.",
+            "If using external data sources, verify that the data for TotalAvailableVine is accessible and correctly referenced."
+          ],
+          "diagnosis": "The parameter TotalAvailableVine used in the VineVolumeLimit constraint is not assigned any value, causing the model to fail during solve.",
+          "error_category": "model_error",
+          "latency_seconds": 1.974508375977166,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "33496eb8e4d4c271",
+          "provider": "azure_openai",
+          "total_tokens": 835,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "97bb1ebf502156b1",
+        "comparison": {
+          "latency_seconds": 2.9750297570135444,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "9fbbcee0dae76666",
+          "provider": "azure_openai",
+          "reason": "The model fails to solve because the parameter TotalAvailableVine in the VineVolumeLimit constraint is not assigned any value. This is a fundamental modeling issue that prevents the model from functioning correctly and must be addressed by explicitly defining or assigning this parameter.",
+          "targeted_issues": [
+            "unassigned parameter TotalAvailableVine",
+            "missing parameter value in data or model",
+            "lack of default parameter assignment"
+          ],
+          "total_tokens": 531,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_vz5itq2e/model.run, line 28, offset 869):\nerror processing constraint VineVolumeLimit:\n\tno value for TotalAvailableVine\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "97bb1ebf502156b1",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.052828460989985615,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_vz5itq2e/model.run, line 28, offset 869):\nerror processing constraint VineVolumeLimit:\n\tno value for TotalAvailableVine\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 3,
+        "remodel": {
+          "ampl_hash": "39b70b9ee91cab5b",
+          "changes": [
+            "Added a default value of 100 to the parameter TotalAvailableVine to ensure it is assigned before solving."
+          ],
+          "latency_seconds": 6.204625818005297,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "048be2573989ad06",
+          "provider": "azure_openai",
+          "total_tokens": 1055,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Assign a valid numeric value to the parameter TotalAvailableVine before solving the model.",
+            "Ensure that the data file or data section includes a definition for TotalAvailableVine.",
+            "Alternatively, provide a default value for TotalAvailableVine in the model declaration if appropriate."
+          ],
+          "diagnosis": "The parameter TotalAvailableVine used in the VineVolumeLimit constraint is not assigned a value, causing the model to fail during solve.",
+          "error_category": "model_error",
+          "latency_seconds": 2.1830145320273004,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "bced33d4d9647425",
+          "provider": "azure_openai",
+          "total_tokens": 848,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "39b70b9ee91cab5b",
+        "comparison": {
+          "latency_seconds": 1.560729952994734,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "7d256b1f326b2bd2",
+          "provider": "azure_openai",
+          "reason": "The model fails to solve because the parameter RegularToVintageMinRatio is not assigned a value, which is a critical formulation error preventing successful optimization.",
+          "targeted_issues": [
+            "unassigned parameter RegularToVintageMinRatio",
+            "missing parameter value assignment",
+            "parameter initialization in model declaration"
+          ],
+          "total_tokens": 502,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_xomxl06m/model.run, line 28, offset 881):\nerror processing constraint RegularToVintageRatio:\n\tno value for RegularToVintageMinRatio\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "39b70b9ee91cab5b",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.040080161998048425,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_xomxl06m/model.run, line 28, offset 881):\nerror processing constraint RegularToVintageRatio:\n\tno value for RegularToVintageMinRatio\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 4,
+        "remodel": {
+          "ampl_hash": "7c15baa30229ec16",
+          "changes": [
+            "Added a default value of 1 to the parameter RegularToVintageMinRatio to ensure it is assigned before solving."
+          ],
+          "latency_seconds": 3.376511345966719,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "9156d5301c2b792a",
+          "provider": "azure_openai",
+          "total_tokens": 1041,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Assign a valid numeric value to the parameter RegularToVintageMinRatio before solving the model.",
+            "Add a default value to RegularToVintageMinRatio in the model declaration if appropriate.",
+            "Ensure all required parameters have values in the data section or input files."
+          ],
+          "diagnosis": "The parameter RegularToVintageMinRatio used in the RegularToVintageRatio constraint is not assigned a value, causing the model to fail during solve.",
+          "error_category": "model_error",
+          "latency_seconds": 2.539934500004165,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "5e9070b691289636",
+          "provider": "azure_openai",
+          "total_tokens": 851,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "7c15baa30229ec16",
+        "comparison": null,
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_ua31besc/model.run, line 28, offset 891):\nerror processing constraint MinVintageProduction:\n\tno value for MinVintageBottles\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "7c15baa30229ec16",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.042080333980266005,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_ua31besc/model.run, line 28, offset 891):\nerror processing constraint MinVintageProduction:\n\tno value for MinVintageBottles\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 5,
+        "remodel": null,
+        "review": null
+      }
+    ],
+    "problem_id": "88",
+    "stopped_reason": "max_correction_iterations",
+    "total_tokens": 11914
+  }
+}
