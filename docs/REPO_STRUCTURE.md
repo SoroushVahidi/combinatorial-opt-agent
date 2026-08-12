@@ -1,18 +1,33 @@
 # Repository Structure
 
-Annotated directory map for the EAAI companion codebase.
+Annotated directory map. **See [`../PROJECT_STATUS.md`](../PROJECT_STATUS.md) first**
+for current scientific status; this file is the directory-level companion. The
+manuscript is now targeted at **KAIS** (see `docs/KAIS_SOURCE_OF_TRUTH.md`); the
+"EAAI" naming below (directories, table files, doc titles) is historical —
+those experiment results remain the underlying evidence base, just under an
+earlier venue name.
+
 ★ = authoritative for the paper  |  ⚠ = historical / non-authoritative  |  ✦ = demo only
+
+**2026-08-11 note:** `results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv`
+(marked ★ below) is **stale** for its core downstream metrics — see
+`PROJECT_STATUS.md` §3 and `results/paper/eaai_camera_ready_tables/README.md`.
 
 ```
 combinatorial-opt-agent/
 │
-├── ★ results/paper/                   Camera-ready EAAI tables and figures (DO NOT EDIT)
+├── ★ manuscript/                      KAIS manuscript source (main.tex, authoritative) + PDFs
+│
+├──   baselines/pamop/                 PaMOP (IJCAI 2025) reproduction — IN PROGRESS
+├──   results/pamop/                   PaMOP pilot + forensics results
+│
+├── ★ results/paper/                   Camera-ready EAAI-era tables and figures (DO NOT EDIT; table1 is stale, see note above)
 │   ├── eaai_camera_ready_tables/      Tables 1–5 CSV files
 │   ├── eaai_camera_ready_figures/     Figures 1–5 PNG/PDF files
 │   └── (other CSV/JSON)               Downstream utility summaries — see RESULTS_PROVENANCE
 ├──   results/rerun/                   Optional provider reruns (e.g. Gemini); may be empty
 │
-├── ★ analysis/                        EAAI experiment reports (canonical)
+├── ★ analysis/                        EAAI-era experiment reports (canonical)
 │   ├── eaai_engineering_subset_report.md
 │   ├── eaai_executable_subset_report.md
 │   ├── eaai_final_solver_attempt_report.md
@@ -189,4 +204,6 @@ For full reproduction commands, see [`HOW_TO_REPRODUCE.md`](HOW_TO_REPRODUCE.md)
 
 The paper does **not** require Gurobi.  The solver-backed subset (Table 4, 20 instances)
 uses a SciPy HiGHS shim.  GAMSPy/Pyomo/PuLP appear in demo code only and are outside
-the paper scope.
+the paper scope. Separately, the **PaMOP baseline reproduction** (`baselines/pamop/`)
+does use Gurobi (via AMPL) — available only in a dedicated virtualenv, not the
+default environment; see `PROJECT_STATUS.md` §11 and `baselines/pamop/README.md`.

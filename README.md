@@ -2,6 +2,8 @@
 
 **Companion repo for a manuscript submitted to Knowledge and Information Systems (KAIS), Springer Nature** (manuscript source: [`manuscript/`](manuscript/); see [`docs/KAIS_SOURCE_OF_TRUTH.md`](docs/KAIS_SOURCE_OF_TRUTH.md)): fixed-catalog **NLP4LP** benchmark, **deterministic scalar grounding**, and **restricted** engineering / **solver-backed subset** (SciPy HiGHS, 20 instances)—not a production product.
 
+**New agent or contributor? Start at [`PROJECT_STATUS.md`](PROJECT_STATUS.md)** — single up-to-date entry point (scientific goal, pipeline, authoritative results, what's implemented/failed, PaMOP baseline-reproduction status, next steps).
+
 ---
 
 ## Repository status (short)
@@ -9,25 +11,28 @@
 | | |
 |---|---|
 | **Validated paper core** | NLP4LP `orig` (331 queries): retrieval → grounding; **Tables 1–5** in `results/paper/eaai_camera_ready_tables/` |
-| **Canonical one-pager** | [`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md) |
+| **Canonical one-pager** | [`PROJECT_STATUS.md`](PROJECT_STATUS.md) (see also [`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md)) |
+| **External baseline in progress** | **PaMOP** (IJCAI 2025) reproduction — see [`docs/PAMOP_REPRODUCTION_PLAN.md`](docs/PAMOP_REPRODUCTION_PLAN.md), `baselines/pamop/`; ORLM/OptMATH/DeepOR/OR-R1 not started |
 | **Infrastructure / reruns** | Slurm `batch/learning/`; optional LLM baselines; Gemini [`docs/GEMINI_RERUN_REPORT.md`](docs/GEMINI_RERUN_REPORT.md); Mistral [`docs/MISTRAL_RERUN_REPORT.md`](docs/MISTRAL_RERUN_REPORT.md) (**infra ≠ completed reruns** unless your `results/rerun/` proves it) |
 | **Demo / app** | `app.py`, `demo/` — **outside** paper-evaluated claims unless explicitly scoped |
 | **Archives** | `docs/archive/`, `docs/archive_internal_status/`, `docs/provenance/`, `analysis/archive/` — **provenance only** |
 | **External validation (non–paper-core)** | **Text2Zinc** + **CP-Bench** (DCP-Bench-Open): adapters + staging docs — **no new camera-ready metrics** until runs exist ([`docs/DATASET_EXPANSION_STATUS.md`](docs/DATASET_EXPANSION_STATUS.md)) |
 
-**Table 1 headline** (TF-IDF + typed greedy, `orig`): Schema R@1 **0.9094**; Coverage **0.8639**; TypeMatch **0.7513**; InstantiationReady **0.5257** — source: `results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv` (see [`docs/RESULTS_PROVENANCE.md`](docs/RESULTS_PROVENANCE.md)).
+**Table 1 headline** (TF-IDF + typed greedy, `orig`): Schema R@1 **0.9094**; Coverage **0.8609**; TypeMatch **0.7453**; InstantiationReady **0.5287** — matches `manuscript/main.tex`. **Correction (2026-08-11):** `results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv` (previously cited here) contains stale pre-correction values (Coverage 0.8639, TypeMatch 0.7513, InstReady 0.5257) — the manuscript itself documents regenerating this table from live per-query artifacts during final KAIS preparation. See [`PROJECT_STATUS.md`](PROJECT_STATUS.md) §3 for the full explanation and the currently-correct source files.
 
 ---
 
 ## Read these first (repo map)
 
+0. [`PROJECT_STATUS.md`](PROJECT_STATUS.md) — **start here**: goal, pipeline, authoritative results, what's implemented/failed, PaMOP status, next steps
 1. [`docs/REVIEWER_GUIDE.md`](docs/REVIEWER_GUIDE.md) — what is official vs auxiliary  
 2. [`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md) — validated vs experimental, limitations  
 3. [`docs/KAIS_SOURCE_OF_TRUTH.md`](docs/KAIS_SOURCE_OF_TRUTH.md) — current manuscript authority / scope (see also [`docs/EAAI_SOURCE_OF_TRUTH.md`](docs/EAAI_SOURCE_OF_TRUTH.md) for unchanged benchmark facts)  
 4. [`docs/RESULTS_PROVENANCE.md`](docs/RESULTS_PROVENANCE.md) — metrics and provenance chain  
 5. [`docs/HOW_TO_REPRODUCE.md`](docs/HOW_TO_REPRODUCE.md) — rerun commands  
 6. [`docs/KNOWN_ISSUES.md`](docs/KNOWN_ISSUES.md) — blockers and design tensions  
-7. [`docs/REPO_STRUCTURE.md`](docs/REPO_STRUCTURE.md) — annotated tree (canonical vs demo vs archive)  
+7. [`docs/REPO_STRUCTURE.md`](docs/REPO_STRUCTURE.md) / [`docs/REPOSITORY_MAP.md`](docs/REPOSITORY_MAP.md) — annotated tree (canonical vs demo vs archive)
+8. [`docs/PAMOP_REPRODUCTION_PLAN.md`](docs/PAMOP_REPRODUCTION_PLAN.md) — current external-baseline work in progress
 
 **Index:** [`docs/README.md`](docs/README.md) · **External datasets plan:** [`docs/DATASET_EXPANSION_PLAN.md`](docs/DATASET_EXPANSION_PLAN.md) · **Doc check:** `python scripts/check_docs_integrity.py`
 

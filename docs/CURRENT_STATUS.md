@@ -1,6 +1,14 @@
 # Current repository status (reviewer-facing)
 
-**Last updated:** 2026-04-03 (Mistral Wulver submission attempts registered — blocked on job env key)
+**Last updated:** 2026-04-03 (Mistral Wulver submission attempts registered — blocked on job env key).
+**2026-08-11 note:** this file predates the KAIS venue switch (see
+[`../PROJECT_STATUS.md`](../PROJECT_STATUS.md) and
+[`KAIS_SOURCE_OF_TRUTH.md`](KAIS_SOURCE_OF_TRUTH.md)) and the PaMOP baseline-reproduction
+work (`docs/PAMOP_REPRODUCTION_PLAN.md`, `baselines/pamop/`), and its headline metrics
+below were superseded by a manuscript-documented correction — see
+[`../PROJECT_STATUS.md`](../PROJECT_STATUS.md) §3. **`PROJECT_STATUS.md` at the repo root
+is now the primary up-to-date entry point; treat this file as a detailed companion, not
+the first stop.**
 
 This file is the **single concise summary** of what this codebase claims today, what is validated,
 and where the evidence lives. It complements **[`docs/EAAI_SOURCE_OF_TRUTH.md`](EAAI_SOURCE_OF_TRUTH.md)**
@@ -32,6 +40,17 @@ and where the evidence lives. It complements **[`docs/EAAI_SOURCE_OF_TRUTH.md`](
 | Coverage (paper table) | **0.8639** |
 | Type match (paper table) | **0.7513** |
 | Instantiation ready (paper table) | **0.5257** |
+
+**⚠ 2026-08-11 correction: the four values above are STALE.** The manuscript
+(`manuscript/main.tex`) documents that this table was populated from a stale
+intermediate significance snapshot and was regenerated during final KAIS
+preparation. The corrected, currently-in-manuscript values are Coverage
+0.8609, TypeMatch 0.7453, InstantiationReady 0.5287 (Schema R@1 unchanged at
+0.9094), sourced from `results/eswa_revision/14_reports/downstream_comparison_all_methods.csv`
+and `results/eswa_revision/13_tables/postfix_main_metrics.csv`. See
+[`../PROJECT_STATUS.md`](../PROJECT_STATUS.md) §3 for the full table and the
+disclosed, separate, unresolved Schema R@1 offset (0.9094 vs 0.9063) that
+should **not** be conflated with this correction.
 
 **Provenance chain:** Table 1 CSV points at `results/eswa_revision/13_tables/deterministic_method_comparison_orig.csv` (see `analysis/eaai_tables_build_report.md` for how tables were reconciled).
 

@@ -142,6 +142,18 @@ Note: The ESWA revision tables in `results/eswa_revision/13_tables/` ARE still a
 
 ## Key Metrics (Verified from Latest Committed Artifacts)
 
+**⚠ 2026-08-11 correction:** the table below (from
+`results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv`,
+sourced from `results/eswa_revision/13_tables/deterministic_method_comparison_orig.csv`)
+is **stale**. The manuscript (`manuscript/main.tex`) documents that this exact
+table was populated from a stale intermediate significance snapshot and was
+regenerated from live per-query artifacts during final KAIS preparation. Use
+the corrected values in [`../PROJECT_STATUS.md`](../PROJECT_STATUS.md) §3
+(sourced from `results/eswa_revision/14_reports/downstream_comparison_all_methods.csv`
+and `results/eswa_revision/13_tables/postfix_main_metrics.csv`, cross-checked
+against the manuscript directly) instead of the table below. The table below
+is retained here only as a record of what this file previously claimed.
+
 All values below are from `results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv` (sourced from `results/eswa_revision/13_tables/deterministic_method_comparison_orig.csv`):
 
 | Method | Schema R@1 | Coverage | TypeMatch | InstReady |
