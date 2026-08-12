@@ -294,4 +294,15 @@ manuscript/submission_package/*.aux
 manuscript/submission_package/*.log
 manuscript/submission_package/*.out
 manuscript/submission_package/*.blg
+
+# Solver/modeling-language license and credential files (never intended to
+# be versioned; e.g. Gurobi/AMPL). Real license files for this project live
+# outside the repo (~/gurobi.lic, ~/.venvs/gurobi) -- this is precautionary.
+*.lic
+gurobi.lic
+ampl.lic
+
+# HuggingFace cache, if ever created inside the repo instead of ~/.cache
+.hf_cache/
+huggingface_cache/
 manuscript/submission_package/*.bbl
