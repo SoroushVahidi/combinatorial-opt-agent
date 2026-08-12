@@ -1,0 +1,17 @@
+{
+  "phase": 3,
+  "date": "2026-08-12",
+  "git_commit_at_start": "068ac515b7be43d79e8038169c14ad7bb7321371",
+  "encoder": "sentence-transformers/all-MiniLM-L6-v2 (frozen, not fine-tuned)",
+  "classifier_kind_selected": "logistic_regression",
+  "feature_count": 26,
+  "gold_cache": "results/eswa_revision/00_env/nlp4lp_gold_cache.json",
+  "compute": "CPU only, no GPU, no external API calls",
+  "commands": {
+    "build_split": "python3 -m src.learning.build_common_grounding_corpus --dataset nlp4lp --split test --output_dir artifacts/learning_corpus && python3 -m src.learning.split_nlp4lp_corpus_for_benchmark --corpus_dir artifacts/learning_corpus --seed 42",
+    "build_p0_corpus": "python3 scripts/learning/build_p0_corpus.py",
+    "train": "python3 scripts/learning/train_p0_classifier.py",
+    "evaluate_m2_m3_m4": "python3 scripts/learning/eval_p0_grounding.py",
+    "evaluate_m0": "python3 -m tools.nlp4lp_downstream_utility --variant orig --eval <50-query-subset> --baseline oracle --assignment-mode typed --output-dir <out>"
+  }
+}

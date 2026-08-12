@@ -1,0 +1,27 @@
+{
+  "config": {
+    "variant": "orig",
+    "baseline": "tfidf_hierarchical_structured_grounding",
+    "k": 1,
+    "random_control": false
+  },
+  "aggregate": {
+    "variant": "orig",
+    "baseline": "tfidf_hierarchical_structured_grounding",
+    "schema_R1": 0.9093655589123867,
+    "param_coverage": 0.8255235449344211,
+    "type_match": 0.8806958231429531,
+    "exact5_on_hits": 0.6374997529107118,
+    "exact20_on_hits": 0.6492361234655755,
+    "param_coverage_hits": 0.872917918183699,
+    "param_coverage_miss": 0.35,
+    "type_match_hits": 0.9319279649844434,
+    "type_match_miss": 0.36666666666666664,
+    "key_overlap": 0.9217810386994677,
+    "key_overlap_hits": 0.994779307071666,
+    "key_overlap_miss": 0.18936507936507938,
+    "instantiation_ready": 0.7039274924471299,
+    "n": 331
+  },
+  "resume_merged": false
+}

@@ -1,0 +1,73 @@
+{
+  "p0_model_config": {
+    "selected_model_kind": "logistic_regression",
+    "feature_set": "combined",
+    "feature_names": [
+      "type_incompatible",
+      "derived_count_non_count",
+      "type_exact",
+      "type_loose",
+      "opt_role_overlap",
+      "fragment_objective",
+      "fragment_bound",
+      "fragment_resource",
+      "fragment_ratio",
+      "operator_match",
+      "ctx_overlap",
+      "sent_overlap",
+      "unit_match",
+      "entity_resource_overlap",
+      "total_match",
+      "coefficient_match",
+      "coeff_to_total_penalty",
+      "total_to_coeff_penalty",
+      "count_role_match",
+      "count_to_non_count_penalty",
+      "lower_bound_match",
+      "upper_bound_match",
+      "bound_direction_wrong",
+      "weak_penalty",
+      "hand_engineered_score",
+      "embedding_similarity"
+    ],
+    "encoder": "sentence-transformers/all-MiniLM-L6-v2",
+    "model_selection_dev_results": {
+      "logistic_regression": {
+        "correct": 115,
+        "total": 245,
+        "accuracy": 0.46938775510204084
+      },
+      "gradient_boosted_trees": {
+        "correct": 114,
+        "total": 245,
+        "accuracy": 0.46530612244897956
+      }
+    },
+    "ablation_dev_results_for_selected_model": {
+      "combined": {
+        "correct": 115,
+        "total": 245,
+        "accuracy": 0.46938775510204084
+      },
+      "engineered_only": {
+        "correct": 109,
+        "total": 245,
+        "accuracy": 0.4448979591836735
+      },
+      "embedding_only": {
+        "correct": 58,
+        "total": 245,
+        "accuracy": 0.23673469387755103
+      }
+    },
+    "train_size": 11755,
+    "dev_size": 2633,
+    "seed": 42
+  },
+  "methods": [
+    "M2_p0_greedy",
+    "M3_p0_max_weight",
+    "M4_p0_max_weight_repair"
+  ],
+  "test_n": 50
+}
