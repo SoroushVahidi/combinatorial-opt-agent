@@ -4,8 +4,9 @@
 pilot-validated with larger evaluation still pending, **updated Phase 4
 (2026-08-12): ORLM re-verified against primary sources and implemented for
 inference preparation** (`baselines/orlm/` — no model call, GPU/weights, or
-COPT execution). DeepOR and OR-R1 remain research/planning only, not
-implemented; OptMATH is now lightweight-inference-ready. This document records what implementing each would require
+COPT execution). DeepOR is now a paper-level, mock-tested reconstruction in
+`baselines/deepor/`; OR-R1 remains research/planning only. OptMATH is now
+lightweight-inference-ready. This document records what implementing each would require
 and in what order, so a future phase can act without repeating this
 research. See `PROJECT_STATUS.md` §9 for the current status summary and
 `baselines/pamop/` for the pilot-validated reconstruction and
@@ -154,17 +155,16 @@ research. See `PROJECT_STATUS.md` §9 for the current status summary and
   locked official prompt and static-validate generated Gurobi code before
   any solver execution. See `docs/OPTMATH_PROVENANCE.md`.
 
-## 4. DeepOR
+## 4. DeepOR (paper reconstruction ready; checkpoint pending)
 
 - **Citation:** "DeepOR: A Deep Reasoning Foundation Model for
   Optimization Modeling," AAAI 2026 (per the AAAI proceedings listing
   found; very recent, published at/after this repository's knowledge
   cutoff window).
-- **Official code available:** **UNCONFIRMED** -- no public GitHub
-  repository was located during this pass's research; AAAI 2026
-  publication suggests code may not yet be released or may be
-  released concurrently with/after the conference.
-- **Model weights available:** **UNCONFIRMED**, same caveat.
+- **Official code available:** **NOT FOUND** after a fresh exact-title,
+  author, GitHub, Hugging Face, and ModelScope search (2026-08-12).
+- **Model weights available:** **NOT FOUND**. The paper specifies Qwen3-8B
+  as the base model but does not release a DeepOR checkpoint identifier.
 - **Task overlap with ours:** High in spirit (optimization modeling from
   NL) but architecturally very different -- DeepOR is a reasoning-LLM
   (long chain-of-thought, RL-trained with solver-feedback reward shaping),
@@ -178,8 +178,9 @@ research. See `PROJECT_STATUS.md` §9 for the current status summary and
 - **API requirement:** Unknown (depends on whether a hosted or open-weight
   release accompanies the paper).
 - **Licensing/access issues:** Unknown pending release.
-- **Expected implementation difficulty:** **Currently not implementable**
-  -- blocked on code/weight availability, not on our own effort.
+- **Expected implementation difficulty:** the inference/evaluation interface
+  is implemented as a paper-level reconstruction; empirical execution is
+  blocked on the trained checkpoint and exact upstream details.
 - **Fairness concerns:** N/A until implementable.
 - **Comparable metrics:** Presumably the same execution/feasibility/
   objective-accuracy family as ORLM/OptMATH/PaMOP, pending confirmation.
@@ -187,9 +188,9 @@ research. See `PROJECT_STATUS.md` §9 for the current status summary and
   alone, ahead of OR-R1 only because DeepOR's AAAI 2026 venue suggests a
   slightly more mature/reviewed artifact than OR-R1's November 2025 arXiv
   preprint, though neither is currently actionable).
-- **First implementation milestone:** **Monitor for code release** (check
-  the paper's eventual camera-ready / AAAI proceedings page for a code
-  link); no implementation action possible until then.
+- **First implementation milestone:** completed lightweight reconstruction;
+  monitor for an official checkpoint/code release before claiming empirical
+  DeepOR results. See `docs/DEEPOR_PROVENANCE.md`.
 
 ## 5. OR-R1
 

@@ -276,7 +276,7 @@ committed number. Full detail and next steps:
 | **PaMOP** (IJCAI 2025) | **PILOT VALIDATED**, fidelity gate RESOLVED (`B. MODEL_LIMITED`) — independent reconstruction, no official code available; larger run pending. See §10. |
 | **ORLM** | **IMPLEMENTED, READY FOR INFERENCE (2026-08-12)** — lightweight adapter/runner/normalizer/validator/harness/evaluator and mocked tests complete; no GPU/weights/COPT execution performed; code+one checkpoint confirmed public |
 | **OptMATH** | **IMPLEMENTED, READY FOR INFERENCE (2026-08-12)** — official prompt/checkpoint provenance, NLP4LP adapter, Gurobi parser/validator/harness, result schema, evaluator, manifest, and mocked tests complete; no inference or solver run |
-| **DeepOR** | **NOT STARTED, code unconfirmed** — very recent (AAAI 2026); monitor for release |
+| **DeepOR** | **PAPER RECONSTRUCTION READY (2026-08-12)** — mock-tested adapter, paper-level prompt, reasoning parser, Pyomo static validator, safe harness, schema, evaluator, and manifest; official code/checkpoint not found and no empirical result |
 | **OR-R1** | **NOT STARTED, code unconfirmed** — very recent (Nov 2025 preprint); monitor for release |
 
 Verified by directory listing: `baselines/` contains `baselines/pamop/`

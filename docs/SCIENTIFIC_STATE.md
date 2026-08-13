@@ -179,7 +179,8 @@ not exact.
   generator. See `docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`.
 - Limited solver-backed scale (20/331), compatibility-filtered.
 - No broad comparison against LLM-based auto-formulation methods yet
-  (ORLM/OptMATH/DeepOR/OR-R1 all NOT_STARTED).
+  (ORLM/OptMATH complete for lightweight inference preparation; DeepOR is
+  paper-reconstruction-ready; OR-R1 remains NOT_STARTED).
 - PaMOP reproduction fidelity uncertain (6/6 execution, 1/6 semantic
   correctness on the pilot).
 - 3 of ~16 grounding-method families (`global_compat_*`,
@@ -232,7 +233,7 @@ prerequisites, falsification criteria):
 | PaMOP | IN PROGRESS, fidelity gate RESOLVED | optional C2/C4 prompt follow-up, or decide on scale-up (§15) |
 | ORLM | **IMPLEMENTED, READY FOR INFERENCE** (`baselines/orlm/`) | smoke test — needs checkpoint/GPU; COPT only for later solver execution, see `NEXT_STEPS.md` P4 |
 | OptMATH | **IMPLEMENTED, READY FOR INFERENCE** (`baselines/optmath/`) | 7B checkpoint smoke test when resources allow, see `docs/OPTMATH_PROVENANCE.md` |
-| DeepOR | NOT STARTED, code unconfirmed | monitor for release (AAAI 2026) |
+| DeepOR | PAPER RECONSTRUCTION READY; official code/checkpoint not found | use `baselines/deepor/`; do not claim empirical results until an official checkpoint is available |
 | OR-R1 | NOT STARTED, code unconfirmed | monitor for release (Nov 2025 preprint) |
 
 ORLM verified 2026-08-12 (primary-source research): official code public
