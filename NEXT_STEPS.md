@@ -2,13 +2,31 @@
 
 **Purpose:** a short, operational task queue so the next agent does not
 have to decide from scratch what to do. Derived from
-`docs/BASELINE_STALENESS_AUDIT_2026-08-12.md` and
-`docs/ALGORITHM_IMPROVEMENT_ROADMAP.md` (Phase 4, 2026-08-12). For full
-scientific context, read `docs/SCIENTIFIC_STATE.md` first.
+`docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`,
+`docs/ALGORITHM_IMPROVEMENT_ROADMAP.md`, and the 2026-08-13 method audit.
+For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
 
 ---
 
-## P0 — Verify/refresh the remaining stale method numbers
+## P0 — Stage-A diagnostic for role-quantity factorized grounding
+
+- **Task:** follow
+  `docs/METHOD_NOVELTY_EFFICIENCY_AUDIT_2026-08-13.md` Stage A: build a
+  lightweight per-slot diagnostic over the 54 schema-hit/not-ready fresh
+  `tfidf_typed_greedy` cases and verify whether role/quantity factors
+  would change the selected mention in at least 10 targeted failures.
+- **Purpose:** this is the pre-gate before implementing the top-ranked
+  method candidate. It avoids repeating already-negative matching,
+  beam-search, repair, ambiguity, and learned-pair-scorer ideas without
+  new information.
+- **Prerequisite:** keep using a fresh same-code `tfidf_typed_greedy`
+  reference (`0.7764` on 331 `orig`) and do not modify manuscript files.
+- **Stop/success criterion:** if fewer than 10 targeted failures appear
+  correctable by explicit role/quantity factors, record a negative result
+  and move to the TOP-2 candidate from the audit; otherwise implement only
+  the minimal factorized scorer/cascade needed for a 331-query test.
+
+## P1 — Verify/refresh the remaining stale method numbers
 
 - **Task:** rerun `global_compat_full` (and `_local`/`_pairwise`),
   `relation_aware_full` (and `_basic`/`_ops`/`_semantic`),
@@ -27,7 +45,7 @@ scientific context, read `docs/SCIENTIFIC_STATE.md` first.
 - **Stop/success criterion:** every row in that table has a fresh,
   same-code number.
 
-## P1 — Decide the manuscript's path forward (requires the author)
+## P2 — Decide the manuscript's path forward (requires the author)
 
 - **Task:** read `docs/MANUSCRIPT_INTEGRATION_DECISION_2026-08-12.md` and
   choose one of: (a) issue an erratum with fresh numbers, (b) pin/tag the
@@ -47,7 +65,7 @@ scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   → `tools/build_eaai_camera_ready_figures.py` chain, all 3 variants.
 - **Stop/success criterion:** n/a — decision gate.
 
-## P2 — PaMOP: PILOT VALIDATED (2026-08-12), scale-up pending
+## P3 — PaMOP: PILOT VALIDATED (2026-08-12), scale-up pending
 
 - **Status:** the fidelity diagnostic is complete —
   `results/pamop/fidelity_diagnostic_gpt5/README.md`. Gate: `B. MODEL_LIMITED`.
@@ -68,7 +86,7 @@ scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   unrelated active AMPL/HiGHS computation, then use a fresh output directory
   and a pre-registered subset/configuration.
 
-## P3 — Improve the local pairwise score's dominant error modes
+## P4 — Improve the local pairwise score's dominant error modes
 
 - **Task:** target `_score_mention_slot_opt`'s residual same-type
   ambiguity (335 slot-level instances) and total/per-unit confusion (166)
@@ -88,7 +106,7 @@ scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   numbers closer to typed greedy's, the local score is not the gating
   factor and this line should stop.
 
-## P4 — ORLM baseline: lightweight implementation DONE (2026-08-12), inference pending
+## P5 — ORLM baseline: lightweight implementation DONE (2026-08-12), inference pending
 
 - **Status:** `baselines/orlm/` is inference-ready for resource-available
   execution (adapter, official prompt, lazy runner, normalizer, static
@@ -108,7 +126,7 @@ scientific context, read `docs/SCIENTIFIC_STATE.md` first.
 - **Stop/success criterion:** do not download the 8B weights or attempt
   GPU inference without first confirming GPU/license availability.
 
-## P5 — OptMATH lightweight implementation DONE (2026-08-12), inference pending
+## P6 — OptMATH lightweight implementation DONE (2026-08-12), inference pending
 
 - **Status:** `baselines/optmath/` is ready for resource-available inference.
   The primary checkpoint is `Aurora-Gem/OptMATH-Qwen2.5-7B`; the official
@@ -120,7 +138,7 @@ scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   evaluate the fixed pilot. Do not download weights or execute Gurobi during
   the current high-priority AMPL/HiGHS workload.
 
-## P6 — Re-derive the typed-greedy bottleneck table against current code
+## P7 — Re-derive the typed-greedy bottleneck table against current code
 
 - **Task:** `docs/CURRENT_BOTTLENECK_ANALYSIS.md`'s counts (82/331 type
   mismatch etc.) were derived from `per_instance_diagnostics.csv`, which
@@ -130,7 +148,7 @@ scientific context, read `docs/SCIENTIFIC_STATE.md` first.
 - **Expected artifact:** updated bottleneck table with a note on whether
   the fresh counts differ from the ones currently documented.
 
-## P7 — Cross-baseline comparison harness: infrastructure DONE (2026-08-13), empirical rows pending
+## P8 — Cross-baseline comparison harness: infrastructure DONE (2026-08-13), empirical rows pending
 
 - **Status:** `baselines/comparison/` implements a unified analysis view
   (`UnifiedRow`), adapters for all six systems, native/shared metric

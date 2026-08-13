@@ -1,8 +1,10 @@
 # Project Status
 
-**Last verified:** 2026-08-12 (Phase 4: validated and RETRACTED Phase 3's
-headline claim after discovering the comparison baseline was stale; full
-audit in `docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`). This file is the
+**Last verified:** 2026-08-13 (method novelty/efficiency audit added:
+`docs/METHOD_NOVELTY_EFFICIENCY_AUDIT_2026-08-13.md`; Phase 4 previously
+validated and RETRACTED Phase 3's headline claim after discovering the
+comparison baseline was stale; full audit in
+`docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`). This file is the
 primary entry point for a new agent or contributor; it stays concise and
 links out for detail. See
 [`docs/KAIS_SOURCE_OF_TRUTH.md`](docs/KAIS_SOURCE_OF_TRUTH.md) for
@@ -22,6 +24,7 @@ these documents for full scientific detail:
 - [`docs/LEARNED_GROUNDING_P0.md`](docs/LEARNED_GROUNDING_P0.md) — the P0 learned-scorer experiment (negative result, decision gate C)
 - [`docs/MANUSCRIPT_INTEGRATION_DECISION_2026-08-12.md`](docs/MANUSCRIPT_INTEGRATION_DECISION_2026-08-12.md) — why the manuscript was NOT touched despite the staleness finding, and what the author should do next
 - [`docs/BASELINE_IMPLEMENTATION_ROADMAP.md`](docs/BASELINE_IMPLEMENTATION_ROADMAP.md) — ORLM/OptMATH/DeepOR/OR-R1 implementation planning
+- [`docs/METHOD_NOVELTY_EFFICIENCY_AUDIT_2026-08-13.md`](docs/METHOD_NOVELTY_EFFICIENCY_AUDIT_2026-08-13.md) — current method algorithm, fresh failure taxonomy, reviewer-gap matrix, novelty assessment, and ranked go/no-go plan for the next method improvement
 
 **Headline change since Phase 3 (retraction, same day, 2026-08-12):**
 Phase 3 believed `tfidf_typed_greedy` (committed at 0.5287) had been
@@ -260,6 +263,16 @@ it. Concretely (see `docs/ALGORITHM_IMPROVEMENT_ROADMAP.md` P1-P3):
    history.
 3. Re-target H4 (richer semantic-role features) at `_choose_token` itself
    rather than a learned scorer.
+
+**2026-08-13 novelty/efficiency audit update:** the next scientifically
+defensible method-improvement line should not be another unchanged matching,
+beam-search, repair, or generic learned-pair scorer. The audit selects a
+pre-gated **role-quantity factorized grounding with an ambiguity cascade** as
+the top candidate, with a strict success gate: beat fresh typed greedy
+(`0.7764`) by at least +2 pp on the same 331-query protocol, improve a
+predeclared error class, pass paired testing and ablations, and preserve
+runtime. The single next action is a Stage-A lightweight per-slot diagnostic
+over the 54 schema-hit/not-ready current typed-greedy cases.
 
 The P0 feature-augmented learned scorer (the direction recommended in
 Phase 2) WAS built and evaluated in Phase 3 and did **not** improve over
