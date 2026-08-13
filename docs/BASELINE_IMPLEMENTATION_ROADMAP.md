@@ -1,16 +1,20 @@
 # External Baseline Implementation Roadmap
 
-**Status:** Phase 4 (2026-08-12), PaMOP independent reconstruction
-pilot-validated with larger evaluation still pending, **updated Phase 4
-(2026-08-12): ORLM re-verified against primary sources and implemented for
-inference preparation** (`baselines/orlm/` — no model call, GPU/weights, or
-COPT execution). DeepOR is now a paper-level, mock-tested reconstruction in
-`baselines/deepor/`; OR-R1 remains research/planning only. OptMATH is now
-lightweight-inference-ready. This document records what implementing each would require
-and in what order, so a future phase can act without repeating this
-research. See `PROJECT_STATUS.md` §9 for the current status summary and
-`baselines/pamop/` for the pilot-validated reconstruction and
-`baselines/orlm/` for the inference-ready lightweight path.
+**Status:** Phase 5 (2026-08-13), PaMOP independent reconstruction
+pilot-validated with larger evaluation still pending. ORLM and OptMATH are
+implemented for inference preparation (`baselines/orlm/`, `baselines/optmath/`
+— no model call, GPU/weights, or solver execution). DeepOR is a paper-level,
+mock-tested reconstruction in `baselines/deepor/` (no official code found).
+**OR-R1's official code is now verified and integrated**
+(`baselines/orr1/`, `docs/ORR1_PROVENANCE.md`): the repository
+`SCUTE-ZZ/OR-R1` is cited directly by the arXiv paper as its code release,
+but no SFT/GRPO/merged checkpoint has been published anywhere, so this is
+`ORR1_CODE_INTEGRATED_CHECKPOINT_BLOCKED`, not an empirical result. All five
+baselines are now at some lightweight-implementation stage; none has a
+runnable empirical result. This document records what completing each would
+require, so a future phase can act without repeating this research. See
+`PROJECT_STATUS.md` §9 for the current status summary and `baselines/pamop/`
+for the pilot-validated reconstruction.
 
 ---
 
@@ -184,82 +188,137 @@ research. See `PROJECT_STATUS.md` §9 for the current status summary and
 - **Fairness concerns:** N/A until implementable.
 - **Comparable metrics:** Presumably the same execution/feasibility/
   objective-accuracy family as ORLM/OptMATH/PaMOP, pending confirmation.
-- **Priority:** **3rd** (behind ORLM/OptMATH on availability grounds
-  alone, ahead of OR-R1 only because DeepOR's AAAI 2026 venue suggests a
-  slightly more mature/reviewed artifact than OR-R1's November 2025 arXiv
-  preprint, though neither is currently actionable).
+- **Priority:** **3rd** (behind ORLM/OptMATH on availability grounds).
+  DeepOR and OR-R1 are now both checkpoint-blocked for different reasons:
+  DeepOR has no confirmed official code at all, while OR-R1's official code
+  is confirmed but its checkpoint is unreleased (see §5) -- neither is
+  currently actionable for an empirical result.
 - **First implementation milestone:** completed lightweight reconstruction;
   monitor for an official checkpoint/code release before claiming empirical
   DeepOR results. See `docs/DEEPOR_PROVENANCE.md`.
 
 ## 5. OR-R1
 
-- **Citation:** Zhu, Ma, Wang, Bi, et al., "OR-R1: Automating Modeling and
+- **Citation:** Ding, Tan, Zhang, Chen, "OR-R1: Automating Modeling and
   Solving of Operations Research Optimization Problem via Test-Time
-  Reinforcement Learning," arXiv:2511.09092 (2025).
-- **Official code available:** **UNCONFIRMED** -- not located during this
-  pass's research; very recent (November 2025) preprint.
-- **Model weights available:** **UNCONFIRMED**, same caveat.
-- **Task overlap with ours:** High in spirit, same reasoning-LLM /
-  test-time-RL architecture family as DeepOR, not a retrieval+grounding
-  pipeline.
-- **NLP4LP support:** Unknown.
-- **Environment requirements:** Unknown pending release; test-time RL
-  methods often require nontrivial inference-time compute (multiple
-  reasoning rollouts per problem), separate from training cost.
-- **GPU requirement:** Likely yes.
-- **API requirement:** Unknown.
-- **Licensing/access issues:** Unknown pending release.
-- **Expected implementation difficulty:** **Currently not implementable**
-  -- blocked on code/weight availability.
-- **Fairness concerns:** N/A until implementable.
-- **Comparable metrics:** Presumably the same family as above, pending
-  confirmation.
-- **Priority:** **4th (last)** -- most recent preprint of the five, least
-  mature evidence of a stable public artifact as of this research pass.
-- **First implementation milestone:** **Monitor for code release**, same
-  as DeepOR; re-check both together on a periodic basis rather than as a
-  dedicated task, since neither currently supports any concrete next step.
+  Reinforcement Learning," AAAI-26, Vol. 40, No. 1, DOI
+  10.1609/aaai.v40i1.36983, arXiv:2511.09092 (2025). (An earlier pass of
+  this document cited the authors as "Zhu, Ma, Wang, Bi, et al." -- that
+  was incorrect and has been corrected here and in
+  `docs/ORR1_PROVENANCE.md`.)
+- **Official code available:** **CONFIRMED** -- `SCUTE-ZZ/OR-R1`
+  (`master`, commit `9de48e3b22555e729ec032e7efd00ebaaa8e78d5`), cited
+  directly by the arXiv paper's own HTML/LaTeX source as "Code". No
+  LICENSE file is present.
+- **Model weights available:** **NOT RELEASED**. Searched Hugging Face,
+  ModelScope (web search), GitHub releases/tags/wiki/issues, and the
+  repository itself -- no SFT, TGRPO LoRA, or merged checkpoint found
+  anywhere. `CHECKPOINT_NOT_RELEASED`.
+- **Task overlap with ours:** High in spirit; full NL-to-model generation
+  with a `coptpy` target, architecturally close to ORLM (shares the same
+  `TEMPLATE_q2mc_en` prompt structure and evaluation-harness lineage --
+  `eval/generate.py` even special-cases `ORLM-LLaMA-3-8B` model paths),
+  not a retrieval+grounding pipeline.
+- **NLP4LP support:** Yes -- one of nine official evaluation benchmarks
+  (`eval.NLP4LP.pass1.sh`, `eval.NLP4LP.pass8.sh`), 242 official test rows.
+- **Environment requirements:** vLLM for inference, coptpy for solver
+  execution; DeepSpeed ZeRO-3 + TRL + PEFT for training (SFT and TGRPO),
+  multi-GPU per the official shell scripts. No requirements file is
+  published, so exact versions are unpinned.
+- **GPU requirement:** Yes -- 24GB+ for inference-only; multi-GPU for any
+  training (SFT or TGRPO), since neither checkpoint is released.
+- **API requirement:** No.
+- **Licensing/access issues:** No LICENSE file in the repository at all;
+  treat as all-rights-reserved pending clarification. The SFT dataset
+  (`OR-Instruct-Data-3K`) is ORLM's own release under cc-by-nc-4.0.
+- **Expected implementation difficulty:** Lightweight integration (adapter,
+  prompt, TGRPO control-flow modeling, static validation, execution
+  harness, evaluator) is **complete** (`baselines/orr1/`). A faithful
+  empirical result additionally requires training SFT and TGRPO from
+  scratch -- substantially more expensive than ORLM/OptMATH's
+  inference-only path, since OR-R1 has no released checkpoint at any
+  stage.
+- **Fairness concerns:** **Significant and specific.** The official TGRPO
+  training set (`datasets/trainset/train_all.jsonl`) is verified (by
+  direct file inspection, not just the paper's prose) to be exactly the
+  union of all nine official evaluation test sets, including all 242
+  NLP4LP rows. OR-R1's headline Pass@1/Pass@8 numbers therefore come from
+  a model trained (via label-free self-consistency RL) directly on the
+  questions being scored -- a fundamentally different evaluation protocol
+  from every other baseline here, none of which train on the evaluation
+  set. See `docs/ORR1_PROVENANCE.md` for the full analysis.
+- **Comparable metrics:** Official Pass@1/Pass@8/mj@8 (execution +
+  tolerance-based objective agreement), same family as ORLM/OptMATH; kept
+  distinct from this repository's own proxy metrics.
+- **Priority:** Lightweight integration is now complete alongside the
+  other four baselines; further work is checkpoint-blocked, identically to
+  DeepOR, but for a different reason (DeepOR: no official code at all;
+  OR-R1: official code confirmed, but no checkpoint at any training
+  stage).
+- **First implementation milestone reached:** adapter, official prompt,
+  TGRPO control-flow/reward-breakdown model, majority-voting/Pass@k
+  scoring, static validator, execution harness, result schema, evaluator,
+  fixed manifest, and mocked end-to-end tests (`baselines/orr1/`,
+  2026-08-13). Next milestone is checkpoint-gated (see
+  `docs/ORR1_PROVENANCE.md` "Future inference/TGRPO prerequisites").
 
 ---
 
 ## Recommended order and rationale
 
-**PaMOP (in progress) -> ORLM -> OptMATH -> DeepOR -> OR-R1**, matching the
-task's originally-assumed order. This was re-verified against actual
-evidence in this pass, not merely assumed by publication recency:
+**PaMOP (pilot validated) -> ORLM -> OptMATH -> DeepOR -> OR-R1** for
+lightweight-implementation order, which is what actually happened
+(2026-08-12 through 2026-08-13); all five now have *some* lightweight
+artifact. For future *empirical* (checkpoint-requiring) work the ranking is
+no longer availability-only, since OR-R1's code turned out to be confirmed
+public (unlike when this document was first written):
 
 1. **Direct comparability**: ORLM and OptMATH are both full
    auto-formulation systems like PaMOP, so all three baselines share a
    comparable metric family (execution/feasibility/objective-accuracy),
    letting future work build one shared harness rather than three
    incompatible ones.
-2. **Availability**: ORLM and OptMATH have confirmed public code AND
-   weights today; DeepOR and OR-R1 do not (as of this research pass) --
-   this is the dominant factor separating the first two from the last two,
-   not a scientific-value judgment.
+2. **Checkpoint availability now separates the baselines, not code
+   availability**: ORLM and OptMATH have confirmed public code AND
+   weights today. DeepOR has neither official code nor a checkpoint.
+   **OR-R1 has confirmed official code (`SCUTE-ZZ/OR-R1`, cited directly by
+   its arXiv paper) but no checkpoint at any training stage** -- a
+   different and more specific blocker than DeepOR's. Empirical work on
+   ORLM/OptMATH remains the cheapest path (inference-only); OR-R1's
+   empirical path additionally requires running SFT and TGRPO from
+   scratch, and TGRPO's official training data is transductive over every
+   evaluation set (see `docs/ORR1_PROVENANCE.md`), which is a real
+   scientific-fairness cost, not merely an engineering one.
 3. **Implementation cost**: ORLM and OptMATH require the same class of
    new infrastructure (GPU-hosted 7-8B model inference), which is a real,
    one-time cost this repository does not currently pay (the whole
    grounding pipeline is deliberately CPU-only, no-external-LLM, per
    `docs/CURRENT_BOTTLENECK_ANALYSIS.md`'s documented strengths) --
    building that infrastructure once and reusing it for both ORLM and
-   OptMATH is more efficient than any other ordering.
+   OptMATH is more efficient than any other ordering. OR-R1's inference
+   path can reuse the same infrastructure (vLLM, coptpy) once a checkpoint
+   exists.
 4. **Reviewer relevance**: ORLM (Operations Research journal) and OptMATH
    (ICML 2025) are both peer-reviewed/accepted at their respective venues
-   already; DeepOR (AAAI 2026) and OR-R1 (November 2025 arXiv, venue
-   unconfirmed) are newer and less established in the literature as of
-   this pass.
+   already; DeepOR and OR-R1 are both AAAI-26, newer and less established
+   in the literature as of this pass, but OR-R1's DOI
+   (10.1609/aaai.v40i1.36983) and code are both now confirmed.
 5. **Recency is deliberately NOT the ranking criterion** -- DeepOR and
-   OR-R1 are the most recent methods but rank last, precisely because
-   recency without confirmed code/weight availability is not actionable;
+   OR-R1 are the most recent methods but rank last for *empirical* work,
+   because they are checkpoint-blocked, not because of recency itself;
    re-ranking should happen automatically once either publishes usable
-   artifacts, independent of any further recency judgment.
+   checkpoints, independent of any further recency judgment.
 
 ## What must NOT happen next
 
-Per phase scope: do not begin implementing ORLM, OptMATH, DeepOR, or OR-R1
-in this phase. This document is planning-only. The concrete next action
-for external baselines is the ORLM pilot-subset milestone above, to be
-picked up as a dedicated future task once GPU resources are confirmed
-available for this workstation or an alternative compute environment.
+All five baselines (PaMOP, ORLM, OptMATH, DeepOR, OR-R1) now have a
+lightweight implementation, reconstruction, or integration in
+`baselines/`. Do not start a sixth baseline. Do not run GPU-heavy inference,
+model downloads, training (SFT or TGRPO), or solver benchmarks against any
+of the five without first confirming compute resources are available and
+without checking for conflicts with any unrelated higher-priority workload
+running on the same machine. The concrete next actions per baseline are the
+checkpoint/GPU-gated milestones recorded in each baseline's own README and
+provenance document (`docs/ORLM_PROVENANCE.md`, `docs/OPTMATH_PROVENANCE.md`,
+`docs/DEEPOR_PROVENANCE.md`, `docs/ORR1_PROVENANCE.md`) and in
+`docs/PAMOP_REPRODUCTION_PLAN.md`.

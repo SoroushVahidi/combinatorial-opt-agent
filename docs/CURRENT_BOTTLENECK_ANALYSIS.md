@@ -89,7 +89,7 @@ post-fix.
 |---|---|
 | No strong learned contextual grounding baseline exists yet | This is the literal gap `docs/ALGORITHM_IMPROVEMENT_ROADMAP.md` P0 addresses |
 | Limited solver-backed scale (20/331) | Compatibility-filtered, not randomly sampled — explicit manuscript caveat |
-| No broad comparison against newest LLM-based auto-formulation methods | ORLM/OptMATH/DeepOR/OR-R1 are all `NOT_STARTED` (`PROJECT_STATUS.md` §9) |
+| No broad comparison against newest LLM-based auto-formulation methods | ORLM/OptMATH/DeepOR/OR-R1 are all implemented/reconstructed for lightweight inference preparation but none has a runnable empirical result (checkpoint or environment blocked in every case) (`PROJECT_STATUS.md` §9) |
 | PaMOP reproduction fidelity uncertain | 6/6 execution success but only 1/6 semantic correctness on the pilot — see `PROJECT_STATUS.md` §10 |
 | Three grounding-method families implemented but never evaluated | `max_weight_matching`, `search_structured_grounding*`, `hierarchical_structured_grounding*` — see `docs/METHOD_INVENTORY.md` |
 

@@ -277,10 +277,12 @@ committed number. Full detail and next steps:
 | **ORLM** | **IMPLEMENTED, READY FOR INFERENCE (2026-08-12)** — lightweight adapter/runner/normalizer/validator/harness/evaluator and mocked tests complete; no GPU/weights/COPT execution performed; code+one checkpoint confirmed public |
 | **OptMATH** | **IMPLEMENTED, READY FOR INFERENCE (2026-08-12)** — official prompt/checkpoint provenance, NLP4LP adapter, Gurobi parser/validator/harness, result schema, evaluator, manifest, and mocked tests complete; no inference or solver run |
 | **DeepOR** | **PAPER RECONSTRUCTION READY (2026-08-12)** — mock-tested adapter, paper-level prompt, reasoning parser, Pyomo static validator, safe harness, schema, evaluator, and manifest; official code/checkpoint not found and no empirical result |
-| **OR-R1** | **NOT STARTED, code unconfirmed** — very recent (Nov 2025 preprint); monitor for release |
+| **OR-R1** | **CODE INTEGRATED, CHECKPOINT BLOCKED (2026-08-13)** — official code verified (`SCUTE-ZZ/OR-R1`, cited directly by the arXiv paper); lightweight adapter/runner/TGRPO-control/majority-voting/normalizer/validator/harness/evaluator and mocked tests complete; no SFT/GRPO/merged checkpoint released anywhere; TGRPO training set is transductive (== union of all eval sets, incl. NLP4LP); see [`docs/ORR1_PROVENANCE.md`](docs/ORR1_PROVENANCE.md) |
 
 Verified by directory listing: `baselines/` contains `baselines/pamop/`
-(pilot executed), `baselines/orlm/` and `baselines/optmath/` (inference-ready lightweight paths, 2026-08-12). Full
+(pilot executed), `baselines/orlm/`, `baselines/optmath/`, `baselines/deepor/`,
+and `baselines/orr1/` (lightweight inference-preparation paths, 2026-08-12
+through 2026-08-13). Full
 research (citations, code/weight availability, GPU/environment
 requirements, ranked order and rationale):
 [`docs/BASELINE_IMPLEMENTATION_ROADMAP.md`](docs/BASELINE_IMPLEMENTATION_ROADMAP.md).

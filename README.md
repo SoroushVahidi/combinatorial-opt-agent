@@ -12,7 +12,7 @@
 |---|---|
 | **Validated paper core** | NLP4LP `orig` (331 queries): retrieval → grounding; **Tables 1–5** in `results/paper/eaai_camera_ready_tables/` |
 | **Canonical one-pager** | [`PROJECT_STATUS.md`](PROJECT_STATUS.md) (see also [`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md)) |
-| **External baseline in progress** | **PaMOP** (IJCAI 2025) reproduction — see [`docs/PAMOP_REPRODUCTION_PLAN.md`](docs/PAMOP_REPRODUCTION_PLAN.md), `baselines/pamop/`; ORLM/OptMATH/DeepOR/OR-R1 not started |
+| **External baseline in progress** | **PaMOP** (IJCAI 2025) reproduction — see [`docs/PAMOP_REPRODUCTION_PLAN.md`](docs/PAMOP_REPRODUCTION_PLAN.md), `baselines/pamop/`; ORLM/OptMATH/DeepOR/OR-R1 all implemented/reconstructed for lightweight inference-preparation (no baseline has a runnable empirical result yet) |
 | **Infrastructure / reruns** | Slurm `batch/learning/`; optional LLM baselines; Gemini [`docs/GEMINI_RERUN_REPORT.md`](docs/GEMINI_RERUN_REPORT.md); Mistral [`docs/MISTRAL_RERUN_REPORT.md`](docs/MISTRAL_RERUN_REPORT.md) (**infra ≠ completed reruns** unless your `results/rerun/` proves it) |
 | **Demo / app** | `app.py`, `demo/` — **outside** paper-evaluated claims unless explicitly scoped |
 | **Archives** | `docs/archive/`, `docs/archive_internal_status/`, `docs/provenance/`, `analysis/archive/` — **provenance only** |
@@ -36,7 +36,7 @@
 6. [`docs/KNOWN_ISSUES.md`](docs/KNOWN_ISSUES.md) — blockers and design tensions  
 7. [`docs/REPO_STRUCTURE.md`](docs/REPO_STRUCTURE.md) / [`docs/REPOSITORY_MAP.md`](docs/REPOSITORY_MAP.md) — annotated tree (canonical vs demo vs archive)
 8. [`docs/PAMOP_REPRODUCTION_PLAN.md`](docs/PAMOP_REPRODUCTION_PLAN.md) — current external-baseline work in progress
-9. [`docs/BASELINE_IMPLEMENTATION_ROADMAP.md`](docs/BASELINE_IMPLEMENTATION_ROADMAP.md) — ORLM/OptMATH/DeepOR/OR-R1 planning (not started)
+9. [`docs/BASELINE_IMPLEMENTATION_ROADMAP.md`](docs/BASELINE_IMPLEMENTATION_ROADMAP.md) — ORLM/OptMATH/DeepOR/OR-R1 planning and implementation status
 10. [`docs/SCIENTIFIC_STATE.md`](docs/SCIENTIFIC_STATE.md) / [`NEXT_STEPS.md`](NEXT_STEPS.md) — detailed scientific handoff and the operational execution queue
 
 **Index:** [`docs/README.md`](docs/README.md) · **External datasets plan:** [`docs/DATASET_EXPANSION_PLAN.md`](docs/DATASET_EXPANSION_PLAN.md) · **Doc check:** `python scripts/check_docs_integrity.py`
