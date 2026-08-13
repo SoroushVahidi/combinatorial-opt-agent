@@ -1,7 +1,19 @@
 # PaMOP Reproduction Plan — Investigation & Feasibility Report
 
-**Status:** Investigation/planning only. No PaMOP code has been implemented as part of
-this pass. No manuscript file and no committed benchmark result was modified.
+**Primary-source recheck:** 2026-08-12. The current IJCAI proceedings page
+and official PDF were re-opened during the PaMOP implementation pass:
+<https://www.ijcai.org/proceedings/2025/296> and
+<https://www.ijcai.org/proceedings/2025/0296.pdf>. The proceedings page
+provides the paper/PDF/BibTeX links but no author code or prompt release.
+Searches of current GitHub, author/project references, and the paper's public
+landing page still found no official PaMOP repository, prompts, model
+configuration, or converted benchmark data files. The implementation remains
+an independent reconstruction, not an official-code adaptation.
+
+**Status:** Independent reconstruction implemented through AMPL execution and
+correction; pilot-validated but not a reproduction of the paper's exact
+67-instance result. No manuscript file and no committed benchmark result was
+modified by the current implementation pass.
 
 **Paper under investigation:**
 Xiaotian Pan, Junhao Fang, Feng Wu, Sijia Zhang, Yi-Xiang Hu, Shaoang Li, Xiang-Yang Li.
@@ -1032,8 +1044,10 @@ implemented.
 
 ### 14.2 PaMOP stages now implemented
 
-Only **paper section 3.2, "Construction of the Partition Tree"**, minus its
-own LLM-based structured-extraction sub-step:
+The PaMOP architecture is now implemented as an independent reconstruction
+through solver execution and correction. The only major paper-level items
+that remain unavailable are the authors' exact prompts/model snapshot,
+exact 67-instance membership, and converted AMPL data files:
 
 - Independent-set separation at the root (bipartite constraint–variable
   graph, keyword-match-confidence edges, connected components).
@@ -1043,11 +1057,14 @@ own LLM-based structured-extraction sub-step:
 - Recursive leaf-stop condition ("small number of constraints or highly
   similar ones," both thresholds configurable).
 
-**Not implemented:** structured extraction via LLM (`G_extr`), vagueness
-scoring, self-augmented leaf modeling (`G_mod`), AMPL generation, the full
-correction loop (`G_exe`/`G_rev`/`G_comp`/`G_remod`), solver execution, and
-all four published evaluation metrics (Accuracy/Execution-Rate/CE-rate/
-RE-rate) — see `baselines/pamop/README.md` "Not implemented yet".
+Implemented reconstruction stages: structured extraction (`G_extr`),
+vagueness scoring, self-augmented leaf modeling (`G_mod`), bottom-up merge,
+AMPL rendering/validation, solver execution, and the reconstructed correction
+loop (`G_exe`/`G_rev`/`G_comp`/`G_remod`). The benchmark runner records the
+paper's execution-oriented metrics and explicitly labels objective equality
+as an objective-value proxy, not full semantic accuracy. Exact reproduction
+of the paper's four reported metrics remains unavailable for the reasons
+above.
 
 ### 14.3 Paper-faithful vs. reconstructed, by equation/component
 
@@ -1199,8 +1216,8 @@ proceed in parallel and are not blocking for this next step either.
 **Follow-up implementation pass, 2026-08-11 (third same-day follow-up).**
 Adds the LLM-based structured-extraction stage (`G_extr`) and a
 provider-agnostic LLM interface on top of Milestone 1's partitioning
-scaffold. No manuscript file touched, no existing benchmark result changed,
-AMPL generation and solver execution still not implemented.
+scaffold. No manuscript file was touched and no existing benchmark result
+was changed.
 
 ### 15.1 LLM/API environment status (verified, not assumed)
 
@@ -1656,21 +1673,19 @@ boundaries to consume (§16.7). Validation requires all four headers present
 in order and non-empty `OBJECTIVE`/`CONSTRAINTS` sections; retries up to
 `modeling_max_retries` on failure, same policy as leaf modeling.
 
-### 16.7 AMPL interface boundary (prepared, not implemented)
+### 16.7 AMPL interface and execution boundary
 
-`baselines/pamop/ampl_interface.py`: an `AmplRenderer` `Protocol` (`render`
-/ `solve` method signatures only, no implementation) documenting exactly
-what the next milestone must consume from `MergedModel` — its four
-AMPL-flavored text fields — and stating plainly that none of them are
-validated as syntactically correct AMPL yet (no parser exists this
-milestone). A `naive_concatenation_preview` helper exists only for
-human/debug inspection, explicitly **not** a renderer.
+`baselines/pamop/ampl/renderer.py` and `ampl/executor.py` now implement the
+independent reconstruction's AMPL rendering, conservative validation,
+subprocess execution, timeout, solver-status, objective parsing, and
+structured error classification. `ampl_interface.py` remains the stable
+protocol/consumption boundary. These are not official PaMOP code; the paper
+does not publish the authors' renderer or error-classification implementation.
 
-**AMPL/`amplpy` were not installed** — every check this milestone needed
-(prompt construction, section parsing, heuristic reference-checking)
-operates on plain text and required no AMPL runtime; installation becomes
-necessary only once something needs to actually *execute* a model, which
-is the next milestone's job.
+**Historical milestone note (superseded):** the earlier text in this report
+recorded a point at which AMPL/`amplpy` were not installed. The current
+environment has a working dedicated AMPL/solver path for the independent
+runner; the exact paper-faithful AMPL data conversion remains unavailable.
 
 ### 16.8 Prompt provenance
 

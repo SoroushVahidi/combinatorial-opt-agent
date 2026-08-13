@@ -83,6 +83,12 @@ class RemodelResult:
     def to_dict(self) -> dict[str, Any]:
         return {
             "ampl_hash": prompt_hash(self.ampl_model),
+            # Generated AMPL is the scientifically relevant raw artifact of
+            # G_remod. Preserve it in local traces so a failed correction can
+            # be audited without replaying an API call. It contains no API
+            # credentials; callers must still apply the repository's policy
+            # against storing gated problem text or prompts.
+            "ampl_model": self.ampl_model,
             "changes": list(self.changes),
             "prompt_hash": self.llm_response.prompt_hash,
             "provider": self.llm_response.provider,

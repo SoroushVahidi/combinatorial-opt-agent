@@ -47,7 +47,7 @@ scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   → `tools/build_eaai_camera_ready_figures.py` chain, all 3 variants.
 - **Stop/success criterion:** n/a — decision gate.
 
-## P2 — PaMOP: DONE (2026-08-12), optional follow-up available
+## P2 — PaMOP: PILOT VALIDATED (2026-08-12), scale-up pending
 
 - **Status:** the fidelity diagnostic is complete —
   `results/pamop/fidelity_diagnostic_gpt5/README.md`. Gate: `B. MODEL_LIMITED`.
@@ -60,6 +60,13 @@ scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   `gpt-4.1-mini` — this recommendation is evidence-backed but the scale-up
   itself was deliberately not launched in Phase 4 and remains a future
   decision.
+- **Implementation hardening completed:** the runner now accepts an explicit
+  config/deployment, preserves generated AMPL/correction artifacts in local
+  traces, and labels objective equality as an objective-value proxy. Do not
+  call that proxy the paper's full Accuracy metric.
+- **Immediate prerequisite before scale-up:** avoid interference with the
+  unrelated active AMPL/HiGHS computation, then use a fresh output directory
+  and a pre-registered subset/configuration.
 
 ## P3 — Improve the local pairwise score's dominant error modes
 

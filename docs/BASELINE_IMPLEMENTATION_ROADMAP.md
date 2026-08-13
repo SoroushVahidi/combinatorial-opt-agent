@@ -1,18 +1,19 @@
 # External Baseline Implementation Roadmap
 
-**Status:** Phase 3 (2026-08-12), research/planning only, **updated Phase 4
+**Status:** Phase 4 (2026-08-12), PaMOP independent reconstruction
+pilot-validated with larger evaluation still pending, **updated Phase 4
 (2026-08-12): ORLM re-verified against primary sources and scaffolded**
 (`baselines/orlm/` — interfaces only, no model call, no GPU/weights
 available). OptMATH, DeepOR, and OR-R1 remain research/planning only, not
 implemented. This document records what implementing each would require
 and in what order, so a future phase can act without repeating this
 research. See `PROJECT_STATUS.md` §9 for the current status summary and
-`baselines/pamop/` for the one baseline with an executed pilot (in
-progress) and `baselines/orlm/` for the newest scaffold.
+`baselines/pamop/` for the pilot-validated reconstruction and
+`baselines/orlm/` for the newest scaffold.
 
 ---
 
-## 1. PaMOP (already in progress -- included here for ranking context only)
+## 1. PaMOP (pilot validated; larger evaluation pending)
 
 - **Citation:** PaMOP, IJCAI 2025 (independent reproduction in this repo;
   no official code was found -- see `docs/PAMOP_REPRODUCTION_PLAN.md`).
@@ -35,8 +36,9 @@ progress) and `baselines/orlm/` for the newest scaffold.
   grounding pipeline.
 - **Licensing/access issues:** None known beyond standard Azure OpenAI
   terms.
-- **Expected implementation difficulty:** Already implemented; remaining
-  work is fidelity diagnosis and scale-up, not new implementation.
+- **Expected implementation difficulty:** The independent reconstruction is
+  implemented and pilot-validated; remaining work is a preregistered,
+  non-interfering scale-up and fuller semantic evaluation.
 - **Fairness concerns:** Model/prompt fidelity to the original paper is
   unresolved (`gpt-4.1-mini-2025-04-14` substituted for an unspecified
   "GPT-4"; exact original prompts unavailable) -- see
@@ -44,8 +46,8 @@ progress) and `baselines/orlm/` for the newest scaffold.
 - **Comparable metrics:** Execution success rate, solver feasibility,
   semantic (objective-value) correctness, correction-loop iteration count,
   token cost.
-- **Priority:** Already in progress -- see PROJECT_STATUS.md §10 for
-  current decision gate.
+- **Priority:** Pilot validated; larger evaluation pending -- see
+  `PROJECT_STATUS.md` §10 for the current decision gate.
 - **First implementation milestone:** N/A (past this stage) -- current
   milestone is the fidelity diagnostic recommended in
   `docs/PAMOP_PILOT_FAILURE_FORENSICS.md`.

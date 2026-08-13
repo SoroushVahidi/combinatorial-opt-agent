@@ -25,9 +25,10 @@ DOI: [10.24963/ijcai.2025/296](https://doi.org/10.24963/ijcai.2025/296).
 > own Table 1, **not results this code has produced or reproduced**. Nothing
 > in this repository should ever caption a number from this scaffold as
 > matching, reproducing, or being comparable to these two figures until the
-> full pipeline (LLM stage, AMPL generation, solver execution — none of
-> which exist yet, see "Not implemented yet" below) is built, run on a
-> confirmed-equivalent problem subset, and explicitly labeled as such.
+> the full pipeline (LLM stage, AMPL generation, and solver execution — now
+> present as an independent reconstruction, see "Evaluation boundary" below)
+> is run on a confirmed-equivalent problem subset and explicitly labeled as
+> such.
 
 ## What is implemented so far
 
@@ -115,13 +116,23 @@ partition tree -> `G_mod` (all leaves) -> merge -> eq. 4 root completion.
   versioned, hashed correction prompts.
 
 Live infrastructure and tiny NLP4LP smoke tests pass with Azure OpenAI
-`gpt-4.1-mini` and AMPL/Gurobi. This is still not an exact reproduction of
+`gpt-4.1-mini` and AMPL/Gurobi. The existing six-instance `gpt-5.4`
+deployment diagnostic is also recorded in
+`results/pamop/fidelity_diagnostic_gpt5/`; it improved objective-value proxy
+success from 1/6 to 4/5 evaluable. Neither is an exact reproduction of
 PaMOP's 67-problem result.
 
-## Not implemented yet
+## Evaluation boundary
 
-- Any evaluation against PaMOP's published Accuracy / Execution-Rate / CE /
-  RE metrics.
+- The complete paper-defined Accuracy judgment is not reproducible from the
+  available artifacts: the authors' exact 67-instance membership, prompts,
+  model snapshot, and converted AMPL `data.dat` files are unavailable.
+- The runner records execution, feasibility, objective production, runtime,
+  correction, and token metrics. Objective equality is labeled only as an
+  `OBJECTIVE_VALUE_PROXY_ONLY`, never as full semantic correctness.
+- `tools/pamop_pilot_benchmark.py` preserves generated leaf/root/rendered AMPL
+  artifacts and correction remodel outputs in each incremental JSON trace,
+  while avoiding gated source text and prompts.
 
 ## LLM providers: what actually works, checked, not assumed
 

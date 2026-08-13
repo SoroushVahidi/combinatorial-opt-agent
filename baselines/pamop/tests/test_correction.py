@@ -300,3 +300,32 @@ def test_correction_trace_serialization_has_hashes_not_raw_secrets(config):
     ) or serialized["initial_ampl_hash"]
     assert "api_key" not in str(serialized).lower()
     assert "secret" not in str(serialized).lower()
+
+
+def test_remodel_serialization_preserves_generated_ampl(config):
+    remodel = run_g_remod(
+        ampl_model="bad",
+        structured_problem=_problem(),
+        review=run_g_rev(
+            ampl_model="bad",
+            execution=_exec(False, ErrorCategory.MODEL_ERROR),
+            structured_problem=_problem(),
+            provider=_ScriptedProvider(_responses()),
+            config=config,
+        ),
+        comparison=run_g_comp(
+            structured_problem=_problem(),
+            review=run_g_rev(
+                ampl_model="bad",
+                execution=_exec(False, ErrorCategory.MODEL_ERROR),
+                structured_problem=_problem(),
+                provider=_ScriptedProvider(_responses()),
+                config=config,
+            ),
+            provider=_ScriptedProvider(_responses()[1:]),
+            config=config,
+        ),
+        provider=_ScriptedProvider(_responses()[2:]),
+        config=config,
+    )
+    assert "subject to c" in remodel.to_dict()["ampl_model"]

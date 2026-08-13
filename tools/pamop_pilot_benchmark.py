@@ -21,7 +21,7 @@ import tempfile
 import time
 import uuid
 from collections import Counter
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 from typing import Any
 
@@ -555,6 +555,7 @@ def run_problem(meta: SliceMeta, out_dir: Path, args: argparse.Namespace, config
     exc = None
     render_valid = None
     responses: list[LLMResponse] = []
+    generated_artifacts: dict[str, Any] = {}
     g_mod_calls = 0
     gold = run_gold_model(meta.problem_id) if args.run_gold else {"gold_comparison_eligible": False, "gold_reason": "disabled"}
     try:
@@ -564,10 +565,16 @@ def run_problem(meta: SliceMeta, out_dir: Path, args: argparse.Namespace, config
         responses.append(extraction.llm_response)
         tree = build_partition_tree(extraction.structured_problem, config)
         merged = build_merged_model(tree, extraction.structured_problem, provider, config)
+        # Preserve generated model/code artifacts in the per-instance trace.
+        # Do not persist the extracted problem text or rendered prompts: the
+        # NLP4LP source is gated and the repository's results policy forbids
+        # copying it into result files.
+        generated_artifacts["merged_model"] = merged.to_dict()
         model_responses = [r.llm_response for r in merged.leaf_results] + [merged.root_llm_response]
         responses.extend(model_responses)
         g_mod_calls = len(model_responses)
         render = render_merged_model(merged)
+        generated_artifacts["rendered_model"] = render.to_dict()
         render_valid = render.valid
         executor = AmplExecutor(
             solver="gurobi",
@@ -593,12 +600,17 @@ def run_problem(meta: SliceMeta, out_dir: Path, args: argparse.Namespace, config
     final = trace.iterations[-1].execution if trace and trace.iterations else None
     correction_calls = len(correction_responses(trace)) if trace else 0
     objective_match = ""
+    # The paper's accuracy is not defined as objective equality alone: it is
+    # a full model-correctness judgment after AMPL/Gurobi evaluation. This
+    # runner can currently compute only an objective-value proxy from the
+    # available NLP4LP gold artifacts, so label it explicitly rather than
+    # calling it semantic correctness.
     semantic_status = "NOT_EVALUABLE"
     wrong_but_feasible = ""
     if final and final.objective_value is not None and gold.get("gold_objective") is not None:
         try:
             objective_match = abs(float(final.objective_value) - float(gold["gold_objective"])) <= 1.0e-6
-            semantic_status = "PARTIAL_GOLD_OBJECTIVE_STATUS_ONLY"
+            semantic_status = "OBJECTIVE_VALUE_PROXY_ONLY"
             wrong_but_feasible = bool(final.success and not objective_match)
         except (TypeError, ValueError):
             objective_match = ""
@@ -688,6 +700,7 @@ def run_problem(meta: SliceMeta, out_dir: Path, args: argparse.Namespace, config
             "metadata": asdict(meta),
             "per_problem_row": row,
             "gold": gold,
+            "generated_artifacts": generated_artifacts,
             "trace": trace.to_dict() if trace else None,
             "exception_type": type(exc).__name__ if exc else "",
             "exception_message": str(exc)[:500] if exc else "",
@@ -866,8 +879,18 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--target-count", type=int, default=18)
     parser.add_argument("--select-only", action="store_true")
     parser.add_argument("--allow-local", action="store_true", help="Permit benchmark execution outside Slurm.")
-    parser.add_argument("--deployment", default="gpt-4.1-mini")
-    parser.add_argument("--temperature", type=float, default=0.2)
+    parser.add_argument(
+        "--config",
+        type=Path,
+        default=reconstructed_default_path(),
+        help="PaMOP YAML configuration with explicit paper deviations.",
+    )
+    parser.add_argument(
+        "--deployment",
+        default="",
+        help="Optional Azure deployment override, recorded in every result.",
+    )
+    parser.add_argument("--temperature", type=float, default=None)
     parser.add_argument("--ampl-python", default="/home/soroush/.venvs/gurobi/bin/python")
     parser.add_argument("--ampl-timeout", type=int, default=60)
     parser.add_argument("--run-gold", action="store_true", default=True)
@@ -910,9 +933,18 @@ def main() -> int:
         return 2
 
     os.environ["PAMOP_AMPLPY_PYTHON"] = args.ampl_python
-    config = load_config(reconstructed_default_path())
-    if config.llm.provider != "azure_openai" or config.llm.model != args.deployment or config.llm.temperature != args.temperature:
-        raise RuntimeError("This pilot is pinned to Azure OpenAI gpt-4.1-mini at temperature 0.2; config mismatch.")
+    config = load_config(args.config)
+    deployment = args.deployment or config.llm.model
+    temperature = config.llm.temperature if args.temperature is None else args.temperature
+    if config.llm.provider != "azure_openai":
+        raise RuntimeError(
+            "The current pilot entry point supports Azure OpenAI only; use a "
+            "provider-specific runner rather than silently substituting one."
+        )
+    if deployment != config.llm.model or temperature != config.llm.temperature:
+        config = replace(config, llm=replace(config.llm, model=deployment, temperature=temperature))
+    args.deployment = deployment
+    args.temperature = temperature
     provider = get_provider("azure_openai")
     write_run_metadata(out_dir, args, "RUNNING")
     write_checkpoint_state(out_dir, run_id=run_id, selected=selected, status="RUNNING", execution_mode="local")

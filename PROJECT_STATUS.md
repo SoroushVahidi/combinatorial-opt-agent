@@ -273,7 +273,7 @@ committed number. Full detail and next steps:
 
 | Baseline | Status |
 |---|---|
-| **PaMOP** (IJCAI 2025) | **IN PROGRESS**, fidelity gate RESOLVED (`B. MODEL_LIMITED`) — independent reproduction, no official code available. See §10. |
+| **PaMOP** (IJCAI 2025) | **PILOT VALIDATED**, fidelity gate RESOLVED (`B. MODEL_LIMITED`) — independent reconstruction, no official code available; larger run pending. See §10. |
 | **ORLM** | **SCAFFOLDED (2026-08-12)** — interfaces only (`baselines/orlm/`), no GPU/weights/COPT license available; code+one checkpoint confirmed public (re-verified against primary sources); ranked 1st of the remaining four |
 | **OptMATH** | **NOT STARTED** — code+weights public; ranked 2nd |
 | **DeepOR** | **NOT STARTED, code unconfirmed** — very recent (AAAI 2026); monitor for release |
@@ -334,6 +334,13 @@ informed by evidence about which deployment to use when it happens.
 suggestive, not rigorously powered). A C2/C4 (prompt-strengthening)
 comparison was not run — this diagnostic isolated the model axis only,
 a deliberate scope reduction given time constraints.
+
+**Current implementation status:** the independent reconstruction now has a
+configurable pilot runner, structured per-instance traces preserving generated
+AMPL and correction remodel outputs, and explicit labeling of objective
+equality as an objective-value proxy rather than full PaMOP semantic accuracy.
+No larger run is active; the existing unrelated AMPL/HiGHS computation must
+not be disturbed.
 
 ## 11. Data / Solver / API Environment
 

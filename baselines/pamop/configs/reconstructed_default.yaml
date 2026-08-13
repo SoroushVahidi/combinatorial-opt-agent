@@ -10,8 +10,8 @@
 # This config's numeric results must never be captioned as reproducing the
 # PaMOP paper's own published numbers (62.3% accuracy / 86.8% code
 # executability) -- it is an independent reimplementation under
-# reconstructed choices, evaluated (for now) only through the non-LLM
-# partitioning stage.
+# reconstructed choices. Existing pilot results exercise the LLM/AMPL/solver
+# path, but are not exact reproductions of the paper's reported numbers.
 
 config_kind: reconstructed_default
 citation: >
@@ -68,8 +68,8 @@ correction:
   reverse_translation_scope: vague_only  # REPRODUCTION CHOICE: matches Figure 2's implication that reverse translation targets constraints already flagged vague at extraction time
 
 execution:
-  generation_target: AMPL          # PAPER-SPECIFIED -- not implemented in this milestone (placeholder)
-  solver_backend: gurobi_via_ampl  # PAPER-SPECIFIED -- not implemented in this milestone (placeholder)
+  generation_target: AMPL          # PAPER-SPECIFIED; renderer/executor implemented independently
+  solver_backend: gurobi_via_ampl  # PAPER-SPECIFIED; exact paper data conversion unavailable
 
 dataset:
   subset: pamop_possible_269       # see docs/PAMOP_REPRODUCTION_PLAN.md section 13 -- NOT PaMOP's confirmed exact 67-problem set
