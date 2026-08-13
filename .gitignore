@@ -269,6 +269,11 @@ results/*
 !results/baseline_staleness_audit_2026-08-12/**
 !results/max_weight_matching_validation/
 !results/max_weight_matching_validation/**
+# Exception: cross-baseline comparison harness generated report (2026-08-13)
+# -- small CSV/JSON/Markdown only, fully regenerable via
+# `python -m baselines.comparison.cli`; no model weights or raw NLP4LP text.
+!results/external_baseline_comparison/
+!results/external_baseline_comparison/**
 # Scratch exports under a run (partial CSV/JSON/interrupt); not curated rerun bundles
 results/rerun/gemini/*/paper/
 

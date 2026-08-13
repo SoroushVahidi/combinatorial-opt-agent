@@ -247,6 +247,14 @@ MAMO/IndustryOR only), single 24GB-class GPU plausible for inference, no
 fine-tuning required, fully local/offline once weights+COPT license
 obtained.
 
+**Cross-baseline comparison harness (2026-08-13):** `baselines/comparison/`
+unifies all five baselines above plus `ours` into one analysis view without
+conflating incomparable metrics (native vs. shared vs. resource vs.
+availability, per `docs/EXTERNAL_BASELINE_COMPARISON_PROTOCOL.md`).
+Generated report: `results/external_baseline_comparison/comparison.md`
+(status `PRELIMINARY_EXTERNAL_BASELINE_STATUS`; real rows only for `ours`
+and PaMOP).
+
 ## 15. PaMOP Status
 
 **Decision gate: `B. MODEL_LIMITED`** (resolved 2026-08-12, Phase 4 — see

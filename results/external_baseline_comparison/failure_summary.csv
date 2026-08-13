@@ -1,0 +1,7 @@
+system,problem_id,native_failure_category,top_level_category
+pamop,14,A. SUCCESS_NO_CORRECTION,none
+pamop,23,A. SUCCESS_NO_CORRECTION,none
+pamop,34,A. SUCCESS_NO_CORRECTION,none
+pamop,72,A. SUCCESS_NO_CORRECTION,none
+pamop,84,E. AMPL_PARSE_FAILURE,parse_failure
+pamop,88,A. SUCCESS_NO_CORRECTION,none

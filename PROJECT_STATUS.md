@@ -287,6 +287,19 @@ research (citations, code/weight availability, GPU/environment
 requirements, ranked order and rationale):
 [`docs/BASELINE_IMPLEMENTATION_ROADMAP.md`](docs/BASELINE_IMPLEMENTATION_ROADMAP.md).
 
+### 9a. Cross-baseline comparison harness
+
+`baselines/comparison/` (2026-08-13) is a unified, lightweight analysis
+layer over the five baselines above plus `ours`: a shared `UnifiedRow`
+schema, per-baseline adapters, a native-vs-shared metric taxonomy, Wilson
+CI/exact-McNemar statistics, mock-evidence exclusion, and a Markdown/CSV/JSON
+report generator (`python -m baselines.comparison.cli`). Frozen protocol:
+[`docs/EXTERNAL_BASELINE_COMPARISON_PROTOCOL.md`](docs/EXTERNAL_BASELINE_COMPARISON_PROTOCOL.md).
+Generated report (status `PRELIMINARY_EXTERNAL_BASELINE_STATUS`, real rows
+only for `ours` and PaMOP; ORLM/OptMATH/DeepOR/OR-R1 are `PENDING`/
+`UNAVAILABLE`, never fabricated):
+[`results/external_baseline_comparison/comparison.md`](results/external_baseline_comparison/comparison.md).
+
 ## 10. PaMOP Reproduction Status
 
 **Implemented stages** (verified present in `baselines/pamop/`): LLM extraction

@@ -130,6 +130,27 @@ scientific context, read `docs/SCIENTIFIC_STATE.md` first.
 - **Expected artifact:** updated bottleneck table with a note on whether
   the fresh counts differ from the ones currently documented.
 
+## P7 — Cross-baseline comparison harness: infrastructure DONE (2026-08-13), empirical rows pending
+
+- **Status:** `baselines/comparison/` implements a unified analysis view
+  (`UnifiedRow`), adapters for all six systems, native/shared metric
+  taxonomy, Wilson CI + exact McNemar statistics, mock-evidence exclusion,
+  duplicate-run rejection, and a Markdown/CSV/JSON report generator. See
+  `baselines/comparison/README.md` and
+  `docs/EXTERNAL_BASELINE_COMPARISON_PROTOCOL.md` (frozen protocol).
+- **Preliminary report generated:** `results/external_baseline_comparison/`
+  (regenerate via `python -m baselines.comparison.cli`). Currently contains
+  real rows only for `ours` (fresh common-18-subset rerun,
+  `instantiation_ready` 10/18) and `pamop` (the existing 6-instance gpt-5.4
+  diagnostic). ORLM/OptMATH/DeepOR/OR-R1 show `PENDING`/`UNAVAILABLE`, not
+  fabricated numbers.
+- **Remaining task:** once P4/P5 (ORLM/OptMATH inference) or a DeepOR/OR-R1
+  checkpoint become available, ingest their real result files via
+  `baselines/comparison/ingest.py` (add an explicit known-location entry;
+  do not add filesystem crawling) and regenerate the report.
+- **Do not** treat the current report as a final paper comparison — it is
+  explicitly labeled `PRELIMINARY_EXTERNAL_BASELINE_STATUS`.
+
 ---
 
 **Do not start from scratch on any of the above without reading the
