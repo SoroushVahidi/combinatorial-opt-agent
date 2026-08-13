@@ -1,0 +1,20 @@
+{
+  "manifest_version": "orlm-nlp4lp-common-v1",
+  "source_subset": "pamop_possible_269",
+  "selection_rule": "Use the existing deterministic 18-instance engineering subset; pilot is the first six rows in stable problem-id order. No ORLM output or outcome was used for selection.",
+  "common_comparison_scope": "NLP4LP records suitable for full natural-language-to-model generation; ORLM-native metrics remain separate from scalar-grounding metrics.",
+  "pilot_ids": [14, 23, 34, 59, 69, 72],
+  "future_evaluation_ids": [14, 23, 34, 59, 69, 72, 84, 88, 96, 117, 190, 202, 208, 219, 232, 237, 254, 262],
+  "pilot_rationale": [
+    "Includes both LP and MILP metadata.",
+    "Includes maximize and minimize objectives.",
+    "Includes simple and multi-constraint/tree structures.",
+    "Includes high- and low-numeric-mention cases.",
+    "The manifest is fixed before ORLM inference and contains no success-based filtering."
+  ],
+  "exclusion_criteria": [
+    "Do not label this as PaMOP's exact 67-instance set.",
+    "Exclude rows with missing raw text or missing structured gold metadata at execution time, recording the reason explicitly.",
+    "Do not silently replace an excluded row with another row."
+  ]
+}

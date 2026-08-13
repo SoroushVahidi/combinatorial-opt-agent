@@ -1,38 +1,68 @@
-"""Parse ORLM's free-text response into model description + coptpy code.
-
-ORLM's response format (per its prompt template) is free text containing
-a mathematical model description followed by a coptpy Python code block.
-This module splits those apart; it does NOT execute the code or attempt
-solver-outcome normalization -- that requires a COPT license and is a
-separate, not-yet-built step (README.md "Fair comparison caveats").
-"""
+"""Non-executing normalization of ORLM free-text generations."""
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import Any
 
-_CODE_BLOCK_RE = re.compile(r"```(?:python)?\s*(.*?)```", re.DOTALL)
+
+_CODE_BLOCK_RE = re.compile(r"```(?P<language>[A-Za-z0-9_+.-]*)?[ \t]*\n?(?P<code>.*?)```", re.DOTALL)
+_INLINE_CODE_START = re.compile(r"(?m)^(?P<line>\s*(?:from|import)\s+coptpy\b.*)$")
 
 
-@dataclass
+@dataclass(frozen=True)
 class OrlmParsedOutput:
+    raw_output: str
     model_description: str
     coptpy_code: str | None
     code_block_found: bool
+    code_blocks_seen: int = 0
+    selected_block_index: int | None = None
+    warnings: tuple[str, ...] = field(default_factory=tuple)
+    parser_status: str = "EMPTY"
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "raw_output": self.raw_output,
+            "model_description": self.model_description,
+            "coptpy_code": self.coptpy_code,
+            "code_block_found": self.code_block_found,
+            "code_blocks_seen": self.code_blocks_seen,
+            "selected_block_index": self.selected_block_index,
+            "warnings": list(self.warnings),
+            "parser_status": self.parser_status,
+        }
+
+
+def _looks_like_code(language: str, code: str) -> bool:
+    lowered = language.lower()
+    return lowered in {"python", "py", "coptpy", ""} and (
+        "coptpy" in code or "setobjective" in code.lower() or "model." in code
+    )
 
 
 def parse_orlm_output(raw: str) -> OrlmParsedOutput:
-    """Split ORLM's raw text response into description and code.
-
-    This is a structural best-effort parse (fenced code block extraction)
-    based on the documented response format; it has not been validated
-    against real ORLM output, since no inference has been run in this
-    environment. Verify and adjust against real output before relying on
-    this for any reported metric.
-    """
-    match = _CODE_BLOCK_RE.search(raw)
-    if match:
-        code = match.group(1).strip()
+    """Extract the most plausible coptpy block without repairing its semantics."""
+    if not isinstance(raw, str) or not raw.strip():
+        return OrlmParsedOutput(raw_output=raw if isinstance(raw, str) else "", model_description="", coptpy_code=None, code_block_found=False, parser_status="EMPTY")
+    matches = list(_CODE_BLOCK_RE.finditer(raw))
+    warnings: list[str] = []
+    if matches:
+        candidates = [(i, m) for i, m in enumerate(matches) if _looks_like_code(m.group("language") or "", m.group("code"))]
+        if not candidates:
+            warnings.append("fenced_blocks_found_but_no_coptpy_like_block")
+            return OrlmParsedOutput(raw, raw.strip(), None, True, len(matches), None, tuple(warnings), "NO_COPT_CODE")
+        index, match = max(candidates, key=lambda item: len(item[1].group("code")))
+        code = match.group("code").strip()
         description = (raw[: match.start()] + raw[match.end():]).strip()
-        return OrlmParsedOutput(model_description=description, coptpy_code=code, code_block_found=True)
-    return OrlmParsedOutput(model_description=raw.strip(), coptpy_code=None, code_block_found=False)
+        if len(candidates) > 1:
+            warnings.append("multiple_coptpy_like_blocks_selected_longest")
+        return OrlmParsedOutput(raw, description, code, True, len(matches), index, tuple(warnings), "CODE_EXTRACTED")
+
+    inline = _INLINE_CODE_START.search(raw)
+    if inline:
+        code = raw[inline.start():].strip()
+        description = raw[: inline.start()].strip()
+        warnings.append("unfenced_coptpy_code_detected")
+        return OrlmParsedOutput(raw, description, code, False, 0, None, tuple(warnings), "UNFENCED_CODE_EXTRACTED")
+    return OrlmParsedOutput(raw, raw.strip(), None, False, 0, None, tuple(warnings), "NO_CODE")

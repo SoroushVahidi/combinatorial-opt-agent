@@ -1,4 +1,4 @@
-"""ORLM baseline scaffold (Phase 4, 2026-08-12).
+"""ORLM baseline inference-ready lightweight implementation (2026-08-12).
 
 Interface-only: no model weights, no inference implementation. See
 README.md for status, environment requirements, and the exact next

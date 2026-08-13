@@ -274,13 +274,13 @@ committed number. Full detail and next steps:
 | Baseline | Status |
 |---|---|
 | **PaMOP** (IJCAI 2025) | **PILOT VALIDATED**, fidelity gate RESOLVED (`B. MODEL_LIMITED`) — independent reconstruction, no official code available; larger run pending. See §10. |
-| **ORLM** | **SCAFFOLDED (2026-08-12)** — interfaces only (`baselines/orlm/`), no GPU/weights/COPT license available; code+one checkpoint confirmed public (re-verified against primary sources); ranked 1st of the remaining four |
+| **ORLM** | **IMPLEMENTED, READY FOR INFERENCE (2026-08-12)** — lightweight adapter/runner/normalizer/validator/harness/evaluator and mocked tests complete; no GPU/weights/COPT execution performed; code+one checkpoint confirmed public |
 | **OptMATH** | **NOT STARTED** — code+weights public; ranked 2nd |
 | **DeepOR** | **NOT STARTED, code unconfirmed** — very recent (AAAI 2026); monitor for release |
 | **OR-R1** | **NOT STARTED, code unconfirmed** — very recent (Nov 2025 preprint); monitor for release |
 
 Verified by directory listing: `baselines/` contains `baselines/pamop/`
-(pilot executed) and `baselines/orlm/` (scaffold only, 2026-08-12). Full
+(pilot executed) and `baselines/orlm/` (inference-ready lightweight path, 2026-08-12). Full
 research (citations, code/weight availability, GPU/environment
 requirements, ranked order and rationale):
 [`docs/BASELINE_IMPLEMENTATION_ROADMAP.md`](docs/BASELINE_IMPLEMENTATION_ROADMAP.md).
@@ -446,13 +446,10 @@ phase.
   commit, or a "v2" revision with regenerated numbers).
 
 **P5 (baseline coverage):**
-- Begin ORLM baseline scaffolding (highest-priority of the four
-  not-yet-started baselines — see `docs/BASELINE_IMPLEMENTATION_ROADMAP.md`
-  for the full ranked list and rationale), following the `baselines/pamop/`
-  structure as a template. Requires GPU access not currently provisioned
-  (verified 2026-08-12: needs a single 24GB-class GPU for the 8B ORLM
-  checkpoint, plus a COPT/`coptpy` solver license — neither is currently
-  set up on this workstation).
+- Complete ORLM's actual resource-gated smoke test when a GPU and checkpoint
+  are available. The lightweight implementation is complete in
+  `baselines/orlm/`; a COPT/`coptpy` license is required only for later
+  generated-code execution, not for model inference.
 - Evaluate Ner4Opt (Kadıoğlu et al. 2024, pretrained models on HuggingFace)
   against our numeric-extraction stage — an existing, published, locally-
   runnable model in the same problem family that we do not currently compare

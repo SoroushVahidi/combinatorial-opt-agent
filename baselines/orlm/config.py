@@ -1,47 +1,55 @@
-"""Configuration for the ORLM baseline scaffold.
-
-Every field the upstream ORLM repo leaves as a script constant is named
-here instead, matching this repo's baselines/pamop/config.py convention:
-document reproduction choices explicitly rather than hard-coding them.
-"""
+"""Configuration and provenance for lightweight ORLM inference preparation."""
 from __future__ import annotations
 
 from dataclasses import dataclass
 
 
+ORLM_UPSTREAM_REPOSITORY = "https://github.com/Cardinal-Operations/ORLM"
+ORLM_UPSTREAM_REVISION = "33bc47d0a1d1710d24ab839118bdf4cb89b9e31b"
+ORLM_PROMPT_VERSION = "upstream-eval-generate-TEMPLATE_q2mc_en-v1"
+ORLM_PROMPT_TEMPLATE = (
+    "Below is an operations research question. Build a mathematical model "
+    "and corresponding python code using `coptpy` that appropriately "
+    "addresses the question.\n\n"
+    "# Question:\n"
+    "{Question}\n"
+    "# Response:\n"
+)
+
+
 @dataclass(frozen=True)
 class OrlmConfig:
-    # HuggingFace repo id of the checkpoint to use. Only this one is
-    # confirmed publicly retrievable as of 2026-08-12 -- see README.md.
     model_id: str = "CardinalOperations/ORLM-LLaMA-3-8B"
-
-    # Upstream official prompt template. RECONSTRUCTED from public
-    # documentation, not yet verified byte-for-byte against the upstream
-    # repo's own prompt file -- do this before first real use (README.md
-    # "Exact first practical smoke-test milestone", step 4).
-    prompt_template: str = (
-        "Below is an operations research question. Build a mathematical "
-        "model and corresponding python code using `coptpy` that "
-        "appropriately addresses the question.\n"
-        "# Question:\n{question}\n"
-        "# Response:\n"
-    )
-
+    model_revision: str | None = None
+    prompt_template: str = ORLM_PROMPT_TEMPLATE
+    prompt_version: str = ORLM_PROMPT_VERSION
     max_new_tokens: int = 2048
-    temperature: float = 0.0  # deterministic-as-possible; upstream default not confirmed
+    temperature: float = 0.0  # Official eval/generate.py greedy path.
+    top_p: float = 1.0
+    top_k: int = 1
+    decoding_method: str = "greedy"
+    stop_tokens: tuple[str, ...] = ("</s>",)
     max_seq_len: int = 8192
-
-    # Solver the generated code targets -- NOT Gurobi/Pyomo/plain LP.
+    tensor_parallel_size: int = 1
+    dtype: str = "bfloat16"
+    device_map: str = "auto"
+    seed: int = 0
     solver: str = "coptpy"
-
-    # Minimum GPU memory class this checkpoint plausibly needs for
-    # inference (not training). Documented estimate, not measured on this
-    # workstation (no GPU provisioned here as of 2026-08-12).
     min_gpu_memory_gb: int = 24
-
-    # Whether the upstream repo requires fine-tuning before use.
     finetuning_required: bool = False
-
-    # Whether an external API is required (it is not -- fully local once
-    # weights + a COPT license are obtained).
     requires_external_api: bool = False
+
+    def generation_dict(self) -> dict[str, object]:
+        return {
+            "max_new_tokens": self.max_new_tokens,
+            "temperature": self.temperature,
+            "top_p": self.top_p,
+            "top_k": self.top_k,
+            "decoding_method": self.decoding_method,
+            "stop_tokens": list(self.stop_tokens),
+            "max_seq_len": self.max_seq_len,
+            "tensor_parallel_size": self.tensor_parallel_size,
+            "dtype": self.dtype,
+            "device_map": self.device_map,
+            "seed": self.seed,
+        }

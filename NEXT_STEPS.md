@@ -88,24 +88,23 @@ scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   numbers closer to typed greedy's, the local score is not the gating
   factor and this line should stop.
 
-## P4 — ORLM baseline: scaffold DONE (2026-08-12), smoke test still pending
+## P4 — ORLM baseline: lightweight implementation DONE (2026-08-12), inference pending
 
-- **Status:** `baselines/orlm/` built (README, config, data-adapter
-  interface, runner interface stub, output normalizer, 5 passing unit
-  tests for the parts that don't need a GPU). Wraps
+- **Status:** `baselines/orlm/` is inference-ready for resource-available
+  execution (adapter, official prompt, lazy runner, normalizer, static
+  validator, safe harness, result schema, evaluator, resume store, and 11
+  lightweight tests). Wraps
   `CardinalOperations/ORLM-LLaMA-3-8B` (the only confirmed-public
   checkpoint of the three the paper names — verify this before trusting
   any older claim of "multiple checkpoints public").
-- **Remaining task:** the actual smoke test — download weights, run one
-  NLP4LP query through the (verified-against-upstream) prompt template,
-  check the output at least parses as valid `coptpy` code. **Not done**
+- **Remaining task:** the actual smoke test — obtain weights, run one
+  NLP4LP query through the verified upstream prompt template, and check the
+  output at least parses and passes static validation. **Not done**
   — requires a single 24GB-class GPU (not provisioned on this
   workstation) and a COPT/`coptpy` solver license (ORLM's official
   pipeline generates COPT solver code, not Gurobi/Pyomo/plain LP).
-- **Before first real use:** verify `baselines/orlm/config.py`'s
-  reconstructed prompt template against the upstream repo's actual
-  prompt file — it was written from public documentation, not
-  copy-pasted from source.
+- **Provenance:** the prompt is now locked to upstream `eval/generate.py`
+  revision `33bc47d0a1d1710d24ab839118bdf4cb89b9e31b`.
 - **Stop/success criterion:** do not download the 8B weights or attempt
   GPU inference without first confirming GPU/license availability.
 

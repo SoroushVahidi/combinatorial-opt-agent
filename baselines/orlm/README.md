@@ -1,150 +1,88 @@
-# ORLM baseline (scaffold only — not runnable in this environment)
+# ORLM baseline (implemented, inference-ready)
 
-**Status: SCAFFOLDED, 2026-08-12 (Phase 4).** No model weights downloaded,
-no inference run. This directory holds the adapter/runner interface and
-environment documentation so a future agent with GPU access can start
-immediately, per `docs/BASELINE_IMPLEMENTATION_ROADMAP.md`'s ranking
-(ORLM is next after PaMOP).
+**Status: `ORLM_IMPLEMENTED_READY_FOR_INFERENCE`, 2026-08-12.** No model
+weights were downloaded and no inference or COPT execution was run. The
+lightweight adapter, official prompt builder, lazy Transformers runner,
+normalizer, static validator, safe execution harness, result schema,
+evaluator, resume store, fixed manifest, and mocked end-to-end tests are
+complete.
 
-## Citation
+## Primary sources
 
-Chenyu Huang, Zhengyang Tang, Shixi Hu, Ruoqing Jiang, Xin Zheng, Dongdong
-Ge, Benyou Wang, Zizhuo Wang. "ORLM: A Customizable Framework in Training
-Large Language Models for Automated Optimization Modeling."
-arXiv:[2405.17743](https://arxiv.org/abs/2405.17743) (May 2024, v5 April
-2025); accepted at *Operations Research* (2025).
+- Paper: Huang et al., [ORLM](https://arxiv.org/abs/2405.17743).
+- Official code: [Cardinal-Operations/ORLM](https://github.com/Cardinal-Operations/ORLM).
+- Verified upstream revision: `33bc47d0a1d1710d24ab839118bdf4cb89b9e31b`.
+- Official checkpoint: [CardinalOperations/ORLM-LLaMA-3-8B](https://huggingface.co/CardinalOperations/ORLM-LLaMA-3-8B).
+- Code license: Apache-2.0. The checkpoint has a Llama 3 license; review it
+  before redistribution or deployment.
 
-## Official code and weights (verified 2026-08-12, primary sources)
+The upstream code uses vLLM with a local model path for generation and COPT
+(`coptpy`) for execution. The current repository does not vendor upstream
+code, download weights, or expose any license contents.
 
-- **Code:** [github.com/Cardinal-Operations/ORLM](https://github.com/Cardinal-Operations/ORLM)
-  — public, active (272 stars, last push Sept 2025), **Apache-2.0**
-  license, default branch `master` (not `main`).
-- **Weights:** only **`CardinalOperations/ORLM-LLaMA-3-8B`** is confirmed
-  publicly retrievable on HuggingFace (8.03B params, bf16, `llama3`
-  license — this is a Meta license term, separate from the code's
-  Apache-2.0). The paper and repo README also name `ORLM-Mistral-7B` and
-  `ORLM-Deepseek-Math-7B-Base` checkpoints with published benchmark
-  scores, but **neither resolves as a public HF repo** under any
-  plausible path — verify independently before relying on either; treat
-  as unconfirmed, not as "also available."
-- **Correction to earlier planning note:** `docs/BASELINE_IMPLEMENTATION_ROADMAP.md`
-  originally said "code+weights public" without deep verification. This
-  is accurate for the code and for exactly one of the three named
-  checkpoints (LLaMA-3-8B), not for all three.
+The component-by-component evidence table is maintained in
+[`docs/ORLM_PROVENANCE.md`](../../docs/ORLM_PROVENANCE.md).
 
-## Dependencies / environment
+## Official prompt and decoding
 
-- `requirements.txt` (upstream) pins `vllm==0.3.2` (Feb 2024 — old;
-  likely needs an isolated env for CUDA/torch compatibility) and
-  `openai==0.28.1` (legacy SDK, appears used only by the repo's optional
-  GPT-baseline comparison scripts, not ORLM inference itself).
-  torch/transformers/deepspeed/accelerate/peft are unpinned upstream.
-- **`coptpy`** — Cardinal Operations' own commercial solver (COPT). ORLM's
-  official generation target is COPT solver code, **not** Pyomo,
-  GurobiPy, or a plain LP file. This is an additional solver dependency
-  parallel to this repo's existing Gurobi/AMPL setup
-  (`~/.venvs/gurobi`) — a COPT license (community/academic tiers likely
-  exist but were not independently verified) is required to actually
-  *execute* any code ORLM generates, separate from running the LLM itself.
-- **GPU:** 8B params in bf16 ≈ 16GB for weights alone; with an 8192-token
-  max sequence length, a single 24GB-class consumer/workstation GPU
-  (RTX 3090/4090, A5000) is plausible for **inference**. Multi-GPU/
-  DeepSpeed is used for *training* in the original paper, not required
-  for using the published checkpoint as-is.
-- **Not currently available on this workstation** (verified 2026-08-12):
-  no GPU provisioned for this environment, no COPT license configured.
-  This scaffold is therefore interface/documentation only.
+The prompt is copied structurally from upstream `eval/generate.py` and
+versioned as `upstream-eval-generate-TEMPLATE_q2mc_en-v1`:
 
-## Input / output format (from the official prompt template)
+```text
+Below is an operations research question. Build a mathematical model and corresponding python code using `coptpy` that appropriately addresses the question.
 
-ORLM expects a **fixed prompt template**, approximately:
-
-```
-Below is an operations research question. Build a mathematical model and
-corresponding python code using `coptpy` that appropriately addresses the
-question.
 # Question:
 {Question}
 # Response:
 ```
 
-Output is free-text: a mathematical model description followed by
-`coptpy` (COPT solver) Python code — not a solver-agnostic LP file, not
-GurobiPy, not Pyomo.
+The official greedy generation path uses `topk=1`, `temperature=0`,
+`top_p=1`, and stops on `</s>`. The local configuration records these
+settings explicitly. The runner also supports an injected backend for tests
+and a lazy Transformers backend for future local inference; importing it does
+not load the 8B checkpoint.
 
-## Does ORLM cover NLP4LP?
+## NLP4LP adaptation and evaluation boundary
 
-**No.** The paper evaluates on NL4OPT, MAMO (EasyLP/ComplexLP), and
-IndustryOR only (self-reported: 85.7% / 82.3% / 37.4% / 38.0%, micro-avg
-71.4%). There is no published NLP4LP overlap. Adapting ORLM to NLP4LP
-requires:
-1. Wrapping each NLP4LP query in ORLM's exact prompt template (see
-   `data_adapter.py` below — interface defined, not yet populated with
-   the verified exact template string from the upstream repo).
-2. A new execution/scoring harness: run the generated `coptpy` code,
-   capture whether it parses/executes/solves, and — if a fair comparison
-   to this repo's own metrics is wanted — a bridge from "solved
-   correctly" to something comparable to (but not identical to)
-   `InstantiationReady`. See "Fair comparison" below for why this is not
-   a drop-in metric swap.
+ORLM was evaluated by its authors on NL4OPT, MAMO, and IndustryOR, not
+NLP4LP. The adapter therefore performs a transparent task adaptation: each
+NLP4LP raw problem becomes the upstream `en_question`/`prompt` shape while
+preserving its ID, raw text, metadata, and text hash. Unsupported or malformed
+records are retained as explicit exclusions with reasons.
 
-## Fair comparison caveats (do not conflate metrics)
+ORLM-native metrics are kept separate from this repository's scalar-grounding
+metrics:
 
-ORLM solves a **broader, different task** than this repository's core
-pipeline: full NL → mathematical-model-and-code generation, vs. this
-repo's schema-conditioned scalar parameter grounding given an already-known
-template. They are not directly comparable on `InstantiationReady`/
-`Coverage`/`TypeMatch`. Comparable and incomparable dimensions:
+| ORLM-native | Shared/common outcome |
+|---|---|
+| generated model/code, parseability, static validity, COPT execution, feasibility, objective agreement | valid executable formulation and gold-objective agreement where both systems and gold data support it |
 
-| Dimension | This repo's pipeline | ORLM |
-|---|---|---|
-| End-to-end model generation | No (schema-conditioned slot-filling only) | Yes |
-| Executable formulation | Restricted subset only (20/331, SciPy HiGHS) | Yes (COPT), for problems where generation succeeds |
-| Solver success as a metric | Secondary (structural check first) | Primary reported metric |
-| External generative LLM required | No (core pipeline) | Yes (8B LLM, GPU) |
-| GPU requirement | None | Yes (~16-24GB) |
-| Deterministic | Yes | No (LLM sampling, unless temperature=0 and still not guaranteed deterministic) |
-| Runtime cost per query | Milliseconds, CPU | Seconds-minutes, GPU + LLM generation |
-| Schema/template requirement | Yes (fixed catalog) | No (open-ended generation) |
+Objective agreement is an objective-value proxy, never semantic accuracy.
+`InstantiationReady` is not directly comparable to full ORLM formulation
+accuracy.
 
-A fair write-up, if this is ever run, should report ORLM's own metrics
-(execution rate, accuracy vs. gold objective) as a **separate table**,
-explicitly not folded into `InstantiationReady` comparisons, with the
-above table's caveats stated alongside.
+## Lightweight implementation
 
-## Directory contents
+- `config.py` — official prompt, upstream revision, checkpoint, and decoding metadata.
+- `data_adapter.py` — deterministic NLP4LP record conversion and explicit exclusion reasons.
+- `runner.py` — lazy Transformers backend plus injectable mock backend.
+- `output_normalizer.py` — fenced/unfenced extraction with raw-output preservation and warnings.
+- `static_validation.py` — non-executing Python/coptpy shape and safety checks.
+- `execution_harness.py` — opt-in isolated subprocess harness; dry-run by default.
+- `result_schema.py` — JSON-friendly per-instance provenance/result record.
+- `evaluator.py` — generation, parsing, static, execution, and objective-proxy metrics.
+- `pipeline.py` — mocked-ready path and append-only problem-ID resume store.
+- `manifests/nlp4lp_common_manifest.json` — fixed six-instance pilot and 18-instance future subset.
 
-- `config.py` — `OrlmConfig` dataclass (deployment path, prompt template,
-  GPU/COPT requirements as documented fields, not hidden constants).
-- `data_adapter.py` — interface (`build_orlm_prompt(nlp4lp_query: str) -> str`)
-  for wrapping an NLP4LP query in ORLM's prompt format. **Not yet
-  implemented against the verified exact upstream template string** —
-  the template above is reconstructed from public documentation, not
-  copy-pasted from the upstream repo's own prompt file (which should be
-  fetched and diffed against this reconstruction before first real use).
-- `runner.py` — interface (`OrlmRunner.generate(prompt: str) -> str`) for
-  the actual model call. **Not implemented** — requires `vllm`/
-  `transformers` + the downloaded checkpoint + a GPU, none available here.
-- `output_normalizer.py` — interface
-  (`parse_orlm_output(raw: str) -> OrlmParsedOutput`) for splitting ORLM's
-  free-text response into the model description and the `coptpy` code
-  block, and a hook for execution-outcome normalization.
+## Future inference prerequisites
 
-## Exact first practical smoke-test milestone
+1. Provision an isolated environment with compatible PyTorch/Transformers or
+   the upstream vLLM path.
+2. Obtain the checkpoint and verify its revision/license terms.
+3. Provision and verify COPT/coptpy separately; do not silently substitute
+   Gurobi or another solver for ORLM-native results.
+4. Run one local inference instance and static-validate its generated code.
+5. Only then consider the fixed pilot manifest and larger evaluation set.
 
-1. Provision a single 24GB-class GPU and a COPT license (community tier
-   if available).
-2. `git clone https://github.com/Cardinal-Operations/ORLM` (or wrap it as
-   a dependency, not vendored into this repo — do not copy large upstream
-   code unnecessarily) in an isolated environment matching its pinned
-   `vllm==0.3.2`.
-3. Download `CardinalOperations/ORLM-LLaMA-3-8B` from HuggingFace.
-4. Verify `data_adapter.py`'s reconstructed prompt template against the
-   upstream repo's actual prompt file; fix any discrepancy.
-5. Run **one** NLP4LP query through the reference generation script using
-   the exact upstream prompt template.
-6. Verify the generated `coptpy` code at least *parses* — this alone is a
-   meaningful first checkpoint before attempting full solver execution.
-
-Do not attempt steps 5-6 without 1-2 in place; do not attempt a
-benchmark-scale run before the single-query smoke test succeeds.
+No GPU-heavy inference, model download, or solver benchmark was performed in
+the current implementation pass.

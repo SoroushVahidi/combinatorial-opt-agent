@@ -2,14 +2,14 @@
 
 **Status:** Phase 4 (2026-08-12), PaMOP independent reconstruction
 pilot-validated with larger evaluation still pending, **updated Phase 4
-(2026-08-12): ORLM re-verified against primary sources and scaffolded**
-(`baselines/orlm/` — interfaces only, no model call, no GPU/weights
-available). OptMATH, DeepOR, and OR-R1 remain research/planning only, not
+(2026-08-12): ORLM re-verified against primary sources and implemented for
+inference preparation** (`baselines/orlm/` — no model call, GPU/weights, or
+COPT execution). OptMATH, DeepOR, and OR-R1 remain research/planning only, not
 implemented. This document records what implementing each would require
 and in what order, so a future phase can act without repeating this
 research. See `PROJECT_STATUS.md` §9 for the current status summary and
 `baselines/pamop/` for the pilot-validated reconstruction and
-`baselines/orlm/` for the newest scaffold.
+`baselines/orlm/` for the inference-ready lightweight path.
 
 ---
 
@@ -52,7 +52,7 @@ research. See `PROJECT_STATUS.md` §9 for the current status summary and
   milestone is the fidelity diagnostic recommended in
   `docs/PAMOP_PILOT_FAILURE_FORENSICS.md`.
 
-## 2. ORLM — **SCAFFOLDED 2026-08-12 (Phase 4), see `baselines/orlm/`**
+## 2. ORLM — **IMPLEMENTED READY FOR INFERENCE 2026-08-12, see `baselines/orlm/`**
 
 - **Citation:** Huang et al., "ORLM: A Customizable Framework in Training
   Large Language Models for Automated Optimization Modeling," arXiv:2405.17743
@@ -96,16 +96,10 @@ research. See `PROJECT_STATUS.md` §9 for the current status summary and
 - **Licensing/access issues:** Apache-2.0 code; `llama3` license for the
   one confirmed checkpoint (a Meta license term, review before any
   redistribution — local research use is standard).
-- **Expected implementation difficulty:** Medium — code and (one)
-  checkpoint are public and documented, but adapting NLP4LP problems into
-  ORLM's expected input format and adapting its code-generation output
-  into our Coverage/TypeMatch/InstantiationReady metric family (or an
-  ORLM-native metric) is nontrivial glue work. **Interface scaffold now
-  exists** (`baselines/orlm/{config,data_adapter,runner,output_normalizer}.py`)
-  — the prompt-wrapping and output-parsing interfaces are defined and
-  unit-tested (`baselines/orlm/tests/`), but the actual model call
-  (`runner.py`) deliberately raises `NotImplementedError` since no
-  GPU/weights/COPT license are available in this environment.
+- **Expected implementation difficulty:** Medium — the lightweight
+  inference-preparation and evaluation glue is complete. The actual model
+  call remains unexecuted because no GPU/weights are available; COPT remains
+  required only for solver execution.
 - **Fairness concerns:** ORLM is a full generative pipeline (LLM writes
   the entire model + solver code), fundamentally different in
   computational cost and scope from this repo's retrieval + scalar-
@@ -118,13 +112,10 @@ research. See `PROJECT_STATUS.md` §9 for the current status summary and
   PaMOP's existing metric family) — **not** directly comparable to
   InstantiationReady/Coverage/TypeMatch.
 - **Priority:** **1st** among the four non-PaMOP baselines.
-- **First implementation milestone (scaffolded, not executed):** provision
-  a GPU + COPT license, verify `baselines/orlm/config.py`'s reconstructed
-  prompt template against the upstream repo's actual prompt file, then
-  run a single NLP4LP query through the reference generation script and
-  verify the output at least parses as valid `coptpy` code — see
-  `baselines/orlm/README.md` for the exact numbered milestone sequence.
-  Matches the same pilot-before-scale discipline already used for PaMOP.
+- **First inference milestone (prepared, not executed):** provision a GPU
+  and checkpoint, then run one query through the local lazy runner and
+  static-validate the output before any COPT execution. The fixed pilot
+  manifest and mocked end-to-end path are already committed.
 
 ## 3. OptMATH
 

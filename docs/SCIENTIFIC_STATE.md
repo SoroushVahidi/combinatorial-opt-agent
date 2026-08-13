@@ -230,7 +230,7 @@ prerequisites, falsification criteria):
 | Baseline | Status | Next action |
 |---|---|---|
 | PaMOP | IN PROGRESS, fidelity gate RESOLVED | optional C2/C4 prompt follow-up, or decide on scale-up (§15) |
-| ORLM | **SCAFFOLDED** (`baselines/orlm/`) | smoke test — needs 24GB GPU + COPT license, see `NEXT_STEPS.md` P4 |
+| ORLM | **IMPLEMENTED, READY FOR INFERENCE** (`baselines/orlm/`) | smoke test — needs checkpoint/GPU; COPT only for later solver execution, see `NEXT_STEPS.md` P4 |
 | OptMATH | NOT STARTED | ranked 2nd, see `docs/BASELINE_IMPLEMENTATION_ROADMAP.md` |
 | DeepOR | NOT STARTED, code unconfirmed | monitor for release (AAAI 2026) |
 | OR-R1 | NOT STARTED, code unconfirmed | monitor for release (Nov 2025 preprint) |
