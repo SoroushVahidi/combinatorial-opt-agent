@@ -231,7 +231,7 @@ prerequisites, falsification criteria):
 |---|---|---|
 | PaMOP | IN PROGRESS, fidelity gate RESOLVED | optional C2/C4 prompt follow-up, or decide on scale-up (§15) |
 | ORLM | **IMPLEMENTED, READY FOR INFERENCE** (`baselines/orlm/`) | smoke test — needs checkpoint/GPU; COPT only for later solver execution, see `NEXT_STEPS.md` P4 |
-| OptMATH | NOT STARTED | ranked 2nd, see `docs/BASELINE_IMPLEMENTATION_ROADMAP.md` |
+| OptMATH | **IMPLEMENTED, READY FOR INFERENCE** (`baselines/optmath/`) | 7B checkpoint smoke test when resources allow, see `docs/OPTMATH_PROVENANCE.md` |
 | DeepOR | NOT STARTED, code unconfirmed | monitor for release (AAAI 2026) |
 | OR-R1 | NOT STARTED, code unconfirmed | monitor for release (Nov 2025 preprint) |
 

@@ -108,7 +108,19 @@ scientific context, read `docs/SCIENTIFIC_STATE.md` first.
 - **Stop/success criterion:** do not download the 8B weights or attempt
   GPU inference without first confirming GPU/license availability.
 
-## P5 — Re-derive the typed-greedy bottleneck table against current code
+## P5 — OptMATH lightweight implementation DONE (2026-08-12), inference pending
+
+- **Status:** `baselines/optmath/` is ready for resource-available inference.
+  The primary checkpoint is `Aurora-Gem/OptMATH-Qwen2.5-7B`; the official
+  prompt and Gurobi target are provenance-locked.
+- **Completed:** NLP4LP adapter, static validation, safe Gurobi harness,
+  result/evaluation schema, resume store, fixed common manifest, provenance,
+  and mocked end-to-end tests.
+- **Remaining:** obtain model resources, run one inference smoke test, then
+  evaluate the fixed pilot. Do not download weights or execute Gurobi during
+  the current high-priority AMPL/HiGHS workload.
+
+## P6 — Re-derive the typed-greedy bottleneck table against current code
 
 - **Task:** `docs/CURRENT_BOTTLENECK_ANALYSIS.md`'s counts (82/331 type
   mismatch etc.) were derived from `per_instance_diagnostics.csv`, which

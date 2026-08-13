@@ -4,8 +4,8 @@
 pilot-validated with larger evaluation still pending, **updated Phase 4
 (2026-08-12): ORLM re-verified against primary sources and implemented for
 inference preparation** (`baselines/orlm/` — no model call, GPU/weights, or
-COPT execution). OptMATH, DeepOR, and OR-R1 remain research/planning only, not
-implemented. This document records what implementing each would require
+COPT execution). DeepOR and OR-R1 remain research/planning only, not
+implemented; OptMATH is now lightweight-inference-ready. This document records what implementing each would require
 and in what order, so a future phase can act without repeating this
 research. See `PROJECT_STATUS.md` §9 for the current status summary and
 `baselines/pamop/` for the pilot-validated reconstruction and
@@ -117,13 +117,14 @@ research. See `PROJECT_STATUS.md` §9 for the current status summary and
   static-validate the output before any COPT execution. The fixed pilot
   manifest and mocked end-to-end path are already committed.
 
-## 3. OptMATH
+## 3. OptMATH — **IMPLEMENTED READY FOR INFERENCE 2026-08-12, see `baselines/optmath/`**
 
 - **Citation:** Lu et al., "OptMATH: A Scalable Bidirectional Data
   Synthesis Framework for Optimization Modeling," ICML 2025.
-- **Official code available:** **YES** -- [github.com/optsuite/OptMATH](https://github.com/optsuite/OptMATH), Apache-2.0.
-- **Model weights available:** **YES** -- released on HuggingFace
-  (`Aurora-Gem/models` per the repository).
+- **Official code available:** **YES, re-verified 2026-08-12** -- [github.com/optsuite/OptMATH](https://github.com/optsuite/OptMATH), upstream `main` revision `f15bbc4477c70db85ad148df8bcc1b780bca0f8c`, Apache-2.0.
+- **Model weights available:** **YES** -- `Aurora-Gem/OptMATH-Qwen2.5-7B`
+  and `Aurora-Gem/OptMATH-Qwen2.5-32B-Instruct` are released; the 7B model
+  is the primary size-comparable checkpoint for this repository.
 - **Task overlap with ours:** High -- same full auto-formulation task
   family as ORLM.
 - **NLP4LP support:** **NOT direct.** Evaluated on their own
@@ -136,8 +137,8 @@ research. See `PROJECT_STATUS.md` §9 for the current status summary and
 - **API requirement:** No (self-hosted weights).
 - **Licensing/access issues:** Apache-2.0; base-model license review
   needed as with ORLM.
-- **Expected implementation difficulty:** Medium, same class of glue work
-  as ORLM (NLP4LP -> OptMATH input adaptation, output -> our metrics).
+- **Expected implementation difficulty:** Lightweight inference preparation
+  is complete; actual model/Gurobi execution remains resource-gated.
 - **Fairness concerns:** Same as ORLM -- full generative pipeline, not a
   like-for-like method comparison with grounding-only approaches.
 - **Comparable metrics:** Same as ORLM; OptMATH additionally reports a
@@ -149,9 +150,9 @@ research. See `PROJECT_STATUS.md` §9 for the current status summary and
   longer, more complex synthetic descriptions, making ORLM's results
   slightly more directly interpretable against our benchmark's difficulty
   level.
-- **First implementation milestone:** Same pilot-subset approach as ORLM,
-  after ORLM's pilot is complete (to reuse the NLP4LP-adaptation glue code
-  built for ORLM rather than duplicating it).
+- **First inference milestone:** Run one 7B checkpoint query through the
+  locked official prompt and static-validate generated Gurobi code before
+  any solver execution. See `docs/OPTMATH_PROVENANCE.md`.
 
 ## 4. DeepOR
 
