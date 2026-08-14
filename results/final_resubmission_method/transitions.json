@@ -1,0 +1,57 @@
+[
+  {
+    "both": "247",
+    "mcnemar_note": "exact binomial two-sided test on discordant pairs; n_discordant < 10, treat as a small-sample indication only",
+    "mcnemar_p": "0.0078125",
+    "metric": "strict",
+    "neither": "76",
+    "patched_only": "8",
+    "patched_only_ids": "nlp4lp_test_47 nlp4lp_test_98 nlp4lp_test_116 nlp4lp_test_128 nlp4lp_test_156 nlp4lp_test_195 nlp4lp_test_245 nlp4lp_test_261",
+    "prepatch_only": "0",
+    "prepatch_only_ids": ""
+  },
+  {
+    "both": "257",
+    "mcnemar_note": "exact binomial two-sided test on discordant pairs; n_discordant < 10, treat as a small-sample indication only",
+    "mcnemar_p": "0.0078125",
+    "metric": "ordinary",
+    "neither": "66",
+    "patched_only": "8",
+    "patched_only_ids": "nlp4lp_test_47 nlp4lp_test_98 nlp4lp_test_116 nlp4lp_test_128 nlp4lp_test_156 nlp4lp_test_195 nlp4lp_test_245 nlp4lp_test_261",
+    "prepatch_only": "0",
+    "prepatch_only_ids": ""
+  },
+  {
+    "both": "301",
+    "mcnemar_note": "zero discordant pairs: McNemar's test is undefined, not non-significant",
+    "mcnemar_p": "",
+    "metric": "schema",
+    "neither": "30",
+    "patched_only": "0",
+    "patched_only_ids": "",
+    "prepatch_only": "0",
+    "prepatch_only_ids": ""
+  },
+  {
+    "both": "8",
+    "mcnemar_note": "zero discordant pairs: McNemar's test is undefined, not non-significant",
+    "mcnemar_p": "",
+    "metric": "exact5_full",
+    "neither": "323",
+    "patched_only": "0",
+    "patched_only_ids": "",
+    "prepatch_only": "0",
+    "prepatch_only_ids": ""
+  },
+  {
+    "both": "8",
+    "mcnemar_note": "zero discordant pairs: McNemar's test is undefined, not non-significant",
+    "mcnemar_p": "",
+    "metric": "exact20_full",
+    "neither": "323",
+    "patched_only": "0",
+    "patched_only_ids": "",
+    "prepatch_only": "0",
+    "prepatch_only_ids": ""
+  }
+]

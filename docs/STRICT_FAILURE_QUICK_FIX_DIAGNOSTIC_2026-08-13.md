@@ -6,6 +6,8 @@
 **Decision:** `QUICK_FIX_GO` for exactly one narrow candidate:
 `multiplicative_ratio_word_extraction`.
 **Resubmission recommendation:** `IMPLEMENT_ONE_QUICK_FIX_THEN_FREEZE_METHOD`.
+**Production follow-up:** `QUICK_FIX_VALIDATED`; method state
+`FROZEN_FOR_RESUBMISSION`.
 
 This diagnostic asks whether any small deterministic change can rescue a
 meaningful number of schema-correct strict-readiness failures without opening
@@ -193,7 +195,24 @@ After implementing this one patch:
 
 Do not start another algorithm family for this resubmission.
 
-## 11. Artifacts
+## 11. Production Validation Addendum
+
+The production patch was implemented in `tools/nlp4lp_downstream_utility.py`
+and validated under `PYTHONHASHSEED=0`.
+
+Final result:
+
+- strict readiness: 247/331 -> 255/331
+- ordinary readiness: 257/331 -> 265/331
+- Schema R@1: unchanged at 301/331
+- strict/ordinary readiness gains: 8
+- strict/ordinary readiness losses: 0
+- McNemar p-value: 0.0078125
+
+Full freeze document: `docs/METHOD_FREEZE_FOR_RESUBMISSION_2026-08-13.md`.
+Full result artifacts: `results/final_resubmission_method/`.
+
+## 12. Artifacts
 
 Generated under `results/strict_failure_quick_fix/`:
 

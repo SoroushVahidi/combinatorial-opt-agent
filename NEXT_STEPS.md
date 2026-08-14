@@ -22,24 +22,32 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   primary native end-to-end proxy, while retaining ordinary
   InstantiationReady as a predicted-schema diagnostic.
 
-## P1 — Next: implement one ratio-word extraction quick fix, then freeze
+## P1 — Next: complete external baseline empirical work
 
-- **Status:** quick-fix diagnostic completed with `QUICK_FIX_GO`.
-- **Evidence:** `docs/STRICT_FAILURE_QUICK_FIX_DIAGNOSTIC_2026-08-13.md`
-  and `results/strict_failure_quick_fix/`.
-- **Task:** implement exactly one localized production patch:
-  multiplicative ratio-word extraction for `twice`/`double`/`two times` and
-  `triple`/`three times`, then rerun the 331-query benchmark under strict
-  readiness.
-- **Projected gain:** diagnostic prototype reaches 255/331 strict-ready
-  (+8) with 0 simulated losses across all 331.
-- **Stop/success criterion:** if the patch reproduces a strict-readiness gain
-  without regressions, freeze method development and move to external
-  baselines + manuscript revision. If it fails, record the negative result
-  and freeze method development anyway. Do not start another algorithm family
-  for this resubmission.
+- **Status:** method development is `FROZEN_FOR_RESUBMISSION`.
+- **Evidence:** `docs/METHOD_FREEZE_FOR_RESUBMISSION_2026-08-13.md` and
+  `results/final_resubmission_method/`.
+- **Final method result:** production ratio-word extraction validated the
+  diagnostic projection exactly: strict readiness is 255/331, ordinary
+  readiness is 265/331, Schema R@1 remains 301/331, and there are 0
+  strict/ordinary readiness losses.
+- **Task:** finish external baseline empirical completion for the
+  resubmission comparison package.
+- **Instruction:** do not start another algorithm experiment before
+  resubmission.
 
-## P2 — Completed: Stage-B selective grounding reranker
+## P2 — Completed: ratio-word extraction quick fix and method freeze
+
+- **Status:** `QUICK_FIX_VALIDATED`; method state `FROZEN_FOR_RESUBMISSION`.
+- **Evidence:** `docs/STRICT_FAILURE_QUICK_FIX_DIAGNOSTIC_2026-08-13.md`,
+  `docs/METHOD_FREEZE_FOR_RESUBMISSION_2026-08-13.md`, and
+  `results/final_resubmission_method/`.
+- **Implemented patch:** multiplicative ratio-word extraction for
+  `twice`/`double`/`two times` and `triple`/`three times`.
+- **Validated effect:** strict +8 (`247/331 -> 255/331`), ordinary +8
+  (`257/331 -> 265/331`), 0 strict/ordinary losses, McNemar p=0.0078125.
+
+## P3 — Completed: Stage-B selective grounding reranker
 
 - **Status:** `STAGE_B_METRIC_ONLY_GAIN`.
 - **Evidence:** `docs/SELECTIVE_GROUNDING_RERANK_STAGE_B_2026-08-13.md` and
@@ -50,7 +58,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
 - **Instruction:** do not promote this as the new main method without metric
   redesign or strict-readiness validation.
 
-## P3 — Completed: TOP-2 Stage-A diagnostic
+## P4 — Completed: TOP-2 Stage-A diagnostic
 
 - **Status:** `TOP2_GO`.
 - **Evidence:** `docs/TOPK_SCHEMA_RERANK_STAGE_A_2026-08-13.md` and
@@ -62,7 +70,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   first; do not add API, learned reranking, semantic parsing, or structured
   assignment.
 
-## P4 — Completed: role-quantity Stage-A diagnostic
+## P5 — Completed: role-quantity Stage-A diagnostic
 
 - **Status:** `STAGE_A_NO_GO`.
 - **Evidence:** `docs/ROLE_QUANTITY_STAGE_A_DIAGNOSTIC_2026-08-13.md` and
@@ -74,7 +82,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   the next main-method patch unless the target metric changes to numeric
   exactness rather than InstantiationReady.
 
-## P5 — Verify/refresh the remaining stale method numbers
+## P6 — Verify/refresh the remaining stale method numbers
 
 - **Task:** rerun `global_compat_full` (and `_local`/`_pairwise`),
   `relation_aware_full` (and `_basic`/`_ops`/`_semantic`),

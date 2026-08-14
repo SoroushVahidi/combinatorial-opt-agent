@@ -180,7 +180,7 @@ def _oracle_ready(expected_slots: list[str], candidates: list[NumTok]) -> bool:
 
 
 def _current_replay(expected_slots: list[str], query: str, variant: str = "orig") -> tuple[list[SlotDecision], dict[str, Any]]:
-    initial_candidates = list(_extract_num_tokens(query, variant))
+    initial_candidates = _prepatch_num_tokens(query, variant)
     candidates = list(initial_candidates)
     decisions: list[SlotDecision] = []
     n_filled = 0
@@ -256,6 +256,20 @@ def _multiplicative_ratio_word_tokens(query: str) -> list[NumTok]:
     return toks
 
 
+def _prepatch_num_tokens(query: str, variant: str = "orig") -> list[NumTok]:
+    return [
+        tok for tok in _extract_num_tokens(query, variant)
+        if not tok.raw.startswith("RATIO_WORD:")
+    ]
+
+
+def _prepatch_num_mentions(query: str, variant: str = "orig"):
+    return [
+        mention for mention in _extract_num_mentions(query, variant)
+        if not mention.tok.raw.startswith("RATIO_WORD:")
+    ]
+
+
 def _classify_slot(
     query: str,
     slot: str,
@@ -297,8 +311,8 @@ def _classify_slot(
 def replay_query(qid: str, query: str, gold: dict[str, Any]) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     params = gold.get("parameters") or {}
     expected_slots = _schema_expected_scalar(gold)
-    initial_candidates = list(_extract_num_tokens(query, "orig"))
-    mentions = _extract_num_mentions(query, "orig")
+    initial_candidates = _prepatch_num_tokens(query, "orig")
+    mentions = _prepatch_num_mentions(query, "orig")
     candidates = list(initial_candidates)
     slot_rows: list[dict[str, Any]] = []
     filled_slots: list[str] = []
@@ -364,7 +378,7 @@ def replay_query(qid: str, query: str, gold: dict[str, Any]) -> tuple[list[dict[
 def _simulate_current(expected_slots: list[str], query: str, candidates: list[NumTok] | None = None,
                       expected_overrides: dict[str, str] | None = None,
                       allow_reuse: bool = False) -> bool:
-    cands = list(candidates if candidates is not None else _extract_num_tokens(query, "orig"))
+    cands = list(candidates if candidates is not None else _prepatch_num_tokens(query, "orig"))
     if not expected_slots:
         return False
     n_filled = 0
@@ -405,7 +419,7 @@ def intervention_bounds(failing_ids: list[str], eval_by_id: dict[str, dict[str, 
         gold = gold_by_id[qid]
         params = gold.get("parameters") or {}
         slots = _schema_expected_scalar(gold)
-        current_candidates = list(_extract_num_tokens(query, "orig"))
+        current_candidates = _prepatch_num_tokens(query, "orig")
         gold_tokens = [_gold_token(slot, float(params[slot])) for slot in slots if _is_scalar(params.get(slot))]
         missing_gold_tokens = [
             tok for slot, tok in zip(slots, gold_tokens)
@@ -602,7 +616,7 @@ def generate(out_dir: Path = DEFAULT_OUT) -> dict[str, Any]:
             proto_strict = _simulate_current(
                 slots,
                 query,
-                list(_extract_num_tokens(query, "orig")) + _multiplicative_ratio_word_tokens(query),
+                _prepatch_num_tokens(query, "orig") + _multiplicative_ratio_word_tokens(query),
             )
             replay_current_ready += int(current_replay)
         prototype_ready += int(proto_strict)
@@ -624,7 +638,7 @@ def generate(out_dir: Path = DEFAULT_OUT) -> dict[str, Any]:
     # exposure estimate.
     all_feature_rows = []
     for qid, item in sorted(eval_by_id.items(), key=lambda kv: int(kv[0].rsplit("_", 1)[-1])):
-        toks = _extract_num_tokens(item["query"], "orig")
+        toks = _prepatch_num_tokens(item["query"], "orig")
         lower = item["query"].lower()
         all_feature_rows.append({
             "problem_id": qid,

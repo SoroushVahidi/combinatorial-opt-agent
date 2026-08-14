@@ -4,14 +4,14 @@ Companion to `docs/RESEARCH_HYPOTHESES.md` (testable hypotheses),
 `docs/NEGATIVE_RESULTS.md` (what already failed — **read NR10 first**), and
 `docs/CURRENT_BOTTLENECK_ANALYSIS.md` (where errors actually concentrate).
 
-**Current resubmission decision (2026-08-13):** after the strict-readiness
-metric audit and strict-failure quick-fix diagnostic, do not start another
-broad algorithm family for this resubmission. Implement exactly one localized
-production patch, multiplicative ratio-word extraction for
-`twice`/`double`/`two times` and `triple`/`three times`, then freeze method
-development and move to external baselines + manuscript revision. Diagnostic
-simulation projects 247/331 -> 255/331 strict readiness with 0 simulated
-strict losses (`docs/STRICT_FAILURE_QUICK_FIX_DIAGNOSTIC_2026-08-13.md`).
+**Current resubmission decision (2026-08-13): `FROZEN_FOR_RESUBMISSION`.**
+The strict-readiness metric audit and strict-failure quick-fix diagnostic led
+to exactly one production patch: multiplicative ratio-word extraction for
+`twice`/`double`/`two times` and `triple`/`three times`. Production validation
+reproduced the diagnostic projection exactly: 247/331 -> 255/331 strict
+readiness, 257/331 -> 265/331 ordinary readiness, and 0 strict/ordinary
+readiness losses (`docs/METHOD_FREEZE_FOR_RESUBMISSION_2026-08-13.md`).
+Do not start another broad algorithm family for this resubmission.
 
 ---
 
@@ -278,18 +278,18 @@ top-k schema + grounding reranking rather than another local role/quantity
 scorer.
 
 **2026-08-13 strict-metric update:** after schema-gated readiness became the
-primary native end-to-end proxy, a quick-fix diagnostic found one acceptable
-small extraction patch: multiplicative ratio-word extraction. Broader local
-expected-type repair has a high oracle ceiling (24 strict-ready rescues) but
-is not a quick fix because overloaded slot names would require global rule
-redesign and regression control. Do not use this roadmap section to reopen
-role/quantity reranking, learned pair scoring, matching, or search for the
-current resubmission.
+primary native end-to-end proxy, a quick-fix diagnostic found and production
+validation confirmed one acceptable small extraction patch: multiplicative
+ratio-word extraction. Broader local expected-type repair has a high oracle
+ceiling (24 strict-ready rescues) but is not a quick fix because overloaded
+slot names would require global rule redesign and regression control. Do not
+use this roadmap section to reopen role/quantity reranking, learned pair
+scoring, matching, or search for the current resubmission.
 
 ### P3 (was P3/H4) — Add richer semantic-role/unit/domain features to `_choose_token` itself (H4, re-targeted)
 
-- **Status:** DEFERRED FOR RESUBMISSION (`docs/RESEARCH_HYPOTHESES.md` H4).
-  The strict-failure quick-fix diagnostic supersedes this as near-term work.
+- **Status:** FROZEN FOR RESUBMISSION (`docs/RESEARCH_HYPOTHESES.md` H4).
+  The validated ratio-word extraction patch supersedes this as near-term work.
   Originally
   framed as input to a learned scorer (P0, negative result); **re-targeted**
   here at `_choose_token` (typed greedy's own simple heuristic), given that

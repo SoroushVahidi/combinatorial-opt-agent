@@ -30,6 +30,7 @@ these documents for full scientific detail:
 - [`docs/SELECTIVE_GROUNDING_RERANK_STAGE_B_2026-08-13.md`](docs/SELECTIVE_GROUNDING_RERANK_STAGE_B_2026-08-13.md) — frozen Stage-B implementation of `tfidf_selective_grounding_rerank`; result `STAGE_B_METRIC_ONLY_GAIN`
 - [`docs/STRICT_INSTANTIATION_READY_DIAGNOSTIC_2026-08-13.md`](docs/STRICT_INSTANTIATION_READY_DIAGNOSTIC_2026-08-13.md) — fresh schema-correctness-gated readiness diagnostic; result `STRICT_METRIC_RECOMMENDED`
 - [`docs/STRICT_FAILURE_QUICK_FIX_DIAGNOSTIC_2026-08-13.md`](docs/STRICT_FAILURE_QUICK_FIX_DIAGNOSTIC_2026-08-13.md) — strict-failure quick-fix diagnostic; result `QUICK_FIX_GO` for one ratio-word extraction patch, then freeze method development
+- [`docs/METHOD_FREEZE_FOR_RESUBMISSION_2026-08-13.md`](docs/METHOD_FREEZE_FOR_RESUBMISSION_2026-08-13.md) — final method freeze; result `FROZEN_FOR_RESUBMISSION` after validating multiplicative ratio-word extraction
 
 **Headline change since Phase 3 (retraction, same day, 2026-08-12):**
 Phase 3 believed `tfidf_typed_greedy` (committed at 0.5287) had been
@@ -314,15 +315,19 @@ strict. The selective reranker's +8 ordinary gain collapses to +2 true
 schema-gated ready gains, confirming that ordinary InstantiationReady should
 be treated as a predicted-schema proxy, not end-to-end correctness.
 
-**Strict-failure quick-fix result (2026-08-13): `QUICK_FIX_GO`.**
+**Strict-failure quick-fix production result (2026-08-13):
+`QUICK_FIX_VALIDATED`; method state `FROZEN_FOR_RESUBMISSION`.**
 `docs/STRICT_FAILURE_QUICK_FIX_DIAGNOSTIC_2026-08-13.md` verified 54
 schema-correct/not-strict-ready current failures and 58 oracle-schema
 not-ready failures. The only small high-confidence candidate is
 multiplicative ratio-word extraction (`twice`/`double`/`two times`,
-`triple`/`three times`), projected by diagnostic simulation to improve
-strict readiness from 247/331 to 255/331 with 0 simulated losses across
-all 331. Implement exactly that one patch next, then freeze method
-development for resubmission regardless of outcome.
+`triple`/`three times`). Production implementation validated the diagnostic
+projection exactly under `PYTHONHASHSEED=0`: strict readiness improves from
+247/331 to 255/331, ordinary readiness improves from 257/331 to 265/331,
+Schema R@1 remains 301/331, and there are 0 strict/ordinary readiness losses.
+See `docs/METHOD_FREEZE_FOR_RESUBMISSION_2026-08-13.md` and
+`results/final_resubmission_method/`. Do not perform further method
+development for this resubmission.
 
 The P0 feature-augmented learned scorer (the direction recommended in
 Phase 2) WAS built and evaluated in Phase 3 and did **not** improve over

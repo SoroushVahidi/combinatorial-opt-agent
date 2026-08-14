@@ -616,6 +616,29 @@ def _parse_num_token(tok: str, context_words: set[str]) -> NumTok:
     return NumTok(raw=t, value=val, kind="float")
 
 
+def _extract_multiplicative_ratio_tokens(query: str) -> list[tuple[int, NumTok]]:
+    """Extract ratio words such as "twice" and "three times" as percent-like tokens.
+
+    The raw/value/kind representation intentionally matches the Stage-A
+    diagnostic prototype in `tools/strict_failure_quick_fix_diagnostic.py`.
+    """
+    groups: tuple[tuple[tuple[str, ...], float, str], ...] = (
+        ((r"\btwice\b", r"\bdouble\b(?!-)", r"\btwo\s+times\b"), 2.0, "RATIO_WORD:twice"),
+        ((r"\btriple\b", r"\bthree\s+times\b"), 3.0, "RATIO_WORD:triple"),
+    )
+    out: list[tuple[int, NumTok]] = []
+    lower = query.lower()
+    for patterns, value, raw in groups:
+        starts = [
+            match.start()
+            for pattern in patterns
+            for match in re.finditer(pattern, lower)
+        ]
+        if starts:
+            out.append((min(starts), NumTok(raw=raw, value=value, kind="percent")))
+    return out
+
+
 def _extract_num_tokens(query: str, variant: str) -> list[NumTok]:
     toks = query.split()
     out: list[NumTok] = []
@@ -650,6 +673,7 @@ def _extract_num_tokens(query: str, variant: str) -> list[NumTok]:
             i += 1
             continue
         i += 1
+    out.extend(tok for _, tok in _extract_multiplicative_ratio_tokens(query))
     return out
 
 
@@ -813,6 +837,23 @@ def _extract_num_mentions(query: str, variant: str) -> list[MentionRecord]:
             continue
 
         i += 1
+    for char_index, tok in _extract_multiplicative_ratio_tokens(query):
+        prefix = query[:char_index]
+        token_index = len(prefix.split())
+        ctx_tokens = [
+            x.lower().strip(".,;:()[]{}") for x in toks[max(0, token_index - 8) : token_index + 9]
+        ]
+        ctx_tokens = [c for c in ctx_tokens if c]
+        mentions.append(
+            MentionRecord(
+                index=token_index,
+                tok=tok,
+                context_tokens=ctx_tokens,
+                sentence_tokens=sent_tokens,
+                cue_words=set(ctx_tokens) & CUE_WORDS,
+            )
+        )
+    mentions.sort(key=lambda m: (m.index, m.tok.raw))
     return mentions
 
 

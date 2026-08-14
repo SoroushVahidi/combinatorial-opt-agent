@@ -270,21 +270,22 @@ to `max_weight_matching` was retracted along with that claim.
 
 ---
 
-## Strict-Failure Quick-Fix Conclusion: multiplicative ratio-word extraction is the only near-term GO
+## Strict-Failure Quick-Fix Conclusion: multiplicative ratio-word extraction validated; method frozen
 
-**Status (2026-08-13): QUICK_FIX_GO, but bug-fix quality.**
+**Status (2026-08-13): QUICK_FIX_VALIDATED; `FROZEN_FOR_RESUBMISSION`.**
 `docs/STRICT_FAILURE_QUICK_FIX_DIAGNOSTIC_2026-08-13.md` reanalyzed the 54
 schema-correct/not-strict-ready failures under the new strict metric. The only
 small, general, high-confidence change with a meaningful query-level projection
 is numeric extraction of multiplicative ratio words:
 `twice`/`double`/`two times` -> 2.0 and `triple`/`three times` -> 3.0. The
-diagnostic prototype projects 247/331 -> 255/331 strict readiness with 0
-simulated losses across all 331.
+diagnostic prototype projected 247/331 -> 255/331 strict readiness with 0
+simulated losses across all 331, and production validation reproduced it:
+strict readiness 255/331, ordinary InstantiationReady 265/331, Schema R@1
+301/331, and 0 strict/ordinary readiness losses.
 
 This is not a new method hypothesis. It is a localized extraction robustness
-patch. If production implementation reproduces the gain, freeze method
-development for resubmission. If it fails, record the negative result and
-freeze method development anyway.
+patch. It is now implemented. Method development is frozen for resubmission;
+the next work is external baseline completion and manuscript integration.
 
 Rejected quick-fix temptations:
 

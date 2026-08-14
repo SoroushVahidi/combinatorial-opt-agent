@@ -1,0 +1,6 @@
+metric,both,prepatch_only,patched_only,neither,prepatch_only_ids,patched_only_ids,mcnemar_p,mcnemar_note
+strict,247,0,8,76,,nlp4lp_test_47 nlp4lp_test_98 nlp4lp_test_116 nlp4lp_test_128 nlp4lp_test_156 nlp4lp_test_195 nlp4lp_test_245 nlp4lp_test_261,0.0078125,"exact binomial two-sided test on discordant pairs; n_discordant < 10, treat as a small-sample indication only"
+ordinary,257,0,8,66,,nlp4lp_test_47 nlp4lp_test_98 nlp4lp_test_116 nlp4lp_test_128 nlp4lp_test_156 nlp4lp_test_195 nlp4lp_test_245 nlp4lp_test_261,0.0078125,"exact binomial two-sided test on discordant pairs; n_discordant < 10, treat as a small-sample indication only"
+schema,301,0,0,30,,,,"zero discordant pairs: McNemar's test is undefined, not non-significant"
+exact5_full,8,0,0,323,,,,"zero discordant pairs: McNemar's test is undefined, not non-significant"
+exact20_full,8,0,0,323,,,,"zero discordant pairs: McNemar's test is undefined, not non-significant"

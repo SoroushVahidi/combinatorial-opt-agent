@@ -85,16 +85,19 @@ ready gains (`nlp4lp_test_222`, `nlp4lp_test_268`). Future main-method gates
 should use strict readiness, with ordinary InstantiationReady retained as a
 predicted-schema diagnostic.
 
-**Strict-failure quick-fix diagnostic (2026-08-13):**
+**Strict-failure quick-fix production validation (2026-08-13):**
 
 `docs/STRICT_FAILURE_QUICK_FIX_DIAGNOSTIC_2026-08-13.md` verifies 54 current
 schema-correct/not-strict-ready failures and 58 oracle-schema/not-ready
 failures. The only small, high-confidence, deterministic candidate is
 multiplicative ratio-word extraction: expose `twice`/`double`/`two times` as
 2.0 and `triple`/`three times` as 3.0 ratio tokens. The diagnostic prototype
-projects 247/331 -> 255/331 strict readiness with 0 simulated strict losses.
-Broader expected-type repair and mention reuse have larger oracle ceilings but
-are not quick fixes; they would reopen broad, high-risk method development.
+projected 247/331 -> 255/331 strict readiness with 0 simulated strict losses.
+Production validation reproduced that projection exactly: strict readiness is
+255/331 = 0.7704, ordinary InstantiationReady is 265/331 = 0.8006, Schema
+R@1 remains 301/331, and there are 0 strict/ordinary readiness losses.
+Method development is now `FROZEN_FOR_RESUBMISSION`; see
+`docs/METHOD_FREEZE_FOR_RESUBMISSION_2026-08-13.md`.
 
 ## 4. Why the Best Method Works
 
@@ -241,12 +244,12 @@ not exact.
 Ranked (`docs/ALGORITHM_IMPROVEMENT_ROADMAP.md` has full detail,
 prerequisites, falsification criteria):
 
-1. **Implement exactly one ratio-word extraction quick fix, then freeze
-   method development for resubmission.** This is the only current
-   high-confidence quick fix with a meaningful strict-readiness projection
-   (247/331 -> 255/331, 0 simulated losses).
-2. **Complete external baseline execution and manuscript revision.** If the
-   ratio-word patch fails to reproduce, record it and stop method search.
+1. **Complete external baseline execution and manuscript revision.** Method
+   development is frozen for this resubmission after validating the
+   multiplicative ratio-word extraction patch.
+2. **Integrate strict readiness into the manuscript evaluation framing.**
+   Ordinary InstantiationReady remains useful for historical comparison, but
+   strict readiness is the primary native end-to-end proxy.
 3. **Verify/refresh remaining stale numbers** (`global_compat_*` etc.) only
    if needed for evidence cleanup, not as a new method direction.
 4. H5 (top-k retrieval + grounding joint reranking) — replicated as an

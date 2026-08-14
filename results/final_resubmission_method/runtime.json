@@ -1,0 +1,6 @@
+{
+  "max_kb": 202508,
+  "note": "Measured with /usr/bin/time and PYTHONHASHSEED=0.",
+  "patched_mean_ms_per_query": 3.293051359516616,
+  "patched_total_seconds": 1.09
+}
