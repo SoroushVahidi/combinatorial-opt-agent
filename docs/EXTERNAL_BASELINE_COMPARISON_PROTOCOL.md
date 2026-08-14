@@ -122,8 +122,10 @@ system without this caveat visible in the same output.
 
 ## What this protocol does not yet cover
 
-- A real empirical run for ORLM, OptMATH, DeepOR, or OR-R1 (all `PENDING`/
-  `UNAVAILABLE` as of 2026-08-13 — see `baselines/comparison/availability.py`).
+- A completed empirical result for ORLM, OptMATH, DeepOR, or OR-R1. ORLM's
+  official-checkpoint six-instance pilot is currently running, but its output
+  remains excluded until rows complete and pass provenance validation (see
+  `baselines/comparison/availability.py`).
 - Any statistical correction for multiple comparisons across metrics/systems.
 - A canonical single "leaderboard" ranking — deliberately out of scope; see
   the critical scientific principle in this document's introduction.

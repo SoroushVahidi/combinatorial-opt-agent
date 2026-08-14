@@ -73,8 +73,9 @@ package instead distinguishes four kinds of information (frozen in
 - `ingest.py` — explicit, fixed-location ingestion for `ours` (a fresh,
   CPU-only rerun of `tools.nlp4lp_downstream_utility`, filtered to the
   common manifest) and `pamop` (`results/pamop/fidelity_diagnostic_gpt5/`).
-  No filesystem crawling. ORLM/OptMATH/DeepOR/OR-R1 currently ingest to an
-  empty list — there are no real result files for them yet.
+  No filesystem crawling. ORLM's pilot is running but has no completed result
+  rows, so it remains an empty ingestion until the job finishes and its fixed
+  location is explicitly registered.
 - `report.py` + `cli.py` — Markdown/CSV/JSON report generation, run via
   `python -m baselines.comparison.cli`.
 

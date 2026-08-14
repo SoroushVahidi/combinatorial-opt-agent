@@ -342,7 +342,7 @@ committed number. Full detail and next steps:
 | Baseline | Status |
 |---|---|
 | **PaMOP** (IJCAI 2025) | **PILOT VALIDATED**, fidelity gate RESOLVED (`B. MODEL_LIMITED`) — independent reconstruction, no official code available; larger run pending. See §10. |
-| **ORLM** | **IMPLEMENTED, READY FOR INFERENCE (2026-08-12)** — lightweight adapter/runner/normalizer/validator/harness/evaluator and mocked tests complete; no GPU/weights/COPT execution performed; code+one checkpoint confirmed public |
+| **ORLM** | **PILOT RUNNING HEALTHY (2026-08-13)** — pinned official checkpoint cached; six-instance official-checkpoint inference is healthy in tmux with CPU offload; no completed empirical rows yet; coptpy missing so solver execution is blocked |
 | **OptMATH** | **IMPLEMENTED, READY FOR INFERENCE (2026-08-12)** — official prompt/checkpoint provenance, NLP4LP adapter, Gurobi parser/validator/harness, result schema, evaluator, manifest, and mocked tests complete; no inference or solver run |
 | **DeepOR** | **PAPER RECONSTRUCTION READY (2026-08-12)** — mock-tested adapter, paper-level prompt, reasoning parser, Pyomo static validator, safe harness, schema, evaluator, and manifest; official code/checkpoint not found and no empirical result |
 | **OR-R1** | **CODE INTEGRATED, CHECKPOINT BLOCKED (2026-08-13)** — official code verified (`SCUTE-ZZ/OR-R1`, cited directly by the arXiv paper); lightweight adapter/runner/TGRPO-control/majority-voting/normalizer/validator/harness/evaluator and mocked tests complete; no SFT/GRPO/merged checkpoint released anywhere; TGRPO training set is transductive (== union of all eval sets, incl. NLP4LP); see [`docs/ORR1_PROVENANCE.md`](docs/ORR1_PROVENANCE.md) |
@@ -364,7 +364,8 @@ CI/exact-McNemar statistics, mock-evidence exclusion, and a Markdown/CSV/JSON
 report generator (`python -m baselines.comparison.cli`). Frozen protocol:
 [`docs/EXTERNAL_BASELINE_COMPARISON_PROTOCOL.md`](docs/EXTERNAL_BASELINE_COMPARISON_PROTOCOL.md).
 Generated report (status `PRELIMINARY_EXTERNAL_BASELINE_STATUS`, real rows
-only for `ours` and PaMOP; ORLM/OptMATH/DeepOR/OR-R1 are `PENDING`/
+only for `ours` and PaMOP; ORLM has a running pilot but no completed rows and
+remains pending in the report; OptMATH/DeepOR/OR-R1 are `PENDING`/
 `UNAVAILABLE`, never fabricated):
 [`results/external_baseline_comparison/comparison.md`](results/external_baseline_comparison/comparison.md).
 
@@ -529,10 +530,9 @@ phase.
   commit, or a "v2" revision with regenerated numbers).
 
 **P5 (baseline coverage):**
-- Complete ORLM's actual resource-gated smoke test when a GPU and checkpoint
-  are available. The lightweight implementation is complete in
-  `baselines/orlm/`; a COPT/`coptpy` license is required only for later
-  generated-code execution, not for model inference.
+- Inspect the running ORLM pilot and validate its six completed rows before
+  launching the fixed common-18 run. A COPT/`coptpy` license is required only
+  for later generated-code execution, not for model inference.
 - Evaluate Ner4Opt (Kadıoğlu et al. 2024, pretrained models on HuggingFace)
   against our numeric-extraction stage — an existing, published, locally-
   runnable model in the same problem family that we do not currently compare

@@ -162,7 +162,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   numbers closer to typed greedy's, the local score is not the gating
   factor and this line should stop.
 
-## P9 — ORLM baseline: lightweight implementation DONE (2026-08-12), inference pending
+## P9 — ORLM baseline: pilot running healthy (2026-08-13)
 
 - **Status:** `baselines/orlm/` is inference-ready for resource-available
   execution (adapter, official prompt, lazy runner, normalizer, static
@@ -171,16 +171,19 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   `CardinalOperations/ORLM-LLaMA-3-8B` (the only confirmed-public
   checkpoint of the three the paper names — verify this before trusting
   any older claim of "multiple checkpoints public").
-- **Remaining task:** the actual smoke test — obtain weights, run one
-  NLP4LP query through the verified upstream prompt template, and check the
-  output at least parses and passes static validation. **Not done**
-  — requires a single 24GB-class GPU (not provisioned on this
-  workstation) and a COPT/`coptpy` solver license (ORLM's official
-  pipeline generates COPT solver code, not Gurobi/Pyomo/plain LP).
+- **Checkpoint:** downloaded and cached at pinned revision
+  `94fdc3c5738c6536d4880dc19a78f215529181c5` (16.1 GiB download).
+- **Pilot:** `ORLM_PILOT_RUNNING_HEALTHY`; six IDs `[14, 23, 34, 59, 69, 72]`
+  are running in tmux with CPU offload. No completed result row exists yet.
+- **Handoff:** session `orlm_pilot_official_20260813_corrected`, log
+  `results/orlm/pilot_official_checkpoint/inference_corrected.log`, output
+  `results/orlm/pilot_official_checkpoint/results.jsonl`, start
+  `2026-08-13T23:06:54-04:00`, Git SHA `6bb75a4c4bed02c458ac30b4af206a2802fce095`.
 - **Provenance:** the prompt is now locked to upstream `eval/generate.py`
   revision `33bc47d0a1d1710d24ab839118bdf4cb89b9e31b`.
-- **Stop/success criterion:** do not download the 8B weights or attempt
-  GPU inference without first confirming GPU/license availability.
+- **Next action:** inspect this job's result later; only after all six rows
+  validate should the common-18 run be launched. `coptpy` is missing, so
+  solver execution is blocked and must not be substituted with another solver.
 
 ## P10 — OptMATH lightweight implementation DONE (2026-08-12), inference pending
 

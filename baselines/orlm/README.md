@@ -1,7 +1,8 @@
 # ORLM baseline (implemented, inference-ready)
 
-**Status: `ORLM_IMPLEMENTED_READY_FOR_INFERENCE`, 2026-08-12.** No model
-weights were downloaded and no inference or COPT execution was run. The
+**Status: `ORLM_PILOT_RUNNING_HEALTHY`, 2026-08-13.** The pinned checkpoint
+is cached and the official six-instance pilot is running in tmux; no
+completed empirical row or COPT execution exists yet. The
 lightweight adapter, official prompt builder, lazy Transformers runner,
 normalizer, static validator, safe execution harness, result schema,
 evaluator, resume store, fixed manifest, and mocked end-to-end tests are
@@ -13,12 +14,14 @@ complete.
 - Official code: [Cardinal-Operations/ORLM](https://github.com/Cardinal-Operations/ORLM).
 - Verified upstream revision: `33bc47d0a1d1710d24ab839118bdf4cb89b9e31b`.
 - Official checkpoint: [CardinalOperations/ORLM-LLaMA-3-8B](https://huggingface.co/CardinalOperations/ORLM-LLaMA-3-8B).
+- Run checkpoint revision: `94fdc3c5738c6536d4880dc19a78f215529181c5`.
 - Code license: Apache-2.0. The checkpoint has a Llama 3 license; review it
   before redistribution or deployment.
 
 The upstream code uses vLLM with a local model path for generation and COPT
-(`coptpy`) for execution. The current repository does not vendor upstream
-code, download weights, or expose any license contents.
+(`coptpy`) for execution. This repository uses its documented Transformers
+adaptation for the pinned checkpoint; the weights remain in the Hugging Face
+cache and are not repository artifacts.
 
 The component-by-component evidence table is maintained in
 [`docs/ORLM_PROVENANCE.md`](../../docs/ORLM_PROVENANCE.md).
@@ -37,10 +40,10 @@ Below is an operations research question. Build a mathematical model and corresp
 ```
 
 The official greedy generation path uses `topk=1`, `temperature=0`,
-`top_p=1`, and stops on `</s>`. The local configuration records these
-settings explicitly. The runner also supports an injected backend for tests
-and a lazy Transformers backend for future local inference; importing it does
-not load the 8B checkpoint.
+`top_p=1`, `max_tokens` resolved to the checkpoint's 8192-token model limit,
+and stops on `</s>`. The local configuration records these settings
+explicitly. The runner also supports an injected backend for tests and a lazy
+Transformers backend; importing it does not load the 8B checkpoint.
 
 ## NLP4LP adaptation and evaluation boundary
 
@@ -72,17 +75,28 @@ accuracy.
 - `result_schema.py` — JSON-friendly per-instance provenance/result record.
 - `evaluator.py` — generation, parsing, static, execution, and objective-proxy metrics.
 - `pipeline.py` — mocked-ready path and append-only problem-ID resume store.
+- `scripts/run_orlm_inference.py` — resumable pilot/common-18 launcher with run metadata.
 - `manifests/nlp4lp_common_manifest.json` — fixed six-instance pilot and 18-instance future subset.
 
 ## Future inference prerequisites
 
 1. Provision an isolated environment with compatible PyTorch/Transformers or
    the upstream vLLM path.
-2. Obtain the checkpoint and verify its revision/license terms.
+2. Obtain the checkpoint and verify its revision/license terms. The pinned
+   revision is already cached for the current pilot.
 3. Provision and verify COPT/coptpy separately; do not silently substitute
    Gurobi or another solver for ORLM-native results.
 4. Run one local inference instance and static-validate its generated code.
 5. Only then consider the fixed pilot manifest and larger evaluation set.
 
-No GPU-heavy inference, model download, or solver benchmark was performed in
-the current implementation pass.
+## Current pilot handoff
+
+- tmux session: `orlm_pilot_official_20260813_corrected`
+- command: `export CUDA_VISIBLE_DEVICES=0; python -u -m scripts.run_orlm_inference --subset pilot --output /home/soroush/combinatorial-opt-agent/results/orlm/pilot_official_checkpoint/results.jsonl --model-id CardinalOperations/ORLM-LLaMA-3-8B --model-revision 94fdc3c5738c6536d4880dc19a78f215529181c5 --max-new-tokens 8192 --device-map auto --dtype bfloat16 --device cuda:0`
+- start: `2026-08-13T23:06:54-04:00`
+- log: `results/orlm/pilot_official_checkpoint/inference_corrected.log`
+- output: `results/orlm/pilot_official_checkpoint/results.jsonl`
+- Git SHA: `6bb75a4c4bed02c458ac30b4af206a2802fce095`
+- health check: passed after approximately three minutes; checkpoint loaded
+  with CPU offload, GPU memory remained below 15.3 GiB, and no result row had
+  completed at handoff.

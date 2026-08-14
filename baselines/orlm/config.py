@@ -6,6 +6,7 @@ from dataclasses import dataclass
 
 ORLM_UPSTREAM_REPOSITORY = "https://github.com/Cardinal-Operations/ORLM"
 ORLM_UPSTREAM_REVISION = "33bc47d0a1d1710d24ab839118bdf4cb89b9e31b"
+ORLM_CHECKPOINT_REVISION = "94fdc3c5738c6536d4880dc19a78f215529181c5"
 ORLM_PROMPT_VERSION = "upstream-eval-generate-TEMPLATE_q2mc_en-v1"
 ORLM_PROMPT_TEMPLATE = (
     "Below is an operations research question. Build a mathematical model "
@@ -20,10 +21,12 @@ ORLM_PROMPT_TEMPLATE = (
 @dataclass(frozen=True)
 class OrlmConfig:
     model_id: str = "CardinalOperations/ORLM-LLaMA-3-8B"
-    model_revision: str | None = None
+    model_revision: str | None = ORLM_CHECKPOINT_REVISION
     prompt_template: str = ORLM_PROMPT_TEMPLATE
     prompt_version: str = ORLM_PROMPT_VERSION
-    max_new_tokens: int = 2048
+    # Upstream vLLM uses max_tokens=None, which resolves to this checkpoint's
+    # max_model_len (8192).
+    max_new_tokens: int = 8192
     temperature: float = 0.0  # Official eval/generate.py greedy path.
     top_p: float = 1.0
     top_k: int = 1

@@ -35,10 +35,10 @@ AVAILABILITY: dict[str, AvailabilityStatus] = {
         "4/5 evaluable objective-value-proxy success. Independent reconstruction, no official code.",
     ),
     "orlm": AvailabilityStatus(
-        "orlm", "IMPLEMENTED, NOT YET RUN",
-        False, "ORLM_IMPLEMENTED_READY_FOR_INFERENCE",
-        "Official code (Apache-2.0) and one public checkpoint confirmed. No GPU inference has been run "
-        "against NLP4LP in this repository; zero result rows exist.",
+        "orlm", "PILOT RUNNING HEALTHY (no completed rows)",
+        False, "ORLM_PILOT_RUNNING_HEALTHY",
+        "Pinned official checkpoint revision is cached and the six-instance pilot is running in tmux. "
+        "No completed result rows exist; coptpy is missing for later solver execution.",
     ),
     "optmath": AvailabilityStatus(
         "optmath", "IMPLEMENTED, NOT YET RUN",

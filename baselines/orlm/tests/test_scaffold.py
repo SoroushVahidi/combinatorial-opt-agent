@@ -95,6 +95,17 @@ def test_runner_returns_structured_generation_result():
     assert result.token_counts["total_tokens"] == 16
 
 
+def test_runner_reuses_default_backend_instance(monkeypatch):
+    backend = FakeBackend(VALID_CODE)
+    monkeypatch.setattr("baselines.orlm.runner.TransformersBackend", lambda: backend)
+    runner = OrlmRunner()
+    assert runner._backend_instance is None
+    runner.generate("prompt")
+    assert runner._backend_instance is backend
+    runner.generate("prompt")
+    assert backend is runner._backend_instance
+
+
 def test_result_store_resumes_by_problem_id(tmp_path):
     record = adapt_record({"doc_id": "1", "text": "x"}, source="fixture").record
     store = JsonlResultStore(tmp_path / "results.jsonl")

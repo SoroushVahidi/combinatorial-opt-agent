@@ -77,10 +77,9 @@ class TransformersBackend:
         kwargs: dict[str, Any] = {
             "max_new_tokens": config.max_new_tokens,
             "do_sample": config.decoding_method != "greedy",
-            "temperature": config.temperature,
-            "top_p": config.top_p,
-            "top_k": config.top_k,
         }
+        if config.decoding_method != "greedy":
+            kwargs.update(temperature=config.temperature, top_p=config.top_p, top_k=config.top_k)
         if config.stop_tokens and hasattr(self.tokenizer, "eos_token_id"):
             kwargs["eos_token_id"] = self.tokenizer.eos_token_id
         with torch.inference_mode():
@@ -88,6 +87,9 @@ class TransformersBackend:
         prompt_len = inputs["input_ids"].shape[-1]
         new_tokens = output[0][prompt_len:]
         text = self.tokenizer.decode(new_tokens, skip_special_tokens=True)
+        for stop_token in config.stop_tokens:
+            if stop_token in text:
+                text = text.split(stop_token, 1)[0]
         return text, {"completion_tokens": int(len(new_tokens)), "prompt_tokens": int(prompt_len), "total_tokens": int(output.shape[-1])}
 
 
@@ -95,12 +97,18 @@ class TransformersBackend:
 class OrlmRunner:
     config: OrlmConfig = field(default_factory=OrlmConfig)
     backend: GenerationBackend | None = None
+    _backend_instance: GenerationBackend | None = field(default=None, init=False, repr=False)
 
     def generate(self, prompt: str) -> GenerationResult:
         if not isinstance(prompt, str) or not prompt.strip():
             return GenerationResult("", "INPUT_ERROR", self.config.model_id, self.config.model_revision, "", 0.0, error_category="empty_prompt", error_message="prompt must be non-empty")
         prompt_hash = hashlib.sha256(prompt.encode("utf-8")).hexdigest()
-        backend = self.backend or TransformersBackend()
+        if self.backend is not None:
+            backend = self.backend
+        else:
+            if self._backend_instance is None:
+                self._backend_instance = TransformersBackend()
+            backend = self._backend_instance
         start = time.perf_counter()
         error_message = ""
         try:
