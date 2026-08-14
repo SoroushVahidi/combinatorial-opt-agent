@@ -4,6 +4,15 @@ Companion to `docs/RESEARCH_HYPOTHESES.md` (testable hypotheses),
 `docs/NEGATIVE_RESULTS.md` (what already failed — **read NR10 first**), and
 `docs/CURRENT_BOTTLENECK_ANALYSIS.md` (where errors actually concentrate).
 
+**Current resubmission decision (2026-08-13):** after the strict-readiness
+metric audit and strict-failure quick-fix diagnostic, do not start another
+broad algorithm family for this resubmission. Implement exactly one localized
+production patch, multiplicative ratio-word extraction for
+`twice`/`double`/`two times` and `triple`/`three times`, then freeze method
+development and move to external baselines + manuscript revision. Diagnostic
+simulation projects 247/331 -> 255/331 strict readiness with 0 simulated
+strict losses (`docs/STRICT_FAILURE_QUICK_FIX_DIAGNOSTIC_2026-08-13.md`).
+
 ---
 
 ## Literature review: established techniques closest to our numeric-mention → schema-slot problem
@@ -268,9 +277,20 @@ InstantiationReady gate. The next method diagnostic should move to selective
 top-k schema + grounding reranking rather than another local role/quantity
 scorer.
 
+**2026-08-13 strict-metric update:** after schema-gated readiness became the
+primary native end-to-end proxy, a quick-fix diagnostic found one acceptable
+small extraction patch: multiplicative ratio-word extraction. Broader local
+expected-type repair has a high oracle ceiling (24 strict-ready rescues) but
+is not a quick fix because overloaded slot names would require global rule
+redesign and regression control. Do not use this roadmap section to reopen
+role/quantity reranking, learned pair scoring, matching, or search for the
+current resubmission.
+
 ### P3 (was P3/H4) — Add richer semantic-role/unit/domain features to `_choose_token` itself (H4, re-targeted)
 
-- **Status:** NOT TESTED (`docs/RESEARCH_HYPOTHESES.md` H4). Originally
+- **Status:** DEFERRED FOR RESUBMISSION (`docs/RESEARCH_HYPOTHESES.md` H4).
+  The strict-failure quick-fix diagnostic supersedes this as near-term work.
+  Originally
   framed as input to a learned scorer (P0, negative result); **re-targeted**
   here at `_choose_token` (typed greedy's own simple heuristic), given that
   49 commits of exactly this kind of incremental, deterministic feature
@@ -278,7 +298,8 @@ scorer.
   place. This is now the most evidence-backed lever in the roadmap: the
   technique (targeted deterministic fixes to the simple baseline) has a
   demonstrated track record in this exact codebase, unlike any of the
-  richer-architecture alternatives tried so far.
+  richer-architecture alternatives tried so far. However, it is broader than
+  the single ratio-word patch and should not be pursued before resubmission.
 - **Prerequisite:** P1 (accurate current baselines).
 
 ### P4 (was P4/H5) — Top-k retrieval + grounding joint reranking (H5)

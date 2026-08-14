@@ -29,6 +29,7 @@ these documents for full scientific detail:
 - [`docs/TOPK_SCHEMA_RERANK_STAGE_A_2026-08-13.md`](docs/TOPK_SCHEMA_RERANK_STAGE_A_2026-08-13.md) — Stage-A diagnostic for selective top-k schema + grounding reranking; result `TOP2_GO`
 - [`docs/SELECTIVE_GROUNDING_RERANK_STAGE_B_2026-08-13.md`](docs/SELECTIVE_GROUNDING_RERANK_STAGE_B_2026-08-13.md) — frozen Stage-B implementation of `tfidf_selective_grounding_rerank`; result `STAGE_B_METRIC_ONLY_GAIN`
 - [`docs/STRICT_INSTANTIATION_READY_DIAGNOSTIC_2026-08-13.md`](docs/STRICT_INSTANTIATION_READY_DIAGNOSTIC_2026-08-13.md) — fresh schema-correctness-gated readiness diagnostic; result `STRICT_METRIC_RECOMMENDED`
+- [`docs/STRICT_FAILURE_QUICK_FIX_DIAGNOSTIC_2026-08-13.md`](docs/STRICT_FAILURE_QUICK_FIX_DIAGNOSTIC_2026-08-13.md) — strict-failure quick-fix diagnostic; result `QUICK_FIX_GO` for one ratio-word extraction patch, then freeze method development
 
 **Headline change since Phase 3 (retraction, same day, 2026-08-12):**
 Phase 3 believed `tfidf_typed_greedy` (committed at 0.5287) had been
@@ -312,6 +313,16 @@ InstantiationReady but 247/331 under strict readiness; fresh
 strict. The selective reranker's +8 ordinary gain collapses to +2 true
 schema-gated ready gains, confirming that ordinary InstantiationReady should
 be treated as a predicted-schema proxy, not end-to-end correctness.
+
+**Strict-failure quick-fix result (2026-08-13): `QUICK_FIX_GO`.**
+`docs/STRICT_FAILURE_QUICK_FIX_DIAGNOSTIC_2026-08-13.md` verified 54
+schema-correct/not-strict-ready current failures and 58 oracle-schema
+not-ready failures. The only small high-confidence candidate is
+multiplicative ratio-word extraction (`twice`/`double`/`two times`,
+`triple`/`three times`), projected by diagnostic simulation to improve
+strict readiness from 247/331 to 255/331 with 0 simulated losses across
+all 331. Implement exactly that one patch next, then freeze method
+development for resubmission regardless of outcome.
 
 The P0 feature-augmented learned scorer (the direction recommended in
 Phase 2) WAS built and evaluated in Phase 3 and did **not** improve over

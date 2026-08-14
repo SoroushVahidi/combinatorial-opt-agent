@@ -22,20 +22,22 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   primary native end-to-end proxy, while retaining ordinary
   InstantiationReady as a predicted-schema diagnostic.
 
-## P1 — Next: target strict-readiness failures under the correct schema
+## P1 — Next: implement one ratio-word extraction quick fix, then freeze
 
-- **Task:** diagnose the 58 oracle-schema not-ready cases and the 54
-  current `tfidf_typed_greedy` schema-correct/not-ready cases under the
-  strict metric.
-- **Purpose:** strict readiness shows retrieval is not the whole problem:
-  oracle typed greedy reaches only 273/331, leaving a grounding gap even
-  when the schema is correct.
-- **Prerequisite:** do not tune or extend the selective reranker; do not edit
-  the manuscript yet.
-- **Stop/success criterion:** identify one narrow grounding failure class
-  with at least a plausible +7-query strict-readiness rescue ceiling, or
-  document that strict-readiness optimization should pause in favor of exact
-  value metrics.
+- **Status:** quick-fix diagnostic completed with `QUICK_FIX_GO`.
+- **Evidence:** `docs/STRICT_FAILURE_QUICK_FIX_DIAGNOSTIC_2026-08-13.md`
+  and `results/strict_failure_quick_fix/`.
+- **Task:** implement exactly one localized production patch:
+  multiplicative ratio-word extraction for `twice`/`double`/`two times` and
+  `triple`/`three times`, then rerun the 331-query benchmark under strict
+  readiness.
+- **Projected gain:** diagnostic prototype reaches 255/331 strict-ready
+  (+8) with 0 simulated losses across all 331.
+- **Stop/success criterion:** if the patch reproduces a strict-readiness gain
+  without regressions, freeze method development and move to external
+  baselines + manuscript revision. If it fails, record the negative result
+  and freeze method development anyway. Do not start another algorithm family
+  for this resubmission.
 
 ## P2 — Completed: Stage-B selective grounding reranker
 

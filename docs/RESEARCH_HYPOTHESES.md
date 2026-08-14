@@ -270,6 +270,32 @@ to `max_weight_matching` was retracted along with that claim.
 
 ---
 
+## Strict-Failure Quick-Fix Conclusion: multiplicative ratio-word extraction is the only near-term GO
+
+**Status (2026-08-13): QUICK_FIX_GO, but bug-fix quality.**
+`docs/STRICT_FAILURE_QUICK_FIX_DIAGNOSTIC_2026-08-13.md` reanalyzed the 54
+schema-correct/not-strict-ready failures under the new strict metric. The only
+small, general, high-confidence change with a meaningful query-level projection
+is numeric extraction of multiplicative ratio words:
+`twice`/`double`/`two times` -> 2.0 and `triple`/`three times` -> 3.0. The
+diagnostic prototype projects 247/331 -> 255/331 strict readiness with 0
+simulated losses across all 331.
+
+This is not a new method hypothesis. It is a localized extraction robustness
+patch. If production implementation reproduces the gain, freeze method
+development for resubmission. If it fails, record the negative result and
+freeze method development anyway.
+
+Rejected quick-fix temptations:
+
+- expected-type oracle has a large ceiling (24 rescues) but is broad, risky,
+  and tied to overloaded slot names;
+- mention reuse has a large ceiling (25 rescues) but changes the one-use
+  grounding semantics and overlaps with failed matching/search directions;
+- role/quantity reranking remains unsupported for readiness after H4 Stage A.
+
+---
+
 ## Explicitly deprioritized (not a hypothesis to test next)
 
 - **Repeating NR10's exact setup** (text-only pairwise ranker, 500 steps) —

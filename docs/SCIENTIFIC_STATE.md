@@ -85,6 +85,17 @@ ready gains (`nlp4lp_test_222`, `nlp4lp_test_268`). Future main-method gates
 should use strict readiness, with ordinary InstantiationReady retained as a
 predicted-schema diagnostic.
 
+**Strict-failure quick-fix diagnostic (2026-08-13):**
+
+`docs/STRICT_FAILURE_QUICK_FIX_DIAGNOSTIC_2026-08-13.md` verifies 54 current
+schema-correct/not-strict-ready failures and 58 oracle-schema/not-ready
+failures. The only small, high-confidence, deterministic candidate is
+multiplicative ratio-word extraction: expose `twice`/`double`/`two times` as
+2.0 and `triple`/`three times` as 3.0 ratio tokens. The diagnostic prototype
+projects 247/331 -> 255/331 strict readiness with 0 simulated strict losses.
+Broader expected-type repair and mention reuse have larger oracle ceilings but
+are not quick fixes; they would reopen broad, high-risk method development.
+
 ## 4. Why the Best Method Works
 
 Typed greedy's simplicity is not the reason it wins — its *history* is.
@@ -230,14 +241,14 @@ not exact.
 Ranked (`docs/ALGORITHM_IMPROVEMENT_ROADMAP.md` has full detail,
 prerequisites, falsification criteria):
 
-1. **Verify/refresh remaining stale numbers** (`global_compat_*` etc.) —
-   cheap, closes a real evidence gap.
-2. **Target the local score's dominant error modes directly**
-   (same-type ambiguity, total/per-unit confusion) with further
-   deterministic fixes — the only lever with a demonstrated track record
-   in this codebase.
-3. **Re-target H4 (richer semantic-role features) at `_choose_token`**
-   rather than a learned scorer, given (2)'s evidence.
+1. **Implement exactly one ratio-word extraction quick fix, then freeze
+   method development for resubmission.** This is the only current
+   high-confidence quick fix with a meaningful strict-readiness projection
+   (247/331 -> 255/331, 0 simulated losses).
+2. **Complete external baseline execution and manuscript revision.** If the
+   ratio-word patch fails to reproduce, record it and stop method search.
+3. **Verify/refresh remaining stale numbers** (`global_compat_*` etc.) only
+   if needed for evidence cleanup, not as a new method direction.
 4. H5 (top-k retrieval + grounding joint reranking) — replicated as an
    ordinary-readiness metric artifact; only +2 strict-ready gains.
 5. Confidence calibration/abstention — conditional, needs a working
