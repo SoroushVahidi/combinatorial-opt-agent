@@ -258,6 +258,16 @@ method built on top of it does not win).
 - **Novelty status:** ESTABLISHED_ADAPTATION (same class of fix as the 49
   commits already in this repository's history; not a new technique).
 
+**2026-08-13 Stage-A update:** the specific role/quantity-factorized version
+of this direction was tested diagnostically and should not be implemented next
+for InstantiationReady. See
+`docs/ROLE_QUANTITY_STAGE_A_DIAGNOSTIC_2026-08-13.md`: 28/49 targeted wrong
+assignments were role/quantity-separable, but correcting all separable
+assignments rescued 0 currently not-ready queries under the coverage/type
+InstantiationReady gate. The next method diagnostic should move to selective
+top-k schema + grounding reranking rather than another local role/quantity
+scorer.
+
 ### P3 (was P3/H4) — Add richer semantic-role/unit/domain features to `_choose_token` itself (H4, re-targeted)
 
 - **Status:** NOT TESTED (`docs/RESEARCH_HYPOTHESES.md` H4). Originally

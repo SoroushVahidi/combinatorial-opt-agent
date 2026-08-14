@@ -8,25 +8,40 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
 
 ---
 
-## P0 — Stage-A diagnostic for role-quantity factorized grounding
+## P0 — TOP-2 diagnostic: selective top-k schema + grounding reranking
 
-- **Task:** follow
-  `docs/METHOD_NOVELTY_EFFICIENCY_AUDIT_2026-08-13.md` Stage A: build a
-  lightweight per-slot diagnostic over the 54 schema-hit/not-ready fresh
-  `tfidf_typed_greedy` cases and verify whether role/quantity factors
-  would change the selected mention in at least 10 targeted failures.
-- **Purpose:** this is the pre-gate before implementing the top-ranked
-  method candidate. It avoids repeating already-negative matching,
-  beam-search, repair, ambiguity, and learned-pair-scorer ideas without
-  new information.
+- **Task:** design and run a lightweight diagnostic for the TOP-2 candidate
+  from `docs/METHOD_NOVELTY_EFFICIENCY_AUDIT_2026-08-13.md`: for low
+  retrieval-margin cases, evaluate whether running current grounding over
+  top-k schemas and selecting by a deterministic fillability/type/role score
+  could rescue InstantiationReady queries.
+- **Purpose:** the TOP-1 role/quantity Stage-A diagnostic is complete and
+  resulted in `STAGE_A_NO_GO`
+  (`docs/ROLE_QUANTITY_STAGE_A_DIAGNOSTIC_2026-08-13.md`): 28 targeted
+  slot assignments were role/quantity-separable, but the conservative
+  query-level upper bound rescued 0 additional InstantiationReady queries.
+  The next plausible +2 pp path is therefore schema/candidate recovery, not
+  numeric role relabeling.
 - **Prerequisite:** keep using a fresh same-code `tfidf_typed_greedy`
   reference (`0.7764` on 331 `orig`) and do not modify manuscript files.
-- **Stop/success criterion:** if fewer than 10 targeted failures appear
-  correctable by explicit role/quantity factors, record a negative result
-  and move to the TOP-2 candidate from the audit; otherwise implement only
-  the minimal factorized scorer/cascade needed for a 331-query test.
+- **Stop/success criterion:** proceed only if the diagnostic shows at least
+  7 currently not-ready queries could plausibly become ready under a
+  selective top-k schema+grounding rerank without changing the benchmark
+  eligibility or using gold schema labels.
 
-## P1 — Verify/refresh the remaining stale method numbers
+## P1 — Completed: role-quantity Stage-A diagnostic
+
+- **Status:** `STAGE_A_NO_GO`.
+- **Evidence:** `docs/ROLE_QUANTITY_STAGE_A_DIAGNOSTIC_2026-08-13.md` and
+  `results/role_quantity_stage_a/`.
+- **Key result:** 49 targeted wrong assignments, 28 separable by
+  deterministic role/quantity features, but 0 projected query-level rescues
+  and +0.0 pp InstantiationReady upper-bound gain.
+- **Instruction:** do not implement the role-quantity factorized scorer as
+  the next main-method patch unless the target metric changes to numeric
+  exactness rather than InstantiationReady.
+
+## P2 — Verify/refresh the remaining stale method numbers
 
 - **Task:** rerun `global_compat_full` (and `_local`/`_pairwise`),
   `relation_aware_full` (and `_basic`/`_ops`/`_semantic`),
@@ -45,7 +60,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
 - **Stop/success criterion:** every row in that table has a fresh,
   same-code number.
 
-## P2 — Decide the manuscript's path forward (requires the author)
+## P3 — Decide the manuscript's path forward (requires the author)
 
 - **Task:** read `docs/MANUSCRIPT_INTEGRATION_DECISION_2026-08-12.md` and
   choose one of: (a) issue an erratum with fresh numbers, (b) pin/tag the
@@ -65,7 +80,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   → `tools/build_eaai_camera_ready_figures.py` chain, all 3 variants.
 - **Stop/success criterion:** n/a — decision gate.
 
-## P3 — PaMOP: PILOT VALIDATED (2026-08-12), scale-up pending
+## P4 — PaMOP: PILOT VALIDATED (2026-08-12), scale-up pending
 
 - **Status:** the fidelity diagnostic is complete —
   `results/pamop/fidelity_diagnostic_gpt5/README.md`. Gate: `B. MODEL_LIMITED`.
@@ -86,7 +101,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   unrelated active AMPL/HiGHS computation, then use a fresh output directory
   and a pre-registered subset/configuration.
 
-## P4 — Improve the local pairwise score's dominant error modes
+## P5 — Improve the local pairwise score's dominant error modes
 
 - **Task:** target `_score_mention_slot_opt`'s residual same-type
   ambiguity (335 slot-level instances) and total/per-unit confusion (166)
@@ -106,7 +121,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   numbers closer to typed greedy's, the local score is not the gating
   factor and this line should stop.
 
-## P5 — ORLM baseline: lightweight implementation DONE (2026-08-12), inference pending
+## P6 — ORLM baseline: lightweight implementation DONE (2026-08-12), inference pending
 
 - **Status:** `baselines/orlm/` is inference-ready for resource-available
   execution (adapter, official prompt, lazy runner, normalizer, static
@@ -126,7 +141,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
 - **Stop/success criterion:** do not download the 8B weights or attempt
   GPU inference without first confirming GPU/license availability.
 
-## P6 — OptMATH lightweight implementation DONE (2026-08-12), inference pending
+## P7 — OptMATH lightweight implementation DONE (2026-08-12), inference pending
 
 - **Status:** `baselines/optmath/` is ready for resource-available inference.
   The primary checkpoint is `Aurora-Gem/OptMATH-Qwen2.5-7B`; the official
@@ -138,7 +153,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   evaluate the fixed pilot. Do not download weights or execute Gurobi during
   the current high-priority AMPL/HiGHS workload.
 
-## P7 — Re-derive the typed-greedy bottleneck table against current code
+## P8 — Re-derive the typed-greedy bottleneck table against current code
 
 - **Task:** `docs/CURRENT_BOTTLENECK_ANALYSIS.md`'s counts (82/331 type
   mismatch etc.) were derived from `per_instance_diagnostics.csv`, which
@@ -148,7 +163,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
 - **Expected artifact:** updated bottleneck table with a note on whether
   the fresh counts differ from the ones currently documented.
 
-## P8 — Cross-baseline comparison harness: infrastructure DONE (2026-08-13), empirical rows pending
+## P9 — Cross-baseline comparison harness: infrastructure DONE (2026-08-13), empirical rows pending
 
 - **Status:** `baselines/comparison/` implements a unified analysis view
   (`UnifiedRow`), adapters for all six systems, native/shared metric

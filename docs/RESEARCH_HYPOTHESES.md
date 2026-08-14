@@ -167,11 +167,24 @@ retracted claim.
 
 ## H4: Richer semantic role typing will improve float/int/percent/coefficient-vs-total cases
 
-**Status (2026-08-12, Phase 3): NOT TESTED.** Out of scope for this phase
-(a follow-up ablation contingent on H1, which was not supported). Note the
-semantic-role features H4 targets ARE already present in P0's feature set
-and did not, in combination, produce a working scorer (see H1) — a
-standalone ablation isolating just these features was not run.
+**Status (2026-08-13): NOT SUPPORTED AS A NEXT MAIN METHOD FOR
+InstantiationReady.** A dedicated Stage-A diagnostic was run after the method
+novelty/efficiency audit:
+`docs/ROLE_QUANTITY_STAGE_A_DIAGNOSTIC_2026-08-13.md`. It found real
+slot-level signal — 28 of 49 targeted schema-hit/not-ready wrong assignments
+were separable by deterministic role/quantity features — but the conservative
+query-level upper bound rescued **0 additional InstantiationReady queries**
+because the current readiness metric is gated by coverage/type compatibility,
+not numeric exactness. This does not prove role/quantity features are useless;
+it means they are not a justified next implementation target for the current
+main metric and +2 pp manuscript gate. If revisited, scope them to numeric
+exactness/Exact20 or a changed metric, not as another InstantiationReady patch.
+
+**Prior status (2026-08-12, Phase 3): NOT TESTED.** Out of scope for that
+phase (a follow-up ablation contingent on H1, which was not supported). Note
+the semantic-role features H4 targets ARE already present in P0's feature set
+and did not, in combination, produce a working scorer (see H1) — a standalone
+ablation isolating just these features had not been run at that point.
 
 - **Motivation:** `docs/NEGATIVE_RESULTS.md` NR3 (optimization-role repair)
   and NR2 (semantic IR repair) both failed as *deterministic rules*, but

@@ -1,0 +1,84 @@
+{
+  "absolute_pp_gain": 0.0,
+  "ambiguous_assignments": 10,
+  "api_oracle": "NOT_USED",
+  "cascade_trigger_rate": 1.0,
+  "cascade_triggered_queries": 331,
+  "case_counts": {
+    "bound_role": 10,
+    "objective_constraint": 6,
+    "other_role_quantity": 3,
+    "same_type_ambiguity": 21,
+    "total_perunit": 9
+  },
+  "correctable_failure_recall": 1.0,
+  "current_instantiation_ready": 0.7764350453172205,
+  "current_ready": 257,
+  "decision": "STAGE_A_NO_GO",
+  "false_trigger_rate_on_ready_queries": 1.0,
+  "n_total_queries": 331,
+  "not_separable_assignments": 11,
+  "potentially_rescued_queries": 0,
+  "projected_instantiation_ready": 0.7764350453172205,
+  "projected_ready": 257,
+  "rescued_query_ids": [],
+  "schema_hit_not_ready": 54,
+  "separable_assignments": 28,
+  "separable_by_case": {
+    "bound_role": 9,
+    "objective_constraint": 3,
+    "same_type_ambiguity": 10,
+    "total_perunit": 6
+  },
+  "targeted_wrong_assignments": 49,
+  "trigger_analysis": {
+    "any_pre_verification": {
+      "correctable_failure_recall": 1.0,
+      "false_trigger_rate_on_ready_queries": 1.0,
+      "trigger_rate": 0.9335347432024169,
+      "triggered_queries": 309
+    },
+    "low_assignment_margin": {
+      "correctable_failure_recall": 0.23809523809523808,
+      "false_trigger_rate_on_ready_queries": 0.4357976653696498,
+      "trigger_rate": 0.3685800604229607,
+      "triggered_queries": 122
+    },
+    "low_retrieval_margin": {
+      "correctable_failure_recall": 0.0,
+      "false_trigger_rate_on_ready_queries": 0.042801556420233464,
+      "trigger_rate": 0.08157099697885196,
+      "triggered_queries": 27
+    },
+    "multiple_compatible_mentions": {
+      "correctable_failure_recall": 1.0,
+      "false_trigger_rate_on_ready_queries": 0.9961089494163424,
+      "trigger_rate": 0.8912386706948641,
+      "triggered_queries": 295
+    },
+    "role_quantity_conflict": {
+      "correctable_failure_recall": 0.9523809523809523,
+      "false_trigger_rate_on_ready_queries": 0.7782101167315175,
+      "trigger_rate": 0.6918429003021148,
+      "triggered_queries": 229
+    },
+    "same_type_multiplicity": {
+      "correctable_failure_recall": 1.0,
+      "false_trigger_rate_on_ready_queries": 0.9961089494163424,
+      "trigger_rate": 0.8882175226586103,
+      "triggered_queries": 294
+    },
+    "verification_failure": {
+      "correctable_failure_recall": 1.0,
+      "false_trigger_rate_on_ready_queries": 0.0,
+      "trigger_rate": 0.22356495468277945,
+      "triggered_queries": 74
+    },
+    "verification_or_low_retrieval_margin": {
+      "correctable_failure_recall": 1.0,
+      "false_trigger_rate_on_ready_queries": 0.042801556420233464,
+      "trigger_rate": 0.256797583081571,
+      "triggered_queries": 85
+    }
+  }
+}

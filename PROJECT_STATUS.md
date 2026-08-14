@@ -25,6 +25,7 @@ these documents for full scientific detail:
 - [`docs/MANUSCRIPT_INTEGRATION_DECISION_2026-08-12.md`](docs/MANUSCRIPT_INTEGRATION_DECISION_2026-08-12.md) — why the manuscript was NOT touched despite the staleness finding, and what the author should do next
 - [`docs/BASELINE_IMPLEMENTATION_ROADMAP.md`](docs/BASELINE_IMPLEMENTATION_ROADMAP.md) — ORLM/OptMATH/DeepOR/OR-R1 implementation planning
 - [`docs/METHOD_NOVELTY_EFFICIENCY_AUDIT_2026-08-13.md`](docs/METHOD_NOVELTY_EFFICIENCY_AUDIT_2026-08-13.md) — current method algorithm, fresh failure taxonomy, reviewer-gap matrix, novelty assessment, and ranked go/no-go plan for the next method improvement
+- [`docs/ROLE_QUANTITY_STAGE_A_DIAGNOSTIC_2026-08-13.md`](docs/ROLE_QUANTITY_STAGE_A_DIAGNOSTIC_2026-08-13.md) — Stage-A diagnostic for the top-ranked role/quantity candidate; result `STAGE_A_NO_GO`
 
 **Headline change since Phase 3 (retraction, same day, 2026-08-12):**
 Phase 3 believed `tfidf_typed_greedy` (committed at 0.5287) had been
@@ -273,6 +274,14 @@ the top candidate, with a strict success gate: beat fresh typed greedy
 predeclared error class, pass paired testing and ablations, and preserve
 runtime. The single next action is a Stage-A lightweight per-slot diagnostic
 over the 54 schema-hit/not-ready current typed-greedy cases.
+
+**Stage-A result (2026-08-13): `STAGE_A_NO_GO`.** The diagnostic found
+28 role/quantity-separable wrong assignments among 49 targeted schema-hit /
+not-ready slot errors, but correcting all separable assignments would rescue
+0 additional InstantiationReady queries because the current readiness metric
+is gated by coverage/type compatibility rather than numeric exactness. Do not
+implement the role-quantity factorized scorer as the next main-method patch;
+move to the TOP-2 candidate, selective top-k schema + grounding reranking.
 
 The P0 feature-augmented learned scorer (the direction recommended in
 Phase 2) WAS built and evaluated in Phase 3 and did **not** improve over
