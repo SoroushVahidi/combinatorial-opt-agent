@@ -21,7 +21,11 @@ package instead distinguishes four kinds of information (frozen in
 `docs/EXTERNAL_BASELINE_COMPARISON_PROTOCOL.md`):
 
 - **NATIVE metrics** (`metrics.py::NATIVE_METRICS`) — meaningful only within
-  one system/family (e.g. `InstantiationReady` for `ours`, `pass@8` for OR-R1).
+  one system/family (e.g. `InstantiationReady` and
+  `StrictInstantiationReady` for `ours`, `pass@8` for OR-R1). For `ours`,
+  `InstantiationReady` is the predicted-schema proxy
+  `Coverage >= 0.8 AND TypeMatch >= 0.8`; `StrictInstantiationReady` adds
+  `schema_hit` and is therefore the native schema-gated readiness diagnostic.
 - **SHARED metrics** (`metrics.py::SHARED_METRICS`) — verified genuinely
   computable identically across multiple systems (`parse_success_rate`,
   `executable_rate`, `feasible_rate`, `objective_agreement_rate`). `ours` is

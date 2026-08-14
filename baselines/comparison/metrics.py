@@ -27,7 +27,8 @@ NATIVE_METRICS: tuple[NativeMetric, ...] = (
     NativeMetric("ours", "schema_R1", "Schema Recall@1 against the fixed NLP4LP catalog.", "training/external/run_full_downstream_benchmark.py"),
     NativeMetric("ours", "param_coverage", "Fraction of expected scalar slots filled ('Coverage').", "same"),
     NativeMetric("ours", "type_match", "Type-correctness of filled scalar slots ('TypeMatch').", "same"),
-    NativeMetric("ours", "instantiation_ready", "Schema hit AND full coverage AND full type match, per query.", "same"),
+    NativeMetric("ours", "instantiation_ready", "Coverage >= 0.8 AND TypeMatch >= 0.8 under the predicted schema; schema correctness is reported separately.", "same"),
+    NativeMetric("ours", "strict_instantiation_ready", "Schema hit AND Coverage >= 0.8 AND TypeMatch >= 0.8; native schema-gated end-to-end readiness diagnostic.", "same"),
     NativeMetric("pamop", "execution_success_rate", "AMPL parse+solve succeeds (initial or after correction).", "results/pamop/*/summary.json"),
     NativeMetric("pamop", "objective_value_proxy", "Predicted objective within tolerance of gold, execution-successful rows only.", "same"),
     NativeMetric("pamop", "correction_rescue_count", "Rows that failed initially but succeeded after the G_exe/G_rev/G_comp/G_remod loop.", "same"),
@@ -88,8 +89,9 @@ SHARED_METRICS: tuple[SharedMetric, ...] = (
 # above: it performs fixed-catalog scalar grounding, not full NL-to-model
 # generation, so it has no "generated code", "execution", "feasible", or
 # "objective" concept in the same sense the five full-formulation systems
-# do. InstantiationReady is the closest analogue but is NOT the same claim
-# as objective-value agreement -- see END_TO_END_OBJECTIVE_SUCCESS_ELIGIBILITY.
+# do. InstantiationReady and StrictInstantiationReady are the closest native
+# analogues but are NOT the same claim as objective-value agreement -- see
+# END_TO_END_OBJECTIVE_SUCCESS_ELIGIBILITY.
 
 END_TO_END_OBJECTIVE_SUCCESS_ELIGIBILITY: dict[str, str] = {
     "ours": (
@@ -97,9 +99,9 @@ END_TO_END_OBJECTIVE_SUCCESS_ELIGIBILITY: dict[str, str] = {
         "against a fixed catalog; it never generates an executable optimization "
         "instance or solves one, so steps 2 and 3 of END_TO_END_OBJECTIVE_SUCCESS "
         "('solving succeeds', 'objective agrees') do not apply. InstantiationReady "
-        "is a different claim (full, correctly-typed scalar instantiation of the "
-        "single correct catalog entry) and must never be reported in the same "
-        "column as objective-value agreement."
+        "is a predicted-schema grounding-readiness proxy, and "
+        "StrictInstantiationReady is a schema-gated version of that proxy. "
+        "Neither must be reported in the same column as objective-value agreement."
     ),
     "pamop": (
         "ELIGIBLE. Full AMPL formulation, solved locally with the same solver "

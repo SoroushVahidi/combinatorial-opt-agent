@@ -212,14 +212,17 @@ ablation isolating just these features had not been run at that point.
 
 ## H5: Joint top-k schema + grounding reranking may improve strict readiness more than top-1 retrieval alone
 
-**Status (2026-08-13): REPLICATED BUT METRIC-ONLY.**
+**Status (2026-08-13): STRICT-METRIC SECONDARY RESULT.**
 `docs/SELECTIVE_GROUNDING_RERANK_STAGE_B_2026-08-13.md` implemented the
 frozen Stage-A candidate as `tfidf_selective_grounding_rerank` and reproduced
 265/331 InstantiationReady exactly. However, semantic audit showed only 2/8
 new ready queries are true schema rescues; 6/8 are wrong-schema readiness
 gains. H5 is therefore supported as a metric-improvement mechanism, but not as
 a main-method semantic improvement under the current InstantiationReady
-definition.
+definition. The strict metric follow-up
+(`docs/STRICT_INSTANTIATION_READY_DIAGNOSTIC_2026-08-13.md`) confirms this:
+the ordinary +8 readiness gain collapses to +2 strict-ready gains
+(`247/331 -> 249/331`, McNemar `p=0.5`).
 
 **Prior Stage-A status (2026-08-13): SUPPORTED / READY FOR MINIMAL STAGE-B.**
 `docs/TOPK_SCHEMA_RERANK_STAGE_A_2026-08-13.md` recomputed this hypothesis
@@ -243,17 +246,18 @@ to `max_weight_matching` was retracted along with that claim.
   reranking) already reranks top-k retrieval by an *acceptance score*, with
   a statistically indistinguishable result from top-1 — but that reranking
   does not use grounding-quality signal, only schema-acceptance signal.
-- **Current evidence:** Stage B replicates the InstantiationReady gain but
-  shows it is mostly a metric artifact. NR4 remains relevant as a negative
-  result for schema-only acceptance reranking, but it does not invalidate
-  retrieval-grounding consistency selection as a diagnostic.
+- **Current evidence:** Stage B replicates the ordinary InstantiationReady
+  gain but strict readiness shows only a small true schema-gated gain. NR4
+  remains relevant as a negative result for schema-only acceptance reranking,
+  but it does not invalidate retrieval-grounding consistency selection as a
+  secondary diagnostic.
 - **Implementation concept:** for each of the top-k retrieved schemas,
   actually run grounding and pick the schema whose grounding result scores
   highest (not just whose retrieval/acceptance score is highest) —
   distinct from NR4's schema-only reranking.
-- **Primary metric:** InstantiationReady, `orig`.
-- **Secondary metrics:** wall-clock cost (this is strictly more expensive
-  than top-1, running grounding k times per query).
+- **Primary metric for any future claim:** StrictInstantiationReady, `orig`.
+- **Secondary metrics:** ordinary InstantiationReady, Schema R@1, false-ready
+  count, and wall-clock cost.
 - **Falsification criterion:** as a main-method candidate, fails because most
   readiness gains are incorrect-schema gains. As a metric diagnostic, it is
   useful and should motivate schema-correctness-gated readiness.

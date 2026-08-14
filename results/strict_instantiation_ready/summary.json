@@ -1,0 +1,178 @@
+{
+  "baseline": {
+    "correct_schema_not_ready_count": 54,
+    "coverage": 0.8794302206688914,
+    "exact20_on_schema_hits": 0.24488825416660467,
+    "exact5_on_schema_hits": 0.21946266791627614,
+    "false_ready_count": 10,
+    "instantiation_ready": 0.7764350453172205,
+    "method": "tfidf_typed_greedy",
+    "n": 331,
+    "ordinary_ready_count": 257,
+    "schema_R1": 0.9093655589123867,
+    "schema_correct_count": 301,
+    "strict_instantiation_ready": 0.7462235649546828,
+    "strict_ready_count": 247,
+    "strict_wilson95_high": 0.79009605851815,
+    "strict_wilson95_low": 0.6967012808805388,
+    "type_match": 0.8515453411979093,
+    "wrong_schema_not_ready_count": 20
+  },
+  "benchmark": "NLP4LP orig, 331 fresh current-code queries",
+  "false_ready_taxonomy_all": {
+    "fewer_or_easier_scalar_slots": 114,
+    "structurally_similar_schema": 10
+  },
+  "false_ready_taxonomy_baseline": {
+    "fewer_or_easier_scalar_slots": 9,
+    "structurally_similar_schema": 1
+  },
+  "false_ready_taxonomy_selective": {
+    "fewer_or_easier_scalar_slots": 13,
+    "structurally_similar_schema": 3
+  },
+  "git_sha": "e5c0492",
+  "historical_compatibility": [
+    {
+      "historical_instantiation_ready": "0.5287",
+      "historical_strict_instantiation_ready": "0.5045",
+      "method": "TFIDF-TG",
+      "note": "Historical artifact is 0.5287-era and must not be mixed with fresh 257/331 metrics.",
+      "source": "results/eswa_revision/18_strict_instready/strict_instantiation_ready.csv",
+      "status": "RECONSTRUCTABLE_FROM_HISTORICAL_ARTIFACT"
+    },
+    {
+      "historical_instantiation_ready": "0.5196",
+      "historical_strict_instantiation_ready": "0.4924",
+      "method": "BM25-TG",
+      "note": "Historical artifact is 0.5287-era and must not be mixed with fresh 257/331 metrics.",
+      "source": "results/eswa_revision/18_strict_instready/strict_instantiation_ready.csv",
+      "status": "RECONSTRUCTABLE_FROM_HISTORICAL_ARTIFACT"
+    },
+    {
+      "historical_instantiation_ready": "0.5076",
+      "historical_strict_instantiation_ready": "0.4864",
+      "method": "LSA-TG",
+      "note": "Historical artifact is 0.5287-era and must not be mixed with fresh 257/331 metrics.",
+      "source": "results/eswa_revision/18_strict_instready/strict_instantiation_ready.csv",
+      "status": "RECONSTRUCTABLE_FROM_HISTORICAL_ARTIFACT"
+    },
+    {
+      "historical_instantiation_ready": "0.568",
+      "historical_strict_instantiation_ready": "0.568",
+      "method": "Oracle-TG",
+      "note": "Historical artifact is 0.5287-era and must not be mixed with fresh 257/331 metrics.",
+      "source": "results/eswa_revision/18_strict_instready/strict_instantiation_ready.csv",
+      "status": "RECONSTRUCTABLE_FROM_HISTORICAL_ARTIFACT"
+    }
+  ],
+  "metric_definitions": {
+    "instantiation_ready": "Coverage >= 0.8 AND TypeMatch >= 0.8 under the predicted schema; no schema-correctness gate.",
+    "strict_instantiation_ready": "SchemaCorrect AND Coverage >= 0.8 AND TypeMatch >= 0.8."
+  },
+  "oracle": {
+    "correct_schema_not_ready_count": 58,
+    "coverage": 0.9317770405650271,
+    "exact20_on_schema_hits": 0.23497204184704185,
+    "exact5_on_schema_hits": 0.21106939935064933,
+    "false_ready_count": 0,
+    "instantiation_ready": 0.824773413897281,
+    "method": "oracle_typed_greedy",
+    "n": 331,
+    "ordinary_ready_count": 273,
+    "schema_R1": 1.0,
+    "schema_correct_count": 331,
+    "strict_instantiation_ready": 0.824773413897281,
+    "strict_ready_count": 273,
+    "strict_wilson95_high": 0.8619370672572413,
+    "strict_wilson95_low": 0.7801575828698637,
+    "type_match": 0.9076399263710442,
+    "wrong_schema_not_ready_count": 0
+  },
+  "oracle_decomposition": {
+    "baseline_strict_gap_to_oracle_count": 26,
+    "baseline_strict_ready_count": 247,
+    "oracle_strict_instantiation_ready": 0.824773413897281,
+    "oracle_strict_ready_count": 273,
+    "retrieval_ceiling_schema_R1": 1.0,
+    "selective_strict_gap_to_oracle_count": 24,
+    "selective_strict_ready_count": 249
+  },
+  "ordinary_transition": {
+    "both": 257,
+    "mcnemar_note": "exact binomial two-sided test on discordant pairs; n_discordant < 10, treat as a small-sample indication only",
+    "mcnemar_p": 0.0078125,
+    "metric": "ordinary_ready",
+    "neither": 66,
+    "system_a": "tfidf_typed_greedy",
+    "system_b": "tfidf_selective_grounding_rerank",
+    "tfidf_selective_grounding_rerank_only": 8,
+    "tfidf_selective_grounding_rerank_only_ids": "nlp4lp_test_12 nlp4lp_test_106 nlp4lp_test_130 nlp4lp_test_194 nlp4lp_test_222 nlp4lp_test_268 nlp4lp_test_311 nlp4lp_test_317",
+    "tfidf_typed_greedy_only": 0,
+    "tfidf_typed_greedy_only_ids": ""
+  },
+  "outputs": [
+    "README.md",
+    "baseline_vs_selective_transition_details.csv",
+    "baseline_vs_selective_transitions.csv",
+    "bottleneck_taxonomy.csv",
+    "exact_metric_relationship.csv",
+    "false_ready_cases.csv",
+    "historical_compatibility.csv",
+    "method_summary.csv",
+    "oracle_decomposition.csv",
+    "per_query.csv",
+    "summary.json",
+    "threshold_diagnostic.csv"
+  ],
+  "schema_transition": {
+    "both": 301,
+    "mcnemar_note": "exact binomial two-sided test on discordant pairs; n_discordant < 10, treat as a small-sample indication only",
+    "mcnemar_p": 0.5,
+    "metric": "schema_correct",
+    "neither": 28,
+    "system_a": "tfidf_typed_greedy",
+    "system_b": "tfidf_selective_grounding_rerank",
+    "tfidf_selective_grounding_rerank_only": 2,
+    "tfidf_selective_grounding_rerank_only_ids": "nlp4lp_test_222 nlp4lp_test_268",
+    "tfidf_typed_greedy_only": 0,
+    "tfidf_typed_greedy_only_ids": ""
+  },
+  "selective": {
+    "correct_schema_not_ready_count": 54,
+    "coverage": 0.9035994049589217,
+    "exact20_on_schema_hits": 0.24648742421779965,
+    "exact5_on_schema_hits": 0.22123539145723448,
+    "false_ready_count": 16,
+    "instantiation_ready": 0.8006042296072508,
+    "method": "tfidf_selective_grounding_rerank",
+    "n": 331,
+    "ordinary_ready_count": 265,
+    "schema_R1": 0.9154078549848943,
+    "schema_correct_count": 303,
+    "strict_instantiation_ready": 0.7522658610271903,
+    "strict_ready_count": 249,
+    "strict_wilson95_high": 0.7957018278593995,
+    "strict_wilson95_low": 0.7030414585183982,
+    "type_match": 0.8757145254879395,
+    "wrong_schema_not_ready_count": 12
+  },
+  "strict_transition": {
+    "both": 247,
+    "mcnemar_note": "exact binomial two-sided test on discordant pairs; n_discordant < 10, treat as a small-sample indication only",
+    "mcnemar_p": 0.5,
+    "metric": "strict_ready",
+    "neither": 82,
+    "system_a": "tfidf_typed_greedy",
+    "system_b": "tfidf_selective_grounding_rerank",
+    "tfidf_selective_grounding_rerank_only": 2,
+    "tfidf_selective_grounding_rerank_only_ids": "nlp4lp_test_222 nlp4lp_test_268",
+    "tfidf_typed_greedy_only": 0,
+    "tfidf_typed_greedy_only_ids": ""
+  },
+  "thresholds": {
+    "coverage": 0.8,
+    "type_match": 0.8
+  },
+  "timestamp_utc": "2026-08-14T01:08:50.497353+00:00"
+}

@@ -70,7 +70,8 @@ def test_adapt_ours_never_populates_shared_metric_fields():
     assert row.system == "ours" and row.scalar_grounding_only is True and row.full_formulation is False
     assert row.execution_attempted == CellState.NOT_APPLICABLE
     assert row.native_metrics["schema_hit"] is True
-    assert row.native_metrics["instantiation_ready"] is False  # coverage 0.923 != 1.0
+    assert row.native_metrics["instantiation_ready"] is True  # current definition is Coverage/TypeMatch >= 0.8
+    assert row.native_metrics["strict_instantiation_ready"] is True
 
 
 def test_adapt_pamop_objective_proxy_not_semantic_correctness():

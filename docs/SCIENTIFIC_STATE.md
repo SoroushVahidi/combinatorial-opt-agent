@@ -38,6 +38,8 @@ the strongest semantically reliable non-oracle method as of 2026-08-13 (see
 §3-4). A later selective top-k schema reranker improves the repository's
 InstantiationReady metric to 265/331, but Stage-B audit classified it as
 `STAGE_B_METRIC_ONLY_GAIN` because most new ready cases use incorrect schemas.
+The follow-up strict-readiness diagnostic therefore recommends
+schema-correctness-gated readiness as the primary native end-to-end proxy.
 
 ## 3. Current Best Verified Results
 
@@ -67,8 +69,21 @@ Both numbers are "real" in the sense that they are correctly computed —
 they were computed at different points in the codebase's history.
 
 `global_compat_*`, `relation_aware_*`, `ambiguity_aware_*` have **not**
-been re-verified fresh (`NEXT_STEPS.md` P0) — their committed numbers
+been re-verified fresh (`NEXT_STEPS.md` P5) — their committed numbers
 (0.42-0.50 range) are presumed stale by pattern but not confirmed.
+
+**Fresh strict-readiness diagnostic (2026-08-13):**
+
+| Method | StrictInstantiationReady | False-ready count |
+|---|---:|---:|
+| `oracle_typed_greedy` | 273/331 = 0.8248 | 0 |
+| `tfidf_selective_grounding_rerank` | 249/331 = 0.7523 | 16 |
+| `tfidf_typed_greedy` | 247/331 = 0.7462 | 10 |
+
+The selective reranker's ordinary +8 readiness gain becomes only +2 strict
+ready gains (`nlp4lp_test_222`, `nlp4lp_test_268`). Future main-method gates
+should use strict readiness, with ordinary InstantiationReady retained as a
+predicted-schema diagnostic.
 
 ## 4. Why the Best Method Works
 
@@ -190,7 +205,7 @@ not exact.
   correctness on the pilot).
 - 3 of ~16 grounding-method families (`global_compat_*`,
   `relation_aware_*`, `ambiguity_aware_*`) have not been re-verified
-  against current code (`NEXT_STEPS.md` P0).
+  against current code (`NEXT_STEPS.md` P5).
 
 ## 12. Strengths of the Approach
 
@@ -223,8 +238,8 @@ prerequisites, falsification criteria):
    in this codebase.
 3. **Re-target H4 (richer semantic-role features) at `_choose_token`**
    rather than a learned scorer, given (2)'s evidence.
-4. H5 (top-k retrieval + grounding joint reranking) — untested, likely
-   smaller value given retrieval is already comparatively strong.
+4. H5 (top-k retrieval + grounding joint reranking) — replicated as an
+   ordinary-readiness metric artifact; only +2 strict-ready gains.
 5. Confidence calibration/abstention — conditional, needs a working
    improved score first (NR7 shows current abstention badly miscalibrated).
 6. A genuinely new combinatorial algorithm — only if 1-5 are exhausted
@@ -236,7 +251,7 @@ prerequisites, falsification criteria):
 | Baseline | Status | Next action |
 |---|---|---|
 | PaMOP | IN PROGRESS, fidelity gate RESOLVED | optional C2/C4 prompt follow-up, or decide on scale-up (§15) |
-| ORLM | **IMPLEMENTED, READY FOR INFERENCE** (`baselines/orlm/`) | smoke test — needs checkpoint/GPU; COPT only for later solver execution, see `NEXT_STEPS.md` P4 |
+| ORLM | **IMPLEMENTED, READY FOR INFERENCE** (`baselines/orlm/`) | smoke test — needs checkpoint/GPU; COPT only for later solver execution, see `NEXT_STEPS.md` P9 |
 | OptMATH | **IMPLEMENTED, READY FOR INFERENCE** (`baselines/optmath/`) | 7B checkpoint smoke test when resources allow, see `docs/OPTMATH_PROVENANCE.md` |
 | DeepOR | PAPER RECONSTRUCTION READY; official code/checkpoint not found | use `baselines/deepor/`; do not claim empirical results until an official checkpoint is available |
 | OR-R1 | **CODE INTEGRATED, CHECKPOINT BLOCKED** (`baselines/orr1/`) | no official SFT/GRPO/merged checkpoint exists anywhere; faithful reproduction requires training TGRPO from scratch, and TGRPO's official training data is transductive over the eval sets — see `docs/ORR1_PROVENANCE.md` |
@@ -298,7 +313,7 @@ reported absolute numbers not reproducing.
   as expensive and lower-value than the P0-P3 directions in §13).
 - Are `global_compat_*`/`relation_aware_*`/`ambiguity_aware_*` also stale
   by a similar magnitude? Pattern-predicted but not confirmed
-  (`NEXT_STEPS.md` P0).
+  (`NEXT_STEPS.md` P5).
 - Does the same-type-ambiguity/total-per-unit-confusion bottleneck (§7-8)
   have a tractable deterministic fix, or does it require genuinely richer
   semantic understanding (dependency parsing, H3) or more training data
@@ -309,9 +324,9 @@ reported absolute numbers not reproducing.
 
 ## 18. Immediate Next Experiments
 
-See `NEXT_STEPS.md` for the full operational queue (P0-P5). Highest
-priority: P0 (verify remaining stale numbers, cheap) and P1 (manuscript
-decision, requires the author, not an agent-executable experiment).
+See `NEXT_STEPS.md` for the full operational queue. Highest
+priority: P1 (strict-readiness failure diagnosis) and P6 (manuscript
+path decision, requires the author, not an agent-executable experiment).
 
 ## 19. Things Future Agents Must Not Repeat
 

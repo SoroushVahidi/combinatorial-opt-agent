@@ -540,7 +540,27 @@ Risk: high, because current performance depends on many small heuristic
 interactions. Require byte-for-byte aggregate preservation before any method
 change.
 
-## 20. Documentation State
+## 20. Strict-Metric Addendum (2026-08-13)
+
+The Stage-B follow-up to the TOP-2 candidate showed that ordinary
+InstantiationReady can reward incorrect schemas. The strict-readiness
+diagnostic in `docs/STRICT_INSTANTIATION_READY_DIAGNOSTIC_2026-08-13.md`
+therefore supersedes the original +2 pp ordinary-InstantiationReady success
+gate for future main-method claims.
+
+Fresh reference values:
+
+- `tfidf_typed_greedy`: ordinary readiness 257/331, strict readiness 247/331.
+- `tfidf_selective_grounding_rerank`: ordinary readiness 265/331, strict
+  readiness 249/331.
+- `oracle_typed_greedy`: strict readiness 273/331.
+
+Future candidate gates should use StrictInstantiationReady as the primary
+native end-to-end proxy and report ordinary InstantiationReady only as a
+predicted-schema diagnostic. The selective reranker remains a secondary
+retrieval diagnostic, not a main-method improvement.
+
+## 21. Documentation State
 
 This audit should be treated as the current research plan. Older files still
 contain some superseded positive wording in `results/unevaluated_methods_evaluation/README.md`
@@ -548,7 +568,7 @@ and early `docs/LEARNED_GROUNDING_P0.md` paragraphs; later status documents
 correct the interpretation. Do not cite those older positive paragraphs without
 the staleness correction.
 
-## 21. Classification
+## 22. Classification
 
 **METHOD_IMPROVEMENT_PLAN_READY**
 

@@ -28,6 +28,7 @@ these documents for full scientific detail:
 - [`docs/ROLE_QUANTITY_STAGE_A_DIAGNOSTIC_2026-08-13.md`](docs/ROLE_QUANTITY_STAGE_A_DIAGNOSTIC_2026-08-13.md) — Stage-A diagnostic for the top-ranked role/quantity candidate; result `STAGE_A_NO_GO`
 - [`docs/TOPK_SCHEMA_RERANK_STAGE_A_2026-08-13.md`](docs/TOPK_SCHEMA_RERANK_STAGE_A_2026-08-13.md) — Stage-A diagnostic for selective top-k schema + grounding reranking; result `TOP2_GO`
 - [`docs/SELECTIVE_GROUNDING_RERANK_STAGE_B_2026-08-13.md`](docs/SELECTIVE_GROUNDING_RERANK_STAGE_B_2026-08-13.md) — frozen Stage-B implementation of `tfidf_selective_grounding_rerank`; result `STAGE_B_METRIC_ONLY_GAIN`
+- [`docs/STRICT_INSTANTIATION_READY_DIAGNOSTIC_2026-08-13.md`](docs/STRICT_INSTANTIATION_READY_DIAGNOSTIC_2026-08-13.md) — fresh schema-correctness-gated readiness diagnostic; result `STRICT_METRIC_RECOMMENDED`
 
 **Headline change since Phase 3 (retraction, same day, 2026-08-12):**
 Phase 3 believed `tfidf_typed_greedy` (committed at 0.5287) had been
@@ -301,6 +302,16 @@ queries are true schema rescues; the other 6 are wrong-schema readiness gains.
 Treat this as evidence that InstantiationReady can be gamed by easier wrong
 schemas. Do not promote this as the new main method without schema-correctness
 gating or metric redesign.
+
+**Strict metric result (2026-08-13): `STRICT_METRIC_RECOMMENDED`.**
+`docs/STRICT_INSTANTIATION_READY_DIAGNOSTIC_2026-08-13.md` adds a
+schema-correctness gate to the fresh current-code readiness metric. Fresh
+`tfidf_typed_greedy` is 257/331 under ordinary predicted-schema
+InstantiationReady but 247/331 under strict readiness; fresh
+`tfidf_selective_grounding_rerank` is 265/331 ordinary but only 249/331
+strict. The selective reranker's +8 ordinary gain collapses to +2 true
+schema-gated ready gains, confirming that ordinary InstantiationReady should
+be treated as a predicted-schema proxy, not end-to-end correctness.
 
 The P0 feature-augmented learned scorer (the direction recommended in
 Phase 2) WAS built and evaluated in Phase 3 and did **not** improve over

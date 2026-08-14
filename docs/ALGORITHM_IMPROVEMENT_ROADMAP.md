@@ -283,15 +283,17 @@ scorer.
 
 ### P4 (was P4/H5) — Top-k retrieval + grounding joint reranking (H5)
 
-- **Status:** REPLICATED BUT METRIC-ONLY
-  (`docs/SELECTIVE_GROUNDING_RERANK_STAGE_B_2026-08-13.md`). The frozen
+- **Status:** STRICT-METRIC SECONDARY RESULT
+  (`docs/SELECTIVE_GROUNDING_RERANK_STAGE_B_2026-08-13.md`,
+  `docs/STRICT_INSTANTIATION_READY_DIAGNOSTIC_2026-08-13.md`). The frozen
   production method `tfidf_selective_grounding_rerank` reaches 265/331
-  InstantiationReady with 0 ready losses, but only 2/8 new ready cases are
-  true schema rescues; 6/8 are wrong-schema readiness gains. This is useful
-  evidence about the metric, not a main-method result.
+  ordinary InstantiationReady with 0 ready losses, but only 2/8 new ready
+  cases are true schema rescues. Under strict readiness, the method improves
+  only 247/331 -> 249/331 (McNemar `p=0.5`). This is useful evidence about
+  metric design and a small retrieval diagnostic, not a main-method result.
 - **Prerequisite:** P1.
-- **Next implementation:** do not extend this reranker before a
-  schema-correctness-gated readiness metric is defined and evaluated.
+- **Next implementation:** do not extend this reranker unless a future design
+  explicitly optimizes strict readiness and controls false-ready artifacts.
 - **Risk:** confirmed. Readiness-only improvement can be driven by wrong
   schemas with easier overlapping scalar slots.
 

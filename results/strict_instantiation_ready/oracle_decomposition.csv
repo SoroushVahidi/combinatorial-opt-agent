@@ -1,0 +1,2 @@
+retrieval_ceiling_schema_R1,oracle_strict_ready_count,oracle_strict_instantiation_ready,baseline_strict_ready_count,baseline_strict_gap_to_oracle_count,selective_strict_ready_count,selective_strict_gap_to_oracle_count
+1.0,273,0.824773413897281,247,26,249,24

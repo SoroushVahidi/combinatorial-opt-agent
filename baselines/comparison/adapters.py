@@ -46,10 +46,14 @@ def _num_or(value: Any, default: Any = CellState.UNAVAILABLE) -> Any:
 def adapt_ours(row: dict[str, Any], *, method_variant: str = "tfidf_typed_greedy", dataset: str = "nlp4lp_orig") -> UnifiedRow:
     """From a `nlp4lp_downstream_per_query_*.csv` row (schema_hit/param_coverage/type_match/...)."""
     problem_id = str(row["query_id"])
+    schema_hit = _bool_or(row.get("schema_hit"))
     instantiation_ready = (
-        _bool_or(row.get("schema_hit")) is True
-        and _num_or(row.get("param_coverage"), 0.0) == 1.0
-        and _num_or(row.get("type_match"), 0.0) == 1.0
+        _num_or(row.get("param_coverage"), 0.0) >= 0.8
+        and _num_or(row.get("type_match"), 0.0) >= 0.8
+    )
+    strict_instantiation_ready = (
+        schema_hit is True
+        and instantiation_ready
     )
     return UnifiedRow(
         system="ours", method_variant=method_variant, problem_id=problem_id, dataset=dataset,
@@ -75,13 +79,14 @@ def adapt_ours(row: dict[str, Any], *, method_variant: str = "tfidf_typed_greedy
         generative=False, test_time_learning=False, transductive_training=False,
         native_record=dict(row),
         native_metrics={
-            "schema_hit": _bool_or(row.get("schema_hit")),
+            "schema_hit": schema_hit,
             "param_coverage": _num_or(row.get("param_coverage")),
             "type_match": _num_or(row.get("type_match")),
             "exact5": _num_or(row.get("exact5"), CellState.NOT_APPLICABLE),
             "exact20": _num_or(row.get("exact20"), CellState.NOT_APPLICABLE),
             "key_overlap": _num_or(row.get("key_overlap"), CellState.NOT_APPLICABLE),
             "instantiation_ready": instantiation_ready,
+            "strict_instantiation_ready": strict_instantiation_ready,
         },
     )
 

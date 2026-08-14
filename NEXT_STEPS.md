@@ -8,24 +8,36 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
 
 ---
 
-## P0 — Redesign/evaluate schema-correctness-gated readiness
+## P0 — Completed: schema-correctness-gated readiness
 
-- **Task:** define and compute a strict or schema-correctness-gated readiness
-  metric for the current methods, starting with `tfidf_typed_greedy` and
-  `tfidf_selective_grounding_rerank`.
-- **Purpose:** Stage-B selective reranking replicated 265/331
-  InstantiationReady but was classified `STAGE_B_METRIC_ONLY_GAIN`
-  (`docs/SELECTIVE_GROUNDING_RERANK_STAGE_B_2026-08-13.md`): only 2/8 new
-  ready queries are true schema rescues, while 6/8 are wrong-schema readiness
-  gains. The next scientific step is to fix or foreground the metric issue,
-  not to present the reranker as a main method.
-- **Prerequisite:** do not edit the manuscript yet; keep canonical historical
-  tables unchanged until the metric decision is explicit.
-- **Stop/success criterion:** produce a small report showing whether the
-  selective reranker still improves under a schema-correctness-gated readiness
-  metric. If it does not, treat it as a metric artifact only.
+- **Status:** `STRICT_METRIC_RECOMMENDED`.
+- **Evidence:** `docs/STRICT_INSTANTIATION_READY_DIAGNOSTIC_2026-08-13.md`
+  and `results/strict_instantiation_ready/`.
+- **Key result:** fresh `tfidf_typed_greedy` ordinary readiness is
+  257/331 but strict readiness is 247/331; `tfidf_selective_grounding_rerank`
+  ordinary readiness is 265/331 but strict readiness is only 249/331.
+  The selective reranker's +8 ordinary gain collapses to +2 strict-ready
+  true schema rescues.
+- **Instruction:** future method gates should use strict readiness as the
+  primary native end-to-end proxy, while retaining ordinary
+  InstantiationReady as a predicted-schema diagnostic.
 
-## P1 — Completed: Stage-B selective grounding reranker
+## P1 — Next: target strict-readiness failures under the correct schema
+
+- **Task:** diagnose the 58 oracle-schema not-ready cases and the 54
+  current `tfidf_typed_greedy` schema-correct/not-ready cases under the
+  strict metric.
+- **Purpose:** strict readiness shows retrieval is not the whole problem:
+  oracle typed greedy reaches only 273/331, leaving a grounding gap even
+  when the schema is correct.
+- **Prerequisite:** do not tune or extend the selective reranker; do not edit
+  the manuscript yet.
+- **Stop/success criterion:** identify one narrow grounding failure class
+  with at least a plausible +7-query strict-readiness rescue ceiling, or
+  document that strict-readiness optimization should pause in favor of exact
+  value metrics.
+
+## P2 — Completed: Stage-B selective grounding reranker
 
 - **Status:** `STAGE_B_METRIC_ONLY_GAIN`.
 - **Evidence:** `docs/SELECTIVE_GROUNDING_RERANK_STAGE_B_2026-08-13.md` and
@@ -36,7 +48,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
 - **Instruction:** do not promote this as the new main method without metric
   redesign or strict-readiness validation.
 
-## P2 — Completed: TOP-2 Stage-A diagnostic
+## P3 — Completed: TOP-2 Stage-A diagnostic
 
 - **Status:** `TOP2_GO`.
 - **Evidence:** `docs/TOPK_SCHEMA_RERANK_STAGE_A_2026-08-13.md` and
@@ -48,7 +60,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   first; do not add API, learned reranking, semantic parsing, or structured
   assignment.
 
-## P3 — Completed: role-quantity Stage-A diagnostic
+## P4 — Completed: role-quantity Stage-A diagnostic
 
 - **Status:** `STAGE_A_NO_GO`.
 - **Evidence:** `docs/ROLE_QUANTITY_STAGE_A_DIAGNOSTIC_2026-08-13.md` and
@@ -60,7 +72,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   the next main-method patch unless the target metric changes to numeric
   exactness rather than InstantiationReady.
 
-## P4 — Verify/refresh the remaining stale method numbers
+## P5 — Verify/refresh the remaining stale method numbers
 
 - **Task:** rerun `global_compat_full` (and `_local`/`_pairwise`),
   `relation_aware_full` (and `_basic`/`_ops`/`_semantic`),
@@ -79,7 +91,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
 - **Stop/success criterion:** every row in that table has a fresh,
   same-code number.
 
-## P5 — Decide the manuscript's path forward (requires the author)
+## P6 — Decide the manuscript's path forward (requires the author)
 
 - **Task:** read `docs/MANUSCRIPT_INTEGRATION_DECISION_2026-08-12.md` and
   choose one of: (a) issue an erratum with fresh numbers, (b) pin/tag the
@@ -99,7 +111,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   → `tools/build_eaai_camera_ready_figures.py` chain, all 3 variants.
 - **Stop/success criterion:** n/a — decision gate.
 
-## P6 — PaMOP: PILOT VALIDATED (2026-08-12), scale-up pending
+## P7 — PaMOP: PILOT VALIDATED (2026-08-12), scale-up pending
 
 - **Status:** the fidelity diagnostic is complete —
   `results/pamop/fidelity_diagnostic_gpt5/README.md`. Gate: `B. MODEL_LIMITED`.
@@ -120,7 +132,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   unrelated active AMPL/HiGHS computation, then use a fresh output directory
   and a pre-registered subset/configuration.
 
-## P7 — Improve the local pairwise score's dominant error modes
+## P8 — Improve the local pairwise score's dominant error modes
 
 - **Task:** target `_score_mention_slot_opt`'s residual same-type
   ambiguity (335 slot-level instances) and total/per-unit confusion (166)
@@ -131,8 +143,8 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   this codebase (it produced the entire +0.2477 improvement already
   measured). No learned scorer, global-assignment method, or repair rule
   has beaten it.
-- **Prerequisite:** P0 (accurate current baselines for every method, so
-  any improvement is measured against the right numbers).
+- **Prerequisite:** P0/P1 (strict metric and current failure target defined)
+  plus P5 if comparing against the still-stale method families.
 - **Expected artifact:** a targeted fix (or documented negative result if
   attempted and it doesn't help) plus a fresh InstantiationReady number
   for `optimization_role_repair`/`max_weight_matching` after the fix.
@@ -140,7 +152,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   numbers closer to typed greedy's, the local score is not the gating
   factor and this line should stop.
 
-## P8 — ORLM baseline: lightweight implementation DONE (2026-08-12), inference pending
+## P9 — ORLM baseline: lightweight implementation DONE (2026-08-12), inference pending
 
 - **Status:** `baselines/orlm/` is inference-ready for resource-available
   execution (adapter, official prompt, lazy runner, normalizer, static
@@ -160,7 +172,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
 - **Stop/success criterion:** do not download the 8B weights or attempt
   GPU inference without first confirming GPU/license availability.
 
-## P9 — OptMATH lightweight implementation DONE (2026-08-12), inference pending
+## P10 — OptMATH lightweight implementation DONE (2026-08-12), inference pending
 
 - **Status:** `baselines/optmath/` is ready for resource-available inference.
   The primary checkpoint is `Aurora-Gem/OptMATH-Qwen2.5-7B`; the official
@@ -172,7 +184,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   evaluate the fixed pilot. Do not download weights or execute Gurobi during
   the current high-priority AMPL/HiGHS workload.
 
-## P10 — Re-derive the typed-greedy bottleneck table against current code
+## P11 — Re-derive the typed-greedy bottleneck table against current code
 
 - **Task:** `docs/CURRENT_BOTTLENECK_ANALYSIS.md`'s counts (82/331 type
   mismatch etc.) were derived from `per_instance_diagnostics.csv`, which
@@ -182,7 +194,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
 - **Expected artifact:** updated bottleneck table with a note on whether
   the fresh counts differ from the ones currently documented.
 
-## P11 — Cross-baseline comparison harness: infrastructure DONE (2026-08-13), empirical rows pending
+## P12 — Cross-baseline comparison harness: infrastructure DONE (2026-08-13), empirical rows pending
 
 - **Status:** `baselines/comparison/` implements a unified analysis view
   (`UnifiedRow`), adapters for all six systems, native/shared metric
@@ -196,7 +208,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   `instantiation_ready` 10/18) and `pamop` (the existing 6-instance gpt-5.4
   diagnostic). ORLM/OptMATH/DeepOR/OR-R1 show `PENDING`/`UNAVAILABLE`, not
   fabricated numbers.
-- **Remaining task:** once P4/P5 (ORLM/OptMATH inference) or a DeepOR/OR-R1
+- **Remaining task:** once P9/P10 (ORLM/OptMATH inference) or a DeepOR/OR-R1
   checkpoint become available, ingest their real result files via
   `baselines/comparison/ingest.py` (add an explicit known-location entry;
   do not add filesystem crawling) and regenerate the report.
