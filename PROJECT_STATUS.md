@@ -342,7 +342,7 @@ committed number. Full detail and next steps:
 | Baseline | Status |
 |---|---|
 | **PaMOP** (IJCAI 2025) | **PILOT VALIDATED**, fidelity gate RESOLVED (`B. MODEL_LIMITED`) — independent reconstruction, no official code available; larger run pending. See §10. |
-| **ORLM** | **PILOT RUNNING HEALTHY (2026-08-13)** — pinned official checkpoint cached; six-instance official-checkpoint inference is healthy in tmux with CPU offload; no completed empirical rows yet; coptpy missing so solver execution is blocked |
+| **ORLM** | **PILOT RUNNING HEALTHY (2026-08-13)** — pinned official checkpoint cached; six-instance official-checkpoint inference is healthy in tmux with CPU offload; one row has completed parse/static validation and five remain pending; coptpy missing so solver execution is blocked |
 | **OptMATH** | **IMPLEMENTED, READY FOR INFERENCE (2026-08-12)** — official prompt/checkpoint provenance, NLP4LP adapter, Gurobi parser/validator/harness, result schema, evaluator, manifest, and mocked tests complete; no inference or solver run |
 | **DeepOR** | **PAPER RECONSTRUCTION READY (2026-08-12)** — mock-tested adapter, paper-level prompt, reasoning parser, Pyomo static validator, safe harness, schema, evaluator, and manifest; official code/checkpoint not found and no empirical result |
 | **OR-R1** | **CODE INTEGRATED, CHECKPOINT BLOCKED (2026-08-13)** — official code verified (`SCUTE-ZZ/OR-R1`, cited directly by the arXiv paper); lightweight adapter/runner/TGRPO-control/majority-voting/normalizer/validator/harness/evaluator and mocked tests complete; no SFT/GRPO/merged checkpoint released anywhere; TGRPO training set is transductive (== union of all eval sets, incl. NLP4LP); see [`docs/ORR1_PROVENANCE.md`](docs/ORR1_PROVENANCE.md) |

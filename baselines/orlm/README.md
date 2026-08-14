@@ -98,5 +98,6 @@ accuracy.
 - output: `results/orlm/pilot_official_checkpoint/results.jsonl`
 - Git SHA: `6bb75a4c4bed02c458ac30b4af206a2802fce095`
 - health check: passed after approximately three minutes; checkpoint loaded
-  with CPU offload, GPU memory remained below 15.3 GiB, and no result row had
-  completed at handoff.
+  with CPU offload and GPU memory remained below 15.3 GiB. At the later
+  handoff inspection, one real row (`problem_id=14`) had completed with
+  `CODE_EXTRACTED` and `STATIC_VALID`; the other five rows remain pending.
