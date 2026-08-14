@@ -212,13 +212,24 @@ ablation isolating just these features had not been run at that point.
 
 ## H5: Joint top-k schema + grounding reranking may improve strict readiness more than top-1 retrieval alone
 
-**Status (2026-08-12, Phase 4 note): NOT TESTED.** Out of scope for this
-phase. H5's upper-bound estimate (≤8/331, 2.4%) was computed against typed
-greedy's committed 0.5287; that number is stale (fresh rerun: 0.7764, see
-`docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`), so the upper-bound estimate
-should be recomputed against the fresh baseline before this hypothesis is
-prioritized either up or down. The Phase 3 note reprioritizing this
-relative to `max_weight_matching` is retracted along with that claim.
+**Status (2026-08-13): STAGE-A SUPPORTED / READY FOR MINIMAL STAGE-B.**
+`docs/TOPK_SCHEMA_RERANK_STAGE_A_2026-08-13.md` recomputed this hypothesis
+against the fresh 257/331 typed-greedy baseline. The true gold+ready oracle
+ceiling is 8 rescued queries at k=3, 9 at k=5, and 13 at k=10. A deterministic
+selective cascade already crosses the +2 pp gate diagnostically: margin
+`<=0.05`, top-5 grounding, and
+`0.50 * normalized_tfidf + 0.25 * coverage + 0.25 * type_match` reaches
+265/331 InstantiationReady with 0 schema regressions and 0 ready losses while
+reranking only 27/331 queries. This should be implemented next as a minimal
+Stage-B production candidate.
+
+**Prior status (2026-08-12, Phase 4 note): NOT TESTED.** Out of scope for
+that phase. H5's upper-bound estimate (≤8/331, 2.4%) was computed against
+typed greedy's committed 0.5287; that number is stale (fresh rerun: 0.7764,
+see `docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`), so the upper-bound
+estimate needed recomputation against the fresh baseline before this
+hypothesis could be prioritized. The Phase 3 note reprioritizing this relative
+to `max_weight_matching` was retracted along with that claim.
 
 - **Motivation:** `docs/CURRENT_BOTTLENECK_ANALYSIS.md` rank 3 (schema
   retrieval miss, 30/331 = 9.1%) is a comparatively small but nonzero
@@ -226,10 +237,10 @@ relative to `max_weight_matching` is retracted along with that claim.
   reranking) already reranks top-k retrieval by an *acceptance score*, with
   a statistically indistinguishable result from top-1 — but that reranking
   does not use grounding-quality signal, only schema-acceptance signal.
-- **Current evidence:** NR4 (not significant either way); StrictInstantiationReady
-  (`results/CANONICAL_RESULTS.md` §D) shows the schema-match gate removes
-  8/331 TF-IDF queries from the ready count — an upper bound on what
-  fixing retrieval-grounding joint decisions could plausibly recover.
+- **Current evidence:** TOP-2 Stage A supports the hypothesis for a minimal
+  deterministic cascade. NR4 remains relevant as a negative result for
+  schema-only acceptance reranking, but it does not invalidate
+  retrieval-grounding consistency selection.
 - **Implementation concept:** for each of the top-k retrieved schemas,
   actually run grounding and pick the schema whose grounding result scores
   highest (not just whose retrieval/acceptance score is highest) —
@@ -237,11 +248,11 @@ relative to `max_weight_matching` is retracted along with that claim.
 - **Primary metric:** InstantiationReady, `orig`.
 - **Secondary metrics:** wall-clock cost (this is strictly more expensive
   than top-1, running grounding k times per query).
-- **Falsification criterion:** gain smaller than the ≤8/331 (2.4%) upper
-  bound implied by the StrictInstantiationReady schema-match-gate analysis
-  would mean this is not worth its k-fold inference cost.
-- **Expected risk:** k-fold inference cost; already-small upper bound on
-  achievable gain given how strong top-1 retrieval already is.
+- **Falsification criterion:** Stage-B production implementation fails to
+  reproduce at least 264/331 on the unchanged 331-query protocol, or introduces
+  material schema regressions/runtime cost.
+- **Expected risk:** readiness-only reranking can select wrong schemas; retain
+  the TF-IDF regularizer and report schema transitions.
 - **Novelty status:** **MODERATE_NOVELTY** (joint retrieval-grounding
   reranking is known in retrieve-and-generate architectures broadly;
   specific application here, and distinction from the already-tried

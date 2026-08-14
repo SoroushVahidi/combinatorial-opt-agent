@@ -283,12 +283,20 @@ scorer.
 
 ### P4 (was P4/H5) — Top-k retrieval + grounding joint reranking (H5)
 
-- **Status:** NOT TESTED. H5's upper-bound estimate needs recomputing
-  against the fresh typed-greedy baseline (0.7764) rather than the stale
-  0.5287 — schema retrieval miss (30/331, 9.1%) is a similar *relative*
-  share of the gap either way, so this is likely still a smaller-value
-  lever than P2/P3, but should be re-estimated, not assumed.
+- **Status:** STAGE-A SUPPORTED / READY FOR MINIMAL STAGE-B
+  (`docs/TOPK_SCHEMA_RERANK_STAGE_A_2026-08-13.md`). Against the fresh
+  257/331 baseline, the true gold+ready top-k ceiling is 8 rescued queries
+  at k=3, 9 at k=5, and 13 at k=10. A selective deterministic diagnostic
+  rule already reaches 265/331 with 0 schema regressions: rerank only
+  TF-IDF margin `<=0.05` cases, ground top-5 schemas, and select by
+  `0.50 * normalized_tfidf + 0.25 * coverage + 0.25 * type_match`.
 - **Prerequisite:** P1.
+- **Next implementation:** add only this minimal deterministic cascade to
+  the downstream utility or an adjacent wrapper, then rerun the unchanged
+  331-query protocol and paired transitions. Do not add learned/API/semantic
+  reranking before this Stage-B test.
+- **Risk:** readiness-only rules produce many wrong-schema-ready false
+  positives; keep the retrieval regularizer and schema-transition reporting.
 
 ### P5 (was P5) — Confidence calibration / abstention — **CONDITIONAL**
 

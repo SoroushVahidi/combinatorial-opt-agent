@@ -26,6 +26,7 @@ these documents for full scientific detail:
 - [`docs/BASELINE_IMPLEMENTATION_ROADMAP.md`](docs/BASELINE_IMPLEMENTATION_ROADMAP.md) — ORLM/OptMATH/DeepOR/OR-R1 implementation planning
 - [`docs/METHOD_NOVELTY_EFFICIENCY_AUDIT_2026-08-13.md`](docs/METHOD_NOVELTY_EFFICIENCY_AUDIT_2026-08-13.md) — current method algorithm, fresh failure taxonomy, reviewer-gap matrix, novelty assessment, and ranked go/no-go plan for the next method improvement
 - [`docs/ROLE_QUANTITY_STAGE_A_DIAGNOSTIC_2026-08-13.md`](docs/ROLE_QUANTITY_STAGE_A_DIAGNOSTIC_2026-08-13.md) — Stage-A diagnostic for the top-ranked role/quantity candidate; result `STAGE_A_NO_GO`
+- [`docs/TOPK_SCHEMA_RERANK_STAGE_A_2026-08-13.md`](docs/TOPK_SCHEMA_RERANK_STAGE_A_2026-08-13.md) — Stage-A diagnostic for selective top-k schema + grounding reranking; result `TOP2_GO`
 
 **Headline change since Phase 3 (retraction, same day, 2026-08-12):**
 Phase 3 believed `tfidf_typed_greedy` (committed at 0.5287) had been
@@ -282,6 +283,15 @@ not-ready slot errors, but correcting all separable assignments would rescue
 is gated by coverage/type compatibility rather than numeric exactness. Do not
 implement the role-quantity factorized scorer as the next main-method patch;
 move to the TOP-2 candidate, selective top-k schema + grounding reranking.
+
+**TOP-2 Stage-A result (2026-08-13): `TOP2_GO`.** Selective top-k schema +
+grounding reranking has enough query-level signal for a minimal Stage-B:
+the recommended diagnostic rule reranks only 27/331 low-margin queries, grounds
+top-5 schemas, selects by `0.50 * normalized_tfidf + 0.25 * coverage +
+0.25 * type_match`, and reaches 265/331 InstantiationReady with 0 schema
+regressions and 0 ready losses. Implement this minimal deterministic cascade
+next; do not add API, learned, or semantic reranking before the Stage-B
+regression test.
 
 The P0 feature-augmented learned scorer (the direction recommended in
 Phase 2) WAS built and evaluated in Phase 3 and did **not** improve over
