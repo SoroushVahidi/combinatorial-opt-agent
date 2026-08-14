@@ -68,3 +68,27 @@ That objective agreement is implemented as a named proxy in this repository;
 it is not renamed semantic equivalence. The official OptMATH triplet
 equivalence/rejection-sampling claim is a training-data validation concept,
 not automatically transferable to an NLP4LP adaptation.
+
+## Lightweight preparation state / handoff (2026-08-14)
+
+Checked without consuming GPU or disturbing the running ORLM common-18 job:
+
+- `Aurora-Gem/OptMATH-Qwen2.5-7B` (revision `617fe77`) is **NOT cached** in
+  `~/.cache/huggingface/hub/`; it must be downloaded before launch.
+- Disk: `/` at 93% used, ~50 GiB free; a bf16 7B snapshot is ~15 GiB, so
+  download is feasible but the host is getting tight. Do not clear the ORLM
+  cache or remove any ORLM artifacts.
+- Environment: Python 3.12.3, `transformers 5.8.1`, `torch 2.12.0+cu130`
+  present (same stack as the ORLM job).
+- Solver: `gurobipy` is **NOT installed**. A Gurobi license file exists at
+  `~/gurobi.lic` (WLS/`LICENSEID` entries present, values redacted). Installing
+  `gurobipy` is required before any solver-verified execution; generation,
+  parse, and static validation do not need it.
+- Tests: `python -m pytest baselines/optmath/tests/test_optmath.py` -> 6/6 pass.
+- Launch blocker: no CLI entry point yet. `baselines/optmath/` has
+  `runner.py`/`pipeline.py` but no `run_optmath_inference.py` (the ORLM launch
+  used `scripts/run_orlm_inference.py`). The exact future common-6 / common-18
+  launch command is therefore NOT yet defined and must be added before launch.
+- Manifest: `baselines/optmath/manifests/nlp4lp_common_manifest.json` defines
+  `pilot_ids` `[14,23,34,59,69,72]` and `future_evaluation_ids` the 18 common
+  IDs; the store is append-only and resume-friendly via `JsonlResultStore`.

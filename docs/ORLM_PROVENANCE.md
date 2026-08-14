@@ -51,6 +51,16 @@ The initial health check found the model loaded, GPU utilization high, stable
 host memory, and no OOM or traceback. Leave this same tmux job running; do not
 launch a duplicate common-18 run.
 
+Follow-up check 2026-08-14T00:32-04:00: the same tmux session and PID `3807778`
+were still alive and healthy. `results.jsonl` held 3/18 unique valid rows for
+problem IDs `14, 23, 34` (each `generation.status=COMPLETED` with
+`parsed.code_block_found` and `static_validation.status=STATIC_VALID`; all rows
+set `execution_attempted=false` and `objective_proxy_status=NOT_EVALUABLE`
+because `coptpy` is missing). Observed for three minutes: GPU 96-99%
+utilization, VRAM 14.3-15.3 GiB / 16.3 GiB, ~57 GiB RAM available, no OOM, no
+traceback, no duplicate IDs, valid JSONL. Rows complete at roughly one per
+4-5 minutes, so the full 18-row run is expected to take ~1.5 hours total.
+
 ## Fair comparison boundary
 
 ORLM generates a complete optimization formulation and COPT program. This
