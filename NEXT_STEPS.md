@@ -174,8 +174,8 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
 - **Checkpoint:** downloaded and cached at pinned revision
   `94fdc3c5738c6536d4880dc19a78f215529181c5` (16.1 GiB download).
 - **Pilot:** `ORLM_PILOT_RUNNING_HEALTHY`; six IDs `[14, 23, 34, 59, 69, 72]`
-  are running in tmux with CPU offload. One real row (`problem_id=14`) has
-  completed with parse and static validation success; five rows remain pending.
+  are running in tmux with CPU offload. Four real rows (`14, 23, 34, 59`)
+  have completed with unique valid JSONL records; two rows remain pending.
 - **Handoff:** session `orlm_pilot_official_20260813_corrected`, log
   `results/orlm/pilot_official_checkpoint/inference_corrected.log`, output
   `results/orlm/pilot_official_checkpoint/results.jsonl`, start

@@ -37,9 +37,9 @@ Pilot handoff: session `orlm_pilot_official_20260813_corrected`, started
 `results/orlm/pilot_official_checkpoint/results.jsonl`. The approximately
 three-minute health check found the model loaded, stable GPU memory below
 15.3 GiB, and no OOM or generation exception. A later non-polling inspection
-found one completed real row (`problem_id=14`): `CODE_EXTRACTED`,
-`STATIC_VALID`, no prompt-marker leakage, and no execution attempt. The other
-five pilot rows remain pending.
+found four completed real rows (`problem_id` values `14, 23, 34, 59`), with
+four unique valid JSONL records and two pilot rows pending. No traceback or
+OOM appeared during the check.
 
 ## Fair comparison boundary
 
