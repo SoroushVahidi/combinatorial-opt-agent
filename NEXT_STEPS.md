@@ -162,7 +162,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   numbers closer to typed greedy's, the local score is not the gating
   factor and this line should stop.
 
-## P9 — ORLM baseline: pilot running healthy (2026-08-13)
+## P9 — ORLM baseline: pilot complete; common-18 running (2026-08-14)
 
 - **Status:** `baselines/orlm/` is inference-ready for resource-available
   execution (adapter, official prompt, lazy runner, normalizer, static
@@ -173,18 +173,24 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   any older claim of "multiple checkpoints public").
 - **Checkpoint:** downloaded and cached at pinned revision
   `94fdc3c5738c6536d4880dc19a78f215529181c5` (16.1 GiB download).
-- **Pilot:** `ORLM_PILOT_RUNNING_HEALTHY`; six IDs `[14, 23, 34, 59, 69, 72]`
-  are running in tmux with CPU offload. Four real rows (`14, 23, 34, 59`)
-  have completed with unique valid JSONL records; two rows remain pending.
+- **Pilot:** `PILOT_COMPLETED_NORMALLY`; six IDs `[14, 23, 34, 59, 69, 72]`
+  completed with unique valid JSONL records, 6/6 generation success, 6/6
+  code extraction, and 6/6 static validation. No COPT execution was attempted
+  because `coptpy` is missing.
 - **Handoff:** session `orlm_pilot_official_20260813_corrected`, log
   `results/orlm/pilot_official_checkpoint/inference_corrected.log`, output
   `results/orlm/pilot_official_checkpoint/results.jsonl`, start
   `2026-08-13T23:06:54-04:00`, Git SHA `6bb75a4c4bed02c458ac30b4af206a2802fce095`.
 - **Provenance:** the prompt is now locked to upstream `eval/generate.py`
   revision `33bc47d0a1d1710d24ab839118bdf4cb89b9e31b`.
-- **Next action:** inspect this job's result later; only after all six rows
-  validate should the common-18 run be launched. `coptpy` is missing, so
-  solver execution is blocked and must not be substituted with another solver.
+- **Common-18:** session `orlm_common18_official_20260814`, PID `3807778`,
+  log `results/orlm/common18_official_checkpoint/inference.log`, output
+  `results/orlm/common18_official_checkpoint/results.jsonl`, start
+  `2026-08-14T00:13:37-04:00`, Git SHA
+  `1831396b0b3d4428415e354b0a4e1fcbc658df26`.
+- **Next action:** inspect this same common-18 tmux job later. Do not launch a
+  duplicate. `coptpy` is missing, so solver execution is blocked and must not
+  be substituted with another solver.
 
 ## P10 — OptMATH lightweight implementation DONE (2026-08-12), inference pending
 

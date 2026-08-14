@@ -73,9 +73,10 @@ package instead distinguishes four kinds of information (frozen in
 - `ingest.py` — explicit, fixed-location ingestion for `ours` (a fresh,
   CPU-only rerun of `tools.nlp4lp_downstream_utility`, filtered to the
   common manifest) and `pamop` (`results/pamop/fidelity_diagnostic_gpt5/`).
-  No filesystem crawling. ORLM's pilot is running but has no completed result
-  rows, so it remains an empty ingestion until the job finishes and its fixed
-  location is explicitly registered.
+  No filesystem crawling. ORLM's six-row pilot is complete, but this harness
+  is fixed to the common-18 manifest and has no explicit common-6 ingestion
+  mode; ORLM remains empty here until the common-18 output finishes and its
+  fixed location is explicitly registered.
 - `report.py` + `cli.py` — Markdown/CSV/JSON report generation, run via
   `python -m baselines.comparison.cli`.
 

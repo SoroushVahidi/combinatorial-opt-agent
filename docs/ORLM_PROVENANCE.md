@@ -26,20 +26,30 @@ The official repository requires a local model path for its vLLM evaluation
 script and executes generated programs with COPT. The pinned checkpoint is
 cached at the Hugging Face snapshot for revision
 `94fdc3c5738c6536d4880dc19a78f215529181c5`. The current host has an RTX 5060
-Ti with 16.3 GiB VRAM, so the Transformers adaptation uses CPU offload. The
-six-instance pilot is running in tmux; no completed row or solver execution
-exists yet. `coptpy` is not installed, so COPT execution is currently blocked.
+Ti with 16.3 GiB VRAM, so the Transformers adaptation uses CPU offload.
+`coptpy` is not installed, so COPT execution is currently blocked.
 
 Pilot handoff: session `orlm_pilot_official_20260813_corrected`, started
 `2026-08-13T23:06:54-04:00`, Git SHA
 `6bb75a4c4bed02c458ac30b4af206a2802fce095`, log
 `results/orlm/pilot_official_checkpoint/inference_corrected.log`, output
-`results/orlm/pilot_official_checkpoint/results.jsonl`. The approximately
-three-minute health check found the model loaded, stable GPU memory below
-15.3 GiB, and no OOM or generation exception. A later non-polling inspection
-found four completed real rows (`problem_id` values `14, 23, 34, 59`), with
-four unique valid JSONL records and two pilot rows pending. No traceback or
-OOM appeared during the check.
+`results/orlm/pilot_official_checkpoint/results.jsonl`. On
+`2026-08-14T00:14-04:00`, the tmux session was gone but the pilot artifacts
+showed normal completion: six unique valid JSONL rows for problem IDs
+`14, 23, 34, 59, 69, 72`, no malformed rows, 6/6 generation success, 6/6
+code extraction, and 6/6 static validation. The log records `attempted: 6`
+and the same completed ID set, with no traceback, CUDA OOM, or failure text.
+
+Common-18 handoff: session `orlm_common18_official_20260814`, PID `3807778`,
+started `2026-08-14T00:13:37-04:00`, Git SHA
+`1831396b0b3d4428415e354b0a4e1fcbc658df26`, log
+`results/orlm/common18_official_checkpoint/inference.log`, output
+`results/orlm/common18_official_checkpoint/results.jsonl`. The command uses
+the same pinned checkpoint revision, `--subset common18`, `--max-new-tokens
+8192`, `--device-map auto`, `--dtype bfloat16`, and `--device cuda:0`.
+The initial health check found the model loaded, GPU utilization high, stable
+host memory, and no OOM or traceback. Leave this same tmux job running; do not
+launch a duplicate common-18 run.
 
 ## Fair comparison boundary
 

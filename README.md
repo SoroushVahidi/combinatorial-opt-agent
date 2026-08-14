@@ -12,7 +12,7 @@
 |---|---|
 | **Validated paper core** | NLP4LP `orig` (331 queries): retrieval → grounding; **Tables 1–5** in `results/paper/eaai_camera_ready_tables/` |
 | **Canonical one-pager** | [`PROJECT_STATUS.md`](PROJECT_STATUS.md) (see also [`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md)) |
-| **External baseline in progress** | **PaMOP** (IJCAI 2025) reproduction — see [`docs/PAMOP_REPRODUCTION_PLAN.md`](docs/PAMOP_REPRODUCTION_PLAN.md), `baselines/pamop/`; ORLM/OptMATH/DeepOR/OR-R1 all implemented/reconstructed for lightweight inference-preparation (no baseline has a runnable empirical result yet) |
+| **External baseline in progress** | **PaMOP** (IJCAI 2025) reproduction — see [`docs/PAMOP_REPRODUCTION_PLAN.md`](docs/PAMOP_REPRODUCTION_PLAN.md), `baselines/pamop/`; ORLM pilot inference is complete and common-18 is running; OptMATH/DeepOR/OR-R1 remain implemented/reconstructed for lightweight inference-preparation without completed empirical rows |
 | **Infrastructure / reruns** | Slurm `batch/learning/`; optional LLM baselines; Gemini [`docs/GEMINI_RERUN_REPORT.md`](docs/GEMINI_RERUN_REPORT.md); Mistral [`docs/MISTRAL_RERUN_REPORT.md`](docs/MISTRAL_RERUN_REPORT.md) (**infra ≠ completed reruns** unless your `results/rerun/` proves it) |
 | **Demo / app** | `app.py`, `demo/` — **outside** paper-evaluated claims unless explicitly scoped |
 | **Archives** | `docs/archive/`, `docs/archive_internal_status/`, `docs/provenance/`, `analysis/archive/` — **provenance only** |

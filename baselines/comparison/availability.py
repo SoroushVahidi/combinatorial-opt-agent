@@ -35,10 +35,11 @@ AVAILABILITY: dict[str, AvailabilityStatus] = {
         "4/5 evaluable objective-value-proxy success. Independent reconstruction, no official code.",
     ),
     "orlm": AvailabilityStatus(
-        "orlm", "PILOT RUNNING HEALTHY (no completed rows)",
-        False, "ORLM_PILOT_RUNNING_HEALTHY",
-        "Pinned official checkpoint revision is cached and the six-instance pilot is running in tmux. "
-        "No completed result rows exist; coptpy is missing for later solver execution.",
+        "orlm", "PILOT COMPLETE; COMMON-18 RUNNING",
+        False, "ORLM_PILOT_COMPLETE_COMMON18_RUNNING",
+        "Pinned official checkpoint revision is cached. The six-instance pilot completed with 6/6 "
+        "valid generation/parse/static-validation rows, but the comparison report is fixed to the "
+        "common-18 manifest. The common-18 run is active in tmux; coptpy is missing for later solver execution.",
     ),
     "optmath": AvailabilityStatus(
         "optmath", "IMPLEMENTED, NOT YET RUN",

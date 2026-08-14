@@ -265,7 +265,7 @@ prerequisites, falsification criteria):
 | Baseline | Status | Next action |
 |---|---|---|
 | PaMOP | IN PROGRESS, fidelity gate RESOLVED | optional C2/C4 prompt follow-up, or decide on scale-up (§15) |
-| ORLM | **PILOT RUNNING HEALTHY** (`baselines/orlm/`) | pinned checkpoint cached; six-instance inference is running in tmux with CPU offload; no completed rows yet; coptpy missing |
+| ORLM | **PILOT COMPLETE; COMMON-18 RUNNING** (`baselines/orlm/`) | pilot has six valid official-checkpoint rows; common-18 is running in `orlm_common18_official_20260814`; coptpy missing |
 | OptMATH | **IMPLEMENTED, READY FOR INFERENCE** (`baselines/optmath/`) | 7B checkpoint smoke test when resources allow, see `docs/OPTMATH_PROVENANCE.md` |
 | DeepOR | PAPER RECONSTRUCTION READY; official code/checkpoint not found | use `baselines/deepor/`; do not claim empirical results until an official checkpoint is available |
 | OR-R1 | **CODE INTEGRATED, CHECKPOINT BLOCKED** (`baselines/orr1/`) | no official SFT/GRPO/merged checkpoint exists anywhere; faithful reproduction requires training TGRPO from scratch, and TGRPO's official training data is transductive over the eval sets — see `docs/ORR1_PROVENANCE.md` |
@@ -286,7 +286,10 @@ conflating incomparable metrics (native vs. shared vs. resource vs.
 availability, per `docs/EXTERNAL_BASELINE_COMPARISON_PROTOCOL.md`).
 Generated report: `results/external_baseline_comparison/comparison.md`
 (status `PRELIMINARY_EXTERNAL_BASELINE_STATUS`; real rows only for `ours`
-and PaMOP; the ORLM pilot is running but not yet ingested).
+and PaMOP). The ORLM six-row pilot is complete and valid, but the comparison
+harness is fixed to the common-18 manifest and does not explicitly support a
+common-6 ORLM ingestion; leave ORLM pending in that report until the running
+common-18 job completes.
 
 ## 15. PaMOP Status
 
