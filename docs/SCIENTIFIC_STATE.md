@@ -33,10 +33,11 @@ NL query → Schema retrieval (TF-IDF cosine similarity, top-1)
          → [Optional] Solver on restricted subset (SciPy HiGHS shim)
 ```
 
-Plain typed greedy — the manuscript's own original baseline method — is
-the strongest known non-oracle method as of 2026-08-12 (see §3-4). No
-richer scoring, repair, learned, or global-assignment method evaluated so
-far beats it.
+Plain typed greedy — the manuscript's own original baseline method — remains
+the strongest semantically reliable non-oracle method as of 2026-08-13 (see
+§3-4). A later selective top-k schema reranker improves the repository's
+InstantiationReady metric to 265/331, but Stage-B audit classified it as
+`STAGE_B_METRIC_ONLY_GAIN` because most new ready cases use incorrect schemas.
 
 ## 3. Current Best Verified Results
 
@@ -46,6 +47,7 @@ far beats it.
 |---|---|---|
 | `oracle_typed_greedy` | 0.8248 | retrieval upper-bound control |
 | **`tfidf_typed_greedy`** | **0.7764** | **strongest non-oracle method** |
+| `tfidf_selective_grounding_rerank` | 0.8006 | **metric-only gain**: 6/8 new ready cases use incorrect schemas |
 | `bm25_typed_greedy` | 0.7644 | n.s. vs. tfidf, p=0.322 |
 | `tfidf_acceptance_rerank` | 0.7644 | n.s. vs. tfidf, p=0.328 |
 | `tfidf_constrained` | 0.7492 | borderline, p=0.050 |
@@ -136,7 +138,8 @@ not exact.
    global optimization (§7).
 2. Type mismatch on otherwise-covered decisions (typed-greedy-specific
    count not yet re-verified fresh, see §7).
-3. Schema retrieval miss (~9% of queries) — small relative to (1)-(2).
+3. Schema retrieval miss (~9% of queries) — top-k reranking can improve
+   InstantiationReady, but wrong schemas can exploit the readiness metric.
 4. Coverage gaps (missing numeric mentions) — moderate.
 5. Zero-expected-scalar-slot queries — 95% are a downstream artifact of
    (3), not independent; 1/331 genuine (vector/matrix-valued parameters,
@@ -153,8 +156,9 @@ not exact.
   phrasing.
 - Scalar-only grounding — cannot represent vector/matrix-valued
   parameters (the one genuine zero-expected-scalar case, §8).
-- Fixed top-1 retrieval before grounding — retrieval errors unrecoverable
-  downstream by construction (H5, untested).
+- Fixed top-1 retrieval before grounding — retrieval errors are recoverable by
+  selective top-k reranking, but the current readiness metric can reward wrong
+  schemas with easier overlapping scalar slots.
 
 ## 10. Benchmark / Data Weaknesses
 

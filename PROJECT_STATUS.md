@@ -27,6 +27,7 @@ these documents for full scientific detail:
 - [`docs/METHOD_NOVELTY_EFFICIENCY_AUDIT_2026-08-13.md`](docs/METHOD_NOVELTY_EFFICIENCY_AUDIT_2026-08-13.md) — current method algorithm, fresh failure taxonomy, reviewer-gap matrix, novelty assessment, and ranked go/no-go plan for the next method improvement
 - [`docs/ROLE_QUANTITY_STAGE_A_DIAGNOSTIC_2026-08-13.md`](docs/ROLE_QUANTITY_STAGE_A_DIAGNOSTIC_2026-08-13.md) — Stage-A diagnostic for the top-ranked role/quantity candidate; result `STAGE_A_NO_GO`
 - [`docs/TOPK_SCHEMA_RERANK_STAGE_A_2026-08-13.md`](docs/TOPK_SCHEMA_RERANK_STAGE_A_2026-08-13.md) — Stage-A diagnostic for selective top-k schema + grounding reranking; result `TOP2_GO`
+- [`docs/SELECTIVE_GROUNDING_RERANK_STAGE_B_2026-08-13.md`](docs/SELECTIVE_GROUNDING_RERANK_STAGE_B_2026-08-13.md) — frozen Stage-B implementation of `tfidf_selective_grounding_rerank`; result `STAGE_B_METRIC_ONLY_GAIN`
 
 **Headline change since Phase 3 (retraction, same day, 2026-08-12):**
 Phase 3 believed `tfidf_typed_greedy` (committed at 0.5287) had been
@@ -292,6 +293,14 @@ top-5 schemas, selects by `0.50 * normalized_tfidf + 0.25 * coverage +
 regressions and 0 ready losses. Implement this minimal deterministic cascade
 next; do not add API, learned, or semantic reranking before the Stage-B
 regression test.
+
+**TOP-2 Stage-B result (2026-08-13): `STAGE_B_METRIC_ONLY_GAIN`.** The frozen
+production method `tfidf_selective_grounding_rerank` exactly reproduces the
+265/331 InstantiationReady result, but semantic audit shows only 2/8 new ready
+queries are true schema rescues; the other 6 are wrong-schema readiness gains.
+Treat this as evidence that InstantiationReady can be gamed by easier wrong
+schemas. Do not promote this as the new main method without schema-correctness
+gating or metric redesign.
 
 The P0 feature-augmented learned scorer (the direction recommended in
 Phase 2) WAS built and evaluated in Phase 3 and did **not** improve over

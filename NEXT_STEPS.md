@@ -8,25 +8,35 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
 
 ---
 
-## P0 — Implement minimal Stage-B top-k schema + grounding reranker
+## P0 — Redesign/evaluate schema-correctness-gated readiness
 
-- **Task:** implement only the Stage-B candidate selected by
-  `docs/TOPK_SCHEMA_RERANK_STAGE_A_2026-08-13.md`: if TF-IDF top1-top2
-  margin is `<= 0.05`, ground top-5 schemas with the unchanged typed-greedy
-  decoder and choose by
-  `0.50 * normalized_tfidf + 0.25 * coverage + 0.25 * type_match`; otherwise
-  keep TF-IDF top1.
-- **Purpose:** TOP-2 Stage A resulted in `TOP2_GO`. The diagnostic candidate
-  reached 265/331 InstantiationReady, reranked only 27/331 queries, recovered
-  2 schemas, introduced 0 schema regressions, and had 0 ready losses.
-- **Prerequisite:** keep using a fresh same-code `tfidf_typed_greedy`
-  reference (`0.7764` on 331 `orig`) and do not modify manuscript files.
-- **Stop/success criterion:** production Stage B must reproduce at least
-  264/331 on the same 331-query protocol, with no material schema regression,
-  no eligibility change, paired transition reporting, and runtime still in the
-  lightweight CPU-only regime.
+- **Task:** define and compute a strict or schema-correctness-gated readiness
+  metric for the current methods, starting with `tfidf_typed_greedy` and
+  `tfidf_selective_grounding_rerank`.
+- **Purpose:** Stage-B selective reranking replicated 265/331
+  InstantiationReady but was classified `STAGE_B_METRIC_ONLY_GAIN`
+  (`docs/SELECTIVE_GROUNDING_RERANK_STAGE_B_2026-08-13.md`): only 2/8 new
+  ready queries are true schema rescues, while 6/8 are wrong-schema readiness
+  gains. The next scientific step is to fix or foreground the metric issue,
+  not to present the reranker as a main method.
+- **Prerequisite:** do not edit the manuscript yet; keep canonical historical
+  tables unchanged until the metric decision is explicit.
+- **Stop/success criterion:** produce a small report showing whether the
+  selective reranker still improves under a schema-correctness-gated readiness
+  metric. If it does not, treat it as a metric artifact only.
 
-## P1 — Completed: TOP-2 Stage-A diagnostic
+## P1 — Completed: Stage-B selective grounding reranker
+
+- **Status:** `STAGE_B_METRIC_ONLY_GAIN`.
+- **Evidence:** `docs/SELECTIVE_GROUNDING_RERANK_STAGE_B_2026-08-13.md` and
+  `results/selective_grounding_rerank/`.
+- **Key result:** production `tfidf_selective_grounding_rerank` reaches
+  265/331 InstantiationReady with 0 ready losses and 0 schema regressions, but
+  only 2/8 readiness gains are semantically better true schema rescues.
+- **Instruction:** do not promote this as the new main method without metric
+  redesign or strict-readiness validation.
+
+## P2 — Completed: TOP-2 Stage-A diagnostic
 
 - **Status:** `TOP2_GO`.
 - **Evidence:** `docs/TOPK_SCHEMA_RERANK_STAGE_A_2026-08-13.md` and
@@ -38,7 +48,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   first; do not add API, learned reranking, semantic parsing, or structured
   assignment.
 
-## P2 — Completed: role-quantity Stage-A diagnostic
+## P3 — Completed: role-quantity Stage-A diagnostic
 
 - **Status:** `STAGE_A_NO_GO`.
 - **Evidence:** `docs/ROLE_QUANTITY_STAGE_A_DIAGNOSTIC_2026-08-13.md` and
@@ -50,7 +60,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   the next main-method patch unless the target metric changes to numeric
   exactness rather than InstantiationReady.
 
-## P3 — Verify/refresh the remaining stale method numbers
+## P4 — Verify/refresh the remaining stale method numbers
 
 - **Task:** rerun `global_compat_full` (and `_local`/`_pairwise`),
   `relation_aware_full` (and `_basic`/`_ops`/`_semantic`),
@@ -69,7 +79,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
 - **Stop/success criterion:** every row in that table has a fresh,
   same-code number.
 
-## P4 — Decide the manuscript's path forward (requires the author)
+## P5 — Decide the manuscript's path forward (requires the author)
 
 - **Task:** read `docs/MANUSCRIPT_INTEGRATION_DECISION_2026-08-12.md` and
   choose one of: (a) issue an erratum with fresh numbers, (b) pin/tag the
@@ -89,7 +99,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   → `tools/build_eaai_camera_ready_figures.py` chain, all 3 variants.
 - **Stop/success criterion:** n/a — decision gate.
 
-## P5 — PaMOP: PILOT VALIDATED (2026-08-12), scale-up pending
+## P6 — PaMOP: PILOT VALIDATED (2026-08-12), scale-up pending
 
 - **Status:** the fidelity diagnostic is complete —
   `results/pamop/fidelity_diagnostic_gpt5/README.md`. Gate: `B. MODEL_LIMITED`.
@@ -110,7 +120,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   unrelated active AMPL/HiGHS computation, then use a fresh output directory
   and a pre-registered subset/configuration.
 
-## P6 — Improve the local pairwise score's dominant error modes
+## P7 — Improve the local pairwise score's dominant error modes
 
 - **Task:** target `_score_mention_slot_opt`'s residual same-type
   ambiguity (335 slot-level instances) and total/per-unit confusion (166)
@@ -130,7 +140,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   numbers closer to typed greedy's, the local score is not the gating
   factor and this line should stop.
 
-## P7 — ORLM baseline: lightweight implementation DONE (2026-08-12), inference pending
+## P8 — ORLM baseline: lightweight implementation DONE (2026-08-12), inference pending
 
 - **Status:** `baselines/orlm/` is inference-ready for resource-available
   execution (adapter, official prompt, lazy runner, normalizer, static
@@ -150,7 +160,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
 - **Stop/success criterion:** do not download the 8B weights or attempt
   GPU inference without first confirming GPU/license availability.
 
-## P8 — OptMATH lightweight implementation DONE (2026-08-12), inference pending
+## P9 — OptMATH lightweight implementation DONE (2026-08-12), inference pending
 
 - **Status:** `baselines/optmath/` is ready for resource-available inference.
   The primary checkpoint is `Aurora-Gem/OptMATH-Qwen2.5-7B`; the official
@@ -162,7 +172,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   evaluate the fixed pilot. Do not download weights or execute Gurobi during
   the current high-priority AMPL/HiGHS workload.
 
-## P9 — Re-derive the typed-greedy bottleneck table against current code
+## P10 — Re-derive the typed-greedy bottleneck table against current code
 
 - **Task:** `docs/CURRENT_BOTTLENECK_ANALYSIS.md`'s counts (82/331 type
   mismatch etc.) were derived from `per_instance_diagnostics.csv`, which
@@ -172,7 +182,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
 - **Expected artifact:** updated bottleneck table with a note on whether
   the fresh counts differ from the ones currently documented.
 
-## P10 — Cross-baseline comparison harness: infrastructure DONE (2026-08-13), empirical rows pending
+## P11 — Cross-baseline comparison harness: infrastructure DONE (2026-08-13), empirical rows pending
 
 - **Status:** `baselines/comparison/` implements a unified analysis view
   (`UnifiedRow`), adapters for all six systems, native/shared metric

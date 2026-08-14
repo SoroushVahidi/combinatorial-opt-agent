@@ -1,0 +1,32 @@
+{
+  "readiness": {
+    "baseline_only": 0,
+    "baseline_only_ids": [],
+    "both_ready": 257,
+    "candidate_only": 8,
+    "candidate_only_ids": [
+      "nlp4lp_test_106",
+      "nlp4lp_test_12",
+      "nlp4lp_test_130",
+      "nlp4lp_test_194",
+      "nlp4lp_test_222",
+      "nlp4lp_test_268",
+      "nlp4lp_test_311",
+      "nlp4lp_test_317"
+    ],
+    "mcnemar_p": 0.0078125,
+    "neither": 66
+  },
+  "schema": {
+    "baseline_only": 0,
+    "baseline_only_ids": [],
+    "both_correct": 301,
+    "both_wrong": 28,
+    "candidate_only": 2,
+    "candidate_only_ids": [
+      "nlp4lp_test_222",
+      "nlp4lp_test_268"
+    ],
+    "mcnemar_p": 0.5
+  }
+}

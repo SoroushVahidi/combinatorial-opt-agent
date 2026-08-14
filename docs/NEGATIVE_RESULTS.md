@@ -341,6 +341,28 @@ in Phase 4)
 - **Full record:** `docs/BASELINE_STALENESS_AUDIT_2026-08-12.md` (primary
   source for this entry).
 
+## NR13: `tfidf_selective_grounding_rerank` as a main-method candidate
+
+- **Hypothesis:** selective top-k schema reranking using downstream typed-greedy
+  consistency could recover enough schema misses to become the new main
+  method.
+- **Implementation:** `tfidf_selective_grounding_rerank` in
+  `tools/nlp4lp_downstream_utility.py`; trigger TF-IDF top1-top2 margin
+  `<=0.05`; ground top-5 schemas with unchanged typed greedy; select by
+  `0.50 * normalized_tfidf + 0.25 * coverage + 0.25 * type_match`.
+- **Result:** the frozen Stage-B implementation replicated the Stage-A
+  InstantiationReady gain exactly: 265/331 = 0.8006 vs. baseline 257/331 =
+  0.7764, McNemar p=0.0078125, with 0 ready losses and 0 schema regressions.
+- **Why this is still a negative result for main-method use:** semantic audit
+  found only 2/8 new ready queries were true schema rescues; 6/8 were
+  wrong-schema readiness gains. The method improves the current
+  InstantiationReady metric mostly by selecting easier incorrect schemas.
+- **Interpretation:** useful metric diagnostic, not a publishable main-method
+  improvement unless the manuscript explicitly adopts schema-correctness-gated
+  readiness or reframes the result as a metric artifact.
+- **Full record:** `docs/SELECTIVE_GROUNDING_RERANK_STAGE_B_2026-08-13.md`
+  and `results/selective_grounding_rerank/`.
+
 ## What this ledger does NOT cover
 
 - **PaMOP fidelity** (semantic correctness 1/6 despite 6/6 execution

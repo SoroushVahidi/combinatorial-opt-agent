@@ -1,0 +1,12 @@
+{
+  "absolute_ms_per_query_overhead": -1.866849416830321,
+  "baseline_mean_ms_per_query": 2.769163042290018,
+  "baseline_total_seconds": 0.916592966997996,
+  "candidate_mean_ms_per_query": 0.9023136254596972,
+  "candidate_total_seconds": 0.29866581002715975,
+  "diagnostic_median_ms_per_query": 1.243900042027235,
+  "extra_schema_grounding_calls": 108,
+  "multiplicative_overhead": 0.32584344499755774,
+  "trigger_rate": 0.08157099697885196,
+  "triggered_queries": 27
+}

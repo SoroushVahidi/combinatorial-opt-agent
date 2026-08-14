@@ -1,0 +1,21 @@
+{
+  "benchmark": "NLP4LP orig, 331 queries",
+  "command": "PYTHONHASHSEED=0 NLP4LP_GOLD_CACHE=... python3 tools/analyze_selective_grounding_rerank_stage_b.py",
+  "git_sha": "2d386cc",
+  "k": 5,
+  "margin_threshold": 0.05,
+  "method": "tfidf_selective_grounding_rerank",
+  "normalization": "min-max over top-k TF-IDF scores; all 1.0 if span is zero",
+  "tie_break": [
+    "higher consistency score",
+    "higher raw TF-IDF score",
+    "lower retrieval rank",
+    "schema id"
+  ],
+  "trigger": "tfidf_top1_score - tfidf_top2_score <= 0.05",
+  "weights": {
+    "coverage": 0.25,
+    "normalized_tfidf": 0.5,
+    "type_match": 0.25
+  }
+}
