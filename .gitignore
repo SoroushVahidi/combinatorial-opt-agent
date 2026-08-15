@@ -274,6 +274,11 @@ results/*
 # `python -m baselines.comparison.cli`; no model weights or raw NLP4LP text.
 !results/external_baseline_comparison/
 !results/external_baseline_comparison/**
+# Exception: deterministic frozen-oracle recomputation (DKE Stage 1,
+# 2026-08-15) -- small CSV/JSON only, produced by tools/recompute_frozen_oracle.py
+# from frozen per-query data; cited by manuscript/dke/main.tex.
+!results/oracle_recomputation_2026-08-15/
+!results/oracle_recomputation_2026-08-15/**
 # Scratch exports under a run (partial CSV/JSON/interrupt); not curated rerun bundles
 results/rerun/gemini/*/paper/
 
