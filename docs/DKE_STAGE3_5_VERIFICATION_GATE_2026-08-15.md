@@ -43,7 +43,7 @@ All metric values (301/331, 0.9094, 265/331, 255/331, etc.) perfectly match froz
 Novelty: 9/10, Contribution: 8/10, Diff from LLMs: 9/10, DKE fit: 8/10, Baselines: 9/10, Fairness: 10/10, Rigor: 9/10, Reproducibility: 10/10, Funding: 9/10 (requires author input), Writing: 9/10.
 
 ## 15. Remaining author inputs
-Reduced to four absolute necessities: Bio/photo, Azure funding confirmation, Acknowledgments consent, and Affiliation/Metadata verification.
+Reduced to three absolute necessities: a photo file for final accepted production, Azure funding confirmation, and Acknowledgments consent. Full author metadata, including NJIT institutional affiliation, email, biography, and ORCID, has been fully verified and integrated.
 
 ## 16. Stage-4 readiness verdict
 READY_FOR_STAGE_4

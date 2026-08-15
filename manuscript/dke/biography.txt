@@ -1,0 +1,9 @@
+Soroush Vahidi is a Ph.D. candidate in Computer Science at the New Jersey Institute of Technology (NJIT). His research interests lie at the intersection of natural language processing, combinatorial optimization, and machine learning for intelligent decision support systems. His work focuses on developing deterministic, auditable semantic grounding pipelines that connect natural-language descriptions to structured mathematical formulations.
+
+Website: https://web.njit.edu/~sv96/
+ORCID: https://orcid.org/0000-0003-1934-6282
+LinkedIn: https://www.linkedin.com/in/soroush-vahidi/
+GitHub: https://github.com/SoroushVahidi
+Google Scholar: https://scholar.google.com/citations?user=GNk1ajUAAAAJ&hl=en
+ResearchGate: https://www.researchgate.net/profile/Soroush_Vahidi
+Web of Science: https://www.webofscience.com/wos/author/record/GMW-8958-2022
