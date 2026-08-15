@@ -230,7 +230,7 @@ The core study is intentionally solver-free and fully deterministic: no feasibil
 
 These choices also determine how the metrics should be read. \textit{InstantiationReady} is a diagnostic readiness criterion based on coverage and type consistency, not a guarantee of model correctness or solver compatibility; strong schema retrieval is not full optimization-model recovery; and successful scalar assignment is not feasibility- or optimality-verified instantiation. The framework is best viewed as a retrieval-assisted deterministic instantiation system that quantifies how schema grounding affects structured parameter recovery, with the restricted subset analyses addressing the separate question of downstream executable behavior on compatible cases.
 
-\noindent\textbf{Note on generative-AI assistance.} The retrieval-and-grounding pipeline studied in this paper is itself fully deterministic and uses no large language model, learned retriever, or learned extractor (see above). Separately, during preparation of this work the author used ChatGPT and Gemini to assist with aspects of manuscript writing and used Cursor and GitHub Copilot to assist with coding; the author reviewed, verified, and edited all generated content and takes full responsibility for the content of the publication. No generative-AI tool is listed as an author, consistent with Elsevier's authorship policy.
+\noindent\textbf{Note on generative-AI assistance.} The retrieval-and-grounding pipeline studied in this paper is fully deterministic and requires no large language model, learned retriever, or learned extractor at inference time. Separately, during the research process the author used Cursor and GitHub Copilot to assist with coding; the author reviewed, verified, and edited all generated code and takes full responsibility for the content of the implementation.
 
 \section{Experiments}
 \label{sec:experiments}
@@ -578,6 +578,53 @@ We define the validation metrics once here as per-instance Boolean conditions, e
 
 \paragraph{Summary.} Across all three validation studies, the same qualitative pattern from the main benchmark repeats: Oracle retrieval does not consistently provide a substantial advantage over TF--IDF, and the dominant limitation is downstream. On the structural subset Oracle is modestly higher than TF--IDF ($0.7667$ vs.\ $0.75$ structural-valid; $0.7833$ vs.\ $0.75$ instantiation-complete), but on the final solver-backed subset Oracle is actually \emph{lower} than TF--IDF on solver-success, feasible, and objective-produced rates ($0.75$ vs.\ $0.80$ on each), a difference plausibly attributable to this subset's small size (20 instances) and its compatibility-filtering rule rather than to a genuine retrieval-quality effect. Taken together, these restricted studies reinforce the main benchmark's conclusion that downstream grounding -- not schema selection -- is the binding constraint, and they caution against assuming a monotonic Oracle advantage on small subsets. In the executable-attempt subset, missing scalar slots, type mismatch, and incomplete instantiation account for the majority of non-\texttt{gurobipy} failures (69, 82, and 267 counted instances, respectively, across baselines), consistent with the error taxonomy in Section~\ref{subsec:exp_error}. These restricted studies should be read as evidence of downstream engineering relevance on compatible cases, complementing -- not replacing -- the main scalar-grounding benchmark.
 
+\subsection{External Baseline Comparison on a Shared Subset}
+\label{subsec:exp_external}
+
+The proposed method performs fixed-catalog scalar grounding and does not generate complete formulations, solver code, or executable models. Consequently, its native metrics (Section~\ref{subsec:exp_setup}) are \emph{not numerically comparable} to the end-to-end outcomes reported by LLM-based modeling systems, and any direct head-to-head ranking would be misleading. To nonetheless provide context, we report a preliminary external-baseline assessment on a small shared subset of \textsc{NLP4LP}-derived problems for which several recent LLM systems were run under a common execution harness. Table~\ref{tab:ext-context} records the fidelity and context of each system; Table~\ref{tab:ext-outcomes} records only the shared end-to-end outcome cells that were actually evaluated, with unavailable cells shown as ``not applicable'' rather than as zero. The full protocol and per-problem artifacts are documented in the accompanying repository (\texttt{docs/EXTERNAL\_} \allowbreak \texttt{BASELINE\_} \allowbreak \texttt{COMPARISON\_} \allowbreak \texttt{PROTOCOL.md} and \texttt{results/external\_} \allowbreak \texttt{baseline\_} \allowbreak \texttt{comparison/}).
+
+\begin{table}[t]
+  \centering
+  \caption{Context and artifact fidelity of the systems in the external-baseline assessment. ``Cases'' is the number of shared-subset instances for which the system produced empirical rows. Fidelity levels: NATIVE (proposed pipeline), INDEPENDENT (independent reconstruction of the published method), ADAPTED-OFFICIAL (official released checkpoint adapted to a common harness). The proposed method is listed for context only; its native metrics are not comparable to the end-to-end cells in Table~\ref{tab:ext-outcomes}.}
+  \label{tab:ext-context}
+  \small
+  \setlength{\tabcolsep}{3.5pt}
+  \begin{tabularx}{\linewidth}{l l X X c}
+    \toprule
+    System & Fidelity & Output representation & Solver environment / status & Cases \\
+    \midrule
+    Ours (this paper) & NATIVE & Scalar slot assignments on retrieved schema & No solver call in core benchmark & 18 \\
+    PaMOP \cite{pan2025pamop} & INDEPENDENT & AMPL formulation + solver code & Local AMPL + HiGHS; 13/18 executed & 18 \\
+    ORLM \cite{huang2025orlm} & ADAPTED-OFFICIAL & LP formulation + solver code & Solver dependency (coptpy) unavailable; execution blocked & 18 \\
+    OptMATH \cite{lu2025optmath} & ADAPTED-OFFICIAL & LP formulation + solver code & Gurobi (gurobipy); 15/18 executed & 18 \\
+    Generic LLM (GPT-5.4) & INDEPENDENT & Gurobi solver code, zero-shot & Gurobi (gurobipy); 16/18 executed & 18 \\
+    DeepOR \cite{xiao2026deepor} & --- & Formulation (paper-described) & No official checkpoint or code released & 0 \\
+    OR-R1 \cite{ding2026orr1} & --- & Formulation + solver code & Official code, no released checkpoint & 0 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\begin{table}[t]
+  \centering
+  \caption{Shared end-to-end outcomes on the 18-instance common subset, as actually evaluated by the external-baseline harness. ``N/A'' denotes an outcome cell that was not evaluated (never a silent zero). \textit{Parse} is the fraction of instances whose produced artifact parsed; \textit{Executable} is the fraction whose solver code ran to completion; \textit{Feasible} is the fraction of executed runs that reported a feasible solution; \textit{Objective agreement} is the fraction of objective-proxy comparisons that agreed within a $5\%$ relative tolerance on executed runs with a comparable reference objective. Denominators vary across systems because they depend on how many runs reached the corresponding stage.}
+  \label{tab:ext-outcomes}
+  \small
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{lcccc}
+    \toprule
+    System & Parse & Executable & Feasible & Objective agreement \\
+    \midrule
+    Ours (this paper) & N/A & N/A & N/A & N/A \\
+    PaMOP \cite{pan2025pamop} & 0.72 & 0.72 & 0.72 & 0.73 (8/11) \\
+    ORLM \cite{huang2025orlm} & 1.00 & N/A & N/A & N/A \\
+    OptMATH \cite{lu2025optmath} & 1.00 & 0.83 & 1.00 & 0.40 (6/15) \\
+    Generic LLM (GPT-5.4) & 1.00 & 0.89 & 1.00 & 0.63 (10/16) \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+These results must be read with explicit fairness caveats, and they are \emph{not} a leaderboard. First, the systems solve different tasks: the proposed method performs fixed-catalog scalar grounding, whereas PaMOP, ORLM, OptMATH, and the generic LLM generate complete formulations or solver code; for this reason the proposed method is excluded from every shared end-to-end cell in Table~\ref{tab:ext-outcomes}. Second, fidelity differs: PaMOP here is an independent reconstruction on a current model (GPT-5.4) rather than the paper's original configuration, and its objective agreement is an exact-match proxy on execution-successful rows, not a structural or semantic correctness judgment. Third, ORLM's execution cells are ``not applicable'' rather than zero because its solver dependency (coptpy) is unavailable in the evaluation environment; DeepOR and OR-R1 have no released checkpoint, so no empirical row exists for them at all. Fourth, the generic LLM is a general-purpose zero-shot floor, not an optimization-trained baseline, so its objective-agreement rate relative to OptMATH must be read with the temperature and training caveats in mind (OptMATH temperature 0.8 with its official checkpoint; generic GPT-5.4 temperature 0.0), never as a ranking of optimization-modeling systems. Finally, the shared subset is small (18 instances) and selection was outcome-independent, but it remains a feasibility-oriented probe rather than a benchmark-scale comparison. We therefore treat this assessment as supplementary context for the qualitative positioning in Section~\ref{subsec:rw_position}, not as evidence about which system is ``better.''
+
 \section{Conclusions and Future Research}
 \label{sec:conclusion}
 
@@ -650,9 +697,9 @@ The author is deeply grateful to his mother for her continuous emotional support
 
 \noindent\textbf{Code availability.} The retrieval, grounding, evaluation, and figure/table-generation code used in this paper is available at \url{https://github.com/SoroushVahidi/combinatorial-opt-agent}. Reading the committed tables and figures, and running the test suite, do not require Hugging Face dataset access; reproducing a full end-to-end rerun on NLP4LP (retrieval and grounding on the live benchmark) requires the gated dataset access described above.
 
-\section*{Declaration of generative AI and AI-assisted technologies in the manuscript preparation process}
+\section*{Declaration of generative AI and AI-assisted technologies in the writing process}
 
-During the preparation of this work the author used ChatGPT and Gemini to assist with aspects of manuscript writing and Cursor and GitHub Copilot to assist with coding. After using these tools/services, the author reviewed and edited the content as needed and takes full responsibility for the content of the published article. This declaration concerns manuscript preparation only; the scientific method evaluated in this paper requires no large language model at inference time, and the large-language-model systems discussed in Sections~\ref{sec:related_work} and~\ref{subsec:exp_external} are external comparison systems, not manuscript-preparation assistance.
+During the preparation of this work the author used ChatGPT and Gemini in order to improve readability and language. After using this tool/service, the author reviewed and edited the content as needed and takes full responsibility for the content of the published article.
 
 \bibliographystyle{elsarticle-num}
 \bibliography{references}
