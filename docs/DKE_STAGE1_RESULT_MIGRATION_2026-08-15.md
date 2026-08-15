@@ -9,8 +9,8 @@ migrated into the Data & Knowledge Engineering (DKE) manuscript version under
 
 - `results/final_resubmission_method/metrics.json` (rows 1-2)
 - `results/final_resubmission_method/strict_metrics.json`
-- `results/final_resubmission_method/nlp4lp_downstream_per_query_orig_tfidf.csv`
-- `results/final_resubmission_method/per_query.csv` (pre-patch, row 1)
+- `results/final_resubmission_method/nlp4lp_downstream_per_query_orig_tfidf.csv` (patched; `per_query.csv` in the same directory is byte-identical to it)
+- `results/selective_grounding_rerank/nlp4lp_downstream_per_query_orig_tfidf.csv` (pre-patch per-query artifact, matches `metrics.json` row 1)
 - `results/final_resubmission_method/config.json` (frozen config, git_sha 72f7e29)
 - `results/final_resubmission_method/transitions.json` (prepatch/patched transitions)
 - `results/oracle_recomputation_2026-08-15/oracle_frozen_summary.csv` (deterministic recomputation, two identical runs)
