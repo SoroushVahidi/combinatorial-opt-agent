@@ -272,16 +272,23 @@ def build_figure3_engineering() -> None:
     t2 = _read_csv(TABLE_DIR / "table2_engineering_structural_subset.csv")
     rows = []
     for r in t2:
+        method_name = r["baseline"]
+        if method_name.lower() == "tfidf":
+            method_name = "TF\u2013IDF"
+        elif method_name.lower() == "oracle":
+            method_name = "Oracle"
+        elif method_name.lower() == "bm25":
+            method_name = "BM25"
         rows.append(
             {
-                "method": r["baseline"].upper(),
+                "method": method_name,
                 "structural_valid": float(r["structural_valid_rate"]),
                 "instantiation_complete": float(r["instantiation_complete_rate"]),
             }
         )
     _write_source_csv("figure3_engineering_validation_source.csv", rows)
     methods = [r["method"] for r in rows]
-    metrics = ["structural valid", "inst. complete"]
+    metrics = ["Structural validity", "Instantiation completeness"]
     vals = [[r["structural_valid"], r["instantiation_complete"]] for r in rows]
     _draw_grouped_bars_mpl(methods, metrics, vals, "figure3_engineering_validation_comparison", y_max=1.0)
 
@@ -290,9 +297,14 @@ def build_figure4_solver_subset() -> None:
     t4 = _read_csv(TABLE_DIR / "table4_final_solver_backed_subset.csv")
     rows = []
     for r in t4:
+        method_name = r["baseline"]
+        if method_name.lower() == "tfidf":
+            method_name = "TF\u2013IDF"
+        elif method_name.lower() == "oracle":
+            method_name = "Oracle"
         rows.append(
             {
-                "method": r["baseline"].upper(),
+                "method": method_name,
                 "executable": float(r["executable_rate"]),
                 "solver_success": float(r["solver_success_rate"]),
                 "feasible": float(r["feasible_rate"]),
@@ -301,7 +313,7 @@ def build_figure4_solver_subset() -> None:
         )
     _write_source_csv("figure4_solver_subset_source.csv", rows)
     methods = [r["method"] for r in rows]
-    metrics = ["executable", "solver success", "feasible", "objective"]
+    metrics = ["Executable", "Solver success", "Feasible", "Objective produced"]
     vals = [[r["executable"], r["solver_success"], r["feasible"], r["objective"]] for r in rows]
     _draw_grouped_bars_mpl(methods, metrics, vals, "figure4_final_solver_backed_subset", y_max=1.0)
 
