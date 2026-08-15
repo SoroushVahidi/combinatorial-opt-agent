@@ -46,23 +46,23 @@ def verify_baseline_manifests(common: dict[str, Any] | None = None) -> dict[str,
 
 
 def pamop_empirical_manifest_note(common: dict[str, Any] | None = None) -> str:
-    """Explains the known, real divergence between PaMOP's executed evidence and the shared pilot_ids convention.
+    """Explains the (now resolved) divergence between PaMOP's executed evidence and the shared pilot_ids convention.
 
-    Do not "fix" this by relabeling PaMOP's IDs or the shared pilot_ids --
-    both are real, already-committed selections; the divergence itself is
-    the fact to report (see PHASE 7 / PHASE 9 of the comparison-harness task).
+    PaMOP's original 6-problem diagnostic used a different 6 than the shared
+    `pilot_ids`; the scaled extension (2026-08-15) executed the remaining 12,
+    so PaMOP's evidence now covers the full 18-instance
+    `future_evaluation_ids` set. A 6-instance pilot-vs-pilot comparison must
+    still state which 6 it means.
     """
     common = common or load_common_manifest()
     divergence = common["known_manifest_divergence"]
     pamop_ids = divergence["pamop_empirical_pilot_ids"]
     return (
-        f"The shared pilot_ids convention {common['pilot_ids']} (used by the "
-        "ORLM/OptMATH/DeepOR/OR-R1 lightweight manifests) is NOT identical to "
-        f"the 6 problem IDs PaMOP's gpt-5.4 fidelity diagnostic actually executed "
-        f"({pamop_ids}). Overlap: "
-        f"{sorted(set(common['pilot_ids']) & set(pamop_ids))} "
-        f"(4 of 6). Both ID sets are subsets of the same 18-instance "
-        f"future_evaluation_ids superset {common['future_evaluation_ids']}, so "
-        "they remain comparable at the 18-instance level, but any 6-instance "
-        "pilot-vs-pilot comparison must state which 6 it means."
+        f"PaMOP's original gpt-5.4 diagnostic executed 6 IDs "
+        f"({pamop_ids}), which were NOT the shared pilot_ids convention "
+        f"{common['pilot_ids']}. That divergence is RESOLVED at the 18-instance "
+        "level: the 2026-08-15 scaled extension executed the remaining 12 IDs, "
+        "so PaMOP's empirical evidence now covers the full "
+        f"`future_evaluation_ids` set {common['future_evaluation_ids']}. "
+        "Any 6-instance pilot-vs-pilot comparison must still state which 6 it means."
     )

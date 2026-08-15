@@ -279,9 +279,13 @@ def _render_markdown(
     lines.append("- PaMOP's objective-value agreement is an exact-match proxy on execution-successful rows "
                   "only, never a structural/semantic correctness judgment.")
     lines.append("- ORLM has 18 real common-18 rows but **no solver execution** (coptpy not installed); its "
-                  "executable/feasible/objective-agreement cells are NOT_APPLICABLE, never zero. OptMATH/DeepOR/OR-R1 "
+                  "executable/feasible/objective-agreement cells are NOT_APPLICABLE, never zero. DeepOR/OR-R1 "
                   "currently have **zero** empirical rows; any non-zero number for them in this report would be "
-                  "fabricated and must be treated as a bug.\n")
+                  "fabricated and must be treated as a bug.")
+    lines.append("- `generic` (gpt-5.4, zero-shot gurobipy) has 18 real common-18 rows with valid "
+                  "generation/parse/static-validation but **no solver execution**; it is a general-purpose LLM "
+                  "floor, not an optimization-trained baseline, and its executable/objective cells are "
+                  "NOT_APPLICABLE.\n")
 
     lines.append("## OR-R1 transductive-protocol note\n")
     lines.append("The official OR-R1 TGRPO training set is the union of all official evaluation test sets, "

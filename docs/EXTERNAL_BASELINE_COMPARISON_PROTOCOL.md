@@ -122,10 +122,26 @@ system without this caveat visible in the same output.
 
 ## What this protocol does not yet cover
 
-- A completed empirical result for ORLM, OptMATH, DeepOR, or OR-R1. ORLM's
-  official-checkpoint six-instance pilot is currently running, but its output
-  remains excluded until rows complete and pass provenance validation (see
-  `baselines/comparison/availability.py`).
-- Any statistical correction for multiple comparisons across metrics/systems.
+- A completed, validated empirical result for DeepOR or OR-R1. DeepOR has no
+  official code or checkpoint at all; OR-R1 has code but no released
+  checkpoint, so neither can produce empirical rows (see
+  `baselines/comparison/availability.py` and `docs/DEEPOR_PROVENANCE.md`,
+  `docs/ORR1_PROVENANCE.md`; rechecked 2026-08-15).
+- A statistical correction for multiple comparisons across metrics/systems.
 - A canonical single "leaderboard" ranking — deliberately out of scope; see
   the critical scientific principle in this document's introduction.
+
+## Current empirical evidence (as of 2026-08-15)
+
+- `ours`: 18/18 common-18 rows, deterministic frozen method.
+- `pamop`: 18/18 common-18 rows (gpt-5.4, AMPL/HiGHS execution) — scaled
+  extension completed 2026-08-15; the original 6-problem divergence note is
+  resolved at the 18-instance level (see `manifests.py`).
+- `orlm`: 18/18 common-18 rows (official checkpoint), execution blocked on
+  missing coptpy.
+- `optmath`: 18/18 common-18 rows (official checkpoint) once the running
+  inference completes and is validated.
+- `generic`: 18/18 common-18 rows (gpt-5.4, zero-shot gurobipy), no solver
+  execution attempted.
+- A partially-written checkpoint (fewer rows than the common manifest) is
+  never ingested, so a running job cannot leak a partial run into the report.

@@ -252,8 +252,8 @@ def test_generate_report_never_fabricates_a_value_for_empty_systems(tmp_path):
 
 
 def test_availability_and_resource_profile_cover_all_six_systems():
-    assert set(AVAILABILITY) == {"ours", "pamop", "orlm", "optmath", "deepor", "orr1"}
-    assert set(RESOURCE_PROFILES) == {"ours", "pamop", "orlm", "optmath", "deepor", "orr1"}
+    assert set(AVAILABILITY) == {"ours", "pamop", "orlm", "optmath", "generic", "deepor", "orr1"}
+    assert set(RESOURCE_PROFILES) == {"ours", "pamop", "orlm", "optmath", "generic", "deepor", "orr1"}
 
 
 # --- CLI smoke test -------------------------------------------------------------

@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Iterable
 
 from baselines.optmath.data_adapter import OptmathInputRecord
 from baselines.optmath.result_schema import OptmathResult
@@ -31,3 +32,13 @@ class JsonlResultStore:
     def append(self, result: OptmathResult) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         with self.path.open("a", encoding="utf-8") as handle: handle.write(result.to_json() + "\n")
+    def append_unfinished(self, records: Iterable[OptmathInputRecord], runner: OptmathRunner, *, git_sha: str | None = None) -> list[OptmathResult]:
+        completed = self.completed_ids()
+        results = []
+        for record in records:
+            if record.problem_id in completed:
+                continue
+            result = run_one(record, runner, git_sha=git_sha)
+            self.append(result)
+            results.append(result)
+        return results

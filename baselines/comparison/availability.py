@@ -29,10 +29,11 @@ AVAILABILITY: dict[str, AvailabilityStatus] = {
         "a dedicated common-18-instance subset run is a separate, smaller extraction (see report §7).",
     ),
     "pamop": AvailabilityStatus(
-        "pamop", "PILOT VALIDATED (6-instance gpt-5.4 diagnostic)",
-        True, "PAMOP_PILOT_VALIDATED",
-        "results/pamop/fidelity_diagnostic_gpt5/: 6 attempted, 5/6 execution success, "
-        "4/5 evaluable objective-value-proxy success. Independent reconstruction, no official code.",
+        "pamop", "COMMON-18 COMPLETE (gpt-5.4, AMPL/HiGHS execution)",
+        True, "PAMOP_COMMON18_COMPLETE",
+        "results/pamop/fidelity_diagnostic_gpt5/: 18/18 common-18 rows, deployment gpt-5.4 "
+        "temperature 0.2, 13/18 execution success, 5 AMPL parse failures, 8/11 evaluable "
+        "objective-value-proxy success. Independent reconstruction, no official code.",
     ),
     "orlm": AvailabilityStatus(
         "orlm", "COMMON-18 COMPLETE (official checkpoint; execution blocked on coptpy)",
@@ -44,9 +45,21 @@ AVAILABILITY: dict[str, AvailabilityStatus] = {
         "objective_proxy_status=NOT_EVALUABLE for all 18 rows.",
     ),
     "optmath": AvailabilityStatus(
-        "optmath", "IMPLEMENTED, NOT YET RUN",
-        False, "OPTMATH_IMPLEMENTED_READY_FOR_INFERENCE",
-        "Official code and checkpoint confirmed public. No GPU inference has been run; zero result rows exist.",
+        "optmath", "COMMON-18 COMPLETE (official checkpoint; solver execution pending)",
+        True, "OPTMATH_COMMON18_INFERENCE_COMPLETE",
+        "results/optmath/common18_official_checkpoint/results.jsonl: 18/18 rows, official "
+        "Aurora-Gem/OptMATH-Qwen2.5-7B revision 617fe77, all generation/parse/static-validation "
+        "complete (prompt upstream-eval-evaluator-build-cot-prompt-v1, temperature 0.8, 8192 max "
+        "tokens). Solver execution not yet run; gurobipy is available in a dedicated venv "
+        "(objective cells NOT_APPLICABLE until execution is run).",
+    ),
+    "generic": AvailabilityStatus(
+        "generic", "COMMON-18 COMPLETE (gpt-5.4, zero-shot gurobipy; no solver execution)",
+        True, "GENERIC_LLM_COMMON18_COMPLETE_EXECUTION_NOT_ATTEMPTED",
+        "results/generic_llm/common18_official/results.jsonl: 18/18 rows, all generation/parse/"
+        "static-validation complete, served model gpt-5.4-2026-03-05 (azure_openai deployment gpt-5.4). "
+        "Generic-purpose API LLM with a fixed zero-shot gurobipy prompt (no optimization training); "
+        "solver execution not attempted (objective cells NOT_APPLICABLE, never zero).",
     ),
     "deepor": AvailabilityStatus(
         "deepor", "PAPER RECONSTRUCTION, OFFICIAL CHECKPOINT UNAVAILABLE",

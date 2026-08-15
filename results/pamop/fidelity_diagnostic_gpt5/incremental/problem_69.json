@@ -1,0 +1,270 @@
+{
+  "exception_message": "",
+  "exception_type": "",
+  "generated_artifacts": {
+    "merged_model": {
+      "config_hash": "8c44b93014ee08ea",
+      "constraints_text": "subject to ChocolateSpreadPerChocolateCrepe:\n    chocolate_spread_per_chocolate_crepe = 3;\n\nsubject to PeanutButterSpreadPerPeanutButterCrepe:\n    peanut_butter_spread_per_peanut_butter_crepe = 4;\n\nsubject to CrepeMixPerChocolateCrepe:\n    crepe_mix_per_chocolate_crepe = 6;\n\nsubject to CrepeMixPerPeanutButterCrepe:\n    crepe_mix_per_peanut_butter_crepe = 7;\nsubject to PeanutButterGreaterThanChocolate:\n    peanut_butter_crepes > chocolate_crepes;\nsubject to MinimumChocolateFraction:\n    chocolate_crepes >= minimum_chocolate_fraction * (chocolate_crepes + peanut_butter_crepes);\nsubject to ChocolateSpreadAvailability:\n    chocolate_spread_per_chocolate_crepe * chocolate_crepes <= available_chocolate_spread;\n\nsubject to PeanutButterSpreadAvailability:\n    peanut_butter_spread_per_peanut_butter_crepe * peanut_butter_crepes <= available_peanut_butter_spread;",
+      "leaf_results": [
+        {
+          "ampl_fragment": "subject to ChocolateSpreadPerChocolateCrepe:\n    chocolate_spread_per_chocolate_crepe = 3;\n\nsubject to PeanutButterSpreadPerPeanutButterCrepe:\n    peanut_butter_spread_per_peanut_butter_crepe = 4;\n\nsubject to CrepeMixPerChocolateCrepe:\n    crepe_mix_per_chocolate_crepe = 6;\n\nsubject to CrepeMixPerPeanutButterCrepe:\n    crepe_mix_per_peanut_butter_crepe = 7;",
+          "constraint_indices": [
+            0,
+            1
+          ],
+          "node_id": "node_1",
+          "prompt_hash": "4850acf33837a5fe",
+          "referenced_global_symbols": [
+            "chocolate_spread_per_chocolate_crepe",
+            "crepe_mix_per_chocolate_crepe",
+            "crepe_mix_per_peanut_butter_crepe",
+            "peanut_butter_spread_per_peanut_butter_crepe"
+          ],
+          "unresolved_references": [],
+          "used_augmentation": false,
+          "validation_attempts": 1
+        },
+        {
+          "ampl_fragment": "subject to PeanutButterGreaterThanChocolate:\n    peanut_butter_crepes > chocolate_crepes;",
+          "constraint_indices": [
+            2
+          ],
+          "node_id": "node_2",
+          "prompt_hash": "f3e21480002f4bd3",
+          "referenced_global_symbols": [
+            "chocolate_crepes",
+            "peanut_butter_crepes"
+          ],
+          "unresolved_references": [],
+          "used_augmentation": false,
+          "validation_attempts": 1
+        },
+        {
+          "ampl_fragment": "subject to MinimumChocolateFraction:\n    chocolate_crepes >= minimum_chocolate_fraction * (chocolate_crepes + peanut_butter_crepes);",
+          "constraint_indices": [
+            3
+          ],
+          "node_id": "node_3",
+          "prompt_hash": "1232dab947204546",
+          "referenced_global_symbols": [
+            "chocolate_crepes",
+            "minimum_chocolate_fraction",
+            "peanut_butter_crepes"
+          ],
+          "unresolved_references": [],
+          "used_augmentation": false,
+          "validation_attempts": 1
+        },
+        {
+          "ampl_fragment": "subject to ChocolateSpreadAvailability:\n    chocolate_spread_per_chocolate_crepe * chocolate_crepes <= available_chocolate_spread;\n\nsubject to PeanutButterSpreadAvailability:\n    peanut_butter_spread_per_peanut_butter_crepe * peanut_butter_crepes <= available_peanut_butter_spread;",
+          "constraint_indices": [
+            4,
+            5
+          ],
+          "node_id": "node_4",
+          "prompt_hash": "d10f387e34d9212c",
+          "referenced_global_symbols": [
+            "available_chocolate_spread",
+            "available_peanut_butter_spread",
+            "chocolate_crepes",
+            "chocolate_spread_per_chocolate_crepe",
+            "peanut_butter_crepes",
+            "peanut_butter_spread_per_peanut_butter_crepe"
+          ],
+          "unresolved_references": [],
+          "used_augmentation": false,
+          "validation_attempts": 1
+        }
+      ],
+      "objective_text": "minimize TotalCrepeMixUsed: crepe_mix_per_chocolate_crepe * chocolate_crepes + crepe_mix_per_peanut_butter_crepe * peanut_butter_crepes;",
+      "parameters_text": "param chocolate_spread_per_chocolate_crepe;\nparam crepe_mix_per_chocolate_crepe;\nparam peanut_butter_spread_per_peanut_butter_crepe;\nparam crepe_mix_per_peanut_butter_crepe;\nparam available_chocolate_spread;\nparam available_peanut_butter_spread;\nparam minimum_chocolate_fraction;",
+      "problem_id": "69",
+      "provenance": {
+        "config_kind": "reconstructed_default",
+        "root_validation_attempts": 1,
+        "structured_problem_source": "llm_extraction:azure_openai:gpt-5.4"
+      },
+      "root_prompt_hash": "1c3518d29bf296bf",
+      "symbol_conflicts": [],
+      "variables_text": "var chocolate_crepes integer >= 0;\nvar peanut_butter_crepes integer >= 0;"
+    },
+    "rendered_model": {
+      "diagnostics": [],
+      "model_hash": "6544c0502bbd4082",
+      "model_text": "# Generated by the independent PaMOP reproduction scaffold.\n\n# Source sections: parameters, variables, objective, constraints.\n\nparam chocolate_spread_per_chocolate_crepe;\nparam crepe_mix_per_chocolate_crepe;\nparam peanut_butter_spread_per_peanut_butter_crepe;\nparam crepe_mix_per_peanut_butter_crepe;\nparam available_chocolate_spread;\nparam available_peanut_butter_spread;\nparam minimum_chocolate_fraction;\n\nvar chocolate_crepes integer >= 0;\nvar peanut_butter_crepes integer >= 0;\n\nminimize TotalCrepeMixUsed: crepe_mix_per_chocolate_crepe * chocolate_crepes + crepe_mix_per_peanut_butter_crepe * peanut_butter_crepes;\n\nsubject to ChocolateSpreadPerChocolateCrepe:\n    chocolate_spread_per_chocolate_crepe = 3;\n\nsubject to PeanutButterSpreadPerPeanutButterCrepe:\n    peanut_butter_spread_per_peanut_butter_crepe = 4;\n\nsubject to CrepeMixPerChocolateCrepe:\n    crepe_mix_per_chocolate_crepe = 6;\n\nsubject to CrepeMixPerPeanutButterCrepe:\n    crepe_mix_per_peanut_butter_crepe = 7;\nsubject to PeanutButterGreaterThanChocolate:\n    peanut_butter_crepes > chocolate_crepes;\nsubject to MinimumChocolateFraction:\n    chocolate_crepes >= minimum_chocolate_fraction * (chocolate_crepes + peanut_butter_crepes);\nsubject to ChocolateSpreadAvailability:\n    chocolate_spread_per_chocolate_crepe * chocolate_crepes <= available_chocolate_spread;\n\nsubject to PeanutButterSpreadAvailability:\n    peanut_butter_spread_per_peanut_butter_crepe * peanut_butter_crepes <= available_peanut_butter_spread;\n",
+      "valid": true
+    }
+  },
+  "gold": {
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_latency_seconds": 0.046959,
+    "gold_objective": 20.0,
+    "gold_reason": "",
+    "gold_returncode": 0,
+    "gold_solver_success": true
+  },
+  "metadata": {
+    "constraint_count": 4,
+    "doc_id": "nlp4lp_test_68",
+    "family_proxy": "MILP|minimize|v2|p7|c4|tree5x1",
+    "lp_or_milp": "MILP",
+    "numeric_mentions": 7,
+    "objective_sense": "minimize",
+    "optimus_code_available": true,
+    "parameter_count": 7,
+    "partition_depth": 1,
+    "partition_node_count": 5,
+    "problem_id": 69,
+    "selection_bucket": "MILP|multi_constraint|low_numeric|large_tree|minimize",
+    "variable_count": 2
+  },
+  "per_problem_row": {
+    "completion_tokens": 2146,
+    "correction_calls": 3,
+    "correction_invoked": true,
+    "correction_iterations": 1,
+    "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
+    "deployment": "gpt-5.4",
+    "estimated_cost_usd": "",
+    "failure_category": "B. SUCCESS_AFTER_CORRECTION",
+    "final_ampl_hash": "4417c57eb741ba5c",
+    "final_ampl_parse_success": true,
+    "final_feasible": true,
+    "final_solver_status": "solved",
+    "g_extr_calls": 1,
+    "g_mod_calls": 5,
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_objective": 20.0,
+    "gold_solver_success": true,
+    "initial_ampl_parse_success": false,
+    "initial_feasible_status": false,
+    "initial_generation_valid": "YES",
+    "initial_solver_success": false,
+    "latency_seconds": 24.372782,
+    "lp_or_milp": "MILP",
+    "objective_match_with_gold": true,
+    "objective_produced": true,
+    "objective_value": 20.0,
+    "partition_depth": 1,
+    "partition_node_count": 5,
+    "problem_id": 69,
+    "prompt_hashes": "1232dab947204546;1c3518d29bf296bf;3ec411d7e6e16ccd;4850acf33837a5fe;7cd196ef44866176;81994db4c5b74408;d10f387e34d9212c;d80b6f6482f6b014;f3e21480002f4bd3",
+    "prompt_tokens": 6932,
+    "provider": "azure_openai",
+    "semantic_correctness_status": "OBJECTIVE_VALUE_PROXY_ONLY",
+    "semantically_wrong_but_feasible": false,
+    "temperature": 0.2,
+    "total_llm_calls": 9,
+    "total_tokens": 9078,
+    "underlying_model": "gpt-5.4-2026-03-05"
+  },
+  "problem_id": 69,
+  "trace": {
+    "correction_iterations_observed": 1,
+    "final_ampl_hash": "4417c57eb741ba5c",
+    "final_success": true,
+    "initial_ampl_hash": "6544c0502bbd4082",
+    "iterations": [
+      {
+        "ampl_hash": "6544c0502bbd4082",
+        "comparison": {
+          "latency_seconds": 2.562727450975217,
+          "model": "gpt-5.4",
+          "needs_remodel": true,
+          "prompt_hash": "d80b6f6482f6b014",
+          "provider": "azure_openai",
+          "reason": "The review identifies genuine formulation issues in the model: constants were incorrectly written as constraints instead of initialized parameters, which prevents the model from being evaluated, and the strict inequality for the popularity condition should be reformulated into a valid linear/integer constraint. These are actionable modeling errors, so remodeling is justified.",
+          "targeted_issues": [
+            "Initialize all fixed numerical quantities as parameters or data rather than as `subject to` constraints.",
+            "Ensure the objective and resource constraints use properly assigned parameter values for ingredient usage and availability.",
+            "Reformulate the condition that peanut butter crepes exceed chocolate crepes as a non-strict linear constraint, e.g. `peanut_butter_crepes >= chocolate_crepes + 1`."
+          ],
+          "total_tokens": 887,
+          "underlying_model": "gpt-5.4-2026-03-05"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_j3r_sa4c/model.run, line 41, offset 1544):\nerror processing objective TotalCrepeMixUsed:\n\tno value for crepe_mix_per_chocolate_crepe\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "6544c0502bbd4082",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.045388250960968435,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_j3r_sa4c/model.run, line 41, offset 1544):\nerror processing objective TotalCrepeMixUsed:\n\tno value for crepe_mix_per_chocolate_crepe\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 0,
+        "remodel": {
+          "ampl_hash": "4417c57eb741ba5c",
+          "ampl_model": "param chocolate_spread_per_chocolate_crepe := 3;\nparam crepe_mix_per_chocolate_crepe := 6;\nparam peanut_butter_spread_per_peanut_butter_crepe := 4;\nparam crepe_mix_per_peanut_butter_crepe := 7;\nparam available_chocolate_spread := 400;\nparam available_peanut_butter_spread := 450;\nparam minimum_chocolate_fraction := 0.25;\n\nvar chocolate_crepes integer >= 0;\nvar peanut_butter_crepes integer >= 0;\n\nminimize TotalCrepeMixUsed:\n    crepe_mix_per_chocolate_crepe * chocolate_crepes + crepe_mix_per_peanut_butter_crepe * peanut_butter_crepes;\n\nsubject to PeanutButterGreaterThanChocolate:\n    peanut_butter_crepes >= chocolate_crepes + 1;\n\nsubject to MinimumChocolateFraction:\n    chocolate_crepes >= minimum_chocolate_fraction * (chocolate_crepes + peanut_butter_crepes);\n\nsubject to ChocolateSpreadAvailability:\n    chocolate_spread_per_chocolate_crepe * chocolate_crepes <= available_chocolate_spread;\n\nsubject to PeanutButterSpreadAvailability:\n    peanut_butter_spread_per_peanut_butter_crepe * peanut_butter_crepes <= available_peanut_butter_spread;",
+          "changes": [
+            "Replaced parameter-setting constraints with proper parameter initializations using := for all fixed numerical values.",
+            "Initialized ingredient availability and minimum chocolate fraction directly in the model so the objective and constraints are evaluable.",
+            "Reformulated the strict inequality peanut_butter_crepes > chocolate_crepes as the valid linear integer constraint peanut_butter_crepes >= chocolate_crepes + 1.",
+            "Removed the invalid constraints that attempted to equate parameters to constants, preserving the original modeling approach otherwise."
+          ],
+          "latency_seconds": 3.2452832820126787,
+          "model": "gpt-5.4",
+          "prompt_hash": "7cd196ef44866176",
+          "provider": "azure_openai",
+          "total_tokens": 1820,
+          "underlying_model": "gpt-5.4-2026-03-05"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Replace the parameter-setting constraints with actual parameter assignments, e.g. `param chocolate_spread_per_chocolate_crepe := 3;`, `param peanut_butter_spread_per_peanut_butter_crepe := 4;`, `param crepe_mix_per_chocolate_crepe := 6;`, `param crepe_mix_per_peanut_butter_crepe := 7;`, `param available_chocolate_spread := 400;`, `param available_peanut_butter_spread := 450;`, and `param minimum_chocolate_fraction := 0.25;` (or provide these in a separate data file).",
+            "Do not model fixed constants as `subject to` constraints on parameters; parameters must be initialized before `solve`.",
+            "After fixing parameter values, consider rewriting the strict inequality `peanut_butter_crepes > chocolate_crepes` as `peanut_butter_crepes >= chocolate_crepes + 1`, since strict inequalities are typically not allowed in linear/integer AMPL models."
+          ],
+          "diagnosis": "The model uses parameters in the objective and constraints without assigning them values. The statements like `subject to CrepeMixPerChocolateCrepe: crepe_mix_per_chocolate_crepe = 6;` are constraints, not parameter definitions, so AMPL still sees `crepe_mix_per_chocolate_crepe` (and similarly the other parameters) as having no value when evaluating the objective.",
+          "error_category": "model_error",
+          "latency_seconds": 3.312213327968493,
+          "model": "gpt-5.4",
+          "prompt_hash": "81994db4c5b74408",
+          "provider": "azure_openai",
+          "total_tokens": 1324,
+          "underlying_model": "gpt-5.4-2026-03-05"
+        }
+      },
+      {
+        "ampl_hash": "4417c57eb741ba5c",
+        "comparison": null,
+        "execution": {
+          "diagnostics": [],
+          "error_category": "none",
+          "model_hash": "4417c57eb741ba5c",
+          "model_load_success": true,
+          "objective_value": 20.0,
+          "parse_success": true,
+          "runtime_seconds": 0.05250570795033127,
+          "solver_invocation_success": true,
+          "solver_status": "solved",
+          "stderr_tail": "",
+          "stdout_tail": "Gurobi 13.0.2:   tech:outlev = 0\nGurobi 13.0.2: optimal solution; objective 20\n0 simplex iterations\nsolve_result = solved\n\nTotalCrepeMixUsed = 20",
+          "success": true,
+          "timed_out": false
+        },
+        "iteration_number": 1,
+        "remodel": null,
+        "review": null
+      }
+    ],
+    "problem_id": "69",
+    "stopped_reason": "execution_success",
+    "total_tokens": 4031
+  }
+}

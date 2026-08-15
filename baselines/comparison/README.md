@@ -1,10 +1,11 @@
 # Cross-baseline comparison harness
 
 **Status: `CROSS_BASELINE_HARNESS_COMPLETE` (infrastructure), report status
-`PRELIMINARY_EXTERNAL_BASELINE_STATUS` (data), 2026-08-13.** This package is
+`PRELIMINARY_EXTERNAL_BASELINE_STATUS` (data), 2026-08-15.** This package is
 an ANALYSIS VIEW that sits above each baseline's own native
 `result_schema.py`/`evaluator.py` (`baselines/pamop/`, `baselines/orlm/`,
-`baselines/optmath/`, `baselines/deepor/`, `baselines/orr1/`) and this
+`baselines/optmath/`, `baselines/generic_llm/`, `baselines/deepor/`,
+`baselines/orr1/`) and this
 repository's own NLP4LP downstream benchmark. It never replaces any of
 those, and it never invents a number: a system with zero real result rows
 appears only in the availability/resource tables, never with a fabricated
@@ -12,10 +13,12 @@ metric value.
 
 ## Why this exists
 
-The six systems compared here (`ours`, PaMOP, ORLM, OptMATH, DeepOR, OR-R1)
+The seven systems compared here (`ours`, PaMOP, ORLM, OptMATH, a generic
+general-purpose LLM baseline, DeepOR, OR-R1)
 do not naturally expose the same metrics — one is deterministic fixed-catalog
 scalar grounding, the others are five different flavors of full NL-to-model
-generation with different solvers, training regimes, and rollout counts. A
+generation with different solvers, training regimes, and rollout counts, plus
+a generic-purpose API LLM with a zero-shot gurobipy prompt. A
 single blended "score" across them would misrepresent the science. This
 package instead distinguishes four kinds of information (frozen in
 `docs/EXTERNAL_BASELINE_COMPARISON_PROTOCOL.md`):
@@ -47,8 +50,8 @@ package instead distinguishes four kinds of information (frozen in
   `CellState` (`PENDING`/`NOT_APPLICABLE`/`UNAVAILABLE`/`MOCK_ONLY`/`PROXY`/
   `UNSUPPORTED`/`UNKNOWN`) so no cell is ever an ambiguous blank.
 - `adapters.py` — `adapt_ours`/`adapt_pamop`/`adapt_orlm`/`adapt_optmath`/
-  `adapt_deepor`/`adapt_orr1`: native record -> `UnifiedRow`, discarding
-  nothing (native fields land in `native_record`/`native_metrics`).
+  `adapt_generic`/`adapt_deepor`/`adapt_orr1`: native record -> `UnifiedRow`,
+  discarding nothing (native fields land in `native_record`/`native_metrics`).
 - `metrics.py` — the native/shared metric taxonomy and the
   `END_TO_END_OBJECTIVE_SUCCESS` eligibility notes per system.
 - `pairing.py` — pairs two systems' rows on `problem_id` for one boolean
@@ -73,9 +76,15 @@ package instead distinguishes four kinds of information (frozen in
 - `ingest.py` — explicit, fixed-location ingestion for `ours` (a fresh,
   CPU-only rerun of `tools.nlp4lp_downstream_utility`, filtered to the
   common manifest), `pamop` (`results/pamop/fidelity_diagnostic_gpt5/`),
-  and `orlm` (`results/orlm/common18_official_checkpoint/results.jsonl`,
-  official-checkpoint common-18 run, complete with 18 rows).
-  No filesystem crawling. OptMATH/DeepOR/OR-R1 have no real result files yet
+  `orlm` (`results/orlm/common18_official_checkpoint/results.jsonl`,
+  official-checkpoint common-18 run, complete with 18 rows), `optmath`
+  (`results/optmath/common18_official_checkpoint/results.jsonl`,
+  official-checkpoint common-18 run), and `generic`
+  (`results/generic_llm/common18_official/results.jsonl`, gpt-5.4 common-18
+  run). Partially-written checkpoints (fewer rows than the common manifest)
+  are treated as not-yet-complete and yield no rows, so a running job can
+  never leak a partial run into the report.
+  No filesystem crawling. DeepOR/OR-R1 have no real result files yet
   and remain empty until their fixed locations are explicitly registered.
 - `report.py` + `cli.py` — Markdown/CSV/JSON report generation, run via
   `python -m baselines.comparison.cli`.

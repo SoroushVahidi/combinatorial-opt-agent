@@ -40,7 +40,7 @@ def validate_row(row: UnifiedRow, *, known_problem_ids: set[str] | None = None) 
         problems.append("missing_git_sha")
     if is_state(row.checkpoint_model) and row.checkpoint_model not in (CellState.NOT_APPLICABLE,):
         problems.append(f"checkpoint_model_state:{row.checkpoint_model}")
-    if row.system not in {"ours", "pamop", "orlm", "optmath", "deepor", "orr1"}:
+    if row.system not in {"ours", "pamop", "orlm", "optmath", "generic", "deepor", "orr1"}:
         problems.append(f"unknown_system:{row.system}")
     if is_mock_evidence(row):
         problems.append("mock_evidence")

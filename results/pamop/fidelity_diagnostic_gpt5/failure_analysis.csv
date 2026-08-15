@@ -4,3 +4,23 @@ problem_id,failure_category,primary_reason,issue_tags,diagnostic_codes
 error processing objective TotalRareCompoundProduced:
 	no value for rare_compound_per_A
 Error: Exit code 2",,ampl_process_failed
+117,E. AMPL_PARSE_FAILURE,"Error at _cmdno 3 executing ""solve"" command
+(file /tmp/pamop_ampl_e2ctsu9a/model.run, line 29, offset 979):
+error processing objective TotalFatIntake:
+	no value for almond_fat_per_serving
+Error: Exit code 2",,ampl_process_failed
+190,E. AMPL_PARSE_FAILURE,"Error at _cmdno 3 executing ""solve"" command
+(file /tmp/pamop_ampl_dltccv22/model.run, line 26, offset 926):
+error processing objective TotalProfit:
+	no value for ham_profit_per_batch
+Error: Exit code 2",,ampl_process_failed
+232,E. AMPL_PARSE_FAILURE,"Error at _cmdno 3 executing ""solve"" command
+(file /tmp/pamop_ampl_9bqp9o8t/model.run, line 31, offset 824):
+error processing objective TotalSodium:
+	no value for salmon_sodium
+Error: Exit code 2",,ampl_process_failed
+262,E. AMPL_PARSE_FAILURE,"Error at _cmdno 3 executing ""solve"" command
+(file /tmp/pamop_ampl_vxhq2uom/model.run, line 30, offset 1181):
+error processing objective Total_People_Treated:
+	no value for people_treated_per_patch_batch
+Error: Exit code 2",,ampl_process_failed

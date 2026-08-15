@@ -4,6 +4,15 @@ Verified 2026-08-13 against the paper, the arXiv HTML source, the AAAI
 proceedings record, and the official GitHub repository at commit
 `9de48e3b22555e729ec032e7efd00ebaaa8e78d5`.
 
+## Verification log
+
+- 2026-08-13: full provenance verification (this document).
+- 2026-08-15 (recheck for the external-baseline campaign): GitHub releases
+  and tags API for `SCUTE-ZZ/OR-R1` both return empty (0 releases, 0 tags);
+  a repository search surfaced no DeepOR-attributable code release. The
+  SFT/TGRPO/merged checkpoint remains NOT RELEASED. Classification unchanged:
+  `ORR1_CODE_INTEGRATED_CHECKPOINT_BLOCKED`, zero empirical rows possible.
+
 ## Publication
 
 - **Title:** "OR-R1: Automating Modeling and Solving of Operations Research

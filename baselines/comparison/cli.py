@@ -17,7 +17,7 @@ from baselines.comparison.report import generate_report
 from baselines.comparison.validation import select_rows
 
 _REPO_ROOT = Path(__file__).resolve().parents[2]
-_ALL_SYSTEMS = ("ours", "pamop", "orlm", "optmath", "deepor", "orr1")
+_ALL_SYSTEMS = ("ours", "pamop", "orlm", "optmath", "generic", "deepor", "orr1")
 
 
 def _git_sha() -> str | None:

@@ -5,18 +5,59 @@
   "selection_algorithm": "Deterministic pamop-pilot-v1 stratified bucket pass over accessible ids 1-269 (LP/MILP, simple/multi-constraint, low/high numeric mentions, small/large partition tree, objective sense, then stable SHA-256 tie-breaking). No execution outcomes were used. See results/pamop/fidelity_diagnostic_gpt5/selected_ids.json for the full 18-row selection record with per-problem metadata.",
   "selection_independent_of_outcomes": true,
   "selection_preceded_external_baseline_outcomes": true,
-  "pilot_ids": [14, 23, 34, 59, 69, 72],
-  "future_evaluation_ids": [14, 23, 34, 59, 69, 72, 84, 88, 96, 117, 190, 202, 208, 219, 232, 237, 254, 262],
+  "pilot_ids": [
+    14,
+    23,
+    34,
+    59,
+    69,
+    72
+  ],
+  "future_evaluation_ids": [
+    14,
+    23,
+    34,
+    59,
+    69,
+    72,
+    84,
+    88,
+    96,
+    117,
+    190,
+    202,
+    208,
+    219,
+    232,
+    237,
+    254,
+    262
+  ],
   "eligibility_rule": "Natural-language problem text must be present; no outcome-based filtering.",
   "exclusions": {
-    "excluded_missing_structured_data_ids": [28, 51, 57, 123, 126, 135],
+    "excluded_missing_structured_data_ids": [
+      28,
+      51,
+      57,
+      123,
+      126,
+      135
+    ],
     "reason": "Excluded from the pamop_possible_269 source subset before any of these 18 IDs were chosen; not an ID dropped from this manifest itself."
   },
   "known_manifest_divergence": {
-    "pamop_empirical_pilot_ids": [14, 23, 34, 72, 84, 88],
+    "pamop_empirical_pilot_ids": [
+      14,
+      23,
+      34,
+      72,
+      84,
+      88
+    ],
     "pamop_empirical_pilot_source": "results/pamop/fidelity_diagnostic_gpt5/ (gpt-5.4 deployment, 2026-08-12), verified against per_problem.csv",
-    "divergence_from_pilot_ids": "PaMOP's actually-executed 6-problem diagnostic (14, 23, 34, 72, 84, 88) is NOT the same set as pilot_ids above (14, 23, 34, 59, 69, 72). Overlap is 4 of 6 (14, 23, 34, 72); PaMOP additionally covers 84 and 88 instead of 59 and 69.",
-    "why_this_happened": "The gpt-5.4 diagnostic (results/pamop/fidelity_diagnostic_gpt5/) was run to answer a model-vs-prompt fidelity question and reused the same 6 IDs as an earlier forensics run (results/pamop/forensics_targeted/), which predates the pilot_ids convention later adopted uniformly by the ORLM/OptMATH/DeepOR/OR-R1 lightweight manifests.",
-    "resolution": "Do not retroactively relabel either ID set. Both are subsets of the same 18-instance future_evaluation_ids superset below, so an 18-instance comparison remains valid; a 6-instance pilot-vs-pilot comparison must explicitly state which 6 IDs it means and must not silently treat PaMOP's pilot and the other four baselines' pilot as the same set."
+    "pamop_common18_complete_source": "results/pamop/fidelity_diagnostic_gpt5/ per_problem.csv now contains all 18 future_evaluation_ids (scaled extension run completed 2026-08-15, deployment gpt-5.4 temperature 0.2)",
+    "divergence_from_pilot_ids": "PaMOP's original 6-problem diagnostic (14, 23, 34, 72, 84, 88) was NOT the same set as pilot_ids (14, 23, 34, 59, 69, 72); overlap was 4 of 6. This divergence is now resolved at the 18-instance level: the scaled extension run executed the remaining 12 IDs, so PaMOP's empirical evidence covers the full future_evaluation_ids set.",
+    "why_this_happened": "The gpt-5.4 diagnostic was run to answer a model-vs-prompt fidelity question and reused the same 6 IDs as an earlier forensics run, which predates the pilot_ids convention later adopted uniformly by the ORLM/OptMATH/DeepOR/OR-R1 lightweight manifests.",
+    "resolution": "An 18-instance comparison is now fully valid for PaMOP. Any 6-instance pilot-vs-pilot comparison must still explicitly state which 6 IDs it means."
   }
 }

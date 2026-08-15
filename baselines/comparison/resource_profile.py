@@ -59,6 +59,14 @@ RESOURCE_PROFILES: dict[str, ResourceProfile] = {
         training_required_for_faithful_result=False,
         notes=("Official code and checkpoint confirmed public.",),
     ),
+    "generic": ResourceProfile(
+        system="generic", compute="None local (external Azure OpenAI API)", external_llm_api=True, deterministic=False,
+        model_size_params="Undisclosed (Azure OpenAI gpt-5.4)", solver="gurobipy (Gurobi)",
+        test_time_learning=False, rollouts_per_problem="1 (greedy, temperature=0.0)",
+        training_required_for_faithful_result=False,
+        notes=("General-purpose API LLM, NOT optimization-trained; zero-shot fixed prompt.",
+               "Bounds the plain-LLM floor; no local GPU needed, cost = API calls."),
+    ),
     "deepor": ResourceProfile(
         system="deepor", compute="Unknown (official code unavailable; paper implies multi-GPU training)", external_llm_api=False,
         deterministic=True, model_size_params="~8B (Qwen3-8B, paper-specified)", solver="Pyomo (paper case study)",

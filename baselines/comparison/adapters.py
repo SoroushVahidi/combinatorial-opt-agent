@@ -237,3 +237,55 @@ def adapt_orr1(record: dict[str, Any]) -> UnifiedRow:
     row.rollout_count = record.get("rollout_count", CellState.NOT_APPLICABLE)
     row.correctness_metric_name = "pass_at_k_or_mj_at_k"
     return row
+
+
+# --- General-purpose LLM baseline -------------------------------------------
+
+def adapt_generic(record: dict[str, Any]) -> UnifiedRow:
+    """From a `baselines.generic_llm` result row (gurobipy code, Azure gpt-5.4).
+
+    Same parse/static-validation semantics as OptMATH; the served model
+    snapshot (e.g. `gpt-5.4-2026-03-05`) is recorded as the revision.
+    """
+    generation = record.get("generation", {}) or {}
+    parsed = record.get("parsed") or {}
+    static = record.get("static_validation") or {}
+    execution_attempted = bool(record.get("execution_attempted", False))
+    exec_status = str((record.get("execution") or {}).get("status", ""))
+    parse_success = bool(parsed.get("generated_code"))
+    return UnifiedRow(
+        system="generic", method_variant=f"general_purpose_llm_{generation.get('underlying_model') or record.get('checkpoint', 'unknown')}",
+        problem_id=str(record.get("problem_id", CellState.UNKNOWN)),
+        dataset=str(record.get("dataset", "nlp4lp")),
+        input_hash=record.get("input_sha256") or CellState.UNKNOWN,
+        implementation_fidelity="INDEPENDENT_RECONSTRUCTION",  # a generic API model, not an official optimization baseline
+        official_code_used=CellState.NOT_APPLICABLE, official_checkpoint_used=CellState.NOT_APPLICABLE,
+        checkpoint_model=record.get("checkpoint", CellState.UNAVAILABLE),
+        checkpoint_revision=generation.get("underlying_model") or CellState.NOT_APPLICABLE,
+        source_repo=CellState.NOT_APPLICABLE, source_repo_revision=CellState.NOT_APPLICABLE,
+        local_git_sha=record.get("git_sha", CellState.UNKNOWN),
+        generation_attempted=True, generation_completed=str(generation.get("status")) == "COMPLETED",
+        parse_success=parse_success,
+        static_valid=(str(static.get("status")) == "STATIC_VALID") if static else CellState.NOT_APPLICABLE,
+        execution_attempted=execution_attempted,
+        execution_success=(exec_status.startswith("COMPLETED")) if execution_attempted else CellState.NOT_APPLICABLE,
+        feasible=CellState.NOT_APPLICABLE, bounded=CellState.NOT_APPLICABLE,
+        solver_status=CellState.NOT_APPLICABLE,
+        objective_available=False, objective_predicted=CellState.UNAVAILABLE,
+        objective_gold=record.get("gold_objective", CellState.UNAVAILABLE),
+        objective_match=CellState.NOT_APPLICABLE, objective_tolerance=0.05,
+        semantic_correct=CellState.NOT_APPLICABLE, semantic_metric_available=False,
+        correctness_metric_name="parse_and_static_validation",
+        runtime_seconds=generation.get("runtime_seconds", CellState.NOT_APPLICABLE),
+        prompt_tokens=generation.get("prompt_tokens", CellState.NOT_APPLICABLE),
+        generated_tokens=generation.get("completion_tokens", CellState.NOT_APPLICABLE),
+        total_tokens=generation.get("total_tokens", CellState.NOT_APPLICABLE),
+        rollout_count=1, correction_iterations=CellState.NOT_APPLICABLE,
+        test_time_training_steps=CellState.NOT_APPLICABLE, estimated_cost=CellState.UNKNOWN,
+        failure_category=record.get("error_category") or CellState.NOT_APPLICABLE,
+        failure_detail=CellState.NOT_APPLICABLE,
+        full_formulation=True, fixed_schema=False, scalar_grounding_only=False,
+        generative=True, test_time_learning=False, transductive_training=False,
+        native_record=dict(record),
+        native_metrics={"underlying_model": generation.get("underlying_model"), "finish_reason": generation.get("finish_reason")},
+    )

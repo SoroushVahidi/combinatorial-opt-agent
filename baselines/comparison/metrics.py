@@ -76,13 +76,13 @@ def objective_agreement_rate(rows: list[UnifiedRow]) -> dict[str, object]:
 
 SHARED_METRICS: tuple[SharedMetric, ...] = (
     SharedMetric("parse_success_rate", "Generated output yields a parseable code/model artifact.",
-                 ("pamop", "orlm", "optmath", "deepor", "orr1"), parse_success_rate),
+                 ("pamop", "orlm", "optmath", "generic", "deepor", "orr1"), parse_success_rate),
     SharedMetric("executable_rate", "The generated artifact executes against its target solver without error.",
-                 ("pamop", "orlm", "optmath", "deepor", "orr1"), executable_rate),
+                 ("pamop", "orlm", "optmath", "generic", "deepor", "orr1"), executable_rate),
     SharedMetric("feasible_rate", "Execution reports a feasible solution (not infeasible/unbounded/error).",
-                 ("pamop", "orlm", "optmath", "deepor", "orr1"), feasible_rate),
+                 ("pamop", "orlm", "optmath", "generic", "deepor", "orr1"), feasible_rate),
     SharedMetric("objective_agreement_rate", "Predicted objective within a predeclared tolerance of gold -- a PROXY, not semantic correctness.",
-                 ("pamop", "orlm", "optmath", "deepor", "orr1"), objective_agreement_rate),
+                 ("pamop", "orlm", "optmath", "generic", "deepor", "orr1"), objective_agreement_rate),
 )
 
 # `ours` (tfidf_typed_greedy) is deliberately excluded from every SharedMetric
@@ -92,6 +92,13 @@ SHARED_METRICS: tuple[SharedMetric, ...] = (
 # do. InstantiationReady and StrictInstantiationReady are the closest native
 # analogues but are NOT the same claim as objective-value agreement -- see
 # END_TO_END_OBJECTIVE_SUCCESS_ELIGIBILITY.
+#
+# `generic` (a general-purpose API LLM with a zero-shot gurobipy prompt) IS
+# eligible for parse/execution/feasible/objective agreement in principle --
+# its output is real gurobipy code -- but it is NOT an optimization-trained
+# baseline: it exists to bound how much of the task is attributable to a
+# plain API model. Executable/objective cells are NOT_APPLICABLE until solver
+# execution is actually run.
 
 END_TO_END_OBJECTIVE_SUCCESS_ELIGIBILITY: dict[str, str] = {
     "ours": (
@@ -110,7 +117,13 @@ END_TO_END_OBJECTIVE_SUCCESS_ELIGIBILITY: dict[str, str] = {
         "results/pamop/fidelity_diagnostic_gpt5/."
     ),
     "orlm": "ELIGIBLE but BLOCKED on solver execution: 18/18 common-18 rows have valid generation/parse/static validation (official checkpoint), but coptpy is not installed, so no row has been executed and objective comparison is NOT_EVALUABLE.",
-    "optmath": "ELIGIBLE once inference is run. Official gurobipy execution + gold objective comparison; currently PENDING (no rows exist).",
+    "optmath": "ELIGIBLE. Official gurobipy execution + gold objective comparison is defined; common-18 inference is being run (see results/optmath/).",
+    "generic": (
+        "ELIGIBLE IN PRINCIPLE for parse/execution/feasible/objective-agreement: the zero-shot "
+        "gurobipy output is real, runnable code. NOT an optimization-trained baseline; it bounds "
+        "the general-purpose-LLM floor. Solver execution not yet attempted -- objective cells "
+        "are NOT_APPLICABLE, never zero."
+    ),
     "deepor": "BLOCKED. No official checkpoint or code exists to generate rows at all; the metric definition is eligible in principle (Pyomo execution + gold comparison) but UNAVAILABLE in practice.",
     "orr1": (
         "ELIGIBLE IN PRINCIPLE, WITH A MANDATORY CAVEAT. Official coptpy "

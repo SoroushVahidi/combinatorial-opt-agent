@@ -1,5 +1,14 @@
 # DeepOR provenance
 
+## Verification log
+
+- 2026-08-12: initial artifact search (paper, PDF, appendix, code, checkpoint,
+  dataset, project page) per the table below.
+- 2026-08-15 (recheck for the external-baseline campaign): AAAI proceedings
+  page, dblp, and GitHub repository search re-run; no attributable code,
+  checkpoint, dataset, or project-page release was found. Classification
+  unchanged: `DEEPOR_PAPER_RECONSTRUCTION_READY`, zero empirical rows possible.
+
 ## Paper
 
 Xiao et al., “DeepOR: A Deep Reasoning Foundation Model for Optimization
