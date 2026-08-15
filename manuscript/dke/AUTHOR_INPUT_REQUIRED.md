@@ -38,16 +38,17 @@ select a different Elsevier option before submission.
 
 ## 4. Funding statement
 
-`main.tex` states "This research received no specific grant from any funding
-agency in the public, commercial, or not-for-profit sectors."
+`main.tex` states that the research received no specific grants except for the Microsoft Azure OpenAI API access used for the external LLM baselines. 
 
-TODO (author): confirm this is still accurate.
+TODO (author): `AUTHOR_CONFIRMATION_REQUIRED`: Confirm whether the Microsoft Azure OpenAI calls contributing to the Generic LLM baseline in Section 4.5 were charged against the USD 100 Azure for Students credit.
+
+## 4b. Acknowledgments Consent
+
+TODO (author): `AUTHOR_ACTION_REQUIRED`: Confirm permission/consent from Professor Ioannis Koutis and Anders Borum to be named in the Acknowledgments.
 
 ## 5. Generative-AI disclosure wording
 
-The manuscript includes a "Note on generative-AI assistance" in the
-methodology section and mentions the use of ChatGPT/Gemini (writing) and
-Cursor/GitHub Copilot (coding).
+The manuscript includes a "Declaration of generative AI and AI-assisted technologies in the manuscript preparation process" at the end of the paper and mentions the use of ChatGPT/Gemini (writing) and Cursor/GitHub Copilot (coding).
 
 TODO (author): confirm the wording matches Elsevier/DKE disclosure guidance at
 submission time, since these policies evolve.

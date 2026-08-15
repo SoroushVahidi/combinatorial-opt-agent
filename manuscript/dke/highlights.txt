@@ -1,6 +1,6 @@
 Highlights
 
-- Retrieval-assisted grounding maps optimization text to typed scalar slots
+- Deterministic schema instantiation requires no inference-time LLM
 - Deterministic schema retrieval reaches Schema R@1 = 0.9094 on NLP4LP
 - InstantiationReady 0.8006; strict-gated 0.7704; oracle control 0.8489
 - Frozen numeric-extraction ablation gains 8 strict-ready queries (p=0.008)
