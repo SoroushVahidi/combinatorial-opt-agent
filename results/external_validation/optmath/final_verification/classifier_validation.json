@@ -1,0 +1,7 @@
+{
+  "instances": 150,
+  "numeric_literals": 4801,
+  "agreement": 0.9804207456779838,
+  "ambiguous_rate": 0.0,
+  "main_classifier_errors": 94
+}

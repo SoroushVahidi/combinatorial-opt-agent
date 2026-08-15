@@ -1,0 +1,26 @@
+{
+  "dataset": "shushulei/OptMATH-Train",
+  "sample_size": 1000,
+  "RawASTRecall_Macro": 0.7500945298714393,
+  "RawASTRecall_Average": 0.7412421655926692,
+  "TextSupportedRecall_Macro": 0.8118477593615715,
+  "TextSupportedRecall_Macro_95CI": [
+    0.7895075560187598,
+    0.8327982993518114
+  ],
+  "TextSupportedRecall_Average": 0.8157996735319328,
+  "TextSupportedPlusDerivedRecall_Macro": 0.8089784544280568,
+  "TextSupportedPlusDerivedRecall_Average": 0.8125804357907678,
+  "InstanceCompleteExtraction": 0.591,
+  "InstanceCompleteExtraction_95CI": [
+    0.56,
+    0.621
+  ],
+  "PrecisionLikeDiagnostic_Micro": 0.8392384981491274,
+  "total_gold_ast_numbers": 31736,
+  "total_matched_ast_numbers": 23805,
+  "total_gold_text_supported_numbers": 29322,
+  "total_matched_text_supported_numbers": 23805,
+  "total_gold_derived_numbers": 29426,
+  "total_matched_derived_numbers": 23805
+}

@@ -1,0 +1,38 @@
+{
+  "device": "cuda:0",
+  "generation": {
+    "decoding_method": "greedy",
+    "device_map": "auto",
+    "dtype": "bfloat16",
+    "max_new_tokens": 8192,
+    "max_seq_len": 8192,
+    "seed": 0,
+    "stop_tokens": [
+      "</s>"
+    ],
+    "temperature": 0.0,
+    "tensor_parallel_size": 1,
+    "top_k": 1,
+    "top_p": 1.0
+  },
+  "git_sha": "6bb75a4c4bed02c458ac30b4af206a2802fce095",
+  "input_path": "/home/soroush/combinatorial-opt-agent/data/processed/nlp4lp_eval_orig.jsonl",
+  "manifest_path": "/home/soroush/combinatorial-opt-agent/baselines/orlm/manifests/nlp4lp_common_manifest.json",
+  "model_id": "CardinalOperations/ORLM-LLaMA-3-8B",
+  "model_revision": "94fdc3c5738c6536d4880dc19a78f215529181c5",
+  "output_path": "/home/soroush/combinatorial-opt-agent/results/orlm/pilot_official_checkpoint/results.jsonl",
+  "problem_ids": [
+    14,
+    23,
+    34,
+    59,
+    69,
+    72
+  ],
+  "prompt_template_sha256": "70c8f72a0debc754cb427452e948c1b22be1dc2b5c68976bf41b5648b1d0274e",
+  "prompt_version": "upstream-eval-generate-TEMPLATE_q2mc_en-v1",
+  "run_started_utc": "2026-08-14T03:06:54.735104+00:00",
+  "runner": "TransformersBackend (repository adaptation of official checkpoint)",
+  "solver": "coptpy",
+  "subset": "pilot"
+}

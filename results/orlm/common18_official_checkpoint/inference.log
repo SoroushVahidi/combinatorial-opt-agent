@@ -1,0 +1,31 @@
+start_utc=2026-08-14T00:13:37-04:00
+model=CardinalOperations/ORLM-LLaMA-3-8B
+revision=94fdc3c5738c6536d4880dc19a78f215529181c5
+git_sha=1831396b0b3d4428415e354b0a4e1fcbc658df26
+output=/home/soroush/combinatorial-opt-agent/results/orlm/common18_official_checkpoint/results.jsonl
+command=export CUDA_VISIBLE_DEVICES=0; python -u -m scripts.run_orlm_inference --subset common18 --output /home/soroush/combinatorial-opt-agent/results/orlm/common18_official_checkpoint/results.jsonl --model-id CardinalOperations/ORLM-LLaMA-3-8B --model-revision 94fdc3c5738c6536d4880dc19a78f215529181c5 --max-new-tokens 8192 --device-map auto --dtype bfloat16 --device cuda:0
+{"event": "records_loaded", "subset": "common18", "problem_ids": [14, 23, 34, 59, 69, 72, 84, 88, 96, 117, 190, 202, 208, 219, 232, 237, 254, 262]}
+{"event": "starting_checkpoint_runner", "model_id": "CardinalOperations/ORLM-LLaMA-3-8B", "model_revision": "94fdc3c5738c6536d4880dc19a78f215529181c5", "device_map": "auto", "max_new_tokens": 8192}
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:   1%|          | 2/291 [00:00<00:39,  7.36it/s]Loading weights:   3%|▎         | 9/291 [00:00<00:09, 28.55it/s]Loading weights:   5%|▌         | 15/291 [00:00<00:07, 35.62it/s]Loading weights:   8%|▊         | 24/291 [00:00<00:05, 49.61it/s]Loading weights:  11%|█▏        | 33/291 [00:00<00:04, 59.17it/s]Loading weights:  14%|█▍        | 42/291 [00:00<00:03, 65.78it/s]Loading weights:  18%|█▊        | 51/291 [00:00<00:03, 70.31it/s]Loading weights:  21%|██        | 60/291 [00:01<00:03, 73.38it/s]Loading weights:  24%|██▎       | 69/291 [00:01<00:02, 75.57it/s]Loading weights:  27%|██▋       | 78/291 [00:01<00:02, 76.60it/s]Loading weights:  30%|██▉       | 87/291 [00:01<00:02, 77.24it/s]Loading weights:  33%|███▎      | 96/291 [00:01<00:02, 77.34it/s]Loading weights:  36%|███▌      | 105/291 [00:01<00:02, 78.07it/s]Loading weights:  39%|███▉      | 114/291 [00:01<00:02, 78.20it/s]Loading weights:  42%|████▏     | 123/291 [00:01<00:02, 78.72it/s]Loading weights:  45%|████▌     | 132/291 [00:01<00:02, 78.63it/s]Loading weights:  48%|████▊     | 141/291 [00:02<00:01, 78.71it/s]Loading weights:  52%|█████▏    | 150/291 [00:02<00:01, 78.71it/s]Loading weights:  55%|█████▍    | 159/291 [00:02<00:01, 79.24it/s]Loading weights:  58%|█████▊    | 168/291 [00:02<00:01, 78.25it/s]Loading weights:  61%|██████    | 177/291 [00:02<00:01, 78.56it/s]Loading weights:  64%|██████▎   | 185/291 [00:02<00:01, 78.29it/s]Loading weights:  66%|██████▋   | 193/291 [00:02<00:01, 74.81it/s]Loading weights:  69%|██████▉   | 201/291 [00:02<00:01, 68.51it/s]Loading weights:  71%|███████▏  | 208/291 [00:03<00:01, 62.04it/s]Loading weights:  74%|███████▍  | 216/291 [00:03<00:01, 64.04it/s]Loading weights:  79%|███████▉  | 230/291 [00:03<00:00, 82.93it/s]Loading weights:  82%|████████▏ | 239/291 [00:03<00:00, 79.65it/s]Loading weights:  88%|████████▊ | 257/291 [00:03<00:00, 103.62it/s]Loading weights: 100%|██████████| 291/291 [00:03<00:00, 82.45it/s] 
+Some parameters are on the meta device because they were offloaded to the cpu.
+[transformers] Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+[transformers] Ignoring clean_up_tokenization_spaces=True for BPE tokenizer TokenizersBackend. The clean_up_tokenization post-processing step is designed for WordPiece tokenizers and is destructive for BPE (it strips spaces before punctuation). Set clean_up_tokenization_spaces=False to suppress this warning, or set clean_up_tokenization_spaces_for_bpe_even_though_it_will_corrupt_output=True to force cleanup anyway.
+[transformers] Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+[transformers] Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+[transformers] Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+[transformers] Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+[transformers] Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+[transformers] Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+[transformers] Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+[transformers] Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+[transformers] Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+[transformers] Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+[transformers] Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+[transformers] Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+[transformers] Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+[transformers] Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+[transformers] Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+[transformers] Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+[transformers] Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+{"output": "/home/soroush/combinatorial-opt-agent/results/orlm/common18_official_checkpoint/results.jsonl", "attempted": 18, "completed_ids": ["117", "14", "190", "202", "208", "219", "23", "232", "237", "254", "262", "34", "59", "69", "72", "84", "88", "96"]}

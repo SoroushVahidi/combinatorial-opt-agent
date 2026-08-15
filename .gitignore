@@ -279,6 +279,16 @@ results/*
 # from frozen per-query data; cited by manuscript/dke/main.tex.
 !results/oracle_recomputation_2026-08-15/
 !results/oracle_recomputation_2026-08-15/**
+# Exception: OptMATH external validation (DKE Stage 2, 2026-08-15)
+!results/external_validation/
+!results/external_validation/**
+# Exception: raw external-baseline evidence (Generic LLM / OptMATH / ORLM)
+!results/generic_llm/
+!results/generic_llm/**
+!results/optmath/
+!results/optmath/**
+!results/orlm/
+!results/orlm/**
 # Scratch exports under a run (partial CSV/JSON/interrupt); not curated rerun bundles
 results/rerun/gemini/*/paper/
 

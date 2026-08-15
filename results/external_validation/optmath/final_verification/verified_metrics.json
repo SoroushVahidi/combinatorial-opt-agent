@@ -1,0 +1,21 @@
+{
+  "VerifiedTextSupportedRecall": {
+    "macro": 0.8070071877495746,
+    "micro": 0.8135375383251147,
+    "denominator": 28799,
+    "95CI": [
+      0.7842296896896338,
+      0.8283250553286509
+    ]
+  },
+  "TextSupportedRecall_set": {
+    "macro": 0.8097627260374203,
+    "micro": 0.816268829793771,
+    "denominator": 28701,
+    "95CI": [
+      0.7873614928009309,
+      0.8321271125979399
+    ]
+  },
+  "TextSupportedRecall_occurrence_aware": "NOT_IDENTIFIABLE_FROM_AVAILABLE_DATA"
+}

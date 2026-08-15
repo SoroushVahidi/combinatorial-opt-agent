@@ -1,0 +1,32 @@
+{
+  "total_code_side_literals": 31736,
+  "unique_literals_by_category": {
+    "TEXT_SUPPORTED_EXACT": 29104,
+    "IMPLEMENTATION_ONLY": 1190,
+    "SOLVER_OR_API_CONSTANT": 411,
+    "INDEX_OR_LOOP_BOUND": 86,
+    "TEXT_SUPPORTED_NORMALIZED": 218,
+    "TEXT_SUPPORTED_DERIVED": 104,
+    "ARRAY_OR_DIMENSION_CONSTANT": 623
+  },
+  "category_fractions": {
+    "TEXT_SUPPORTED_EXACT": 0.9170657927905218,
+    "IMPLEMENTATION_ONLY": 0.037496849004285356,
+    "SOLVER_OR_API_CONSTANT": 0.012950592387194353,
+    "INDEX_OR_LOOP_BOUND": 0.0027098563145954123,
+    "TEXT_SUPPORTED_NORMALIZED": 0.006869170657927905,
+    "TEXT_SUPPORTED_DERIVED": 0.0032770355432316612,
+    "ARRAY_OR_DIMENSION_CONSTANT": 0.019630703302243507
+  },
+  "instance_level": {
+    "fraction_zero_contamination": 0.434,
+    "fraction_at_least_one_implementation_only": 0.161,
+    "mean_contaminated_literals_per_instance": 2.414,
+    "median_contaminated_literals_per_instance": 1.0
+  },
+  "manual_audit_stats": {
+    "num_inspected_instances": 100,
+    "num_audited_literals": 2995,
+    "automatic_vs_manual_agreement": 1.0
+  }
+}
