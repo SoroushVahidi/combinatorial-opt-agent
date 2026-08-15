@@ -69,12 +69,33 @@ it is not renamed semantic equivalence. The official OptMATH triplet
 equivalence/rejection-sampling claim is a training-data validation concept,
 not automatically transferable to an NLP4LP adaptation.
 
-## Lightweight preparation state / handoff (2026-08-14)
+## Completed execution (2026-08-15)
+
+The launchability gap documented below was closed and both runs were executed.
+
+- CLI: `scripts/run_optmath_inference.py` now provides the common-6/common-18
+  launch entry point (this was the blocking gap in the 2026-08-14 handoff).
+- Checkpoint: `Aurora-Gem/OptMATH-Qwen2.5-7B` revision `617fe77` is now
+  downloaded and cached (`~/.cache/huggingface/hub/models--Aurora-Gem--OptMATH-Qwen2.5-7B`).
+- Solver: `gurobipy 13.0.2` is installed in the dedicated venv
+  `~/.venvs/gurobi`; the Gurobi license file at `~/gurobi.lic` was usable.
+- Pilot (common-6): `results/optmath/pilot_official_checkpoint/results.jsonl`,
+  6/6 valid rows for IDs `[14,23,34,59,69,72]`.
+- Common-18: `results/optmath/common18_official_checkpoint/results.jsonl`,
+  18/18 rows for the full common-18 manifest, Git SHA `69df7c0`, run started
+  `2026-08-15T05:34:54Z`. Generation 18/18 COMPLETED, static validation
+  18/18 STATIC_VALID, gurobipy execution 15/18 COMPLETED with 3 genuine
+  model-code failures (ids 219, 232, 237), objective-proxy agreement 6/15
+  (0.05 relative tolerance). Ingested into the external baseline comparison
+  (commit `0197f0c`); see `docs/RESUBMISSION_BASELINE_READINESS_2026-08-15.md`.
+
+## Lightweight preparation state / handoff (2026-08-14, superseded)
 
 Checked without consuming GPU or disturbing the running ORLM common-18 job:
 
 - `Aurora-Gem/OptMATH-Qwen2.5-7B` (revision `617fe77`) is **NOT cached** in
-  `~/.cache/huggingface/hub/`; it must be downloaded before launch.
+  `~/.cache/huggingface/hub/`; it must be downloaded before launch. **[Since
+  superseded — the checkpoint was downloaded on 2026-08-15, see above.]**
 - Disk: `/` at 93% used, ~50 GiB free; a bf16 7B snapshot is ~15 GiB, so
   download is feasible but the host is getting tight. Do not clear the ORLM
   cache or remove any ORLM artifacts.
@@ -83,12 +104,16 @@ Checked without consuming GPU or disturbing the running ORLM common-18 job:
 - Solver: `gurobipy` is **NOT installed**. A Gurobi license file exists at
   `~/gurobi.lic` (WLS/`LICENSEID` entries present, values redacted). Installing
   `gurobipy` is required before any solver-verified execution; generation,
-  parse, and static validation do not need it.
+  parse, and static validation do not need it. **[Since superseded —
+  `gurobipy 13.0.2` was installed in `~/.venvs/gurobi` and the common-18
+  execution completed on 2026-08-15, see above.]**
 - Tests: `python -m pytest baselines/optmath/tests/test_optmath.py` -> 6/6 pass.
 - Launch blocker: no CLI entry point yet. `baselines/optmath/` has
   `runner.py`/`pipeline.py` but no `run_optmath_inference.py` (the ORLM launch
   used `scripts/run_orlm_inference.py`). The exact future common-6 / common-18
   launch command is therefore NOT yet defined and must be added before launch.
+  **[Since superseded — `scripts/run_optmath_inference.py` was added and both
+  runs executed on 2026-08-15, see above.]**
 - Manifest: `baselines/optmath/manifests/nlp4lp_common_manifest.json` defines
   `pilot_ids` `[14,23,34,59,69,72]` and `future_evaluation_ids` the 18 common
   IDs; the store is append-only and resume-friendly via `JsonlResultStore`.

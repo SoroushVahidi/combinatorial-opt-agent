@@ -1,0 +1,29 @@
+{
+  "completed_ids": [
+    14,
+    23,
+    34,
+    72,
+    84,
+    88,
+    59,
+    69,
+    96,
+    117,
+    190,
+    202,
+    208,
+    219,
+    232,
+    237,
+    254,
+    262
+  ],
+  "execution_mode": "local",
+  "pid": 3968384,
+  "remaining_ids": [],
+  "run_id": "pamop-pilot-local-20260815T054212Z-8dfa9916",
+  "status": "COMPLETED",
+  "tmux_session": "",
+  "updated_at_utc": "2026-08-15T05:45:44Z"
+}

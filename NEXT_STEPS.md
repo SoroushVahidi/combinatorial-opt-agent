@@ -22,7 +22,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   primary native end-to-end proxy, while retaining ordinary
   InstantiationReady as a predicted-schema diagnostic.
 
-## P1 — Next: complete external baseline empirical work
+## P1 — DONE: external baseline empirical work complete (2026-08-15)
 
 - **Status:** method development is `FROZEN_FOR_RESUBMISSION`.
 - **Evidence:** `docs/METHOD_FREEZE_FOR_RESUBMISSION_2026-08-13.md` and
@@ -31,8 +31,10 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   diagnostic projection exactly: strict readiness is 255/331, ordinary
   readiness is 265/331, Schema R@1 remains 301/331, and there are 0
   strict/ordinary readiness losses.
-- **Task:** finish external baseline empirical completion for the
-  resubmission comparison package.
+- **Task:** COMPLETED. External baseline empirical work (ORLM, OptMATH,
+  generic, PaMOP common-18) is done, validated, and ingested; see
+  `docs/RESUBMISSION_BASELINE_READINESS_2026-08-15.md` and
+  `results/external_baseline_comparison/comparison.md`.
 - **Instruction:** do not start another algorithm experiment before
   resubmission.
 
@@ -121,26 +123,16 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   → `tools/build_eaai_camera_ready_figures.py` chain, all 3 variants.
 - **Stop/success criterion:** n/a — decision gate.
 
-## P7 — PaMOP: PILOT VALIDATED (2026-08-12), scale-up pending
+## P7 — PaMOP: COMMON-18 COMPLETE (2026-08-15)
 
-- **Status:** the fidelity diagnostic is complete —
-  `results/pamop/fidelity_diagnostic_gpt5/README.md`. Gate: `B. MODEL_LIMITED`.
-  A model swap alone (gpt-4.1-mini → gpt-5.4, same prompts) took semantic
-  correctness from 1/6 to 4/5 evaluable.
-- **Optional follow-up (not required):** a C2/C4 prompt-strengthening
-  comparison was not run (scope-reduced). If more precision on the
-  model-vs-prompt split is needed, this is a cheap (6-problem) follow-up.
-- **If scaling to 18 or 269 cases is decided:** use `gpt-5.4`, not
-  `gpt-4.1-mini` — this recommendation is evidence-backed but the scale-up
-  itself was deliberately not launched in Phase 4 and remains a future
-  decision.
-- **Implementation hardening completed:** the runner now accepts an explicit
-  config/deployment, preserves generated AMPL/correction artifacts in local
-  traces, and labels objective equality as an objective-value proxy. Do not
-  call that proxy the paper's full Accuracy metric.
-- **Immediate prerequisite before scale-up:** avoid interference with the
-  unrelated active AMPL/HiGHS computation, then use a fresh output directory
-  and a pre-registered subset/configuration.
+- **Status:** fidelity diagnostic gate is `B. MODEL_LIMITED`; scaled-18
+  extension executed on `gpt-5.4` completed (18/18 rows,
+  `results/pamop/fidelity_diagnostic_gpt5/per_problem.csv`).
+- **Result:** 13/18 final execution success, 5 AMPL parse failures, 8/11
+  evaluable objective-proxy success (0.727), decision gate
+  `A. PROCEED TO LARGER RUN`. Evidence ingested into the comparison report.
+- **Next action:** none required. A 269-case full rerun remains an optional
+  future decision (use `gpt-5.4`); it is not authorized automatically.
 
 ## P8 — Improve the local pairwise score's dominant error modes
 
@@ -162,47 +154,52 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   numbers closer to typed greedy's, the local score is not the gating
   factor and this line should stop.
 
-## P9 — ORLM baseline: pilot complete; common-18 running (2026-08-14)
+## P9 — ORLM baseline: COMPLETE (2026-08-14), execution blocked on coptpy
 
-- **Status:** `baselines/orlm/` is inference-ready for resource-available
-  execution (adapter, official prompt, lazy runner, normalizer, static
-  validator, safe harness, result schema, evaluator, resume store, and 11
-  lightweight tests). Wraps
-  `CardinalOperations/ORLM-LLaMA-3-8B` (the only confirmed-public
-  checkpoint of the three the paper names — verify this before trusting
-  any older claim of "multiple checkpoints public").
-- **Checkpoint:** downloaded and cached at pinned revision
-  `94fdc3c5738c6536d4880dc19a78f215529181c5` (16.1 GiB download).
-- **Pilot:** `PILOT_COMPLETED_NORMALLY`; six IDs `[14, 23, 34, 59, 69, 72]`
-  completed with unique valid JSONL records, 6/6 generation success, 6/6
-  code extraction, and 6/6 static validation. No COPT execution was attempted
-  because `coptpy` is missing.
-- **Handoff:** session `orlm_pilot_official_20260813_corrected`, log
-  `results/orlm/pilot_official_checkpoint/inference_corrected.log`, output
-  `results/orlm/pilot_official_checkpoint/results.jsonl`, start
-  `2026-08-13T23:06:54-04:00`, Git SHA `6bb75a4c4bed02c458ac30b4af206a2802fce095`.
-- **Provenance:** the prompt is now locked to upstream `eval/generate.py`
-  revision `33bc47d0a1d1710d24ab839118bdf4cb89b9e31b`.
-- **Common-18:** session `orlm_common18_official_20260814`, PID `3807778`,
-  log `results/orlm/common18_official_checkpoint/inference.log`, output
-  `results/orlm/common18_official_checkpoint/results.jsonl`, start
-  `2026-08-14T00:13:37-04:00`, Git SHA
-  `1831396b0b3d4428415e354b0a4e1fcbc658df26`.
-- **Next action:** inspect this same common-18 tmux job later. Do not launch a
-  duplicate. `coptpy` is missing, so solver execution is blocked and must not
-  be substituted with another solver.
+- **Status:** `ORLM_COMMON18_COMPLETE_EXECUTION_BLOCKED`.
+- **Evidence:** `results/orlm/common18_official_checkpoint/results.jsonl`
+  (18/18 rows), `docs/ORLM_PROVENANCE.md`, ingested into the comparison
+  report (commit `69df7c0`).
+- **Checkpoint:** `CardinalOperations/ORLM-LLaMA-3-8B` at pinned revision
+  `94fdc3c5738c6536d4880dc19a78f215529181c5` (cached).
+- **Result:** generation 18/18 COMPLETED, parse 18/18, static validation
+  18/18 STATIC_VALID (16 clean, 2 benign `round` warnings). All rows set
+  `execution_attempted=false` and `objective_proxy_status=NOT_EVALUABLE`.
+- **Blocker:** `coptpy` (COPT) is not installed. Do NOT substitute another
+  solver and do NOT rerun ORLM inference. Objective cells stay
+  NOT_APPLICABLE until coptpy is installed.
+- **Next action:** none required for the comparison. If objective cells are
+  ever wanted, the only valid move is `pip install coptpy` and re-execution
+  of the already-generated code (no model rerun).
 
-## P10 — OptMATH lightweight implementation DONE (2026-08-12), inference pending
+## P10 — OptMATH lightweight implementation DONE, common-18 EXECUTED (2026-08-15)
 
-- **Status:** `baselines/optmath/` is ready for resource-available inference.
-  The primary checkpoint is `Aurora-Gem/OptMATH-Qwen2.5-7B`; the official
-  prompt and Gurobi target are provenance-locked.
-- **Completed:** NLP4LP adapter, static validation, safe Gurobi harness,
-  result/evaluation schema, resume store, fixed common manifest, provenance,
-  and mocked end-to-end tests.
-- **Remaining:** obtain model resources, run one inference smoke test, then
-  evaluate the fixed pilot. Do not download weights or execute Gurobi during
-  the current high-priority AMPL/HiGHS workload.
+- **Status:** `OPTMATH_COMMON18_COMPLETE_EXECUTION_COMPLETE`.
+- **Evidence:** `results/optmath/common18_official_checkpoint/results.jsonl`
+  (18/18 rows), `docs/OPTMATH_PROVENANCE.md`, ingested into the comparison
+  report (commit `0197f0c`).
+- **Checkpoint:** `Aurora-Gem/OptMATH-Qwen2.5-7B` revision `617fe77`
+  (cached); gurobipy 13.0.2 in `~/.venvs/gurobi`; CLI
+  `scripts/run_optmath_inference.py`; pilot 6/6 and common-18 18/18 executed.
+- **Result:** gurobipy execution 15/18 COMPLETED, 3 genuine model-code
+  failures (ids 219, 232, 237); objective-proxy agreement 6/15 (0.05
+  tolerance).
+- **Next action:** none required.
+
+## P10b — General-purpose LLM baseline: COMMON-18 COMPLETE (2026-08-15)
+
+- **Status:** `GENERIC_LLM_COMMON18_COMPLETE_EXECUTION_COMPLETE`.
+- **Provider/model:** Microsoft Azure OpenAI, deployment `gpt-5.4`
+  (served model `gpt-5.4-2026-03-05`), temperature 0.0, zero-shot
+  gurobipy prompt (general-purpose floor, NOT optimization-trained).
+- **Evidence:** `results/generic_llm/common18_official/results.jsonl`
+  (18/18 rows), pilot at `results/generic_llm/pilot_official/`, ingested
+  into the comparison report (commit `0197f0c`).
+- **Result:** generation/parse/static 18/18; gurobipy execution 16/18
+  COMPLETED, 2 genuine model-code failures (ids 219, 237); objective-proxy
+  agreement 10/16 (0.05 tolerance). Same harness as OptMATH.
+- **Next action:** none required. Do not run additional providers or
+  cherry-pick a higher-scoring model; this single floor baseline is frozen.
 
 ## P11 — Re-derive the typed-greedy bottleneck table against current code
 
@@ -214,7 +211,7 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
 - **Expected artifact:** updated bottleneck table with a note on whether
   the fresh counts differ from the ones currently documented.
 
-## P12 — Cross-baseline comparison harness: infrastructure DONE (2026-08-13), empirical rows pending
+## P12 — Cross-baseline comparison harness: infrastructure DONE (2026-08-13), empirical rows ingested (2026-08-15)
 
 - **Status:** `baselines/comparison/` implements a unified analysis view
   (`UnifiedRow`), adapters for all six systems, native/shared metric
@@ -222,18 +219,16 @@ For full scientific context, read `docs/SCIENTIFIC_STATE.md` first.
   duplicate-run rejection, and a Markdown/CSV/JSON report generator. See
   `baselines/comparison/README.md` and
   `docs/EXTERNAL_BASELINE_COMPARISON_PROTOCOL.md` (frozen protocol).
-- **Preliminary report generated:** `results/external_baseline_comparison/`
-  (regenerate via `python -m baselines.comparison.cli`). Currently contains
-  real rows only for `ours` (fresh common-18-subset rerun,
-  `instantiation_ready` 10/18) and `pamop` (the existing 6-instance gpt-5.4
-  diagnostic). ORLM/OptMATH/DeepOR/OR-R1 show `PENDING`/`UNAVAILABLE`, not
-  fabricated numbers.
-- **Remaining task:** once P9/P10 (ORLM/OptMATH inference) or a DeepOR/OR-R1
-  checkpoint become available, ingest their real result files via
-  `baselines/comparison/ingest.py` (add an explicit known-location entry;
-  do not add filesystem crawling) and regenerate the report.
-- **Do not** treat the current report as a final paper comparison — it is
-  explicitly labeled `PRELIMINARY_EXTERNAL_BASELINE_STATUS`.
+- **Report generated:** `results/external_baseline_comparison/` (regenerate
+  via `python -m baselines.comparison.cli`). Real common-18 rows now exist
+  for `ours`, `pamop` (18), `orlm` (18), `optmath` (18), and `generic` (18);
+  DeepOR/OR-R1 remain `UNAVAILABLE`, never fabricated. Shared solver metrics
+  are computed where execution exists (PaMOP/AMPL+HiGHS, OptMATH/gurobipy,
+  generic/gurobipy); ORLM objective cells are NOT_APPLICABLE (coptpy).
+- **Remaining task:** none for the empirical baseline work. The report stays
+  labeled `PRELIMINARY_EXTERNAL_BASELINE_STATUS`; making it manuscript-final
+  is an author decision per
+  `docs/RESUBMISSION_BASELINE_READINESS_2026-08-15.md`.
 
 ---
 

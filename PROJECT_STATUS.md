@@ -341,9 +341,9 @@ committed number. Full detail and next steps:
 
 | Baseline | Status |
 |---|---|
-| **PaMOP** (IJCAI 2025) | **PILOT VALIDATED**, fidelity gate RESOLVED (`B. MODEL_LIMITED`) — independent reconstruction, no official code available; larger run pending. See §10. |
-| **ORLM** | **PILOT COMPLETE; COMMON-18 RUNNING (2026-08-14)** — pinned official checkpoint cached; six-instance official-checkpoint pilot completed with 6/6 valid generated/static rows; common-18 is running in tmux `orlm_common18_official_20260814`; coptpy missing so solver execution is blocked |
-| **OptMATH** | **IMPLEMENTED, READY FOR INFERENCE (2026-08-12)** — official prompt/checkpoint provenance, NLP4LP adapter, Gurobi parser/validator/harness, result schema, evaluator, manifest, and mocked tests complete; no inference or solver run |
+| **PaMOP** (IJCAI 2025) | **COMMON-18 COMPLETE (2026-08-15)** — independent reconstruction; fidelity gate `B. MODEL_LIMITED` resolved; scaled-18 extension on `gpt-5.4` completed (18/18 rows, 13/18 execution success, 8/11 evaluable objective-proxy success); ingested into comparison. See §10. |
+| **ORLM** | **COMMON-18 COMPLETE, EXECUTION BLOCKED (2026-08-15)** — official checkpoint `CardinalOperations/ORLM-LLaMA-3-8B` @ `94fdc3c5738c6536d4880dc19a78f215529181c5`; pilot (6/6) and common-18 (18/18) both completed with all generation/parse/static rows valid; `coptpy` missing so solver execution is blocked (`ORLM_COMMON18_COMPLETE_EXECUTION_BLOCKED`); ingested into comparison |
+| **OptMATH** | **COMMON-18 COMPLETE, EXECUTION COMPLETE (2026-08-15)** — official checkpoint `Aurora-Gem/OptMATH-Qwen2.5-7B` @ `617fe77`, gurobipy harness; pilot (6/6) and common-18 (18/18) both completed; execution 15/18 COMPLETED, 3 genuine model-code failures; objective-proxy 6/15; ingested into comparison |
 | **DeepOR** | **PAPER RECONSTRUCTION READY (2026-08-12)** — mock-tested adapter, paper-level prompt, reasoning parser, Pyomo static validator, safe harness, schema, evaluator, and manifest; official code/checkpoint not found and no empirical result |
 | **OR-R1** | **CODE INTEGRATED, CHECKPOINT BLOCKED (2026-08-13)** — official code verified (`SCUTE-ZZ/OR-R1`, cited directly by the arXiv paper); lightweight adapter/runner/TGRPO-control/majority-voting/normalizer/validator/harness/evaluator and mocked tests complete; no SFT/GRPO/merged checkpoint released anywhere; TGRPO training set is transductive (== union of all eval sets, incl. NLP4LP); see [`docs/ORR1_PROVENANCE.md`](docs/ORR1_PROVENANCE.md) |
 
@@ -364,9 +364,7 @@ CI/exact-McNemar statistics, mock-evidence exclusion, and a Markdown/CSV/JSON
 report generator (`python -m baselines.comparison.cli`). Frozen protocol:
 [`docs/EXTERNAL_BASELINE_COMPARISON_PROTOCOL.md`](docs/EXTERNAL_BASELINE_COMPARISON_PROTOCOL.md).
 Generated report (status `PRELIMINARY_EXTERNAL_BASELINE_STATUS`, real rows
-only for `ours` and PaMOP; ORLM's six-row pilot is complete but not ingested
-because the harness is fixed to common-18, and the common-18 run is still in
-progress; OptMATH/DeepOR/OR-R1 are `PENDING`/
+for `ours`, PaMOP, ORLM, OptMATH, and `generic`; DeepOR/OR-R1 are
 `UNAVAILABLE`, never fabricated):
 [`results/external_baseline_comparison/comparison.md`](results/external_baseline_comparison/comparison.md).
 
@@ -408,6 +406,14 @@ prior "C. IMPLEMENTATION SOUND, MODEL/PROMPT IS PRIMARY LIMITATION" reading
 is now sharpened: it is the *model*, not the prompt, that was primarily
 limiting.
 
+**Scaled-18 extension (COMPLETED 2026-08-15):** the remaining 12 common-18
+IDs were executed with `gpt-5.4` to complete PaMOP's common-18 coverage
+(`results/pamop/fidelity_diagnostic_gpt5/per_problem.csv`, 18 rows,
+`summary.json` status COMPLETED, decision gate `A. PROCEED TO LARGER RUN`).
+Result: 18/18 final execution success 13/18, 5 AMPL parse failures, 8/11
+evaluable objective-proxy success (0.727). This evidence is ingested into
+the external baseline comparison.
+
 **Recommendation, not yet executed:** any future scale-up (18- or
 269-case rerun) should use `gpt-5.4` or the strongest available deployment,
 not `gpt-4.1-mini`. **This diagnostic does not itself authorize a
@@ -424,8 +430,9 @@ a deliberate scope reduction given time constraints.
 configurable pilot runner, structured per-instance traces preserving generated
 AMPL and correction remodel outputs, and explicit labeling of objective
 equality as an objective-value proxy rather than full PaMOP semantic accuracy.
-No larger run is active; the existing unrelated AMPL/HiGHS computation must
-not be disturbed.
+The common-18 evidence is complete (18/18 rows, gpt-5.4, AMPL/HiGHS execution)
+and ingested; no further PaMOP run is active. The unrelated AMPL/HiGHS
+computation is not disturbed.
 
 ## 11. Data / Solver / API Environment
 

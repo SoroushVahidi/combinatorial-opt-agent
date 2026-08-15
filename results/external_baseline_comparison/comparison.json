@@ -122,8 +122,8 @@
     "ours": "INELIGIBLE. tfidf_typed_greedy performs deterministic scalar grounding against a fixed catalog; it never generates an executable optimization instance or solves one, so steps 2 and 3 of END_TO_END_OBJECTIVE_SUCCESS ('solving succeeds', 'objective agrees') do not apply. InstantiationReady is a predicted-schema grounding-readiness proxy, and StrictInstantiationReady is a schema-gated version of that proxy. Neither must be reported in the same column as objective-value agreement.",
     "pamop": "ELIGIBLE. Full AMPL formulation, solved locally with the same solver used elsewhere in this repository (HiGHS/Gurobi via AMPL), objective compared to gold with a predeclared tolerance. See results/pamop/fidelity_diagnostic_gpt5/."
   },
-  "generated_at_utc": "2026-08-15T06:02:41.235724+00:00",
-  "git_sha": "6ecc235340b0064790651c62cce651fe83657683",
+  "generated_at_utc": "2026-08-15T15:17:13.839923+00:00",
+  "git_sha": "0197f0cf737f162bd65128c532c708177f475e33",
   "pairings": [
     {
       "metric_name": "objective_agreement",
@@ -6974,7 +6974,7 @@
         "generative": false,
         "implementation_fidelity": "NATIVE_METHOD",
         "input_hash": "UNKNOWN",
-        "local_git_sha": "6ecc235340b0064790651c62cce651fe83657683",
+        "local_git_sha": "0197f0cf737f162bd65128c532c708177f475e33",
         "method_variant": "tfidf_typed_greedy",
         "native_metrics": {
           "exact20": 0.08333333333333333,
@@ -7047,7 +7047,7 @@
         "generative": false,
         "implementation_fidelity": "NATIVE_METHOD",
         "input_hash": "UNKNOWN",
-        "local_git_sha": "6ecc235340b0064790651c62cce651fe83657683",
+        "local_git_sha": "0197f0cf737f162bd65128c532c708177f475e33",
         "method_variant": "tfidf_typed_greedy",
         "native_metrics": {
           "exact20": 0.6666666666666666,
@@ -7120,7 +7120,7 @@
         "generative": false,
         "implementation_fidelity": "NATIVE_METHOD",
         "input_hash": "UNKNOWN",
-        "local_git_sha": "6ecc235340b0064790651c62cce651fe83657683",
+        "local_git_sha": "0197f0cf737f162bd65128c532c708177f475e33",
         "method_variant": "tfidf_typed_greedy",
         "native_metrics": {
           "exact20": 0.25,
@@ -7193,7 +7193,7 @@
         "generative": false,
         "implementation_fidelity": "NATIVE_METHOD",
         "input_hash": "UNKNOWN",
-        "local_git_sha": "6ecc235340b0064790651c62cce651fe83657683",
+        "local_git_sha": "0197f0cf737f162bd65128c532c708177f475e33",
         "method_variant": "tfidf_typed_greedy",
         "native_metrics": {
           "exact20": 0.2857142857142857,
@@ -7266,7 +7266,7 @@
         "generative": false,
         "implementation_fidelity": "NATIVE_METHOD",
         "input_hash": "UNKNOWN",
-        "local_git_sha": "6ecc235340b0064790651c62cce651fe83657683",
+        "local_git_sha": "0197f0cf737f162bd65128c532c708177f475e33",
         "method_variant": "tfidf_typed_greedy",
         "native_metrics": {
           "exact20": 0.2857142857142857,
@@ -7339,7 +7339,7 @@
         "generative": false,
         "implementation_fidelity": "NATIVE_METHOD",
         "input_hash": "UNKNOWN",
-        "local_git_sha": "6ecc235340b0064790651c62cce651fe83657683",
+        "local_git_sha": "0197f0cf737f162bd65128c532c708177f475e33",
         "method_variant": "tfidf_typed_greedy",
         "native_metrics": {
           "exact20": 0.16666666666666666,
@@ -7412,7 +7412,7 @@
         "generative": false,
         "implementation_fidelity": "NATIVE_METHOD",
         "input_hash": "UNKNOWN",
-        "local_git_sha": "6ecc235340b0064790651c62cce651fe83657683",
+        "local_git_sha": "0197f0cf737f162bd65128c532c708177f475e33",
         "method_variant": "tfidf_typed_greedy",
         "native_metrics": {
           "exact20": 0.0,
@@ -7485,7 +7485,7 @@
         "generative": false,
         "implementation_fidelity": "NATIVE_METHOD",
         "input_hash": "UNKNOWN",
-        "local_git_sha": "6ecc235340b0064790651c62cce651fe83657683",
+        "local_git_sha": "0197f0cf737f162bd65128c532c708177f475e33",
         "method_variant": "tfidf_typed_greedy",
         "native_metrics": {
           "exact20": 0.0,
@@ -7558,7 +7558,7 @@
         "generative": false,
         "implementation_fidelity": "NATIVE_METHOD",
         "input_hash": "UNKNOWN",
-        "local_git_sha": "6ecc235340b0064790651c62cce651fe83657683",
+        "local_git_sha": "0197f0cf737f162bd65128c532c708177f475e33",
         "method_variant": "tfidf_typed_greedy",
         "native_metrics": {
           "exact20": 0.3333333333333333,
@@ -7631,7 +7631,7 @@
         "generative": false,
         "implementation_fidelity": "NATIVE_METHOD",
         "input_hash": "UNKNOWN",
-        "local_git_sha": "6ecc235340b0064790651c62cce651fe83657683",
+        "local_git_sha": "0197f0cf737f162bd65128c532c708177f475e33",
         "method_variant": "tfidf_typed_greedy",
         "native_metrics": {
           "exact20": 0.25,
@@ -7704,7 +7704,7 @@
         "generative": false,
         "implementation_fidelity": "NATIVE_METHOD",
         "input_hash": "UNKNOWN",
-        "local_git_sha": "6ecc235340b0064790651c62cce651fe83657683",
+        "local_git_sha": "0197f0cf737f162bd65128c532c708177f475e33",
         "method_variant": "tfidf_typed_greedy",
         "native_metrics": {
           "exact20": 0.0,
@@ -7777,7 +7777,7 @@
         "generative": false,
         "implementation_fidelity": "NATIVE_METHOD",
         "input_hash": "UNKNOWN",
-        "local_git_sha": "6ecc235340b0064790651c62cce651fe83657683",
+        "local_git_sha": "0197f0cf737f162bd65128c532c708177f475e33",
         "method_variant": "tfidf_typed_greedy",
         "native_metrics": {
           "exact20": "NOT_APPLICABLE",
@@ -7850,7 +7850,7 @@
         "generative": false,
         "implementation_fidelity": "NATIVE_METHOD",
         "input_hash": "UNKNOWN",
-        "local_git_sha": "6ecc235340b0064790651c62cce651fe83657683",
+        "local_git_sha": "0197f0cf737f162bd65128c532c708177f475e33",
         "method_variant": "tfidf_typed_greedy",
         "native_metrics": {
           "exact20": 1.0,
@@ -7923,7 +7923,7 @@
         "generative": false,
         "implementation_fidelity": "NATIVE_METHOD",
         "input_hash": "UNKNOWN",
-        "local_git_sha": "6ecc235340b0064790651c62cce651fe83657683",
+        "local_git_sha": "0197f0cf737f162bd65128c532c708177f475e33",
         "method_variant": "tfidf_typed_greedy",
         "native_metrics": {
           "exact20": 0.25,
@@ -7996,7 +7996,7 @@
         "generative": false,
         "implementation_fidelity": "NATIVE_METHOD",
         "input_hash": "UNKNOWN",
-        "local_git_sha": "6ecc235340b0064790651c62cce651fe83657683",
+        "local_git_sha": "0197f0cf737f162bd65128c532c708177f475e33",
         "method_variant": "tfidf_typed_greedy",
         "native_metrics": {
           "exact20": 0.25,
@@ -8069,7 +8069,7 @@
         "generative": false,
         "implementation_fidelity": "NATIVE_METHOD",
         "input_hash": "UNKNOWN",
-        "local_git_sha": "6ecc235340b0064790651c62cce651fe83657683",
+        "local_git_sha": "0197f0cf737f162bd65128c532c708177f475e33",
         "method_variant": "tfidf_typed_greedy",
         "native_metrics": {
           "exact20": 0.6,
@@ -8142,7 +8142,7 @@
         "generative": false,
         "implementation_fidelity": "NATIVE_METHOD",
         "input_hash": "UNKNOWN",
-        "local_git_sha": "6ecc235340b0064790651c62cce651fe83657683",
+        "local_git_sha": "0197f0cf737f162bd65128c532c708177f475e33",
         "method_variant": "tfidf_typed_greedy",
         "native_metrics": {
           "exact20": 0.3333333333333333,
@@ -8215,7 +8215,7 @@
         "generative": false,
         "implementation_fidelity": "NATIVE_METHOD",
         "input_hash": "UNKNOWN",
-        "local_git_sha": "6ecc235340b0064790651c62cce651fe83657683",
+        "local_git_sha": "0197f0cf737f162bd65128c532c708177f475e33",
         "method_variant": "tfidf_typed_greedy",
         "native_metrics": {
           "exact20": 0.4,

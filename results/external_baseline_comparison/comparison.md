@@ -1,6 +1,6 @@
 # External Baseline Comparison
 
-**Status: `PRELIMINARY_EXTERNAL_BASELINE_STATUS`** — not a final paper comparison. Generated 2026-08-15T06:02:41.241701+00:00, repository HEAD `6ecc235340b0064790651c62cce651fe83657683`.
+**Status: `PRELIMINARY_EXTERNAL_BASELINE_STATUS`** — not a final paper comparison. Generated 2026-08-15T15:17:13.845780+00:00, repository HEAD `0197f0cf737f162bd65128c532c708177f475e33`.
 
 ## Evaluation protocol
 
@@ -116,7 +116,7 @@ The official OR-R1 TGRPO training set is the union of all official evaluation te
 
 ## Provenance
 
-- Repository HEAD at generation time: `6ecc235340b0064790651c62cce651fe83657683`
+- Repository HEAD at generation time: `0197f0cf737f162bd65128c532c708177f475e33`
 - Generator: `baselines/comparison/report.py` via `python -m baselines.comparison.cli`
 - Protocol: `docs/EXTERNAL_BASELINE_COMPARISON_PROTOCOL.md`
 

@@ -49,7 +49,9 @@ the same pinned checkpoint revision, `--subset common18`, `--max-new-tokens
 8192`, `--device-map auto`, `--dtype bfloat16`, and `--device cuda:0`.
 The initial health check found the model loaded, GPU utilization high, stable
 host memory, and no OOM or traceback. Leave this same tmux job running; do not
-launch a duplicate common-18 run.
+launch a duplicate common-18 run. **[Since superseded — the common-18 run
+completed normally on 2026-08-14 with all 18/18 rows; see the follow-up note
+below and `docs/RESUBMISSION_BASELINE_READINESS_2026-08-15.md`.]**
 
 Follow-up check 2026-08-14T00:32-04:00: the same tmux session and PID `3807778`
 were still alive and healthy. `results.jsonl` held 3/18 unique valid rows for
@@ -60,6 +62,18 @@ because `coptpy` is missing). Observed for three minutes: GPU 96-99%
 utilization, VRAM 14.3-15.3 GiB / 16.3 GiB, ~57 GiB RAM available, no OOM, no
 traceback, no duplicate IDs, valid JSONL. Rows complete at roughly one per
 4-5 minutes, so the full 18-row run is expected to take ~1.5 hours total.
+
+Common-18 completion (2026-08-15 check): the tmux session
+`orlm_common18_official_20260814` is gone and the run completed normally.
+`results/orlm/common18_official_checkpoint/results.jsonl` holds 18/18 unique
+valid rows for the full common-18 manifest `[14,23,34,59,69,72,84,88,96,117,
+190,202,208,219,232,237,254,262]`; each `generation.status=COMPLETED` with
+`parsed.code_block_found` and `static_validation.status=STATIC_VALID` (16 clean,
+2 with a benign `round` possible-undefined-name warning). `execution_attempted`
+is false and `objective_proxy_status=NOT_EVALUABLE` for all 18 rows because
+`coptpy` is still not installed. The run was ingested into the external baseline
+comparison (commit `69df7c0`), status
+`ORLM_COMMON18_COMPLETE_EXECUTION_BLOCKED`.
 
 ## Fair comparison boundary
 
