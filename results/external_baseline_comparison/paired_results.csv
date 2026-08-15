@@ -1,1 +1,2 @@
 metric_name,system_a,system_b,n_paired,both_succeed,a_only,b_only,neither,mcnemar_p_value,mcnemar_note
+objective_agreement,pamop,orlm,0,0,0,0,0,,"zero discordant pairs: McNemar's test is undefined, not non-significant"

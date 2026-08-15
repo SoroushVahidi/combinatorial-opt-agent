@@ -278,8 +278,10 @@ def _render_markdown(
                   "in `metrics.py`).")
     lines.append("- PaMOP's objective-value agreement is an exact-match proxy on execution-successful rows "
                   "only, never a structural/semantic correctness judgment.")
-    lines.append("- ORLM/OptMATH/DeepOR/OR-R1 currently have **zero** empirical NLP4LP rows; any non-zero "
-                  "number for them in this report would be fabricated and must be treated as a bug.\n")
+    lines.append("- ORLM has 18 real common-18 rows but **no solver execution** (coptpy not installed); its "
+                  "executable/feasible/objective-agreement cells are NOT_APPLICABLE, never zero. OptMATH/DeepOR/OR-R1 "
+                  "currently have **zero** empirical rows; any non-zero number for them in this report would be "
+                  "fabricated and must be treated as a bug.\n")
 
     lines.append("## OR-R1 transductive-protocol note\n")
     lines.append("The official OR-R1 TGRPO training set is the union of all official evaluation test sets, "

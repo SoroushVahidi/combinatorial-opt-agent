@@ -35,11 +35,13 @@ AVAILABILITY: dict[str, AvailabilityStatus] = {
         "4/5 evaluable objective-value-proxy success. Independent reconstruction, no official code.",
     ),
     "orlm": AvailabilityStatus(
-        "orlm", "PILOT COMPLETE; COMMON-18 RUNNING",
-        False, "ORLM_PILOT_COMPLETE_COMMON18_RUNNING",
-        "Pinned official checkpoint revision is cached. The six-instance pilot completed with 6/6 "
-        "valid generation/parse/static-validation rows, but the comparison report is fixed to the "
-        "common-18 manifest. The common-18 run is active in tmux; coptpy is missing for later solver execution.",
+        "orlm", "COMMON-18 COMPLETE (official checkpoint; execution blocked on coptpy)",
+        True, "ORLM_COMMON18_COMPLETE_EXECUTION_BLOCKED",
+        "results/orlm/common18_official_checkpoint/results.jsonl: 18/18 rows, official "
+        "CardinalOperations/ORLM-LLaMA-3-8B revision 94fdc3c5738c6536d4880dc19a78f215529181c5, "
+        "all generation/parse/static-validation complete. Solver execution and objective "
+        "comparison are blocked because coptpy is not installed (COPTPY_MISSING); "
+        "objective_proxy_status=NOT_EVALUABLE for all 18 rows.",
     ),
     "optmath": AvailabilityStatus(
         "optmath", "IMPLEMENTED, NOT YET RUN",

@@ -13,7 +13,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from baselines.comparison.adapters import adapt_ours, adapt_pamop
+from baselines.comparison.adapters import adapt_orlm, adapt_ours, adapt_pamop
 from baselines.comparison.manifests import load_common_manifest
 from baselines.comparison.schema import UnifiedRow
 
@@ -26,10 +26,13 @@ def _current_git_sha() -> str:
 
 PAMOP_FIDELITY_DIAGNOSTIC_DIR = _REPO_ROOT / "results/pamop/fidelity_diagnostic_gpt5"
 
+ORLM_COMMON18_DIR = _REPO_ROOT / "results/orlm/common18_official_checkpoint"
+ORLM_COMMON18_RESULTS_PATH = ORLM_COMMON18_DIR / "results.jsonl"
+
 KNOWN_RESULT_LOCATIONS: dict[str, list[str]] = {
     "ours": ["generated fresh via tools.nlp4lp_downstream_utility (CPU-only, ~1s); see ingest_ours()"],
     "pamop": [str(PAMOP_FIDELITY_DIAGNOSTIC_DIR / "per_problem.csv"), str(PAMOP_FIDELITY_DIAGNOSTIC_DIR / "run_metadata.json")],
-    "orlm": [],
+    "orlm": [str(ORLM_COMMON18_RESULTS_PATH)],
     "optmath": [],
     "deepor": [],
     "orr1": [],
@@ -87,6 +90,15 @@ def ingest_pamop() -> list[UnifiedRow]:
     return [adapt_pamop(r, run_metadata=run_metadata) for r in rows]
 
 
+def ingest_orlm() -> list[UnifiedRow]:
+    """Reads the official-checkpoint ORLM common-18 JSONL (fixed location)."""
+    if not ORLM_COMMON18_RESULTS_PATH.exists():
+        return []
+    with ORLM_COMMON18_RESULTS_PATH.open(encoding="utf-8") as fh:
+        rows = [json.loads(line) for line in fh if line.strip()]
+    return [adapt_orlm(r) for r in rows]
+
+
 def ingest_all(*, systems: list[str] | None = None, save_ours_subset_to: Path | None = None) -> dict[str, list[UnifiedRow]]:
     systems = systems or ["ours", "pamop", "orlm", "optmath", "deepor", "orr1"]
     out: dict[str, list[UnifiedRow]] = {}
@@ -94,7 +106,9 @@ def ingest_all(*, systems: list[str] | None = None, save_ours_subset_to: Path | 
         out["ours"] = ingest_ours(save_subset_to=save_ours_subset_to)
     if "pamop" in systems:
         out["pamop"] = ingest_pamop()
-    for name in ("orlm", "optmath", "deepor", "orr1"):
+    if "orlm" in systems:
+        out["orlm"] = ingest_orlm()
+    for name in ("optmath", "deepor", "orr1"):
         if name in systems:
             out[name] = []  # No real result files exist on disk yet (see availability.py).
     return out

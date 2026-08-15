@@ -8,12 +8,12 @@ nlp4lp_test_71,orig,tfidf,nlp4lp_test_71,nlp4lp_test_71,1,6,6,1.0,1.0,0.16666666
 nlp4lp_test_83,orig,tfidf,nlp4lp_test_83,nlp4lp_test_83,1,2,2,1.0,1.0,0.0,0.0,1.0
 nlp4lp_test_87,orig,tfidf,nlp4lp_test_87,nlp4lp_test_87,1,5,5,1.0,0.8,0.0,0.0,1.0
 nlp4lp_test_95,orig,tfidf,nlp4lp_test_95,nlp4lp_test_95,1,3,3,1.0,1.0,0.3333333333333333,0.3333333333333333,1.0
-nlp4lp_test_116,orig,tfidf,nlp4lp_test_116,nlp4lp_test_116,1,4,4,1.0,0.75,0.25,0.25,1.0
+nlp4lp_test_116,orig,tfidf,nlp4lp_test_116,nlp4lp_test_116,1,4,4,1.0,1.0,0.25,0.25,1.0
 nlp4lp_test_189,orig,tfidf,nlp4lp_test_189,nlp4lp_test_189,1,2,2,1.0,1.0,0.0,0.0,1.0
 nlp4lp_test_201,orig,tfidf,nlp4lp_test_193,nlp4lp_test_201,0,0,0,0.0,0.0,,,0.0
 nlp4lp_test_207,orig,tfidf,nlp4lp_test_207,nlp4lp_test_207,1,5,5,1.0,1.0,1.0,1.0,1.0
 nlp4lp_test_218,orig,tfidf,nlp4lp_test_218,nlp4lp_test_218,1,8,8,1.0,1.0,0.25,0.25,1.0
 nlp4lp_test_231,orig,tfidf,nlp4lp_test_231,nlp4lp_test_231,1,4,4,1.0,1.0,0.25,0.25,1.0
-nlp4lp_test_236,orig,tfidf,nlp4lp_test_236,nlp4lp_test_236,1,5,5,1.0,0.8,0.4,0.4,1.0
+nlp4lp_test_236,orig,tfidf,nlp4lp_test_236,nlp4lp_test_236,1,5,5,1.0,1.0,0.6,0.6,1.0
 nlp4lp_test_253,orig,tfidf,nlp4lp_test_253,nlp4lp_test_253,1,6,6,1.0,0.6666666666666666,0.16666666666666666,0.3333333333333333,1.0
-nlp4lp_test_261,orig,tfidf,nlp4lp_test_261,nlp4lp_test_261,1,10,9,0.9,0.7777777777777778,0.3333333333333333,0.3333333333333333,1.0
+nlp4lp_test_261,orig,tfidf,nlp4lp_test_261,nlp4lp_test_261,1,10,10,1.0,0.8,0.4,0.4,1.0

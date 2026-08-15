@@ -109,7 +109,7 @@ END_TO_END_OBJECTIVE_SUCCESS_ELIGIBILITY: dict[str, str] = {
         "compared to gold with a predeclared tolerance. See "
         "results/pamop/fidelity_diagnostic_gpt5/."
     ),
-    "orlm": "ELIGIBLE once inference is run. Official coptpy execution + gold objective comparison; currently PENDING (no rows exist).",
+    "orlm": "ELIGIBLE but BLOCKED on solver execution: 18/18 common-18 rows have valid generation/parse/static validation (official checkpoint), but coptpy is not installed, so no row has been executed and objective comparison is NOT_EVALUABLE.",
     "optmath": "ELIGIBLE once inference is run. Official gurobipy execution + gold objective comparison; currently PENDING (no rows exist).",
     "deepor": "BLOCKED. No official checkpoint or code exists to generate rows at all; the metric definition is eligible in principle (Pyomo execution + gold comparison) but UNAVAILABLE in practice.",
     "orr1": (

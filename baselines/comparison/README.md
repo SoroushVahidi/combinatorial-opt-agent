@@ -72,11 +72,11 @@ package instead distinguishes four kinds of information (frozen in
   separate from performance metrics.
 - `ingest.py` — explicit, fixed-location ingestion for `ours` (a fresh,
   CPU-only rerun of `tools.nlp4lp_downstream_utility`, filtered to the
-  common manifest) and `pamop` (`results/pamop/fidelity_diagnostic_gpt5/`).
-  No filesystem crawling. ORLM's six-row pilot is complete, but this harness
-  is fixed to the common-18 manifest and has no explicit common-6 ingestion
-  mode; ORLM remains empty here until the common-18 output finishes and its
-  fixed location is explicitly registered.
+  common manifest), `pamop` (`results/pamop/fidelity_diagnostic_gpt5/`),
+  and `orlm` (`results/orlm/common18_official_checkpoint/results.jsonl`,
+  official-checkpoint common-18 run, complete with 18 rows).
+  No filesystem crawling. OptMATH/DeepOR/OR-R1 have no real result files yet
+  and remain empty until their fixed locations are explicitly registered.
 - `report.py` + `cli.py` — Markdown/CSV/JSON report generation, run via
   `python -m baselines.comparison.cli`.
 

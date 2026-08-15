@@ -1,6 +1,6 @@
 # External Baseline Comparison
 
-**Status: `PRELIMINARY_EXTERNAL_BASELINE_STATUS`** — not a final paper comparison. Generated 2026-08-13T21:31:43.933110+00:00, repository HEAD `b2bb4f35b053e24300b07492ffa8de3ee1e4a392`.
+**Status: `PRELIMINARY_EXTERNAL_BASELINE_STATUS`** — not a final paper comparison. Generated 2026-08-15T05:20:22.453023+00:00, repository HEAD `8daafe0156276b513550943cd454fccfe19aefff`.
 
 ## Evaluation protocol
 
@@ -20,7 +20,7 @@ See `docs/EXTERNAL_BASELINE_COMPARISON_PROTOCOL.md` for the frozen protocol this
 |---|---|---|---|
 | ours | VALIDATED (whole-benchmark); common-18-subset status tracked separately | True | `PAPER_CORE_VALIDATED` |
 | pamop | PILOT VALIDATED (6-instance gpt-5.4 diagnostic) | True | `PAMOP_PILOT_VALIDATED` |
-| orlm | IMPLEMENTED, NOT YET RUN | False | `ORLM_IMPLEMENTED_READY_FOR_INFERENCE` |
+| orlm | COMMON-18 COMPLETE (official checkpoint; execution blocked on coptpy) | True | `ORLM_COMMON18_COMPLETE_EXECUTION_BLOCKED` |
 | optmath | IMPLEMENTED, NOT YET RUN | False | `OPTMATH_IMPLEMENTED_READY_FOR_INFERENCE` |
 | deepor | PAPER RECONSTRUCTION, OFFICIAL CHECKPOINT UNAVAILABLE | False | `DEEPOR_PAPER_RECONSTRUCTION_READY` |
 | orr1 | OFFICIAL CODE INTEGRATED, CHECKPOINT UNAVAILABLE | False | `ORR1_CODE_INTEGRATED_CHECKPOINT_BLOCKED` |
@@ -31,7 +31,7 @@ See `docs/EXTERNAL_BASELINE_COMPARISON_PROTOCOL.md` for the frozen protocol this
 |---|---|---|
 | ours | 18 | NATIVE_METHOD |
 | pamop | 6 | INDEPENDENT_RECONSTRUCTION |
-| orlm | 0 | PENDING |
+| orlm | 18 | ADAPTED_OFFICIAL |
 | optmath | 0 | PENDING |
 | deepor | 0 | PENDING |
 | orr1 | 0 | PENDING |
@@ -45,30 +45,31 @@ Native metrics are NOT comparable numerically across systems -- see `docs/EXTERN
 | Metric | System | n | Rate/state |
 |---|---|---|---|
 | parse_success_rate | pamop | 6 | 0.8333 |
-| parse_success_rate | orlm | 0 | PENDING |
+| parse_success_rate | orlm | 18 | 1.0000 |
 | parse_success_rate | optmath | 0 | PENDING |
 | parse_success_rate | deepor | 0 | PENDING |
 | parse_success_rate | orr1 | 0 | PENDING |
 | executable_rate | pamop | 6 | 0.8333 |
-| executable_rate | orlm | 0 | PENDING |
+| executable_rate | orlm | 0 | NOT_APPLICABLE |
 | executable_rate | optmath | 0 | PENDING |
 | executable_rate | deepor | 0 | PENDING |
 | executable_rate | orr1 | 0 | PENDING |
 | feasible_rate | pamop | 6 | 0.8333 |
-| feasible_rate | orlm | 0 | PENDING |
+| feasible_rate | orlm | 0 | NOT_APPLICABLE |
 | feasible_rate | optmath | 0 | PENDING |
 | feasible_rate | deepor | 0 | PENDING |
 | feasible_rate | orr1 | 0 | PENDING |
 | objective_agreement_rate | pamop | 5 | 0.8000 |
-| objective_agreement_rate | orlm | 0 | PENDING |
+| objective_agreement_rate | orlm | 0 | NOT_APPLICABLE |
 | objective_agreement_rate | optmath | 0 | PENDING |
 | objective_agreement_rate | deepor | 0 | PENDING |
 | objective_agreement_rate | orr1 | 0 | PENDING |
 
 ## Paired comparison results
 
-NOT_APPLICABLE — no two systems currently share empirical rows on the same problem_ids.
-
+| Metric | A | B | n paired | both | A only | B only | neither | McNemar p |
+|---|---|---|---|---|---|---|---|---|
+| objective_agreement | pamop | orlm | 0 | 0 | 0 | 0 | 0 | None |
 
 ## Resource requirements
 
@@ -89,7 +90,7 @@ See `failure_summary.csv` for the full per-row native-category -> top-level-buck
 
 - `ours` performs fixed-catalog scalar grounding, not full NL-to-model generation; it is excluded from every SharedMetric above (see `END_TO_END_OBJECTIVE_SUCCESS_ELIGIBILITY` in `metrics.py`).
 - PaMOP's objective-value agreement is an exact-match proxy on execution-successful rows only, never a structural/semantic correctness judgment.
-- ORLM/OptMATH/DeepOR/OR-R1 currently have **zero** empirical NLP4LP rows; any non-zero number for them in this report would be fabricated and must be treated as a bug.
+- ORLM has 18 real common-18 rows but **no solver execution** (coptpy not installed); its executable/feasible/objective-agreement cells are NOT_APPLICABLE, never zero. OptMATH/DeepOR/OR-R1 currently have **zero** empirical rows; any non-zero number for them in this report would be fabricated and must be treated as a bug.
 
 ## OR-R1 transductive-protocol note
 
@@ -97,14 +98,13 @@ The official OR-R1 TGRPO training set is the union of all official evaluation te
 
 ## Missing experiments / blockers
 
-- **orlm**: Official code (Apache-2.0) and one public checkpoint confirmed. No GPU inference has been run against NLP4LP in this repository; zero result rows exist.
 - **optmath**: Official code and checkpoint confirmed public. No GPU inference has been run; zero result rows exist.
 - **deepor**: No official code, checkpoint, or requirements file located anywhere. Lightweight reconstruction is mock-tested only; zero empirical result rows exist and none can exist without a released artifact.
 - **orr1**: Official code verified (cited directly by the arXiv paper). No SFT/TGRPO/merged checkpoint released anywhere. Faithful reproduction additionally requires training TGRPO transductively over the evaluation set itself. Zero empirical result rows exist.
 
 ## Provenance
 
-- Repository HEAD at generation time: `b2bb4f35b053e24300b07492ffa8de3ee1e4a392`
+- Repository HEAD at generation time: `8daafe0156276b513550943cd454fccfe19aefff`
 - Generator: `baselines/comparison/report.py` via `python -m baselines.comparison.cli`
 - Protocol: `docs/EXTERNAL_BASELINE_COMPARISON_PROTOCOL.md`
 
