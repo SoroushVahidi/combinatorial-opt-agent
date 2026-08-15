@@ -17,3 +17,5 @@ pamop,232,E. AMPL_PARSE_FAILURE,parse_failure
 pamop,237,B. SUCCESS_AFTER_CORRECTION,none
 pamop,254,A. SUCCESS_NO_CORRECTION,none
 pamop,262,E. AMPL_PARSE_FAILURE,parse_failure
+generic,219,gurobi_api_failure,evaluation_ambiguous
+generic,237,gurobi_api_failure,evaluation_ambiguous

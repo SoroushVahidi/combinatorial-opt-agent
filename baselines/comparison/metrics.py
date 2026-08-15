@@ -117,12 +117,13 @@ END_TO_END_OBJECTIVE_SUCCESS_ELIGIBILITY: dict[str, str] = {
         "results/pamop/fidelity_diagnostic_gpt5/."
     ),
     "orlm": "ELIGIBLE but BLOCKED on solver execution: 18/18 common-18 rows have valid generation/parse/static validation (official checkpoint), but coptpy is not installed, so no row has been executed and objective comparison is NOT_EVALUABLE.",
-    "optmath": "ELIGIBLE. Official gurobipy execution + gold objective comparison is defined; common-18 inference is being run (see results/optmath/).",
+    "optmath": "ELIGIBLE. Official gurobipy execution + gold objective comparison complete for common-18 (15/18 executed, 3 genuine model-code failures); 6/18 objective-proxy agreement at tolerance 0.05.",
     "generic": (
-        "ELIGIBLE IN PRINCIPLE for parse/execution/feasible/objective-agreement: the zero-shot "
-        "gurobipy output is real, runnable code. NOT an optimization-trained baseline; it bounds "
-        "the general-purpose-LLM floor. Solver execution not yet attempted -- objective cells "
-        "are NOT_APPLICABLE, never zero."
+        "ELIGIBLE. Zero-shot gurobipy output executed with gurobipy for common-18 "
+        "(16/18 COMPLETED, 2 genuine model-code failures); 10/18 objective-proxy "
+        "agreement at tolerance 0.05. NOT an optimization-trained baseline; it "
+        "bounds the general-purpose-LLM floor and must not be reported as an "
+        "optimization-trained system."
     ),
     "deepor": "BLOCKED. No official checkpoint or code exists to generate rows at all; the metric definition is eligible in principle (Pyomo execution + gold comparison) but UNAVAILABLE in practice.",
     "orr1": (

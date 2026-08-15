@@ -1,7 +1,7 @@
 metric_name,system_a,system_b,n_paired,both_succeed,a_only,b_only,neither,mcnemar_p_value,mcnemar_note
 objective_agreement,pamop,orlm,0,0,0,0,0,,"zero discordant pairs: McNemar's test is undefined, not non-significant"
-objective_agreement,pamop,optmath,0,0,0,0,0,,"zero discordant pairs: McNemar's test is undefined, not non-significant"
-objective_agreement,pamop,generic,0,0,0,0,0,,"zero discordant pairs: McNemar's test is undefined, not non-significant"
+objective_agreement,pamop,optmath,11,4,4,2,1,0.6875,"exact binomial two-sided test on discordant pairs; n_discordant < 10, treat as a small-sample indication only"
+objective_agreement,pamop,generic,11,6,2,1,2,1.0,"exact binomial two-sided test on discordant pairs; n_discordant < 10, treat as a small-sample indication only"
 objective_agreement,orlm,optmath,0,0,0,0,0,,"zero discordant pairs: McNemar's test is undefined, not non-significant"
 objective_agreement,orlm,generic,0,0,0,0,0,,"zero discordant pairs: McNemar's test is undefined, not non-significant"
-objective_agreement,optmath,generic,0,0,0,0,0,,"zero discordant pairs: McNemar's test is undefined, not non-significant"
+objective_agreement,optmath,generic,15,5,1,5,4,0.21875,"exact binomial two-sided test on discordant pairs; n_discordant < 10, treat as a small-sample indication only"

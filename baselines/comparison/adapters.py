@@ -250,9 +250,12 @@ def adapt_generic(record: dict[str, Any]) -> UnifiedRow:
     generation = record.get("generation", {}) or {}
     parsed = record.get("parsed") or {}
     static = record.get("static_validation") or {}
+    execution = record.get("execution") or {}
     execution_attempted = bool(record.get("execution_attempted", False))
-    exec_status = str((record.get("execution") or {}).get("status", ""))
+    exec_status = str(execution.get("status", ""))
     parse_success = bool(parsed.get("generated_code"))
+    obj_status = record.get("objective_proxy_status")
+    objective_match = (obj_status == "PASS") if obj_status in ("PASS", "FAIL") else CellState.NOT_APPLICABLE
     return UnifiedRow(
         system="generic", method_variant=f"general_purpose_llm_{generation.get('underlying_model') or record.get('checkpoint', 'unknown')}",
         problem_id=str(record.get("problem_id", CellState.UNKNOWN)),
@@ -269,20 +272,22 @@ def adapt_generic(record: dict[str, Any]) -> UnifiedRow:
         static_valid=(str(static.get("status")) == "STATIC_VALID") if static else CellState.NOT_APPLICABLE,
         execution_attempted=execution_attempted,
         execution_success=(exec_status.startswith("COMPLETED")) if execution_attempted else CellState.NOT_APPLICABLE,
-        feasible=CellState.NOT_APPLICABLE, bounded=CellState.NOT_APPLICABLE,
-        solver_status=CellState.NOT_APPLICABLE,
-        objective_available=False, objective_predicted=CellState.UNAVAILABLE,
+        feasible=("INFEASIBLE" not in exec_status and "UNBOUNDED" not in exec_status) if execution_attempted and exec_status else CellState.NOT_APPLICABLE,
+        bounded=("UNBOUNDED" not in exec_status) if execution_attempted and exec_status else CellState.NOT_APPLICABLE,
+        solver_status=exec_status or CellState.NOT_APPLICABLE,
+        objective_available=record.get("objective_value") is not None,
+        objective_predicted=record.get("objective_value") if record.get("objective_value") is not None else CellState.UNAVAILABLE,
         objective_gold=record.get("gold_objective", CellState.UNAVAILABLE),
-        objective_match=CellState.NOT_APPLICABLE, objective_tolerance=0.05,
+        objective_match=objective_match, objective_tolerance=0.05,
         semantic_correct=CellState.NOT_APPLICABLE, semantic_metric_available=False,
-        correctness_metric_name="parse_and_static_validation",
+        correctness_metric_name="objective_value_tolerance_proxy",
         runtime_seconds=generation.get("runtime_seconds", CellState.NOT_APPLICABLE),
         prompt_tokens=generation.get("prompt_tokens", CellState.NOT_APPLICABLE),
         generated_tokens=generation.get("completion_tokens", CellState.NOT_APPLICABLE),
         total_tokens=generation.get("total_tokens", CellState.NOT_APPLICABLE),
         rollout_count=1, correction_iterations=CellState.NOT_APPLICABLE,
         test_time_training_steps=CellState.NOT_APPLICABLE, estimated_cost=CellState.UNKNOWN,
-        failure_category=record.get("error_category") or CellState.NOT_APPLICABLE,
+        failure_category=record.get("error_category") or execution.get("error_category") or CellState.NOT_APPLICABLE,
         failure_detail=CellState.NOT_APPLICABLE,
         full_formulation=True, fixed_schema=False, scalar_grounding_only=False,
         generative=True, test_time_learning=False, transductive_training=False,

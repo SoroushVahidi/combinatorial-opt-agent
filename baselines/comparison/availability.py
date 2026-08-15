@@ -45,21 +45,21 @@ AVAILABILITY: dict[str, AvailabilityStatus] = {
         "objective_proxy_status=NOT_EVALUABLE for all 18 rows.",
     ),
     "optmath": AvailabilityStatus(
-        "optmath", "COMMON-18 COMPLETE (official checkpoint; solver execution pending)",
-        True, "OPTMATH_COMMON18_INFERENCE_COMPLETE",
+        "optmath", "COMMON-18 COMPLETE (official checkpoint; execution complete)",
+        True, "OPTMATH_COMMON18_COMPLETE_EXECUTION_COMPLETE",
         "results/optmath/common18_official_checkpoint/results.jsonl: 18/18 rows, official "
         "Aurora-Gem/OptMATH-Qwen2.5-7B revision 617fe77, all generation/parse/static-validation "
-        "complete (prompt upstream-eval-evaluator-build-cot-prompt-v1, temperature 0.8, 8192 max "
-        "tokens). Solver execution not yet run; gurobipy is available in a dedicated venv "
-        "(objective cells NOT_APPLICABLE until execution is run).",
+        "complete; gurobipy execution complete (15/18 COMPLETED, 3 genuine model-code failures), "
+        "objective-proxy 6/18 agreement (tolerance 0.05).",
     ),
     "generic": AvailabilityStatus(
-        "generic", "COMMON-18 COMPLETE (gpt-5.4, zero-shot gurobipy; no solver execution)",
-        True, "GENERIC_LLM_COMMON18_COMPLETE_EXECUTION_NOT_ATTEMPTED",
+        "generic", "COMMON-18 COMPLETE (gpt-5.4, zero-shot gurobipy; execution complete)",
+        True, "GENERIC_LLM_COMMON18_COMPLETE_EXECUTION_COMPLETE",
         "results/generic_llm/common18_official/results.jsonl: 18/18 rows, all generation/parse/"
-        "static-validation complete, served model gpt-5.4-2026-03-05 (azure_openai deployment gpt-5.4). "
-        "Generic-purpose API LLM with a fixed zero-shot gurobipy prompt (no optimization training); "
-        "solver execution not attempted (objective cells NOT_APPLICABLE, never zero).",
+        "static-validation complete, served model gpt-5.4-2026-03-05 (azure_openai deployment gpt-5.4); "
+        "gurobipy execution complete (16/18 COMPLETED, 2 genuine model-code failures), objective-proxy "
+        "10/18 agreement (tolerance 0.05). Generic-purpose API LLM with a fixed zero-shot gurobipy prompt "
+        "(no optimization training).",
     ),
     "deepor": AvailabilityStatus(
         "deepor", "PAPER RECONSTRUCTION, OFFICIAL CHECKPOINT UNAVAILABLE",

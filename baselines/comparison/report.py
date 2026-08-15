@@ -282,10 +282,12 @@ def _render_markdown(
                   "executable/feasible/objective-agreement cells are NOT_APPLICABLE, never zero. DeepOR/OR-R1 "
                   "currently have **zero** empirical rows; any non-zero number for them in this report would be "
                   "fabricated and must be treated as a bug.")
-    lines.append("- `generic` (gpt-5.4, zero-shot gurobipy) has 18 real common-18 rows with valid "
-                  "generation/parse/static-validation but **no solver execution**; it is a general-purpose LLM "
-                  "floor, not an optimization-trained baseline, and its executable/objective cells are "
-                  "NOT_APPLICABLE.\n")
+    lines.append("- OptMATH (temperature 0.8, official config) and `generic` (gpt-5.4, temperature 0.0) were "
+                  "executed with the SAME gurobipy harness and the SAME 0.05 relative-tolerance objective rule; "
+                  "both failures observed (OptMATH 3, generic 2) are genuine model-code errors, not harness "
+                  "errors. `generic` is a general-purpose LLM floor, NOT an optimization-trained baseline, and "
+                  "its 10/18 vs OptMATH's 6/18 objective-proxy agreement must be read with the temperature/"
+                  "training caveats in mind, never as a ranking of 'optimization baselines'.\n")
 
     lines.append("## OR-R1 transductive-protocol note\n")
     lines.append("The official OR-R1 TGRPO training set is the union of all official evaluation test sets, "

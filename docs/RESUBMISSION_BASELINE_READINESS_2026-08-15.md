@@ -28,26 +28,29 @@ the pamop_possible_269 subset, stable SHA-256 tie-breaking). See
 | **ours** (frozen) | 18/18 | Schema R@1 17/18; InstantiationReady 16/18; Strict 16/18 | N/A (scalar grounding, no solver) | N/A (ineligible by protocol) | `PAPER_CORE_VALIDATED` | none |
 | **PaMOP** (reconstruction, gpt-5.4) | 18/18 | 13/18 execution success; 5 AMPL parse failures | AMPL + HiGHS (local) | 8/11 evaluable success (proxy) | `PAMOP_COMMON18_COMPLETE` | none |
 | **ORLM** (official checkpoint) | 18/18 | 18/18 generation; 18/18 parse; 18/18 static | BLOCKED (coptpy missing) | NOT_EVALUABLE | `ORLM_COMMON18_COMPLETE_EXECUTION_BLOCKED` | coptpy not installed |
-| **OptMATH** (official checkpoint) | 18/18 | verified complete | PENDING (gurobipy available in dedicated venv) | PENDING | `OPTMATH_COMMON18_INFERENCE_COMPLETE` | solver execution not yet run |
-| **generic** (gpt-5.4, zero-shot gurobipy) | 18/18 | 18/18 generation; 18/18 parse; 18/18 static | NOT_ATTEMPTED | NOT_APPLICABLE | `GENERIC_LLM_COMMON18_COMPLETE_EXECUTION_NOT_ATTEMPTED` | execution intentionally deferred (floor bound) |
+| **OptMATH** (official checkpoint) | 18/18 | verified complete | 15/18 COMPLETED; 3 genuine model-code failures (ids 219, 232, 237) | 6/15 evaluable success (0.05 tolerance) | `OPTMATH_COMMON18_COMPLETE_EXECUTION_COMPLETE` | none |
+| **generic** (gpt-5.4, zero-shot gurobipy) | 18/18 | 18/18 generation; 18/18 parse; 18/18 static | 16/18 COMPLETED; 2 genuine model-code failures (ids 219, 237) | 10/16 evaluable success (0.05 tolerance) | `GENERIC_LLM_COMMON18_COMPLETE_EXECUTION_COMPLETE` | none (deliberately a general-purpose floor, not optimization-trained) |
 | **DeepOR** | 0 | — | — | — | `DEEPOR_PAPER_RECONSTRUCTION_READY` | no official code/checkpoint (rechecked 2026-08-15) |
 | **OR-R1** | 0 | — | — | — | `ORR1_CODE_INTEGRATED_CHECKPOINT_BLOCKED` | no SFT/TGRPO/merged checkpoint (rechecked 2026-08-15) |
 
 ## What this means for the resubmission
 
-1. **Three full-LLM baselines now have real common-18 evidence**: ORLM
-   (official checkpoint, execution blocked on coptpy), OptMATH (official
-   checkpoint, inference complete, execution pending), and PaMOP
-   (reconstruction, fully executed with AMPL + HiGHS). This is the empirical
-   backbone the manuscript revision needs.
-2. **A generic-purpose LLM floor** (gpt-5.4, zero-shot gurobipy, 18/18
-   parse/static valid) bounds how much of the task is attributable to a plain
-   API model — it is deliberately NOT optimization-trained and is never
-   compared as if it were.
+1. **Three full-LLM baselines now have real common-18 evidence with solver
+   execution**: PaMOP (reconstruction, 8/11 objective-proxy success via AMPL +
+   HiGHS), OptMATH (official checkpoint, 6/15 objective-proxy success via
+   gurobipy), and `generic` (gpt-5.4 floor, 10/16 objective-proxy success via
+   gurobipy). ORLM is the only full-LLM baseline without execution (coptpy not
+   installed). This is the empirical backbone the manuscript revision needs.
+2. **A generic-purpose LLM floor** (gpt-5.4, zero-shot gurobipy) matches or
+   exceeds the two specialized open baselines on this 18-instance objective
+   proxy under the same gurobipy harness. It is deliberately NOT
+   optimization-trained and is never compared as if it were; the temperature
+   difference (0.0 vs 0.8 official) is documented, and the paired test is
+   small-sample (n<10 discordant pairs).
 3. **Shared end-to-end metrics** (parse/executable/feasible/objective
    agreement) are computed only where solver execution exists. `ours` is
    excluded by protocol (scalar grounding, not NL-to-model generation); ORLM
-   and `generic` report NOT_APPLICABLE objective cells rather than zero.
+   reports NOT_APPLICABLE objective cells rather than zero.
 4. **DeepOR and OR-R1 cannot contribute empirical rows** without released
    artifacts. OR-R1 additionally has the mandatory transductive-protocol
    caveat (its official training data is the union of the evaluation test
@@ -65,9 +68,8 @@ the pamop_possible_269 subset, stable SHA-256 tie-breaking). See
 ## Remaining work before the report is manuscript-final
 
 - Regenerate `results/external_baseline_comparison/` with all evidence above
-  (done once OptMATH inference validated).
-- Optional: run gurobipy solver execution for OptMATH and generic rows using
-  `/home/soroush/.venvs/gurobi/bin/python` to promote objective cells from
-  NOT_APPLICABLE to measured; ORLM would need coptpy installed for the same.
+  (done; includes OptMATH + generic solver execution).
+- ORLM objective cells would require installing coptpy (a proprietary `pip
+  install coptpy`); until then they stay NOT_APPLICABLE.
 - Final resource/fairness table is in `baselines/comparison/resource_profile.py`
   and rendered into the comparison report.

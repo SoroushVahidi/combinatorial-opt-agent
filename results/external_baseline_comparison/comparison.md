@@ -1,6 +1,6 @@
 # External Baseline Comparison
 
-**Status: `PRELIMINARY_EXTERNAL_BASELINE_STATUS`** — not a final paper comparison. Generated 2026-08-15T05:58:06.373364+00:00, repository HEAD `69df7c030fabb3bd785684b68a844929487603b9`.
+**Status: `PRELIMINARY_EXTERNAL_BASELINE_STATUS`** — not a final paper comparison. Generated 2026-08-15T06:02:41.241701+00:00, repository HEAD `6ecc235340b0064790651c62cce651fe83657683`.
 
 ## Evaluation protocol
 
@@ -21,8 +21,8 @@ See `docs/EXTERNAL_BASELINE_COMPARISON_PROTOCOL.md` for the frozen protocol this
 | ours | VALIDATED (whole-benchmark); common-18-subset status tracked separately | True | `PAPER_CORE_VALIDATED` |
 | pamop | COMMON-18 COMPLETE (gpt-5.4, AMPL/HiGHS execution) | True | `PAMOP_COMMON18_COMPLETE` |
 | orlm | COMMON-18 COMPLETE (official checkpoint; execution blocked on coptpy) | True | `ORLM_COMMON18_COMPLETE_EXECUTION_BLOCKED` |
-| optmath | COMMON-18 COMPLETE (official checkpoint; solver execution pending) | True | `OPTMATH_COMMON18_INFERENCE_COMPLETE` |
-| generic | COMMON-18 COMPLETE (gpt-5.4, zero-shot gurobipy; no solver execution) | True | `GENERIC_LLM_COMMON18_COMPLETE_EXECUTION_NOT_ATTEMPTED` |
+| optmath | COMMON-18 COMPLETE (official checkpoint; execution complete) | True | `OPTMATH_COMMON18_COMPLETE_EXECUTION_COMPLETE` |
+| generic | COMMON-18 COMPLETE (gpt-5.4, zero-shot gurobipy; execution complete) | True | `GENERIC_LLM_COMMON18_COMPLETE_EXECUTION_COMPLETE` |
 | deepor | PAPER RECONSTRUCTION, OFFICIAL CHECKPOINT UNAVAILABLE | False | `DEEPOR_PAPER_RECONSTRUCTION_READY` |
 | orr1 | OFFICIAL CODE INTEGRATED, CHECKPOINT UNAVAILABLE | False | `ORR1_CODE_INTEGRATED_CHECKPOINT_BLOCKED` |
 
@@ -54,20 +54,20 @@ Native metrics are NOT comparable numerically across systems -- see `docs/EXTERN
 | parse_success_rate | orr1 | 0 | PENDING |
 | executable_rate | pamop | 18 | 0.7222 |
 | executable_rate | orlm | 0 | NOT_APPLICABLE |
-| executable_rate | optmath | 0 | NOT_APPLICABLE |
-| executable_rate | generic | 0 | NOT_APPLICABLE |
+| executable_rate | optmath | 18 | 0.8333 |
+| executable_rate | generic | 18 | 0.8889 |
 | executable_rate | deepor | 0 | PENDING |
 | executable_rate | orr1 | 0 | PENDING |
 | feasible_rate | pamop | 18 | 0.7222 |
 | feasible_rate | orlm | 0 | NOT_APPLICABLE |
-| feasible_rate | optmath | 0 | NOT_APPLICABLE |
-| feasible_rate | generic | 0 | NOT_APPLICABLE |
+| feasible_rate | optmath | 18 | 1.0000 |
+| feasible_rate | generic | 18 | 1.0000 |
 | feasible_rate | deepor | 0 | PENDING |
 | feasible_rate | orr1 | 0 | PENDING |
 | objective_agreement_rate | pamop | 11 | 0.7273 |
 | objective_agreement_rate | orlm | 0 | NOT_APPLICABLE |
-| objective_agreement_rate | optmath | 0 | NOT_APPLICABLE |
-| objective_agreement_rate | generic | 0 | NOT_APPLICABLE |
+| objective_agreement_rate | optmath | 15 | 0.4000 |
+| objective_agreement_rate | generic | 16 | 0.6250 |
 | objective_agreement_rate | deepor | 0 | PENDING |
 | objective_agreement_rate | orr1 | 0 | PENDING |
 
@@ -76,11 +76,11 @@ Native metrics are NOT comparable numerically across systems -- see `docs/EXTERN
 | Metric | A | B | n paired | both | A only | B only | neither | McNemar p |
 |---|---|---|---|---|---|---|---|---|
 | objective_agreement | pamop | orlm | 0 | 0 | 0 | 0 | 0 | None |
-| objective_agreement | pamop | optmath | 0 | 0 | 0 | 0 | 0 | None |
-| objective_agreement | pamop | generic | 0 | 0 | 0 | 0 | 0 | None |
+| objective_agreement | pamop | optmath | 11 | 4 | 4 | 2 | 1 | 0.6875 |
+| objective_agreement | pamop | generic | 11 | 6 | 2 | 1 | 2 | 1.0000 |
 | objective_agreement | orlm | optmath | 0 | 0 | 0 | 0 | 0 | None |
 | objective_agreement | orlm | generic | 0 | 0 | 0 | 0 | 0 | None |
-| objective_agreement | optmath | generic | 0 | 0 | 0 | 0 | 0 | None |
+| objective_agreement | optmath | generic | 15 | 5 | 1 | 5 | 4 | 0.2188 |
 
 ## Resource requirements
 
@@ -103,7 +103,7 @@ See `failure_summary.csv` for the full per-row native-category -> top-level-buck
 - `ours` performs fixed-catalog scalar grounding, not full NL-to-model generation; it is excluded from every SharedMetric above (see `END_TO_END_OBJECTIVE_SUCCESS_ELIGIBILITY` in `metrics.py`).
 - PaMOP's objective-value agreement is an exact-match proxy on execution-successful rows only, never a structural/semantic correctness judgment.
 - ORLM has 18 real common-18 rows but **no solver execution** (coptpy not installed); its executable/feasible/objective-agreement cells are NOT_APPLICABLE, never zero. DeepOR/OR-R1 currently have **zero** empirical rows; any non-zero number for them in this report would be fabricated and must be treated as a bug.
-- `generic` (gpt-5.4, zero-shot gurobipy) has 18 real common-18 rows with valid generation/parse/static-validation but **no solver execution**; it is a general-purpose LLM floor, not an optimization-trained baseline, and its executable/objective cells are NOT_APPLICABLE.
+- OptMATH (temperature 0.8, official config) and `generic` (gpt-5.4, temperature 0.0) were executed with the SAME gurobipy harness and the SAME 0.05 relative-tolerance objective rule; both failures observed (OptMATH 3, generic 2) are genuine model-code errors, not harness errors. `generic` is a general-purpose LLM floor, NOT an optimization-trained baseline, and its 10/18 vs OptMATH's 6/18 objective-proxy agreement must be read with the temperature/training caveats in mind, never as a ranking of 'optimization baselines'.
 
 ## OR-R1 transductive-protocol note
 
@@ -116,7 +116,7 @@ The official OR-R1 TGRPO training set is the union of all official evaluation te
 
 ## Provenance
 
-- Repository HEAD at generation time: `69df7c030fabb3bd785684b68a844929487603b9`
+- Repository HEAD at generation time: `6ecc235340b0064790651c62cce651fe83657683`
 - Generator: `baselines/comparison/report.py` via `python -m baselines.comparison.cli`
 - Protocol: `docs/EXTERNAL_BASELINE_COMPARISON_PROTOCOL.md`
 
