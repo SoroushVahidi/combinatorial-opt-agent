@@ -7144,7 +7144,7 @@ def main() -> None:
             return llm_ranker.rank(query, top_k=top_k)
         setattr(rank_fn, "_llm_runner", llm_ranker)
     else:
-        if args.baseline not in ("bm25", "tfidf", "lsa"):
+        if args.baseline not in ("bm25", "tfidf", "lsa", "bge_m3"):
             raise SystemExit(
                 f"Unknown baseline: {args.baseline}. Use bm25, tfidf, lsa, openai, gemini, mistral, oracle, "
                 "or tfidf_selective_grounding_rerank / *_acceptance_rerank / *_hierarchical_acceptance_rerank."

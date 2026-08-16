@@ -1,0 +1,9 @@
+{
+  "model_id": "BAAI/bge-m3",
+  "exact_revision": "5617a9f61b028005a4858fdac845db406aefb181",
+  "embedding_dimension": 1024,
+  "device": "cuda (inferred)",
+  "dtype": "float32",
+  "normalization_setting": "True (L2 norm)",
+  "similarity_function": "cosine"
+}

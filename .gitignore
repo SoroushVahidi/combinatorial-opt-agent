@@ -289,6 +289,9 @@ results/*
 !results/optmath/**
 !results/orlm/
 !results/orlm/**
+# Exception: BGE-M3 dense retrieval baseline results (DKE Stage 1, 2026-08-15)
+!results/dense_retrieval_bge_m3/
+!results/dense_retrieval_bge_m3/**
 # Scratch exports under a run (partial CSV/JSON/interrupt); not curated rerun bundles
 results/rerun/gemini/*/paper/
 

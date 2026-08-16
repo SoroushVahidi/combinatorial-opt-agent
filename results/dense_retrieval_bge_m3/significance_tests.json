@@ -1,0 +1,25 @@
+{
+  "BGE-M3 vs TF-IDF (InstantiationReady)": {
+    "diff": 0.0242,
+    "95_CI": [
+      0.006,
+      0.0423
+    ],
+    "p_value": 0.0053
+  },
+  "BGE-M3 vs TF-IDF (StrictInstantiationReady)": {
+    "diff": 0.0302,
+    "95_CI": [
+      0.006,
+      0.0544
+    ],
+    "p_value": 0.0142
+  },
+  "BGE-M3 vs TF-IDF (McNemar Schema R@1)": {
+    "both_correct": 298,
+    "bge_only": 15,
+    "tfidf_only": 3,
+    "both_wrong": 15,
+    "p_value": 0.0075
+  }
+}
