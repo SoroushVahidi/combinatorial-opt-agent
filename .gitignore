@@ -295,3 +295,9 @@ manuscript/submission_package/*.log
 manuscript/submission_package/*.out
 manuscript/submission_package/*.blg
 manuscript/submission_package/*.bbl
+
+# Claude Code local state (agent worktrees, per-machine settings)
+.claude/
+
+# Manuscript build/validation logs (sbatch scripts, page renders, checksums)
+manuscript/build_logs/
