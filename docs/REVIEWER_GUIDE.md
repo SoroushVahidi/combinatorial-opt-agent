@@ -56,9 +56,9 @@ All values are from `results/paper/eaai_camera_ready_tables/table1_main_benchmar
 | Metric | Value |
 |--------|------:|
 | Schema R@1 | **0.9094** |
-| Coverage | **0.8639** |
-| TypeMatch | **0.7513** |
-| InstantiationReady | **0.5257** |
+| Coverage | **0.8609** |
+| TypeMatch | **0.7453** |
+| InstantiationReady | **0.5287** |
 
 **Restricted solver-backed subset (Table 4) — 20 instances — SciPy HiGHS shim:**
 

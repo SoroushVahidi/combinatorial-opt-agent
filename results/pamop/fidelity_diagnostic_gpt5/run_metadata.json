@@ -1,0 +1,19 @@
+{
+  "ampl_python": "/home/soroush/.venvs/gurobi/bin/python",
+  "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
+  "created_at_utc": "2026-08-15T05:45:44Z",
+  "cwd": "/home/soroush/combinatorial-opt-agent",
+  "deployment": "gpt-5.4",
+  "execution_mode": "local",
+  "git_commit": "69df7c030fabb3bd785684b68a844929487603b9",
+  "max_correction_iterations": 5,
+  "message": "",
+  "provider": "azure_openai",
+  "required_slurm": false,
+  "run_id": "pamop-pilot-local-20260815T054212Z-8dfa9916",
+  "secrets_policy": "No API keys, HF tokens, AMPL/Gurobi licenses, or gated problem text are written.",
+  "slurm_job_id": null,
+  "slurm_job_name": null,
+  "status": "COMPLETED",
+  "temperature": 0.2
+}

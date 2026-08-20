@@ -1,0 +1,169 @@
+{
+  "exception_message": "",
+  "exception_type": "",
+  "gold": {
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_latency_seconds": 0.039265,
+    "gold_objective": 1555.5555555555557,
+    "gold_reason": "",
+    "gold_returncode": 0,
+    "gold_solver_success": true
+  },
+  "metadata": {
+    "constraint_count": 2,
+    "doc_id": "nlp4lp_test_83",
+    "family_proxy": "LP|maximize|v1|p5|c2|tree1x0",
+    "lp_or_milp": "LP",
+    "numeric_mentions": 8,
+    "objective_sense": "maximize",
+    "optimus_code_available": true,
+    "parameter_count": 5,
+    "partition_depth": 0,
+    "partition_node_count": 1,
+    "problem_id": 84,
+    "selection_bucket": "LP|simple|high_numeric|small_tree|maximize",
+    "variable_count": 1
+  },
+  "per_problem_row": {
+    "completion_tokens": 828,
+    "correction_calls": 3,
+    "correction_invoked": true,
+    "correction_iterations": 1,
+    "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
+    "deployment": "gpt-4.1-mini",
+    "estimated_cost_usd": "",
+    "failure_category": "B. SUCCESS_AFTER_CORRECTION",
+    "final_ampl_hash": "a42545dd9b7e3f89",
+    "final_ampl_parse_success": true,
+    "final_feasible": true,
+    "final_solver_status": "solved",
+    "g_extr_calls": 1,
+    "g_mod_calls": 2,
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_objective": 1555.5555555555557,
+    "gold_solver_success": true,
+    "initial_ampl_parse_success": false,
+    "initial_feasible_status": false,
+    "initial_generation_valid": "YES",
+    "initial_solver_success": false,
+    "latency_seconds": 13.963273,
+    "lp_or_milp": "LP",
+    "objective_match_with_gold": false,
+    "objective_produced": true,
+    "objective_value": 800.0,
+    "partition_depth": 0,
+    "partition_node_count": 1,
+    "problem_id": 84,
+    "prompt_hashes": "2ca52bbcd69d7215;410a060e8e221138;b957fe4a5dd0d685;c516a5cd2f6a61d4;e2ffebfddb532614;ee8bdd7b07f6c7ce",
+    "prompt_tokens": 3522,
+    "provider": "azure_openai",
+    "semantic_correctness_status": "PARTIAL_GOLD_OBJECTIVE_STATUS_ONLY",
+    "semantically_wrong_but_feasible": true,
+    "temperature": 0.2,
+    "total_llm_calls": 6,
+    "total_tokens": 4350,
+    "underlying_model": "gpt-4.1-mini-2025-04-14"
+  },
+  "problem_id": 84,
+  "trace": {
+    "correction_iterations_observed": 1,
+    "final_ampl_hash": "a42545dd9b7e3f89",
+    "final_success": true,
+    "initial_ampl_hash": "b6fccad837bbd0dd",
+    "iterations": [
+      {
+        "ampl_hash": "b6fccad837bbd0dd",
+        "comparison": {
+          "latency_seconds": 1.9933987759868614,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "c516a5cd2f6a61d4",
+          "provider": "azure_openai",
+          "reason": "The model lacks assigned values for critical parameters 'rare_inert_gas_available' and 'treated_water_available', causing constraint evaluation to fail. Remodeling is justified to ensure these parameters are properly defined, enabling the model to function correctly.",
+          "targeted_issues": [
+            "missing parameter values for 'rare_inert_gas_available' and 'treated_water_available'"
+          ],
+          "total_tokens": 512,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_ma_c0cpl/model.run, line 18, offset 590):\nerror processing constraint rare_inert_gas_limit:\n\tno value for rare_inert_gas_available\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "b6fccad837bbd0dd",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.03907495102612302,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_ma_c0cpl/model.run, line 18, offset 590):\nerror processing constraint rare_inert_gas_limit:\n\tno value for rare_inert_gas_available\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 0,
+        "remodel": {
+          "ampl_hash": "a42545dd9b7e3f89",
+          "changes": [
+            "Assigned default values to parameters 'rare_inert_gas_available' and 'treated_water_available' as 1000 and 800 respectively"
+          ],
+          "latency_seconds": 2.2752670799964108,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "e2ffebfddb532614",
+          "provider": "azure_openai",
+          "total_tokens": 968,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Provide data values for 'rare_inert_gas_available' and 'treated_water_available' before solving the model, either via a data file or inline data statements.",
+            "Alternatively, assign default values to these parameters in the model declaration to ensure they have defined values during execution."
+          ],
+          "diagnosis": "The model fails because the parameters 'rare_inert_gas_available' and 'treated_water_available' are declared but not assigned any values, causing constraint evaluation to fail.",
+          "error_category": "model_error",
+          "latency_seconds": 1.881005470000673,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "ee8bdd7b07f6c7ce",
+          "provider": "azure_openai",
+          "total_tokens": 782,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "a42545dd9b7e3f89",
+        "comparison": null,
+        "execution": {
+          "diagnostics": [],
+          "error_category": "none",
+          "model_hash": "a42545dd9b7e3f89",
+          "model_load_success": true,
+          "objective_value": 800.0,
+          "parse_success": true,
+          "runtime_seconds": 0.0448905189987272,
+          "solver_invocation_success": true,
+          "solver_status": "solved",
+          "stderr_tail": "",
+          "stdout_tail": "Gurobi 13.0.2:   tech:outlev = 0\nGurobi 13.0.2: optimal solution; objective 800\n0 simplex iterations\nsolve_result = solved\n\ntotal_rare_compound = 800",
+          "success": true,
+          "timed_out": false
+        },
+        "iteration_number": 1,
+        "remodel": null,
+        "review": null
+      }
+    ],
+    "problem_id": "84",
+    "stopped_reason": "execution_success",
+    "total_tokens": 2262
+  }
+}

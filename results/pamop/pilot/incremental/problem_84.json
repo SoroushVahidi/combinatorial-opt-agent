@@ -1,0 +1,549 @@
+{
+  "exception_message": "",
+  "exception_type": "",
+  "gold": {
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_latency_seconds": 0.041124,
+    "gold_objective": 1555.5555555555557,
+    "gold_reason": "",
+    "gold_returncode": 0,
+    "gold_solver_success": true
+  },
+  "metadata": {
+    "constraint_count": 2,
+    "doc_id": "nlp4lp_test_83",
+    "family_proxy": "LP|maximize|v1|p5|c2|tree1x0",
+    "lp_or_milp": "LP",
+    "numeric_mentions": 8,
+    "objective_sense": "maximize",
+    "optimus_code_available": true,
+    "parameter_count": 5,
+    "partition_depth": 0,
+    "partition_node_count": 1,
+    "problem_id": 84,
+    "selection_bucket": "LP|simple|high_numeric|small_tree|maximize",
+    "variable_count": 1
+  },
+  "per_problem_row": {
+    "completion_tokens": 3293,
+    "correction_calls": 15,
+    "correction_invoked": true,
+    "correction_iterations": 5,
+    "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
+    "deployment": "gpt-4.1-mini",
+    "estimated_cost_usd": "",
+    "failure_category": "D. AMPL_RENDER_FAILURE",
+    "final_ampl_hash": "f61f3a6acbf90804",
+    "final_ampl_parse_success": false,
+    "final_feasible": false,
+    "final_solver_status": null,
+    "g_extr_calls": 1,
+    "g_mod_calls": 2,
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_objective": 1555.5555555555557,
+    "gold_solver_success": true,
+    "initial_ampl_parse_success": false,
+    "initial_feasible_status": false,
+    "initial_generation_valid": "NO",
+    "initial_solver_success": false,
+    "latency_seconds": 50.502183,
+    "lp_or_milp": "LP",
+    "objective_match_with_gold": "",
+    "objective_produced": false,
+    "objective_value": null,
+    "partition_depth": 0,
+    "partition_node_count": 1,
+    "problem_id": 84,
+    "prompt_hashes": "08554e41ff82138c;223552e997700038;2bc236101e797a3a;3ad32f1418bfb536;693d1537c4929637;6a590795291956fc;7d57079c6bd4ffa6;a337a811fecd75e6;b55f3105635894e4;bd40eb2748c25e31;c1d324580658a246;c430e97ba38b2c0a;d48ae4cfe91ded03;d53376399c065129;ecb4ed9f2a6f582e;eee14493251a729b",
+    "prompt_tokens": 10927,
+    "provider": "azure_openai",
+    "semantic_correctness_status": "NOT_EVALUABLE",
+    "semantically_wrong_but_feasible": "",
+    "temperature": 0.2,
+    "total_llm_calls": 18,
+    "total_tokens": 14220,
+    "underlying_model": "gpt-4.1-mini-2025-04-14"
+  },
+  "problem_id": 84,
+  "trace": {
+    "correction_iterations_observed": 5,
+    "final_ampl_hash": "f61f3a6acbf90804",
+    "final_success": false,
+    "initial_ampl_hash": "9ee8e22b9e960c29",
+    "iterations": [
+      {
+        "ampl_hash": "9ee8e22b9e960c29",
+        "comparison": {
+          "latency_seconds": 2.0106751429848373,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "2bc236101e797a3a",
+          "provider": "azure_openai",
+          "reason": "The model uses the index variable 'i' outside of a properly defined indexing context, leading to unresolved symbol errors and invalid constraints. Remodeling is justified to ensure all summations and constraints explicitly declare and scope the index variable correctly, enabling the model parser to recognize and process the constraints as intended.",
+          "targeted_issues": [
+            "undefined or improperly scoped index variables in summations and constraints",
+            "incorrect or missing indexing in 'subject to' constraints",
+            "undeclared or improperly indexed variables and parameters within expressions"
+          ],
+          "total_tokens": 545,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "missing_constraint",
+              "message": "AMPL model has no subject-to constraint.",
+              "severity": "error",
+              "symbol": null
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'i'.",
+              "severity": "error",
+              "symbol": "i"
+            },
+            {
+              "category": "model_error",
+              "code": "unparsed_statement",
+              "message": "Model contains semicolon-terminated text not recognized by the lightweight validator.",
+              "severity": "warning",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "9ee8e22b9e960c29",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 0,
+        "remodel": {
+          "ampl_hash": "aff8f9a4bc265ad1",
+          "changes": [
+            "Ensured all summations explicitly declare the index variable 'i' in their scope.",
+            "Confirmed 'subject to' constraints use proper indexing with 'r in 1..NumResources'.",
+            "Verified all variables and parameters inside expressions are properly declared and indexed."
+          ],
+          "latency_seconds": 3.642165658995509,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "693d1537c4929637",
+          "provider": "azure_openai",
+          "total_tokens": 1069,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that all summations and constraints explicitly declare the index variable in their scope, for example, use 'sum {i in 1..NumReactions}' consistently.",
+            "Verify that the 'subject to' constraints are correctly defined with proper indexing and syntax so the model parser recognizes them.",
+            "Check that all variables and parameters referenced inside expressions are properly declared and indexed."
+          ],
+          "diagnosis": "The model's constraints and objective use the index variable 'i' outside of a defined indexing context, causing unresolved symbol errors and no valid subject-to constraints being recognized.",
+          "error_category": "model_error",
+          "latency_seconds": 2.0805560880107805,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "223552e997700038",
+          "provider": "azure_openai",
+          "total_tokens": 805,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "aff8f9a4bc265ad1",
+        "comparison": {
+          "latency_seconds": 2.207150775997434,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "eee14493251a729b",
+          "provider": "azure_openai",
+          "reason": "The model uses the index variable 'i' outside of any defined indexing context, resulting in unresolved symbol errors and invalid constraints. This fundamental indexing issue prevents the model from being correctly parsed and solved, justifying a remodel to explicitly declare all index variables and ensure proper scope in summations and constraints.",
+          "targeted_issues": [
+            "undefined or improperly scoped index variables",
+            "missing or incorrect indexing sets in summations and constraints",
+            "noncompliance with AMPL syntax for indexing and constraint declarations"
+          ],
+          "total_tokens": 556,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "missing_constraint",
+              "message": "AMPL model has no subject-to constraint.",
+              "severity": "error",
+              "symbol": null
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'i'.",
+              "severity": "error",
+              "symbol": "i"
+            },
+            {
+              "category": "model_error",
+              "code": "unparsed_statement",
+              "message": "Model contains semicolon-terminated text not recognized by the lightweight validator.",
+              "severity": "warning",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "aff8f9a4bc265ad1",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 1,
+        "remodel": {
+          "ampl_hash": "aff8f9a4bc265ad1",
+          "changes": [
+            "Ensured all summations explicitly declare their index variables within the correct indexing sets (e.g., 'sum {i in 1..NumReactions}').",
+            "Confirmed that the 'subject to' constraint 'ResourceLimits' properly declares its index set and uses index variables only within their scope."
+          ],
+          "latency_seconds": 3.612935827986803,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "6a590795291956fc",
+          "provider": "azure_openai",
+          "total_tokens": 1079,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that all summations and constraints explicitly declare their index variables within the correct indexing sets, for example, use 'sum {i in 1..NumReactions}' consistently.",
+            "Verify that the 'subject to' constraints are properly declared with valid index sets and that the indexing variables are in scope.",
+            "Check that the model syntax follows AMPL conventions for indexing and constraint declarations, avoiding references to undeclared symbols."
+          ],
+          "diagnosis": "The model's constraints and objective use the index variable 'i' outside of a defined indexing context, causing unresolved symbol errors and no valid subject-to constraints being recognized.",
+          "error_category": "model_error",
+          "latency_seconds": 2.967548731015995,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "7d57079c6bd4ffa6",
+          "provider": "azure_openai",
+          "total_tokens": 810,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "aff8f9a4bc265ad1",
+        "comparison": {
+          "latency_seconds": 2.7008072279859334,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "b55f3105635894e4",
+          "provider": "azure_openai",
+          "reason": "The model contains unresolved symbol errors due to the use of the index variable 'i' outside of a properly defined indexing context, resulting in no valid subject-to constraints being recognized. Remodeling is justified to explicitly declare all index variables within their indexing sets in summations and constraints, and to ensure compliance with AMPL syntax conventions.",
+          "targeted_issues": [
+            "undefined or improperly declared index variables in constraints and summations",
+            "missing or incorrect indexing in 'subject to' constraint declarations",
+            "noncompliance with AMPL syntax regarding indexing and semicolon usage"
+          ],
+          "total_tokens": 575,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "missing_constraint",
+              "message": "AMPL model has no subject-to constraint.",
+              "severity": "error",
+              "symbol": null
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'i'.",
+              "severity": "error",
+              "symbol": "i"
+            },
+            {
+              "category": "model_error",
+              "code": "unparsed_statement",
+              "message": "Model contains semicolon-terminated text not recognized by the lightweight validator.",
+              "severity": "warning",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "aff8f9a4bc265ad1",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 2,
+        "remodel": {
+          "ampl_hash": "f61f3a6acbf90804",
+          "changes": [
+            "Declared index variable 'i' explicitly in the variable declaration for ReactionsCount.",
+            "Ensured all summations use explicit index declarations (e.g., 'sum {i in 1..NumReactions}').",
+            "Verified that the 'subject to' constraint uses properly declared index variables 'r' and 'i'."
+          ],
+          "latency_seconds": 3.65896413003793,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "ecb4ed9f2a6f582e",
+          "provider": "azure_openai",
+          "total_tokens": 1114,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that all summations and constraints explicitly declare their index variables within the indexing sets, for example: use 'sum {i in 1..NumReactions}' consistently.",
+            "Verify that the 'subject to' constraints are properly declared with valid indexing and that the index variables used in expressions are declared in the constraint header.",
+            "Check that the model syntax follows AMPL conventions, including proper use of semicolons and indexing in constraints and objective definitions."
+          ],
+          "diagnosis": "The model's constraints and objective use the index variable 'i' outside of a defined indexing context, causing unresolved symbol errors and no valid subject-to constraints being recognized.",
+          "error_category": "model_error",
+          "latency_seconds": 2.307158430980053,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "7d57079c6bd4ffa6",
+          "provider": "azure_openai",
+          "total_tokens": 821,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "f61f3a6acbf90804",
+        "comparison": {
+          "latency_seconds": 2.0852726319571957,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "d48ae4cfe91ded03",
+          "provider": "azure_openai",
+          "reason": "The model uses the index variable 'i' without declaring it in the indexing context, causing parsing failures and invalid constraints. Remodeling is necessary to explicitly declare all index variables in summations and 'subject to' constraints, ensuring syntactic correctness and proper constraint recognition.",
+          "targeted_issues": [
+            "undeclared index variables in summations and constraints",
+            "missing or incorrect indexing in 'subject to' constraints",
+            "syntax errors causing parser failures (e.g., missing semicolons or braces)"
+          ],
+          "total_tokens": 587,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "missing_constraint",
+              "message": "AMPL model has no subject-to constraint.",
+              "severity": "error",
+              "symbol": null
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'i'.",
+              "severity": "error",
+              "symbol": "i"
+            },
+            {
+              "category": "model_error",
+              "code": "unparsed_statement",
+              "message": "Model contains semicolon-terminated text not recognized by the lightweight validator.",
+              "severity": "warning",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "f61f3a6acbf90804",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 3,
+        "remodel": {
+          "ampl_hash": "f61f3a6acbf90804",
+          "changes": [
+            "Explicitly declared index variable 'i' in all summations.",
+            "Ensured 'subject to' constraint 'ResourceLimits' is properly indexed over 'r in 1..NumResources'.",
+            "Verified all semicolons and braces are correctly placed to avoid parser errors."
+          ],
+          "latency_seconds": 3.37945878499886,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "bd40eb2748c25e31",
+          "provider": "azure_openai",
+          "total_tokens": 1118,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that all summations and indexed expressions explicitly declare the index variable within their scope, for example: sum {i in 1..NumReactions} ...",
+            "Verify that the 'subject to' constraints are properly declared with their indexing sets, e.g., 'subject to ResourceLimits {r in 1..NumResources}: ...', and that the index variables used inside are consistent and declared.",
+            "Check for any syntax errors such as missing or misplaced semicolons or braces that might cause the parser to fail recognizing constraints."
+          ],
+          "diagnosis": "The model's constraints and objective use the index variable 'i' outside of a declared indexing context, causing 'i' to be undefined. This leads to no valid subject-to constraints being recognized and parsing failure.",
+          "error_category": "model_error",
+          "latency_seconds": 2.1329542549792677,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "a337a811fecd75e6",
+          "provider": "azure_openai",
+          "total_tokens": 845,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "f61f3a6acbf90804",
+        "comparison": {
+          "latency_seconds": 2.105130144045688,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "c430e97ba38b2c0a",
+          "provider": "azure_openai",
+          "reason": "The model uses the index variable 'i' without declaring it in the indexing context, leading to unresolved symbol errors and missing subject-to constraints. This fundamental modeling error prevents the problem from being correctly interpreted or solved.",
+          "targeted_issues": [
+            "undeclared index variables in summations and constraints",
+            "missing or incorrect use of 'subject to' keyword before constraints",
+            "improper declaration and indexing of variables and parameters"
+          ],
+          "total_tokens": 526,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "missing_constraint",
+              "message": "AMPL model has no subject-to constraint.",
+              "severity": "error",
+              "symbol": null
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'i'.",
+              "severity": "error",
+              "symbol": "i"
+            },
+            {
+              "category": "model_error",
+              "code": "unparsed_statement",
+              "message": "Model contains semicolon-terminated text not recognized by the lightweight validator.",
+              "severity": "warning",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "f61f3a6acbf90804",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 4,
+        "remodel": {
+          "ampl_hash": "f61f3a6acbf90804",
+          "changes": [
+            "Added explicit indexing 'i in 1..NumReactions' in all summations to declare the index variable.",
+            "Ensured 'subject to' keyword is correctly used before the constraint name 'ResourceLimits'.",
+            "Verified all variables and parameters inside expressions are properly declared and indexed."
+          ],
+          "latency_seconds": 3.42247774702264,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "3ad32f1418bfb536",
+          "provider": "azure_openai",
+          "total_tokens": 1066,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that all summations and constraints explicitly declare their index variables within the correct indexing sets, for example, use 'sum {i in 1..NumReactions}' consistently.",
+            "Verify that the 'subject to' keyword is correctly used before constraints and that constraints are properly named and scoped.",
+            "Check that all variables and parameters referenced inside expressions are declared and indexed properly."
+          ],
+          "diagnosis": "The model's constraints and objective use the index variable 'i' outside of a declared indexing context, causing unresolved symbol errors and no recognized subject-to constraints.",
+          "error_category": "model_error",
+          "latency_seconds": 2.9824433820322156,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "a337a811fecd75e6",
+          "provider": "azure_openai",
+          "total_tokens": 802,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "f61f3a6acbf90804",
+        "comparison": null,
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "missing_constraint",
+              "message": "AMPL model has no subject-to constraint.",
+              "severity": "error",
+              "symbol": null
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'i'.",
+              "severity": "error",
+              "symbol": "i"
+            },
+            {
+              "category": "model_error",
+              "code": "unparsed_statement",
+              "message": "Model contains semicolon-terminated text not recognized by the lightweight validator.",
+              "severity": "warning",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "f61f3a6acbf90804",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 5,
+        "remodel": null,
+        "review": null
+      }
+    ],
+    "problem_id": "84",
+    "stopped_reason": "max_correction_iterations",
+    "total_tokens": 12318
+  }
+}

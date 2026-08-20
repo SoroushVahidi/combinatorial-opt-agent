@@ -1,0 +1,333 @@
+{
+  "exception_message": "",
+  "exception_type": "",
+  "generated_artifacts": {
+    "merged_model": {
+      "config_hash": "8c44b93014ee08ea",
+      "constraints_text": "subject to Preparation_Time_Requirement:\n    patch_prep_time_per_batch = 3 and cream_prep_time_per_batch = 5;\nsubject to Patch_Materials_Per_Batch:\n    patch_materials_per_batch = 5;\n\nsubject to Cream_Materials_Per_Batch:\n    cream_materials_per_batch = 6;\nsubject to CreamAtLeastTwicePatches:\n    antibiotic_cream_batches >= 2 * medication_patch_batches;\nsubject to Total_Batches_Limit:\n    medication_patch_batches + antibiotic_cream_batches <= max_total_batches;\nsubject to Total_Preparation_Time:\n    patch_prep_time_per_batch * medication_patch_batches + cream_prep_time_per_batch * antibiotic_cream_batches <= 400;\nsubject to Total_Materials_Used:\n    patch_materials_per_batch * medication_patch_batches + cream_materials_per_batch * antibiotic_cream_batches <= 530;",
+      "leaf_results": [
+        {
+          "ampl_fragment": "subject to Preparation_Time_Requirement:\n    patch_prep_time_per_batch = 3 and cream_prep_time_per_batch = 5;",
+          "constraint_indices": [
+            0
+          ],
+          "node_id": "node_1",
+          "prompt_hash": "13f7032bc0cf651c",
+          "referenced_global_symbols": [
+            "cream_prep_time_per_batch",
+            "patch_prep_time_per_batch"
+          ],
+          "unresolved_references": [],
+          "used_augmentation": false,
+          "validation_attempts": 1
+        },
+        {
+          "ampl_fragment": "subject to Patch_Materials_Per_Batch:\n    patch_materials_per_batch = 5;\n\nsubject to Cream_Materials_Per_Batch:\n    cream_materials_per_batch = 6;",
+          "constraint_indices": [
+            1
+          ],
+          "node_id": "node_2",
+          "prompt_hash": "770ca2c84b30abc5",
+          "referenced_global_symbols": [
+            "cream_materials_per_batch",
+            "patch_materials_per_batch"
+          ],
+          "unresolved_references": [],
+          "used_augmentation": false,
+          "validation_attempts": 1
+        },
+        {
+          "ampl_fragment": "subject to CreamAtLeastTwicePatches:\n    antibiotic_cream_batches >= 2 * medication_patch_batches;",
+          "constraint_indices": [
+            2
+          ],
+          "node_id": "node_3",
+          "prompt_hash": "7cf1878ffad7c2e8",
+          "referenced_global_symbols": [
+            "antibiotic_cream_batches",
+            "medication_patch_batches"
+          ],
+          "unresolved_references": [],
+          "used_augmentation": false,
+          "validation_attempts": 1
+        },
+        {
+          "ampl_fragment": "subject to Total_Batches_Limit:\n    medication_patch_batches + antibiotic_cream_batches <= max_total_batches;",
+          "constraint_indices": [
+            3
+          ],
+          "node_id": "node_4",
+          "prompt_hash": "aa4992ce8acb8434",
+          "referenced_global_symbols": [
+            "antibiotic_cream_batches",
+            "max_total_batches",
+            "medication_patch_batches"
+          ],
+          "unresolved_references": [],
+          "used_augmentation": false,
+          "validation_attempts": 1
+        },
+        {
+          "ampl_fragment": "subject to Total_Preparation_Time:\n    patch_prep_time_per_batch * medication_patch_batches + cream_prep_time_per_batch * antibiotic_cream_batches <= 400;",
+          "constraint_indices": [
+            4
+          ],
+          "node_id": "node_5",
+          "prompt_hash": "fc99b63bc38242d4",
+          "referenced_global_symbols": [
+            "antibiotic_cream_batches",
+            "cream_prep_time_per_batch",
+            "medication_patch_batches",
+            "patch_prep_time_per_batch"
+          ],
+          "unresolved_references": [],
+          "used_augmentation": false,
+          "validation_attempts": 1
+        },
+        {
+          "ampl_fragment": "subject to Total_Materials_Used:\n    patch_materials_per_batch * medication_patch_batches + cream_materials_per_batch * antibiotic_cream_batches <= 530;",
+          "constraint_indices": [
+            5
+          ],
+          "node_id": "node_6",
+          "prompt_hash": "40fbf40b3f4547de",
+          "referenced_global_symbols": [
+            "antibiotic_cream_batches",
+            "cream_materials_per_batch",
+            "medication_patch_batches",
+            "patch_materials_per_batch"
+          ],
+          "unresolved_references": [],
+          "used_augmentation": false,
+          "validation_attempts": 1
+        }
+      ],
+      "objective_text": "maximize Total_People_Treated: people_treated_per_patch_batch * medication_patch_batches + people_treated_per_cream_batch * antibiotic_cream_batches;",
+      "parameters_text": "param patch_prep_time_per_batch;\nparam cream_prep_time_per_batch;\nparam patch_materials_per_batch;\nparam cream_materials_per_batch;\nparam max_total_batches;\nparam available_staff_time;\nparam available_materials;\nparam people_treated_per_patch_batch;\nparam people_treated_per_cream_batch;",
+      "problem_id": "262",
+      "provenance": {
+        "config_kind": "reconstructed_default",
+        "root_validation_attempts": 1,
+        "structured_problem_source": "llm_extraction:azure_openai:gpt-5.4"
+      },
+      "root_prompt_hash": "bb9e492844649128",
+      "symbol_conflicts": [],
+      "variables_text": "var medication_patch_batches integer >= 0;\nvar antibiotic_cream_batches integer >= 0;"
+    },
+    "rendered_model": {
+      "diagnostics": [],
+      "model_hash": "90cccd0327275b64",
+      "model_text": "# Generated by the independent PaMOP reproduction scaffold.\n\n# Source sections: parameters, variables, objective, constraints.\n\nparam patch_prep_time_per_batch;\nparam cream_prep_time_per_batch;\nparam patch_materials_per_batch;\nparam cream_materials_per_batch;\nparam max_total_batches;\nparam available_staff_time;\nparam available_materials;\nparam people_treated_per_patch_batch;\nparam people_treated_per_cream_batch;\n\nvar medication_patch_batches integer >= 0;\nvar antibiotic_cream_batches integer >= 0;\n\nmaximize Total_People_Treated: people_treated_per_patch_batch * medication_patch_batches + people_treated_per_cream_batch * antibiotic_cream_batches;\n\nsubject to Preparation_Time_Requirement:\n    patch_prep_time_per_batch = 3 and cream_prep_time_per_batch = 5;\nsubject to Patch_Materials_Per_Batch:\n    patch_materials_per_batch = 5;\n\nsubject to Cream_Materials_Per_Batch:\n    cream_materials_per_batch = 6;\nsubject to CreamAtLeastTwicePatches:\n    antibiotic_cream_batches >= 2 * medication_patch_batches;\nsubject to Total_Batches_Limit:\n    medication_patch_batches + antibiotic_cream_batches <= max_total_batches;\nsubject to Total_Preparation_Time:\n    patch_prep_time_per_batch * medication_patch_batches + cream_prep_time_per_batch * antibiotic_cream_batches <= 400;\nsubject to Total_Materials_Used:\n    patch_materials_per_batch * medication_patch_batches + cream_materials_per_batch * antibiotic_cream_batches <= 530;\n",
+      "valid": true
+    }
+  },
+  "gold": {
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_latency_seconds": 0.041415,
+    "gold_objective": 214.0,
+    "gold_reason": "",
+    "gold_returncode": 0,
+    "gold_solver_success": true
+  },
+  "metadata": {
+    "constraint_count": 4,
+    "doc_id": "nlp4lp_test_261",
+    "family_proxy": "MILP|maximize|v2|p10|c4|tree5x1",
+    "lp_or_milp": "MILP",
+    "numeric_mentions": 9,
+    "objective_sense": "maximize",
+    "optimus_code_available": true,
+    "parameter_count": 10,
+    "partition_depth": 1,
+    "partition_node_count": 5,
+    "problem_id": 262,
+    "selection_bucket": "MILP|multi_constraint|high_numeric|large_tree|maximize",
+    "variable_count": 2
+  },
+  "per_problem_row": {
+    "completion_tokens": 2423,
+    "correction_calls": 5,
+    "correction_invoked": true,
+    "correction_iterations": 1,
+    "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
+    "deployment": "gpt-5.4",
+    "estimated_cost_usd": "",
+    "failure_category": "E. AMPL_PARSE_FAILURE",
+    "final_ampl_hash": "93fac9750f49b139",
+    "final_ampl_parse_success": false,
+    "final_feasible": false,
+    "final_solver_status": null,
+    "g_extr_calls": 1,
+    "g_mod_calls": 7,
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_objective": 214.0,
+    "gold_solver_success": true,
+    "initial_ampl_parse_success": false,
+    "initial_feasible_status": false,
+    "initial_generation_valid": "YES",
+    "initial_solver_success": false,
+    "latency_seconds": 29.441584,
+    "lp_or_milp": "MILP",
+    "objective_match_with_gold": "",
+    "objective_produced": false,
+    "objective_value": null,
+    "partition_depth": 1,
+    "partition_node_count": 5,
+    "problem_id": 262,
+    "prompt_hashes": "13f7032bc0cf651c;2e91880056b9e2d3;3aa7548cb302b3d5;40fbf40b3f4547de;52bd2b4ffabc5bac;770ca2c84b30abc5;7cf1878ffad7c2e8;99e76435506bc962;aa4992ce8acb8434;bb9e492844649128;d56c0b4b77f8bd82;d6a27be83767febc;fc99b63bc38242d4",
+    "prompt_tokens": 9497,
+    "provider": "azure_openai",
+    "semantic_correctness_status": "NOT_EVALUABLE",
+    "semantically_wrong_but_feasible": "",
+    "temperature": 0.2,
+    "total_llm_calls": 13,
+    "total_tokens": 11920,
+    "underlying_model": "gpt-5.4-2026-03-05"
+  },
+  "problem_id": 262,
+  "trace": {
+    "correction_iterations_observed": 1,
+    "final_ampl_hash": "93fac9750f49b139",
+    "final_success": false,
+    "initial_ampl_hash": "90cccd0327275b64",
+    "iterations": [
+      {
+        "ampl_hash": "90cccd0327275b64",
+        "comparison": {
+          "latency_seconds": 2.64800013799686,
+          "model": "gpt-5.4",
+          "needs_remodel": true,
+          "prompt_hash": "3aa7548cb302b3d5",
+          "provider": "azure_openai",
+          "reason": "The review identifies actionable formulation errors in the optimization model itself: required numeric parameter values for the objective are missing, which prevents evaluation of the model, and several fixed data quantities were incorrectly encoded as constraints instead of parameter assignments. These are model-structure/data-specification issues that justify remodeling.",
+          "targeted_issues": [
+            "Assign numeric values to all parameters used in the objective and constraints before solving, especially the people-treated coefficients for patch and cream batches.",
+            "Replace fixed data statements such as preparation times and material usage per batch with parameter definitions/data assignments rather than constraints.",
+            "Ensure all resource-limit parameters referenced by constraints (e.g., available staff time, available materials, storage/batch limit) are explicitly defined and populated with the problem's numeric values.",
+            "Keep only true decision constraints in the model, including the cream-to-patch ratio, total batch limit, preparation time limit, and materials limit."
+          ],
+          "total_tokens": 930,
+          "underlying_model": "gpt-5.4-2026-03-05"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_mkpxp91t/model.run, line 38, offset 1486):\nerror processing objective Total_People_Treated:\n\tno value for people_treated_per_patch_batch\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "90cccd0327275b64",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.05067486595362425,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_mkpxp91t/model.run, line 38, offset 1486):\nerror processing objective Total_People_Treated:\n\tno value for people_treated_per_patch_batch\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 0,
+        "remodel": {
+          "ampl_hash": "93fac9750f49b139",
+          "ampl_model": "param patch_prep_time_per_batch := 3;\nparam cream_prep_time_per_batch := 5;\nparam patch_materials_per_batch := 5;\nparam cream_materials_per_batch := 6;\nparam max_total_batches := 100;\nparam available_staff_time := 400;\nparam available_materials := 530;\nparam people_treated_per_patch_batch;\nparam people_treated_per_cream_batch;\n\nvar medication_patch_batches integer >= 0;\nvar antibiotic_cream_batches integer >= 0;\n\nmaximize Total_People_Treated:\n    people_treated_per_patch_batch * medication_patch_batches + people_treated_per_cream_batch * antibiotic_cream_batches;\n\nsubject to CreamAtLeastTwicePatches:\n    antibiotic_cream_batches >= 2 * medication_patch_batches;\n\nsubject to Total_Batches_Limit:\n    medication_patch_batches + antibiotic_cream_batches <= max_total_batches;\n\nsubject to Total_Preparation_Time:\n    patch_prep_time_per_batch * medication_patch_batches + cream_prep_time_per_batch * antibiotic_cream_batches <= available_staff_time;\n\nsubject to Total_Materials_Used:\n    patch_materials_per_batch * medication_patch_batches + cream_materials_per_batch * antibiotic_cream_batches <= available_materials;",
+          "changes": [
+            "Replaced fixed data that had been incorrectly modeled as constraints with parameter assignments for preparation times, material usage, and resource limits.",
+            "Removed non-decision constraints that only equated parameters to constants.",
+            "Kept the original decision variables, objective structure, and true operational constraints unchanged.",
+            "Updated time and materials constraints to use the declared limit parameters consistently."
+          ],
+          "latency_seconds": 3.4133037329884246,
+          "model": "gpt-5.4",
+          "prompt_hash": "d56c0b4b77f8bd82",
+          "provider": "azure_openai",
+          "total_tokens": 1784,
+          "underlying_model": "gpt-5.4-2026-03-05"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Provide numeric values for all parameters before `solve`, especially `people_treated_per_patch_batch` and `people_treated_per_cream_batch`, either in the model (`param ... := ...;`) or in a separate data section/file.",
+            "Replace the data-as-constraints lines with parameter definitions or data assignments, e.g. `param patch_prep_time_per_batch := 3;`, `param cream_prep_time_per_batch := 5;`, `param patch_materials_per_batch := 5;`, `param cream_materials_per_batch := 6;`.",
+            "If the treatment counts are known from the problem statement, encode them explicitly; otherwise the objective cannot be evaluated.",
+            "For consistency, use the parameter limits already declared in the constraints as well, e.g. `... <= available_staff_time` and `... <= available_materials`, and make sure those parameters are also assigned values."
+          ],
+          "diagnosis": "The model uses parameters in the objective and constraints without assigning them values. In particular, `people_treated_per_patch_batch` (and likely `people_treated_per_cream_batch`) has no value, causing solve-time failure. Also, the statements `patch_prep_time_per_batch = 3`, `cream_prep_time_per_batch = 5`, `patch_materials_per_batch = 5`, and `cream_materials_per_batch = 6` were written as constraints, but these are fixed data values and should be defined as parameter assignments, not decision constraints.",
+          "error_category": "model_error",
+          "latency_seconds": 3.550365397008136,
+          "model": "gpt-5.4",
+          "prompt_hash": "2e91880056b9e2d3",
+          "provider": "azure_openai",
+          "total_tokens": 1281,
+          "underlying_model": "gpt-5.4-2026-03-05"
+        }
+      },
+      {
+        "ampl_hash": "93fac9750f49b139",
+        "comparison": {
+          "latency_seconds": 2.096219609025866,
+          "model": "gpt-5.4",
+          "needs_remodel": false,
+          "prompt_hash": "52bd2b4ffabc5bac",
+          "provider": "azure_openai",
+          "reason": "The review identifies missing numeric values for objective coefficients, but the extracted problem requirements do not specify how many people each batch type treats. That is a data omission or underspecification, not a formulation error that remodeling can fix without inventing unsupported coefficients. The model structure implied by the requirements is otherwise coherent; the issue should be handled by supplying the missing parameter values or clarifying the problem data, not by remodeling the optimization formulation.",
+          "targeted_issues": [
+            "Clarify or provide the objective coefficients: number of people treated per batch of medication patches and per batch of anti-biotic cream.",
+            "Ensure any required parameter values are supplied in data input before solving."
+          ],
+          "total_tokens": 707,
+          "underlying_model": "gpt-5.4-2026-03-05"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_vxhq2uom/model.run, line 30, offset 1181):\nerror processing objective Total_People_Treated:\n\tno value for people_treated_per_patch_batch\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "93fac9750f49b139",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.04753659607376903,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_vxhq2uom/model.run, line 30, offset 1181):\nerror processing objective Total_People_Treated:\n\tno value for people_treated_per_patch_batch\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 1,
+        "remodel": null,
+        "review": {
+          "actionable_feedback": [
+            "Assign numeric values to people_treated_per_patch_batch and people_treated_per_cream_batch before calling solve, either with param default values in the model or in a separate data section/file.",
+            "If these treatment counts are fixed by the problem statement, replace the symbolic parameters in the objective with those constants.",
+            "Check that any .dat file or inline data block actually includes both parameter values and is loaded before the solve command."
+          ],
+          "diagnosis": "The model leaves objective coefficients undefined: parameters people_treated_per_patch_batch and people_treated_per_cream_batch are declared but never assigned values, so AMPL cannot evaluate the objective at solve time.",
+          "error_category": "model_error",
+          "latency_seconds": 2.082664355984889,
+          "model": "gpt-5.4",
+          "prompt_hash": "d6a27be83767febc",
+          "provider": "azure_openai",
+          "total_tokens": 1042,
+          "underlying_model": "gpt-5.4-2026-03-05"
+        }
+      }
+    ],
+    "problem_id": "262",
+    "stopped_reason": "comparison_declined_remodel",
+    "total_tokens": 5744
+  }
+}

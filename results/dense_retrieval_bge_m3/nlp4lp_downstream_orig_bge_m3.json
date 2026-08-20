@@ -1,0 +1,27 @@
+{
+  "config": {
+    "variant": "orig",
+    "baseline": "bge_m3",
+    "k": 1,
+    "random_control": false
+  },
+  "aggregate": {
+    "variant": "orig",
+    "baseline": "bge_m3",
+    "schema_R1": 0.945619335347432,
+    "param_coverage": 0.9154005000193022,
+    "type_match": 0.8946226147132492,
+    "exact5_on_hits": 0.21154353530591152,
+    "exact20_on_hits": 0.24362519585291864,
+    "param_coverage_hits": 0.9424842348446935,
+    "param_coverage_miss": 0.4444444444444444,
+    "type_match_hits": 0.920511455175992,
+    "type_match_miss": 0.4444444444444444,
+    "key_overlap": 0.9544669831678896,
+    "key_overlap_hits": 0.9949794614331356,
+    "key_overlap_miss": 0.25,
+    "instantiation_ready": 0.824773413897281,
+    "n": 331
+  },
+  "resume_merged": false
+}

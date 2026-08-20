@@ -1,0 +1,541 @@
+{
+  "exception_message": "",
+  "exception_type": "",
+  "gold": {
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_latency_seconds": 0.039221,
+    "gold_objective": 214.0,
+    "gold_reason": "",
+    "gold_returncode": 0,
+    "gold_solver_success": true
+  },
+  "metadata": {
+    "constraint_count": 4,
+    "doc_id": "nlp4lp_test_261",
+    "family_proxy": "MILP|maximize|v2|p10|c4|tree5x1",
+    "lp_or_milp": "MILP",
+    "numeric_mentions": 9,
+    "objective_sense": "maximize",
+    "optimus_code_available": true,
+    "parameter_count": 10,
+    "partition_depth": 1,
+    "partition_node_count": 5,
+    "problem_id": 262,
+    "selection_bucket": "MILP|multi_constraint|high_numeric|large_tree|maximize",
+    "variable_count": 2
+  },
+  "per_problem_row": {
+    "completion_tokens": 5163,
+    "correction_calls": 15,
+    "correction_invoked": true,
+    "correction_iterations": 5,
+    "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
+    "deployment": "gpt-4.1-mini",
+    "estimated_cost_usd": "",
+    "failure_category": "H. SOLVER_RUNTIME_ERROR",
+    "final_ampl_hash": "47453c2b695f41cb",
+    "final_ampl_parse_success": true,
+    "final_feasible": false,
+    "final_solver_status": null,
+    "g_extr_calls": 1,
+    "g_mod_calls": 5,
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_objective": 214.0,
+    "gold_solver_success": true,
+    "initial_ampl_parse_success": false,
+    "initial_feasible_status": false,
+    "initial_generation_valid": "YES",
+    "initial_solver_success": false,
+    "latency_seconds": 87.274307,
+    "lp_or_milp": "MILP",
+    "objective_match_with_gold": "",
+    "objective_produced": false,
+    "objective_value": null,
+    "partition_depth": 1,
+    "partition_node_count": 5,
+    "problem_id": 262,
+    "prompt_hashes": "00a8063fc86fa005;12a4473d25def30f;2454d6c2d9a9c754;2b80b39327cbdfcf;4252ce34569c022a;447bcaf2d7624d6c;4a6430bdd08e5693;5769ac0ef20ffa72;5e390aec92a61523;60e90d443d10dbd3;63916d1e82811169;884110260a214c28;8b39a479369f53a5;a96ebbd357119a67;accca452b3497889;b3126aacc9585101;b63db6e1c0759183;e802069bd842d3d0;f2a2d767a4603210;f7829c6b58c5a8cc;f7ab915ff93bcfe7",
+    "prompt_tokens": 17689,
+    "provider": "azure_openai",
+    "semantic_correctness_status": "NOT_EVALUABLE",
+    "semantically_wrong_but_feasible": "",
+    "temperature": 0.2,
+    "total_llm_calls": 21,
+    "total_tokens": 22852,
+    "underlying_model": "gpt-4.1-mini-2025-04-14"
+  },
+  "problem_id": 262,
+  "trace": {
+    "correction_iterations_observed": 5,
+    "final_ampl_hash": "47453c2b695f41cb",
+    "final_success": false,
+    "initial_ampl_hash": "d3a3e8d2650931f8",
+    "iterations": [
+      {
+        "ampl_hash": "d3a3e8d2650931f8",
+        "comparison": {
+          "latency_seconds": 2.696368542034179,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "8b39a479369f53a5",
+          "provider": "azure_openai",
+          "reason": "The model contains invalid AMPL syntax by placing multiple inequality constraints inside a single 'subject to' block separated by semicolons, which is not allowed. Each constraint must be declared separately or combined properly. Remodeling is justified to correct this fundamental syntax error and ensure the model is valid and executable.",
+          "targeted_issues": [
+            "multiple inequality constraints improperly combined in one 'subject to' block",
+            "invalid AMPL syntax due to semicolon-separated constraints inside a single 'subject to'",
+            "need to split combined constraints into separate 'subject to' declarations"
+          ],
+          "total_tokens": 754,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "unparsed_statement",
+              "message": "Model contains semicolon-terminated text not recognized by the lightweight validator.",
+              "severity": "warning",
+              "symbol": null
+            },
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "/tmp/pamop_ampl_1wo5emol/model.run, line 26 (offset 904):\n\tsyntax error\ncontext:  PreparationTimeMedicationPatch * batches_medication_patch  >>> <=  <<< AvailableStaffTime;\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "d3a3e8d2650931f8",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.040718071977607906,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "/tmp/pamop_ampl_1wo5emol/model.run, line 26 (offset 904):\n\tsyntax error\ncontext:  PreparationTimeMedicationPatch * batches_medication_patch  >>> <=  <<< AvailableStaffTime;\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 0,
+        "remodel": {
+          "ampl_hash": "65b45f2e1375c8b8",
+          "changes": [
+            "Split MedicationPatchPreparationTimeMaterial constraint into two separate constraints: MedicationPatchPreparationTime and MedicationPatchMaterial.",
+            "Split AntiBioticCreamPreparationTimeMaterial constraint into two separate constraints: AntiBioticCreamPreparationTime and AntiBioticCreamMaterial."
+          ],
+          "latency_seconds": 6.800399149011355,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "e802069bd842d3d0",
+          "provider": "azure_openai",
+          "total_tokens": 1723,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Split the 'MedicationPatchPreparationTimeMaterial' and 'AntiBioticCreamPreparationTimeMaterial' constraints into separate constraints, each with its own 'subject to' declaration.",
+            "For example, replace 'subject to MedicationPatchPreparationTimeMaterial { PreparationTimeMedicationPatch * batches_medication_patch <= AvailableStaffTime; MaterialRequiredMedicationPatch * batches_medication_patch <= AvailableMaterials; }' with two separate constraints:",
+            "subject to MedicationPatchPreparationTime: PreparationTimeMedicationPatch * batches_medication_patch <= AvailableStaffTime;",
+            "subject to MedicationPatchMaterial: MaterialRequiredMedicationPatch * batches_medication_patch <= AvailableMaterials;",
+            "Do the same for the AntiBioticCreamPreparationTimeMaterial constraints."
+          ],
+          "diagnosis": "The model incorrectly places multiple inequality constraints inside a single subject to block using semicolons, which is invalid AMPL syntax. Each constraint must be declared separately with its own 'subject to' statement or combined properly within a single constraint expression.",
+          "error_category": "model_error",
+          "latency_seconds": 2.683533990988508,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "f2a2d767a4603210",
+          "provider": "azure_openai",
+          "total_tokens": 1276,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "65b45f2e1375c8b8",
+        "comparison": {
+          "latency_seconds": 3.153568429988809,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "5769ac0ef20ffa72",
+          "provider": "azure_openai",
+          "reason": "The model fails to assign a value to the parameter TreatmentPerBatchMedicationPatch, which is essential for the objective function. This missing parameter causes the solve command to fail, indicating a fundamental formulation issue that must be corrected by remodeling.",
+          "targeted_issues": [
+            "undefined parameter TreatmentPerBatchMedicationPatch",
+            "parameter value assignment",
+            "data linkage and completeness"
+          ],
+          "total_tokens": 613,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_z66sgfoj/model.run, line 52, offset 1895):\nerror processing objective TotalPeopleTreated:\n\tno value for TreatmentPerBatchMedicationPatch\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "65b45f2e1375c8b8",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.03939075401285663,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_z66sgfoj/model.run, line 52, offset 1895):\nerror processing objective TotalPeopleTreated:\n\tno value for TreatmentPerBatchMedicationPatch\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 1,
+        "remodel": {
+          "ampl_hash": "0b1f84f30de79aa9",
+          "changes": [
+            "Added a default value of 1 to the parameter TreatmentPerBatchMedicationPatch to ensure it is defined if not assigned externally"
+          ],
+          "latency_seconds": 8.527697135985363,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "447bcaf2d7624d6c",
+          "provider": "azure_openai",
+          "total_tokens": 1578,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that all parameters, especially TreatmentPerBatchMedicationPatch, are assigned values before solving the model.",
+            "Check the data section or data file to confirm that TreatmentPerBatchMedicationPatch and all other parameters have valid numeric values.",
+            "If using separate data files, verify they are correctly loaded and linked to the model."
+          ],
+          "diagnosis": "The model references the parameter TreatmentPerBatchMedicationPatch in the objective but no value has been assigned to it, causing the solve command to fail due to an undefined parameter.",
+          "error_category": "model_error",
+          "latency_seconds": 2.064845540036913,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "60e90d443d10dbd3",
+          "provider": "azure_openai",
+          "total_tokens": 1151,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "0b1f84f30de79aa9",
+        "comparison": {
+          "latency_seconds": 2.5667103939922526,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "f7ab915ff93bcfe7",
+          "provider": "azure_openai",
+          "reason": "The model fails to solve because the parameter TreatmentPerBatchAntiBioticCream, which is used in the objective function, has no assigned value. This is a critical modeling error that must be fixed by explicitly assigning a value or providing a default for this parameter before solving. Remodeling is justified to ensure all parameters used in the objective and constraints are properly defined and initialized.",
+          "targeted_issues": [
+            "undefined parameter TreatmentPerBatchAntiBioticCream",
+            "missing parameter value assignment",
+            "parameter initialization in objective function"
+          ],
+          "total_tokens": 644,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl__uxb40on/model.run, line 52, offset 1905):\nerror processing objective TotalPeopleTreated:\n\tno value for TreatmentPerBatchAntiBioticCream\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "0b1f84f30de79aa9",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.04035433498211205,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl__uxb40on/model.run, line 52, offset 1905):\nerror processing objective TotalPeopleTreated:\n\tno value for TreatmentPerBatchAntiBioticCream\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 2,
+        "remodel": {
+          "ampl_hash": "7d2484c250562f7a",
+          "changes": [
+            "Added default value 1 to parameter TreatmentPerBatchAntiBioticCream"
+          ],
+          "latency_seconds": 7.025654584984295,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "00a8063fc86fa005",
+          "provider": "azure_openai",
+          "total_tokens": 1603,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Assign a value to the parameter TreatmentPerBatchAntiBioticCream before solving the model.",
+            "Ensure that all parameters used in expressions, especially in the objective function, have defined values.",
+            "Add a default value to TreatmentPerBatchAntiBioticCream if appropriate, or provide it explicitly in the data section."
+          ],
+          "diagnosis": "The parameter TreatmentPerBatchAntiBioticCream is used in the objective but has no assigned value, causing the model to fail during solve.",
+          "error_category": "model_error",
+          "latency_seconds": 1.5205445389728993,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "f7829c6b58c5a8cc",
+          "provider": "azure_openai",
+          "total_tokens": 1154,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "7d2484c250562f7a",
+        "comparison": {
+          "latency_seconds": 2.0570637289783917,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "accca452b3497889",
+          "provider": "azure_openai",
+          "reason": "The model formulation is incomplete because the parameter PreparationTimeMedicationPatch is declared but not assigned any value, causing a constraint to reference an undefined parameter. This is a fundamental modeling error that prevents the model from solving correctly. Remodeling is justified to ensure all parameters are properly defined and assigned values before solving.",
+          "targeted_issues": [
+            "undefined parameter assignment",
+            "parameter value initialization",
+            "data loading and parameter validation"
+          ],
+          "total_tokens": 622,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_1gvh07v1/model.run, line 52, offset 1915):\nerror processing constraint MedicationPatchPreparationTime:\n\tno value for PreparationTimeMedicationPatch\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "7d2484c250562f7a",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.045557205041404814,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_1gvh07v1/model.run, line 52, offset 1915):\nerror processing constraint MedicationPatchPreparationTime:\n\tno value for PreparationTimeMedicationPatch\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 3,
+        "remodel": {
+          "ampl_hash": "9179f00a7a1fcaa6",
+          "changes": [
+            "Removed the redundant single-product preparation time and material constraints that referenced parameters individually to avoid errors from unassigned parameters.",
+            "Kept only combined preparation time and material constraints that use all parameters together, ensuring all parameters are properly referenced.",
+            "Added a minimal example data section assigning values to all parameters, including PreparationTimeMedicationPatch, to ensure the model can be solved without undefined parameters."
+          ],
+          "latency_seconds": 10.260651554970536,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "63916d1e82811169",
+          "provider": "azure_openai",
+          "total_tokens": 1687,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that all required parameters, especially PreparationTimeMedicationPatch, are assigned values before solving the model.",
+            "Check the data section or data file to confirm that PreparationTimeMedicationPatch and other parameters have valid numeric values.",
+            "If using external data files, verify they are correctly loaded and contain the necessary parameter assignments."
+          ],
+          "diagnosis": "The model failed because the parameter PreparationTimeMedicationPatch is declared but not assigned any value, causing the constraint MedicationPatchPreparationTime to reference an undefined parameter.",
+          "error_category": "model_error",
+          "latency_seconds": 1.9327278629643843,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "a96ebbd357119a67",
+          "provider": "azure_openai",
+          "total_tokens": 1153,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "9179f00a7a1fcaa6",
+        "comparison": {
+          "latency_seconds": 2.0642631899681874,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "b63db6e1c0759183",
+          "provider": "azure_openai",
+          "reason": "The model contains duplicate parameter declarations in both the model and data sections, causing parsing and loading errors that prevent successful execution. Remodeling is justified to clarify parameter declarations, ensuring each parameter is declared once in the model and assigned values only in the data section, thus resolving the duplicate symbol errors.",
+          "targeted_issues": [
+            "duplicate parameter declarations",
+            "parameter redeclaration in data section",
+            "separation of model and data files"
+          ],
+          "total_tokens": 628,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'AvailableMaterials' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "AvailableMaterials"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'AvailableStaffTime' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "AvailableStaffTime"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'MaterialRequiredAntiBioticCream' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "MaterialRequiredAntiBioticCream"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'MaterialRequiredMedicationPatch' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "MaterialRequiredMedicationPatch"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'MaxTotalBatches' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "MaxTotalBatches"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'MinRatioAntiBioticCreamToMedicationPatch' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "MinRatioAntiBioticCreamToMedicationPatch"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'PreparationTimeAntiBioticCream' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "PreparationTimeAntiBioticCream"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'PreparationTimeMedicationPatch' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "PreparationTimeMedicationPatch"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'TreatmentPerBatchAntiBioticCream' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "TreatmentPerBatchAntiBioticCream"
+            },
+            {
+              "category": "model_error",
+              "code": "duplicate_symbol",
+              "message": "Symbol 'TreatmentPerBatchMedicationPatch' is declared multiple times as ['param', 'param'].",
+              "severity": "error",
+              "symbol": "TreatmentPerBatchMedicationPatch"
+            },
+            {
+              "category": "model_error",
+              "code": "unparsed_statement",
+              "message": "Model contains semicolon-terminated text not recognized by the lightweight validator.",
+              "severity": "warning",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "9179f00a7a1fcaa6",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 4,
+        "remodel": {
+          "ampl_hash": "47453c2b695f41cb",
+          "changes": [
+            "Removed the data section from the model file to avoid duplicate parameter declarations.",
+            "Kept all parameter declarations only in the model section without assigning values.",
+            "Added 'end;' statement at the end of the model file to properly close the model.",
+            "Left parameter values to be provided separately in a data file to ensure proper model and data separation."
+          ],
+          "latency_seconds": 7.281339658016805,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "4a6430bdd08e5693",
+          "provider": "azure_openai",
+          "total_tokens": 1577,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Remove duplicate parameter declarations so each parameter is declared exactly once in the model section and assigned values only once in the data section.",
+            "Ensure that parameters are not redeclared or redefined in the data section; only provide their values there.",
+            "Verify that the model and data files are properly separated and combined during execution to avoid repeated declarations."
+          ],
+          "diagnosis": "The model declares the same parameters multiple times in both the model and data sections, causing duplicate symbol errors that prevent parsing and loading.",
+          "error_category": "model_error",
+          "latency_seconds": 1.712112488981802,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "2454d6c2d9a9c754",
+          "provider": "azure_openai",
+          "total_tokens": 1696,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "47453c2b695f41cb",
+        "comparison": null,
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "unparsed_statement",
+              "message": "Model contains semicolon-terminated text not recognized by the lightweight validator.",
+              "severity": "warning",
+              "symbol": null
+            }
+          ],
+          "error_category": "none",
+          "model_hash": "47453c2b695f41cb",
+          "model_load_success": true,
+          "objective_value": null,
+          "parse_success": true,
+          "runtime_seconds": 0.0400939789833501,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 5,
+        "remodel": null,
+        "review": null
+      }
+    ],
+    "problem_id": "262",
+    "stopped_reason": "max_correction_iterations",
+    "total_tokens": 17859
+  }
+}

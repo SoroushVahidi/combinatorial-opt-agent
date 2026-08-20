@@ -1,0 +1,4 @@
+metric,count,rate
+prepatch_strict_ready,247,0.7462235649546828
+patched_strict_ready,255,0.770392749244713
+strict_gain,8,0.024169184290030232

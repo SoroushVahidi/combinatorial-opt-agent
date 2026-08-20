@@ -1,0 +1,21 @@
+{
+  "assignment_mode": "typed",
+  "baseline": "tfidf",
+  "baseline_reference": "pre-patch tfidf_typed_greedy artifact from results/selective_grounding_rerank",
+  "benchmark": "NLP4LP orig, 331 queries",
+  "expressions": {
+    "triple/three times": 3.0,
+    "twice/double/two times": 2.0
+  },
+  "git_sha": "72f7e29",
+  "method": "tfidf_typed_greedy with multiplicative ratio-word numeric extraction",
+  "pythonhashseed": "0",
+  "token_representation": {
+    "kind": "percent",
+    "raw": [
+      "RATIO_WORD:twice",
+      "RATIO_WORD:triple"
+    ]
+  },
+  "variant": "orig"
+}

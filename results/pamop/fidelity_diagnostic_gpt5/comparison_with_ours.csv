@@ -1,0 +1,19 @@
+problem_id,doc_id,our_method,our_external_llm_calls,our_llm_tokens,our_api_cost,our_deterministic,our_inst_ready,our_param_coverage,our_type_match,pamop_failure_category,pamop_total_llm_calls,pamop_total_tokens,pamop_final_feasible,common_metric_status
+14,nlp4lp_test_13,tfidf deterministic grounding,0,0,0,True,1,0.9231,1.0000,A. SUCCESS_NO_CORRECTION,4,4110,True,NO_COMMON_ACCURACY_METRIC; operational metrics only
+23,nlp4lp_test_22,tfidf deterministic grounding,0,0,0,True,1,1.0000,1.0000,A. SUCCESS_NO_CORRECTION,3,2723,True,NO_COMMON_ACCURACY_METRIC; operational metrics only
+34,nlp4lp_test_33,tfidf deterministic grounding,0,0,0,True,1,0.8750,0.8571,A. SUCCESS_NO_CORRECTION,3,2806,True,NO_COMMON_ACCURACY_METRIC; operational metrics only
+59,nlp4lp_test_58,tfidf deterministic grounding,0,0,0,True,0,0.8750,0.7143,B. SUCCESS_AFTER_CORRECTION,10,8533,True,NO_COMMON_ACCURACY_METRIC; operational metrics only
+69,nlp4lp_test_68,tfidf deterministic grounding,0,0,0,True,0,1.0000,0.7143,B. SUCCESS_AFTER_CORRECTION,9,9078,True,NO_COMMON_ACCURACY_METRIC; operational metrics only
+72,nlp4lp_test_71,tfidf deterministic grounding,0,0,0,True,1,1.0000,0.8333,A. SUCCESS_NO_CORRECTION,3,2526,True,NO_COMMON_ACCURACY_METRIC; operational metrics only
+84,nlp4lp_test_83,tfidf deterministic grounding,0,0,0,True,1,1.0000,1.0000,E. AMPL_PARSE_FAILURE,5,4258,False,NO_COMMON_ACCURACY_METRIC; operational metrics only
+88,nlp4lp_test_87,tfidf deterministic grounding,0,0,0,True,1,1.0000,0.8000,A. SUCCESS_NO_CORRECTION,3,2639,True,NO_COMMON_ACCURACY_METRIC; operational metrics only
+96,nlp4lp_test_95,tfidf deterministic grounding,0,0,0,True,1,1.0000,1.0000,A. SUCCESS_NO_CORRECTION,3,3248,True,NO_COMMON_ACCURACY_METRIC; operational metrics only
+117,nlp4lp_test_116,tfidf deterministic grounding,0,0,0,True,1,1.0000,1.0000,E. AMPL_PARSE_FAILURE,6,5052,False,NO_COMMON_ACCURACY_METRIC; operational metrics only
+190,nlp4lp_test_189,tfidf deterministic grounding,0,0,0,True,1,1.0000,1.0000,E. AMPL_PARSE_FAILURE,6,5017,False,NO_COMMON_ACCURACY_METRIC; operational metrics only
+202,nlp4lp_test_201,tfidf deterministic grounding,0,0,0,True,0,0.0000,0.0000,A. SUCCESS_NO_CORRECTION,4,3283,True,NO_COMMON_ACCURACY_METRIC; operational metrics only
+208,nlp4lp_test_207,tfidf deterministic grounding,0,0,0,True,0,1.0000,0.6000,A. SUCCESS_NO_CORRECTION,5,3537,True,NO_COMMON_ACCURACY_METRIC; operational metrics only
+219,nlp4lp_test_218,tfidf deterministic grounding,0,0,0,True,1,1.0000,0.8750,B. SUCCESS_AFTER_CORRECTION,9,8563,True,NO_COMMON_ACCURACY_METRIC; operational metrics only
+232,nlp4lp_test_231,tfidf deterministic grounding,0,0,0,True,1,1.0000,1.0000,E. AMPL_PARSE_FAILURE,5,4329,False,NO_COMMON_ACCURACY_METRIC; operational metrics only
+237,nlp4lp_test_236,tfidf deterministic grounding,0,0,0,True,1,1.0000,1.0000,B. SUCCESS_AFTER_CORRECTION,13,11202,True,NO_COMMON_ACCURACY_METRIC; operational metrics only
+254,nlp4lp_test_253,tfidf deterministic grounding,0,0,0,True,0,1.0000,0.3333,A. SUCCESS_NO_CORRECTION,5,3837,True,NO_COMMON_ACCURACY_METRIC; operational metrics only
+262,nlp4lp_test_261,tfidf deterministic grounding,0,0,0,True,1,0.9000,1.0000,E. AMPL_PARSE_FAILURE,13,11920,False,NO_COMMON_ACCURACY_METRIC; operational metrics only

@@ -1,0 +1,3 @@
+{"event": "records_loaded", "subset": "pilot", "mode": "real", "problem_ids": [14, 23, 34, 59, 69, 72]}
+{"event": "starting_api_runner", "mode": "real", "provider": "azure_openai", "deployment": "gpt-5.4", "temperature": 0.0, "max_tokens": 8192}
+{"output": "/home/soroush/combinatorial-opt-agent/results/generic_llm/pilot_official/results.jsonl", "attempted": 6, "completed_ids": ["14", "23", "34", "59", "69", "72"]}

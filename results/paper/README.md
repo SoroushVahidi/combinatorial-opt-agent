@@ -21,10 +21,10 @@ These are the files that should be cited in README, docs, and the manuscript.
 | `table5_failure_taxonomy.csv` | Cross-experiment failure taxonomy | ★ Canonical |
 | `camera_ready_tables.md` | Markdown bundle of Tables 1–5 with source notes | ★ Canonical |
 
-**Table 1 key values** (TF-IDF typed-greedy, orig variant):
-- Schema R@1 = **0.9094**, Coverage = **0.8639**, TypeMatch = **0.7513**, InstReady = **0.5257**
+**Table 1 key values** (TF-IDF typed-greedy, orig variant; corrected 2026-08-11, see `../CANONICAL_RESULTS.md`):
+- Schema R@1 = **0.9094**, Coverage = **0.8609**, TypeMatch = **0.7453**, InstReady = **0.5287**
 
-Provenance source: `results/eswa_revision/13_tables/deterministic_method_comparison_orig.csv`
+Provenance: `tools/build_camera_ready_table1.py`, reading `results/eswa_revision/13_tables/postfix_main_metrics.csv` and `results/eswa_revision/13_tables/deterministic_method_comparison_orig.csv`
 
 ### `eaai_camera_ready_figures/`
 

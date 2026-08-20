@@ -1,0 +1,17 @@
+[
+  {
+    "count": "247",
+    "metric": "prepatch_strict_ready",
+    "rate": "0.7462235649546828"
+  },
+  {
+    "count": "255",
+    "metric": "patched_strict_ready",
+    "rate": "0.770392749244713"
+  },
+  {
+    "count": "8",
+    "metric": "strict_gain",
+    "rate": "0.024169184290030232"
+  }
+]

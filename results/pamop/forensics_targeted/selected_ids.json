@@ -1,0 +1,113 @@
+{
+  "excluded_missing_structured_data_ids": [
+    28,
+    51,
+    57,
+    123,
+    126,
+    135
+  ],
+  "problems": [
+    {
+      "constraint_count": 5,
+      "doc_id": "nlp4lp_test_13",
+      "family_proxy": "LP|maximize|v2|p13|c5|tree5x1",
+      "lp_or_milp": "LP",
+      "numeric_mentions": 12,
+      "objective_sense": "maximize",
+      "optimus_code_available": true,
+      "parameter_count": 13,
+      "partition_depth": 1,
+      "partition_node_count": 5,
+      "problem_id": 14,
+      "selection_bucket": "LP|multi_constraint|high_numeric|large_tree|maximize",
+      "variable_count": 2
+    },
+    {
+      "constraint_count": 2,
+      "doc_id": "nlp4lp_test_22",
+      "family_proxy": "MILP|maximize|v1|p6|c2|tree1x0",
+      "lp_or_milp": "MILP",
+      "numeric_mentions": 8,
+      "objective_sense": "maximize",
+      "optimus_code_available": true,
+      "parameter_count": 6,
+      "partition_depth": 0,
+      "partition_node_count": 1,
+      "problem_id": 23,
+      "selection_bucket": "MILP|simple|high_numeric|small_tree|maximize",
+      "variable_count": 1
+    },
+    {
+      "constraint_count": 2,
+      "doc_id": "nlp4lp_test_33",
+      "family_proxy": "LP|maximize|v2|p8|c2|tree3x1",
+      "lp_or_milp": "LP",
+      "numeric_mentions": 8,
+      "objective_sense": "maximize",
+      "optimus_code_available": true,
+      "parameter_count": 8,
+      "partition_depth": 1,
+      "partition_node_count": 3,
+      "problem_id": 34,
+      "selection_bucket": "LP|simple|high_numeric|large_tree|maximize",
+      "variable_count": 2
+    },
+    {
+      "constraint_count": 2,
+      "doc_id": "nlp4lp_test_71",
+      "family_proxy": "MILP|minimize|v2|p6|c2|tree3x1",
+      "lp_or_milp": "MILP",
+      "numeric_mentions": 6,
+      "objective_sense": "minimize",
+      "optimus_code_available": true,
+      "parameter_count": 6,
+      "partition_depth": 1,
+      "partition_node_count": 3,
+      "problem_id": 72,
+      "selection_bucket": "MILP|simple|low_numeric|large_tree|minimize",
+      "variable_count": 2
+    },
+    {
+      "constraint_count": 2,
+      "doc_id": "nlp4lp_test_83",
+      "family_proxy": "LP|maximize|v1|p5|c2|tree1x0",
+      "lp_or_milp": "LP",
+      "numeric_mentions": 8,
+      "objective_sense": "maximize",
+      "optimus_code_available": true,
+      "parameter_count": 5,
+      "partition_depth": 0,
+      "partition_node_count": 1,
+      "problem_id": 84,
+      "selection_bucket": "LP|simple|high_numeric|small_tree|maximize",
+      "variable_count": 1
+    },
+    {
+      "constraint_count": 3,
+      "doc_id": "nlp4lp_test_87",
+      "family_proxy": "MILP|maximize|v2|p5|c3|tree3x1",
+      "lp_or_milp": "MILP",
+      "numeric_mentions": 5,
+      "objective_sense": "maximize",
+      "optimus_code_available": true,
+      "parameter_count": 5,
+      "partition_depth": 1,
+      "partition_node_count": 3,
+      "problem_id": 88,
+      "selection_bucket": "MILP|simple|low_numeric|large_tree|maximize",
+      "variable_count": 2
+    }
+  ],
+  "selected_count": 6,
+  "selected_ids": [
+    14,
+    23,
+    34,
+    72,
+    84,
+    88
+  ],
+  "selection_algorithm": "Deterministic pamop-pilot-v1 stratified bucket pass over accessible ids 1-269, using LP/MILP, simple/multi-constraint, low/high numeric mentions, small/large partition tree, objective sense, then stable SHA-256 tie-breaking. No execution outcomes are used.; forensics_targeted_filter_from_original_18",
+  "subset": "pamop_possible_269"
+}

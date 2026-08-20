@@ -1,0 +1,17 @@
+{
+  "dataset": "NLP4LP",
+  "split": "test",
+  "query_count": 331,
+  "schema_catalog_size": 335,
+  "model": "BAAI/bge-m3",
+  "revision": "main",
+  "retrieval_mode": "dense only",
+  "normalization": "L2 normalization applied to query and document embeddings",
+  "similarity": "Cosine similarity (normalized dot product)",
+  "seed": 42,
+  "software_versions": {
+    "sentence-transformers": "latest",
+    "numpy": "latest",
+    "pytorch": "latest"
+  }
+}

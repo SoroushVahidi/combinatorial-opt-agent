@@ -1,0 +1,43 @@
+{
+  "kind": "oracle_frozen_recomputation",
+  "method": "FROZEN_FOR_RESUBMISSION (tfidf_typed_greedy_ratio_extraction, gold retrieval)",
+  "benchmark": "NLP4LP orig, 331 queries",
+  "assignment_mode": "typed",
+  "predicted_doc_id_rule": "pred_id = gold_id for every query (upper-bound control)",
+  "extraction": "frozen multiplicative ratio-word numeric extraction",
+  "metric_definitions": {
+    "StrictInstantiationReady": "1[SchemaHit AND param_coverage >= 0.8 AND type_match >= 0.8]",
+    "InstantiationReady": "1[param_coverage >= 0.8 AND type_match >= 0.8]",
+    "Exact5/Exact20": "full-denominator mean over all 331 queries",
+    "Exact5_on_hits/Exact20_on_hits": "mean over queries with at least one comparable scalar value"
+  },
+  "command": "PYTHONHASHSEED=0 NLP4LP_GOLD_CACHE=results/eswa_revision/00_env/nlp4lp_gold_cache.json python3 tools/recompute_frozen_oracle.py",
+  "git_sha": "52dda3cd91624240099e908e5f783bd962114dce",
+  "pythonhashseed": "0",
+  "gold_cache": "results/eswa_revision/00_env/nlp4lp_gold_cache.json",
+  "inputs": {
+    "eval": "data/processed/nlp4lp_eval_orig.jsonl",
+    "catalog": "data/catalogs/nlp4lp_catalog.jsonl"
+  },
+  "outputs": {
+    "per_query": "results/oracle_recomputation_2026-08-15/nlp4lp_downstream_per_query_orig_oracle.csv",
+    "aggregate_sidecar": "results/oracle_recomputation_2026-08-15/nlp4lp_downstream_orig_oracle.json",
+    "summary": "results/oracle_recomputation_2026-08-15/oracle_frozen_summary.csv"
+  },
+  "summary": {
+    "oracle_n": 331,
+    "Schema_R1": 1.0,
+    "Coverage": 0.941584,
+    "TypeMatch": 0.923021,
+    "KeyOverlap": 0.995252,
+    "InstantiationReady": 0.848943,
+    "InstantiationReady_count": 281,
+    "StrictInstantiationReady": 0.848943,
+    "StrictInstantiationReady_count": 281,
+    "Exact5": 0.218774,
+    "Exact20": 0.242176,
+    "Exact5_on_hits": 0.226294,
+    "Exact20_on_hits": 0.2505
+  },
+  "note": "Deterministic verification of the oracle (gold-schema retrieval) control with the frozen patched grounding/extraction; not a new experiment."
+}

@@ -1,0 +1,38 @@
+REPRODUCTION CHOICE -- reconstructed wording for PaMOP's remodeling stage
+(`G_remod`), not PaMOP's own prompt text.
+
+You are correcting an AMPL model for an optimization problem. Preserve the
+same modeling approach and make the smallest formulation change that
+addresses the review/comparison issues. Do not change the problem being
+modeled. Do not add explanation outside the JSON response.
+
+Problem summary:
+{global_summary}
+
+Objective:
+{objective_text}
+
+Original constraint descriptions:
+{constraints}
+
+Current AMPL model:
+{current_ampl_model}
+
+Review:
+{review}
+
+Comparison:
+{comparison}
+
+Return exactly one JSON object:
+{{
+  "ampl_model": "the full corrected AMPL model text",
+  "changes": ["short description of each change"]
+}}
+
+The `ampl_model` string must contain valid AMPL model text only: no
+Markdown fences, prose, Python-style pseudocode, explanatory comments, or
+partial snippets. Bind every local index in its statement or summation,
+declare every index set before using it, avoid duplicate declarations, and
+preserve numeric parameter values with `:= value` or `default value` when
+they are present in the problem text.

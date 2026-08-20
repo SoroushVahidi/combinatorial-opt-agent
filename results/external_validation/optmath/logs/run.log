@@ -1,0 +1,6 @@
+Starting external validation at Sat Aug 15 09:14:56 PM UTC 2026
+Git SHA: 712de9e79f8a4867224b72752da689466e1bf7e6
+Command: python3 scripts/run_external_validation_optmath.py
+Loading shushulei/OptMATH-Train...
+Validation complete. Macro Recall: 0.7497
+Finished external validation at Sat Aug 15 09:15:00 PM UTC 2026

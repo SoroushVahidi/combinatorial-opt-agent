@@ -1,0 +1,84 @@
+# ORLM provenance and fidelity
+
+Rechecked 2026-08-13 against the official [paper](https://arxiv.org/abs/2405.17743),
+[Cardinal-Operations/ORLM](https://github.com/Cardinal-Operations/ORLM), and
+the official [LLaMA-3-8B checkpoint](https://huggingface.co/CardinalOperations/ORLM-LLaMA-3-8B).
+The repository revision used for source inspection is
+`33bc47d0a1d1710d24ab839118bdf4cb89b9e31b`.
+
+| Component | Primary source | Local implementation | Fidelity | Action/status |
+|---|---|---|---|---|
+| Prompt wording | `eval/generate.py`, `TEMPLATE_q2mc_en` | `config.py` + `data_adapter.py` | EXACT_OFFICIAL | Locked and snapshot-tested |
+| Input shape | Upstream `en_question` + `prompt` fields | `OrlmInputRecord.to_upstream_example()` | ADAPTED_OFFICIAL | NLP4LP ID/text/gold metadata retained |
+| Generation backend | Upstream vLLM `eval/generate.py` | Lazy Transformers backend with injectable backend | ADAPTED_OFFICIAL | No weights loaded; local-path inference ready |
+| Greedy decoding | Upstream `topk=1`, temperature `0`, top-p `1` | `OrlmConfig` | EXACT_OFFICIAL | Recorded per result |
+| Generation length | Upstream `max_tokens=None` -> model max length | `OrlmConfig.max_new_tokens=8192` | EXACT_OFFICIAL | Checkpoint `max_position_embeddings=8192` |
+| Model/checkpoint | Official HF model card | `CardinalOperations/ORLM-LLaMA-3-8B` | EXACT_OFFICIAL | Pinned revision `94fdc3c5738c6536d4880dc19a78f215529181c5` |
+| Output format | Upstream `en_math_model_coptpy_code` / fenced code | `output_normalizer.py` | ADAPTED_OFFICIAL | Robust parser, raw output preserved |
+| Execution | Upstream `eval/execute.py`, COPT-only | `execution_harness.py` | ADAPTED_OFFICIAL | Safer isolated subprocess, opt-in only |
+| Static validation | No official equivalent | `static_validation.py` | LOCAL_ENGINEERING | Never substitutes for execution or semantics |
+| Result/evaluation schema | Upstream generated/execution JSONL | `result_schema.py`, `evaluator.py` | LOCAL_ENGINEERING | Objective agreement explicitly proxy-only |
+| NLP4LP adaptation | No upstream NLP4LP path | `data_adapter.py` and manifest | LOCAL_ENGINEERING | New cross-system adaptation; no original benchmark claim |
+
+## Model and environment limits
+
+The official repository requires a local model path for its vLLM evaluation
+script and executes generated programs with COPT. The pinned checkpoint is
+cached at the Hugging Face snapshot for revision
+`94fdc3c5738c6536d4880dc19a78f215529181c5`. The current host has an RTX 5060
+Ti with 16.3 GiB VRAM, so the Transformers adaptation uses CPU offload.
+`coptpy` is not installed, so COPT execution is currently blocked.
+
+Pilot handoff: session `orlm_pilot_official_20260813_corrected`, started
+`2026-08-13T23:06:54-04:00`, Git SHA
+`6bb75a4c4bed02c458ac30b4af206a2802fce095`, log
+`results/orlm/pilot_official_checkpoint/inference_corrected.log`, output
+`results/orlm/pilot_official_checkpoint/results.jsonl`. On
+`2026-08-14T00:14-04:00`, the tmux session was gone but the pilot artifacts
+showed normal completion: six unique valid JSONL rows for problem IDs
+`14, 23, 34, 59, 69, 72`, no malformed rows, 6/6 generation success, 6/6
+code extraction, and 6/6 static validation. The log records `attempted: 6`
+and the same completed ID set, with no traceback, CUDA OOM, or failure text.
+
+Common-18 handoff: session `orlm_common18_official_20260814`, PID `3807778`,
+started `2026-08-14T00:13:37-04:00`, Git SHA
+`1831396b0b3d4428415e354b0a4e1fcbc658df26`, log
+`results/orlm/common18_official_checkpoint/inference.log`, output
+`results/orlm/common18_official_checkpoint/results.jsonl`. The command uses
+the same pinned checkpoint revision, `--subset common18`, `--max-new-tokens
+8192`, `--device-map auto`, `--dtype bfloat16`, and `--device cuda:0`.
+The initial health check found the model loaded, GPU utilization high, stable
+host memory, and no OOM or traceback. Leave this same tmux job running; do not
+launch a duplicate common-18 run. **[Since superseded — the common-18 run
+completed normally on 2026-08-14 with all 18/18 rows; see the follow-up note
+below and `docs/RESUBMISSION_BASELINE_READINESS_2026-08-15.md`.]**
+
+Follow-up check 2026-08-14T00:32-04:00: the same tmux session and PID `3807778`
+were still alive and healthy. `results.jsonl` held 3/18 unique valid rows for
+problem IDs `14, 23, 34` (each `generation.status=COMPLETED` with
+`parsed.code_block_found` and `static_validation.status=STATIC_VALID`; all rows
+set `execution_attempted=false` and `objective_proxy_status=NOT_EVALUABLE`
+because `coptpy` is missing). Observed for three minutes: GPU 96-99%
+utilization, VRAM 14.3-15.3 GiB / 16.3 GiB, ~57 GiB RAM available, no OOM, no
+traceback, no duplicate IDs, valid JSONL. Rows complete at roughly one per
+4-5 minutes, so the full 18-row run is expected to take ~1.5 hours total.
+
+Common-18 completion (2026-08-15 check): the tmux session
+`orlm_common18_official_20260814` is gone and the run completed normally.
+`results/orlm/common18_official_checkpoint/results.jsonl` holds 18/18 unique
+valid rows for the full common-18 manifest `[14,23,34,59,69,72,84,88,96,117,
+190,202,208,219,232,237,254,262]`; each `generation.status=COMPLETED` with
+`parsed.code_block_found` and `static_validation.status=STATIC_VALID` (16 clean,
+2 with a benign `round` possible-undefined-name warning). `execution_attempted`
+is false and `objective_proxy_status=NOT_EVALUABLE` for all 18 rows because
+`coptpy` is still not installed. The run was ingested into the external baseline
+comparison (commit `69df7c0`), status
+`ORLM_COMMON18_COMPLETE_EXECUTION_BLOCKED`.
+
+## Fair comparison boundary
+
+ORLM generates a complete optimization formulation and COPT program. This
+repository's primary system grounds scalar values into a fixed catalog. The
+common manifest is intended for parallel reporting of executable formulation,
+feasibility, and gold-objective agreement only; it does not make ORLM's native
+full-formulation accuracy equal to `InstantiationReady`.

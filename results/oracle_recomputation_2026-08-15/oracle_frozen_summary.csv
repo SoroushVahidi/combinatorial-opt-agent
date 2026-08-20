@@ -1,0 +1,2 @@
+oracle_n,Schema_R1,Coverage,TypeMatch,KeyOverlap,InstantiationReady,InstantiationReady_count,StrictInstantiationReady,StrictInstantiationReady_count,Exact5,Exact20,Exact5_on_hits,Exact20_on_hits
+331,1.0,0.941584,0.923021,0.995252,0.848943,281,0.848943,281,0.218774,0.242176,0.226294,0.2505

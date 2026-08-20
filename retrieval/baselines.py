@@ -238,6 +238,44 @@ class E5Baseline(RetrievalBaseline):
         return [(self._problem_ids[i], float(scores[i])) for i in idx]
 
 
+class BGEM3Baseline(RetrievalBaseline):
+    """Dense retrieval using BAAI/bge-m3.
+    Off-the-shelf usage without instruction prefix.
+    """
+
+    def __init__(self, model_name: str | None = None) -> None:
+        self._model_name = model_name or "BAAI/bge-m3"
+        self._problem_ids: list[str] = []
+        self._embeddings = None
+        self._model = None
+
+    def fit(self, catalog: list[dict]) -> RetrievalBaseline:
+        from sentence_transformers import SentenceTransformer
+        import numpy as np
+        self._model = SentenceTransformer(self._model_name)
+        texts = [_searchable_text(p) for p in catalog]
+        self._problem_ids = [p.get("id", "") for p in catalog]
+        self._embeddings = self._model.encode(texts, show_progress_bar=False, convert_to_numpy=True)
+        norms = np.linalg.norm(self._embeddings, axis=1, keepdims=True)
+        norms = np.where(norms == 0, 1, norms)
+        self._embeddings = self._embeddings / norms
+        return self
+
+    def rank(self, query: str, top_k: int) -> list[tuple[str, float]]:
+        if top_k <= 0:
+            return []
+        if self._embeddings is None or self._model is None:
+            raise RuntimeError("Call fit(catalog) first")
+        import numpy as np
+        q_text = expand_short_query(query)
+        q_vec = self._model.encode([q_text], show_progress_bar=False, convert_to_numpy=True)
+        q_norm = np.linalg.norm(q_vec) or 1
+        q_vec = q_vec / q_norm
+        scores = (self._embeddings @ q_vec.T).flatten()
+        idx = np.argsort(scores)[::-1][:top_k]
+        return [(self._problem_ids[i], float(scores[i])) for i in idx]
+
+
 class BGEBaseline(RetrievalBaseline):
     """Dense retrieval using BAAI/bge-large-en-v1.5.
 
@@ -329,6 +367,8 @@ def get_baseline(name: str, model_path: str | None = None) -> RetrievalBaseline:
         return SBERTBaseline(model_path=model_path)
     if name == "e5":
         return E5Baseline(model_name=model_path)
+    if name == "bge_m3":
+        return BGEM3Baseline(model_name=model_path)
     if name == "bge":
         return BGEBaseline(model_name=model_path)
     raise ValueError(f"Unknown baseline: {name!r}. Use bm25, tfidf, lsa, sbert, e5, or bge.")

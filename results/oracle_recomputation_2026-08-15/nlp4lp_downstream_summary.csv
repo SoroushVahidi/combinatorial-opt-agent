@@ -1,0 +1,2 @@
+variant,baseline,schema_R1,param_coverage,type_match,exact5_on_hits,exact20_on_hits,param_coverage_hits,param_coverage_miss,type_match_hits,type_match_miss,key_overlap,key_overlap_hits,key_overlap_miss,instantiation_ready,n
+orig,oracle,1.0,0.9415837830001683,0.9230214062540346,0.22629385371572872,0.2505003156565656,0.9415837830001683,,0.9230214062540346,,0.9952524816573155,0.9952524816573155,,0.8489425981873112,331

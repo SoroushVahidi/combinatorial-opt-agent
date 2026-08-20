@@ -1,0 +1,93 @@
+# PaMOP -- paper-faithful configuration.
+#
+# Every value below is either PAPER-SPECIFIED (a number/string the IJCAI 2025
+# paper actually states) or `null` (the paper does not specify it). Loading
+# this config and asking the partitioning/correction code for a `null` value
+# raises UnspecifiedPaperDetailError -- it will NOT silently substitute a
+# guess. Use reconstructed_default.yaml for anything that needs to actually
+# run end to end today.
+#
+# See docs/PAMOP_REPRODUCTION_PLAN.md sections 2, 7, and 9 for the full
+# per-field sourcing and the A/B/C (explicit/inferable/unspecified)
+# classification this file follows.
+
+config_kind: paper_faithful
+citation: >
+  Xiaotian Pan, Junhao Fang, Feng Wu, Sijia Zhang, Yi-Xiang Hu, Shaoang Li,
+  Xiang-Yang Li. "Guiding Large Language Models in Modeling Optimization
+  Problems via Question Partitioning." IJCAI 2025, pp. 2657-2665.
+  DOI: 10.24963/ijcai.2025/296.
+
+llm:
+  # HIGH-CONFIDENCE INFERENCE: the paper names "GPT-4", "GPT-3.5-turbo", and
+  # "Llama-3.3-70b" as its three tested base models -- all OpenAI-published
+  # names for the first two -- so an OpenAI-family provider for the GPT-4
+  # condition is about as safe an inference as this codebase makes anywhere,
+  # even though the paper never writes the word "OpenAI" or "Azure".
+  #
+  # PRIMARY REPRODUCTION PATH (as of this milestone): azure_openai. This
+  # workstation has verified, working Microsoft Azure OpenAI access (see
+  # docs/PAMOP_REPRODUCTION_PLAN.md section 16) but NO genuine direct-OpenAI
+  # credential (its OPENAI_API_KEY is actually a CloudRift key aliased
+  # through OpenAI's env-var names, confirmed section 15). Per task policy:
+  # the paper-faithful path uses whichever GPT-4-family access actually
+  # works, and does NOT silently fall back to a non-GPT-4-family provider if
+  # that access fails.
+  provider: azure_openai
+  # REPRODUCTION CHOICE (not paper-stated): exact model/deployment. The
+  # paper says only "GPT-4", no version string, and definitely does not
+  # mention "GPT-4.1" (a materially later model generation than plain
+  # "GPT-4"). This workstation's only confirmed GPT-4-family Azure
+  # deployment is "gpt-4.1-mini" (resolves live to the underlying snapshot
+  # "gpt-4.1-mini-2025-04-14" -- Azure echoes this back per call). This is
+  # the CLOSEST AVAILABLE GPT-4-FAMILY REPRODUCTION CONFIGURATION on this
+  # workstation, explicitly NOT a claim of exact reproduction: it is a
+  # smaller ("mini") tier from a newer model generation than the paper's own
+  # "GPT-4", not the specific model the authors used. Deployment enumeration
+  # beyond the two names present as environment variables
+  # (AZURE_OPENAI_DEPLOYMENT, AZURE_OPENAI_STRONG_DEPLOYMENT) was not
+  # possible with the available inference-plane credential (no
+  # management-plane access) -- a larger/older GPT-4-family deployment may
+  # exist on this Azure resource without being independently discoverable
+  # here. See docs/PAMOP_REPRODUCTION_PLAN.md section 16 for the direct
+  # (non-Azure) OpenAI gpt-4-0613 alternative recorded previously, which
+  # remains the documented choice for an environment with genuine direct
+  # OpenAI access instead.
+  model: gpt-4.1-mini
+  temperature: 0.2          # PAPER-SPECIFIED: "we set the model's temperature to 0.2"
+  max_correction_iterations: 5   # PAPER-SPECIFIED: "the maximum number of failed iterations to 5"
+  top_p: null                # UNSPECIFIED
+  max_tokens: null           # UNSPECIFIED
+  extraction_max_retries: null   # UNSPECIFIED: paper doesn't discuss G_extr-specific retries at all
+  modeling_max_retries: null     # UNSPECIFIED: paper doesn't discuss G_mod-specific retries at all
+  vague_threshold: null          # UNSPECIFIED: paper says vague constraints get parent/sibling context but gives no numeric vagueness_score cutoff
+
+partitioning:
+  embedding_source: null              # paper names GloVe (Wikipedia 2014) but not a swappable "source" abstraction -- mechanism is paper-specified, this field is left null pending a real GloVe integration
+  glove_variant: null                 # UNSPECIFIED: Pennington et al. released 50/100/200/300d x 6B/42B/840B variants; paper does not say which
+  tfidf_top_k: null                   # UNSPECIFIED: "common keywords in the top k" -- k not given
+  epsilon: null                       # UNSPECIFIED: eq. (2) "epsilon denotes a small fixed value" -- no number given
+  similarity_weights_by_layer: null   # UNSPECIFIED: "weighted averages ... different [weights] to different layers" -- no numbers given
+  clustering_algorithm: null          # UNSPECIFIED: paper gives the distance metric (eq. 2) only, not the clustering rule that consumes it
+  independent_set_algorithm: null     # UNSPECIFIED: "we then apply graph search algorithms" -- which algorithm is not named
+  bipartite_edge_confidence_threshold: null  # UNSPECIFIED
+  leaf_stop_min_constraints: null     # UNSPECIFIED: "a small number of constraints" -- no threshold given
+  leaf_stop_similarity_threshold: null  # UNSPECIFIED: "highly similar ones" -- no threshold given
+  deterministic_seed: null            # not discussed by the paper
+
+correction:
+  correctness_tolerance: null         # UNSPECIFIED: "optimal solution that meets the problem's requirements" -- no tolerance given
+  iteration_scope: null               # UNSPECIFIED: whether max_correction_iterations is global or per-node/per-constraint is not stated
+  reverse_translation_scope: null     # UNSPECIFIED: whether reverse translation runs on all constraints or only ones flagged vague at extraction is not stated in prose (Fig. 2 suggests vague-only but this is not confirmed text)
+
+execution:
+  generation_target: AMPL             # PAPER-SPECIFIED: "we use AMPL for modeling"
+  solver_backend: gurobi_via_ampl     # PAPER-SPECIFIED: "we use AMPL to call Gurobi to solve the model"
+
+dataset:
+  # PaMOP's own evaluation subset (54 LP + 13 MILP, 67 problems, the NLP4LP
+  # release dated 2024-05-13) is NOT identifiable in our currently accessible
+  # NLP4LP snapshot -- see docs/PAMOP_REPRODUCTION_PLAN.md section 13. This
+  # is the best-available, evidence-bounded superset proxy, never the exact
+  # PaMOP set. Deliberately NOT named "pamop_67" anywhere in this codebase.
+  subset: pamop_possible_269

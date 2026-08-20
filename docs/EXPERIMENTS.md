@@ -88,13 +88,15 @@ After schema retrieval, the pipeline assigns numeric mentions from the NL query 
 
 The primary production baseline. Assigns numeric mentions to schema slots greedily, respecting parameter types.
 
-**Canonical post-fix values** (source: `results/eswa_revision/13_tables/deterministic_method_comparison_orig.csv`):
+**Canonical post-fix values** (source: `results/CANONICAL_RESULTS.md` §B;
+**2026-08-11 correction** — previously showed stale pre-correction values,
+see `PROJECT_STATUS.md` §3):
 
 | Schema | Coverage | TypeMatch | Exact20 | InstantiationReady |
 |--------|----------|-----------|---------|-------------------|
-| TF-IDF | 0.8639 | 0.7513 | 0.1991 | 0.5257 |
-| BM25 | 0.8509 | 0.7386 | 0.2057 | 0.5196 |
-| Oracle | 0.9151 | 0.8030 | 0.1882 | 0.5650 |
+| TF-IDF | 0.8609 | 0.7453 | 0.1834 | 0.5287 |
+| BM25 | 0.8509 | 0.7336 | 0.1884 | 0.5196 |
+| Oracle | 0.9151 | 0.7998 | 0.1745 | 0.5680 |
 
 ### 2.2 Untyped Assignment (Ablation)
 
@@ -125,7 +127,8 @@ Global one-to-one bipartite assignment with strict type constraints. Improves nu
 Re-ranks the top-K retrieved schemas by an acceptance scorer before assignment, rather than always taking rank-1. Also tested with a hierarchical family-mismatch penalty variant.
 
 > **Pre-EAAI exploratory values** — numbers below were produced before the float type-match fixes.
-> The canonical post-fix TF-IDF baseline is: Coverage 0.8639, TypeMatch 0.7513, InstReady 0.5257.
+> The canonical post-fix TF-IDF baseline is: Coverage 0.8609, TypeMatch 0.7453, InstReady 0.5287
+> (corrected 2026-08-11, see `PROJECT_STATUS.md` §3).
 
 | Method | Schema R@1 | Coverage | TypeMatch | InstantiationReady |
 |--------|------------|----------|-----------|-------------------|
@@ -203,11 +206,15 @@ python tools/run_nlp4lp_focused_eval.py --variant orig --safe
 
 **Variants tested:** `orig` (standard queries), `noisy` (numeric values replaced with `<num>`), `short` (abbreviated queries).
 
-**Canonical post-fix values** (source: `results/eswa_revision/13_tables/robustness_by_variant.csv`):
+**Canonical post-fix values** (orig column corrected 2026-08-11, see
+`PROJECT_STATUS.md` §3 — **note:** the underlying
+`results/eswa_revision/13_tables/robustness_by_variant.csv` file itself
+still has the stale `orig` row as of this pass and should be regenerated in
+a future pass; noisy/short columns were not found stale):
 
 | Method | orig InstReady | noisy InstReady | short InstReady |
 |--------|---------------|-----------------|-----------------|
-| tfidf typed | 0.5257 | 0.0393 | 0.0151 |
+| tfidf typed | 0.5287 | 0.0393 | 0.0151 |
 | tfidf constrained | 0.4230 | — | — |
 
 **Observations:**
@@ -362,7 +369,7 @@ Structured experiment suite for the journal paper revision. Results are stored u
 | Experiment | Key finding |
 |------------|-------------|
 | Retrieval | TF-IDF achieves Schema R@1 = 0.9094 on orig; strong across variants |
-| Typed greedy assignment (canonical) | Primary production baseline; Coverage 0.8639, TypeMatch 0.7513, InstReady 0.5257 |
+| Typed greedy assignment (canonical) | Primary production baseline; Coverage 0.8609, TypeMatch 0.7453, InstReady 0.5287 |
 | Constrained assignment | Highest Exact20 (0.3293) at the cost of lower InstReady (0.4230) |
 | Acceptance reranking | Comparable InstReady (0.5227) with slightly lower coverage |
 | Semantic IR repair | Competitive TypeMatch (0.7549); lower coverage than typed greedy |

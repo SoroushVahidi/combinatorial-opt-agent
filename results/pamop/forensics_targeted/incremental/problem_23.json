@@ -1,0 +1,172 @@
+{
+  "exception_message": "",
+  "exception_type": "",
+  "gold": {
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_latency_seconds": 0.039681,
+    "gold_objective": 40.0,
+    "gold_reason": "",
+    "gold_returncode": 0,
+    "gold_solver_success": true
+  },
+  "metadata": {
+    "constraint_count": 2,
+    "doc_id": "nlp4lp_test_22",
+    "family_proxy": "MILP|maximize|v1|p6|c2|tree1x0",
+    "lp_or_milp": "MILP",
+    "numeric_mentions": 8,
+    "objective_sense": "maximize",
+    "optimus_code_available": true,
+    "parameter_count": 6,
+    "partition_depth": 0,
+    "partition_node_count": 1,
+    "problem_id": 23,
+    "selection_bucket": "MILP|simple|high_numeric|small_tree|maximize",
+    "variable_count": 1
+  },
+  "per_problem_row": {
+    "completion_tokens": 1169,
+    "correction_calls": 3,
+    "correction_invoked": true,
+    "correction_iterations": 1,
+    "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
+    "deployment": "gpt-4.1-mini",
+    "estimated_cost_usd": "",
+    "failure_category": "B. SUCCESS_AFTER_CORRECTION",
+    "final_ampl_hash": "0a040eab9e100afe",
+    "final_ampl_parse_success": true,
+    "final_feasible": true,
+    "final_solver_status": "solved",
+    "g_extr_calls": 1,
+    "g_mod_calls": 2,
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_objective": 40.0,
+    "gold_solver_success": true,
+    "initial_ampl_parse_success": false,
+    "initial_feasible_status": false,
+    "initial_generation_valid": "YES",
+    "initial_solver_success": false,
+    "latency_seconds": 18.095794,
+    "lp_or_milp": "MILP",
+    "objective_match_with_gold": false,
+    "objective_produced": true,
+    "objective_value": 52.0,
+    "partition_depth": 0,
+    "partition_node_count": 1,
+    "problem_id": 23,
+    "prompt_hashes": "17db1b6227f9e40c;3bd8f2f4921080d4;7a1fbc6a7e0a537a;b7524a6fb51c39c4;fc24b54dca36c94a;fc6a16ddc704aa83",
+    "prompt_tokens": 3725,
+    "provider": "azure_openai",
+    "semantic_correctness_status": "PARTIAL_GOLD_OBJECTIVE_STATUS_ONLY",
+    "semantically_wrong_but_feasible": true,
+    "temperature": 0.2,
+    "total_llm_calls": 6,
+    "total_tokens": 4894,
+    "underlying_model": "gpt-4.1-mini-2025-04-14"
+  },
+  "problem_id": 23,
+  "trace": {
+    "correction_iterations_observed": 1,
+    "final_ampl_hash": "0a040eab9e100afe",
+    "final_success": true,
+    "initial_ampl_hash": "2addd5a6ae047bca",
+    "iterations": [
+      {
+        "ampl_hash": "2addd5a6ae047bca",
+        "comparison": {
+          "latency_seconds": 1.7616230490384623,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "b7524a6fb51c39c4",
+          "provider": "azure_openai",
+          "reason": "The model references parameters seats_long_desk and seats_short_desk without assigning values, leading to undefined parameters in the objective function. Remodeling is justified to ensure these parameters are properly defined and assigned numeric values, enabling the model to function correctly.",
+          "targeted_issues": [
+            "undefined parameters seats_long_desk and seats_short_desk",
+            "missing parameter assignments in model or data sections"
+          ],
+          "total_tokens": 490,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_5m8d7fo2/model.run, line 25, offset 736):\nerror processing objective total_seating:\n\tno value for seats_long_desk\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "2addd5a6ae047bca",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.039731320983264595,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_5m8d7fo2/model.run, line 25, offset 736):\nerror processing objective total_seating:\n\tno value for seats_long_desk\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 0,
+        "remodel": {
+          "ampl_hash": "0a040eab9e100afe",
+          "changes": [
+            "Assigned numeric values to seats_long_desk and seats_short_desk parameters to define seating capacities",
+            "Assigned numeric values to cost_long_desk, cost_short_desk, area_long_desk, and area_short_desk parameters for completeness",
+            "Replaced hardcoded constants in constraints with max_budget and max_area parameters"
+          ],
+          "latency_seconds": 3.8649453410180286,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "fc24b54dca36c94a",
+          "provider": "azure_openai",
+          "total_tokens": 1108,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Assign numeric values to seats_long_desk and seats_short_desk parameters before solving the model.",
+            "Alternatively, define these parameters with := and provide their values in the model or data section."
+          ],
+          "diagnosis": "The parameters seats_long_desk and seats_short_desk are declared but not assigned any values, causing the objective function to reference undefined parameters.",
+          "error_category": "model_error",
+          "latency_seconds": 2.0229744809912518,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "7a1fbc6a7e0a537a",
+          "provider": "azure_openai",
+          "total_tokens": 804,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "0a040eab9e100afe",
+        "comparison": null,
+        "execution": {
+          "diagnostics": [],
+          "error_category": "none",
+          "model_hash": "0a040eab9e100afe",
+          "model_load_success": true,
+          "objective_value": 52.0,
+          "parse_success": true,
+          "runtime_seconds": 0.04734184697736055,
+          "solver_invocation_success": true,
+          "solver_status": "solved",
+          "stderr_tail": "",
+          "stdout_tail": "Gurobi 13.0.2:   tech:outlev = 0\nGurobi 13.0.2: optimal solution; objective 52\n0 simplex iterations\nsolve_result = solved\n\ntotal_seating = 52",
+          "success": true,
+          "timed_out": false
+        },
+        "iteration_number": 1,
+        "remodel": null,
+        "review": null
+      }
+    ],
+    "problem_id": "23",
+    "stopped_reason": "execution_success",
+    "total_tokens": 2402
+  }
+}

@@ -1,0 +1,39 @@
+REPRODUCTION CHOICE -- reconstructed wording, not PaMOP's own prompt text.
+See baselines/pamop/prompts/PROVENANCE.md for exactly which requirements
+below are paper-specified vs. our own reconstruction.
+
+You are extracting a structured representation of an optimization problem
+from its natural-language description, to be used for further automated
+modeling. Read the problem description below and produce a single JSON
+object with exactly these fields:
+
+- "global_summary": a concise, one-to-two sentence summary of the overall
+  problem (what is being decided and what the goal is), written so someone
+  reading only this summary -- without the full description -- still
+  understands the problem's overall purpose.
+- "objective_text": a plain-language description of what is being
+  maximized or minimized.
+- "constraints": a JSON array, one entry per distinct constraint mentioned
+  in the description, in the order they naturally appear. Each entry is an
+  object with:
+    - "description": a plain-language restatement of that one constraint.
+    - "vagueness_score": a number from 0.0 (fully precise -- the constraint
+      gives exact numeric limits or an unambiguous rule) to 1.0 (highly
+      vague -- the constraint is qualitative, relies on context from other
+      parts of the problem, or could be interpreted multiple ways).
+- "variables": a JSON array, one entry per decision variable or named
+  parameter/constant mentioned in the description. Each entry is an object
+  with:
+    - "name": a short machine-readable identifier (letters, digits,
+      underscores only, no spaces).
+    - "description": a plain-language description of what it represents.
+    - "type": one of "continuous", "integer", "binary", or "parameter"
+      (use "parameter" for constants/given data rather than decision
+      variables).
+
+Do not invent numeric values, constraints, or variables that are not
+present in the description. Do not solve the problem. Do not add any text
+before or after the JSON object -- output the JSON object only.
+
+Problem description:
+{problem_text}

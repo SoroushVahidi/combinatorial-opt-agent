@@ -1,0 +1,169 @@
+{
+  "document_type": "canonical_results_manifest",
+  "verified_date": "2026-08-11",
+  "last_updated": "2026-08-12 (Phase 4: corrected family L status, added family N baseline-staleness audit; flagged family B/C generators STALE_RELATIVE_TO_CURRENT_CODE)",
+  "verification_method": "direct comparison against manuscript/main.tex unless noted",
+  "families": [
+    {
+      "id": "A",
+      "name": "schema_retrieval",
+      "authoritative_artifact": "results/eswa_revision/13_tables/deterministic_method_comparison_orig.csv",
+      "column": "Schema_R1",
+      "variant": "orig",
+      "denominator": 331,
+      "superseded_by": null,
+      "notes": "disclosed offset: 0.9094/0.8822/0.8459 (canonical) vs 0.9063/0.8852/0.8550 (diagnostic-script family, 335-doc catalog) -- both legitimate for their own context"
+    },
+    {
+      "id": "B",
+      "name": "typed_greedy_downstream",
+      "authoritative_artifact": "results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv",
+      "generator": "tools/build_camera_ready_table1.py",
+      "underlying_source": "results/eswa_revision/13_tables/postfix_main_metrics.csv",
+      "variant": "orig",
+      "denominator": 331,
+      "superseded_artifact": "table1_main_benchmark_summary.csv pre-2026-08-11 content (Coverage 0.8639, TypeMatch 0.7513, InstReady 0.5257 for TF-IDF)",
+      "regenerated_2026_08_11": true,
+      "staleness_flag_2026_08_12": "STALE_RELATIVE_TO_CURRENT_CODE -- underlying_source does not reproduce from current code (fresh rerun InstReady 0.7764 vs. committed 0.5287, drift +0.2477). See docs/BASELINE_STALENESS_AUDIT_2026-08-12.md. This artifact remains the frozen, submitted-manuscript authority and was NOT modified; the flag documents a reproducibility finding, not a correction applied to this file."
+    },
+    {
+      "id": "C",
+      "name": "richer_deterministic_grounding_methods",
+      "authoritative_artifact": "results/eswa_revision/14_reports/downstream_comparison_all_methods.csv",
+      "per_method_raw": "results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_{variant}_{method}.json",
+      "method_inventory_doc": "docs/METHOD_INVENTORY.md",
+      "superseded_artifacts": [
+        "results/eswa_revision/14_reports/downstream_comparison_all_methods.csv.stale",
+        "results/eswa_revision/15_significance/confidence_intervals.csv.stale",
+        "results/eswa_revision/15_significance/paired_significance.csv.stale"
+      ],
+      "staleness_flag_2026_08_12": "STALE_RELATIVE_TO_CURRENT_CODE for 9 of these methods (typed, constrained, semantic_ir_repair, optimization_role_repair, acceptance_rerank variants) -- confirmed via fresh rerun, see family N and docs/BASELINE_STALENESS_AUDIT_2026-08-12.md. NOT yet confirmed either way for global_compat_*, relation_aware_*, ambiguity_aware_* (not regenerated in Phase 4; see docs/ALGORITHM_IMPROVEMENT_ROADMAP.md P1)."
+    },
+    {
+      "id": "D",
+      "name": "strict_instantiation_ready",
+      "authoritative_artifact": "results/eswa_revision/18_strict_instready/strict_instantiation_ready.csv",
+      "significance_artifact": "results/eswa_revision/18_strict_instready/strict_vs_standard_significance.csv",
+      "generator": "tools/run_strict_instantiation_ready.py",
+      "variant": "orig",
+      "denominator": 331,
+      "notes": "uses the 0.9063-family Schema_R1"
+    },
+    {
+      "id": "E",
+      "name": "paired_significance_tests",
+      "authoritative_artifact": "results/eswa_revision/15_significance/SIGNIFICANCE_SUMMARY.md",
+      "method": "two-sided paired bootstrap, B=1000, seed=42, 95% percentile CIs",
+      "negative_results_doc": "docs/NEGATIVE_RESULTS.md"
+    },
+    {
+      "id": "F",
+      "name": "sanitization_overlap_analysis",
+      "authoritative_artifact": "results/eswa_revision/17_overlap_analysis/OVERLAP_ANALYSIS.md",
+      "key_finding": "retrieval preserved/improved after removing numbers/stopwords; success driven by structural overlap not numeric-value leakage"
+    },
+    {
+      "id": "G",
+      "name": "structural_60_instance_subset",
+      "authoritative_artifact": "results/paper/eaai_camera_ready_tables/table2_engineering_structural_subset.csv",
+      "generator": "tools/run_eaai_engineering_subset_experiment.py",
+      "status": "CURRENT",
+      "verified_against_manuscript": true
+    },
+    {
+      "id": "H",
+      "name": "executable_attempt_269_instance_subset",
+      "authoritative_artifact": "results/paper/eaai_camera_ready_tables/table3_executable_attempt_with_blockers.csv",
+      "generator": "tools/run_eaai_executable_subset_experiment.py",
+      "status": "CURRENT",
+      "verified_against_manuscript": true,
+      "notes": "0.0 executable/solver rates are a documented missing-gurobipy environment blocker, not a method failure"
+    },
+    {
+      "id": "I",
+      "name": "final_solver_backed_20_instance_subset",
+      "authoritative_artifact": "results/paper/eaai_camera_ready_tables/table4_final_solver_backed_subset.csv",
+      "generator": "tools/run_eaai_final_solver_attempt.py",
+      "status": "CURRENT",
+      "verified_against_manuscript": true,
+      "solver": "SciPy HiGHS shim"
+    },
+    {
+      "id": "J",
+      "name": "pamop_reproduction",
+      "authoritative_artifact": "results/pamop/forensics_targeted/summary.json",
+      "pilot_artifact": "results/pamop/pilot/summary.json",
+      "status": "IN_PROGRESS",
+      "pilot_subset_ids": [14, 23, 34, 72, 84, 88],
+      "initial_execution_success": "2/6",
+      "final_execution_success": "6/6",
+      "semantic_correctness": "1/6",
+      "total_tokens": 24194,
+      "decision_gate_in_artifact_json": "A. PROCEED TO LARGER RUN",
+      "decision_gate_phase3_2026_08_12": "FIDELITY_DIAGNOSTIC_REQUIRED",
+      "decision_gate_phase4_2026_08_12_RESOLVED": "B. MODEL_LIMITED",
+      "fidelity_diagnostic_artifact": "results/pamop/fidelity_diagnostic_gpt5/",
+      "decision_gate_note": "Phase 4 ran the fidelity diagnostic required by Phase 3's gate: same 6 ids, same reconstructed prompts, only the Azure deployment changed from gpt-4.1-mini-2025-04-14 to gpt-5.4 (strongest available). Semantic correctness rose from 1/6 to 4/5 evaluable with zero prompt changes -- model-limited, not prompt-limited. Recommendation (not executed): any future 18- or 269-case rerun should use gpt-5.4. No scale-up was launched in Phase 4; that remains a deliberate future decision. Caveat: n=5 evaluable is a small sample; a C2/C4 prompt-strengthening comparison was not run (scope-reduced)."
+    },
+    {
+      "id": "K",
+      "name": "external_llm_baseline_comparison_artifacts",
+      "status": "AUXILIARY_NOT_PAPER_CORE",
+      "notes": "not the same as the ORLM/OptMATH/DeepOR/OR-R1/PaMOP external-baseline roadmap in PROJECT_STATUS.md section 9"
+    },
+    {
+      "id": "L",
+      "name": "newly_evaluated_grounding_methods",
+      "authoritative_artifact": "results/unevaluated_methods_evaluation/",
+      "generator": "unmodified tools/nlp4lp_downstream_utility.py CLI, --assignment-mode {max_weight_matching,search_structured_grounding,hierarchical_structured_grounding}",
+      "variant": "orig",
+      "denominator": 331,
+      "status": "NEGATIVE_RESULT",
+      "status_history": "briefly NEWLY_VALIDATED_STRONG_POSITIVE for part of 2026-08-12 (Phase 3), corrected to NEGATIVE_RESULT same day (Phase 4) after the comparison baseline was found stale",
+      "date": "2026-08-12",
+      "results_raw_reproducible": {
+        "max_weight_matching": {"instantiation_ready": 0.7432},
+        "search_structured_grounding": {"instantiation_ready": 0.7039},
+        "hierarchical_structured_grounding": {"instantiation_ready": 0.7039}
+      },
+      "results_vs_fresh_typed_greedy_0_7764": {
+        "max_weight_matching": {"diff": -0.0332, "p_value": 0.042},
+        "search_structured_grounding": {"diff": -0.0725, "p_value": 0.0},
+        "hierarchical_structured_grounding": {"diff": -0.0725, "p_value": 0.0}
+      },
+      "correction_doc": "docs/BASELINE_STALENESS_AUDIT_2026-08-12.md",
+      "negative_results_ledger_entry": "NR12",
+      "not_integrated_into": "results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv or the manuscript",
+      "superseded_by": null
+    },
+    {
+      "id": "M",
+      "name": "p0_learned_local_grounding_scorer",
+      "authoritative_artifact": "results/learned_grounding_p0/",
+      "generator": "scripts/learning/{build_p0_corpus,train_p0_classifier,eval_p0_grounding}.py",
+      "variant": "orig",
+      "denominator": 50,
+      "denominator_note": "oracle-schema test subsample, NOT the full 331-query retrieval-conditioned benchmark",
+      "status": "NEGATIVE_RESULT_DECISION_GATE_C",
+      "date": "2026-08-12",
+      "negative_results_ledger_entry": "NR11",
+      "affected_by_family_N_staleness_finding": false,
+      "superseded_by": null
+    },
+    {
+      "id": "N",
+      "name": "baseline_staleness_audit",
+      "authoritative_artifact": "docs/BASELINE_STALENESS_AUDIT_2026-08-12.md",
+      "raw_artifacts": ["results/baseline_staleness_audit_2026-08-12/", "results/max_weight_matching_validation/"],
+      "generator": "run_single_setting() called directly for 12 methods x 3 variants (orig/noisy/short), same function training/external/run_full_downstream_benchmark.py calls",
+      "date": "2026-08-12",
+      "status": "CRITICAL_FINDING",
+      "finding": "results/eswa_revision/13_tables/postfix_main_metrics.csv does not reproduce from current code; fresh tfidf_typed_greedy InstantiationReady = 0.7764 vs. committed 0.5287 (drift +0.2477), root-caused to 49 commits of grounding fixes landing after the table was last generated",
+      "consequence": "tfidf_typed_greedy is the strongest known non-oracle method as of 2026-08-12, beating max_weight_matching/search_structured_grounding/hierarchical_structured_grounding significantly (p<0.05) and every richer Phase-1/2 method re-verified fresh",
+      "manuscript_modified": false,
+      "manuscript_decision_doc": "docs/MANUSCRIPT_INTEGRATION_DECISION_2026-08-12.md",
+      "superseded_by": null
+    }
+  ],
+  "regeneration_command": "python tools/build_camera_ready_table1.py"
+}

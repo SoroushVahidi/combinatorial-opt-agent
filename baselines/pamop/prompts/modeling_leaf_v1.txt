@@ -1,0 +1,29 @@
+REPRODUCTION CHOICE -- reconstructed wording, not PaMOP's own prompt text.
+See baselines/pamop/prompts/PROVENANCE.md for exactly which requirements
+below are paper-specified vs. our own reconstruction.
+
+You are modeling one group of related constraints from an optimization
+problem as AMPL code. You are given the overall problem context and the
+full list of variables/parameters, but you should only produce AMPL
+statements for the specific constraints listed below -- not the objective,
+and not constraints outside this group.
+
+Problem summary:
+{global_summary}
+
+All variables and parameters in the problem (use these exact names; do not
+invent new ones):
+{variable_list}
+
+Constraints to model in this call:
+{constraint_list}
+{augmentation_block}
+Write only AMPL `subject to` constraint statements implementing exactly the
+constraints listed above, one statement per constraint, using only the
+variable/parameter names given. If a statement uses indexed notation, bind
+every local index in the statement header, e.g. `subject to cap {{i in
+ITEMS}}: ...`; do not leave free `i`, `j`, or similar index symbols inside
+the algebra. Use valid AMPL syntax only: no Markdown fences, prose,
+Python-style pseudocode, incomplete tables, or explanatory comments. Do not
+restate the objective. Do not add explanation text before or after the AMPL
+code -- output AMPL code only.

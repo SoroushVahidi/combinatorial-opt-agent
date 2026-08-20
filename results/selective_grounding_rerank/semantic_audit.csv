@@ -1,0 +1,9 @@
+problem_id,semantic_class,gold_schema,old_schema,new_schema,old_ready,new_ready,new_schema_correct,old_coverage,new_coverage,old_type_match,new_type_match
+nlp4lp_test_12,INCORRECT_SCHEMA,nlp4lp_test_12,nlp4lp_test_260,nlp4lp_test_205,0,1,0,0.0,1.0,0.0,1.0
+nlp4lp_test_106,INCORRECT_SCHEMA,nlp4lp_test_106,nlp4lp_test_227,nlp4lp_test_7,0,1,0,0.0,1.0,0.0,1.0
+nlp4lp_test_130,INCORRECT_SCHEMA,nlp4lp_test_130,nlp4lp_test_120,nlp4lp_test_231,0,1,0,0.0,1.0,0.0,1.0
+nlp4lp_test_194,INCORRECT_SCHEMA,nlp4lp_test_194,nlp4lp_test_259,nlp4lp_test_32,0,1,0,0.0,1.0,0.0,1.0
+nlp4lp_test_222,SEMANTICALLY_BETTER,nlp4lp_test_222,nlp4lp_test_214,nlp4lp_test_222,0,1,1,0.0,1.0,0.0,1.0
+nlp4lp_test_268,SEMANTICALLY_BETTER,nlp4lp_test_268,nlp4lp_test_28,nlp4lp_test_268,0,1,1,0.0,1.0,0.0,1.0
+nlp4lp_test_311,INCORRECT_SCHEMA,nlp4lp_test_311,nlp4lp_test_321,nlp4lp_test_325,0,1,0,0.0,1.0,0.0,1.0
+nlp4lp_test_317,INCORRECT_SCHEMA,nlp4lp_test_317,nlp4lp_test_321,nlp4lp_test_325,0,1,0,0.0,1.0,0.0,1.0

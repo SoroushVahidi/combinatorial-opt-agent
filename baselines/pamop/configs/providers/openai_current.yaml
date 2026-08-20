@@ -1,0 +1,71 @@
+# PaMOP -- current-model variant configuration (OpenAI, current model).
+#
+# NOT PaMOP reproduction. This is a robustness/portability variant of
+# configs/reconstructed_default.yaml with a different LLM provider/model.
+# Its results must never be captioned as reproducing PaMOP's published
+# numbers (62.3% accuracy / 86.8% code executability), nor as "the paper's
+# GPT-4 condition" -- see baselines/pamop/README.md and
+# docs/PAMOP_REPRODUCTION_PLAN.md for the full paper-faithful vs.
+# reconstructed-vs-current-model distinction. Partitioning/correction/
+# execution/dataset sections are identical to reconstructed_default.yaml.
+
+config_kind: reconstructed_default
+citation: >
+  Xiaotian Pan, Junhao Fang, Feng Wu, Sijia Zhang, Yi-Xiang Hu, Shaoang Li,
+  Xiang-Yang Li. "Guiding Large Language Models in Modeling Optimization
+  Problems via Question Partitioning." IJCAI 2025, pp. 2657-2665.
+  DOI: 10.24963/ijcai.2025/296.
+
+llm:
+  provider: openai
+  model: gpt-4o
+  temperature: 0.2
+  max_correction_iterations: 5
+  top_p: 1.0
+  max_tokens: 4096
+  extraction_max_retries: 2
+  modeling_max_retries: 2
+  vague_threshold: 0.5
+  # STATUS on this workstation (verified this milestone): NOT currently
+  # runnable -- OPENAI_API_KEY here is actually a CloudRift-issued key
+  # (same value as CLOUDRIFT_API_KEY), so a real OpenAI call fails
+  # authentication. Use azure_openai_current.yaml instead on this
+  # workstation, or openai_current.yaml in an environment with a genuine
+  # direct OpenAI key.
+
+partitioning:
+  # REPRODUCTION CHOICE: no GloVe vectors are provisioned on this workstation
+  # yet (see report section 9/13). A TF-IDF-cosine similarity stands in for
+  # the paper's GloVe-cosine "vector similarity" signal until real GloVe
+  # embeddings are added; swap to "glove" + a glove_variant once available.
+  embedding_source: tfidf_fallback
+  glove_variant: null              # unused while embedding_source=tfidf_fallback
+  tfidf_top_k: 10                  # REPRODUCTION CHOICE: common default for "top-k keyword" schemes
+  epsilon: 0.01                    # REPRODUCTION CHOICE: paper only says "a small fixed value"; 0.01 keeps eq. (2) well-scaled for similarities in [0,1]
+  similarity_weights_by_layer:     # REPRODUCTION CHOICE: paper says weights vary by layer but gives no numbers
+    root:
+      adjacency: 0.2
+      keyword: 0.4
+      vector: 0.4
+    default:
+      adjacency: 0.3
+      keyword: 0.35
+      vector: 0.35
+  clustering_algorithm: agglomerative_average_linkage  # REPRODUCTION CHOICE: paper specifies only the distance metric; agglomerative clustering assigns every point to some cluster, consistent with the paper's explicit "noise points kept, not discarded"
+  independent_set_algorithm: connected_components      # REPRODUCTION CHOICE: simplest graph-search algorithm consistent with "separate independent subgraphs"
+  bipartite_edge_confidence_threshold: 1  # REPRODUCTION CHOICE: >=1 shared keyword between a constraint and a variable description counts as a high-confidence edge
+  leaf_stop_min_constraints: 3            # REPRODUCTION CHOICE: paper says only "a small number"
+  leaf_stop_similarity_threshold: 0.6     # REPRODUCTION CHOICE: paper says only "highly similar ones"
+  deterministic_seed: 0            # currently unused -- the reconstructed pipeline (TF-IDF + hierarchical clustering) has no stochastic component; reserved for a future stage that might need one
+
+correction:
+  correctness_tolerance: 1.0e-6    # REPRODUCTION CHOICE: exact objective match with a small numeric tolerance
+  iteration_scope: global          # REPRODUCTION CHOICE: matches the paper's literal singular "maximum number of failed iterations"
+  reverse_translation_scope: vague_only  # REPRODUCTION CHOICE: matches Figure 2's implication that reverse translation targets constraints already flagged vague at extraction time
+
+execution:
+  generation_target: AMPL          # PAPER-SPECIFIED -- not implemented in this milestone (placeholder)
+  solver_backend: gurobi_via_ampl  # PAPER-SPECIFIED -- not implemented in this milestone (placeholder)
+
+dataset:
+  subset: pamop_possible_269       # see docs/PAMOP_REPRODUCTION_PLAN.md section 13 -- NOT PaMOP's confirmed exact 67-problem set

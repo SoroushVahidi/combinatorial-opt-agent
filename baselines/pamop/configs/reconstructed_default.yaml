@@ -1,0 +1,75 @@
+# PaMOP -- reconstructed-default configuration.
+#
+# Fills every field the paper leaves unspecified with a documented,
+# reproducible choice so development/testing can run end to end today. Every
+# value below that is not paper-specified is tagged REPRODUCTION CHOICE with
+# a one-line justification. See docs/PAMOP_REPRODUCTION_PLAN.md sections 2, 6,
+# and 9 for the fuller rationale, and baselines/pamop/README.md for the
+# summary table.
+#
+# This config's numeric results must never be captioned as reproducing the
+# PaMOP paper's own published numbers (62.3% accuracy / 86.8% code
+# executability) -- it is an independent reimplementation under
+# reconstructed choices. Existing pilot results exercise the LLM/AMPL/solver
+# path, but are not exact reproductions of the paper's reported numbers.
+
+config_kind: reconstructed_default
+citation: >
+  Xiaotian Pan, Junhao Fang, Feng Wu, Sijia Zhang, Yi-Xiang Hu, Shaoang Li,
+  Xiang-Yang Li. "Guiding Large Language Models in Modeling Optimization
+  Problems via Question Partitioning." IJCAI 2025, pp. 2657-2665.
+  DOI: 10.24963/ijcai.2025/296.
+
+llm:
+  # REPRODUCTION CHOICE: GPT-4-family model via Azure OpenAI -- the provider
+  # with a verified-working GPT-4-family credential on this workstation (see
+  # paper_faithful.yaml's provider note and docs/PAMOP_REPRODUCTION_PLAN.md
+  # section 16). See configs/providers/*.yaml for variants pointed at every
+  # other provider (openai, gemini, cohere, fireworks, cloudrift), each
+  # labeled with its own live-verified status.
+  provider: azure_openai
+  model: gpt-4.1-mini
+  temperature: 0.2                 # PAPER-SPECIFIED
+  max_correction_iterations: 5     # PAPER-SPECIFIED
+  top_p: 1.0                       # REPRODUCTION CHOICE: provider default, paper silent
+  max_tokens: 4096                 # REPRODUCTION CHOICE: headroom for an AMPL model + prompt context
+  extraction_max_retries: 2        # REPRODUCTION CHOICE: paper doesn't specify; 2 retries (3 attempts total) balances catching transient malformed JSON against runaway cost
+  modeling_max_retries: 2          # REPRODUCTION CHOICE: same rationale as extraction_max_retries, applied to G_mod
+  vague_threshold: 0.5             # REPRODUCTION CHOICE: midpoint of the [0,1] vagueness_score scale (itself already a reproduction choice, see extraction prompt)
+
+partitioning:
+  # REPRODUCTION CHOICE: no GloVe vectors are provisioned on this workstation
+  # yet (see report section 9/13). A TF-IDF-cosine similarity stands in for
+  # the paper's GloVe-cosine "vector similarity" signal until real GloVe
+  # embeddings are added; swap to "glove" + a glove_variant once available.
+  embedding_source: tfidf_fallback
+  glove_variant: null              # unused while embedding_source=tfidf_fallback
+  tfidf_top_k: 10                  # REPRODUCTION CHOICE: common default for "top-k keyword" schemes
+  epsilon: 0.01                    # REPRODUCTION CHOICE: paper only says "a small fixed value"; 0.01 keeps eq. (2) well-scaled for similarities in [0,1]
+  similarity_weights_by_layer:     # REPRODUCTION CHOICE: paper says weights vary by layer but gives no numbers
+    root:
+      adjacency: 0.2
+      keyword: 0.4
+      vector: 0.4
+    default:
+      adjacency: 0.3
+      keyword: 0.35
+      vector: 0.35
+  clustering_algorithm: agglomerative_average_linkage  # REPRODUCTION CHOICE: paper specifies only the distance metric; agglomerative clustering assigns every point to some cluster, consistent with the paper's explicit "noise points kept, not discarded"
+  independent_set_algorithm: connected_components      # REPRODUCTION CHOICE: simplest graph-search algorithm consistent with "separate independent subgraphs"
+  bipartite_edge_confidence_threshold: 1  # REPRODUCTION CHOICE: >=1 shared keyword between a constraint and a variable description counts as a high-confidence edge
+  leaf_stop_min_constraints: 3            # REPRODUCTION CHOICE: paper says only "a small number"
+  leaf_stop_similarity_threshold: 0.6     # REPRODUCTION CHOICE: paper says only "highly similar ones"
+  deterministic_seed: 0            # currently unused -- the reconstructed pipeline (TF-IDF + hierarchical clustering) has no stochastic component; reserved for a future stage that might need one
+
+correction:
+  correctness_tolerance: 1.0e-6    # REPRODUCTION CHOICE: exact objective match with a small numeric tolerance
+  iteration_scope: global          # REPRODUCTION CHOICE: matches the paper's literal singular "maximum number of failed iterations"
+  reverse_translation_scope: vague_only  # REPRODUCTION CHOICE: matches Figure 2's implication that reverse translation targets constraints already flagged vague at extraction time
+
+execution:
+  generation_target: AMPL          # PAPER-SPECIFIED; renderer/executor implemented independently
+  solver_backend: gurobi_via_ampl  # PAPER-SPECIFIED; exact paper data conversion unavailable
+
+dataset:
+  subset: pamop_possible_269       # see docs/PAMOP_REPRODUCTION_PLAN.md section 13 -- NOT PaMOP's confirmed exact 67-problem set

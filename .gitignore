@@ -229,6 +229,11 @@ artifacts/learning_runs/
 artifacts/training_results/
 artifacts/paper/
 artifacts/experiments/
+# P0 corpus-build intermediates (Phase 3, 2026-08-12) -- regeneratable via
+# scripts/learning/build_p0_corpus.py from the existing verified split; not
+# committed, same rationale as artifacts/learning_runs/ above.
+artifacts/learning_corpus/
+artifacts/learning_ranker_data/
 logs/
 comparison_reports/
 results/*
@@ -241,6 +246,52 @@ results/*
 # Exception: Gemini (and other) explicit rerun bundles under results/rerun/
 !results/rerun/
 !results/rerun/**
+# Exception: canonical results manifest (Phase 2 repository-polish, 2026-08-11)
+!results/CANONICAL_RESULTS.md
+!results/canonical_results_manifest.json
+# Exception: P0 learned-grounding result family + newly-evaluated method
+# family results (Phase 3 repository-polish, 2026-08-12) -- small CSV/JSON
+# summaries only, no model weights or large intermediate artifacts.
+!results/learned_grounding_p0/
+!results/learned_grounding_p0/**
+!results/unevaluated_methods_evaluation/
+!results/unevaluated_methods_evaluation/**
+# Exception: PaMOP pilot/forensics/fidelity-diagnostic results (small CSV/
+# JSON operational metrics + per-problem traces, no gated NLP4LP text, no
+# API keys -- some subdirectories here were already tracked from earlier
+# phases; this exception makes that consistent and covers new ones, e.g.
+# results/pamop/fidelity_diagnostic_gpt5/ (Phase 4, 2026-08-12).
+!results/pamop/
+!results/pamop/**
+# Exception: baseline-staleness audit + max-weight-matching mechanism/error
+# analysis (Phase 4 repository-polish, 2026-08-12) -- small CSV/JSON only.
+!results/baseline_staleness_audit_2026-08-12/
+!results/baseline_staleness_audit_2026-08-12/**
+!results/max_weight_matching_validation/
+!results/max_weight_matching_validation/**
+# Exception: cross-baseline comparison harness generated report (2026-08-13)
+# -- small CSV/JSON/Markdown only, fully regenerable via
+# `python -m baselines.comparison.cli`; no model weights or raw NLP4LP text.
+!results/external_baseline_comparison/
+!results/external_baseline_comparison/**
+# Exception: deterministic frozen-oracle recomputation (DKE Stage 1,
+# 2026-08-15) -- small CSV/JSON only, produced by tools/recompute_frozen_oracle.py
+# from frozen per-query data; cited by manuscript/dke/main.tex.
+!results/oracle_recomputation_2026-08-15/
+!results/oracle_recomputation_2026-08-15/**
+# Exception: OptMATH external validation (DKE Stage 2, 2026-08-15)
+!results/external_validation/
+!results/external_validation/**
+# Exception: raw external-baseline evidence (Generic LLM / OptMATH / ORLM)
+!results/generic_llm/
+!results/generic_llm/**
+!results/optmath/
+!results/optmath/**
+!results/orlm/
+!results/orlm/**
+# Exception: BGE-M3 dense retrieval baseline results (DKE Stage 1, 2026-08-15)
+!results/dense_retrieval_bge_m3/
+!results/dense_retrieval_bge_m3/**
 # Scratch exports under a run (partial CSV/JSON/interrupt); not curated rerun bundles
 results/rerun/gemini/*/paper/
 
@@ -294,6 +345,17 @@ manuscript/submission_package/*.aux
 manuscript/submission_package/*.log
 manuscript/submission_package/*.out
 manuscript/submission_package/*.blg
+
+# Solver/modeling-language license and credential files (never intended to
+# be versioned; e.g. Gurobi/AMPL). Real license files for this project live
+# outside the repo (~/gurobi.lic, ~/.venvs/gurobi) -- this is precautionary.
+*.lic
+gurobi.lic
+ampl.lic
+
+# HuggingFace cache, if ever created inside the repo instead of ~/.cache
+.hf_cache/
+huggingface_cache/
 manuscript/submission_package/*.bbl
 
 # Claude Code local state (agent worktrees, per-machine settings)

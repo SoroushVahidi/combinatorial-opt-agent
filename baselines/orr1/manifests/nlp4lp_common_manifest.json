@@ -1,0 +1,12 @@
+{
+  "manifest_version": "orr1-nlp4lp-common-v1",
+  "source_subset": "pamop_possible_269",
+  "selection_rule": "Reuse the deterministic cross-baseline engineering subset shared with ORLM/OptMATH/DeepOR; retain every selected ID and record unsupported inputs explicitly.",
+  "common_comparison_scope": "NLP4LP records suitable for full natural-language-to-model generation; OR-R1-native Pass@1/Pass@8/mj@8 remain separate from this repository's scalar-grounding metrics.",
+  "pilot_ids": [14, 23, 34, 59, 69, 72],
+  "future_evaluation_ids": [14, 23, 34, 59, 69, 72, 84, 88, 96, 117, 190, 202, 208, 219, 232, 237, 254, 262],
+  "eligibility_rule": "Natural-language problem text must be present; no outcome-based filtering.",
+  "selection_independent_of_outcomes": true,
+  "not_paper_orr1_benchmark": true,
+  "orr1_transductive_training_warning": "The official OR-R1 TGRPO stage is trained on the union of all official test sets, including the full 242-row official NLP4LP test split (see docs/ORR1_PROVENANCE.md). This manifest's IDs come from this repository's own PaMOP-derived NLP4LP subset, not the official split. The official datasets/testset/nlp4lp.jsonl carries an 'ori' provenance field, but it is the constant string '14_nlp4lp' on all 242 rows (verified 2026-08-13), not a per-instance identifier, so it cannot be used to cross-reference these pilot_ids against the official split by inspection alone; a text-level match against this repository's raw NLP4LP problem text would be required before any faithful-TGRPO run against this manifest."
+}

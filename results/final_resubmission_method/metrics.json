@@ -1,0 +1,32 @@
+[
+  {
+    "Coverage": "0.8794302206688913",
+    "Exact20": "0.24488825416660467",
+    "Exact5": "0.21946266791627617",
+    "InstantiationReady": "0.7764350453172205",
+    "InstantiationReady_count": "257",
+    "KeyOverlap": "0.9217810386994677",
+    "StrictInstantiationReady": "0.7462235649546828",
+    "StrictInstantiationReady_count": "247",
+    "TypeMatch": "0.8515453411979091",
+    "method": "prepatch_tfidf_typed_greedy",
+    "n": "331",
+    "schema_R1": "0.9093655589123867",
+    "schema_correct_count": "301"
+  },
+  {
+    "Coverage": "0.888565596873754",
+    "Exact20": "0.2613912814943743",
+    "Exact5": "0.23553614197944095",
+    "InstantiationReady": "0.8006042296072508",
+    "InstantiationReady_count": "265",
+    "KeyOverlap": "0.9217810386994677",
+    "StrictInstantiationReady": "0.770392749244713",
+    "StrictInstantiationReady_count": "255",
+    "TypeMatch": "0.866549177576368",
+    "method": "tfidf_typed_greedy_ratio_extraction",
+    "n": "331",
+    "schema_R1": "0.9093655589123867",
+    "schema_correct_count": "301"
+  }
+]

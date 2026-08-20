@@ -1,0 +1,14 @@
+method,ordinary_ready_count,strict_ready_count,ordinary_ready_wrong_schema_count,strict_ready_exact5_full_count,strict_ready_exact20_full_count,strict_ready_exact20_not_full_count,exact_metrics_schema_gated_by_construction,note
+tfidf_typed_greedy,257,247,10,7,7,240,True,exact5/exact20 are only populated when schema_hit=1 in tools/nlp4lp_downstream_utility.py
+tfidf_selective_grounding_rerank,265,249,16,7,7,242,True,exact5/exact20 are only populated when schema_hit=1 in tools/nlp4lp_downstream_utility.py
+bm25_typed_greedy,253,241,12,7,7,234,True,exact5/exact20 are only populated when schema_hit=1 in tools/nlp4lp_downstream_utility.py
+lsa_typed_greedy,243,233,10,6,6,227,True,exact5/exact20 are only populated when schema_hit=1 in tools/nlp4lp_downstream_utility.py
+oracle_typed_greedy,273,273,0,8,8,265,True,exact5/exact20 are only populated when schema_hit=1 in tools/nlp4lp_downstream_utility.py
+tfidf_acceptance_rerank,253,244,9,7,7,237,True,exact5/exact20 are only populated when schema_hit=1 in tools/nlp4lp_downstream_utility.py
+tfidf_constrained,248,238,10,46,49,189,True,exact5/exact20 are only populated when schema_hit=1 in tools/nlp4lp_downstream_utility.py
+tfidf_hierarchical_acceptance_rerank,238,228,10,6,6,222,True,exact5/exact20 are only populated when schema_hit=1 in tools/nlp4lp_downstream_utility.py
+tfidf_hierarchical_structured_grounding,233,223,10,76,77,146,True,exact5/exact20 are only populated when schema_hit=1 in tools/nlp4lp_downstream_utility.py
+tfidf_max_weight_matching,246,236,10,48,51,185,True,exact5/exact20 are only populated when schema_hit=1 in tools/nlp4lp_downstream_utility.py
+tfidf_optimization_role_repair,244,234,10,46,49,185,True,exact5/exact20 are only populated when schema_hit=1 in tools/nlp4lp_downstream_utility.py
+tfidf_search_structured_grounding,233,223,10,72,73,150,True,exact5/exact20 are only populated when schema_hit=1 in tools/nlp4lp_downstream_utility.py
+tfidf_semantic_ir_repair,237,230,7,19,22,208,True,exact5/exact20 are only populated when schema_hit=1 in tools/nlp4lp_downstream_utility.py

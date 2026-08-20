@@ -1,4 +1,4 @@
 method,schema_retrieval,coverage,type_match,instantiation_ready
-TF-IDF,0.9094,0.8639,0.7513,0.5257
-BM25,0.8822,0.8509,0.7386,0.5196
-Oracle schema,1.0,0.9151,0.803,0.565
+TF-IDF,0.9094,0.8609,0.7453,0.5287
+BM25,0.8822,0.8509,0.7336,0.5196
+Oracle schema,1.0,0.9151,0.7998,0.568

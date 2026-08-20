@@ -1,0 +1,5 @@
+source,status,method,historical_instantiation_ready,historical_strict_instantiation_ready,note
+results/eswa_revision/18_strict_instready/strict_instantiation_ready.csv,RECONSTRUCTABLE_FROM_HISTORICAL_ARTIFACT,TFIDF-TG,0.5287,0.5045,Historical artifact is 0.5287-era and must not be mixed with fresh 257/331 metrics.
+results/eswa_revision/18_strict_instready/strict_instantiation_ready.csv,RECONSTRUCTABLE_FROM_HISTORICAL_ARTIFACT,BM25-TG,0.5196,0.4924,Historical artifact is 0.5287-era and must not be mixed with fresh 257/331 metrics.
+results/eswa_revision/18_strict_instready/strict_instantiation_ready.csv,RECONSTRUCTABLE_FROM_HISTORICAL_ARTIFACT,LSA-TG,0.5076,0.4864,Historical artifact is 0.5287-era and must not be mixed with fresh 257/331 metrics.
+results/eswa_revision/18_strict_instready/strict_instantiation_ready.csv,RECONSTRUCTABLE_FROM_HISTORICAL_ARTIFACT,Oracle-TG,0.568,0.568,Historical artifact is 0.5287-era and must not be mixed with fresh 257/331 metrics.

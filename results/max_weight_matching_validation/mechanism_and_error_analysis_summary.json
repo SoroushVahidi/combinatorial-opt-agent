@@ -1,0 +1,24 @@
+{
+  "n_queries": 331,
+  "mwm_instantiation_ready_recomputed": 0.743202416918429,
+  "typed_greedy_instantiation_ready_recomputed": 0.7764350453172205,
+  "transition_matrix": {
+    "both_ready": 239,
+    "tg_ready_mwm_not": 18,
+    "mwm_ready_tg_not": 7,
+    "neither_ready": 67
+  },
+  "residual_failure_taxonomy_counts": {
+    "same_type_ambiguity": 335,
+    "total_perunit_confusion": 166,
+    "missing": 156,
+    "objective_constraint_confusion": 124,
+    "type_mismatch": 65,
+    "minmax_polarity": 33,
+    "schema_retrieval_miss": 30,
+    "zero_expected_scalar": 20,
+    "percent_ambiguity": 11,
+    "wrong_value_other": 7
+  },
+  "n_mwm_not_ready": 85
+}

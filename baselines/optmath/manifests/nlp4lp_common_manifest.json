@@ -1,0 +1,10 @@
+{
+  "manifest_version": "optmath-nlp4lp-common-v1",
+  "source_subset": "pamop_possible_269",
+  "selection_rule": "Reuse the fixed deterministic 18-instance engineering subset already defined before OptMATH work; pilot is the first six rows in stable problem-id order.",
+  "pilot_ids": [14, 23, 34, 59, 69, 72],
+  "future_evaluation_ids": [14, 23, 34, 59, 69, 72, 84, 88, 96, 117, 190, 202, 208, 219, 232, 237, 254, 262],
+  "eligibility_rule": "Full natural-language problem text is present; unsupported or malformed rows remain explicit UNSUPPORTED_INPUT records.",
+  "selection_independent_of_outcomes": true,
+  "not_paper_optmath_benchmark": true
+}

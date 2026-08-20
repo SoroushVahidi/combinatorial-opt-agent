@@ -1,0 +1,152 @@
+{
+  "baseline_strict_ready": 247,
+  "candidate_fixes": [
+    {
+      "candidate": "multiplicative_ratio_word_extraction",
+      "confidence": "HIGH",
+      "implementation_effort": "LOW",
+      "manuscript_value": "bug-fix quality; not a new method contribution",
+      "mechanism": "Extract words such as twice/double/triple as ratio tokens for ratio-like slots.",
+      "projected_rescues": 8,
+      "projected_strict_ready": 255,
+      "regression_risk": "LOW_SIMULATED"
+    },
+    {
+      "candidate": "oracle_text_exposed_numeric_extraction",
+      "confidence": "MEDIUM",
+      "implementation_effort": "MEDIUM",
+      "manuscript_value": "bug-fix quality unless tied to documented extraction class",
+      "mechanism": "Upper bound for missing values that are text-exposed but absent from current extractor.",
+      "projected_rescues": 7,
+      "projected_strict_ready": 254,
+      "regression_risk": "MEDIUM"
+    },
+    {
+      "candidate": "allow_mention_reuse",
+      "confidence": "LOW",
+      "implementation_effort": "LOW",
+      "manuscript_value": "not recommended; broad one-use-policy change",
+      "mechanism": "Permit one numeric mention to fill multiple slots.",
+      "projected_rescues": 25,
+      "projected_strict_ready": 272,
+      "regression_risk": "HIGH"
+    }
+  ],
+  "decision": "QUICK_FIX_GO",
+  "git_sha": "9629046",
+  "oracle_interventions": [
+    {
+      "intervention": "perfect_numeric_extraction_only",
+      "projected_strict_rate": 0.7673716012084593,
+      "projected_strict_ready": 254,
+      "rescued_queries": 7,
+      "rescued_query_ids": "nlp4lp_test_47 nlp4lp_test_98 nlp4lp_test_116 nlp4lp_test_128 nlp4lp_test_156 nlp4lp_test_166 nlp4lp_test_195"
+    },
+    {
+      "intervention": "perfect_slot_expected_type_only",
+      "projected_strict_rate": 0.8187311178247734,
+      "projected_strict_ready": 271,
+      "rescued_queries": 24,
+      "rescued_query_ids": "nlp4lp_test_14 nlp4lp_test_39 nlp4lp_test_46 nlp4lp_test_49 nlp4lp_test_66 nlp4lp_test_67 nlp4lp_test_70 nlp4lp_test_76 nlp4lp_test_79 nlp4lp_test_97 nlp4lp_test_101 nlp4lp_test_109 nlp4lp_test_118 nlp4lp_test_186 nlp4lp_test_195 nlp4lp_test_203 nlp4lp_test_204 nlp4lp_test_215 nlp4lp_test_223 nlp4lp_test_244 nlp4lp_test_245 nlp4lp_test_253 nlp4lp_test_260 nlp4lp_test_261"
+    },
+    {
+      "intervention": "perfect_candidate_filtering_only",
+      "projected_strict_rate": 0.7462235649546828,
+      "projected_strict_ready": 247,
+      "rescued_queries": 0,
+      "rescued_query_ids": ""
+    },
+    {
+      "intervention": "allow_mention_reuse_only",
+      "projected_strict_rate": 0.8217522658610272,
+      "projected_strict_ready": 272,
+      "rescued_queries": 25,
+      "rescued_query_ids": "nlp4lp_test_39 nlp4lp_test_47 nlp4lp_test_49 nlp4lp_test_70 nlp4lp_test_79 nlp4lp_test_98 nlp4lp_test_128 nlp4lp_test_156 nlp4lp_test_166 nlp4lp_test_195 nlp4lp_test_203 nlp4lp_test_204 nlp4lp_test_215 nlp4lp_test_223 nlp4lp_test_253 nlp4lp_test_284 nlp4lp_test_285 nlp4lp_test_289 nlp4lp_test_294 nlp4lp_test_300 nlp4lp_test_302 nlp4lp_test_303 nlp4lp_test_309 nlp4lp_test_320 nlp4lp_test_324"
+    },
+    {
+      "intervention": "perfect_current_candidate_choice",
+      "projected_strict_rate": 0.7613293051359517,
+      "projected_strict_ready": 252,
+      "rescued_queries": 5,
+      "rescued_query_ids": "nlp4lp_test_47 nlp4lp_test_98 nlp4lp_test_128 nlp4lp_test_156 nlp4lp_test_195"
+    },
+    {
+      "intervention": "perfect_extraction_plus_current_chooser",
+      "projected_strict_rate": 0.7673716012084593,
+      "projected_strict_ready": 254,
+      "rescued_queries": 7,
+      "rescued_query_ids": "nlp4lp_test_47 nlp4lp_test_98 nlp4lp_test_116 nlp4lp_test_128 nlp4lp_test_156 nlp4lp_test_166 nlp4lp_test_195"
+    },
+    {
+      "intervention": "perfect_type_inference_plus_current_chooser",
+      "projected_strict_rate": 0.8187311178247734,
+      "projected_strict_ready": 271,
+      "rescued_queries": 24,
+      "rescued_query_ids": "nlp4lp_test_14 nlp4lp_test_39 nlp4lp_test_46 nlp4lp_test_49 nlp4lp_test_66 nlp4lp_test_67 nlp4lp_test_70 nlp4lp_test_76 nlp4lp_test_79 nlp4lp_test_97 nlp4lp_test_101 nlp4lp_test_109 nlp4lp_test_118 nlp4lp_test_186 nlp4lp_test_195 nlp4lp_test_203 nlp4lp_test_204 nlp4lp_test_215 nlp4lp_test_223 nlp4lp_test_244 nlp4lp_test_245 nlp4lp_test_253 nlp4lp_test_260 nlp4lp_test_261"
+    },
+    {
+      "intervention": "perfect_extraction_plus_perfect_type_compatibility",
+      "projected_strict_rate": 0.770392749244713,
+      "projected_strict_ready": 255,
+      "rescued_queries": 8,
+      "rescued_query_ids": "nlp4lp_test_47 nlp4lp_test_98 nlp4lp_test_116 nlp4lp_test_128 nlp4lp_test_156 nlp4lp_test_166 nlp4lp_test_175 nlp4lp_test_195"
+    },
+    {
+      "intervention": "multiplicative_ratio_word_extraction_prototype",
+      "projected_strict_rate": 0.770392749244713,
+      "projected_strict_ready": 255,
+      "rescued_queries": 8,
+      "rescued_query_ids": "nlp4lp_test_47 nlp4lp_test_98 nlp4lp_test_116 nlp4lp_test_128 nlp4lp_test_156 nlp4lp_test_195 nlp4lp_test_245 nlp4lp_test_261"
+    }
+  ],
+  "oracle_schema_not_ready": 58,
+  "outputs": [
+    "README.md",
+    "candidate_fixes.csv",
+    "mechanism_exposure.csv",
+    "oracle_interventions.csv",
+    "per_query_failures.csv",
+    "per_slot_failures.csv",
+    "prototype_ratio_word_extraction.csv",
+    "root_cause_summary.csv",
+    "summary.json"
+  ],
+  "ratio_word_prototype": {
+    "baseline_strict_ready": 247,
+    "gain_ids": [
+      "nlp4lp_test_47",
+      "nlp4lp_test_98",
+      "nlp4lp_test_116",
+      "nlp4lp_test_128",
+      "nlp4lp_test_156",
+      "nlp4lp_test_195",
+      "nlp4lp_test_245",
+      "nlp4lp_test_261"
+    ],
+    "gains": 8,
+    "loss_ids": [],
+    "losses": 0,
+    "prototype_strict_ready": 255,
+    "replay_current_ready_schema_hits_only": 248
+  },
+  "resubmission_recommendation": "IMPLEMENT_ONE_QUICK_FIX_THEN_FREEZE_METHOD",
+  "root_cause_query_counts": {
+    "DUPLICATE_REUSE_REQUIREMENT": 33,
+    "INSUFFICIENT_NUMERIC_MENTIONS": 4,
+    "NUMBER_NOT_EXTRACTED": 9,
+    "OTHER": 1,
+    "SCHEMA_SLOT_REPRESENTATION_MISMATCH": 21,
+    "WRONG_EXPECTED_SLOT_TYPE": 24
+  },
+  "root_cause_slot_counts": {
+    "DUPLICATE_REUSE_REQUIREMENT": 66,
+    "INSUFFICIENT_NUMERIC_MENTIONS": 4,
+    "NUMBER_NOT_EXTRACTED": 10,
+    "OTHER": 23,
+    "OTHER_WRONG_VALUE_READY_NEUTRAL": 53,
+    "SCHEMA_SLOT_REPRESENTATION_MISMATCH": 69,
+    "WRONG_EXPECTED_SLOT_TYPE": 40
+  },
+  "schema_correct_not_ready": 54,
+  "timestamp_utc": "2026-08-14T01:26:36.488844+00:00"
+}

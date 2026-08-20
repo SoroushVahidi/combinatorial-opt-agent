@@ -1,0 +1,8 @@
+{
+  "dataset": "shushulei/OptMATH-Train",
+  "sample_size": 1000,
+  "macro_recall": 0.7496933287201585,
+  "average_recall": 0.7411300232062659,
+  "total_gold_numbers": 31793,
+  "total_matched_numbers": 23835
+}

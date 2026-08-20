@@ -1,0 +1,32 @@
+{
+  "split_unit": "instance_id (one NLP4LP query = one instance)",
+  "source": "src.learning.split_nlp4lp_corpus_for_benchmark, seed=42, ratios 70/15/15",
+  "reused_from": "existing NR10 split (docs/learning_runs/real_data_only_learning_check.md); rebuilt byte-reproducibly in this phase using the same script/seed, not a new split",
+  "instance_counts": {
+    "train": 230,
+    "dev": 50,
+    "test": 50
+  },
+  "pair_counts_original_5feature_corpus": {
+    "train": 9729,
+    "dev": 2230,
+    "test": 2339
+  },
+  "pair_counts_p0_corpus": {
+    "train": 11755,
+    "dev": 2633,
+    "test": 2736
+  },
+  "schema_level_leakage_check": {
+    "method": "compared schema_name (NLP4LP relevant_doc_id) sets across train/dev/test",
+    "finding": "every one of the 330 instances has a UNIQUE schema_name; train/dev/test schema-name sets are pairwise disjoint by construction (330 instances = 330 unique schemas)",
+    "train_test_schema_overlap": 0,
+    "train_dev_schema_overlap": 0,
+    "dev_test_schema_overlap": 0,
+    "conclusion": "no schema-level leakage risk beyond the already-verified instance-level split; an additional schema-disjoint diagnostic split was judged unnecessary since schema-level and instance-level disjointness coincide for this dataset"
+  },
+  "instance_level_integrity": "verified via src.learning.verify_split_integrity (train/dev/test files are distinct, non-identical) and by direct set-intersection check on instance_id (all three pairwise intersections empty)",
+  "label_provenance": "gold (mention, slot) pairs derived from results/eswa_revision/00_env/nlp4lp_gold_cache.json parameter values, matched to canonically-extracted mention values (tools.nlp4lp_downstream_utility._extract_opt_role_mentions) within relative tolerance 1e-6",
+  "claims_this_split_can_support": "grounding-quality comparison under an ORACLE (gold) schema assumption -- this split does NOT evaluate schema retrieval, since schema_name is taken directly from NLP4LP relevant_doc_id (gold), not from a retrieval baseline",
+  "claims_this_split_cannot_support": "a comparison directly against the canonical 331-query TF-IDF-retrieval InstantiationReady figures (0.5287 etc.) -- those numbers are retrieval-conditioned and computed over all 331 queries, not this 50-query oracle-schema subsample; M0 in this phase was therefore re-run on the identical 50-query subset with --baseline oracle for a fair comparison, see docs/LEARNED_GROUNDING_P0.md"
+}

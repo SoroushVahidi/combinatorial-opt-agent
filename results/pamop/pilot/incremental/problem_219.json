@@ -1,0 +1,457 @@
+{
+  "exception_message": "",
+  "exception_type": "",
+  "gold": {
+    "gold_comparison_eligible": true,
+    "gold_feasible": false,
+    "gold_latency_seconds": 0.03966,
+    "gold_objective": null,
+    "gold_reason": "aceback (most recent call last):\n  File \"/tmp/pamop_gold_219_ow_zihrz/optimus-code.py\", line 77, in <module>\n    variables['LowPowerUnits'] = LowPowerUnits.x\n                                 ^^^^^^^^^^^^^^^\n  File \"src/gurobipy/var.pxi\", line 128, in gurobipy._core.Var.__getattr__\n  File \"src/gurobipy/var.pxi\", line 156, in gurobipy._core.Var.getAttr\n  File \"src/gurobipy/_attrutil.pyx\", line 119, in gurobipy._attrutil._getattr\nAttributeError: Unable to retrieve attribute 'x'. Did you mean: 'X'?\n",
+    "gold_returncode": 1,
+    "gold_solver_success": false
+  },
+  "metadata": {
+    "constraint_count": 4,
+    "doc_id": "nlp4lp_test_218",
+    "family_proxy": "MILP|minimize|v2|p8|c4|tree5x1",
+    "lp_or_milp": "MILP",
+    "numeric_mentions": 8,
+    "objective_sense": "minimize",
+    "optimus_code_available": true,
+    "parameter_count": 8,
+    "partition_depth": 1,
+    "partition_node_count": 5,
+    "problem_id": 219,
+    "selection_bucket": "MILP|multi_constraint|high_numeric|large_tree|minimize",
+    "variable_count": 2
+  },
+  "per_problem_row": {
+    "completion_tokens": 3443,
+    "correction_calls": 15,
+    "correction_invoked": true,
+    "correction_iterations": 5,
+    "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
+    "deployment": "gpt-4.1-mini",
+    "estimated_cost_usd": "",
+    "failure_category": "E. AMPL_PARSE_FAILURE",
+    "final_ampl_hash": "20b123ee7bdeab51",
+    "final_ampl_parse_success": false,
+    "final_feasible": false,
+    "final_solver_status": null,
+    "g_extr_calls": 1,
+    "g_mod_calls": 5,
+    "gold_comparison_eligible": true,
+    "gold_feasible": false,
+    "gold_objective": null,
+    "gold_solver_success": false,
+    "initial_ampl_parse_success": false,
+    "initial_feasible_status": false,
+    "initial_generation_valid": "YES",
+    "initial_solver_success": false,
+    "latency_seconds": 62.704962,
+    "lp_or_milp": "MILP",
+    "objective_match_with_gold": "",
+    "objective_produced": false,
+    "objective_value": null,
+    "partition_depth": 1,
+    "partition_node_count": 5,
+    "problem_id": 219,
+    "prompt_hashes": "0790cd77dfd3dd07;1481f34d2aa67644;2d0abde8af7e3b54;2d3748c42c2a942d;3149a7ce0bb52578;3d868e44dd1f8709;40beac252be764f2;5b91a4a71adf4e12;64869f50d6685163;6593956103113d20;66a117831b6f037d;6fbc03433dbb49a1;aa8c9e916274d387;b39113a840409080;b871e1c8f7b76568;be62d49d7e13e1c9;c01cf56b0b35de24;cb2a7da4db4a931b;e4529d92b9210bb1;f359f911946dcecc;f42fb611b68b7a87",
+    "prompt_tokens": 13445,
+    "provider": "azure_openai",
+    "semantic_correctness_status": "NOT_EVALUABLE",
+    "semantically_wrong_but_feasible": "",
+    "temperature": 0.2,
+    "total_llm_calls": 21,
+    "total_tokens": 16888,
+    "underlying_model": "gpt-4.1-mini-2025-04-14"
+  },
+  "problem_id": 219,
+  "trace": {
+    "correction_iterations_observed": 5,
+    "final_ampl_hash": "20b123ee7bdeab51",
+    "final_success": false,
+    "initial_ampl_hash": "f352cd4880e89c62",
+    "iterations": [
+      {
+        "ampl_hash": "f352cd4880e89c62",
+        "comparison": {
+          "latency_seconds": 1.9482731850002892,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "f42fb611b68b7a87",
+          "provider": "azure_openai",
+          "reason": "The model is missing a critical parameter assignment (MaxLowPowerPercentage), causing a key constraint to be undefined and the model to fail. Remodeling is justified to ensure that all parameters are properly defined and assigned before solving.",
+          "targeted_issues": [
+            "missing parameter assignment",
+            "undefined constraint due to missing parameter",
+            "parameter validation and default values"
+          ],
+          "total_tokens": 540,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_c6tbpqzz/model.run, line 33, offset 1098):\nerror processing constraint LowPowerPercentageLimit:\n\tno value for MaxLowPowerPercentage\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "f352cd4880e89c62",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.04841160698560998,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_c6tbpqzz/model.run, line 33, offset 1098):\nerror processing constraint LowPowerPercentageLimit:\n\tno value for MaxLowPowerPercentage\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 0,
+        "remodel": {
+          "ampl_hash": "affb7f7015bfd697",
+          "changes": [
+            "Added a default value of 1 to the parameter MaxLowPowerPercentage to ensure it is always defined.",
+            "Removed duplicate constraint MinHighPowerModelsConstraint as it was redundant."
+          ],
+          "latency_seconds": 3.683483401022386,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "3d868e44dd1f8709",
+          "provider": "azure_openai",
+          "total_tokens": 1152,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that the parameter MaxLowPowerPercentage is assigned a valid numeric value before solving the model.",
+            "Check the data file or data section to confirm that MaxLowPowerPercentage is properly defined and loaded.",
+            "Add a default value or validate parameter assignments to prevent missing values for critical parameters."
+          ],
+          "diagnosis": "The model fails because the parameter MaxLowPowerPercentage is not assigned a value, causing the LowPowerPercentageLimit constraint to be undefined.",
+          "error_category": "model_error",
+          "latency_seconds": 3.0801513040205464,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "f359f911946dcecc",
+          "provider": "azure_openai",
+          "total_tokens": 909,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "affb7f7015bfd697",
+        "comparison": {
+          "latency_seconds": 2.2219010310363956,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "66a117831b6f037d",
+          "provider": "azure_openai",
+          "reason": "The model references the parameter MinHighPowerModels in a constraint without assigning it any value, which causes the model to fail during solving. This is a fundamental modeling error that must be corrected by ensuring the parameter is properly defined and assigned before solving.",
+          "targeted_issues": [
+            "undefined parameter MinHighPowerModels",
+            "missing parameter value assignment",
+            "parameter data inclusion"
+          ],
+          "total_tokens": 543,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_3ndake9i/model.run, line 32, offset 1029):\nerror processing constraint MinHighPowerRequirement:\n\tno value for MinHighPowerModels\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "affb7f7015bfd697",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.039685533032752573,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_3ndake9i/model.run, line 32, offset 1029):\nerror processing constraint MinHighPowerRequirement:\n\tno value for MinHighPowerModels\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 1,
+        "remodel": {
+          "ampl_hash": "155c5bba89a915e3",
+          "changes": [
+            "Added default value 0 to parameter MinHighPowerModels to ensure it is defined if no external data is provided."
+          ],
+          "latency_seconds": 6.351745894993655,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "cb2a7da4db4a931b",
+          "provider": "azure_openai",
+          "total_tokens": 1125,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that the parameter MinHighPowerModels is assigned a valid numeric value before solving the model.",
+            "Add a data section or external data file that defines MinHighPowerModels.",
+            "Alternatively, provide a default value for MinHighPowerModels in the model declaration if appropriate."
+          ],
+          "diagnosis": "The parameter MinHighPowerModels is used in a constraint but has no assigned value, causing the model to fail during solve.",
+          "error_category": "model_error",
+          "latency_seconds": 3.2615393119631335,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "b871e1c8f7b76568",
+          "provider": "azure_openai",
+          "total_tokens": 894,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "155c5bba89a915e3",
+        "comparison": {
+          "latency_seconds": 1.63418532803189,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "64869f50d6685163",
+          "provider": "azure_openai",
+          "reason": "The model references a parameter, LowPowerCoolingCapacity, that lacks an assigned value, causing the solver to fail. Remodeling is justified to ensure all required parameters are properly defined and assigned values, preventing solver errors.",
+          "targeted_issues": [
+            "missing parameter value for LowPowerCoolingCapacity",
+            "incomplete parameter definitions",
+            "lack of default or assigned values for critical parameters"
+          ],
+          "total_tokens": 542,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_1yjlsfvf/model.run, line 32, offset 1039):\nerror processing constraint CoolingCapacityRequirement:\n\tno value for LowPowerCoolingCapacity\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "155c5bba89a915e3",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.04741029895376414,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_1yjlsfvf/model.run, line 32, offset 1039):\nerror processing constraint CoolingCapacityRequirement:\n\tno value for LowPowerCoolingCapacity\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 2,
+        "remodel": {
+          "ampl_hash": "32dbe5a7e640e241",
+          "changes": [
+            "Added default value 1 to parameter LowPowerCoolingCapacity to ensure it has an assigned value."
+          ],
+          "latency_seconds": 4.973124078998808,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "0790cd77dfd3dd07",
+          "provider": "azure_openai",
+          "total_tokens": 1124,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that all required parameters, including LowPowerCoolingCapacity, are assigned values before solving the model.",
+            "Provide a data section or data file that defines LowPowerCoolingCapacity and other parameters.",
+            "Alternatively, set default values for parameters if appropriate to avoid missing values."
+          ],
+          "diagnosis": "The model references the parameter LowPowerCoolingCapacity in a constraint but this parameter has no assigned value, causing the solver to fail.",
+          "error_category": "model_error",
+          "latency_seconds": 2.4795972169958986,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "aa8c9e916274d387",
+          "provider": "azure_openai",
+          "total_tokens": 893,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "32dbe5a7e640e241",
+        "comparison": {
+          "latency_seconds": 2.2450371170416474,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "6fbc03433dbb49a1",
+          "provider": "azure_openai",
+          "reason": "The model fails to solve because the parameter HighPowerCoolingCapacity is not assigned any value, which is a critical input for the CoolingCapacityRequirement constraint. Remodeling is justified to ensure that all necessary parameters are properly defined and assigned values before solving.",
+          "targeted_issues": [
+            "missing parameter assignment for HighPowerCoolingCapacity",
+            "parameter initialization in data section",
+            "default value handling for HighPowerCoolingCapacity"
+          ],
+          "total_tokens": 549,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_sulnf5la/model.run, line 32, offset 1049):\nerror processing constraint CoolingCapacityRequirement:\n\tno value for HighPowerCoolingCapacity\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "32dbe5a7e640e241",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.03930277901235968,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_sulnf5la/model.run, line 32, offset 1049):\nerror processing constraint CoolingCapacityRequirement:\n\tno value for HighPowerCoolingCapacity\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 3,
+        "remodel": {
+          "ampl_hash": "f723b13053abdcd4",
+          "changes": [
+            "Added default value 1 to parameter HighPowerCoolingCapacity to ensure it is assigned before solving"
+          ],
+          "latency_seconds": 3.2136515179881826,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "2d0abde8af7e3b54",
+          "provider": "azure_openai",
+          "total_tokens": 1144,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that the parameter HighPowerCoolingCapacity is assigned a numeric value before solving the model.",
+            "Check the data section or data file to provide a value for HighPowerCoolingCapacity.",
+            "If using default values, consider setting a default for HighPowerCoolingCapacity similar to LowPowerCoolingCapacity."
+          ],
+          "diagnosis": "The parameter HighPowerCoolingCapacity used in the CoolingCapacityRequirement constraint is not assigned any value, causing the model to fail during solve.",
+          "error_category": "model_error",
+          "latency_seconds": 2.3539552619913593,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "40beac252be764f2",
+          "provider": "azure_openai",
+          "total_tokens": 900,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "f723b13053abdcd4",
+        "comparison": {
+          "latency_seconds": 2.062899354030378,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "e4529d92b9210bb1",
+          "provider": "azure_openai",
+          "reason": "The model fails to solve because the parameter TotalCoolingRequired is not assigned a value, which is a critical missing input affecting the CoolingCapacityRequirement constraint. Remodeling is justified to ensure that the prompt explicitly requires setting or validating this parameter to prevent unsolvable models.",
+          "targeted_issues": [
+            "missing parameter assignment for TotalCoolingRequired",
+            "validation of required input parameters",
+            "ensuring completeness of model data"
+          ],
+          "total_tokens": 550,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_rhdfe42v/model.run, line 32, offset 1059):\nerror processing constraint CoolingCapacityRequirement:\n\tno value for TotalCoolingRequired\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "f723b13053abdcd4",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0403445300180465,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_rhdfe42v/model.run, line 32, offset 1059):\nerror processing constraint CoolingCapacityRequirement:\n\tno value for TotalCoolingRequired\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 4,
+        "remodel": {
+          "ampl_hash": "20b123ee7bdeab51",
+          "changes": [
+            "Added a nonnegative domain declaration (>= 0) to parameter TotalCoolingRequired to enforce it must be assigned a valid numeric value before solving"
+          ],
+          "latency_seconds": 5.01298240700271,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "1481f34d2aa67644",
+          "provider": "azure_openai",
+          "total_tokens": 1160,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that the parameter TotalCoolingRequired is assigned a valid numeric value before solving the model.",
+            "Check the data file or data section to confirm that TotalCoolingRequired is defined and loaded correctly.",
+            "Add a default value to TotalCoolingRequired if appropriate, or explicitly specify it in the model input."
+          ],
+          "diagnosis": "The parameter TotalCoolingRequired used in the CoolingCapacityRequirement constraint is not assigned a value, causing the model to fail during solve.",
+          "error_category": "model_error",
+          "latency_seconds": 2.4232095920015126,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "3149a7ce0bb52578",
+          "provider": "azure_openai",
+          "total_tokens": 903,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "20b123ee7bdeab51",
+        "comparison": null,
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "ampl_process_failed",
+              "message": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_bo_pbbg_/model.run, line 32, offset 1064):\nerror processing constraint CoolingCapacityRequirement:\n\tno value for TotalCoolingRequired\nError: Exit code 2",
+              "severity": "error",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "20b123ee7bdeab51",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.04425672098295763,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "Error at _cmdno 3 executing \"solve\" command\n(file /tmp/pamop_ampl_bo_pbbg_/model.run, line 32, offset 1064):\nerror processing constraint CoolingCapacityRequirement:\n\tno value for TotalCoolingRequired\nError: Exit code 2",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 5,
+        "remodel": null,
+        "review": null
+      }
+    ],
+    "problem_id": "219",
+    "stopped_reason": "max_correction_iterations",
+    "total_tokens": 12928
+  }
+}

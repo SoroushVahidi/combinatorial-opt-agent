@@ -1,0 +1,53 @@
+{
+  "correction_harm_count": 0,
+  "correction_rescue_count": 4,
+  "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
+  "decision_gate": "A. PROCEED TO LARGER RUN",
+  "evaluated_count": 18,
+  "failure_categories": {
+    "A. SUCCESS_NO_CORRECTION": 9,
+    "B. SUCCESS_AFTER_CORRECTION": 4,
+    "E. AMPL_PARSE_FAILURE": 5
+  },
+  "failure_categories_defined_before_run": [
+    "A. SUCCESS_NO_CORRECTION",
+    "B. SUCCESS_AFTER_CORRECTION",
+    "C. MODEL_PARSE_FAILURE",
+    "D. AMPL_RENDER_FAILURE",
+    "E. AMPL_PARSE_FAILURE",
+    "F. SOLVER_INFEASIBLE",
+    "G. SOLVER_UNBOUNDED",
+    "H. SOLVER_RUNTIME_ERROR",
+    "I. CORRECTION_EXHAUSTED",
+    "J. DATA_FAILURE",
+    "K. ENVIRONMENT_FAILURE",
+    "L. OTHER_MODEL_FAILURE"
+  ],
+  "final_execution_success_count": 13,
+  "final_execution_success_rate": 0.7222222222222222,
+  "initial_execution_success_count": 9,
+  "initial_execution_success_rate": 0.5,
+  "label": "PILOT / SMALL-SLICE RESULTS",
+  "latency_seconds": {
+    "max": 29.441584,
+    "mean": 16.325081833333332,
+    "min": 9.305927
+  },
+  "mean_correction_iterations_among_corrected": 1.2,
+  "mean_tokens_per_problem": 5370.055555555556,
+  "objective_produced_count": 13,
+  "objective_produced_rate": 0.7222222222222222,
+  "selected_count": 18,
+  "semantic_correct_count": 8,
+  "semantic_correct_evaluable_count": 8,
+  "semantic_correct_rate": 0.7272727272727273,
+  "semantic_evaluable_count": 11,
+  "semantically_wrong_but_feasible_count": 3,
+  "slurm_job_id": null,
+  "solver_feasible_count": 13,
+  "solver_feasible_rate": 0.7222222222222222,
+  "status": "COMPLETED",
+  "success_after_correction": 4,
+  "success_without_correction": 9,
+  "total_tokens": 96661
+}

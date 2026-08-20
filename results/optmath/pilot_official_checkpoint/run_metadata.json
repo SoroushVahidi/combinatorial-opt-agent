@@ -1,0 +1,37 @@
+{
+  "device": "cuda:0",
+  "generation": {
+    "device_map": "auto",
+    "do_sample": true,
+    "dtype": "bfloat16",
+    "max_new_tokens": 8192,
+    "seed": 0,
+    "temperature": 0.8,
+    "top_p": null
+  },
+  "git_sha": "69df7c030fabb3bd785684b68a844929487603b9",
+  "gold_cache_path": "/home/soroush/combinatorial-opt-agent/results/eswa_revision/00_env/nlp4lp_gold_cache.json",
+  "input_path": "/home/soroush/combinatorial-opt-agent/data/processed/nlp4lp_eval_orig.jsonl",
+  "manifest_path": "/home/soroush/combinatorial-opt-agent/baselines/optmath/manifests/nlp4lp_common_manifest.json",
+  "mode": "real",
+  "model_id": "Aurora-Gem/OptMATH-Qwen2.5-7B",
+  "model_revision": "617fe77",
+  "numerical_tolerance": 0.05,
+  "output_path": "/home/soroush/combinatorial-opt-agent/results/optmath/pilot_official_checkpoint/results.jsonl",
+  "problem_ids": [
+    14,
+    23,
+    34,
+    59,
+    69,
+    72
+  ],
+  "prompt_template_sha256": "8c07f1e4e45e917241e4abd29432204861f8120e7b93c7834d4582e5369ddd25",
+  "prompt_version": "upstream-eval-evaluator-build-cot-prompt-v1",
+  "run_started_utc": "2026-08-15T05:25:47.591504+00:00",
+  "runner": "TransformersBackend (repository adaptation of official checkpoint)",
+  "solver": "gurobipy",
+  "subset": "pilot",
+  "timeout_seconds": 100,
+  "upstream_revision": "f15bbc4477c70db85ad148df8bcc1b780bca0f8c"
+}

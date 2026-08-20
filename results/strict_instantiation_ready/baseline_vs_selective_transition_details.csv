@@ -1,0 +1,13 @@
+query_id,metric,tfidf_typed_greedy_strict_ready,tfidf_selective_grounding_rerank_strict_ready,tfidf_typed_greedy_schema_correct,tfidf_selective_grounding_rerank_schema_correct,tfidf_typed_greedy_ordinary_ready,tfidf_selective_grounding_rerank_ordinary_ready,tfidf_typed_greedy_predicted_doc_id,tfidf_selective_grounding_rerank_predicted_doc_id,gold_doc_id
+nlp4lp_test_222,strict_ready,0,1,0,1,0,1,nlp4lp_test_214,nlp4lp_test_222,nlp4lp_test_222
+nlp4lp_test_268,strict_ready,0,1,0,1,0,1,nlp4lp_test_28,nlp4lp_test_268,nlp4lp_test_268
+nlp4lp_test_12,ordinary_ready,,,0,0,0,1,nlp4lp_test_260,nlp4lp_test_205,nlp4lp_test_12
+nlp4lp_test_106,ordinary_ready,,,0,0,0,1,nlp4lp_test_227,nlp4lp_test_7,nlp4lp_test_106
+nlp4lp_test_130,ordinary_ready,,,0,0,0,1,nlp4lp_test_120,nlp4lp_test_231,nlp4lp_test_130
+nlp4lp_test_194,ordinary_ready,,,0,0,0,1,nlp4lp_test_259,nlp4lp_test_32,nlp4lp_test_194
+nlp4lp_test_222,ordinary_ready,,,0,1,0,1,nlp4lp_test_214,nlp4lp_test_222,nlp4lp_test_222
+nlp4lp_test_268,ordinary_ready,,,0,1,0,1,nlp4lp_test_28,nlp4lp_test_268,nlp4lp_test_268
+nlp4lp_test_311,ordinary_ready,,,0,0,0,1,nlp4lp_test_321,nlp4lp_test_325,nlp4lp_test_311
+nlp4lp_test_317,ordinary_ready,,,0,0,0,1,nlp4lp_test_321,nlp4lp_test_325,nlp4lp_test_317
+nlp4lp_test_222,schema_correct,,,0,1,0,1,nlp4lp_test_214,nlp4lp_test_222,nlp4lp_test_222
+nlp4lp_test_268,schema_correct,,,0,1,0,1,nlp4lp_test_28,nlp4lp_test_268,nlp4lp_test_268

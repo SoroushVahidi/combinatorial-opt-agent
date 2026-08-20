@@ -1,0 +1,80 @@
+{
+  "absolute_pp_instantiation_ready": 0.024169184290030232,
+  "baseline": {
+    "baseline": "tfidf",
+    "exact20_on_hits": 0.24488825416660467,
+    "exact5_on_hits": 0.21946266791627614,
+    "instantiation_ready": 0.7764350453172205,
+    "key_overlap": 0.9217810386994677,
+    "key_overlap_hits": 0.994779307071666,
+    "key_overlap_miss": 0.18936507936507938,
+    "n": 331,
+    "param_coverage": 0.8794302206688914,
+    "param_coverage_hits": 0.9338584818651264,
+    "param_coverage_miss": 0.3333333333333333,
+    "schema_R1": 0.9093655589123867,
+    "type_match": 0.8515453411979093,
+    "type_match_hits": 0.9031943785266046,
+    "type_match_miss": 0.3333333333333333,
+    "variant": "orig"
+  },
+  "baseline_ready_wilson95": [
+    0.7285256232407429,
+    0.8180016814858666
+  ],
+  "candidate": {
+    "baseline": "tfidf_selective_grounding_rerank",
+    "exact20_on_hits": 0.24648742421779965,
+    "exact5_on_hits": 0.22123539145723448,
+    "instantiation_ready": 0.8006042296072508,
+    "key_overlap": 0.9368028581019517,
+    "key_overlap_hits": 0.9948137670909949,
+    "key_overlap_miss": 0.3090419501133787,
+    "n": 331,
+    "param_coverage": 0.9035994049589217,
+    "param_coverage_hits": 0.9342950595425843,
+    "param_coverage_miss": 0.5714285714285714,
+    "schema_R1": 0.9154078549848943,
+    "type_match": 0.8757145254879395,
+    "type_match_hits": 0.903833359526429,
+    "type_match_miss": 0.5714285714285714,
+    "variant": "orig"
+  },
+  "candidate_ready_wilson95": [
+    0.754221592400967,
+    0.8400895203891714
+  ],
+  "relative_instantiation_ready_change": 0.031128404669260812,
+  "transitions": {
+    "readiness": {
+      "baseline_only": 0,
+      "baseline_only_ids": [],
+      "both_ready": 257,
+      "candidate_only": 8,
+      "candidate_only_ids": [
+        "nlp4lp_test_106",
+        "nlp4lp_test_12",
+        "nlp4lp_test_130",
+        "nlp4lp_test_194",
+        "nlp4lp_test_222",
+        "nlp4lp_test_268",
+        "nlp4lp_test_311",
+        "nlp4lp_test_317"
+      ],
+      "mcnemar_p": 0.0078125,
+      "neither": 66
+    },
+    "schema": {
+      "baseline_only": 0,
+      "baseline_only_ids": [],
+      "both_correct": 301,
+      "both_wrong": 28,
+      "candidate_only": 2,
+      "candidate_only_ids": [
+        "nlp4lp_test_222",
+        "nlp4lp_test_268"
+      ],
+      "mcnemar_p": 0.5
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "comparison": "M0_canonical_oracle_typed_greedy vs M2_p0_learned_greedy",
+  "metric": "InstantiationReady",
+  "mean_m0": 0.86,
+  "mean_m2": 0.8,
+  "diff_m0_minus_m2": 0.05999999999999994,
+  "ci_lo_95": -0.06,
+  "ci_hi_95": 0.18,
+  "p_two_sided": 0.44,
+  "n": 50,
+  "B": 1000,
+  "seed": 42,
+  "method": "paired_bootstrap_test (tools/run_confidence_intervals.py, same methodology as results/eswa_revision/15_significance/)"
+}

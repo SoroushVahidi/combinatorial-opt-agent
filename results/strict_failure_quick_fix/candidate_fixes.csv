@@ -1,0 +1,4 @@
+candidate,mechanism,projected_rescues,projected_strict_ready,regression_risk,implementation_effort,confidence,manuscript_value
+multiplicative_ratio_word_extraction,Extract words such as twice/double/triple as ratio tokens for ratio-like slots.,8,255,LOW_SIMULATED,LOW,HIGH,bug-fix quality; not a new method contribution
+oracle_text_exposed_numeric_extraction,Upper bound for missing values that are text-exposed but absent from current extractor.,7,254,MEDIUM,MEDIUM,MEDIUM,bug-fix quality unless tied to documented extraction class
+allow_mention_reuse,Permit one numeric mention to fill multiple slots.,25,272,HIGH,LOW,LOW,not recommended; broad one-use-policy change

@@ -1,0 +1,4 @@
+metric,system_a,system_b,both,tfidf_typed_greedy_only,tfidf_selective_grounding_rerank_only,neither,mcnemar_p,mcnemar_note,tfidf_typed_greedy_only_ids,tfidf_selective_grounding_rerank_only_ids
+strict_ready,tfidf_typed_greedy,tfidf_selective_grounding_rerank,247,0,2,82,0.5,"exact binomial two-sided test on discordant pairs; n_discordant < 10, treat as a small-sample indication only",,nlp4lp_test_222 nlp4lp_test_268
+ordinary_ready,tfidf_typed_greedy,tfidf_selective_grounding_rerank,257,0,8,66,0.0078125,"exact binomial two-sided test on discordant pairs; n_discordant < 10, treat as a small-sample indication only",,nlp4lp_test_12 nlp4lp_test_106 nlp4lp_test_130 nlp4lp_test_194 nlp4lp_test_222 nlp4lp_test_268 nlp4lp_test_311 nlp4lp_test_317
+schema_correct,tfidf_typed_greedy,tfidf_selective_grounding_rerank,301,0,2,28,0.5,"exact binomial two-sided test on discordant pairs; n_discordant < 10, treat as a small-sample indication only",,nlp4lp_test_222 nlp4lp_test_268

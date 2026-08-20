@@ -59,6 +59,7 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import math
 import os
 import random
 import re
@@ -615,6 +616,29 @@ def _parse_num_token(tok: str, context_words: set[str]) -> NumTok:
     return NumTok(raw=t, value=val, kind="float")
 
 
+def _extract_multiplicative_ratio_tokens(query: str) -> list[tuple[int, NumTok]]:
+    """Extract ratio words such as "twice" and "three times" as percent-like tokens.
+
+    The raw/value/kind representation intentionally matches the Stage-A
+    diagnostic prototype in `tools/strict_failure_quick_fix_diagnostic.py`.
+    """
+    groups: tuple[tuple[tuple[str, ...], float, str], ...] = (
+        ((r"\btwice\b", r"\bdouble\b(?!-)", r"\btwo\s+times\b"), 2.0, "RATIO_WORD:twice"),
+        ((r"\btriple\b", r"\bthree\s+times\b"), 3.0, "RATIO_WORD:triple"),
+    )
+    out: list[tuple[int, NumTok]] = []
+    lower = query.lower()
+    for patterns, value, raw in groups:
+        starts = [
+            match.start()
+            for pattern in patterns
+            for match in re.finditer(pattern, lower)
+        ]
+        if starts:
+            out.append((min(starts), NumTok(raw=raw, value=value, kind="percent")))
+    return out
+
+
 def _extract_num_tokens(query: str, variant: str) -> list[NumTok]:
     toks = query.split()
     out: list[NumTok] = []
@@ -649,6 +673,7 @@ def _extract_num_tokens(query: str, variant: str) -> list[NumTok]:
             i += 1
             continue
         i += 1
+    out.extend(tok for _, tok in _extract_multiplicative_ratio_tokens(query))
     return out
 
 
@@ -812,6 +837,23 @@ def _extract_num_mentions(query: str, variant: str) -> list[MentionRecord]:
             continue
 
         i += 1
+    for char_index, tok in _extract_multiplicative_ratio_tokens(query):
+        prefix = query[:char_index]
+        token_index = len(prefix.split())
+        ctx_tokens = [
+            x.lower().strip(".,;:()[]{}") for x in toks[max(0, token_index - 8) : token_index + 9]
+        ]
+        ctx_tokens = [c for c in ctx_tokens if c]
+        mentions.append(
+            MentionRecord(
+                index=token_index,
+                tok=tok,
+                context_tokens=ctx_tokens,
+                sentence_tokens=sent_tokens,
+                cue_words=set(ctx_tokens) & CUE_WORDS,
+            )
+        )
+    mentions.sort(key=lambda m: (m.index, m.tok.raw))
     return mentions
 
 
@@ -5620,6 +5662,195 @@ def make_rerank_rank_fn(
 
     return rank_fn
 
+
+SELECTIVE_GROUNDING_RERANK_MARGIN = 0.05
+SELECTIVE_GROUNDING_RERANK_K = 5
+SELECTIVE_GROUNDING_RERANK_WEIGHTS = {
+    "retrieval": 0.50,
+    "coverage": 0.25,
+    "type_match": 0.25,
+}
+
+
+def _typed_greedy_schema_metrics(
+    query: str,
+    variant: str,
+    schema_id: str,
+    gold_id: str,
+    gold_by_id: dict[str, dict],
+) -> dict[str, Any]:
+    """Return current typed-greedy grounding metrics for one candidate schema.
+
+    This intentionally mirrors the typed branch inside run_setting(); it is used
+    only for schema reranking, while the final selected schema is still evaluated
+    by the normal downstream path.
+    """
+    gold = gold_by_id.get(gold_id) or {}
+    gold_params = gold.get("parameters") or {}
+    pred = gold_by_id.get(schema_id) or {}
+    pred_params = pred.get("parameters") or {}
+    pred_info = pred.get("problem_info") or {}
+    if isinstance(pred_info, dict) and isinstance(pred_info.get("parameters"), dict):
+        expected_params = list(pred_info["parameters"].keys())
+    elif isinstance(pred_params, dict):
+        expected_params = list(pred_params.keys())
+    else:
+        expected_params = []
+
+    gold_scalar_keys = {p for p, v in (gold_params or {}).items() if _is_scalar(v)}
+    pred_scalar_keys = {
+        p for p in expected_params if _is_scalar(gold_params.get(p))
+    } if isinstance(gold_params, dict) else set()
+    expected_scalar = list(pred_scalar_keys)
+    n_expected_scalar = len(expected_scalar)
+    key_overlap = (
+        len(pred_scalar_keys & gold_scalar_keys) / float(len(gold_scalar_keys))
+    ) if gold_scalar_keys else 0.0
+
+    candidates = list(_extract_num_tokens(query, variant))
+    extracted_number_count = len(candidates)
+    n_filled = 0
+    type_matches = 0
+    filled: dict[str, Any] = {}
+    incompatible = 0
+    for p in expected_scalar:
+        et = _expected_type(p)
+        idx, tok = _choose_token(et, candidates)
+        if tok is None:
+            continue
+        if idx is not None and 0 <= idx < len(candidates):
+            candidates.pop(idx)
+        n_filled += 1
+        filled[p] = tok.value if tok.value is not None else tok.raw
+        if _is_type_match(et, tok.kind):
+            type_matches += 1
+        else:
+            incompatible += 1
+
+    coverage = (n_filled / max(1, n_expected_scalar)) if n_expected_scalar else 0.0
+    type_match = (type_matches / max(1, n_filled)) if n_filled else 0.0
+    return {
+        "schema_id": schema_id,
+        "gold_id": gold_id,
+        "schema_hit": schema_id == gold_id,
+        "n_expected_scalar": n_expected_scalar,
+        "n_filled": n_filled,
+        "coverage": coverage,
+        "type_match": type_match,
+        "ready": coverage >= 0.8 and type_match >= 0.8,
+        "key_overlap": key_overlap,
+        "filled": filled,
+        "extracted_number_count": extracted_number_count,
+        "unmatched_mention_count": len(candidates),
+        "incompatible_assignment_count": incompatible,
+        "null_slot_count": max(0, n_expected_scalar - n_filled),
+    }
+
+
+def _normalize_retrieval_scores(scores: list[float]) -> list[float]:
+    """Stage-A min-max normalization over the top-k candidate scores."""
+    if not scores:
+        return []
+    lo = min(scores)
+    hi = max(scores)
+    span = hi - lo
+    if abs(span) <= 1e-12:
+        return [1.0 for _ in scores]
+    return [(s - lo) / span for s in scores]
+
+
+def _selective_grounding_consistency_score(
+    normalized_tfidf: float,
+    coverage: float,
+    type_match: float,
+) -> float:
+    w = SELECTIVE_GROUNDING_RERANK_WEIGHTS
+    return (
+        w["retrieval"] * normalized_tfidf
+        + w["coverage"] * coverage
+        + w["type_match"] * type_match
+    )
+
+
+def make_selective_grounding_rerank_rank_fn(
+    base_rank_fn,
+    gold_by_id: dict[str, dict],
+    query_to_gold: dict[str, str],
+    *,
+    variant: str,
+    margin_threshold: float = SELECTIVE_GROUNDING_RERANK_MARGIN,
+    k_retrieval: int = SELECTIVE_GROUNDING_RERANK_K,
+):
+    """Build the frozen Stage-B selective retrieval-grounding reranker."""
+    diagnostics: list[dict[str, Any]] = []
+
+    def rank_fn(query: str, top_k: int = 1) -> list[tuple[str, float]]:
+        ranked = base_rank_fn(query, top_k=max(k_retrieval, top_k, 2))
+        if not ranked:
+            return []
+        top1_score = ranked[0][1]
+        top2_score = ranked[1][1] if len(ranked) > 1 else top1_score
+        margin = top1_score - top2_score
+        gold_id = query_to_gold.get(query, "")
+        triggered = margin <= margin_threshold and len(ranked) >= 2 and bool(gold_id)
+        if not triggered:
+            diagnostics.append(
+                {
+                    "query": query,
+                    "triggered": False,
+                    "margin": margin,
+                    "selected_schema": ranked[0][0],
+                    "baseline_schema": ranked[0][0],
+                    "candidates": [],
+                }
+            )
+            return ranked[:top_k]
+
+        candidates = ranked[:k_retrieval]
+        norm_scores = _normalize_retrieval_scores([score for _sid, score in candidates])
+        scored: list[tuple[float, float, int, str, dict[str, Any]]] = []
+        candidate_diags: list[dict[str, Any]] = []
+        for idx, ((sid, raw_score), norm_score) in enumerate(zip(candidates, norm_scores), 1):
+            metrics = _typed_greedy_schema_metrics(query, variant, sid, gold_id, gold_by_id)
+            consistency = _selective_grounding_consistency_score(
+                norm_score,
+                float(metrics["coverage"]),
+                float(metrics["type_match"]),
+            )
+            scored.append((consistency, raw_score, -idx, sid, metrics))
+            candidate_diags.append(
+                {
+                    "schema_id": sid,
+                    "rank": idx,
+                    "retrieval_score": raw_score,
+                    "normalized_tfidf": norm_score,
+                    "coverage": metrics["coverage"],
+                    "type_match": metrics["type_match"],
+                    "ready": metrics["ready"],
+                    "consistency_score": consistency,
+                }
+            )
+        consistency, raw_score, neg_rank, selected_id, metrics = max(scored)
+        diagnostics.append(
+            {
+                "query": query,
+                "triggered": True,
+                "margin": margin,
+                "selected_schema": selected_id,
+                "baseline_schema": ranked[0][0],
+                "selected_score": consistency,
+                "selected_retrieval_score": raw_score,
+                "selected_rank": -neg_rank,
+                "candidates": candidate_diags,
+            }
+        )
+        selected_pair = (selected_id, consistency)
+        remaining = [(sid, score) for sid, score in ranked if sid != selected_id]
+        return [selected_pair] + remaining[: max(0, top_k - 1)]
+
+    setattr(rank_fn, "_selective_grounding_rerank_diagnostics", diagnostics)
+    return rank_fn
+
 # ── Section 13 – run_setting(): dispatch one (variant, method) run ────────────
 
 def run_setting(
@@ -6620,6 +6851,17 @@ def run_single_setting(
     effective_baseline = baseline_arg
     if baseline_arg == "oracle":
         rank_fn = None
+    elif baseline_arg == "tfidf_selective_grounding_rerank":
+        from retrieval.baselines import get_baseline
+        base = get_baseline("tfidf")
+        base.fit(catalog)
+        query_to_gold = {ex["query"]: ex["relevant_doc_id"] for ex in eval_items}
+        rank_fn = make_selective_grounding_rerank_rank_fn(
+            base.rank,
+            gold_by_id,
+            query_to_gold,
+            variant=variant,
+        )
     elif baseline_arg in ("tfidf_acceptance_rerank", "tfidf_hierarchical_acceptance_rerank"):
         from retrieval.baselines import get_baseline
         base = get_baseline("tfidf")
@@ -6749,7 +6991,7 @@ def main() -> None:
         "--baseline",
         type=str,
         default="tfidf",
-        help="One of: bm25, tfidf, lsa, openai, gemini, mistral, oracle; or tfidf_acceptance_rerank, tfidf_hierarchical_acceptance_rerank, bm25_acceptance_rerank, bm25_hierarchical_acceptance_rerank",
+        help="One of: bm25, tfidf, lsa, openai, gemini, mistral, oracle; or tfidf_selective_grounding_rerank / *_acceptance_rerank / *_hierarchical_acceptance_rerank",
     )
     p.add_argument(
         "--method",
@@ -6843,6 +7085,17 @@ def main() -> None:
     effective_baseline = args.baseline
     if args.baseline == "oracle":
         rank_fn = None
+    elif args.baseline == "tfidf_selective_grounding_rerank":
+        from retrieval.baselines import get_baseline
+        base = get_baseline("tfidf")
+        base.fit(catalog)
+        query_to_gold = {ex["query"]: ex["relevant_doc_id"] for ex in eval_items}
+        rank_fn = make_selective_grounding_rerank_rank_fn(
+            base.rank,
+            gold_by_id,
+            query_to_gold,
+            variant=args.variant,
+        )
     elif args.baseline in ("tfidf_acceptance_rerank", "tfidf_hierarchical_acceptance_rerank"):
         from retrieval.baselines import get_baseline
         base = get_baseline("tfidf")
@@ -6891,10 +7144,10 @@ def main() -> None:
             return llm_ranker.rank(query, top_k=top_k)
         setattr(rank_fn, "_llm_runner", llm_ranker)
     else:
-        if args.baseline not in ("bm25", "tfidf", "lsa"):
+        if args.baseline not in ("bm25", "tfidf", "lsa", "bge_m3"):
             raise SystemExit(
                 f"Unknown baseline: {args.baseline}. Use bm25, tfidf, lsa, openai, gemini, mistral, oracle, "
-                "or *_acceptance_rerank / *_hierarchical_acceptance_rerank."
+                "or tfidf_selective_grounding_rerank / *_acceptance_rerank / *_hierarchical_acceptance_rerank."
             )
         from retrieval.baselines import get_baseline
         baseline = get_baseline(args.baseline)

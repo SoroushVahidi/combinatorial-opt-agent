@@ -1,0 +1,540 @@
+{
+  "exception_message": "",
+  "exception_type": "",
+  "gold": {
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_latency_seconds": 0.04748,
+    "gold_objective": 40.0,
+    "gold_reason": "",
+    "gold_returncode": 0,
+    "gold_solver_success": true
+  },
+  "metadata": {
+    "constraint_count": 2,
+    "doc_id": "nlp4lp_test_22",
+    "family_proxy": "MILP|maximize|v1|p6|c2|tree1x0",
+    "lp_or_milp": "MILP",
+    "numeric_mentions": 8,
+    "objective_sense": "maximize",
+    "optimus_code_available": true,
+    "parameter_count": 6,
+    "partition_depth": 0,
+    "partition_node_count": 1,
+    "problem_id": 23,
+    "selection_bucket": "MILP|simple|high_numeric|small_tree|maximize",
+    "variable_count": 1
+  },
+  "per_problem_row": {
+    "completion_tokens": 3292,
+    "correction_calls": 15,
+    "correction_invoked": true,
+    "correction_iterations": 5,
+    "cost_status": "UNAVAILABLE_AZURE_ACCOUNT_PRICING_NOT_DETERMINED",
+    "deployment": "gpt-4.1-mini",
+    "estimated_cost_usd": "",
+    "failure_category": "D. AMPL_RENDER_FAILURE",
+    "final_ampl_hash": "804edaa0b35b61d8",
+    "final_ampl_parse_success": false,
+    "final_feasible": false,
+    "final_solver_status": null,
+    "g_extr_calls": 1,
+    "g_mod_calls": 2,
+    "gold_comparison_eligible": true,
+    "gold_feasible": true,
+    "gold_objective": 40.0,
+    "gold_solver_success": true,
+    "initial_ampl_parse_success": false,
+    "initial_feasible_status": false,
+    "initial_generation_valid": "NO",
+    "initial_solver_success": false,
+    "latency_seconds": 64.13099,
+    "lp_or_milp": "MILP",
+    "objective_match_with_gold": "",
+    "objective_produced": false,
+    "objective_value": null,
+    "partition_depth": 0,
+    "partition_node_count": 1,
+    "problem_id": 23,
+    "prompt_hashes": "09bd47f1a7b92e29;104171a4df0ddb1e;2df9f4ca5166bb86;3d6cdae7c98b6eee;4766c23263a0d9be;51413c39f03f423d;555e9271dbb5bbb2;767ced67fb9123cf;93fe924b87b09ff9;a2880b66dbbba86c;c4734bc9ffc2a910;cdb8d5ac034dc7bd;d02c3cc995b336b8;dc79836aedd0cc65;e17f719b485ff487;eadbbe73df575192;fd140b6231fdaa4e",
+    "prompt_tokens": 10868,
+    "provider": "azure_openai",
+    "semantic_correctness_status": "NOT_EVALUABLE",
+    "semantically_wrong_but_feasible": "",
+    "temperature": 0.2,
+    "total_llm_calls": 18,
+    "total_tokens": 14160,
+    "underlying_model": "gpt-4.1-mini-2025-04-14"
+  },
+  "problem_id": 23,
+  "trace": {
+    "correction_iterations_observed": 5,
+    "final_ampl_hash": "804edaa0b35b61d8",
+    "final_success": false,
+    "initial_ampl_hash": "17d502eda93aeff8",
+    "iterations": [
+      {
+        "ampl_hash": "17d502eda93aeff8",
+        "comparison": {
+          "latency_seconds": 2.1528904719743878,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "d02c3cc995b336b8",
+          "provider": "azure_openai",
+          "reason": "The model uses an undeclared index variable 'i' in summations, which is a fundamental modeling error that prevents the model from being valid or executable. Remodeling is necessary to include proper declaration of the desk types set and to use this set consistently as the index in variables and summations.",
+          "targeted_issues": [
+            "undeclared index variable",
+            "missing set declaration for desk types",
+            "incorrect summation indexing"
+          ],
+          "total_tokens": 524,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'i'.",
+              "severity": "error",
+              "symbol": "i"
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "17d502eda93aeff8",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 0,
+        "remodel": {
+          "ampl_hash": "250e55e2296df393",
+          "changes": [
+            "Declared set DeskTypes as 1..NumDeskTypes",
+            "Changed parameter and variable indexing to use DeskTypes set",
+            "Replaced all summations to index over DeskTypes instead of 1..NumDeskTypes"
+          ],
+          "latency_seconds": 4.840323545970023,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "fd140b6231fdaa4e",
+          "provider": "azure_openai",
+          "total_tokens": 1069,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Declare a set for desk types, for example: 'set DeskTypes := 1..NumDeskTypes;'",
+            "Use the declared set as the index in variables, parameters, and summations, e.g., 'var NumDesks {DeskTypes} integer >= 0;' and 'sum {i in DeskTypes} ...'."
+          ],
+          "diagnosis": "The model uses the index variable 'i' in summations without declaring a set or using a proper index set, causing 'i' to be an undeclared symbol.",
+          "error_category": "model_error",
+          "latency_seconds": 2.3245629990124144,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "93fe924b87b09ff9",
+          "provider": "azure_openai",
+          "total_tokens": 715,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "250e55e2296df393",
+        "comparison": {
+          "latency_seconds": 1.9437399469898082,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "cdb8d5ac034dc7bd",
+          "provider": "azure_openai",
+          "reason": "The model contains unresolved symbol errors due to the 'DeskTypes' set being referenced before it is declared or defined, which prevents the model from functioning correctly. Remodeling is justified to ensure the set declaration is properly included and ordered, and that indexing variables are correctly defined to resolve these errors.",
+          "targeted_issues": [
+            "undeclared or improperly declared set 'DeskTypes'",
+            "unresolved index variable 'i'",
+            "ordering and syntax of set declarations"
+          ],
+          "total_tokens": 539,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'DeskTypes'.",
+              "severity": "error",
+              "symbol": "DeskTypes"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'i'.",
+              "severity": "error",
+              "symbol": "i"
+            },
+            {
+              "category": "model_error",
+              "code": "unparsed_statement",
+              "message": "Model contains semicolon-terminated text not recognized by the lightweight validator.",
+              "severity": "warning",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "250e55e2296df393",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 1,
+        "remodel": {
+          "ampl_hash": "152b7a8961e939c4",
+          "changes": [
+            "Ensured 'set DeskTypes' declaration is placed immediately after 'param NumDeskTypes' and before any parameters or variables that use it to resolve unresolved symbol errors."
+          ],
+          "latency_seconds": 4.059896063990891,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "a2880b66dbbba86c",
+          "provider": "azure_openai",
+          "total_tokens": 1040,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure the 'set DeskTypes' declaration is properly defined and placed before it is used in parameters, variables, objective, and constraints.",
+            "Verify that the data section or data file correctly defines the 'DeskTypes' set and that it matches the model's expected indexing.",
+            "Check for any syntax errors or missing semicolons around the 'set DeskTypes' declaration that might prevent it from being recognized."
+          ],
+          "diagnosis": "The model references the set 'DeskTypes' before it is declared or defined, causing unresolved symbol errors for 'DeskTypes' and the index variable 'i'.",
+          "error_category": "model_error",
+          "latency_seconds": 2.6261716209701262,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "eadbbe73df575192",
+          "provider": "azure_openai",
+          "total_tokens": 822,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "152b7a8961e939c4",
+        "comparison": {
+          "latency_seconds": 2.265471128979698,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "c4734bc9ffc2a910",
+          "provider": "azure_openai",
+          "reason": "The model contains unresolved symbol errors due to the use of the set 'DeskTypes' and the index variable 'i' before proper declaration, which prevents correct parsing and solution generation. Remodeling is justified to ensure all sets and indices are properly declared and consistently used in summations and constraints.",
+          "targeted_issues": [
+            "Proper declaration and assignment of the set 'DeskTypes' before use",
+            "Correct introduction and consistent use of the index variable 'i' in summations and constraints",
+            "Syntax correctness to avoid parser errors related to declarations"
+          ],
+          "total_tokens": 574,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'DeskTypes'.",
+              "severity": "error",
+              "symbol": "DeskTypes"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'i'.",
+              "severity": "error",
+              "symbol": "i"
+            },
+            {
+              "category": "model_error",
+              "code": "unparsed_statement",
+              "message": "Model contains semicolon-terminated text not recognized by the lightweight validator.",
+              "severity": "warning",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "152b7a8961e939c4",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 2,
+        "remodel": {
+          "ampl_hash": "8c3e0e89ad2ab5ae",
+          "changes": [
+            "Declared the index variable 'i' explicitly in the variable declaration: 'var NumDesks {i in DeskTypes} integer >= 0;' to ensure proper indexing.",
+            "Ensured consistent use of 'i in DeskTypes' in all summations and constraints.",
+            "Verified that the set 'DeskTypes' is declared before any use in parameters, variables, and constraints."
+          ],
+          "latency_seconds": 5.030411646992434,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "09bd47f1a7b92e29",
+          "provider": "azure_openai",
+          "total_tokens": 1105,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that the set 'DeskTypes' is properly declared and assigned before it is used in any expressions or constraints.",
+            "Verify that the index variable 'i' is correctly introduced in all summations and constraints, for example, by using 'sum {i in DeskTypes}' consistently.",
+            "Check for any syntax errors or misplaced semicolons that might cause the parser to fail recognizing declarations."
+          ],
+          "diagnosis": "The model references the set 'DeskTypes' before it is declared or defined, causing unresolved symbol errors. Additionally, the index variable 'i' is used in expressions without proper context or declaration, leading to further unresolved symbol errors.",
+          "error_category": "model_error",
+          "latency_seconds": 2.65619119402254,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "dc79836aedd0cc65",
+          "provider": "azure_openai",
+          "total_tokens": 818,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "8c3e0e89ad2ab5ae",
+        "comparison": {
+          "latency_seconds": 3.153336109011434,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "3d6cdae7c98b6eee",
+          "provider": "azure_openai",
+          "reason": "The model contains unresolved symbol errors due to referencing the set 'DeskTypes' and index 'i' before their declaration, which prevents correct parsing and model construction. Remodeling is justified to ensure proper declaration and usage of sets and indices, enabling the model to be syntactically and semantically valid.",
+          "targeted_issues": [
+            "Proper declaration and assignment of the set 'DeskTypes' before use",
+            "Correct introduction and consistent use of the index variable 'i' in summations",
+            "Syntax correctness to allow parser recognition of sets and indices"
+          ],
+          "total_tokens": 560,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'DeskTypes'.",
+              "severity": "error",
+              "symbol": "DeskTypes"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'i'.",
+              "severity": "error",
+              "symbol": "i"
+            },
+            {
+              "category": "model_error",
+              "code": "unparsed_statement",
+              "message": "Model contains semicolon-terminated text not recognized by the lightweight validator.",
+              "severity": "warning",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "8c3e0e89ad2ab5ae",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 3,
+        "remodel": {
+          "ampl_hash": "152b7a8961e939c4",
+          "changes": [
+            "Declared the set 'DeskTypes' before using it in variable and constraint definitions",
+            "Replaced 'var NumDesks {i in DeskTypes}' with 'var NumDesks {DeskTypes}' to correctly declare the variable index",
+            "Ensured all summations explicitly introduce the index variable 'i' as 'sum {i in DeskTypes}'"
+          ],
+          "latency_seconds": 8.597240982053336,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "2df9f4ca5166bb86",
+          "provider": "azure_openai",
+          "total_tokens": 1085,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that the set 'DeskTypes' is properly declared and assigned before it is used in variable and constraint definitions.",
+            "Verify that the index variable 'i' is correctly introduced in all summation expressions, e.g., 'sum {i in DeskTypes} ...'.",
+            "Check for any syntax issues or misplaced statements that might prevent the parser from recognizing the set and index declarations."
+          ],
+          "diagnosis": "The model references the set 'DeskTypes' and index 'i' before they are declared or defined, causing unresolved symbol errors.",
+          "error_category": "model_error",
+          "latency_seconds": 3.1843443749821745,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "51413c39f03f423d",
+          "provider": "azure_openai",
+          "total_tokens": 805,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "152b7a8961e939c4",
+        "comparison": {
+          "latency_seconds": 2.519107816973701,
+          "model": "gpt-4.1-mini",
+          "needs_remodel": true,
+          "prompt_hash": "767ced67fb9123cf",
+          "provider": "azure_openai",
+          "reason": "The model contains unresolved symbol errors due to the use of the set 'DeskTypes' and the index variable 'i' before they are declared or properly introduced. These fundamental declaration and indexing issues prevent the model from being parsed and solved correctly, justifying a remodel to ensure proper set and index definitions and consistent syntax.",
+          "targeted_issues": [
+            "undeclared set 'DeskTypes'",
+            "improper or missing index variable 'i' declaration",
+            "syntax errors affecting declaration recognition"
+          ],
+          "total_tokens": 568,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'DeskTypes'.",
+              "severity": "error",
+              "symbol": "DeskTypes"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'i'.",
+              "severity": "error",
+              "symbol": "i"
+            },
+            {
+              "category": "model_error",
+              "code": "unparsed_statement",
+              "message": "Model contains semicolon-terminated text not recognized by the lightweight validator.",
+              "severity": "warning",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "152b7a8961e939c4",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 4,
+        "remodel": {
+          "ampl_hash": "804edaa0b35b61d8",
+          "changes": [
+            "Added explicit indexing 'i in DeskTypes' in BudgetLimit and SpaceLimit constraints to properly declare the index variable.",
+            "Reformatted BudgetLimit and SpaceLimit constraints to use indexed constraints syntax to avoid unresolved symbol errors.",
+            "Ensured the set 'DeskTypes' is declared before any use and that all summations and constraints properly introduce the index variable 'i'."
+          ],
+          "latency_seconds": 4.888077520008665,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "4766c23263a0d9be",
+          "provider": "azure_openai",
+          "total_tokens": 1093,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        },
+        "review": {
+          "actionable_feedback": [
+            "Ensure that the set 'DeskTypes' is properly declared and assigned before it is used in any expressions or constraints.",
+            "Verify that the index variable 'i' is correctly introduced in all summations and constraints, for example, by using 'sum {i in DeskTypes}' syntax consistently.",
+            "Check for any syntax errors or misplaced semicolons that might prevent the parser from recognizing declarations and sets."
+          ],
+          "diagnosis": "The model references the set 'DeskTypes' before it is declared or defined, causing unresolved symbol errors. Additionally, the index variable 'i' is used in expressions without proper context or declaration, leading to further unresolved symbol errors.",
+          "error_category": "model_error",
+          "latency_seconds": 2.457283409021329,
+          "model": "gpt-4.1-mini",
+          "prompt_hash": "dc79836aedd0cc65",
+          "provider": "azure_openai",
+          "total_tokens": 820,
+          "underlying_model": "gpt-4.1-mini-2025-04-14"
+        }
+      },
+      {
+        "ampl_hash": "804edaa0b35b61d8",
+        "comparison": null,
+        "execution": {
+          "diagnostics": [
+            {
+              "category": "model_error",
+              "code": "missing_constraint",
+              "message": "AMPL model has no subject-to constraint.",
+              "severity": "error",
+              "symbol": null
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'DeskTypes'.",
+              "severity": "error",
+              "symbol": "DeskTypes"
+            },
+            {
+              "category": "model_error",
+              "code": "unresolved_symbol",
+              "message": "Expression references undeclared symbol 'i'.",
+              "severity": "error",
+              "symbol": "i"
+            },
+            {
+              "category": "model_error",
+              "code": "unparsed_statement",
+              "message": "Model contains semicolon-terminated text not recognized by the lightweight validator.",
+              "severity": "warning",
+              "symbol": null
+            }
+          ],
+          "error_category": "model_error",
+          "model_hash": "804edaa0b35b61d8",
+          "model_load_success": false,
+          "objective_value": null,
+          "parse_success": false,
+          "runtime_seconds": 0.0,
+          "solver_invocation_success": false,
+          "solver_status": null,
+          "stderr_tail": "",
+          "stdout_tail": "",
+          "success": false,
+          "timed_out": false
+        },
+        "iteration_number": 5,
+        "remodel": null,
+        "review": null
+      }
+    ],
+    "problem_id": "23",
+    "stopped_reason": "max_correction_iterations",
+    "total_tokens": 12137
+  }
+}

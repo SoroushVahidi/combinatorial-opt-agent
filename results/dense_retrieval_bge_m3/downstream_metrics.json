@@ -1,0 +1,23 @@
+{
+  "TF-IDF ratio-aware": {
+    "Coverage": 0.8886,
+    "TypeMatch": 0.8665,
+    "Exact20_on_hits": 0.2527,
+    "InstantiationReady": 0.8006,
+    "StrictInstantiationReady": 0.7704
+  },
+  "BGE-M3 ratio-aware": {
+    "Coverage": 0.9154,
+    "TypeMatch": 0.8946,
+    "Exact20_on_hits": 0.2358,
+    "InstantiationReady": 0.8248,
+    "StrictInstantiationReady": 0.8006
+  },
+  "Oracle ratio-aware": {
+    "Coverage": 0.9416,
+    "TypeMatch": 0.923,
+    "Exact20_on_hits": 0.2505,
+    "InstantiationReady": 0.8489,
+    "StrictInstantiationReady": 0.8489
+  }
+}
