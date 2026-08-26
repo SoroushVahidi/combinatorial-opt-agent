@@ -199,11 +199,16 @@ The following new/modified files were reviewed for secrets (scanned for key/toke
 
 ## 21. Commits Created
 
-Four logically separated commits were created (preservation/provenance evidence; corrected deterministic reproduction tooling; documentation/navigation cleanup; Stage-1 and Stage-2 audit reports) — see the actual commit log for exact SHAs and messages, reproduced in §22 below.
+Four logically separated commits were created on top of the fast-forwarded `689f62b`:
+
+1. `2e806fd` — `tools: add deterministic reproduction/verification scripts for Stage-1 findings`
+2. `f1aec94` — `docs: add DKE source-of-truth pointer and banner stale pre-DKE navigation docs`
+3. `8271445` — `docs: add SN Computer Science Stage-1 manuscript/repository consistency audit`
+4. `bfccb80` — `docs: add Stage-2 local/Wulver/GitHub reconciliation and evidence-preservation report`
 
 ## 22. Push Verification
 
-See the terminal summary (§23 and the final printed block) for `FINAL_LOCAL_HEAD` / `FINAL_REMOTE_HEAD` / `WORKTREE_CLEAN`, captured after the push.
+`git push origin main` succeeded with a clean fast-forward (`689f62b..bfccb80  main -> main`), no force required, no conflicts. Post-push: `FINAL_LOCAL_HEAD` = `FINAL_REMOTE_HEAD` = `bfccb80e22f4fca4223fba81dab3dbe3e2532a58`, 0 ahead / 0 behind, worktree clean except the pre-existing, intentionally-uncommitted EAAI figure PDF modifications noted in §2/§20.
 
 ## 23. Exact Recommended Stage-3 Changes
 
@@ -244,9 +249,9 @@ LARGER_SOLVER_EVIDENCE_ALREADY_EXISTS: NO
 IMPORTANT_LOCAL_ONLY_FILES_PRESERVED: YES
 IMPORTANT_WULVER_ONLY_FILES_PRESERVED: NONE
 COMMITS_CREATED: 4
-PUSH_SUCCESSFUL: <see final terminal message after push>
-FINAL_LOCAL_HEAD: <see final terminal message after push>
-FINAL_REMOTE_HEAD: <see final terminal message after push>
-WORKTREE_CLEAN: <see final terminal message after push>
+PUSH_SUCCESSFUL: YES
+FINAL_LOCAL_HEAD: bfccb80e22f4fca4223fba81dab3dbe3e2532a58
+FINAL_REMOTE_HEAD: bfccb80e22f4fca4223fba81dab3dbe3e2532a58
+WORKTREE_CLEAN: NO (3 pre-existing, unrelated, intentionally-uncommitted EAAI figure PDFs remain modified -- see Section 2/20)
 RECOMMENDED_STAGE3: Apply the 6 evidence-backed manuscript wording/number corrections (Exact20, DeepOR/OR-R1, OptMATH audit characterization, error-taxonomy figure, evaluation dates, funding TODO), then proceed to the SN Computer Science template rewrite.
 ```
