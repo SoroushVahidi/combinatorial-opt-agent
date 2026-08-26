@@ -23,7 +23,7 @@ Upload only the files listed below to Editorial Manager (plus the generated PDF 
 |---|---|
 | FINAL_PDF_SHA256 | `cdfabcc13db478d109a63d8dadac081ac728dc71e47e8e9b8995e53f7fcdf018` |
 | SUBMISSION_PACKAGE_SHA256 | `4d1f09075573e5d6099eb7671681718727a352a63928d3d83a2df858049c3751` (deterministic tar of package files) |
-| FINAL_GIT_COMMIT | *set after Stage-6 push* |
+| FINAL_GIT_COMMIT | 00e89c7809407fb99be53414d121a847e06ea24c |
 | CLEAN_ROOM_PAGE_COUNT | 41 |
 | UNDEFINED_CITATIONS | 0 |
 | UNRESOLVED_REFERENCES | 0 |
