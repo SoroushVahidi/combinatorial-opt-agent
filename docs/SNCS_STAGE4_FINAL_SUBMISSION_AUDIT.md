@@ -236,11 +236,16 @@ Created `manuscript/sncs/SUBMISSION_METADATA.md` with verified title, article ty
 
 ## 29. Commits
 
-See the actual commit log for exact SHAs (recorded after commit, Section 30).
+Four commits on top of Stage 3's final `ecd3e09`:
+
+1. `21f30e9` — `manuscript: fix stale cross-reference and table layout defect (Stage 4)`
+2. `79de4e2` — `manuscript: add SN Computer Science submission package and metadata`
+3. `9990da6` — `docs: update DKE source-of-truth pointer with Stage 3/4 completion status`
+4. `459af77` — `docs: add Stage-4 final submission audit and readiness report`
 
 ## 30. Push Verification
 
-See the terminal summary block below for final SHAs, captured after push.
+`git push origin main` succeeded with a clean fast-forward (`ecd3e09..459af77  main -> main`), no force required, no conflicts. Post-push: `FINAL_LOCAL_HEAD` = `FINAL_REMOTE_HEAD` = `459af778d1b3d379850c2eabff725a0966010ca7`, 0 ahead / 0 behind, worktree clean except the same pre-existing, unrelated EAAI figure PDFs.
 
 ## 31. Final Readiness Recommendation
 
@@ -278,10 +283,10 @@ BRANCH_REVIEW_COMPLETE: YES
 WULVER_STATUS: HUMAN_INTERACTIVE_LOGIN_REQUIRED
 SUBMISSION_METADATA_CREATED: YES
 SUBMISSION_CHECKLIST_CREATED: YES
-COMMITS_CREATED: <see final terminal message after push>
-PUSH_SUCCESSFUL: <see final terminal message after push>
-FINAL_LOCAL_HEAD: <see final terminal message after push>
-FINAL_REMOTE_HEAD: <see final terminal message after push>
+COMMITS_CREATED: 4
+PUSH_SUCCESSFUL: YES
+FINAL_LOCAL_HEAD: 459af778d1b3d379850c2eabff725a0966010ca7
+FINAL_REMOTE_HEAD: 459af778d1b3d379850c2eabff725a0966010ca7
 WORKTREE_CLEAN_EXCEPT_UNRELATED_EAAI_FILES: YES
 READY_TO_SUBMIT_TO_SN_COMPUTER_SCIENCE: YES
 AUTHOR_ACTIONS_REMAINING: Confirm the exact Azure OpenAI credit relationship (Funding); everything else is optional (cover letter, EAAI-figure disposition, branch cleanup, DKE-track times-font recompile).
