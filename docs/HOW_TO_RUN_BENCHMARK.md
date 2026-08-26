@@ -1,5 +1,10 @@
 # How to run the NLP4LP benchmark via GitHub Actions
 
+> **NOTE (2026-08-27):** references below to "manuscript-authoritative" numbers and
+> `RESULTS_PROVENANCE.md` describe the EAAI-era artifact set. For the current DKE/SN Computer
+> Science manuscript, authoritative results live in `results/final_resubmission_method/` and
+> siblings — see [`DKE_SOURCE_OF_TRUTH.md`](DKE_SOURCE_OF_TRUTH.md).
+
 This document explains how to trigger the **optional** NLP4LP downstream benchmark CI workflow (utility CSVs and related paths). It is **not** the same artifact as the **camera-ready EAAI tables** in `results/paper/eaai_camera_ready_tables/` — see **[`RESULTS_PROVENANCE.md`](RESULTS_PROVENANCE.md)** for which numbers are manuscript-authoritative.
 
 For **local** reproduction of EAAI subset experiments, see **[`HOW_TO_REPRODUCE.md`](HOW_TO_REPRODUCE.md)**.

@@ -1,5 +1,13 @@
 # How to Reproduce Paper Results
 
+> **NOTE (2026-08-27):** this document's commands and "canonical numbers" reproduce the
+> **EAAI-era** camera-ready tables, not the current DKE/SN Computer Science manuscript
+> (`manuscript/dke/main.tex`). To reproduce the numbers actually cited in the current
+> manuscript, use `results/final_resubmission_method/`, `results/oracle_recomputation_2026-08-15/`,
+> `results/dense_retrieval_bge_m3/`, and `tools/recompute_frozen_oracle.py` /
+> `tools/recompute_dke_significance.py` — see [`DKE_SOURCE_OF_TRUTH.md`](DKE_SOURCE_OF_TRUTH.md).
+> This file is left otherwise unedited as a correct historical guide to the EAAI-era artifacts.
+
 This document provides canonical commands for reproducing the EAAI manuscript results.
 
 ---

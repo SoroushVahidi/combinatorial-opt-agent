@@ -1,5 +1,9 @@
 # Results Provenance
 
+> **HISTORICAL / PRE-DKE (as of 2026-08-27).** This file documents provenance for the EAAI
+> manuscript only. It is superseded for the current SN Computer Science target by
+> [`DKE_SOURCE_OF_TRUTH.md`](DKE_SOURCE_OF_TRUTH.md).
+
 **Status:** Authoritative — canonical evidence source for the EAAI manuscript  
 **Last updated:** 2026-04-03
 

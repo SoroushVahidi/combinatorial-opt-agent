@@ -1,5 +1,11 @@
 # Project Status
 
+> **HISTORICAL / PRE-DKE (as of 2026-08-27).** This file predates the 2026-08-13→08-15 DKE
+> migration and the current manuscript target (SN Computer Science). It still headlines the
+> retracted 0.5287 InstantiationReady figure. For the current entry point, authoritative results,
+> and open issues, see [`docs/DKE_SOURCE_OF_TRUTH.md`](docs/DKE_SOURCE_OF_TRUTH.md). Kept unedited
+> below as a historical record of Phases 1-4 of the repository-polish effort.
+
 **Last verified:** 2026-08-13 (method novelty/efficiency audit added:
 `docs/METHOD_NOVELTY_EFFICIENCY_AUDIT_2026-08-13.md`; Phase 4 previously
 validated and RETRACTED Phase 3's headline claim after discovering the

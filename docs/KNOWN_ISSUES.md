@@ -1,5 +1,10 @@
 # Known Issues
 
+> **HISTORICAL / PRE-DKE (as of 2026-08-27).** Written for the EAAI-era codebase, predates the
+> DKE migration and current SN Computer Science target. See
+> [`DKE_SOURCE_OF_TRUTH.md`](DKE_SOURCE_OF_TRUTH.md) for current known issues
+> (Exact20 denominator, error-taxonomy staleness, DeepOR/OR-R1 provenance, etc.).
+
 Structured record of active limitations and resolved historical issues for the
 EAAI companion codebase.
 

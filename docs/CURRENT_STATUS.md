@@ -1,5 +1,9 @@
 # Current repository status (reviewer-facing)
 
+> **HISTORICAL / PRE-DKE (as of 2026-08-27).** Predates both the KAIS and DKE venue switches and
+> the frozen ratio-aware-extraction results. See [`DKE_SOURCE_OF_TRUTH.md`](DKE_SOURCE_OF_TRUTH.md)
+> for the current manuscript's authoritative results and open issues.
+
 **Last updated:** 2026-04-03 (Mistral Wulver submission attempts registered — blocked on job env key).
 **2026-08-11 note:** this file predates the KAIS venue switch (see
 [`../PROJECT_STATUS.md`](../PROJECT_STATUS.md) and

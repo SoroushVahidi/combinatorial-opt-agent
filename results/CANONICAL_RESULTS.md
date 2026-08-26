@@ -1,5 +1,13 @@
 # Canonical Results Manifest
 
+> **HISTORICAL / PRE-DKE (as of 2026-08-27).** This manifest was verified 2026-08-11 against
+> `manuscript/main.tex` (the now-superseded KAIS-era version). It does not reflect the
+> 2026-08-13→08-15 DKE migration or the frozen ratio-aware-extraction artifacts
+> (`results/final_resubmission_method/`, `results/oracle_recomputation_2026-08-15/`,
+> `results/dense_retrieval_bge_m3/`). For current authoritative results see
+> [`../docs/DKE_SOURCE_OF_TRUTH.md`](../docs/DKE_SOURCE_OF_TRUTH.md). Kept unedited below as a
+> historical record.
+
 **Purpose:** the single place a new agent checks to find the authoritative
 source for any result family, without reading old submission documents.
 Companion to [`canonical_results_manifest.json`](canonical_results_manifest.json)

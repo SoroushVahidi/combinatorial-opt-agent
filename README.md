@@ -1,5 +1,11 @@
 # Retrieval-assisted optimization schema grounding
 
+> **Current target: SN Computer Science (Springer Nature).** The KAIS framing below is
+> historical (superseded 2026-08-13→08-15). Manuscript source is now
+> [`manuscript/dke/main.tex`](manuscript/dke/main.tex); start at
+> [`docs/DKE_SOURCE_OF_TRUTH.md`](docs/DKE_SOURCE_OF_TRUTH.md) for current authoritative
+> results and open issues.
+
 **Companion repo for a manuscript submitted to Knowledge and Information Systems (KAIS), Springer Nature** (manuscript source: [`manuscript/`](manuscript/); see [`docs/KAIS_SOURCE_OF_TRUTH.md`](docs/KAIS_SOURCE_OF_TRUTH.md)): fixed-catalog **NLP4LP** benchmark, **deterministic scalar grounding**, and **restricted** engineering / **solver-backed subset** (SciPy HiGHS, 20 instances)—not a production product.
 
 **New agent or contributor? Start at [`PROJECT_STATUS.md`](PROJECT_STATUS.md)** — single up-to-date entry point (scientific goal, pipeline, authoritative results, what's implemented/failed, PaMOP baseline-reproduction status, next steps).

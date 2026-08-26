@@ -1,5 +1,9 @@
 # Scientific State
 
+> **HISTORICAL / PRE-DKE (as of 2026-08-27).** Last verified 2026-08-12, predates the DKE
+> migration and current SN Computer Science target. See
+> [`DKE_SOURCE_OF_TRUTH.md`](DKE_SOURCE_OF_TRUTH.md) for current authoritative results.
+
 **Purpose:** the detailed scientific handoff behind `PROJECT_STATUS.md`.
 Written so a new agent needs no chat history to continue this project.
 Last verified 2026-08-12 (Phase 4). Read
