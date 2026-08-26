@@ -95,7 +95,7 @@ Unlike most recent end-to-end text-to-optimization systems, the proposed groundi
 
 
 
-Table~\ref{tab:comparison_landscape} summarizes this landscape at the task level: recent systems predominantly emit complete models or solver code and are evaluated with end-to-end execution metrics, whereas the present work targets fixed-catalog schema retrieval plus deterministic scalar instantiation under InstantiationReady / Exact20.
+Table~\ref{tab:comparison_landscape} summarizes this landscape at the task level: recent systems predominantly emit complete models or solver code and are evaluated with end-to-end execution metrics, whereas the present work targets fixed-catalog schema retrieval plus deterministic scalar instantiation under InstantiationReady / Exact20. Because no external system exposes a directly comparable InstantiationReady protocol, Section~\ref{subsec:exp_grounding_baselines} reports a matched same-task comparison among already-implemented alternative grounding mechanisms under fixed retrieval.
 
 \begin{table}[t]
 \centering
@@ -230,7 +230,7 @@ t_i^{*} = \arg\max_{t \in \mathcal{T}\setminus \mathcal{U}_{i-1}} \mathrm{compat
 \end{equation}
 where $\mathcal{U}_{i-1}$ is the set of mentions already assigned in previous steps. The compatibility function prioritizes agreement between the expected slot type and the inferred mention type, together with deterministic tie-breaking based on local cues and extraction order. Once a mention is assigned, it is removed from the candidate pool and cannot be reused for later slots. This yields a one-pass deterministic assignment rule rather than a global combinatorial optimizer.
 
-More sophisticated assignment strategies could be explored, but the present study evaluates the typed-greedy procedure described above. It serves as a representative and fully deterministic baseline that directly exposes the core challenges of type compatibility and local tie-breaking. In exploratory repository-documented experiments (not part of the main benchmark reported here because they were evaluated under an earlier extraction configuration and are therefore not directly comparable to the frozen results above), a global exact bipartite max-weight-matching assignment over the same local compatibility score, and a selective top-$k$ schema-and-grounding reranking variant, were both found not to improve over typed-greedy once schema-gated correctly, and the reranking variant's apparent gain under the ordinary \textit{InstantiationReady} metric was traced to a wrong-schema artifact rather than a genuine grounding improvement (Section~\ref{subsec:exp_significance}). These negative findings are documented in the accompanying repository and motivate treating typed-greedy as a clear, unconfounded baseline rather than as a placeholder awaiting a better assignment rule. Regardless of the specific assignment heuristic, any such rule-based method shares the same underlying structure: deterministic numeric extraction, schema-conditioned scalar slot selection, coarse type inference, and no-reuse slot filling. This common backbone is summarized in Algorithm~\ref{alg:instantiation} and illustrated in Figure~\ref{fig:instantiation-pipeline}.
+More sophisticated assignment strategies could be explored, but the present study evaluates the typed-greedy procedure described above. It serves as a representative and fully deterministic baseline that directly exposes the core challenges of type compatibility and local tie-breaking. Section~\ref{subsec:exp_grounding_baselines} reports a matched same-task comparison under fixed TF--IDF retrieval: typed greedy and constrained assignment share the final ratio-aware mention extractor, while the remaining alternatives retain their intrinsic enriched extractors as part of their grounding definitions. Typed greedy remains best on \textit{InstantiationReady} and \textit{StrictInstantiationReady}, while some structurally different alternatives achieve higher conditional \textit{Exact20 (on hits)} at the cost of lower coverage. A selective top-$k$ schema-and-grounding reranking variant evaluated in repository diagnostics (not a same-task grounding-only comparison) showed an apparent \textit{InstantiationReady} gain that was traced to a wrong-schema artifact rather than a genuine grounding improvement (Section~\ref{subsec:exp_significance}). Regardless of the specific assignment heuristic, any such rule-based method shares the same underlying structure: deterministic numeric extraction, schema-conditioned scalar slot selection, coarse type inference, and no-reuse slot filling. This common backbone is summarized in Algorithm~\ref{alg:instantiation} and illustrated in Figure~\ref{fig:instantiation-pipeline}.
 
 Optional deterministic, lexicon-based tie-breaking cues can also be defined. For instance, slot names and local query contexts can be matched against a fixed lexicon of optimization-role cue words (e.g., terms indicating limits, cost coefficients, or cardinality bounds) to break ties among type-compatible candidates. While such heuristic role-matching rules can help resolve local ambiguities, they are not part of the primary configurations evaluated in our main benchmark, and they provide no formal feasibility or correctness guarantees.
 
@@ -405,8 +405,6 @@ Second, the strict schema-gated criterion (Eq.~\eqref{eq:strict_instantiation_re
 
 Third, the oracle control confirms that retrieval matters but is not the sole remaining challenge within this benchmark. Replacing the TF--IDF schema retriever with BGE-M3 while holding the ratio-aware deterministic grounding stage fixed improves \textit{InstantiationReady} from $0.8006$ to $0.8248$. Replacing the schema retriever with the oracle control (Oracle-TG) increases it further to $0.8489$ (with \textit{StrictInstantiationReady} rising to $0.8489$). The inclusion of an off-the-shelf dense retriever does not materially alter the benchmark-level diagnosis: schema identification remains comparatively strong (and dense retrieval improves it further), while the larger residual gap to perfect instantiation arises in schema-conditioned scalar grounding and parameter recovery. Dense retrieval improves overall schema identification and InstantiationReady, but not conditional Exact20 (on hits) ($0.2436$ for BGE-M3 vs.\ $0.2614$ for TF--IDF; Oracle $0.2505$). As defined in Section~\ref{subsec:exp_setup}, Exact20 uses a method-dependent denominator (291/303/320 comparable schema-hit queries), so this ordering reflects eligible-subset composition rather than a claim that weaker retrieval improves value grounding. The same oracle-does-not-dominate pattern appears on the small solver-backed subset (Section~\ref{subsec:exp_engineering}). Even when the correct schema is supplied, substantial difficulty remains in deciding which extracted quantity should fill which scalar slot. This is the central benchmark-level empirical point of the paper: on \textsc{NLP4LP}, schema retrieval is already comparatively strong, while downstream scalar grounding and parameter recovery remain the larger residual challenge.
 
-Alternative tie-breaking and assignment heuristics can be designed, but we focus on the reported typed-greedy configuration.
-
 Taken together, these results support a narrower but more defensible interpretation of system utility: on original benchmark inputs, the retrieval-assisted pipeline with deterministic grounding produces partial scalar instantiations for a substantial fraction of cases, and supplying the oracle schema does not close the remaining gap to full readiness. These downstream results are meaningful as benchmarked evidence about this restricted intermediate task, not as a claim of full semantic understanding or broad real-world optimization-model recovery.
 
 \begin{table}[t]
@@ -431,6 +429,39 @@ Taken together, these results support a narrower but more defensible interpretat
   \raggedright
   \footnotesize
   Abbreviations: TFIDF-TG = TF--IDF typed-greedy grounding; Oracle-TG = oracle schema selection with typed-greedy grounding; BGE-M3 = pretrained dense text encoder. All values are supported by the accompanying repository artifacts. \textit{Exact20 (on hits)} uses a single, uniformly applied denominator convention across all four rows: the mean of the per-query bounded-error indicator (Eq.~\eqref{eq:bounded_error}) over exactly the schema-hit queries that have a comparable predicted/gold numeric value, excluding (not zero-filling) schema-hit queries with no comparable value. The four rows accordingly condition on 291, 291, 303, and 320 comparable queries, respectively.
+\end{table}
+
+\subsection{Matched Same-Task Grounding Baselines}
+\label{subsec:exp_grounding_baselines}
+
+The main tables above hold retrieval fixed or vary it as a controlled factor, while keeping typed-greedy assignment as the production grounding rule. A remaining comparison question is whether other already-implemented same-task assignment mechanisms outperform typed greedy when evaluated under the same frozen TF--IDF retrieval setting, the same 331 original queries, the same fixed 335-schema catalog, and the same InstantiationReady / Exact20 definitions. Table~\ref{tab:nlp4lp-grounding-baselines} answers that question for a compact, predeclared set of structurally different grounding alternatives (typed greedy; constrained assignment; maximum-weight bipartite matching; optimization-role repair; search-structured beam assignment; and semantic-IR repair). Methods were selected for mechanism diversity before scores were inspected; no new hyperparameters were tuned against the 331 test labels.
+
+All rows use identical TF--IDF top-1 schema decisions. Typed greedy and constrained assignment share the final ratio-aware mention extractor. The remaining methods retain their intrinsic enriched mention extractors, because those extractors supply role or semantic tags required by their scoring/repair definitions; forcing the production token stream into those pipelines would change their scientific semantics. Metrics, query denominator, and Exact20 comparable-value rules are otherwise identical. Under this matched protocol, typed greedy remains best on both \textit{InstantiationReady} ($0.8006$) and \textit{StrictInstantiationReady} ($0.7704$). Every alternative is significantly worse on InstantiationReady under the same paired bootstrap convention used elsewhere in the paper ($B=10{,}000$, seed $42$; all $p\leq 0.0006$), and exact McNemar tests on StrictInstantiationReady likewise favor typed greedy. Several alternatives achieve substantially higher conditional Exact20 (on hits) -- for example search-structured grounding reaches $0.6397$ versus $0.2614$ for typed greedy -- but only by leaving more slots empty, which lowers Coverage and therefore InstantiationReady. This is useful baseline evidence rather than a reason to replace the production method: readiness-oriented grounding favors typed greedy, while more abstention-prone global/search/repair rules trade coverage for higher accuracy on the slots they do fill.
+
+\begin{table}[t]
+  \centering
+  \caption{Matched same-task grounding baselines on the $331$ original queries with TF--IDF retrieval held fixed. Only the grounding/assignment mechanism changes. Best InstantiationReady / StrictInstantiationReady values are shown in bold.}
+  \label{tab:nlp4lp-grounding-baselines}
+  \small
+  \setlength{\tabcolsep}{2.8pt}
+  \renewcommand{\arraystretch}{1.12}
+  \begin{tabular}{@{}lccccc@{}}
+    \toprule
+    Grounding method & Coverage & TypeMatch & Exact20 & InstReady & Strict \\
+    \midrule
+    Typed greedy (production) & 0.8886 & 0.8665 & 0.2614 & \textbf{0.8006} & \textbf{0.7704} \\
+    Constrained assignment & 0.8531 & 0.8745 & 0.5772 & 0.7613 & 0.7311 \\
+    Max-weight matching & 0.8436 & 0.8740 & 0.5225 & 0.7432 & 0.7130 \\
+    Optimization-role repair & 0.8436 & 0.8724 & 0.5210 & 0.7372 & 0.7069 \\
+    Search-structured grounding & 0.8195 & 0.8795 & 0.6397 & 0.7039 & 0.6737 \\
+    Semantic-IR repair & 0.8131 & 0.8483 & 0.4949 & 0.7160 & 0.6949 \\
+    \bottomrule
+  \end{tabular}
+
+  \vspace{2mm}
+  \raggedright
+  \footnotesize
+  Typed greedy and constrained assignment share the final ratio-aware extractor; the other rows use their intrinsic enriched extractors as part of their grounding definitions. \textit{Exact20 (on hits)} denominators are 291 comparable schema-hit queries for all rows except semantic-IR repair (285), under the same exclude-noncomparable convention as Table~\ref{tab:nlp4lp-downstream-main}.
 \end{table}
 
 \subsection{Error Analysis and Ablation Studies}
@@ -511,23 +542,23 @@ and report it as a robustness check, not as a replacement for the canonical metr
 \caption{Paired bootstrap significance tests ($B=10{,}000$ resamples, original queries) computed from the final per-query evaluation records. Diff is method A minus method B on the stated metric.}
 \label{tab:nlp4lp-significance}
 \small
-\setlength{\tabcolsep}{3pt}
-\begin{tabular}{lccc}
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}p{0.50\linewidth}ccc@{}}
   \toprule
   Comparison (metric) & Diff & 95\% CI & $p$ \\
   \midrule
-  TFIDF-TG (ratio-aware) vs.\ Oracle-TG (InstReady) & $-0.0483$ & $[-0.0755, -0.0242]$ & $<0.001$ \\
-  TFIDF-TG (ratio-aware) vs.\ Oracle-TG (Strict) & $-0.0785$ & $[-0.1088, -0.0514]$ & $<0.001$ \\
-  TFIDF-TG baseline vs.\ ratio-aware (Strict) & $+0.0242$ & $[0.0091, 0.0423]$ & $0.0006$ \\
-  BGE-M3 vs.\ TFIDF-TG (ratio-aware) (InstReady) & $+0.0242$ & $[0.0060, 0.0423]$ & $0.0053$ \\
-  BGE-M3 vs.\ TFIDF-TG (ratio-aware) (Strict) & $+0.0302$ & $[0.0060, 0.0544]$ & $0.0142$ \\
+  TFIDF-TG (ratio) vs.\ Oracle-TG (InstReady) & $-0.0483$ & $[-0.0755,\,-0.0242]$ & $<0.001$ \\
+  TFIDF-TG (ratio) vs.\ Oracle-TG (Strict) & $-0.0785$ & $[-0.1088,\,-0.0514]$ & $<0.001$ \\
+  TFIDF-TG baseline vs.\ ratio (Strict) & $+0.0242$ & $[0.0091,\,0.0423]$ & $0.0006$ \\
+  BGE-M3 vs.\ TFIDF-TG (ratio) (InstReady) & $+0.0242$ & $[0.0060,\,0.0423]$ & $0.0053$ \\
+  BGE-M3 vs.\ TFIDF-TG (ratio) (Strict) & $+0.0302$ & $[0.0060,\,0.0544]$ & $0.0142$ \\
   \bottomrule
 \end{tabular}
 
 \vspace{2mm}
 \raggedright
 \footnotesize
-The baseline versus ratio-aware extraction comparison (8 strict gains, 0 losses) is also significant under an exact McNemar test ($p=0.008$). CI = confidence interval. All five rows are reproducible from a single committed, deterministic script (paired percentile bootstrap, $B=10{,}000$, seed $42$, two-sided $p=2\min(P(\Delta\leq 0),P(\Delta>0))$ over the bootstrap resamples) applied to the frozen per-query records; see Code availability.
+The baseline versus ratio-aware extraction comparison (8 strict gains, 0 losses) is also significant under an exact McNemar test ($p=0.008$). CI = confidence interval. ``ratio'' abbreviates the ratio-aware extraction configuration. All five rows are reproducible from a single committed, deterministic script (paired percentile bootstrap, $B=10{,}000$, seed $42$, two-sided $p=2\min(P(\Delta\leq 0),P(\Delta>0))$ over the bootstrap resamples) applied to the frozen per-query records; see Code availability.
 \end{table}
 
 \begin{table}[t]
