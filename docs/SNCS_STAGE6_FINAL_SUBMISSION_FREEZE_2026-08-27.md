@@ -132,7 +132,14 @@ FINAL_PDF_SHA256: `cdfabcc13db478d109a63d8dadac081ac728dc71e47e8e9b8995e53f7fcdf
 
 ## 10. Final commit
 
-See git log after Stage-6 push; `FINAL_LOCAL_HEAD` must equal `FINAL_REMOTE_HEAD`.
+Stage-6 commits on `main` (after push, `FINAL_LOCAL_HEAD` == `FINAL_REMOTE_HEAD`):
+
+1. `ba3905e` — matched same-task grounding baseline artifacts/runner
+2. `3e6e2dc` — manuscript baseline table + significance layout + submission package
+3. `00e89c7` — Stage-6 freeze report + Stage-5 SHA note + reproducibility/manifest
+4. `b5ebfc8` (+ any follow-up) — upload-manifest SHA recording
+
+See `manuscript/sncs/FINAL_UPLOAD_MANIFEST.md` for `FINAL_GIT_COMMIT` after the final push.
 
 ---
 
