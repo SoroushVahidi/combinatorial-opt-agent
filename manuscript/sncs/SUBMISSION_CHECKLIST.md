@@ -22,7 +22,7 @@ Updated 2026-08-27 (Stage 6). See `docs/SNCS_STAGE6_FINAL_SUBMISSION_FREEZE_2026
 | Acknowledgment | ✅ DONE | Mother, Prof. Ioannis Koutis, Anders Borum (Secure ShellFish) |
 | Source package | ✅ DONE | `manuscript/sncs/submission_package/` |
 | Upload manifest | ✅ DONE | `manuscript/sncs/FINAL_UPLOAD_MANIFEST.md` |
-| Clean-room compilation | ✅ DONE | Isolated `/tmp` copy; 41 pages; 0 undefined citations/references; 0 overfull boxes |
+| Clean-room compilation | ✅ DONE | Isolated `/tmp` copy; **24 pages** after Stage-7 compression; 0 undefined citations/references; 0 overfull boxes |
 | Same-task grounding baselines | ✅ DONE | Stage-6 matched rerun; typed greedy best on InstReady/Strict |
 | Reproducibility verification | ✅ DONE | `docs/SNCS_REPRODUCIBILITY.md` + Stage-6 summary JSON |
 | GitHub synchronization | ✅ DONE (after Stage-6 push) | |

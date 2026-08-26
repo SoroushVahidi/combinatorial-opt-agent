@@ -8,7 +8,7 @@ Verified information for Editorial Manager entry. Nothing below is invented; fie
 - **Short title (running head):** Retrieval-Assisted Instantiation of Optimization Problems
 - **Article type:** Original Research (empirical/benchmark study)
 - **Manuscript source file:** `manuscript/sncs/main.tex` (or the copy in `manuscript/sncs/submission_package/` for upload)
-- **Compiled PDF:** `manuscript/sncs/submission_package/main.pdf` (built clean-room, 41 pages, 0 undefined citations, 0 unresolved references)
+- **Compiled PDF:** `manuscript/sncs/submission_package/main.pdf` (built clean-room, 24 pages after Stage-7 compression, 0 undefined citations, 0 unresolved references)
 
 ## Author
 
