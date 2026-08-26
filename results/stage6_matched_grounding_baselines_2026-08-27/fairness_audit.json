@@ -1,0 +1,86 @@
+{
+  "document_type": "stage6_same_task_grounding_baseline_fairness_audit",
+  "date": "2026-08-27",
+  "predeclared_before_scores": true,
+  "selection_criterion": "mechanism diversity among already-implemented same-task grounding methods; not performance-based",
+  "benchmark": {
+    "queries": "NLP4LP orig, 331",
+    "catalog": "data/catalogs/nlp4lp_catalog.jsonl (335 schemas)",
+    "eval": "data/processed/nlp4lp_eval_orig.jsonl",
+    "gold_cache": "results/eswa_revision/00_env/nlp4lp_gold_cache.json",
+    "retrieval": "TF-IDF top-1 (fixed)",
+    "pythonhashseed": "0",
+    "new_tuning_against_331_labels": false,
+    "human_intervention_per_output": false
+  },
+  "methods": [
+    {
+      "METHOD": "typed_greedy",
+      "IMPLEMENTATION_PATH": "tools/nlp4lp_downstream_utility.py (assignment_mode=typed; _choose_token over _extract_num_tokens)",
+      "SAME_RETRIEVAL": true,
+      "SAME_EXTRACTION": true,
+      "SAME_DATA": true,
+      "SAME_METRICS": true,
+      "NEW_TUNING": false,
+      "FAIR_FOR_TABLE": true,
+      "NOTES": "FINAL production reference; ratio-aware multiplicative tokens via _extract_multiplicative_ratio_tokens."
+    },
+    {
+      "METHOD": "constrained_assignment",
+      "IMPLEMENTATION_PATH": "tools/nlp4lp_downstream_utility.py (_constrained_assignment + _extract_num_mentions)",
+      "SAME_RETRIEVAL": true,
+      "SAME_EXTRACTION": true,
+      "SAME_DATA": true,
+      "SAME_METRICS": true,
+      "NEW_TUNING": false,
+      "FAIR_FOR_TABLE": true,
+      "NOTES": "Shares final ratio-aware extractor (_extract_num_mentions). Cleanest same-extractor control."
+    },
+    {
+      "METHOD": "max_weight_matching",
+      "IMPLEMENTATION_PATH": "tools/nlp4lp_downstream_utility.py (_run_max_weight_matching_grounding)",
+      "SAME_RETRIEVAL": true,
+      "SAME_EXTRACTION": "intrinsic_opt_role_extractor",
+      "SAME_DATA": true,
+      "SAME_METRICS": true,
+      "NEW_TUNING": false,
+      "FAIR_FOR_TABLE": true,
+      "NOTES": "Uses _extract_opt_role_mentions by scientific definition (role/bound tags required for scoring). Injecting production NumToks would change algorithmic semantics; left unmodified. Fair as mechanism-diverse same-task alternative with disclosed intrinsic extractor."
+    },
+    {
+      "METHOD": "optimization_role_repair",
+      "IMPLEMENTATION_PATH": "tools/nlp4lp_downstream_utility.py (_run_optimization_role_repair)",
+      "SAME_RETRIEVAL": true,
+      "SAME_EXTRACTION": "intrinsic_opt_role_extractor",
+      "SAME_DATA": true,
+      "SAME_METRICS": true,
+      "NEW_TUNING": false,
+      "FAIR_FOR_TABLE": true,
+      "NOTES": "Same intrinsic opt-role extractor/repair family as above; not surgically ratio-patched."
+    },
+    {
+      "METHOD": "search_structured_grounding",
+      "IMPLEMENTATION_PATH": "tools/search_structured_grounding.py (via assignment_mode)",
+      "SAME_RETRIEVAL": true,
+      "SAME_EXTRACTION": "intrinsic_opt_role_extractor",
+      "SAME_DATA": true,
+      "SAME_METRICS": true,
+      "NEW_TUNING": false,
+      "FAIR_FOR_TABLE": true,
+      "NOTES": "Beam-search assignment over opt-role mentions; extractor intrinsic to method."
+    },
+    {
+      "METHOD": "semantic_ir_repair",
+      "IMPLEMENTATION_PATH": "tools/nlp4lp_downstream_utility.py (_run_semantic_ir_repair)",
+      "SAME_RETRIEVAL": true,
+      "SAME_EXTRACTION": "intrinsic_semantic_ir_extractor",
+      "SAME_DATA": true,
+      "SAME_METRICS": true,
+      "NEW_TUNING": false,
+      "FAIR_FOR_TABLE": true,
+      "NOTES": "Optional distinct repair mechanism; uses _extract_enriched_mentions (digit-focused). Exact20 comparable denominator may differ (285 vs 291)."
+    }
+  ],
+  "excluded": [],
+  "decision": "At least two meaningful alternatives pass the fairness gate; rerun under frozen codebase and report matched table."
+}

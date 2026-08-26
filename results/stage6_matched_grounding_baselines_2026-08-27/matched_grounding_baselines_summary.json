@@ -1,0 +1,187 @@
+{
+  "benchmark": "NLP4LP orig, 331 queries",
+  "retrieval": "tfidf (fixed)",
+  "extraction": "frozen codebase: typed/constrained share ratio-aware; opt-role/semantic-IR use intrinsic extractors",
+  "pythonhashseed": "0",
+  "gold_cache": "results/eswa_revision/00_env/nlp4lp_gold_cache.json",
+  "git_sha": "d8bbc0c9fa82326fd9e012d4cfc74b080b43583e",
+  "methods": [
+    {
+      "method": "typed_greedy",
+      "assignment_mode": "typed",
+      "schema_R1": 0.9093655589123867,
+      "Coverage": 0.888565596873754,
+      "TypeMatch": 0.866549177576368,
+      "Exact20_on_hits": 0.2613912814943743,
+      "Exact20_n_comparable": 291,
+      "InstantiationReady": 0.8006042296072508,
+      "StrictInstantiationReady": 0.770392749244713,
+      "n": 331
+    },
+    {
+      "method": "constrained_assignment",
+      "assignment_mode": "constrained",
+      "schema_R1": 0.9093655589123867,
+      "Coverage": 0.8530611131064303,
+      "TypeMatch": 0.8744748956984607,
+      "Exact20_on_hits": 0.5772361563598677,
+      "Exact20_n_comparable": 291,
+      "InstantiationReady": 0.7613293051359517,
+      "StrictInstantiationReady": 0.7311178247734139,
+      "n": 331
+    },
+    {
+      "method": "max_weight_matching",
+      "assignment_mode": "max_weight_matching",
+      "schema_R1": 0.9093655589123867,
+      "Coverage": 0.8435696730258664,
+      "TypeMatch": 0.8740385076487797,
+      "Exact20_on_hits": 0.5225183846317867,
+      "Exact20_n_comparable": 291,
+      "InstantiationReady": 0.743202416918429,
+      "StrictInstantiationReady": 0.7129909365558912,
+      "n": 331
+    },
+    {
+      "method": "optimization_role_repair",
+      "assignment_mode": "optimization_role_repair",
+      "schema_R1": 0.9093655589123867,
+      "Coverage": 0.8435696730258664,
+      "TypeMatch": 0.8724020524624755,
+      "Exact20_on_hits": 0.5209679018957369,
+      "Exact20_n_comparable": 291,
+      "InstantiationReady": 0.7371601208459214,
+      "StrictInstantiationReady": 0.7069486404833837,
+      "n": 331
+    },
+    {
+      "method": "search_structured_grounding",
+      "assignment_mode": "search_structured_grounding",
+      "schema_R1": 0.9093655589123867,
+      "Coverage": 0.8195029039439915,
+      "TypeMatch": 0.8795481792460644,
+      "Exact20_on_hits": 0.6397326232377779,
+      "Exact20_n_comparable": 291,
+      "InstantiationReady": 0.7039274924471299,
+      "StrictInstantiationReady": 0.6737160120845922,
+      "n": 331
+    },
+    {
+      "method": "semantic_ir_repair",
+      "assignment_mode": "semantic_ir_repair",
+      "schema_R1": 0.9093655589123867,
+      "Coverage": 0.8131171111533648,
+      "TypeMatch": 0.8483226743045473,
+      "Exact20_on_hits": 0.4949331662489558,
+      "Exact20_n_comparable": 285,
+      "InstantiationReady": 0.716012084592145,
+      "StrictInstantiationReady": 0.6948640483383686,
+      "n": 331
+    }
+  ],
+  "significance_vs_typed_greedy": {
+    "constrained_assignment_instready": {
+      "comparison": "typed_greedy vs constrained_assignment",
+      "n": 331,
+      "diff": 0.0392749244712991,
+      "ci_95": [
+        0.01812688821752262,
+        0.06344410876132922
+      ],
+      "p_value": 0.0006,
+      "B": 10000,
+      "seed": 42
+    },
+    "constrained_assignment_strict_mcnemar": {
+      "a_only": 14,
+      "b_only": 1,
+      "discordant_n": 15,
+      "p_value": 0.0009765625,
+      "note": "exact binomial two-sided test on discordant pairs"
+    },
+    "max_weight_matching_instready": {
+      "comparison": "typed_greedy vs max_weight_matching",
+      "n": 331,
+      "diff": 0.05740181268882172,
+      "ci_95": [
+        0.030211480362537735,
+        0.08459214501510581
+      ],
+      "p_value": 0.0001,
+      "B": 10000,
+      "seed": 42
+    },
+    "max_weight_matching_strict_mcnemar": {
+      "a_only": 21,
+      "b_only": 2,
+      "discordant_n": 23,
+      "p_value": 6.604194641113281e-05,
+      "note": "exact binomial two-sided test on discordant pairs"
+    },
+    "optimization_role_repair_instready": {
+      "comparison": "typed_greedy vs optimization_role_repair",
+      "n": 331,
+      "diff": 0.06344410876132933,
+      "ci_95": [
+        0.03625377643504524,
+        0.09365558912386707
+      ],
+      "p_value": 0.0001,
+      "B": 10000,
+      "seed": 42
+    },
+    "optimization_role_repair_strict_mcnemar": {
+      "a_only": 23,
+      "b_only": 2,
+      "discordant_n": 25,
+      "p_value": 1.9431114196777344e-05,
+      "note": "exact binomial two-sided test on discordant pairs"
+    },
+    "search_structured_grounding_instready": {
+      "comparison": "typed_greedy vs search_structured_grounding",
+      "n": 331,
+      "diff": 0.09667673716012082,
+      "ci_95": [
+        0.05740181268882183,
+        0.13595166163141992
+      ],
+      "p_value": 0.0001,
+      "B": 10000,
+      "seed": 42
+    },
+    "search_structured_grounding_strict_mcnemar": {
+      "a_only": 38,
+      "b_only": 6,
+      "discordant_n": 44,
+      "p_value": 9.430375484953402e-07,
+      "note": "exact binomial two-sided test on discordant pairs"
+    },
+    "semantic_ir_repair_instready": {
+      "comparison": "typed_greedy vs semantic_ir_repair",
+      "n": 331,
+      "diff": 0.0845921450151057,
+      "ci_95": [
+        0.05740181268882172,
+        0.11480362537764355
+      ],
+      "p_value": 0.0001,
+      "B": 10000,
+      "seed": 42
+    },
+    "semantic_ir_repair_strict_mcnemar": {
+      "a_only": 25,
+      "b_only": 0,
+      "discordant_n": 25,
+      "p_value": 5.960464477539063e-08,
+      "note": "exact binomial two-sided test on discordant pairs"
+    }
+  },
+  "runtime_seconds": {
+    "typed_greedy": 0.8504555050749332,
+    "constrained_assignment": 0.5969524609390646,
+    "max_weight_matching": 0.5991780599579215,
+    "optimization_role_repair": 0.6093917989637703,
+    "search_structured_grounding": 1.2070707710226998,
+    "semantic_ir_repair": 0.3962305800523609
+  }
+}

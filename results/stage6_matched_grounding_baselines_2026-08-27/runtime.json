@@ -1,0 +1,8 @@
+{
+  "typed_greedy": 0.8504555050749332,
+  "constrained_assignment": 0.5969524609390646,
+  "max_weight_matching": 0.5991780599579215,
+  "optimization_role_repair": 0.6093917989637703,
+  "search_structured_grounding": 1.2070707710226998,
+  "semantic_ir_repair": 0.3962305800523609
+}

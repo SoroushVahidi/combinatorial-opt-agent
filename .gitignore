@@ -292,6 +292,10 @@ results/*
 # Exception: BGE-M3 dense retrieval baseline results (DKE Stage 1, 2026-08-15)
 !results/dense_retrieval_bge_m3/
 !results/dense_retrieval_bge_m3/**
+# Exception: Stage-6 matched same-task grounding baselines (SNCS, 2026-08-27)
+# -- small CSV/JSON only; PYTHONHASHSEED=0; gold from committed cache.
+!results/stage6_matched_grounding_baselines_2026-08-27/
+!results/stage6_matched_grounding_baselines_2026-08-27/**
 # Scratch exports under a run (partial CSV/JSON/interrupt); not curated rerun bundles
 results/rerun/gemini/*/paper/
 
