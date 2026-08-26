@@ -10,8 +10,14 @@ of how the numbers evolved but are **not** current — see the banner added to t
 
 ## Current manuscript
 
-- **Authoritative source:** [`manuscript/dke/main.tex`](../manuscript/dke/main.tex) (elsarticle
-  class; last finalized 2026-08-15). Compiled PDF: `manuscript/dke/main.pdf`.
+- **Authoritative submission source:** [`manuscript/sncs/main.tex`](../manuscript/sncs/main.tex)
+  (Springer Nature `sn-jnl` class, `sn-basic` numbered references; migrated 2026-08-27). Submission
+  package: `manuscript/sncs/submission_package/` (clean-room build verified, 39 pages, 0 undefined
+  citations/references). Metadata: `manuscript/sncs/SUBMISSION_METADATA.md`,
+  `manuscript/sncs/SUBMISSION_CHECKLIST.md`.
+- **Migration source (also corrected, kept for historical/DKE-track reference):**
+  [`manuscript/dke/main.tex`](../manuscript/dke/main.tex) (elsarticle class; scientifically
+  corrected 2026-08-27, same content as the SNCS version modulo template).
 - **Target journal:** SN Computer Science (Springer Nature).
 - **Superseded manuscript versions:** `manuscript/main.tex` / `manuscript/submission_package/main.tex`
   (byte-identical, 2026-08-11, KAIS-targeted, contains the retracted 0.5287-era numbers) and the
@@ -43,22 +49,31 @@ and Section 4 of the audit below.
 - [`docs/SNCS_STAGE2_LOCAL_WULVER_GITHUB_AUDIT_2026-08-27.md`](SNCS_STAGE2_LOCAL_WULVER_GITHUB_AUDIT_2026-08-27.md)
   — local/GitHub/Wulver reconciliation, MUST-FIX resolution mapping, and the deterministic
   reproduction/verification artifacts preserved in this stage.
+- [`docs/SNCS_STAGE3_MANUSCRIPT_SPRINGER_REPOSITORY_FINALIZATION_2026-08-27.md`](SNCS_STAGE3_MANUSCRIPT_SPRINGER_REPOSITORY_FINALIZATION_2026-08-27.md)
+  — all Stage-1 MUST-FIX items resolved and applied to the manuscript text; SN Computer Science
+  Springer migration.
+- [`docs/SNCS_STAGE4_FINAL_SUBMISSION_AUDIT.md`](SNCS_STAGE4_FINAL_SUBMISSION_AUDIT.md)
+  — final fresh read-through, official-requirement re-verification, a genuine table layout defect
+  found and fixed, clean-room build verification, and submission package preparation.
 
-## Known open issues (not yet fixed in the manuscript text — see Stage-1 report Section 13)
+## Issues found in Stages 1-2 — all now fixed in the manuscript text (Stage 3)
 
-1. Exact20 (on hits) uses an aggregation rule for TF-IDF/BGE-M3 inconsistent with its own stated
-   definition and with the Oracle row in the same table. Evidence:
-   `results/final_resubmission_method/exact20_denominator_audit.json` (`tools/audit_exact20_denominator.py`).
-2. The error-taxonomy table (`tab:nlp4lp-error-taxonomy`) is 8/9 rows a stale, unattributed
-   pre-bugfix carry-over. Partial current recount:
-   `results/final_resubmission_method/type_mismatch_recount_2026-08-27.json`
-   (`tools/recount_type_mismatch_frozen.py`).
-3. The DeepOR/OR-R1 provenance sentence is factually inconsistent with `docs/DEEPOR_PROVENANCE.md`
-   / `docs/ORR1_PROVENANCE.md`.
-4. The OptMATH-Train "single-reviewer manual audit" characterization does not match what
-   `scripts/verify_optmath_external.py` actually does (a second rule-based classifier).
-5. Three of five significance-table rows previously had no reproducible committed script; fixed by
-   `tools/recompute_dke_significance.py` → `results/final_resubmission_method/significance_recomputation_2026-08-27.json`.
+1. **Exact20 (on hits)** — corrected to a uniform, definition-consistent rule across TF-IDF/BGE-M3/
+   Oracle. Evidence: `results/final_resubmission_method/exact20_uniform_2026-08-27.json`
+   (`tools/compute_uniform_exact20.py`).
+2. **Error-taxonomy table** — replaced with an exact, reproducible, mutually exclusive 5-category
+   residual-error decomposition. Evidence: `results/final_resubmission_method/residual_error_analysis_2026-08-27.json`
+   (`tools/recompute_residual_error_analysis.py`).
+3. **DeepOR/OR-R1 provenance sentence** — corrected in both manuscripts (4 occurrences each) to
+   accurately state DeepOR has neither code nor a checkpoint, and OR-R1 has code but no released
+   checkpoint.
+4. **OptMATH-Train "single-reviewer manual audit"** — corrected to accurately describe an automated
+   second-pass rule-based classifier cross-check; the unsupported "148/150 generated-code omission"
+   claim was removed (no corroborating evidence exists).
+5. **Statistical reproduction** — all 5 significance-table rows (including the 3 previously
+   unreproduced ones) now reproduce exactly, including p-values, from
+   `tools/recompute_dke_significance.py`.
 
-None of the above have been edited into the manuscript yet — that is deliberately deferred to a
-later manuscript-editing stage (see the Stage-2 report's Section 23).
+All of the above are applied in both `manuscript/dke/main.tex` and `manuscript/sncs/main.tex`. The
+only remaining open item is an **author-confirmation** field (not evidence-dependent): the exact
+Azure OpenAI funding/credit disclosure — see `manuscript/sncs/SUBMISSION_METADATA.md`.
