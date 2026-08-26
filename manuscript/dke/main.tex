@@ -682,16 +682,7 @@ The author is deeply grateful to his mother for her continuous emotional support
 
 \section*{Declarations}
 
-\noindent\textbf{Funding.} This research did not receive any specific grant from funding agencies in the public, commercial, or not-for-profit sectors. The external large-language-model baselines reported in Section~\ref{subsec:exp_external} used Microsoft Azure OpenAI API access.
-% TODO(AUTHOR_CONFIRMATION_REQUIRED): confirm that the Microsoft Azure for Students
-% subscription credit (USD 100, valid approximately one year) is the funding source
-% of the Azure OpenAI calls used for the external baselines in Section
-% \ref{subsec:exp_external}, and that the disclosure sentence above is accurate;
-% otherwise rephrase. Google Cloud Research Credits, the Cohere Catalyst Grant, and
-% Fireworks/AMD credits are intentionally NOT acknowledged because they did not
-% demonstrably contribute to this paper's reported computation, and the external
-% LLM baselines are scientific comparison systems, not manuscript-preparation
-% assistance (which is disclosed separately below).
+\noindent\textbf{Funding.} This research did not receive any specific grant from funding agencies in the public, commercial, or not-for-profit sectors. The external large-language-model baseline experiments used Microsoft Azure OpenAI services; associated usage was supported by the standard Azure for Students educational credit available to the author.
 
 \noindent\textbf{Competing interests.} The author declares that there are no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
 
@@ -709,7 +700,7 @@ During the preparation of this work the author used ChatGPT and Gemini to improv
 
 \section*{Declaration of AI assistance in software development}
 
-During the research and development process, the author used Cursor and GitHub Copilot for coding assistance; the author reviewed, verified, and edited all code and takes full responsibility for the implementation. Note that the scalar grounding procedure evaluated in this paper is deterministic at inference time and does not itself rely on generative LLM inference; schema retrieval is evaluated using both deterministic lexical methods and the pretrained BGE-M3 dense encoder (with the exception of the external baselines evaluated separately in Section~\ref{subsec:exp_external}).
+During the research and software-development process, the author used Claude, Cursor, and GitHub Copilot for coding assistance. The author reviewed, verified, tested, and edited the resulting code and takes full responsibility for the implementation and reported results. Note that the scalar grounding procedure evaluated in this paper is deterministic at inference time and does not itself rely on generative LLM inference; schema retrieval is evaluated using both deterministic lexical methods and the pretrained BGE-M3 dense encoder (with the exception of the external baselines evaluated separately in Section~\ref{subsec:exp_external}).
 
 \bibliographystyle{elsarticle-num}
 \bibliography{references}
