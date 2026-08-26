@@ -1,0 +1,31 @@
+{
+  "source_file": "results/final_resubmission_method/nlp4lp_downstream_per_query_orig_tfidf.csv",
+  "n_total_queries": 331,
+  "n_schema_hit": 301,
+  "n_schema_hit_with_comparable_value": 291,
+  "n_schema_hit_without_comparable_value": 10,
+  "non_comparable_query_ids": [
+    "nlp4lp_test_293",
+    "nlp4lp_test_295",
+    "nlp4lp_test_296",
+    "nlp4lp_test_297",
+    "nlp4lp_test_298",
+    "nlp4lp_test_301",
+    "nlp4lp_test_304",
+    "nlp4lp_test_305",
+    "nlp4lp_test_306",
+    "nlp4lp_test_308"
+  ],
+  "exact20_comparable_subset_denominator": 0.2613912814943743,
+  "exact20_hits_denominator_zero_filled": 0.2527071857636642,
+  "manuscript_stated_definition": "manuscript/dke/main.tex lines 274-279: Exact20 (on hits) is computed only on the subset of schema-hit queries for which a comparable numeric prediction and gold value are both available for the slot under consideration.",
+  "definition_consistent_value": 0.2613912814943743,
+  "value_currently_printed_in_manuscript_table": 0.2527,
+  "value_currently_printed_matches_which_rule": "exact20_hits_denominator_zero_filled",
+  "authoritative_frozen_artifact_agreement_check": {
+    "results/final_resubmission_method/metrics.json exact20 (patched row)": 0.2613912814943743,
+    "recomputed_here": 0.2613912814943743,
+    "match": true
+  },
+  "conclusion": "Both 0.2527 and 0.2614 are computed from the same underlying frozen per-query file. They differ only in the aggregation rule: whether the 10 schema-hit queries with no comparable numeric value are excluded from the denominator (0.2614, matches the manuscript's own stated definition) or included and zero-filled (0.2527, the value actually printed in the manuscript's downstream table). See docs/SNCS_STAGE1_MANUSCRIPT_REPOSITORY_AUDIT_2026-08-26.md Section 6 for the full root-cause trace, including the BGE-M3 and Oracle arms."
+}

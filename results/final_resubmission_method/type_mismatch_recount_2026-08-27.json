@@ -1,0 +1,13 @@
+{
+  "source_file": "results/final_resubmission_method/nlp4lp_downstream_per_query_orig_tfidf.csv",
+  "manuscript_table_row": "Wrong type assignment (mainly float-related)",
+  "manuscript_value": 230,
+  "manuscript_value_source": "results/eswa_revision/13_tables/error_taxonomy_counts.csv (dated 2026-03-10, pre-`_is_type_match`-fix, pre-ratio-patch; explicitly disowned as stale by docs/CURRENT_BOTTLENECK_ANALYSIS.md)",
+  "n_schema_hit": 301,
+  "n_schema_hit_with_any_type_mismatch": 64,
+  "n_schema_hit_not_ready_with_type_mismatch": 36,
+  "recomputed_current_estimate": 36,
+  "independent_corroboration": "docs/METHOD_NOVELTY_EFFICIENCY_AUDIT_2026-08-13.md Section 3 (fresh, same-week diagnostic on the prepatch rerun) reports 30-33 type/unit-related failures among schema-hit, not-ready queries -- consistent order of magnitude with this recount.",
+  "caveat": "This is a coarse aggregate only (schema_hit=1 AND type_match<1, restricted to not-ready queries to match the manuscript row's intent). It does NOT establish that 'float' specifically dominates -- the current per-query artifact has no per-slot expected-type column, so the float/int/percent/currency attribution in the manuscript's parenthetical cannot be verified or falsified from existing frozen artifacts. A true per-type breakdown requires new per-slot instrumentation in the grounding pipeline (a small, deterministic, CPU-only code change and rerun -- not a new experiment requiring model/API inference -- but out of scope for this evidence-preservation stage).",
+  "conclusion": "The manuscript's figure of 230 is off by roughly 6.4x relative to the frozen post-patch pipeline and must not be used as current evidence."
+}

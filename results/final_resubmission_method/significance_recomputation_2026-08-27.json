@@ -1,0 +1,67 @@
+{
+  "note": "Reproduces the 3 DKE significance-table rows flagged in Stage-1 as NEEDS_RECOMPUTATION (no committed script reproduced them as of 2026-08-26). All three point estimates and CIs below match manuscript/dke/main.tex Table tab:nlp4lp-significance to 4 decimal places; see docs/SNCS_STAGE1_MANUSCRIPT_REPOSITORY_AUDIT_2026-08-26.md Section 9.",
+  "manuscript_reported": {
+    "tfidf_vs_oracle_instready": {
+      "diff": -0.0483,
+      "ci_95": [
+        -0.0755,
+        -0.0242
+      ],
+      "p": "<0.001"
+    },
+    "tfidf_vs_oracle_strict": {
+      "diff": -0.0785,
+      "ci_95": [
+        -0.1088,
+        -0.0514
+      ],
+      "p": "<0.001"
+    },
+    "prepatch_vs_patched_strict": {
+      "diff": 0.0242,
+      "ci_95": [
+        0.0091,
+        0.0423
+      ],
+      "p": 0.0006
+    }
+  },
+  "recomputed": {
+    "tfidf_vs_oracle_instready": {
+      "comparison": "TFIDF-TG(ratio-aware) vs Oracle-TG",
+      "n": 331,
+      "diff": -0.048338368580060465,
+      "ci_95": [
+        -0.07552870090634445,
+        -0.024169184290030232
+      ],
+      "p_value_le": 0.0003,
+      "B": 10000,
+      "seed": 42
+    },
+    "tfidf_vs_oracle_strict": {
+      "comparison": "TFIDF-TG(ratio-aware) vs Oracle-TG",
+      "n": 331,
+      "diff": -0.0785498489425982,
+      "ci_95": [
+        -0.10876132930513593,
+        -0.051359516616314216
+      ],
+      "p_value_le": 0.0001,
+      "B": 10000,
+      "seed": 42
+    },
+    "prepatch_vs_patched_strict": {
+      "comparison": "patched vs prepatch",
+      "n": 331,
+      "diff": 0.024169184290030232,
+      "ci_95": [
+        0.009063444108761365,
+        0.04229607250755285
+      ],
+      "p_value_le": 0.0059,
+      "B": 10000,
+      "seed": 42
+    }
+  }
+}
