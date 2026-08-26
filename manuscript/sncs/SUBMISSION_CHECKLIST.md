@@ -1,6 +1,6 @@
 # SN Computer Science — Final Submission Checklist
 
-Generated 2026-08-27 (Stage 4). See `docs/SNCS_STAGE4_FINAL_SUBMISSION_AUDIT.md` for full detail behind each row.
+Updated 2026-08-27 (Stage 5). See `docs/SNCS_STAGE4_FINAL_SUBMISSION_AUDIT.md` for full detail behind each row.
 
 | Item | Status | Notes |
 |---|---|---|
@@ -13,22 +13,22 @@ Generated 2026-08-27 (Stage 4). See `docs/SNCS_STAGE4_FINAL_SUBMISSION_AUDIT.md`
 | Figures | ✅ DONE | 1 figure (`nlp4lp_instantiation_pipeline_v2.png`), referenced and rendering correctly |
 | Tables | ✅ DONE | 13 tables; one layout defect found and fixed (Table 12 had drifted ~10 pages and mis-wrapped; now renders cleanly 2 pages after its discussion) |
 | References | ✅ DONE | 35 cited entries, 0 undefined citations, 0 unresolved references; spot-checked newest/highest-risk entry (DeepOR) against the official AAAI proceedings page — exact match |
-| Declarations (Funding/Competing/Ethics/CRediT/Data/Code/AI) | ⚠️ MOSTLY DONE | All present and accurate except Funding, which has one pending author-confirmation TODO (see below) |
-| Funding | ⚠️ NEEDS AUTHOR CONFIRMATION | Current wording is conservative and does not claim grant funding; author must confirm the exact Azure credit relationship (see `SUBMISSION_METADATA.md`) |
+| Declarations (Funding/Competing/Ethics/CRediT/Data/Code/AI) | ✅ DONE | Funding Case A confirmed; AI software disclosure includes Claude, Cursor, and GitHub Copilot |
+| Funding | ✅ DONE | Case A confirmed: no specific grant; Azure OpenAI usage supported by standard Azure for Students educational credit |
 | Competing interests | ✅ DONE | None declared |
 | Data availability | ✅ DONE | Gated NLP4LP disclosed; derived artifacts on GitHub |
 | Code availability | ✅ DONE | GitHub repository linked |
-| AI-use disclosure | ✅ DONE | Two separate declarations (writing assistance; software development assistance) |
+| AI-use disclosure | ✅ DONE | Writing: ChatGPT, Gemini. Software: Claude, Cursor, GitHub Copilot. Author retains full responsibility. |
 | Acknowledgment | ✅ DONE | Mother, Prof. Ioannis Koutis, Anders Borum (Secure ShellFish, not classified as funding) |
 | Source package | ✅ DONE | `manuscript/sncs/submission_package/` (main.tex, references.bib, sn-jnl.cls, sn-basic.bst, figures/, main.pdf) |
-| Clean-room compilation | ✅ DONE | Built from an isolated `/tmp` copy of only the submission package; 39 pages, 0 undefined citations/references, 0 missing files |
+| Clean-room compilation | ✅ DONE | Built from an isolated `/tmp` copy of only the submission package; 40 pages, 0 undefined citations/references, 0 missing files |
 | Repository URL | ✅ DONE | https://github.com/SoroushVahidi/combinatorial-opt-agent |
 | Repository commit SHA (at submission prep time) | See `docs/SNCS_STAGE4_FINAL_SUBMISSION_AUDIT.md` §30 for the exact final SHA | |
 | Reproducibility verification | ✅ DONE | 4 deterministic scripts reproduce every corrected number; see `docs/SNCS_REPRODUCIBILITY.md` |
 | GitHub synchronization | ✅ DONE (after this stage's push) | See Stage-4 report push verification |
 | Cover letter status | ⚠️ NOT DRAFTED | See "Cover letter readiness" note below; SN Computer Science does not mandate one, drafting deferred to author's discretion |
 | Supplementary material | ✅ N/A | None planned; all evidence lives in the linked GitHub repository, which is standard practice for this journal and already disclosed in Data/Code availability |
-| Azure-support confirmation | ⚠️ **AUTHOR ACTION REQUIRED** | The only remaining blocker; see `SUBMISSION_METADATA.md` Funding section |
+| Azure-support confirmation | ✅ DONE | Author confirmed standard Azure for Students educational credit (Case A) |
 
 ## Cover letter readiness (information only — no letter drafted)
 

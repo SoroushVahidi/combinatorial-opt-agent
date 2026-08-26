@@ -8,7 +8,7 @@ Verified information for Editorial Manager entry. Nothing below is invented; fie
 - **Short title (running head):** Retrieval-Assisted Instantiation of Optimization Problems
 - **Article type:** Original Research (empirical/benchmark study)
 - **Manuscript source file:** `manuscript/sncs/main.tex` (or the copy in `manuscript/sncs/submission_package/` for upload)
-- **Compiled PDF:** `manuscript/sncs/submission_package/main.pdf` (built clean-room, 39 pages, 0 undefined citations, 0 unresolved references)
+- **Compiled PDF:** `manuscript/sncs/submission_package/main.pdf` (built clean-room, 40 pages, 0 undefined citations, 0 unresolved references)
 
 ## Author
 
@@ -20,7 +20,7 @@ Verified information for Editorial Manager entry. Nothing below is invented; fie
 
 ## Abstract
 
-See `manuscript/sncs/main.tex` (`\abstract{...}`), 247 words, structured (Purpose/Methods/Results/Conclusion).
+See `manuscript/sncs/main.tex` (`\abstract{...}`), ≈250 words, structured (Purpose/Methods/Results/Conclusion).
 
 ## Keywords (6)
 
@@ -34,8 +34,10 @@ natural language processing; optimization modeling; knowledge representation; in
 
 ## Funding
 
-> **AUTHOR CONFIRMATION FIELD — do not submit without resolving.**
-> Current manuscript text: "This research did not receive any specific grant from funding agencies in the public, commercial, or not-for-profit sectors. The external large-language-model baselines reported in Section 4.8 used Microsoft Azure OpenAI API access." This wording is deliberately conservative and does not claim grant funding. Repository evidence (`docs/DKE_EXTERNAL_RESOURCE_PROVENANCE_2026-08-15.md`) indicates the Azure OpenAI calls were "highly likely" charged against an Azure for Students USD 100 credit, but this has not been personally confirmed by the author. See the Stage-4 report's Section 4 decision table for the exact wording to use once confirmed (Case A/B/C).
+- **Status:** Resolved (Case A / ordinary educational account credit).
+- **Manuscript wording:** "This research did not receive any specific grant from funding agencies in the public, commercial, or not-for-profit sectors. The external large-language-model baseline experiments used Microsoft Azure OpenAI services; associated usage was supported by the standard Azure for Students educational credit available to the author."
+- **Classification:** Standard Azure for Students educational credit (USD 100). Not a research grant, sponsored-research award, or research contract. No grant/contract/award number.
+
 
 ## Competing interests
 
@@ -47,7 +49,7 @@ The author's mother (for emotional support); Professor Ioannis Koutis (Ph.D. adv
 
 ## AI-use disclosure
 
-Two separate declarations in the manuscript: (1) generative AI (ChatGPT, Gemini) used to improve writing readability/language; (2) AI coding assistants (Cursor, GitHub Copilot) used during software development. Both state the author reviewed/edited all content and takes full responsibility.
+Two separate declarations in the manuscript: (1) generative AI (ChatGPT, Gemini) used to improve writing readability/language; (2) AI coding assistants (Claude, Cursor, GitHub Copilot) used during software development. Both state the author reviewed/edited all content and takes full responsibility.
 
 ## Suggested subject classification
 
