@@ -577,20 +577,21 @@ The proposed method performs fixed-catalog scalar grounding and does not generat
   \caption{Context and implementation provenance of the systems in the external-baseline assessment. ``Cases'' is the number of common-subset instances processed or evaluated under the system's native protocol. For the proposed method, Cases = 18 indicates that the same common-subset instances were processed under its native scalar-grounding protocol; because its output type is not comparable to full formulation/code generation, no shared end-to-end outcome cells are reported in Table~\ref{tab:ext-outcomes}. Provenance levels: NATIVE (proposed pipeline), INDEPENDENT (independent reconstruction of the published method), ADAPTED-OFFICIAL (official released checkpoint adapted to a common harness), GENERIC-ZERO-SHOT (a general-purpose model evaluated directly under the common harness rather than a reproduction of a published optimization-specific method). The proposed method is listed for context only; its native metrics are not comparable to the end-to-end cells in Table~\ref{tab:ext-outcomes}.}
   \label{tab:ext-context}
   \small
-  \setlength{\tabcolsep}{3.5pt}
-  \begin{tabularx}{\linewidth}{l l X X c}
+  \setlength{\tabcolsep}{3pt}
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabular}{@{}>{\raggedright\arraybackslash}p{1.9cm}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}p{3.55cm}c@{}}
     \toprule
     System & Provenance & Output representation & Solver environment / status & Cases \\
     \midrule
     Ours (this paper) & NATIVE & Scalar slot assignments on retrieved schema & No solver call in core benchmark & 18 \\
     PaMOP \cite{pan2025pamop} & INDEPENDENT & AMPL formulation + solver code & Local AMPL + HiGHS; 13/18 executed & 18 \\
-    ORLM \cite{huang2025orlm} & ADAPTED-OFFICIAL & LP formulation + solver code & Solver dependency (coptpy) unavailable; execution blocked & 18 \\
-    OptMATH \cite{lu2025optmath} & ADAPTED-OFFICIAL & LP formulation + solver code & Gurobi (gurobipy); 15/18 executed & 18 \\
-    Generic LLM (GPT-5.4-2026-03-05) & GENERIC-ZERO-SHOT & Gurobi solver code, zero-shot & Gurobi (gurobipy); 16/18 executed & 18 \\
-    DeepOR \cite{xiao2026deepor} & --- & Formulation (paper-described) & Neither official code nor a released checkpoint could be located; no evaluable artifact exists & 0 \\
-    OR-R1 \cite{ding2026orr1} & --- & Formulation + solver code & Official code is public, but no trained checkpoint was ever released; execution is not possible without one & 0 \\
+    ORLM \cite{huang2025orlm} & ADAPTED- OFFICIAL & LP formulation + solver code & Solver dependency (\texttt{coptpy}) unavailable; execution blocked & 18 \\
+    OptMATH \cite{lu2025optmath} & ADAPTED- OFFICIAL & LP formulation + solver code & Gurobi (\texttt{gurobipy}); 15/18 executed & 18 \\
+    Generic LLM (GPT-5.4- 2026-03-05) & GENERIC- ZERO-SHOT & Gurobi solver code, zero-shot & Gurobi (\texttt{gurobipy}); 16/18 executed & 18 \\
+    DeepOR \cite{xiao2026deepor} & --- & Formulation (paper-described) & No official code or released checkpoint located; no evaluable artifact exists & 0 \\
+    OR-R1 \cite{ding2026orr1} & --- & Formulation + solver code & Official code public; no checkpoint released; execution not possible & 0 \\
     \bottomrule
-  \end{tabularx}
+  \end{tabular}
 \end{table}
 
 \begin{table}[t]
@@ -653,7 +654,7 @@ The scope restrictions adopted throughout this paper (Section~\ref{subsec:method
 
 \emph{Limited direct comparison against end-to-end LLM systems.} Section~\ref{sec:related_work} discusses several recent end-to-end large-language-model-based optimization-modeling systems (e.g., OptiMUS, OptLLM, Chain-of-Experts, LLMOPT, OPT2CODE, ORLM, OptMATH) qualitatively, and the repository documents a contextual external-baseline assessment on a small common-18 subset in which PaMOP (an independent reconstruction rather than an official reproduction) completes 18/18 model-generation attempts (with 13 of 18 yielding executable AMPL files), OptMATH achieves 18/18 generation and 15/18 solver execution, and a generic LLM (acting as a generic zero-shot reference rather than an optimization-trained baseline) completes 16/18, while ORLM's released checkpoint execution is not applicable (N/A) because its solver dependency (\texttt{coptpy}) is unavailable, and DeepOR and OR-R1 have no evaluable released artifact (DeepOR has neither official code nor a checkpoint; OR-R1's official code is public but its checkpoint was never released), so neither could be evaluated in our common harness regardless of integration effort. However, this paper does not run these systems head-to-head against the proposed pipeline on the full \textsc{NLP4LP} benchmark. These systems target a different, broader task (full formulation and solver-code generation); a full-scale controlled evaluation of these end-to-end systems across the complete \textsc{NLP4LP} benchmark would require substantially greater model-access and computational resources and was outside the scope of this study. A controlled quantitative comparison is therefore left to future work.
 
-\emph{No external end-to-end framework validation or deployment study.} Section 4.8 provides external component-level validation of numeric extraction on OptMATH, but schema retrieval and schema-conditioned grounding remain evaluated only on NLP4LP. Consequently, cross-benchmark generalization of the complete framework remains untested. Similarly, no user study or production deployment was conducted; the practical-usefulness claims in this paper are limited to the restricted, benchmark-scoped, and subset-based evidence reported in Sections~\ref{subsec:exp_downstream}--\ref{subsec:exp_engineering}.
+\emph{No external end-to-end framework validation or deployment study.} Section~\ref{subsec:exp_external_validation} provides external component-level validation of numeric extraction on OptMATH, but schema retrieval and schema-conditioned grounding remain evaluated only on NLP4LP. Consequently, cross-benchmark generalization of the complete framework remains untested. Similarly, no user study or production deployment was conducted; the practical-usefulness claims in this paper are limited to the restricted, benchmark-scoped, and subset-based evidence reported in Sections~\ref{subsec:exp_downstream}--\ref{subsec:exp_engineering}.
 
 \subsection{Future Research Directions}
 \label{subsec:future_work}
