@@ -202,7 +202,7 @@ Five commits on top of Stage 2's final `43b329f`:
 
 ## 25. Push Verification
 
-See the terminal summary block below for final SHAs, captured after push.
+`git push origin main` succeeded with a clean fast-forward (`43b329f..9811c32  main -> main`), no force required, no conflicts. Post-push: `FINAL_LOCAL_HEAD` = `FINAL_REMOTE_HEAD` = `9811c329892ec6418a06fe02bd8022a300fe6488`, 0 ahead / 0 behind, worktree clean except the pre-existing, intentionally-uncommitted EAAI figure PDF modifications noted since Stage 1/2 (Section 4 remaining action).
 
 ## 26. Remaining Actions Before Editorial Manager Submission
 
@@ -243,9 +243,9 @@ UNRESOLVED_NUMERIC_MISMATCHES: 0
 REPOSITORY_REVIEWER_READY: YES
 BRANCH_CLEAN: YES (main only; 14 stale remote branches documented, not deleted)
 COMMITS_CREATED: 5
-PUSH_SUCCESSFUL: <see final terminal message after push>
-FINAL_LOCAL_HEAD: <see final terminal message after push>
-FINAL_REMOTE_HEAD: <see final terminal message after push>
+PUSH_SUCCESSFUL: YES
+FINAL_LOCAL_HEAD: 9811c329892ec6418a06fe02bd8022a300fe6488
+FINAL_REMOTE_HEAD: 9811c329892ec6418a06fe02bd8022a300fe6488
 READY_FOR_FINAL_SUBMISSION_AUDIT: YES
 REMAINING_BLOCKERS: Author must confirm the Azure-funding TODO comment before submission; everything else is complete.
 ```
