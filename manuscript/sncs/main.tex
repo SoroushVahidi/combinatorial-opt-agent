@@ -85,7 +85,7 @@ Our study addresses a narrower but complementary setting to the binding challeng
 \subsection{Position of the Present Work}
 \label{subsec:rw_position}
 
-Relative to the families above, this paper isolates fixed-catalog schema retrieval from schema-conditioned scalar grounding under InstantiationReady / Exact20. Grounding is deterministic and inference-time LLM-free; retrieval is evaluated with both lexical and BGE-M3 backbones. This is a cost--capability tradeoff relative to open-ended generative modeling, not a claim of universal superiority. Table~\ref{tab:comparison_landscape} summarizes the landscape without mixing incomparable accuracy numbers. Because no external system exposes a directly comparable InstantiationReady protocol, Section~\ref{subsec:exp_grounding_baselines} reports a matched same-task comparison among already-implemented grounding alternatives under fixed retrieval.
+Relative to the families above, this paper isolates fixed-catalog schema retrieval from schema-conditioned scalar grounding under the InstantiationReady and Exact20 (on hits) diagnostics defined in Section~\ref{subsec:exp_setup}. Grounding is deterministic and inference-time LLM-free; retrieval is evaluated with both lexical and BGE-M3 backbones. This is a cost--capability tradeoff relative to open-ended generative modeling, not a claim of universal superiority. Table~\ref{tab:comparison_landscape} summarizes the landscape without mixing incomparable accuracy numbers. Because no external system exposes a directly comparable InstantiationReady protocol, Section~\ref{subsec:exp_grounding_baselines} reports a matched same-task comparison among already-implemented grounding alternatives under fixed retrieval.
 
 \begin{table}[t]
 \centering
@@ -272,7 +272,7 @@ and counting a slot correct if $\mathrm{error}(i,s) \leq 0.20$. The denominator 
 \end{equation}
 The reported score is the mean over the 331-query denominator. The 0.8/0.8 threshold is a fixed diagnostic criterion; exact schema match is not a hard gate here (see StrictInstantiationReady in Section~\ref{subsec:exp_significance}).
 
-Unless noted, retrieval and readiness metrics use the full denominator; Exact20 is the sole conditional exception. We report paired bootstrap/McNemar tests and overlap sanitization diagnostics (Section~\ref{subsec:exp_significance}), the numeric-extraction ablation (Section~\ref{subsec:exp_error}), and three restricted structural/solver studies (Section~\ref{subsec:exp_engineering}). Table~\ref{tab:exp_blocks} summarizes blocks. Classical retrieval and grounding are CPU-compatible; BGE-M3 used GPU float32 L2-normalized 1024-d embeddings and cosine similarity without fine-tuning (Hugging Face \texttt{datasets} \cite{lhoest2021datasets}, \textsc{scikit-learn} \cite{pedregosa2011sklearn}). Implementation details and reproduction commands are in the repository reproducibility map.
+Unless noted, retrieval and readiness metrics use the full denominator; Exact20 is the sole conditional exception. Paired significance uses a percentile bootstrap with $B=10{,}000$ resamples and seed $42$, plus exact McNemar tests where noted (Section~\ref{subsec:exp_significance}). We also report overlap sanitization diagnostics, the numeric-extraction ablation (Section~\ref{subsec:exp_error}), and three restricted structural/solver studies (Section~\ref{subsec:exp_engineering}). Table~\ref{tab:exp_blocks} summarizes blocks. Classical retrieval and grounding are CPU-compatible; BGE-M3 used GPU float32 L2-normalized 1024-d embeddings and cosine similarity without fine-tuning (Hugging Face \texttt{datasets} \cite{lhoest2021datasets}, \textsc{scikit-learn} \cite{pedregosa2011sklearn}). Implementation-level commands remain in the repository reproducibility map.
 
 \begin{table}[t]
 \centering
@@ -297,7 +297,7 @@ Restricted solver-backed execution (20 inst.) & Real, restricted solver executio
 \subsection{Schema Retrieval Performance}
 \label{subsec:exp_retrieval}
 
-Table~\ref{tab:nlp4lp-retrieval-main} reports Schema R@1 across query variants for the 335-way catalog (random chance $\approx 0.0030$). Within this fixed catalog---not as an open-domain claim---retrieval is already strong: BGE-M3 reaches $0.9456$ on orig versus TF--IDF $0.9094$ (McNemar $p=0.0075$; 15 BGE-only vs.\ 3 TF--IDF-only discordant wins). Noisy results remain close to orig; short truncations drop all methods but keep them well above chance (BGE-M3 $0.8157$). Average ranks: BGE-M3 $0.9013$, TF--IDF $0.8641$, BM25 $0.8469$, LSA $0.8328$. We retain TF--IDF as the primary lexical downstream backbone and also evaluate BGE-M3 downstream to test whether residual grounding difficulty persists under stronger retrieval. Absolute levels in Table~\ref{tab:nlp4lp-retrieval-main} set the paper's interpretive baseline: in this catalog, scalar grounding is the larger residual challenge.
+Table~\ref{tab:nlp4lp-retrieval-main} reports Schema R@1 across query variants for the 335-way catalog (random chance $\approx 0.0030$). Within this fixed catalog---not as an open-domain claim---retrieval is already strong: BGE-M3 reaches $0.9456$ on orig versus TF--IDF $0.9094$ (McNemar $p=0.0075$; 15 BGE-only vs.\ 3 TF--IDF-only discordant wins). Noisy results remain close to orig; short truncations drop all methods but keep them well above chance (BGE-M3 $0.8157$). Average ranks: BGE-M3 $0.9013$, TF--IDF $0.8641$, BM25 $0.8469$, LSA $0.8328$. We retain TF--IDF as the primary lexical downstream backbone and also evaluate BGE-M3 downstream to test whether residual grounding difficulty persists under stronger retrieval. Absolute levels therefore set the paper's interpretive baseline: in this catalog, scalar grounding is the larger residual challenge.
 
 \begin{table}[t]
   \centering
@@ -320,7 +320,7 @@ Table~\ref{tab:nlp4lp-retrieval-main} reports Schema R@1 across query variants f
 \subsection{Downstream Utility for Problem Instantiation}
 \label{subsec:exp_downstream}
 
-Table~\ref{tab:nlp4lp-downstream-main} reports scalar-grounding outcomes on orig queries. TF--IDF with ratio-aware extraction reaches Coverage $0.8886$, TypeMatch $0.8665$, and InstantiationReady $0.8006$; BGE-M3 with the same grounding improves InstantiationReady to $0.8248$ (Strict $0.8006$). TF--IDF ratio-aware remains strongest on Exact20 (on hits) at $0.2614$. Adding the schema gate (Eq.~\eqref{eq:strict_instantiation_ready}) lowers TF--IDF ratio-aware readiness from $0.8006$ to Strict $0.7704$, so a modest number of wrong-schema queries still meet ordinary thresholds. Replacing TF--IDF with BGE-M3 or with Oracle-TG (InstantiationReady $0.8489$) confirms that retrieval helps but does not close the gap: residual difficulty is value-to-slot grounding. Exact20 ordering (BGE-M3 $0.2436$, Oracle $0.2505$) reflects method-dependent denominators (Section~\ref{subsec:exp_setup}), not a claim that weaker retrieval improves value accuracy. These results characterize the restricted intermediate task, not full semantic understanding or open-domain model recovery.
+On the original queries, scalar-grounding outcomes follow the pattern in Table~\ref{tab:nlp4lp-downstream-main}. TF--IDF with ratio-aware extraction reaches Coverage $0.8886$, TypeMatch $0.8665$, and InstantiationReady $0.8006$; BGE-M3 with the same grounding improves InstantiationReady to $0.8248$ (Strict $0.8006$). TF--IDF ratio-aware remains strongest on Exact20 (on hits) at $0.2614$. Adding the schema gate (Eq.~\eqref{eq:strict_instantiation_ready}) lowers TF--IDF ratio-aware readiness from $0.8006$ to Strict $0.7704$, so a modest number of wrong-schema queries still meet ordinary thresholds. Replacing TF--IDF with BGE-M3 or with Oracle-TG (InstantiationReady $0.8489$) confirms that retrieval helps but does not close the gap: residual difficulty is value-to-slot grounding. Exact20 ordering (BGE-M3 $0.2436$, Oracle $0.2505$) reflects method-dependent denominators (Section~\ref{subsec:exp_setup}), not a claim that weaker retrieval improves value accuracy. These results characterize the restricted intermediate task, not full semantic understanding or open-domain model recovery.
 
 \begin{table}[t]
   \centering
@@ -349,7 +349,7 @@ Table~\ref{tab:nlp4lp-downstream-main} reports scalar-grounding outcomes on orig
 \subsection{Matched Same-Task Grounding Baselines}
 \label{subsec:exp_grounding_baselines}
 
-Table~\ref{tab:nlp4lp-grounding-baselines} compares predeclared, mechanism-diverse grounding alternatives under fixed TF--IDF retrieval, the same 331 queries and catalog, and shared InstantiationReady / Exact20 definitions (no tuning on test labels). Typed greedy and constrained assignment share the ratio-aware extractor; other rows use intrinsic enriched extractors required by their scoring definitions. Typed greedy remains best on InstantiationReady ($0.8006$) and StrictInstantiationReady ($0.7704$); all alternatives are significantly worse on InstantiationReady (paired bootstrap $B=10{,}000$, seed $42$; $p\leq 0.0006$), with McNemar likewise favoring typed greedy on Strict. Higher Exact20 for some alternatives (e.g., search-structured $0.6397$) comes with lower Coverage---an abstention tradeoff, not a reason to replace the production method.
+Under fixed TF--IDF retrieval, Table~\ref{tab:nlp4lp-grounding-baselines} compares predeclared, mechanism-diverse grounding alternatives on the same 331 queries and catalog, using shared InstantiationReady and Exact20 definitions and no tuning on test labels. Typed greedy and constrained assignment share the ratio-aware extractor; other rows use intrinsic enriched extractors required by their scoring definitions. Typed greedy remains best on InstantiationReady ($0.8006$) and StrictInstantiationReady ($0.7704$); all alternatives are significantly worse on InstantiationReady (paired bootstrap $B=10{,}000$, seed $42$; $p\leq 0.0006$), with McNemar likewise favoring typed greedy on Strict. Higher Exact20 for some alternatives (e.g., search-structured $0.6397$) comes with lower Coverage---an abstention tradeoff, not a reason to replace the production method.
 
 \begin{table}[t]
   \centering
@@ -380,9 +380,9 @@ Table~\ref{tab:nlp4lp-grounding-baselines} compares predeclared, mechanism-diver
 \subsection{Error Analysis and Ablation Studies}
 \label{subsec:exp_error}
 
-Table~\ref{tab:nlp4lp-error-taxonomy} partitions all 331 orig queries into mutually exclusive categories (fixed order, one label each) for TF--IDF ratio-aware typed greedy: wrong schema $30$ ($9.1\%$); incomplete coverage $31$ ($9.4\%$); type mismatch $49$ ($14.8\%$); value inaccurate $214$ ($64.7\%$); fully correct $7$ ($2.1\%$). Counts are deterministic from frozen per-query records. The dominant residual is fine-grained value-to-slot correctness among type-compatible mentions---the ambiguity Exact20 (Section~\ref{subsec:exp_setup}) targets---not coarse typing or retrieval.
+A mutually exclusive residual-error decomposition on all 331 orig queries (Table~\ref{tab:nlp4lp-error-taxonomy}; fixed category order, one label each) for TF--IDF ratio-aware typed greedy yields: wrong schema $30$ ($9.1\%$); incomplete coverage $31$ ($9.4\%$); type mismatch $49$ ($14.8\%$); value inaccurate $214$ ($64.7\%$); fully correct $7$ ($2.1\%$). Counts are deterministic from frozen per-query records. The dominant residual is fine-grained value-to-slot correctness among type-compatible mentions---the ambiguity Exact20 (Section~\ref{subsec:exp_setup}) targets---not coarse typing or retrieval.
 
-Table~\ref{tab:nlp4lp-prefix-postfix} shows the ratio-word extraction ablation: Coverage $0.8794\rightarrow 0.8886$, TypeMatch $0.8515\rightarrow 0.8665$, InstantiationReady $0.7764\rightarrow 0.8006$, Strict $0.7462\rightarrow 0.7704$ (8 strict gains, 0 losses; McNemar $p=0.008$). Retrieval is unchanged. Gains are real but modest; the remaining oracle gap reflects semantic ambiguities (totals vs.\ unit coefficients, bounds, percent vs.\ absolute values) rather than the extraction patch.
+The ratio-word extraction ablation in Table~\ref{tab:nlp4lp-prefix-postfix} raises Coverage from $0.8794$ to $0.8886$, TypeMatch from $0.8515$ to $0.8665$, InstantiationReady from $0.7764$ to $0.8006$, and Strict from $0.7462$ to $0.7704$ (8 strict gains, 0 losses; McNemar $p=0.008$). Retrieval is unchanged. Gains are real but modest; the remaining oracle gap reflects semantic ambiguities (totals vs.\ unit coefficients, bounds, percent vs.\ absolute values) rather than the extraction patch.
 
 \begin{table}[t]
   \centering
@@ -427,9 +427,9 @@ Table~\ref{tab:nlp4lp-prefix-postfix} shows the ratio-word extraction ablation: 
 \subsection{Statistical Significance and Lexical-Overlap Robustness}
 \label{subsec:exp_significance}
 
-Table~\ref{tab:nlp4lp-significance} summarizes paired bootstrap tests ($B=10{,}000$, seed $42$) on orig queries: TF--IDF ratio-aware vs.\ Oracle InstantiationReady and Strict gaps are significant; the ratio-aware strict gain ($\Delta=+0.0242$; McNemar $p=0.008$) and BGE-M3 vs.\ TF--IDF InstantiationReady/Strict gains are likewise significant. Direction and magnitude are readable from the table.
+Paired bootstrap tests on orig queries ($B=10{,}000$, seed $42$; Table~\ref{tab:nlp4lp-significance}) show that the TF--IDF ratio-aware versus Oracle InstantiationReady and Strict gaps are significant; the ratio-aware strict gain ($\Delta=+0.0242$; McNemar $p=0.008$) and the BGE-M3 versus TF--IDF InstantiationReady/Strict gains are likewise significant.
 
-Table~\ref{tab:nlp4lp-overlap} shows that stripping numbers and/or stopwords does not destroy lexical retrieval; performance is preserved or improved, consistent with reliance on domain terms rather than numeric literals. The diagnostic uses a closely matched index (331 documents excluding four filler templates; no \texttt{doc\_id} tokens), so TF--IDF/BM25 baseline cells differ slightly from Table~\ref{tab:nlp4lp-retrieval-main} while LSA matches exactly ($0.8459$). A Jaccard-overlap stratification places 327/331 queries in a high-overlap bucket (TF--IDF R@1 $0.9174$); the medium-overlap bucket has only 4 queries and is reported only as a qualitative caveat.
+Lexical-overlap sanitization (Table~\ref{tab:nlp4lp-overlap}) shows that stripping numbers and/or stopwords does not destroy lexical retrieval; performance is preserved or improved, consistent with reliance on domain terms rather than numeric literals. The diagnostic uses a closely matched index (331 documents excluding four filler templates; no \texttt{doc\_id} tokens), so TF--IDF/BM25 baseline cells differ slightly from Table~\ref{tab:nlp4lp-retrieval-main} while LSA matches exactly ($0.8459$). A Jaccard-overlap stratification places 327/331 queries in a high-overlap bucket (TF--IDF R@1 $0.9174$); the medium-overlap bucket has only 4 queries and is reported only as a qualitative caveat.
 
 To check whether wrong schemas can inflate ordinary InstantiationReady via smaller eligible-slot sets, a repository diagnostic of selective schema reranking raised ordinary readiness from $257/331$ to $265/331$, but $6$ of $8$ newly ready queries used an incorrect schema. We therefore define
 \begin{equation}
@@ -498,16 +498,17 @@ The baseline versus ratio-aware extraction comparison (8 strict gains, 0 losses)
 \subsection{Computational Complexity and Runtime}
 \label{subsec:exp_runtime}
 
-TF--IDF retrieval is $O(\mathrm{nnz}(q)+M)$ per query ($M=335$); rule extraction is linear in query length; typed greedy is $O(|\mathcal{P}|\cdot|\mathcal{T}|)$ with small slot/mention counts. On the frozen TF--IDF + ratio-aware typed-greedy run (331 queries, one CPU core, \texttt{PYTHONHASHSEED=0}), wall time is $1.09$\,s ($3.29$\,ms/query) with peak RSS $\approx 198$\,MB. This excludes BGE-M3 embedding load/compute and remote LLM baselines; it substantiates that the deterministic backbone is lightweight and CPU-compatible, not a cross-method efficiency benchmark.
+The deterministic backbone is inexpensive on this catalog. TF--IDF fits a sparse vectorizer once over the $M=335$ schema documents and, for each query, transforms the query and scores it against the full catalog matrix by sparse cosine similarity (\textsc{scikit-learn}); with fixed small $M$, this is dominated by sparse vector arithmetic rather than any learned inference. Rule-based extraction is linear in query length. Typed-greedy assignment costs $O(|\mathcal{P}|\cdot|\mathcal{T}|)$ in the (typically small) numbers of eligible slots and mentions. On the frozen TF--IDF + ratio-aware typed-greedy run (331 queries, one CPU core, \texttt{PYTHONHASHSEED=0}), wall time is $1.09$\,s ($3.29$\,ms/query) with peak RSS $\approx 198$\,MB. This excludes BGE-M3 embedding load/compute and remote LLM baselines; it substantiates that the deterministic backbone is lightweight and CPU-compatible, not a cross-method efficiency benchmark.
 
 \subsection{Structural and Solver-Backed Validation}
 \label{subsec:exp_engineering}
 
-Core metrics are solver-free. We complement them with three restricted studies on subsets with available \texttt{optimus\_code}: structural analyses on 60 and 269 instances (static; no Gurobi required) and solver-backed execution on 20 HiGHS-compatible instances (SciPy HiGHS shim). All three are restricted by construction and do not claim benchmark-wide executability.
+Core metrics are solver-free. We complement them with three restricted studies on subsets that have available reference solver code (\texttt{optimus\_code}): static structural analyses on 60 and 269 instances (no Gurobi required) and solver-backed execution on 20 HiGHS-compatible instances via a SciPy HiGHS compatibility shim. All three are restricted by construction and do not claim benchmark-wide executability.
 
-\emph{Structural validity}: well-formed LP/MILP with objective and $\geq 1$ variable (static). \emph{Instantiation completeness}: every gold-required scalar slot receives a type-consistent assignment. \emph{Executable} / \emph{solver success} / \emph{feasible} / \emph{objective produced}: runtime stages as named.
+We define the validation metrics as per-instance Boolean conditions, each reported as a rate over the relevant subset. \emph{Structural validity} holds when the instantiated schema forms a well-formed linear or mixed-integer program with a defined objective and at least one decision variable, checked statically without invoking a solver. \emph{Instantiation completeness} holds when every scalar slot the gold schema marks as required receives a type-consistent assignment. \emph{Executable} holds when the generated solver program runs to completion without raising an exception. \emph{Solver success} holds when the solver returns a well-defined termination status rather than erroring. \emph{Feasible} holds when the solver reports a feasible solution, and \emph{objective produced} holds when it returns a finite objective value. Structural validity and instantiation completeness are static checks; the remaining four require executing the solver.
 
-\paragraph{Structural subset (60)} Table~\ref{tab:eng-structural}: TF--IDF structural-valid and instantiation-complete both $0.75$; Oracle $0.7667$ / $0.7833$. Oracle gains remain modest.
+\paragraph{Structural subset (60 instances)}
+Table~\ref{tab:eng-structural} reports schema-hit, structural-validity, and instantiation-completeness rates. TF--IDF reaches structural-valid and instantiation-complete rates of $0.75$; Oracle reaches $0.7667$ and $0.7833$. As in the main benchmark, the oracle gain over TF--IDF is small: schema selection helps only modestly, while substantial downstream limitations remain.
 
 \begin{table}[t]
 \centering
@@ -525,9 +526,11 @@ Core metrics are solver-free. We complement them with three restricted studies o
 \end{tabular}
 \end{table}
 
-\paragraph{Extended structural subset (269)} With available reference code, TF--IDF / BM25 / Oracle schema-hit rates are $0.9368$ / $0.9257$ / $1.0000$; structural-valid $0.8141$ / $0.8104$ / $0.8253$; instantiation-complete $0.6654$ / $0.6580$ / $0.6840$. Solver execution was not evaluated here (reference path required unavailable Gurobi support); executable claims are reserved for the HiGHS subset.
+\paragraph{Extended structural subset (269 instances)}
+On a larger subset with available reference solver code, TF--IDF, BM25, and Oracle achieve schema-hit rates of $0.9368$, $0.9257$, and $1.0000$; structural-validity rates of $0.8141$, $0.8104$, and $0.8253$; and instantiation-completeness rates of $0.6654$, $0.6580$, and $0.6840$. Solver execution was not evaluated here because the reference path required Gurobi support unavailable in the evaluation environment; executable conclusions are reserved for the HiGHS-compatible subset below.
 
-\paragraph{Restricted solver-backed subset (20)} The first 20 test-split instances whose gold code lacks unsupported commercial constructs under a fixed, outcome-independent filter (identical IDs for TF--IDF and Oracle; chosen before evaluating either). Table~\ref{tab:eng-solver}: TF--IDF $0.95$ executable and $0.80$ on success/feasible/objective; Oracle $0.95$ / $0.75$ / $0.75$ / $0.75$. Non-executions are shim \texttt{IndexError}s (2 of 40 baseline--instance evaluations). The $0.80$ vs.\ $0.75$ gap is inconclusive on $n=20$ compatibility-filtered data---a pragmatic demonstration that execution is possible on compatible cases, not benchmark-wide readiness.
+\paragraph{Restricted solver-backed subset (20 instances)}
+To obtain direct solver-backed evidence, we select the first 20 test-split instances whose gold \texttt{optimus\_code} lacks unsupported commercial constructs (e.g., piecewise-linear objectives or specialized API constraints) under a fixed, outcome-independent compatibility filter. The same 20 IDs are used for TF--IDF and Oracle and were fixed before evaluating either condition. Table~\ref{tab:eng-solver} reports executable, solver-success, feasible, and objective-produced rates: TF--IDF reaches $0.95$ executable and $0.80$ on the three solver-outcome rates; Oracle reaches $0.95$, $0.75$, $0.75$, and $0.75$. Non-executions are shim \texttt{IndexError}s (2 of 40 baseline--instance evaluations). The $0.80$ versus $0.75$ gap is statistically inconclusive on this small, compatibility-filtered subset and should be read only as evidence that solver execution is possible on compatible cases, not as benchmark-wide readiness.
 
 \begin{table}[t]
 \centering
@@ -544,16 +547,18 @@ Core metrics are solver-free. We complement them with three restricted studies o
 \end{tabular}
 \end{table}
 
-Across subsets, Oracle does not consistently dominate TF--IDF, matching the main-benchmark pattern that schema selection yields only modest gains while downstream limits remain. Extended-subset structural gaps (missing slots, type mismatch, incomplete instantiation: 69, 82, and 267 counted instances across baselines) align with Section~\ref{subsec:exp_error}.
+Across subsets, Oracle does not consistently dominate TF--IDF, matching the main-benchmark pattern that schema selection yields only modest gains while downstream limits remain. Extended-subset structural gaps (missing slots, type mismatch, and incomplete instantiation: 69, 82, and 267 counted instances across baselines) align with Section~\ref{subsec:exp_error}.
 
 \subsection{External Baseline Comparison on a Shared Subset}
 \label{subsec:exp_external}
 
-The proposed method performs fixed-catalog scalar grounding and does not emit complete formulations or solver code; its native metrics are therefore not numerically comparable to end-to-end LLM systems. Tables~\ref{tab:ext-context}--\ref{tab:ext-outcomes} provide contextual common-18 evidence under a shared harness (full protocol in the repository). Fairness notes: (i)~different tasks (Ours excluded from end-to-end cells); (ii)~PaMOP is an independent Azure OpenAI reconstruction (\texttt{gpt-5.4-2026-03-05}, 2026-08-15, temperature $0.2$), with objective agreement within $5\%$ relative tolerance on evaluable successful runs; (iii)~ORLM execution is N/A (\texttt{coptpy} unavailable); DeepOR has no located code/checkpoint and OR-R1 has public code but no released checkpoint---neither yields an evaluable artifact; (iv)~the generic LLM is zero-shot under the harness (temperature $0.0$), not an optimization-trained method, and must not be ranked against OptMATH's official checkpoint (temperature $0.8$); (v)~$n=18$ is a feasibility probe, not a leaderboard.
+The proposed method performs fixed-catalog scalar grounding and does not emit complete formulations or solver code. Its native InstantiationReady / Exact20 metrics are therefore not numerically comparable to end-to-end LLM modeling systems, and Tables~\ref{tab:ext-context}--\ref{tab:ext-outcomes} should be read as contextual common-18 evidence under a shared harness rather than as a leaderboard (full per-instance protocol in the repository).
+
+Several fairness qualifications follow. PaMOP is an independent Azure OpenAI reconstruction (\texttt{gpt-5.4-2026-03-05}, evaluated 2026-08-15, temperature $0.2$), with objective agreement defined as a $5\%$ relative tolerance on evaluable successful runs. ORLM execution is marked N/A because its \texttt{coptpy} solver dependency was unavailable. DeepOR has no located official code or checkpoint, and OR-R1 publishes code without a released checkpoint, so neither yields an evaluable artifact. The generic LLM is a zero-shot harness baseline (temperature $0.0$), not an optimization-trained method, and must not be ranked against OptMATH's official checkpoint (temperature $0.8$). Finally, $n=18$ is a feasibility probe: the proposed method is excluded from every shared end-to-end cell in Table~\ref{tab:ext-outcomes} because the tasks differ.
 
 \begin{table}[t]
   \centering
-  \caption{External-baseline provenance on the common-18 subset. Provenance: NATIVE / INDEPENDENT / ADAPTED-OFFICIAL / GENERIC-ZERO-SHOT. Ours is listed for context only; native metrics are not comparable to Table~\ref{tab:ext-outcomes}.}
+  \caption{External-baseline provenance on the common-18 subset. Provenance levels: NATIVE, INDEPENDENT, ADAPTED-OFFICIAL, GENERIC-ZERO-SHOT. Ours is listed for context only; native metrics are not comparable to Table~\ref{tab:ext-outcomes}.}
   \label{tab:ext-context}
   \small
   \setlength{\tabcolsep}{3pt}
@@ -575,7 +580,7 @@ The proposed method performs fixed-catalog scalar grounding and does not emit co
 
 \begin{table}[t]
   \centering
-  \caption{Shared outcomes on the 18-instance common subset. N/A = not evaluated (never a silent zero). Parse / Executable / Feasible / Objective agreement as defined in the harness; denominators vary by stage reached.}
+  \caption{Shared outcomes on the 18-instance common subset. N/A = not evaluated (never a silent zero). \textit{Parse}: fraction whose produced artifact parsed; \textit{Executable}: fraction whose solver code ran to completion; \textit{Feasible}: fraction of successful runs reporting a feasible solution; \textit{Objective agreement}: fraction of execution-successful cases with a comparable reference objective agreeing within $5\%$ relative tolerance. Denominators vary by stage reached.}
   \label{tab:ext-outcomes}
   \small
   \setlength{\tabcolsep}{4pt}
@@ -605,19 +610,19 @@ We studied fixed-catalog schema retrieval paired with deterministic scalar groun
 \subsection{Limitations and Threats to Validity}
 \label{subsec:limitations}
 
-\emph{Fixed-catalog retrieval and task scope.} Strong retrieval numbers characterize the 335-way NLP4LP catalog (Section~\ref{subsec:method_retrieval}) and must not be read as solving open-domain schema retrieval.
+\emph{Fixed-catalog retrieval and task scope.} Strong retrieval numbers characterize the 335-way NLP4LP catalog (Section~\ref{subsec:method_retrieval}) and must not be read as solving open-domain schema retrieval. Generalization to substantially larger or open-ended schema libraries remains untested.
 
-\emph{Dataset dependence and lexical overlap.} All main quantitative results use a single benchmark. Overlap sanitization (Section~\ref{subsec:exp_significance}) argues against pure numeric-literal matching, but the medium-overlap bucket has only 4 queries; cross-style/domain/language generalization is untested.
+\emph{Dataset dependence and lexical overlap.} All main quantitative results use a single benchmark. Overlap sanitization (Section~\ref{subsec:exp_significance}) argues against pure numeric-literal matching, but the medium-overlap bucket has only 4 queries, so cross-style, cross-domain, and cross-language generalization remains untested.
 
-\emph{Gated data access.} NLP4LP requires approved Hugging Face access. Committed artifacts support inspection without live queries; full end-to-end reruns need the gated data.
+\emph{Gated data access.} NLP4LP requires approved Hugging Face access. Committed artifacts support inspection without live queries; a full end-to-end rerun needs the gated data, which is a real (if benchmark-typical) reproducibility constraint.
 
-\emph{Scalar-only instantiation.} Coverage / TypeMatch / InstantiationReady characterize scalar recovery only (Section~\ref{subsec:method_design}).
+\emph{Scalar-only instantiation.} Coverage, TypeMatch, and InstantiationReady characterize scalar recovery only (Section~\ref{subsec:method_design}); they do not certify recovery of variables, constraints, or structured objects.
 
-\emph{Heuristic type and role inference.} Coarse typing and optional role cues are rule-based without formal guarantees; Table~\ref{tab:nlp4lp-error-taxonomy} shows value-to-slot ambiguity remains dominant.
+\emph{Heuristic type and role inference.} Coarse typing and optional role cues are rule-based without formal guarantees; Table~\ref{tab:nlp4lp-error-taxonomy} shows that value-to-slot ambiguity remains dominant even when coarse types are correct.
 
-\emph{Restricted solver-backed validation.} Subsets of size 60 / 269 / 20 are availability- or compatibility-filtered, not random; HiGHS only; the 20-case study cannot support benchmark-wide readiness claims (Section~\ref{subsec:exp_engineering}).
+\emph{Restricted solver-backed validation.} Subsets of size 60 / 269 / 20 are availability- or compatibility-filtered rather than random samples; the HiGHS-only 20-case study cannot support benchmark-wide readiness claims (Section~\ref{subsec:exp_engineering}).
 
-\emph{Limited end-to-end LLM comparison.} Related Work and the common-18 assessment contextualize OptiMUS, OptLLM, ORLM, OptMATH, OptimAI, AlphaOPT, ORThought, and others, but do not provide full-benchmark InstantiationReady head-to-heads; DeepOR/OR-R1 lack evaluable artifacts (Section~\ref{subsec:exp_external}).
+\emph{Limited end-to-end LLM comparison.} Related Work and the common-18 assessment contextualize OptiMUS, OptLLM, ORLM, OptMATH, OptimAI, AlphaOPT, ORThought, and others, but do not provide full-benchmark InstantiationReady head-to-heads; DeepOR and OR-R1 lack evaluable artifacts (Section~\ref{subsec:exp_external}).
 
 \emph{No external full-framework validation or deployment.} OptMATH validates extraction only (Section~\ref{subsec:exp_external_validation}); no user study or production deployment was conducted.
 
