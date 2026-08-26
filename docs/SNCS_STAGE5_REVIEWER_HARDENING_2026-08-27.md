@@ -2,7 +2,7 @@
 
 **Date:** 2026-08-27  
 **Builds on:** Stages 1–4  
-**Starting HEAD:** `ab15970`  
+**Starting HEAD:** `ab15970` (= `ab1597069332658e87bcb142f615fa6d805572a1`)  
 **Authoritative manuscript:** `manuscript/sncs/main.tex`
 
 ---
@@ -266,7 +266,7 @@ Justification: literature/positioning/Exact20/funding/AI/workflow substantially 
 
 Wulver: `HUMAN_INTERACTIVE_LOGIN_REQUIRED` (quick check only).  
 EAAI PDFs: intentionally untouched as scientific content.  
-Commits: Stage-5 logical commits pushed to `origin/main` (see git log).
+Commits: 3 commits pushed (`a39eef2`, `e090dc9`, `b3ca802`); final HEAD `b3ca802fc12bbc7c482a7c8ef76a413e4869c037` = `origin/main`.
 
 ---
 
