@@ -217,6 +217,22 @@
       "value": {"ordinary_ready_before": 257, "ordinary_ready_after": 265, "new_ready_queries": 8, "new_ready_wrong_schema": 6, "strict_ready_gain": 2, "strict_mcnemar_p": 0.5},
       "source_file": "docs/STRICT_INSTANTIATION_READY_DIAGNOSTIC_2026-08-13.md",
       "status": "MATCH_NEW_ADDITION"
+    },
+    {
+      "metric": "Stage-6 matched same-task grounding baselines (TF-IDF fixed; InstReady/Strict/Exact20/Coverage/TypeMatch)",
+      "value": {
+        "typed_greedy": {"Coverage": 0.888565596873754, "TypeMatch": 0.866549177576368, "Exact20": 0.2613912814943743, "Exact20_n": 291, "InstReady": 0.8006042296072508, "Strict": 0.770392749244713},
+        "constrained_assignment": {"Coverage": 0.8530611131064303, "TypeMatch": 0.8744748956984607, "Exact20": 0.5772361563598677, "Exact20_n": 291, "InstReady": 0.7613293051359517, "Strict": 0.7311178247734139},
+        "max_weight_matching": {"Coverage": 0.8435696730258664, "TypeMatch": 0.8740385076487797, "Exact20": 0.5225183846317867, "Exact20_n": 291, "InstReady": 0.743202416918429, "Strict": 0.7129909365558912},
+        "optimization_role_repair": {"Coverage": 0.8435696730258664, "TypeMatch": 0.8724020524624755, "Exact20": 0.5209679018957369, "Exact20_n": 291, "InstReady": 0.7371601208459214, "Strict": 0.7069486404833837},
+        "search_structured_grounding": {"Coverage": 0.8195029039439915, "TypeMatch": 0.8795481792460644, "Exact20": 0.6397326232377779, "Exact20_n": 291, "InstReady": 0.7039274924471299, "Strict": 0.6737160120845922},
+        "semantic_ir_repair": {"Coverage": 0.8131171111533648, "TypeMatch": 0.8483226743045473, "Exact20": 0.4949331662489558, "Exact20_n": 285, "InstReady": 0.716012084592145, "Strict": 0.6948640483383686}
+      },
+      "source_file": "results/stage6_matched_grounding_baselines_2026-08-27/matched_grounding_baselines_summary.json",
+      "fairness_audit": "results/stage6_matched_grounding_baselines_2026-08-27/fairness_audit.json",
+      "reproduction_script": "tools/run_stage6_matched_grounding_baselines.py",
+      "status": "MATCH_STAGE6",
+      "notes": "Typed greedy best on InstReady/Strict; alternatives may have higher Exact20 with lower coverage."
     }
   ]
 }

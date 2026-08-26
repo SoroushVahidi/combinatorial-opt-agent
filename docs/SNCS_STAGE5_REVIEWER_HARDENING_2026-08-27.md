@@ -266,7 +266,10 @@ Justification: literature/positioning/Exact20/funding/AI/workflow substantially 
 
 Wulver: `HUMAN_INTERACTIVE_LOGIN_REQUIRED` (quick check only).  
 EAAI PDFs: intentionally untouched as scientific content.  
-Commits: 3 commits pushed (`a39eef2`, `e090dc9`, `b3ca802`); final HEAD `b3ca802fc12bbc7c482a7c8ef76a413e4869c037` = `origin/main`.
+Commits pushed in Stage 5: `a39eef2`, `e090dc9`, `b3ca802`, and a final documentation-only metadata commit `d8bbc0c`.
+
+- **Scientific/manuscript HEAD before the final report-metadata commit:** `b3ca802fc12bbc7c482a7c8ef76a413e4869c037` (Stage-5 report first landed here).
+- **Actual Stage-5 final repository HEAD:** `d8bbc0c9fa82326fd9e012d4cfc74b080b43583e` (= `origin/main` after the metadata fix).
 
 ---
 
