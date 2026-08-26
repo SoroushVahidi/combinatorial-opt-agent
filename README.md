@@ -1,102 +1,64 @@
-# Retrieval-assisted optimization schema grounding
+# Retrieval-Assisted Instantiation of Natural-Language Optimization Problems
 
-> **Current target: SN Computer Science (Springer Nature).** The KAIS framing below is
-> historical (superseded 2026-08-13→08-15). Manuscript source is now
-> [`manuscript/dke/main.tex`](manuscript/dke/main.tex); start at
-> [`docs/DKE_SOURCE_OF_TRUTH.md`](docs/DKE_SOURCE_OF_TRUTH.md) for current authoritative
-> results and open issues.
+Companion repository for the paper **"Retrieval-Assisted Instantiation of Natural-Language Optimization Problems"**, currently prepared for submission to **SN Computer Science** (Springer Nature). The repository implements and evaluates a two-stage pipeline — fixed-catalog schema retrieval (TF--IDF / BM25 / LSA / BGE-M3) followed by deterministic, inference-time-LLM-free scalar-parameter grounding — on the **NLP4LP** benchmark (331 queries, 335-candidate schema catalog), together with restricted structural, solver-backed, and external-baseline validation subsets. This is a research artifact repository, not a production product.
 
-**Companion repo for a manuscript submitted to Knowledge and Information Systems (KAIS), Springer Nature** (manuscript source: [`manuscript/`](manuscript/); see [`docs/KAIS_SOURCE_OF_TRUTH.md`](docs/KAIS_SOURCE_OF_TRUTH.md)): fixed-catalog **NLP4LP** benchmark, **deterministic scalar grounding**, and **restricted** engineering / **solver-backed subset** (SciPy HiGHS, 20 instances)—not a production product.
+## Current manuscript status
 
-**New agent or contributor? Start at [`PROJECT_STATUS.md`](PROJECT_STATUS.md)** — single up-to-date entry point (scientific goal, pipeline, authoritative results, what's implemented/failed, PaMOP baseline-reproduction status, next steps).
+- **Authoritative manuscript source:** [`manuscript/sncs/main.tex`](manuscript/sncs/main.tex) (SN Computer Science / Springer Nature `sn-jnl` template), migrated 2026-08-27 from the corrected [`manuscript/dke/main.tex`](manuscript/dke/main.tex) (Data & Knowledge Engineering / Elsevier `elsarticle` template, an earlier submission attempt for the same paper).
+- **Older, superseded manuscript versions:** `manuscript/main.tex` / `manuscript/submission_package/main.tex` (a still-earlier Knowledge and Information Systems / KAIS attempt) and the original EAAI/Elsevier draft. These contain a **retracted headline number** (InstantiationReady $=0.5287$) that does not reproduce from the current codebase — see [`docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`](docs/BASELINE_STALENESS_AUDIT_2026-08-12.md). **Do not cite numbers from these files.**
+- **Full audit trail:** [`docs/SNCS_STAGE1_MANUSCRIPT_REPOSITORY_AUDIT_2026-08-26.md`](docs/SNCS_STAGE1_MANUSCRIPT_REPOSITORY_AUDIT_2026-08-26.md), [`docs/SNCS_STAGE2_LOCAL_WULVER_GITHUB_AUDIT_2026-08-27.md`](docs/SNCS_STAGE2_LOCAL_WULVER_GITHUB_AUDIT_2026-08-27.md), and [`docs/SNCS_STAGE3_MANUSCRIPT_SPRINGER_REPOSITORY_FINALIZATION_2026-08-27.md`](docs/SNCS_STAGE3_MANUSCRIPT_SPRINGER_REPOSITORY_FINALIZATION_2026-08-27.md) document every manuscript-vs-repository consistency check performed before submission.
+- **Start here for navigation:** [`docs/DKE_SOURCE_OF_TRUTH.md`](docs/DKE_SOURCE_OF_TRUTH.md).
 
----
+## Current headline results (as reported in `manuscript/sncs/main.tex`)
 
-## Repository status (short)
+| Metric | TF--IDF (ratio-aware) | BGE-M3 (ratio-aware) | Oracle |
+|---|---|---|---|
+| Schema R@1 | 0.9094 | 0.9456 | 1.0000 |
+| Coverage | 0.8886 | 0.9154 | 0.9416 |
+| TypeMatch | 0.8665 | 0.8946 | 0.9230 |
+| Exact20 (on hits) | 0.2614 | 0.2436 | 0.2505 |
+| InstantiationReady | 0.8006 | 0.8248 | 0.8489 |
+| StrictInstantiationReady | 0.7704 | 0.8006 | 0.8489 |
 
-| | |
+All four rows share the 331-query benchmark denominator and a uniform Exact20 aggregation convention (see [`docs/SNCS_RESULT_MANIFEST_2026-08-27.json`](docs/SNCS_RESULT_MANIFEST_2026-08-27.json)). Every value above is independently reproducible from a small deterministic script — see **Reproducing the results** below.
+
+## Where things live
+
+| What | Where |
 |---|---|
-| **Validated paper core** | NLP4LP `orig` (331 queries): retrieval → grounding; **Tables 1–5** in `results/paper/eaai_camera_ready_tables/` |
-| **Canonical one-pager** | [`PROJECT_STATUS.md`](PROJECT_STATUS.md) (see also [`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md)) |
-| **External baseline in progress** | **PaMOP** (IJCAI 2025) reproduction — see [`docs/PAMOP_REPRODUCTION_PLAN.md`](docs/PAMOP_REPRODUCTION_PLAN.md), `baselines/pamop/`; ORLM pilot inference is complete and common-18 is running; OptMATH/DeepOR/OR-R1 remain implemented/reconstructed for lightweight inference-preparation without completed empirical rows |
-| **Infrastructure / reruns** | Slurm `batch/learning/`; optional LLM baselines; Gemini [`docs/GEMINI_RERUN_REPORT.md`](docs/GEMINI_RERUN_REPORT.md); Mistral [`docs/MISTRAL_RERUN_REPORT.md`](docs/MISTRAL_RERUN_REPORT.md) (**infra ≠ completed reruns** unless your `results/rerun/` proves it) |
-| **Demo / app** | `app.py`, `demo/` — **outside** paper-evaluated claims unless explicitly scoped |
-| **Archives** | `docs/archive/`, `docs/archive_internal_status/`, `docs/provenance/`, `analysis/archive/` — **provenance only** |
-| **External validation (non–paper-core)** | **Text2Zinc** + **CP-Bench** (DCP-Bench-Open): adapters + staging docs — **no new camera-ready metrics** until runs exist ([`docs/DATASET_EXPANSION_STATUS.md`](docs/DATASET_EXPANSION_STATUS.md)) |
+| **Authoritative downstream results** | `results/final_resubmission_method/`, `results/oracle_recomputation_2026-08-15/`, `results/dense_retrieval_bge_m3/` |
+| **Statistical significance verification** | `tools/recompute_dke_significance.py` → `results/final_resubmission_method/significance_recomputation_2026-08-27.json` (reproduces every diff/CI/$p$ in the manuscript's significance table exactly) |
+| **Exact20 denominator root-cause + fix** | `tools/audit_exact20_denominator.py`, `tools/compute_uniform_exact20.py` |
+| **Residual-error decomposition** (replaces the old heuristic error taxonomy) | `tools/recompute_residual_error_analysis.py` → `results/final_resubmission_method/residual_error_analysis_2026-08-27.json` |
+| **Structural / solver-backed subsets (60 / 269 / 20 instances)** | `results/paper/eaai_camera_ready_tables/table2*.csv`, `table3*.csv`, `table4*.csv` |
+| **External baseline provenance** (PaMOP, ORLM, OptMATH, generic LLM, DeepOR, OR-R1) | `docs/*_PROVENANCE.md`, `results/external_baseline_comparison/`, `results/optmath/`, `results/orlm/`, `results/pamop/`, `results/generic_llm/` |
+| **Full manuscript-claim-to-artifact map** | [`docs/SNCS_REPRODUCIBILITY.md`](docs/SNCS_REPRODUCIBILITY.md) |
+| **Historical / superseded results** (EAAI/KAIS-era, pre-2026-08-13 ratio-aware patch) | `results/eswa_revision/`, `results/paper/eaai_camera_ready_tables/table1_main_benchmark_summary.csv`, `results/CANONICAL_RESULTS.md` — all banner-marked as historical; see [`docs/DKE_SOURCE_OF_TRUTH.md`](docs/DKE_SOURCE_OF_TRUTH.md) |
+| **Negative results** (max-weight matching, selective reranking, learned grounding) | [`docs/NEGATIVE_RESULTS.md`](docs/NEGATIVE_RESULTS.md), `results/max_weight_matching_validation/`, `results/selective_grounding_rerank/`, `results/learned_grounding_p0/` |
 
-**Table 1 headline** (TF-IDF + typed greedy, `orig`): Schema R@1 **0.9094**; Coverage **0.8609**; TypeMatch **0.7453**; InstantiationReady **0.5287** — matches `manuscript/main.tex` **as submitted**. **This number does not reproduce from the current codebase** (2026-08-12 finding): a fresh rerun of the identical method gives InstantiationReady **0.7764**, because 49 commits of grounding fixes landed after `results/eswa_revision/13_tables/postfix_main_metrics.csv` was last generated and it was never regenerated. Full audit: [`docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`](docs/BASELINE_STALENESS_AUDIT_2026-08-12.md) — **read this before citing 0.5287 as a current-code baseline for anything.** `manuscript/main.tex` and the camera-ready tables were **not** modified; see [`docs/MANUSCRIPT_INTEGRATION_DECISION_2026-08-12.md`](docs/MANUSCRIPT_INTEGRATION_DECISION_2026-08-12.md).
+## Reproducing the results
 
-**Correction (2026-08-12, same day):** an earlier note here claimed an existing assignment mode (`max_weight_matching`) reaches InstantiationReady 0.7432 and beats typed greedy. That comparison used the stale 0.5287 baseline above; against a freshly rerun typed greedy (0.7764), `max_weight_matching` **loses** (p=0.042), as do `search_structured_grounding`/`hierarchical_structured_grounding`. These are negative results — see [`docs/NEGATIVE_RESULTS.md`](docs/NEGATIVE_RESULTS.md) NR12 and the staleness audit above for the full correction.
+Four deterministic, CPU-only, no-API-key Python scripts reproduce the manuscript's corrected/verified numbers directly from already-committed per-query artifacts:
 
----
-
-## Read these first (repo map)
-
-0. [`PROJECT_STATUS.md`](PROJECT_STATUS.md) — **start here**: goal, pipeline, authoritative results, what's implemented/failed, PaMOP status, next steps
-0a. [`docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`](docs/BASELINE_STALENESS_AUDIT_2026-08-12.md) — **read second**: the manuscript's headline number does not reproduce from current code
-1. [`docs/REVIEWER_GUIDE.md`](docs/REVIEWER_GUIDE.md) — what is official vs auxiliary  
-2. [`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md) — validated vs experimental, limitations  
-3. [`docs/KAIS_SOURCE_OF_TRUTH.md`](docs/KAIS_SOURCE_OF_TRUTH.md) — current manuscript authority / scope (see also [`docs/EAAI_SOURCE_OF_TRUTH.md`](docs/EAAI_SOURCE_OF_TRUTH.md) for unchanged benchmark facts)  
-4. [`docs/RESULTS_PROVENANCE.md`](docs/RESULTS_PROVENANCE.md) — metrics and provenance chain  
-5. [`docs/HOW_TO_REPRODUCE.md`](docs/HOW_TO_REPRODUCE.md) — rerun commands  
-6. [`docs/KNOWN_ISSUES.md`](docs/KNOWN_ISSUES.md) — blockers and design tensions  
-7. [`docs/REPO_STRUCTURE.md`](docs/REPO_STRUCTURE.md) / [`docs/REPOSITORY_MAP.md`](docs/REPOSITORY_MAP.md) — annotated tree (canonical vs demo vs archive)
-8. [`docs/PAMOP_REPRODUCTION_PLAN.md`](docs/PAMOP_REPRODUCTION_PLAN.md) — current external-baseline work in progress
-9. [`docs/BASELINE_IMPLEMENTATION_ROADMAP.md`](docs/BASELINE_IMPLEMENTATION_ROADMAP.md) — ORLM/OptMATH/DeepOR/OR-R1 planning and implementation status
-10. [`docs/SCIENTIFIC_STATE.md`](docs/SCIENTIFIC_STATE.md) / [`NEXT_STEPS.md`](NEXT_STEPS.md) — detailed scientific handoff and the operational execution queue
-
-**Index:** [`docs/README.md`](docs/README.md) · **External datasets plan:** [`docs/DATASET_EXPANSION_PLAN.md`](docs/DATASET_EXPANSION_PLAN.md) · **Doc check:** `python scripts/check_docs_integrity.py`
-
----
-
-## What this repository does not claim
-
-- **Arbitrary NL → solver-ready** for the full benchmark (solver claims are **subset-only**).  
-- **Benchmark-wide** end-to-end execution — Tables 2–4 use **restricted denominators**.  
-- **Dense retrieval (E5/BGE) as primary results** — supplementary; TF-IDF is the main retrieval baseline in the paper.  
-- **Learned retrieval beating the rule baseline** on held-out eval — it does not ([`docs/KNOWN_ISSUES.md`](docs/KNOWN_ISSUES.md)).  
-- **Gurobi** for paper numbers — Table 4 uses **SciPy HiGHS** on 20 instances.  
-- **Completed Mistral (or other) LLM benchmark reruns** — **not** claimed unless committed artifacts under `results/rerun/…` match [`docs/MISTRAL_RERUN_REPORT.md`](docs/MISTRAL_RERUN_REPORT.md) / [`docs/GEMINI_RERUN_REPORT.md`](docs/GEMINI_RERUN_REPORT.md).
-
----
-
-## Reproducibility / access (short)
-
-| Goal | Needs |
-|------|--------|
-| **Read official numbers** | Committed `results/paper/` (no keys) |
-| **Structural checks** | `python scripts/paper/run_repo_validation.py`, pytest |
-| **Recompute NLP4LP metrics** | Gated HF dataset `udell-lab/NLP4LP` + `HF_TOKEN` |
-| **EAAI subset experiments** | `tools/run_eaai_*.py` — [`docs/HOW_TO_REPRODUCE.md`](docs/HOW_TO_REPRODUCE.md) |
-| **Optional LLM baselines** | `OPENAI_API_KEY` / `GEMINI_API_KEY` / `MISTRAL_API_KEY` (see provider docs below) |
-| **HPC (NJIT Wulver)** | [`docs/wulver.md`](docs/wulver.md) |
-
----
-
-## LLM providers (optional, non–paper-core)
-
-| Provider | Role | Result status |
-|----------|------|----------------|
-| **OpenAI** | `tools/llm_baselines.py`, `batch/learning/run_openai_llm_baselines.sbatch` | Historical downstream artifacts under `results/paper/` |
-| **Gemini** | `google.genai`, Slurm batch, `scripts/gemini_preflight.py` | **Infra stabilized**; **full benchmark completion not asserted** without your `results/rerun/gemini/…` artifacts |
-| **Mistral** | `tools/llm_baselines.py`, `batch/learning/run_mistral_llm_baselines.sbatch`, `scripts/mistral_preflight.py` | **Infra present**; **full completion not asserted** without `results/rerun/mistral/…` — [`docs/MISTRAL_RERUN_REPORT.md`](docs/MISTRAL_RERUN_REPORT.md) |
-
-Camera-ready **Tables 1–5** remain manuscript authority; LLM CSVs are **auxiliary**.
-
----
-
-## Pipeline (high level)
-
-```
-NL query → Schema retrieval (TF-IDF / BM25 / LSA, …) → top-1 schema
-         → Deterministic scalar grounding (tools/nlp4lp_downstream_utility.py)
-         → Structural LP check (formulation/verify.py)
-         → [Optional] Solver on restricted subset (SciPy HiGHS shim)
+```bash
+python3 tools/audit_exact20_denominator.py          # Exact20 denominator root-cause
+python3 tools/compute_uniform_exact20.py             # uniform Exact20 across all 4 arms
+python3 tools/recompute_residual_error_analysis.py   # exact residual-error decomposition
+python3 tools/recompute_dke_significance.py          # all 5 significance-table rows
 ```
 
----
+**Reproducing from raw data** (rather than verifying from committed artifacts) requires:
 
-## Quick start
+| Goal | Requirement |
+|---|---|
+| Full NLP4LP rerun (retrieval + grounding) | Approved Hugging Face account + `HF_TOKEN` for the gated `udell-lab/NLP4LP` dataset |
+| BGE-M3 dense retrieval | GPU + `sentence-transformers` |
+| External LLM baselines (PaMOP / OptMATH / generic LLM) | Azure OpenAI API access; Gurobi license for OptMATH/generic-LLM solver execution |
+| Structural/solver-backed subsets | No gated access needed for structural checks; the 20-instance solver-backed subset uses SciPy's open-source HiGHS backend (no Gurobi required) |
+
+See [`docs/HOW_TO_REPRODUCE.md`](docs/HOW_TO_REPRODUCE.md) (EAAI-era reproduction guide; still valid for environment setup, historically scoped to the older result tables) and [`docs/SNCS_REPRODUCIBILITY.md`](docs/SNCS_REPRODUCIBILITY.md) (current claim-to-artifact map).
+
+## Setup
 
 ```bash
 git clone https://github.com/SoroushVahidi/combinatorial-opt-agent.git
@@ -105,35 +67,38 @@ python -m venv venv && source venv/bin/activate   # Windows: venv\Scripts\activa
 pip install -r requirements.txt
 ```
 
-**Web demo (out of paper scope):** `python app.py` — [`demo/README.md`](demo/README.md).  
-**CLI search:** `python -m retrieval.search "your query" 3`  
-**Figures from committed tables:** `python tools/build_eaai_camera_ready_figures.py` (requires Pillow).
-
----
-
-## HuggingFace (gated NLP4LP)
-
 ```bash
-cp .env.example .env   # add HF_TOKEN=hf_... (never commit .env)
-# Request access: https://huggingface.co/datasets/udell-lab/NLP4LP
+cp .env.example .env   # add HF_TOKEN=hf_... for gated NLP4LP access (never commit .env)
+# Request dataset access: https://huggingface.co/datasets/udell-lab/NLP4LP
 ```
 
----
+Tech stack: Python 3.10+, scikit-learn, rank-bm25, optional sentence-transformers, SciPy, pytest, GitHub Actions, optional SLURM on NJIT's Wulver HPC cluster ([`docs/wulver.md`](docs/wulver.md)).
 
-## Tech stack (short)
+## Repository structure (high level)
 
-Python 3.10+ · scikit-learn / rank-bm25 · optional sentence-transformers · SciPy · Gradio · pytest · GitHub Actions · SLURM on Wulver (optional).
+```
+manuscript/sncs/      current SN Computer Science manuscript source (authoritative)
+manuscript/dke/       corrected DKE/Elsevier manuscript (migration source, historical target venue)
+manuscript/main.tex   older KAIS-era manuscript (superseded, retracted headline number)
+tools/                deterministic pipeline + verification/reproduction scripts
+results/              frozen result artifacts (see table above for current vs. historical)
+docs/                 provenance, audit, and status documentation
+data/                 dataset adapters/catalogs (gated NLP4LP data itself is not redistributed)
+```
 
----
+## What this repository does not claim
+
+- Full open-domain optimization-model generation from natural language.
+- Benchmark-wide solver readiness — the solver-backed evidence is restricted to a 20-instance compatibility-filtered subset (SciPy HiGHS; Gurobi not required or used for the paper's own numbers).
+- A head-to-head ranking against end-to-end LLM optimization-modeling systems — the external-baseline comparison (Section on external baselines in the manuscript) is explicitly scoped as contextual, not a leaderboard.
+- Open-domain generalization of schema retrieval beyond the fixed NLP4LP catalog.
 
 ## License · acknowledgments · contact
 
-**License:** [MIT](LICENSE) · © Soroush Vahidi  
+**License:** [MIT](LICENSE) · © Soroush Vahidi
 
 **Acknowledgments:** NL4Opt, Gurobi (examples), GAMS, MIPLIB, OR-Library, Pyomo; NJIT Computer Science.
 
 **Contact:** [sv96@njit.edu](mailto:sv96@njit.edu) · [@SoroushVahidi](https://github.com/SoroushVahidi)
 
 **Contributing:** [CONTRIBUTING.md](CONTRIBUTING.md)
-
-**Full experiment log (history + pre-EAAI work):** [`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md) · **CI benchmark workflow:** [`docs/HOW_TO_RUN_BENCHMARK.md`](docs/HOW_TO_RUN_BENCHMARK.md)
