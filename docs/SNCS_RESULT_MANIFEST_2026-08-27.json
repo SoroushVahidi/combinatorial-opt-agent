@@ -1,0 +1,222 @@
+{
+  "document_type": "sncs_authoritative_result_manifest",
+  "created": "2026-08-27",
+  "purpose": "Machine-readable authoritative source for every quantitative claim in the SN Computer Science manuscript (manuscript/sncs/main.tex, migrated from manuscript/dke/main.tex). Every number below must trace to a specific committed file/field. See docs/SNCS_STAGE3_MANUSCRIPT_SPRINGER_REPOSITORY_FINALIZATION_2026-08-27.md for the audit that produced this manifest.",
+  "benchmark": {"dataset": "NLP4LP", "n_queries": 331, "schema_catalog_size": 335},
+  "entries": [
+    {
+      "metric": "Schema R@1 (TF-IDF, orig/noisy/short/avg)",
+      "value": [0.9094, 0.9033, 0.7795, 0.8641],
+      "source_file": "results/dense_retrieval_bge_m3/retrieval_metrics.json",
+      "field": "TF-IDF",
+      "denominator": 331,
+      "status": "MATCH"
+    },
+    {
+      "metric": "Schema R@1 (BGE-M3, orig/noisy/short/avg)",
+      "value": [0.9456, 0.9426, 0.8157, 0.9013],
+      "source_file": "results/dense_retrieval_bge_m3/retrieval_metrics.json",
+      "field": "BGE-M3",
+      "denominator": 331,
+      "status": "MATCH"
+    },
+    {
+      "metric": "TFIDF-TG (baseline extraction): Coverage/TypeMatch/InstReady/Strict",
+      "value": [0.8794302206688913, 0.8515453411979091, 0.7764350453172205, 0.7462235649546828],
+      "source_file": "results/final_resubmission_method/metrics.json",
+      "field": "row 0 (prepatch_tfidf_typed_greedy)",
+      "denominator": 331,
+      "code_provenance": "git_sha 72f7e29 config.json (prepatch reference is results/selective_grounding_rerank/)",
+      "status": "MATCH"
+    },
+    {
+      "metric": "TFIDF-TG (ratio-aware extraction): Coverage/TypeMatch/InstReady/Strict",
+      "value": [0.888565596873754, 0.866549177576368, 0.8006042296072508, 0.770392749244713],
+      "source_file": "results/final_resubmission_method/metrics.json",
+      "field": "row 1 (tfidf_typed_greedy_ratio_extraction)",
+      "denominator": 331,
+      "code_provenance": "git_sha 72f7e29",
+      "status": "MATCH"
+    },
+    {
+      "metric": "BGE-M3 + ratio-aware grounding: Coverage/TypeMatch/InstReady/Strict",
+      "value": [0.9154, 0.8946, 0.8248, 0.8006],
+      "source_file": "results/dense_retrieval_bge_m3/downstream_metrics.json",
+      "field": "BGE-M3 ratio-aware",
+      "denominator": 331,
+      "status": "MATCH"
+    },
+    {
+      "metric": "Oracle-TG: Coverage/TypeMatch/InstReady/Strict",
+      "value": [0.941584, 0.923021, 0.848943, 0.848943],
+      "source_file": "results/oracle_recomputation_2026-08-15/oracle_frozen_verification.json",
+      "field": "summary",
+      "denominator": 331,
+      "code_provenance": "git_sha 52dda3cd91624240099e908e5f783bd962114dce",
+      "status": "MATCH"
+    },
+    {
+      "metric": "Exact20 (on hits), TFIDF-TG baseline extraction -- UNCHANGED (already comparable-subset rule)",
+      "value": 0.24488825416660467,
+      "source_file": "results/selective_grounding_rerank/nlp4lp_downstream_per_query_orig_tfidf.csv",
+      "field": "comparable-subset mean of exact20 column, computed by tools/compute_uniform_exact20.py",
+      "denominator": "291 (301 schema-hit queries minus 10 without a comparable value)",
+      "status": "MATCH_UNCHANGED"
+    },
+    {
+      "metric": "Exact20 (on hits), TFIDF-TG ratio-aware extraction -- CORRECTED",
+      "old_manuscript_value": 0.2527,
+      "value": 0.2613912814943743,
+      "source_file": "results/final_resubmission_method/metrics.json AND results/final_resubmission_method/exact20_denominator_audit.json",
+      "field": "comparable-subset mean; verified by tools/audit_exact20_denominator.py and tools/compute_uniform_exact20.py",
+      "denominator": "291 (301 schema-hit queries minus 10 without a comparable value)",
+      "status": "CORRECTED_STAGE3",
+      "reason": "old value zero-filled the 10 non-comparable schema-hit queries instead of excluding them; see docs/SNCS_STAGE1_MANUSCRIPT_REPOSITORY_AUDIT_2026-08-26.md Section 6"
+    },
+    {
+      "metric": "Exact20 (on hits), BGE-M3 ratio-aware -- CORRECTED",
+      "old_manuscript_value": 0.2358,
+      "value": 0.24362519585291864,
+      "source_file": "results/dense_retrieval_bge_m3/nlp4lp_downstream_per_query_orig_bge_m3.csv",
+      "field": "comparable-subset mean, computed by tools/compute_uniform_exact20.py",
+      "denominator": "303 (313 schema-hit queries minus 10 without a comparable value)",
+      "status": "CORRECTED_STAGE3",
+      "reason": "same aggregation-rule bug as TF-IDF ratio-aware row"
+    },
+    {
+      "metric": "Exact20 (on hits), Oracle-TG -- UNCHANGED (already comparable-subset rule)",
+      "value": 0.2505003156565656,
+      "source_file": "results/oracle_recomputation_2026-08-15/oracle_frozen_verification.json",
+      "field": "Exact20_on_hits",
+      "denominator": "320 (331 schema-hit queries minus 11 without a comparable value)",
+      "status": "MATCH_UNCHANGED"
+    },
+    {
+      "metric": "Schema R@1 McNemar (BGE-M3 vs TF-IDF): both_correct/bge_only/tfidf_only/both_wrong/p",
+      "value": [298, 15, 3, 15, 0.0075],
+      "source_file": "results/dense_retrieval_bge_m3/significance_tests.json",
+      "field": "BGE-M3 vs TF-IDF (McNemar Schema R@1)",
+      "reproduction_script": "results/dense_retrieval_bge_m3/compute_downstream_metrics.py (executed and verified, Stage 1)",
+      "status": "MATCH"
+    },
+    {
+      "metric": "Bootstrap: TFIDF-TG (ratio-aware) vs Oracle-TG, InstReady",
+      "value": {"diff": -0.0483, "ci_95": [-0.0755, -0.0242], "p": "<0.001"},
+      "reproduction_script": "tools/recompute_dke_significance.py",
+      "reproduction_output": "results/final_resubmission_method/significance_recomputation_2026-08-27.json",
+      "status": "CORRECTED_STAGE3_REPRODUCIBLE",
+      "reason": "Stage 1 found no committed script reproduced this; now reproduced exactly (diff, CI, and p) by a committed, deterministic script"
+    },
+    {
+      "metric": "Bootstrap: TFIDF-TG (ratio-aware) vs Oracle-TG, StrictInstReady",
+      "value": {"diff": -0.0785, "ci_95": [-0.1088, -0.0514], "p": "<0.001"},
+      "reproduction_script": "tools/recompute_dke_significance.py",
+      "reproduction_output": "results/final_resubmission_method/significance_recomputation_2026-08-27.json",
+      "status": "CORRECTED_STAGE3_REPRODUCIBLE"
+    },
+    {
+      "metric": "Bootstrap: TFIDF-TG baseline vs ratio-aware, StrictInstReady",
+      "value": {"diff": 0.0242, "ci_95": [0.0091, 0.0423], "p": 0.0006},
+      "reproduction_script": "tools/recompute_dke_significance.py",
+      "reproduction_output": "results/final_resubmission_method/significance_recomputation_2026-08-27.json",
+      "status": "CORRECTED_STAGE3_REPRODUCIBLE",
+      "reason": "p=0.0006 now exactly reproduced using the verified two-sided sign convention documented in the script"
+    },
+    {
+      "metric": "Bootstrap: BGE-M3 vs TFIDF-TG (ratio-aware), InstReady",
+      "value": {"diff": 0.0242, "ci_95": [0.006, 0.0423], "p": 0.0053},
+      "source_file": "results/dense_retrieval_bge_m3/significance_tests.json",
+      "status": "MATCH"
+    },
+    {
+      "metric": "Bootstrap: BGE-M3 vs TFIDF-TG (ratio-aware), StrictInstReady",
+      "value": {"diff": 0.0302, "ci_95": [0.006, 0.0544], "p": 0.0142},
+      "source_file": "results/dense_retrieval_bge_m3/significance_tests.json",
+      "status": "MATCH"
+    },
+    {
+      "metric": "McNemar exact (prepatch vs patched, strict transition 8 gains/0 losses)",
+      "value": {"gains": 8, "losses": 0, "p": 0.0078125},
+      "source_file": "results/final_resubmission_method/summary.json / transitions.json",
+      "status": "MATCH"
+    },
+    {
+      "metric": "Residual error analysis (mutually exclusive, replaces old error taxonomy)",
+      "value": {"wrong_schema": 30, "incomplete_coverage": 31, "type_mismatch": 49, "value_inaccurate": 214, "fully_correct": 7},
+      "source_file": "results/final_resubmission_method/nlp4lp_downstream_per_query_orig_tfidf.csv",
+      "reproduction_script": "tools/recompute_residual_error_analysis.py",
+      "reproduction_output": "results/final_resubmission_method/residual_error_analysis_2026-08-27.json",
+      "denominator": 331,
+      "status": "NEW_STAGE3_REPLACES_STALE_TAXONOMY"
+    },
+    {
+      "metric": "Structural subset (60 instances): TF-IDF/BM25/Oracle schema-hit, structural-valid, inst-complete",
+      "value": {
+        "TF-IDF": [0.9333, 0.75, 0.75],
+        "BM25": [0.9, 0.7333, 0.7333],
+        "Oracle": [1.0, 0.7667, 0.7833]
+      },
+      "source_file": "results/paper/eaai_camera_ready_tables/table2_engineering_structural_subset.csv",
+      "denominator": 60,
+      "status": "MATCH"
+    },
+    {
+      "metric": "Extended structural subset (269 instances)",
+      "value": {
+        "TF-IDF": [0.9368, 0.8141, 0.6654],
+        "BM25": [0.9257, 0.8104, 0.658],
+        "Oracle": [1.0, 0.8253, 0.684]
+      },
+      "source_file": "results/paper/eaai_camera_ready_tables/table3_executable_attempt_with_blockers.csv",
+      "denominator": 269,
+      "status": "MATCH"
+    },
+    {
+      "metric": "Restricted solver-backed subset (20 instances): Executable/Success/Feasible/Objective",
+      "value": {"TF-IDF": [0.95, 0.8, 0.8, 0.8], "Oracle": [0.95, 0.75, 0.75, 0.75]},
+      "source_file": "results/paper/eaai_camera_ready_tables/table4_final_solver_backed_subset.csv",
+      "denominator": 20,
+      "status": "MATCH"
+    },
+    {
+      "metric": "External baseline shared subset (18 instances): PaMOP/ORLM/OptMATH/Generic-LLM",
+      "source_file": "results/external_baseline_comparison/comparison.json",
+      "denominator": 18,
+      "status": "MATCH"
+    },
+    {
+      "metric": "DeepOR/OR-R1 provenance (code/checkpoint availability) -- CORRECTED WORDING",
+      "old_manuscript_claim": "both provide official public code and trained checkpoints; not evaluated at the time of this study's execution",
+      "corrected_claim": "OR-R1's official code is public (SCUTE-ZZ/OR-R1) but no trained checkpoint was ever released; DeepOR has neither official code nor a released checkpoint. Neither exclusion was a matter of integration effort.",
+      "source_file": ["docs/DEEPOR_PROVENANCE.md", "docs/ORR1_PROVENANCE.md"],
+      "status": "CORRECTED_STAGE3"
+    },
+    {
+      "metric": "OptMATH numeric-extraction classifier validation (150-instance, 4801-literal 'manual audit') -- CORRECTED WORDING",
+      "old_manuscript_claim": "single-reviewer manual audit ... annotation uncertainty ... inter-annotator reliability",
+      "corrected_claim": "a second, deterministic, rule-based classifier cross-check (not human annotation)",
+      "numeric_value_unchanged": {"agreement": 0.9804207456779838, "errors": 94, "n_literals": 4801},
+      "source_file": ["scripts/verify_optmath_external.py", "results/external_validation/optmath/final_verification/classifier_validation.json"],
+      "status": "CORRECTED_STAGE3_WORDING_ONLY_NUMBERS_UNCHANGED"
+    },
+    {
+      "metric": "PaMOP / generic-LLM evaluation date -- CORRECTED",
+      "old_manuscript_claim": "evaluated on 2026-08-12",
+      "corrected_claim": "evaluated on 2026-08-15",
+      "source_file": ["results/pamop/fidelity_diagnostic_gpt5/run_metadata.json", "results/generic_llm/common18_official/run_metadata.json"],
+      "status": "CORRECTED_STAGE3"
+    },
+    {
+      "metric": "Runtime (331 queries, TF-IDF + ratio-aware typed-greedy, CPU)",
+      "value": {"total_seconds": 1.09, "mean_ms_per_query": 3.293051359516616, "peak_kb": 202508},
+      "source_file": "results/final_resubmission_method/runtime.json",
+      "status": "MATCH_NEW_ADDITION"
+    },
+    {
+      "metric": "StrictInstantiationReady motivation: selective-reranker ordinary-ready gain and wrong-schema gaming",
+      "value": {"ordinary_ready_before": 257, "ordinary_ready_after": 265, "new_ready_queries": 8, "new_ready_wrong_schema": 6, "strict_ready_gain": 2, "strict_mcnemar_p": 0.5},
+      "source_file": "docs/STRICT_INSTANTIATION_READY_DIAGNOSTIC_2026-08-13.md",
+      "status": "MATCH_NEW_ADDITION"
+    }
+  ]
+}

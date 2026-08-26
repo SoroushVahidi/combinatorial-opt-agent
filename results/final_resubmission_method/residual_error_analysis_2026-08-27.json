@@ -1,0 +1,57 @@
+{
+  "source_file": "results/final_resubmission_method/nlp4lp_downstream_per_query_orig_tfidf.csv",
+  "n_total": 331,
+  "definition": "Mutually exclusive query-level partition, evaluated in order: (1) wrong_schema if schema_hit==0; (2) incomplete_coverage if schema_hit==1 and param_coverage<1.0; (3) type_mismatch if schema_hit==1, param_coverage==1.0, type_match<1.0; (4) value_inaccurate if schema_hit==1, param_coverage==1.0, type_match==1.0, and the query has a comparable exact20 value <1.0; (5) fully_correct otherwise.",
+  "counts": {
+    "wrong_schema": 30,
+    "incomplete_coverage": 31,
+    "type_mismatch": 49,
+    "value_inaccurate": 214,
+    "fully_correct": 7
+  },
+  "fractions_of_331": {
+    "wrong_schema": 0.09063444108761329,
+    "incomplete_coverage": 0.09365558912386707,
+    "type_mismatch": 0.14803625377643503,
+    "value_inaccurate": 0.6465256797583081,
+    "fully_correct": 0.021148036253776436
+  },
+  "example_query_ids": {
+    "wrong_schema": [
+      "nlp4lp_test_4",
+      "nlp4lp_test_12",
+      "nlp4lp_test_24",
+      "nlp4lp_test_36",
+      "nlp4lp_test_96"
+    ],
+    "incomplete_coverage": [
+      "nlp4lp_test_10",
+      "nlp4lp_test_13",
+      "nlp4lp_test_28",
+      "nlp4lp_test_58",
+      "nlp4lp_test_107"
+    ],
+    "type_mismatch": [
+      "nlp4lp_test_3",
+      "nlp4lp_test_6",
+      "nlp4lp_test_14",
+      "nlp4lp_test_39",
+      "nlp4lp_test_45"
+    ],
+    "value_inaccurate": [
+      "nlp4lp_test_1",
+      "nlp4lp_test_2",
+      "nlp4lp_test_5",
+      "nlp4lp_test_7",
+      "nlp4lp_test_8"
+    ],
+    "fully_correct": [
+      "nlp4lp_test_0",
+      "nlp4lp_test_94",
+      "nlp4lp_test_99",
+      "nlp4lp_test_147",
+      "nlp4lp_test_155"
+    ]
+  },
+  "note": "Categories are mutually exclusive and sum to n_total by construction (no double-counting, unlike the superseded heuristic taxonomy). This does not decompose type_mismatch or value_inaccurate into finer sub-causes (e.g. float vs percent) because the current per-query artifact has no per-slot type column; see docs/SNCS_STAGE2_LOCAL_WULVER_GITHUB_AUDIT_2026-08-27.md Section 11 for why that is deferred rather than fabricated."
+}

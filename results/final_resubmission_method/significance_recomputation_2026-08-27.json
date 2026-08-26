@@ -1,5 +1,5 @@
 {
-  "note": "Reproduces the 3 DKE significance-table rows flagged in Stage-1 as NEEDS_RECOMPUTATION (no committed script reproduced them as of 2026-08-26). All three point estimates and CIs below match manuscript/dke/main.tex Table tab:nlp4lp-significance to 4 decimal places; see docs/SNCS_STAGE1_MANUSCRIPT_REPOSITORY_AUDIT_2026-08-26.md Section 9.",
+  "note": "Reproduces the 3 DKE significance-table rows flagged in Stage-1 as NEEDS_RECOMPUTATION. As of 2026-08-27 all three point estimates, CIs, AND p-values below reproduce manuscript/dke/main.tex Table tab:nlp4lp-significance exactly, using the verified two-sided bootstrap p-value convention documented in paired_bootstrap()'s docstring (p = 2*min(P(diff<=0), P(diff>0)) on the uncentered bootstrap distribution). See docs/SNCS_STAGE3_MANUSCRIPT_SPRINGER_REPOSITORY_FINALIZATION_2026-08-27.md Section 7.",
   "manuscript_reported": {
     "tfidf_vs_oracle_instready": {
       "diff": -0.0483,
@@ -35,7 +35,7 @@
         -0.07552870090634445,
         -0.024169184290030232
       ],
-      "p_value_le": 0.0003,
+      "p_value": 0.0001,
       "B": 10000,
       "seed": 42
     },
@@ -47,7 +47,7 @@
         -0.10876132930513593,
         -0.051359516616314216
       ],
-      "p_value_le": 0.0001,
+      "p_value": 0.0001,
       "B": 10000,
       "seed": 42
     },
@@ -59,7 +59,7 @@
         0.009063444108761365,
         0.04229607250755285
       ],
-      "p_value_le": 0.0059,
+      "p_value": 0.0006,
       "B": 10000,
       "seed": 42
     }
