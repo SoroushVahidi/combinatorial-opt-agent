@@ -1,0 +1,76 @@
+{
+  "status": "PASS",
+  "verified_at_utc": "2026-10-29T21:15:42.355580+00:00",
+  "authentication": "None; independent public HTTPS GETs",
+  "manuscript_commit": "00adeca9d3d761da7f8ee2e5dcee7fc8d535f2bc",
+  "tag": "jdsa-manuscript-v1.0.0",
+  "tag_refs": [
+    "972d270d94aadb00c291ba3d19e89c761d40abff\trefs/tags/jdsa-manuscript-v1.0.0",
+    "00adeca9d3d761da7f8ee2e5dcee7fc8d535f2bc\trefs/tags/jdsa-manuscript-v1.0.0^{}"
+  ],
+  "release_id": 428402665,
+  "release_url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0",
+  "draft": false,
+  "prerelease": true,
+  "assets": [
+    {
+      "asset": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+      "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+      "status": 200,
+      "bytes": 444142,
+      "sha256": "e1a5ba63437ce378c320db0ecea96098bd5a586ef8bf8aea0a11046dbd554766",
+      "local_bytes_identical": true,
+      "api_digest": "sha256:e1a5ba63437ce378c320db0ecea96098bd5a586ef8bf8aea0a11046dbd554766"
+    },
+    {
+      "asset": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Source.zip",
+      "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Source.zip",
+      "status": 200,
+      "bytes": 1013756,
+      "sha256": "d99b074ba128acb30dd5736ad171b5432b7b0a37beb598f6f8794dd0e06e6d36",
+      "local_bytes_identical": true,
+      "api_digest": "sha256:d99b074ba128acb30dd5736ad171b5432b7b0a37beb598f6f8794dd0e06e6d36"
+    },
+    {
+      "asset": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf",
+      "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf",
+      "status": 200,
+      "bytes": 435970,
+      "sha256": "0b724ecdbf2bbdbcd531960e4f7e6951bdb4fdb607fa4f94c3efbfaa50962fa4",
+      "local_bytes_identical": true,
+      "api_digest": "sha256:0b724ecdbf2bbdbcd531960e4f7e6951bdb4fdb607fa4f94c3efbfaa50962fa4"
+    },
+    {
+      "asset": "SHA256SUMS.txt",
+      "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/SHA256SUMS.txt",
+      "status": 200,
+      "bytes": 438,
+      "sha256": "c960e2d10d0586143a11c80d1c97d59f24796e1a7ac518b9225f4952f4fe9105",
+      "local_bytes_identical": true,
+      "api_digest": "sha256:c960e2d10d0586143a11c80d1c97d59f24796e1a7ac518b9225f4952f4fe9105"
+    }
+  ],
+  "sha256sums_verified": true,
+  "public_destinations": [
+    {
+      "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0",
+      "http_status": 200,
+      "final_url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0"
+    },
+    {
+      "url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0",
+      "http_status": 200,
+      "final_url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0"
+    },
+    {
+      "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent",
+      "http_status": 200,
+      "final_url": "https://github.com/SoroushVahidi/combinatorial-opt-agent"
+    },
+    {
+      "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0",
+      "http_status": 200,
+      "final_url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0"
+    }
+  ]
+}
