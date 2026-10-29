@@ -1,0 +1,145 @@
+{
+  "source_commit": "49827d274cae995005681fb03a299a5363583861",
+  "date": "2026-10-29",
+  "documents": {
+    "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_JDSA_Phase4.pdf": {
+      "sha256": "edfbf8edb7b9b00083be61294a90abfe4058ed8c642180f4e3ce848b4b49abbe",
+      "pages": 22,
+      "independent_build_text_and_72dpi_pixels_identical": true,
+      "embedded_font_count": 31,
+      "minimum_text_span_pt": 5.0,
+      "text_outside_page": [],
+      "resolved_internal_links": 104,
+      "resolved_cross_pdf_links": 26,
+      "visually_reviewed_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22
+      ]
+    },
+    "ESM_1_Retrieval_Assisted_Scalar_Grounding_JDSA_Phase4_Supplement.pdf": {
+      "sha256": "c3a5e45f0753afa553098397b882185feba1e35be2f07e880d172a16a3d9d24a",
+      "pages": 32,
+      "independent_build_text_and_72dpi_pixels_identical": true,
+      "embedded_font_count": 23,
+      "minimum_text_span_pt": 6.974,
+      "text_outside_page": [],
+      "resolved_internal_links": 34,
+      "resolved_cross_pdf_links": 10,
+      "visually_reviewed_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32
+      ]
+    }
+  },
+  "experiments_executed": false,
+  "main_first_page_orcid_link": "https://orcid.org/0000-0003-1934-6282",
+  "final_build_logs": [
+    {
+      "main": {
+        "sha256": "83993e78c7c5a4a5de92b1cf82bd0737e8e818dc3ba76f0a7dd65449b709dc40",
+        "unresolved_or_overfull_diagnostics": []
+      },
+      "supplement": {
+        "sha256": "0b4df08ba1ba795b52b361d795ff7d4efe6acae631a9e5934fd1093fb84825dd",
+        "unresolved_or_overfull_diagnostics": []
+      }
+    },
+    {
+      "independent_build_console_sha256": "ec25b0cc3f652af5427afe1f1b225d04f0b082d09fcc591d403bbd573fe507b1",
+      "final_log_guard": "PASS; temporary build logs removed by build.sh after successful validation"
+    }
+  ],
+  "source_zip": {
+    "sha256": "ac1603b5b5001337dd39d8af1d12bd115aa4a8071ed33bf2a317f7339ffc7e62",
+    "files": [
+      "Fig1.pdf",
+      "Fig1.tex",
+      "README.md",
+      "build.sh",
+      "main.tex",
+      "orcidlink.sty",
+      "references.bib",
+      "sn-basic.bst",
+      "sn-jnl.cls",
+      "supplement.tex"
+    ],
+    "independent_build": "PASS",
+    "flat_layout": true
+  },
+  "preservation": {
+    "combinatorial-opt-agent": {
+      "head": "a3f0dde397341a41842a30ddb946e7966706351b",
+      "status_unchanged": true,
+      "untracked_file_count_preserved": 115,
+      "untracked_bytes_unchanged": true
+    },
+    "combinatorial-opt-agent-jdsa-phase1": {
+      "head": "a09032a23c4c44a5d6d2a5215b3a8c1ca3b1a650",
+      "status_unchanged": true,
+      "untracked_file_count_preserved": 0,
+      "untracked_bytes_unchanged": true
+    },
+    "combinatorial-opt-agent-jdsa-phase2": {
+      "head": "8fbf3d073c54a4103ef06263084ea7d3fded57b3",
+      "status_unchanged": true,
+      "untracked_file_count_preserved": 0,
+      "untracked_bytes_unchanged": true
+    },
+    "combinatorial-opt-agent-jdsa-phase3": {
+      "head": "49827d274cae995005681fb03a299a5363583861",
+      "status_unchanged": true,
+      "untracked_file_count_preserved": 0,
+      "untracked_bytes_unchanged": true
+    }
+  }
+}

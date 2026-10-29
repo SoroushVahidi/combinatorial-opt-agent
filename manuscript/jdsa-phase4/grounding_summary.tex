@@ -1,0 +1,38 @@
+\subsection{Controlled Grounding Diagnostics and Numerical Correctness}
+\label{subsec:grounding-followup}
+
+Coarse readiness and whole-query numerical correctness rank the existing
+pipelines differently. Saved records yield 40/331 full-gold-key scalar
+tolerance successes for constrained assignment versus 7/331 for typed greedy,
+with 36 gains and three losses. The other matched all-key counts are 37/331 for maximum-weight matching, 35/331 for role repair, 46/331 for search-structured and 9/331 for semantic-IR repair (Table~\ref{tab:nlp4lp-grounding-baselines}). The constrained eligible-only count is 41:
+query 102 covers only three of seven gold scalar keys and is excluded from
+the all-key count. Candidate construction, context, scoring, abstention and
+decoding differ together; both methods already prohibit mention reuse.
+Consequently, the gain cannot be attributed solely to global search.
+
+A separate retrospective factorial study uses 49 primary queries and 277
+gold slots, holding each candidate pool and score matrix fixed within
+decoder comparisons. The 64 collected cases additionally contain 12
+development cases, one historical-overlap reconciliation case, and two
+reference-only cases. Inference uses predicted-schema scalar metadata
+without gold-key filtering, but still receives reference-derived slot structure. Under contextual scores and one-to-one
+assignment, exact slot counts increase from 106 to 136 for typed candidates
+and from 100 to 133 for rich candidates, but whole-query tolerance successes
+remain 5/49. These decoder contrasts do not survive the separately retained
+Holm family of 240 exploratory endpoint tests. With reusable mentions and
+additive scores, independent selection is already globally optimal.
+
+The earlier joint-grounding pilot likewise finds 3/49 successes for both
+local and joint selection on the overlap-free slice. Of the original 50
+cases, 32 have a criterion-correct mapping in the common pools, but only
+eight retain one in the beam's top ten and three select it. Exact diagnosis
+finds 23 strict objective-preference failures and six tied-score ambiguities
+among those 32. A subsequent exact value/type-distinct enumeration on the
+same 49 primary cases leaves retention at 9/49 and selected correctness at
+3/49. More search or numerical diversity therefore produced no observed
+whole-instance improvement for these frozen objectives. These are conditional negative findings on a small pilot, not an equivalence result or evidence that better-supported constraints cannot help.
+
+Appendix~\ref{S-app:grounding-diagnostics} retains the full factorial and
+pruning evidence, reference-convention corrections and reproduction map.
+All these comparisons are retrospective; the known query-291 overlap is
+excluded from new primary comparisons, but prior benchmark exposure remains.
