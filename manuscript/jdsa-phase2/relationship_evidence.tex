@@ -1,0 +1,18 @@
+\subsubsection{Relationship Judgments: Validity and Agreement}
+\label{subsec:relationship-audit}
+A separate study asks three model services to judge 217 occurrence--declaration relationships each: Gemini through Vertex AI, DeepSeek through io.net and Command A through Cohere. The 651 judgment targets come from 16 NL4Opt training problems \cite{ramamonjison2023nl4opt}, selected for category coverage and anticipated difficulty from a previously inspected 100-problem frame. Relationships share source texts and declarations, so the population is selected and clustered. The four decisions---\texttt{CORRECT}, \texttt{INCORRECT}, \texttt{AMBIGUOUS} and \texttt{CANNOT\_DETERMINE}---are model assertions. No independently accepted human reference labels exist for these targets.
+
+\begin{table}[htbp]\centering\small
+\caption{Structural validity on the same 217 relationship targets per service. Final counts combine original-valid objects, deterministic offline repairs and historically generated valid replacements under a revised format. They are not single-pass or equal-treatment accuracy estimates. No new calls were made for this revision.}\label{tab:relationship-validity}
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{@{}lrrrr@{}}\toprule
+Service/model family & Original valid & Offline repairs & Valid replacements & Final valid\\\midrule
+Vertex AI/Gemini & 215 & 2 & 0 & 217/217\\
+io.net/DeepSeek & 180 & 33 & 4 & 217/217\\
+Cohere/Command A & 105 & 24 & 68 & 197/217\\\midrule
+Total & 500 & 59 & 72 & 631/651\\\bottomrule
+\end{tabular}\end{table}
+
+Table~\ref{tab:relationship-validity} distinguishes original valid outputs, deterministic offline repairs and valid replacements from historical recovery generations. Structural checks require valid identifiers and literal source quotations as well as the prescribed JSON fields. Offline repair preserves all 500 originally valid objects and recovers 59; historical targeted regeneration supplies 72 additional valid objects, giving 631 final valid judgments. Smaller recovery batches, revised formatting instructions and Cohere's additional native schema change treatment across stages. These final counts describe the recovered collection rather than single-pass model accuracy. The remaining 20 invalid objects contain nonliteral quotations; this defect alone does not adjudicate their mathematical decisions.
+
+There are 197 complete three-model cases. Fleiss' nominal $\kappa=0.370807$ uses all four decision categories and excludes invalid objects. These cases comprise 119 determinate unanimous judgments, 77 disagreements and one unresolved relationship; raw label unanimity includes that unresolved case. The original complete-case set has only 89 relationships and $\kappa=0.501643$, with the same labels retained after recovery. The change in aggregate agreement therefore accompanies expanded complete-case membership, not a measured change in correctness. Pairwise counts, intermediate recovery results, category marginals and source-level clusters are given in Supplement, Section~\ref{S-app:relationship-evidence}. Agreement measures consistency among assertions, not semantic accuracy, and supports neither a model leaderboard nor approved training labels.

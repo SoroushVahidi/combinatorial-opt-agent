@@ -1,0 +1,184 @@
+{
+  "checks": {
+    "D1": {
+      "categories": 8,
+      "pairs": 12,
+      "samples": 24,
+      "status": "Construction and author audit; no provider-performance measurements"
+    },
+    "common18": {
+      "deepor": {
+        "generation_attempted": 0,
+        "numerical_agreement": 0,
+        "parsed": 0,
+        "precision_unresolved": 0,
+        "process_success": 0,
+        "reference_available": 0,
+        "valid_objective_extraction": 0
+      },
+      "generic": {
+        "generation_attempted": 18,
+        "numerical_agreement": 12,
+        "parsed": 18,
+        "precision_unresolved": 0,
+        "process_success": 16,
+        "reference_available": 16,
+        "valid_objective_extraction": 16
+      },
+      "optmath": {
+        "generation_attempted": 18,
+        "numerical_agreement": 11,
+        "parsed": 18,
+        "precision_unresolved": 0,
+        "process_success": 15,
+        "reference_available": 16,
+        "valid_objective_extraction": 15
+      },
+      "orlm": {
+        "generation_attempted": 18,
+        "numerical_agreement": 0,
+        "parsed": 18,
+        "precision_unresolved": 0,
+        "process_success": 0,
+        "reference_available": 16,
+        "valid_objective_extraction": 0
+      },
+      "orr1": {
+        "generation_attempted": 0,
+        "numerical_agreement": 0,
+        "parsed": 0,
+        "precision_unresolved": 0,
+        "process_success": 0,
+        "reference_available": 0,
+        "valid_objective_extraction": 0
+      },
+      "pamop": {
+        "generation_attempted": 18,
+        "numerical_agreement": "WITHHELD: zero authenticated matches is not an accuracy aggregate",
+        "parsed": 13,
+        "precision_unresolved": 9,
+        "process_success": 13,
+        "reference_available": 16,
+        "valid_objective_extraction": 13
+      }
+    },
+    "investigation_destinations": 47,
+    "main_duplicate_long_paragraphs": 0,
+    "manuscript": {
+      "abstract_unchanged": true,
+      "core_results_unchanged_except_section_title": true,
+      "introduction_changed_only_roadmap": true,
+      "sections": [
+        "Introduction",
+        "Related Work",
+        "Problem Setting and Evaluation Framework",
+        "Methods and Experimental Setup",
+        "Experimental Results",
+        "Discussion",
+        "Conclusion"
+      ]
+    },
+    "optmath": {
+      "audited_sums": {
+        "num_gold_ast": 31736,
+        "num_gold_text_supported": 29322,
+        "num_matched_ast": 23805,
+        "num_matched_text_supported": 23805
+      },
+      "automatic_1000_instance_constant_count": 2310,
+      "classifier_agreements": 4707,
+      "classifier_literals": 4801,
+      "complete": 591.0,
+      "constant_denominator": 31736,
+      "corrected_macro_summary": 0.8135375383251147,
+      "corrected_per_instance_counts": "Unavailable; CI not re-estimated",
+      "corrected_pooled_summary": 0.8070071877495746,
+      "historical_CI_summary_only": [
+        0.7842296896896338,
+        0.8283250553286509
+      ],
+      "instances": 1000,
+      "raw_recall": 0.7500945298714393,
+      "text_recall": 0.8118477593615715
+    },
+    "phase1_manifest": {
+      "hashes_verified": 65,
+      "local_sources_not_checked": []
+    },
+    "relationships": {
+      "kappa": {
+        "final": {
+          "chance": 0.5858578050337695,
+          "complete": 197,
+          "kappa": 0.3708071786079691,
+          "marginals": {
+            "AMBIGUOUS": 1,
+            "CANNOT_DETERMINE": 2,
+            "CORRECT": 420,
+            "INCORRECT": 168
+          },
+          "observed": 0.7394247038917089
+        },
+        "original": {
+          "chance": 0.6242337527528791,
+          "complete": 89,
+          "kappa": 0.501642526504405,
+          "marginals": {
+            "CANNOT_DETERMINE": 2,
+            "CORRECT": 201,
+            "INCORRECT": 64
+          },
+          "observed": 0.8127340823970037
+        }
+      },
+      "pairs": {
+        "gemini/cohere": [
+          123,
+          197
+        ],
+        "gemini/ionet": [
+          213,
+          217
+        ],
+        "ionet/cohere": [
+          120,
+          197
+        ]
+      },
+      "source_problems": 16,
+      "stages": {
+        "final": {
+          "cohere": 197,
+          "gemini": 217,
+          "ionet": 217
+        },
+        "offline": {
+          "cohere": 129,
+          "gemini": 217,
+          "ionet": 213
+        },
+        "original": {
+          "cohere": 105,
+          "gemini": 215,
+          "ionet": 180
+        }
+      }
+    },
+    "supplement_duplicate_long_paragraphs": 0,
+    "tables": {
+      "new_D1_tables": 2,
+      "phase1_tables_preserved_byte_for_byte": 33
+    }
+  },
+  "scope": "Saved observations only; no new experimental measurements",
+  "sources": {
+    "combinatorial-opt-agent-d1-final-pair-audit/docs/d1_final_pair_audit_2026-10-29/D1_FINAL_PAIR_DECISIONS.csv": "ec7412805bd28d3fc3bf1df2982ea7df23327022dd0c8a8938460813dd2c6696",
+    "combinatorial-opt-agent-d1-final-pair-audit/docs/d1_final_pair_audit_2026-10-29/evidence/local_sources/SELECTED_D1_CASES_UNCHANGED.json": "77697bc479de6db6d7be9dd4ef84b6062829c1a42d1d2cffb8e55bdecba55bad",
+    "combinatorial-opt-agent-manuscript-m3/docs/manuscript_m3_2026-10-28/COMMON18_CORRECTED_CASES.csv": "f78ff01b6e59360bba7a960624944421158593d6253f6d11a920fda7dbb0e81a",
+    "combinatorial-opt-agent-manuscript-m5/docs/manuscript_m5_2026-10-28/verified_author_review_20261029T002829Z/verification/llm217/llm217_per_judgment.csv": "56da4161bb951636c1edfae75d32e3c2cf49f0461f6939053549303412144581",
+    "results/external_validation/optmath/audited_per_query_metrics.jsonl": "f20d9bf5ef41f751dc4497e199b9e1aeda0582f17266e4fb7f94c67c01c98f2a",
+    "results/external_validation/optmath/contamination_summary.json": "5ff15fa0b34257d90e696c0f11873e1da55f8316565314e4ddd39e18e4475dc4",
+    "results/external_validation/optmath/final_verification/manual_audit_random150.csv": "7ef29d81dee1ca73a10bf412f307c6b2e181f45d2674ba322dce7b22bac06c80",
+    "results/external_validation/optmath/final_verification/verified_metrics.json": "72cb0453158d016e63061beff065b7bfd414b42f0bad477a63805d1bccc9927d"
+  }
+}
