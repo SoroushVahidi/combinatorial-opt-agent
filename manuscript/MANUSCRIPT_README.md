@@ -1,4 +1,36 @@
-# Manuscript: KAIS Submission Package
+# Manuscript index
+
+## Current JDSA manuscript
+
+**Retrieval-Assisted Scalar Grounding for Natural-Language Optimization**
+
+Target journal: **International Journal of Data Science and Analytics**.
+Canonical package: [`jdsa/`](jdsa/).
+
+- [Main manuscript PDF (22 pages)](https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf)
+- [Supplementary PDF (32 pages)](https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf)
+- [Editable-source ZIP](https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Submission_Source.zip)
+- [LaTeX source directory](https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa/source)
+- [Build instructions](https://github.com/SoroushVahidi/combinatorial-opt-agent/blob/main/manuscript/jdsa/BUILD.md)
+
+
+The Stage 1 JDSA package has been superseded and removed from the current tree.
+Its history remains in Git. The final review and publication checks are linked
+from the canonical package README.
+
+## Preserved separate journal packages
+
+- [SN Computer Science](sncs/): preserved submission files and documentation.
+- [Data & Knowledge Engineering](dke/): preserved DKE materials.
+- KAIS: root `main.tex`, `main.pdf`, `submission_package/`, `KAIS_submission_source.zip`,
+  cover letter and associated root assets are retained as KAIS materials, not JDSA files.
+
+The following KAIS preparation record is historical and does not identify the
+current JDSA submission package. Its scientific audit trail remains intact.
+
+---
+
+## Historical KAIS submission package
 
 **UPDATE (final KAIS submission-prep pass, `kais-final-submission-prep` branch):** the
 "Verified consistent" InstantiationReady/Coverage/TypeMatch numbers cited below

@@ -1,0 +1,96 @@
+{
+  "source_commit": "9d8c501c58415e766d0d5773cf7cbb576da66cfa",
+  "baseline_commit": "a3f0dde397341a41842a30ddb946e7966706351b",
+  "tables_preserved": 35,
+  "equations_preserved": 12,
+  "investigation_destinations_preserved": 47,
+  "byte_identical_source_assets": [
+    ".gitignore",
+    "additional_evidence.tex",
+    "closed_audits.tex",
+    "d1_contrasts.tex",
+    "figures/Fig1.pdf",
+    "figures/Fig1.tex",
+    "figures/pipeline_corrected.pdf",
+    "figures/pipeline_corrected.tex",
+    "figures/pipeline_m1.pdf",
+    "figures/pipeline_m1.tex",
+    "grounding_diagnostics.tex",
+    "grounding_summary.tex",
+    "llm_evidence.tex",
+    "orcidlink.sty",
+    "pipeline_figure.tex",
+    "preserved_results_details.tex",
+    "reference_conventions.tex",
+    "references.bib",
+    "relationship_evidence.tex",
+    "relationship_supplement.tex",
+    "reproduction_map.tex",
+    "sn-basic.bst",
+    "sn-jnl.cls",
+    "supervision_diagnostics.tex",
+    "tables/corrected_significance_rows.tex"
+  ],
+  "all_scientific_source_unchanged_except_three_link_targets": true,
+  "protected_baseline_files_unchanged": 1430,
+  "archive_members": [
+    "Fig1.pdf",
+    "Fig1.tex",
+    "README.md",
+    "build.sh",
+    "main.tex",
+    "orcidlink.sty",
+    "references.bib",
+    "sn-basic.bst",
+    "sn-jnl.cls",
+    "supplement.tex"
+  ],
+  "archive_allowlist_and_secret_pattern_checks_passed": true,
+  "independent_build_directory": "/tmp/jdsa-canonical-qa-p3gt4866",
+  "independent_build_command": "KEEP_BUILD=1 sh build.sh",
+  "final_logs": {
+    "main": {
+      "unresolved_or_overfull_diagnostics": [],
+      "warnings": [
+        "Package hyperref Warning: Difference (4) between bookmark levels is greater "
+      ]
+    },
+    "supplement": {
+      "unresolved_or_overfull_diagnostics": [],
+      "warnings": []
+    }
+  },
+  "pdfs": {
+    "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf": {
+      "pages": 22,
+      "all_pages_text_and_144dpi_pixels_identical_to_authoritative_and_independent_build": true,
+      "original_pdf_streams_unchanged": true,
+      "authoritative_pdf_bytes_preserved_as_prefix": true,
+      "changed_link_annotation_objects": 28,
+      "valid_internal_links": 104,
+      "valid_cross_document_links": 26,
+      "preserved_web_links_except_canonical_source_target": 121,
+      "no_out_of_page_text_or_unresolved_markers": true,
+      "authoritative_sha256": "b734a5fc553fb8896d86ae1d92cb800aca3bfb45bf6df435a19f4b5008f70119",
+      "canonical_sha256": "bb5c15cbba6de018f1b7da97bcd723f352340fb4b8d607b9fa6cef88fa13c42f"
+    },
+    "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf": {
+      "pages": 32,
+      "all_pages_text_and_144dpi_pixels_identical_to_authoritative_and_independent_build": true,
+      "original_pdf_streams_unchanged": true,
+      "authoritative_pdf_bytes_preserved_as_prefix": true,
+      "changed_link_annotation_objects": 10,
+      "valid_internal_links": 34,
+      "valid_cross_document_links": 10,
+      "preserved_web_links_except_canonical_source_target": 16,
+      "no_out_of_page_text_or_unresolved_markers": true,
+      "authoritative_sha256": "0dc93d821779d302d7e1568cee00200c0313361ff6353bb32c04078517c6bf13",
+      "canonical_sha256": "604f99963a58386d39676832206f07eb3e18ce669960e40fa2b57a7e68712ffe"
+    }
+  },
+  "artifact_sha256": {
+    "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf": "604f99963a58386d39676832206f07eb3e18ce669960e40fa2b57a7e68712ffe",
+    "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf": "bb5c15cbba6de018f1b7da97bcd723f352340fb4b8d607b9fa6cef88fa13c42f",
+    "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Submission_Source.zip": "e8e9a9028675fbfaae756ea4783a5c2414871f3b68621749652398a4748bd815"
+  }
+}

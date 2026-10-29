@@ -1,0 +1,26 @@
+{
+  "artifact_commit": "df4fa55f4e572c1a2ed10f300f727953755f73bf",
+  "downloads": [
+    {
+      "path": "manuscript/jdsa-final-review/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_JDSA_Final_Review.pdf",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/df4fa55f4e572c1a2ed10f300f727953755f73bf/manuscript/jdsa-final-review/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_JDSA_Final_Review.pdf",
+      "http_status": 200,
+      "sha256": "b734a5fc553fb8896d86ae1d92cb800aca3bfb45bf6df435a19f4b5008f70119",
+      "matches_local": true
+    },
+    {
+      "path": "manuscript/jdsa-final-review/ESM_1_Retrieval_Assisted_Scalar_Grounding_JDSA_Final_Review_Supplement.pdf",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/df4fa55f4e572c1a2ed10f300f727953755f73bf/manuscript/jdsa-final-review/ESM_1_Retrieval_Assisted_Scalar_Grounding_JDSA_Final_Review_Supplement.pdf",
+      "http_status": 200,
+      "sha256": "0dc93d821779d302d7e1568cee00200c0313361ff6353bb32c04078517c6bf13",
+      "matches_local": true
+    },
+    {
+      "path": "manuscript/jdsa-final-review/Retrieval_Assisted_Scalar_Grounding_JDSA_Final_Review_Submission_Source.zip",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/df4fa55f4e572c1a2ed10f300f727953755f73bf/manuscript/jdsa-final-review/Retrieval_Assisted_Scalar_Grounding_JDSA_Final_Review_Submission_Source.zip",
+      "http_status": 200,
+      "sha256": "d68b1c4caa0e5a7543400d2d75d837128f8b6579098990f1315c699ba5bb92cf",
+      "matches_local": true
+    }
+  ]
+}

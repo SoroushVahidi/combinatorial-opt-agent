@@ -1,0 +1,31 @@
+--- authoritative/main.tex
++++ canonical/source/main.tex
+@@ -20,7 +20,7 @@
+ \usepackage{orcidlink}
+ \raggedbottom
+ 
+-\externaldocument[S-]{supplement}[ESM_1_Retrieval_Assisted_Scalar_Grounding_JDSA_Final_Review_Supplement.pdf]
++\externaldocument[S-]{supplement}[Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf]
+ \begin{document}
+ 
+ \title[Retrieval-Assisted Scalar Grounding]{Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study}
+@@ -577,7 +577,7 @@
+ 
+ \noindent\textbf{Data availability.} The \href{https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics}{historical v1.2 derived metrics} are public under their existing CC BY-NC-SA 4.0 license. NLP4LP is obtained separately from \texttt{udell-lab/NLP4LP}; its current public card identifies CC BY-NC 4.0 and gated access. We provide upstream access instructions rather than redistribute that local cache. OptMATH raw data have an unresolved dataset license and are likewise obtained upstream. The MIT-licensed NL4Opt source subset, relationship prompts, per-case judgments, validity calculations and recovery lineage are prepared in a separate local release candidate, with account identifiers removed from copies. This M5 evidence bundle remains local and has not been uploaded. Online Resource 1, Section~\ref{S-app:reproduction} distinguishes directly verifiable results from missing historical predictions.
+ 
+-\noindent\textbf{Code availability.} Historical code is public at \url{https://github.com/SoroushVahidi/combinatorial-opt-agent}. The local M5 candidate adds deterministic verification entry points, manifests, source hashes and corrected evaluators. Its file-level inventory records included artifacts, sanitized derivatives, original licenses and concrete exclusions; this evidence bundle has not been uploaded. The manuscript source and supplementary material are available in the repository's \href{https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/manuscript/jdsa-final-editorial-polish-20261029/manuscript/jdsa-final-review}{versioned source package}. Publishing those documents does not release the M5 evidence bundle.
++\noindent\textbf{Code availability.} Historical code is public at \url{https://github.com/SoroushVahidi/combinatorial-opt-agent}. The local M5 candidate adds deterministic verification entry points, manifests, source hashes and corrected evaluators. Its file-level inventory records included artifacts, sanitized derivatives, original licenses and concrete exclusions; this evidence bundle has not been uploaded. The manuscript source and supplementary material are available in the repository's \href{https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa/source}{versioned source package}. Publishing those documents does not release the M5 evidence bundle.
+ 
+ \noindent\textbf{Reproducibility.} The reported analyses are based on frozen experimental records; their reanalysis involves no new model inference, solver execution or performance experiment. Released query metrics support aggregate checks; archived formulation logs support conditional objective comparisons; archived relationship responses support independent structure/agreement checks. Missing original headline scalar mappings, subset manifests, some rendered prompts and full-precision PaMOP returns prevent complete historical replay. Provider serving defaults and weight bytes are not fully authenticated. Compiling the source package reproduces the document, not missing measurements.
+ 
+--- authoritative/supplement.tex
++++ canonical/source/supplement.tex
+@@ -22,7 +22,7 @@
+ \renewcommand{\arraystretch}{1.18}
+ \raggedbottom
+ 
+-\externaldocument[M-]{main}[Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_JDSA_Final_Review.pdf]
++\externaldocument[M-]{main}[Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf]
+ \begin{document}
+ \title[Supplement: Scalar Grounding]{Supplementary Material: Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study}
+ \author*[1]{\fnm{Soroush} \sur{Vahidi}}\email{sv96@njit.edu}

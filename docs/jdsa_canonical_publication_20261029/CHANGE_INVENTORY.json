@@ -1,0 +1,407 @@
+[
+  {
+    "path": "README.md",
+    "git_status": "M",
+    "classification": "Updated documentation"
+  },
+  {
+    "path": "docs/jdsa_canonical_publication_20261029/CHANGE_INVENTORY.json",
+    "git_status": "A",
+    "classification": "Other changes: preserved review evidence and publication verification"
+  },
+  {
+    "path": "docs/jdsa_canonical_publication_20261029/DELETED_PATHS.json",
+    "git_status": "A",
+    "classification": "Other changes: preserved review evidence and publication verification"
+  },
+  {
+    "path": "docs/jdsa_canonical_publication_20261029/INVESTIGATION_DESTINATIONS.json",
+    "git_status": "A",
+    "classification": "Other changes: preserved review evidence and publication verification"
+  },
+  {
+    "path": "docs/jdsa_canonical_publication_20261029/MODULAR_BUILD_VERIFICATION.json",
+    "git_status": "A",
+    "classification": "Other changes: preserved review evidence and publication verification"
+  },
+  {
+    "path": "docs/jdsa_canonical_publication_20261029/PDF_LINK_CHANGES.json",
+    "git_status": "A",
+    "classification": "Other changes: preserved review evidence and publication verification"
+  },
+  {
+    "path": "docs/jdsa_canonical_publication_20261029/PUBLICATION_REPORT.md",
+    "git_status": "A",
+    "classification": "Other changes: preserved review evidence and publication verification"
+  },
+  {
+    "path": "docs/jdsa_canonical_publication_20261029/SOURCE_LINK_DIFF.patch",
+    "git_status": "A",
+    "classification": "Other changes: preserved review evidence and publication verification"
+  },
+  {
+    "path": "docs/jdsa_canonical_publication_20261029/VERIFICATION.json",
+    "git_status": "A",
+    "classification": "Other changes: preserved review evidence and publication verification"
+  },
+  {
+    "path": "docs/jdsa_canonical_publication_20261029/verify_package.py",
+    "git_status": "A",
+    "classification": "Other changes: preserved review evidence and publication verification"
+  },
+  {
+    "path": "docs/jdsa_final_editorial_polish_20261029/AVAILABILITY_CHECKS.json",
+    "git_status": "A",
+    "classification": "Other changes: preserved review evidence and publication verification"
+  },
+  {
+    "path": "docs/jdsa_final_editorial_polish_20261029/BUILD_VERIFICATION.json",
+    "git_status": "A",
+    "classification": "Other changes: preserved review evidence and publication verification"
+  },
+  {
+    "path": "docs/jdsa_final_editorial_polish_20261029/EDITORIAL_CHANGES.json",
+    "git_status": "A",
+    "classification": "Other changes: preserved review evidence and publication verification"
+  },
+  {
+    "path": "docs/jdsa_final_editorial_polish_20261029/EXACT_SOURCE_DIFF.patch",
+    "git_status": "A",
+    "classification": "Other changes: preserved review evidence and publication verification"
+  },
+  {
+    "path": "docs/jdsa_final_editorial_polish_20261029/FINAL_EDITORIAL_POLISH_REPORT.md",
+    "git_status": "A",
+    "classification": "Other changes: preserved review evidence and publication verification"
+  },
+  {
+    "path": "docs/jdsa_final_editorial_polish_20261029/GITHUB_AVAILABILITY_CHECK.json",
+    "git_status": "A",
+    "classification": "Other changes: preserved review evidence and publication verification"
+  },
+  {
+    "path": "docs/jdsa_final_editorial_polish_20261029/PRESERVATION_CHECKS.json",
+    "git_status": "A",
+    "classification": "Other changes: preserved review evidence and publication verification"
+  },
+  {
+    "path": "docs/jdsa_final_editorial_polish_20261029/REMOTE_ARTIFACT_VERIFICATION.json",
+    "git_status": "A",
+    "classification": "Other changes: preserved review evidence and publication verification"
+  },
+  {
+    "path": "docs/jdsa_final_editorial_polish_20261029/package_submission.py",
+    "git_status": "A",
+    "classification": "Other changes: preserved review evidence and publication verification"
+  },
+  {
+    "path": "docs/jdsa_final_editorial_polish_20261029/verify_documents.py",
+    "git_status": "A",
+    "classification": "Other changes: preserved review evidence and publication verification"
+  },
+  {
+    "path": "manuscript/MANUSCRIPT_README.md",
+    "git_status": "M",
+    "classification": "Updated documentation"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/.gitignore",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/README.md",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/build.sh",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/closed_audits.tex",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/figures/pipeline_corrected.pdf",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/figures/pipeline_corrected.tex",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/figures/pipeline_m1.pdf",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/figures/pipeline_m1.tex",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/grounding_diagnostics.tex",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/grounding_summary.tex",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/llm_evidence.tex",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/main.tex",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/pipeline_figure.tex",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/reference_conventions.tex",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/references.bib",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/relationship_evidence.tex",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/relationship_supplement.tex",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/reproduction_map.tex",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/sn-basic.bst",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/sn-jnl.cls",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/supervision_diagnostics.tex",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/supplement.pdf",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/supplement.tex",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa-stage1/tables/corrected_significance_rows.tex",
+    "git_status": "D",
+    "classification": "Deleted superseded JDSA files"
+  },
+  {
+    "path": "manuscript/jdsa/BUILD.md",
+    "git_status": "A",
+    "classification": "New canonical manuscript files"
+  },
+  {
+    "path": "manuscript/jdsa/README.md",
+    "git_status": "A",
+    "classification": "New canonical manuscript files"
+  },
+  {
+    "path": "manuscript/jdsa/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Submission_Source.zip",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/build.sh",
+    "git_status": "A",
+    "classification": "New canonical manuscript files"
+  },
+  {
+    "path": "manuscript/jdsa/package_source.py",
+    "git_status": "A",
+    "classification": "New canonical manuscript files"
+  },
+  {
+    "path": "manuscript/jdsa/source/.gitignore",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/additional_evidence.tex",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/build.sh",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/closed_audits.tex",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/d1_contrasts.tex",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/figures/Fig1.pdf",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/figures/Fig1.tex",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/figures/pipeline_corrected.pdf",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/figures/pipeline_corrected.tex",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/figures/pipeline_m1.pdf",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/figures/pipeline_m1.tex",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/grounding_diagnostics.tex",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/grounding_summary.tex",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/llm_evidence.tex",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/main.tex",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/orcidlink.sty",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/pipeline_figure.tex",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/preserved_results_details.tex",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/reference_conventions.tex",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/references.bib",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/relationship_evidence.tex",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/relationship_supplement.tex",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/reproduction_map.tex",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/sn-basic.bst",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/sn-jnl.cls",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/supervision_diagnostics.tex",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/supplement.tex",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  },
+  {
+    "path": "manuscript/jdsa/source/tables/corrected_significance_rows.tex",
+    "git_status": "A",
+    "classification": "Renamed or relocated final files"
+  }
+]

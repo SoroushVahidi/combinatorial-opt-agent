@@ -1,0 +1,11 @@
+{
+  "command": "OUTPUT_DIR=/tmp/jdsa-canonical-modular-output KEEP_BUILD=1 sh manuscript/jdsa/source/build.sh",
+  "all_54_pages_text_and_144dpi_pixels_identical_to_published_pdfs": true,
+  "warnings": {
+    "main": [
+      "Package hyperref Warning: Difference (4) between bookmark levels is greater "
+    ],
+    "supplement": []
+  },
+  "build_directory": "/tmp/jdsa-build.I8cUS8"
+}

@@ -1,16 +1,37 @@
-# Retrieval-Assisted Instantiation of Natural-Language Optimization Problems
+# Natural-language optimization research and manuscripts
 
-Companion repository for the paper **"Retrieval-Assisted Instantiation of Natural-Language Optimization Problems"**, submitted to **SN Computer Science** (Springer Nature) on 2026-08-26, submission ID SNCS-D-26-07548. The repository implements and evaluates a two-stage pipeline — fixed-catalog schema retrieval (TF--IDF / BM25 / LSA / BGE-M3) followed by deterministic, inference-time-LLM-free scalar-parameter grounding — on the **NLP4LP** benchmark (331 queries, 335-candidate schema catalog), together with restricted structural, solver-backed, and external-baseline validation subsets. This is a research artifact repository, not a production product.
+## Current JDSA manuscript
 
-## Current manuscript status
+**Retrieval-Assisted Scalar Grounding for Natural-Language Optimization**
+
+Target journal: **International Journal of Data Science and Analytics**.
+The final verified package is canonical at [`manuscript/jdsa/`](manuscript/jdsa/).
+
+- [Main manuscript PDF (22 pages)](https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf)
+- [Supplementary PDF (32 pages)](https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf)
+- [Editable-source ZIP](https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Submission_Source.zip)
+- [LaTeX source directory](https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa/source)
+- [Build instructions](https://github.com/SoroushVahidi/combinatorial-opt-agent/blob/main/manuscript/jdsa/BUILD.md)
+
+
+The final analysis preserves its distinctions among assisted grounding, validity,
+agreement and semantic correctness. Historical Hugging Face v1.2 and the local,
+unreleased M5 evidence are described separately in the paper. Repository publication
+is not a journal submission. See the [manuscript index](manuscript/MANUSCRIPT_README.md).
+The SNCS, DKE and KAIS packages below are retained as separate journal artifacts;
+they are not the current JDSA package.
+
+Historical companion repository for the paper **"Retrieval-Assisted Instantiation of Natural-Language Optimization Problems"**, submitted to **SN Computer Science** (Springer Nature) on 2026-08-26, submission ID SNCS-D-26-07548. The repository implements and evaluates a two-stage pipeline — fixed-catalog schema retrieval (TF--IDF / BM25 / LSA / BGE-M3) followed by deterministic, inference-time-LLM-free scalar-parameter grounding — on the **NLP4LP** benchmark (331 queries, 335-candidate schema catalog), together with restricted structural, solver-backed, and external-baseline validation subsets. This is a research artifact repository, not a production product.
+
+## Historical SN Computer Science manuscript status
 
 - **Submission status:** Submitted to SN Computer Science (SNCS-D-26-07548), August 2026.
-- **Authoritative manuscript source:** [`manuscript/sncs/main.tex`](manuscript/sncs/main.tex) (SN Computer Science / Springer Nature `sn-jnl` template), migrated 2026-08-27 from the corrected [`manuscript/dke/main.tex`](manuscript/dke/main.tex) (Data & Knowledge Engineering / Elsevier `elsarticle` template, an earlier submission attempt for the same paper).
+- **SN Computer Science manuscript source:** [`manuscript/sncs/main.tex`](manuscript/sncs/main.tex) (SN Computer Science / Springer Nature `sn-jnl` template), migrated 2026-08-27 from the corrected [`manuscript/dke/main.tex`](manuscript/dke/main.tex) (Data & Knowledge Engineering / Elsevier `elsarticle` template, an earlier submission attempt for the same paper).
 - **Older, superseded manuscript versions:** `manuscript/main.tex` / `manuscript/submission_package/main.tex` (a still-earlier Knowledge and Information Systems / KAIS attempt) and the original EAAI/Elsevier draft. These contain a **retracted headline number** (InstantiationReady $=0.5287$) that does not reproduce from the current codebase — see [`docs/BASELINE_STALENESS_AUDIT_2026-08-12.md`](docs/BASELINE_STALENESS_AUDIT_2026-08-12.md). **Do not cite numbers from these files.**
 - **Full audit trail:** [`docs/SNCS_STAGE1_MANUSCRIPT_REPOSITORY_AUDIT_2026-08-26.md`](docs/SNCS_STAGE1_MANUSCRIPT_REPOSITORY_AUDIT_2026-08-26.md), [`docs/SNCS_STAGE2_LOCAL_WULVER_GITHUB_AUDIT_2026-08-27.md`](docs/SNCS_STAGE2_LOCAL_WULVER_GITHUB_AUDIT_2026-08-27.md), and [`docs/SNCS_STAGE3_MANUSCRIPT_SPRINGER_REPOSITORY_FINALIZATION_2026-08-27.md`](docs/SNCS_STAGE3_MANUSCRIPT_SPRINGER_REPOSITORY_FINALIZATION_2026-08-27.md) document every manuscript-vs-repository consistency check performed before submission.
 - **Start here for navigation:** [`docs/DKE_SOURCE_OF_TRUTH.md`](docs/DKE_SOURCE_OF_TRUTH.md).
 
-## Current headline results (as reported in `manuscript/sncs/main.tex`)
+## Historical SN Computer Science headline results
 
 | Metric | TF--IDF (ratio-aware) | BGE-M3 (ratio-aware) | Oracle |
 |---|---|---|---|
@@ -78,7 +99,8 @@ Tech stack: Python 3.10+, scikit-learn, rank-bm25, optional sentence-transformer
 ## Repository structure (high level)
 
 ```
-manuscript/sncs/      current SN Computer Science manuscript source (authoritative)
+manuscript/jdsa/      canonical current JDSA manuscript, supplement and editable sources
+manuscript/sncs/      preserved SN Computer Science manuscript package
 manuscript/dke/       corrected DKE/Elsevier manuscript (migration source, historical target venue)
 manuscript/main.tex   older KAIS-era manuscript (superseded, retracted headline number)
 tools/                deterministic pipeline + verification/reproduction scripts

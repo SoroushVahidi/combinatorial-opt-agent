@@ -1,0 +1,53 @@
+{
+  "main": {
+    "file": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_JDSA_Final_Review.pdf",
+    "pages": 22,
+    "independent_build_text_and_72dpi_pixels_equal": true,
+    "changed_rendered_pages_from_phase4": [
+      16,
+      18,
+      19,
+      20,
+      21,
+      22
+    ],
+    "unchanged_rendered_pages": 16,
+    "outside_page_text": [],
+    "valid_pdf_links": 130
+  },
+  "supplement": {
+    "file": "ESM_1_Retrieval_Assisted_Scalar_Grounding_JDSA_Final_Review_Supplement.pdf",
+    "pages": 32,
+    "independent_build_text_and_72dpi_pixels_equal": true,
+    "changed_rendered_pages_from_phase4": [
+      1,
+      9,
+      10,
+      11,
+      12,
+      24
+    ],
+    "unchanged_rendered_pages": 26,
+    "outside_page_text": [],
+    "valid_pdf_links": 44
+  },
+  "final_logs": {
+    "main": {
+      "fatal_or_unresolved_diagnostics": [],
+      "warnings": [
+        "Package hyperref Warning: Difference (4) between bookmark levels is greater "
+      ]
+    },
+    "supplement": {
+      "fatal_or_unresolved_diagnostics": [],
+      "warnings": []
+    }
+  },
+  "inherited_warning": "Main hyperref bookmark-level adjustment also occurs in the Phase 4 independent-build log; no new warning introduced.",
+  "artifact_sha256": {
+    "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_JDSA_Final_Review.pdf": "b734a5fc553fb8896d86ae1d92cb800aca3bfb45bf6df435a19f4b5008f70119",
+    "ESM_1_Retrieval_Assisted_Scalar_Grounding_JDSA_Final_Review_Supplement.pdf": "0dc93d821779d302d7e1568cee00200c0313361ff6353bb32c04078517c6bf13",
+    "Retrieval_Assisted_Scalar_Grounding_JDSA_Final_Review_Submission_Source.zip": "d68b1c4caa0e5a7543400d2d75d837128f8b6579098990f1315c699ba5bb92cf"
+  },
+  "independent_zip_file_count": 10
+}

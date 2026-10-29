@@ -1,15 +1,4 @@
-%% Prepared for submission to SN Computer Science (Springer Nature).
-%% Built on the official Springer Nature LaTeX authoring template
-%% (sn-jnl.cls) with the sn-basic reference style and numbered
-%% bracketed citations, per SN Computer Science's submission guidelines.
-%% Migrated 2026-08-27 from the corrected manuscript/dke/main.tex (the
-%% Data & Knowledge Engineering / elsarticle version); all scientific
-%% corrections from that migration (Exact20 denominator, residual-error
-%% decomposition, DeepOR/OR-R1 and OptMATH provenance wording, evaluation
-%% dates, runtime/complexity, StrictInstantiationReady motivation) are
-%% retained as migration history; metric definitions were revised 2026-10-27. See
-%% docs/SNCS_STAGE3_MANUSCRIPT_SPRINGER_REPOSITORY_FINALIZATION_2026-08-27.md
-%% for the full audit trail.
+%% JDSA final editorial-polish source.
 
 \documentclass[pdflatex,sn-basic,Numbered]{sn-jnl}
 
@@ -18,16 +7,19 @@
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{booktabs}
 \usepackage{tabularx}
+\renewcommand{\tabularxcolumn}[1]{>{\raggedright\arraybackslash}p{#1}}
 \usepackage{algorithm}
 \usepackage{algorithmicx}
 \usepackage{algpseudocode}
-\usepackage{url}
+\usepackage{xurl}
+\usepackage{microtype}
 \usepackage{placeins}
 \usepackage{xr-hyper}
 \usepackage{hyperref}
 % Avoid duplicate caption destinations in the preserved Springer template.
 \hypersetup{hypertexnames=false}
 
+\renewcommand{\arraystretch}{1.18}
 \raggedbottom
 
 \externaldocument[M-]{main}[Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf]
@@ -40,47 +32,50 @@
 \renewcommand{\thetable}{S\arabic{table}}
 \renewcommand{\thefigure}{S\arabic{figure}}
 \renewcommand{\theequation}{S\arabic{equation}}
-This supplement preserves secondary evidence, population boundaries and source provenance. It accompanies the main article and includes the archived 217-relationship Gemini--DeepSeek--Cohere audit, with explicit recovery and denominator accounting. No new model predictions or experiments were produced for M5.
-\FloatBarrier
+\noindent\textbf{Online Resource 1.} International Journal of Data Science and Analytics.\par
+\noindent ORCID: \href{https://orcid.org/0000-0003-1934-6282}{0000-0003-1934-6282}.\par
+
+This supplement preserves secondary evidence, population boundaries and source provenance. It accompanies the main article and includes the archived 217-relationship Gemini--DeepSeek--Cohere audit, with explicit recovery and denominator accounting. The analyses reported here use archived predictions and experimental records.
 \section{System Context and Secondary Protocol Tables}
 \begin{table}[htbp]
 \centering
 \caption{Task-level comparison landscape for recent natural-language optimization modeling systems.
 This table is deliberately \emph{not} a leaderboard: systems differ in output type, supervision, and
 evaluation protocol, so accuracy numbers are omitted. Abbreviations: Ret.\ = retrieval/memory;
-Sol.\ = solver feedback during generation or training; FT = fine-tuning or RL training;
+Sol.\ = solver feedback during generation or training; FT = fine-tuning or reinforcement-learning training; OR = operations research; CoT = chain of thought;
 Comp.\ = directly comparable
 to the InstantiationReady / Exact20 (on hits) protocol of this paper.}
 \label{tab:comparison_landscape}
-\scriptsize
+\small
 \setlength{\tabcolsep}{2.4pt}
 \renewcommand{\arraystretch}{1.12}
-\begin{tabular}{@{}lccccccc@{}}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.6cm}c>{\raggedright\arraybackslash}p{2.6cm}Xcccc@{}}
 \toprule
 Method & Year & Task & Output & Ret. & Sol. & FT & Comp. \\
 \midrule
-OptiMUS & 2024 & End-to-end (MI)LP & Model+code & no & yes & no & no \\
-OptLLM & 2024 & NL$\rightarrow$model/code & Model+code & no & yes & no$^{*}$ & no \\
-Chain-of-Experts & 2024 & Multi-agent OR & Model+code & no & yes & no & no \\
-LLMOPT & 2025 & Fine-tuned modeling & Model+code & no & yes & yes & no \\
-OPT2CODE & 2025 & Retrieval+codegen & Solver code & yes & yes & no & no \\
-ORLM & 2025 & Training+feedback & Model+code & no & yes & yes & no \\
-OptMATH & 2025 & Data synthesis & Model+code & no & yes & yes & no \\
-SIRL & 2025 & Solver-informed RL & Model+code & no & yes & yes & no \\
-OR-R1 & 2026 & Test-time RL & Model+code & no & yes & yes & no \\
+OptiMUS & 2024 & End-to-end (MI)LP & Model + code & no & yes & no & no \\
+OptLLM & 2024 & NL$\rightarrow$model/code & Model + code & no & yes & no$^{*}$ & no \\
+Chain-of-Experts & 2024 & Multi-agent OR & Model + code & no & yes & no & no \\
+LLMOPT & 2025 & Fine-tuned modeling & Model + code & no & yes & yes & no \\
+OPT2CODE & 2025 & Retrieval + codegen & Solver code & yes & yes & no & no \\
+ORLM & 2025 & Training + feedback & Model + code & no & yes & yes & no \\
+OptMATH & 2025 & Data synthesis & Model + code & no & yes & yes & no \\
+SIRL & 2025 & Solver-informed RL & Model + code & no & yes & yes & no \\
+OR-R1 & 2026 & Test-time RL & Model + code & no & yes & yes & no \\
 DeepOR & 2026 & Foundation OR & Formulation & --- & yes & yes & no \\
-OptimAI & 2025 & Multi-agent NL-OR & Model+code & no & yes & no & no \\
-AlphaOPT & 2025 & Experience library & Model+code & yes & yes & no$^{\ddagger}$ & no \\
-ORThought & 2026 & Logistics CoT & Model+code & no & yes & no & no \\
-Ours & 2026 & Fixed-catalog inst. & Schema+scalars & yes & no & no & yes \\
+OptimAI & 2025 & Multi-agent NL--OR & Model + code & no & yes & no & no \\
+AlphaOPT & 2026 & Experience library & Model + code & yes & yes & no$^{\ddagger}$ & no \\
+ORThought & 2026 & Logistics CoT & Model + code & no & yes & no & no \\
+Ours & 2026 & Fixed-catalog inst. & Schema + scalars & yes & no & no & yes \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 
 \vspace{1mm}
 \raggedright
-\footnotesize
+\small
 $^{*}$OptLLM supports both prompting and fine-tuned variants.
 $^{\ddagger}$Library learning without weight updates.
+AlphaOPT uses its published conference year; OptimAI is an unpublished preprint discussed in main Section~\ref{M-subsec:rw_retrieval_memory}.
 ``---'' denotes information not established from a verified public artifact at the time of writing.
 Direct comparability (Comp.) is ``yes'' only for systems that share our fixed-catalog scalar-instantiation
 task and InstantiationReady / Exact20 protocol; end-to-end solver accuracy is a different metric.
@@ -90,7 +85,7 @@ task and InstantiationReady / Exact20 protocol; end-to-end solver accuracy is a 
 \caption{Retrieval methods used for schema identification.}
 \label{tab:retrieval_backbones}
 \small
-\begin{tabularx}{\linewidth}{l l X}
+\begin{tabularx}{\linewidth}{@{}lXX@{}}
 \toprule
 Method & Representation & Role in pipeline \\
 \midrule
@@ -174,8 +169,8 @@ Restricted solver-backed execution (20 inst.) & Reported reference-program execu
 \input{reference_conventions}
 \input{reproduction_map}
 \input{supervision_diagnostics}
-\FloatBarrier
 \section{LLM Formulation Provenance and Individual Outcomes}
+\label{app:common18}
 \begin{table}[htbp]
   \centering
   \caption{External-baseline provenance on the common-18 subset. The PaMOP row is a project reconstruction; adapted rows use released checkpoints with project-maintained interfaces. Ours is listed for context only; native metrics are not comparable to Table~\ref{M-tab:ext-outcomes}.}
@@ -198,13 +193,27 @@ Restricted solver-backed execution (20 inst.) & Reported reference-program execu
   \end{tabular}
 \end{table}
 \input{llm_evidence}
-\FloatBarrier
 \section{Closed Slot-Participation Audit}
 \label{app:g3}
 \input{closed_audits}
-\FloatBarrier
 \section{Relationship-Labeling Evidence and Recovery}
 \input{relationship_supplement}
+
+\section{Preserved Core-Results Definitions and Archival Details}
+\input{preserved_results_details}
+\section{Additional Completed Investigations and Evidence Status}
+\label{app:additional-evidence}
+\input{additional_evidence}
+
+\section{External Extraction and Semantic Contrast Details}
+\subsection{OptMATH Numeric Extraction}
+\label{app:extraction-details}
+As a component-level check, we evaluated numeric extraction on a fixed 1,000-instance \textsc{OptMATH}-Train sample \cite{lu2025optmath} (no fixed schema catalog, so extraction only). Pooled raw AST code-value overlap recall is $0.7501$; pooled automatic text-support recall is $0.8118$ (complete-instance rate $0.5910$). The saved automatic category counts classify $2{,}310/31{,}736=7.28\%$ of code-side values across the 1,000 instances as implementation, solver/API, index/loop or array/dimension constants. This is distinct from the 150-instance classifier comparison (seed 20260815). The later verification summary reports audit-calibrated text-supported recall as the pooled (micro) ratio $23{,}241/28{,}799=0.8070$ (95\% instance-bootstrap CI $[0.7842,0.8283]$, $B=10{,}000$, seed 42, over the 1,000 sampled instances). Its corrected per-instance counts are unavailable for independent rebootstrap of that historical CI. The reported mean of per-instance ratios (macro recall) is $0.8135$. The stored verification JSON reverses the names of these two aggregates; the values are preserved here with their implemented definitions. The 28,799 values are not independent samples, and occurrence-aware recall is not identifiable from these set-based artifacts. Two independently coded classifiers agree on $98.04\%$ of 4,801 literals in the 150-instance sample---automated cross-validation, not human gold labels. This is limited evidence that extraction transfers beyond \textsc{NLP4LP}; it does not establish full-framework generalization.
+
+
+\subsection{D1 Construction and Interpretation}
+\label{app:d1-details}
+\input{d1_contrasts}
 
 \bibliography{references}
 \end{document}

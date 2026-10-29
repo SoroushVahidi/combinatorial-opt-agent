@@ -1,0 +1,25 @@
+{
+  "source_commit": "cea99e86d33ad83219b9bf711c310e929ae18409",
+  "exact_allowlisted_prose_changes": 15,
+  "changed_tex_files": [
+    "additional_evidence.tex",
+    "main.tex",
+    "relationship_evidence.tex",
+    "reproduction_map.tex",
+    "supervision_diagnostics.tex",
+    "supplement.tex"
+  ],
+  "all_other_tex_bytes_preserved": true,
+  "main_abstract_through_conclusion_source_byte_identical": true,
+  "table_bodies_preserved": 35,
+  "numbered_equations_preserved": 12,
+  "algorithms_math_citations_headings_labels_identical": true,
+  "table_caption_exception": "Table 9 final sentence: editorial timing replaced by archived-response provenance",
+  "investigation_destinations_preserved": 47,
+  "d1_source_byte_identical": true,
+  "author_information_preserved": true,
+  "bibliography_sha256": "6632d047b5c4933c4f55f09658c17ee98af921b86fa0f4337ab46732737a9b70",
+  "bibliography_byte_identical": true,
+  "figure_pdf_bytes_identical": true,
+  "class_style_bytes_identical": true
+}
