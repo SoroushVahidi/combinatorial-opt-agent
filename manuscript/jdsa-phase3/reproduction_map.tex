@@ -1,0 +1,93 @@
+\subsection{Populations, Evidence and Reproduction Boundaries}
+\label{app:reproduction}
+
+The completed archival investigation found no authenticated headline scalar-assignment export. The four existing metric CSVs byte-match their first committed versions; this establishes stored-record integrity, not independent reevaluation of the values originally selected. The inspected original runners serialized 13 metric columns and omitted scalar mappings. Their absence is not evidence of deletion, and source code alone cannot reconstruct a historical prediction.
+
+We distinguish five evidence types. \emph{Original aggregates/query metrics} support summary-statistic reconstruction but not recovery of scalar choices. \emph{Preserved predictions} include top-1 schema IDs, Stage-A selections and later cached mappings. \emph{Deterministically reconstructed statistics} include residual partitions and paired tests derived from those existing records. \emph{Historical diagnostic examples} document selected cases or separate replay configurations; they are not complete original samples. \emph{Unmatched archival candidates} have no authenticated run identity and are excluded from evaluation. No newer outputs replace missing predictions.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Evaluation populations and preserved evidence. These populations
+and configuration versions must not be interchanged.}
+\label{tab:population-map}
+\begin{tabularx}{\linewidth}{@{}lXl@{}}
+\toprule
+Evidence & Unit and denominator & Available observations\\
+\midrule
+Retrieval & 331 queries per variant & Top-1 schema IDs\\
+Main scalar diagnostics & 331 queries per arm & Query metrics, not slots\\
+Conditional Exact20 & 291/291/303/320 queries & Per-query fractions\\
+Pre-ratio Stage A & 1,705 rows / 311 queries & Mentions and selections\\
+Joint pilot & 50 queries; 280 gold scalars & 300 method/query traces\\
+Primary factorial & 49 queries; 277 gold scalars & Choices and matrices\\
+Initial factorial collection & 64 cases; mixed populations & 64 checkpoints\\
+Distinct-class enumeration & 49 primary queries & 49 saved checkpoints\\
+Subset proxy/solver checks & 60/269/20 filtered queries & Reports/aggregates\\
+External generation & Same 18 source problems & Artifacts/execution logs\\
+External extraction & 1,000 instances & Extracted sets and counts\\
+Relationship QC & 217 items / 16 problems & 651 final objects and recovery lineage\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The Stage-A cache covers 311 queries with 1,705 slot rows; its separate full-frame sensitivity uses 331 queries and 1,847 gold scalars, counting missing selections as missing. The initial factorial collection contains 49 primary, 12 development, one overlap-reconciliation and two reference-only cases. All 1,176 primary method/query choices were reevaluated from saved indices/candidate values with historical type rules; no decoder or solver was rerun.
+
+The headline per-query files are under \path{results/selective_grounding_rerank/}, \path{results/final_resubmission_method/}, \path{results/dense_retrieval_bge_m3/} and \path{results/oracle_recomputation_2026-08-15/}. Matched alternatives are under \path{results/stage6_matched_grounding_baselines_2026-08-27/}; joint traces are under \path{results/joint_grounding_2026-10-27/}. Original factorial and enumeration checkpoints are under \path{results/wulver_grounding_attribution_2026-10-27/slurm_1462366/} and \path{results/grounding_followup_2026-10-27/slurm_1462557/}.
+
+Saved top-1 IDs reconstruct retrieval rates; saved query metrics reconstruct the main diagnostic tables and paired statistics (10,000 group resamples, NumPy seed 42). The corrected TF--IDF variant mean is 0.8640, computed before rounding from $(301+299+258)/(3\cdot331)$. Main scalar files cannot support corrected-reference reevaluation. The BGE reporting generator writes literal metadata/aggregates, not a runtime receipt: its revision field and inferred device do not authenticate executed weights, environment or hash-dependent slot order.
+
+The sanitized-retrieval and 60/269/20 complete results remain supported by historical aggregates/reports only. Five reported examples each from 60 and 269 include three shared query IDs, but do not recover either full manifest. The 20-case outcome writer itself omits full scalar maps. Imported overlap-study hit flags, metadata-order diagnostic replays and unauthenticated loose blobs cannot substitute for the missing target outputs.
+
+External generation preserves artifacts and execution records, but incompletely retained prompts prevent authentication of every historical input. Gold objectives are scoring-only in inspected generation paths; objective agreement is not formulation equivalence. The extraction audit preserves automatic sets/counts. Its later corrected aggregate ratio is checkable, but missing corrected per-instance counts prevent independently reconstructing its historical bootstrap interval.
+
+The M3 correction uses \path{tools/reaggregate_common18_m3.py} and the pure \path{baselines/comparison/objective_evidence.py} module. From a checkout containing the M3 correction scripts, run \texttt{python} with script argument \path{tools/reaggregate_common18_m3.py}, \texttt{--output} and a separate local audit directory. The command reads saved records only and never overwrites historical results. Independent verification and regression instructions accompany the local correction ledger under \path{docs/manuscript_m3_2026-10-28/}. This ledger identifies every case, source hash, historical/corrected disposition and precision exclusion.
+
+The M5 local release candidate supplies a machine-readable file inventory, hashes, excluded-file reasons and offline commands in \path{reproducibility/m5/README.md}. Its deterministic entry point, \path{tools/verify_llm217_m5.py}, reconstructs judgments from frozen HTTP responses without importing historical validators or model SDKs. The 651-row judgment ledger and the 20 invalid-case IDs are derived exports; originals are preserved. Account/project identifiers are removed only from explicitly marked candidate release copies, with separate original and release hashes. No raw NLP4LP cache or OptMATH problem corpus is redistributed. The already public derived-metrics dataset keeps its existing CC BY-NC-SA 4.0 license; NL4Opt source material keeps its MIT notice. M5 is a local author-review candidate, not an uploaded release.
+
+Direct offline checks reproduce retained metric aggregates, corrected common-18 text measurements and relationship validity/agreement. Fresh source-level evaluation requires separately obtained upstream data and appropriate dependencies; it was not run here. Historical aggregates without membership records and missing original headline scalar maps remain verifiable only to their retained evidence boundaries. No reconstructed output fills these gaps.
+
+\subsection{Input Dependencies and Identifiable Conclusions}
+\label{app:input-dependencies}
+
+\begin{table}[htbp]
+\centering\small
+\caption{Verified input boundaries. ``Reference-derived'' describes
+provenance even when a cached template is treated as a supplied catalog.}
+\label{tab:input-dependencies}
+\begin{tabularx}{\linewidth}{@{}lXX@{}}
+\toprule
+Stage & Prediction-time inputs & Reference use / interpretation\\
+\midrule
+Retrieval & Query; reference-derived catalog descriptions & Partially assisted known-template identification; target ID used only for scoring, except Oracle\\
+Main grounding & Query; selected template keys; query gold scalar eligibility & Gold-assisted assignment; gold magnitudes used only for scoring\\
+Joint/factorial controls & Cached mentions; template names, shapes, descriptions and available relations; name-inferred types & Partially assisted; no query gold-key filter or value-guided inference ranking\\
+Reference execution & Selected reference program; default parameters; predicted scalar replacements & Gold-assisted; structured and unfilled values retained\\
+External generators & Problem text; fixed prompt; model; own solver feedback where configured & Inspected prompts exclude reference targets; gold objectives score outputs\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+For the headline scalar criterion, let $F$ be the set passing schema match,
+full eligible coverage, all types and full numerical tolerance; let $S$
+and $I$ pass Strict and ordinary coarse readiness. By their definitions,
+$F\subseteq S\subseteq I$: full coverage/type gates imply the 0.8 gates,
+and Strict adds schema match. Thus the saved ratio-aware counts satisfy
+$7\leq255\leq265$ on the same 331-query frame. This is a logical relation
+between conditional diagnostics, not a bound on autonomous or semantic
+accuracy. Without assumptions linking a system supplied with a reference
+inventory to a system that must infer that inventory, the latter's success
+rate is unidentified. Nor does stored-reference tolerance certify source
+semantics when the references themselves contain errors.
+
+The absence of new fitting in this revision does not establish evaluation
+independence. The earlier learned train/development/test subsets all come
+from the 331-query evaluation-origin corpus; retained grouping records
+identify train/development and development/test crossings. The 49-case
+primary slice excludes the known query-291 crossing, but does not certify
+new template families or a fresh test set. The separate 399-problem NL4Opt
+quarantine is not an NLP4LP split and was not applied to these tables.
+
+\subsection{Provisional Availability and Outstanding Releases}
+The public Hugging Face metrics are the historical v1.2 dataset at revision \path{24a047fa5d661be6cfcf75980ac8f62e6c942243}. They are not an uploaded M5 release. The public GitHub repository retains historical records, including comparison fields superseded by the documented terminal-objective correction. The Phase 2 branch publishes manuscript sources, supplementary summaries and deterministic aggregate checks; it does not publish the local M3/M5 evidence bundles or private author-review records.
+
+Final source-level reproducibility would benefit from a separately reviewed additive release of the corrected common-18 ledger/evaluator, permitted relationship prompts and responses with recovery lineage, their independent validators, and the nonprivate D1 case/reference package. Such a release requires its own artifact and access review. It cannot recover missing headline scalar mappings, unavailable corrected extraction rows, full-precision PaMOP returns or incomplete historical environments and prompts. Upstream access conditions continue to apply; no dataset or Hugging Face record was changed for this manuscript revision.

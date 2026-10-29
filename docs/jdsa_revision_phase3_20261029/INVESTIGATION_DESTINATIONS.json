@@ -1,0 +1,284 @@
+[
+  {
+    "id": "E01",
+    "name": "Lexical schema retrieval and ranked-list diagnostics",
+    "status": "Completed",
+    "destination": "Main \u00a75.1, Table 1; S1 and S8.2 ranked-list details"
+  },
+  {
+    "id": "E02",
+    "name": "Pretrained dense retrieval",
+    "status": "Completed",
+    "destination": "Main \u00a75.1, Table 1; S3.3 provenance limits"
+  },
+  {
+    "id": "E03",
+    "name": "Four-arm scalar-grounding benchmark",
+    "status": "Completed",
+    "destination": "Main \u00a7\u00a73.2\u20133.4, 5.2, Table 2; S3.4 assistance boundaries"
+  },
+  {
+    "id": "E04",
+    "name": "Ratio-word extraction ablation",
+    "status": "Completed",
+    "destination": "Main \u00a75.6, Table 5; S7.4 statistical history"
+  },
+  {
+    "id": "E05",
+    "name": "Matched grounding alternatives",
+    "status": "Completed",
+    "destination": "Main \u00a75.3, Table 3; S3.1 and S3.3"
+  },
+  {
+    "id": "E06",
+    "name": "Residual-error and full-scalar analyses",
+    "status": "Completed offline investigation",
+    "destination": "Main \u00a75.4, Table 4; S7.3 error interpretation"
+  },
+  {
+    "id": "E07",
+    "name": "Frozen-score factorial assignment",
+    "status": "Completed",
+    "destination": "Main \u00a75.5; S3.1, Table S7"
+  },
+  {
+    "id": "E08",
+    "name": "Cached joint assignment pilot",
+    "status": "Completed",
+    "destination": "Main \u00a75.5; S3.1 and S8.3, Table S23"
+  },
+  {
+    "id": "E09",
+    "name": "Exact objective and beam-pruning diagnosis",
+    "status": "Completed",
+    "destination": "Main \u00a75.5; S3.1 objective/beam diagnosis"
+  },
+  {
+    "id": "E10",
+    "name": "Value/type-distinct exact enumeration",
+    "status": "Completed negative follow-up",
+    "destination": "Main \u00a75.5; S3.1 exact enumeration"
+  },
+  {
+    "id": "E11",
+    "name": "Cached candidate availability and Stage-A error accounting",
+    "status": "Completed diagnosis",
+    "destination": "S3.2 and S8.3, Table S22; implications in main \u00a76.1"
+  },
+  {
+    "id": "E12",
+    "name": "Reference conventions and frozen-prediction sensitivity",
+    "status": "Completed correction-only audit",
+    "destination": "Main \u00a76.3; S3.2, Table S8"
+  },
+  {
+    "id": "E13",
+    "name": "Corrected paired significance and factorial multiplicity",
+    "status": "Completed statistical correction",
+    "destination": "Main \u00a75.6, Table 6; S3.1 and S7.4"
+  },
+  {
+    "id": "E14",
+    "name": "Sanitization and overlap robustness",
+    "status": "Completed, aggregate-supported in part",
+    "destination": "Main \u00a75.6; S2 Table S4 and S7.4"
+  },
+  {
+    "id": "E15",
+    "name": "Historical 60-case coverage/type proxy",
+    "status": "Completed, aggregate-supported",
+    "destination": "Main \u00a75.7; S2 Table S5 and S7.1 (aggregate-supported)"
+  },
+  {
+    "id": "E16",
+    "name": "Historical extended269 proxy",
+    "status": "Completed, aggregate-supported",
+    "destination": "Main \u00a75.7; S7.1 (aggregate-supported, overlap retained)"
+  },
+  {
+    "id": "E17",
+    "name": "Historical20-case reference-program execution",
+    "status": "Completed, aggregate-supported",
+    "destination": "Main \u00a75.7; S2 Table S6 and S7.1 (reference-assisted, aggregate-supported)"
+  },
+  {
+    "id": "E18",
+    "name": "Common18 formulation and terminal-objective audit",
+    "status": "Completed generation; ORLM execution blocked; PaMOP agreement inconclusive",
+    "destination": "Main \u00a75.8.1, Table 8; S4 Tables S11\u2013S14, Eq. S2"
+  },
+  {
+    "id": "E19",
+    "name": "217-item three-service relationship judgments and recovery",
+    "status": "Completed; semantic accuracy unmeasured",
+    "destination": "Main \u00a75.8.3, Table 9; S6.1\u2013S6.2 Tables S16\u2013S18, Eq. S3"
+  },
+  {
+    "id": "E20",
+    "name": "D1 semantic contrast construction and author audit",
+    "status": "Completed construction/audit; provider pilot not executed",
+    "destination": "Main \u00a75.8.4; S9.2 Tables S25\u2013S26 (construction, not provider performance)"
+  },
+  {
+    "id": "E21",
+    "name": "NL4Opt proposal, annotation and template audit",
+    "status": "Completed audit; training blocked",
+    "destination": "S3.7; implications in main \u00a76.3"
+  },
+  {
+    "id": "E22",
+    "name": "Historical DistilRoBERTa mention-slot learning",
+    "status": "Completed training; comparative interpretation inconclusive",
+    "destination": "S3.6 and S8.4 (weak labels and evaluation-origin dependence)"
+  },
+  {
+    "id": "E23",
+    "name": "P0 learned feature scorer and assignment",
+    "status": "Completed",
+    "destination": "S3.6 and S8.4 (positive and negative outcomes retained)"
+  },
+  {
+    "id": "E24",
+    "name": "GAMS auxiliary weak-label training",
+    "status": "Completed, underpowered",
+    "destination": "S8.4 (tiny auxiliary test population)"
+  },
+  {
+    "id": "E25",
+    "name": "Targeted synthetic auxiliary training",
+    "status": "Completed, underpowered",
+    "destination": "S8.4 (tiny auxiliary test population)"
+  },
+  {
+    "id": "E26",
+    "name": "Historical fine-tuned schema retrieval",
+    "status": "Completed fitting; separate task",
+    "destination": "S8.4 (schema retrieval, not binding)"
+  },
+  {
+    "id": "E27",
+    "name": "OptMATH external numeric extraction and audit",
+    "status": "Completed; corrected CI only summary-supported",
+    "destination": "Main \u00a75.8.2; S9.1 (extraction only; corrected constant-denominator attribution)"
+  },
+  {
+    "id": "E28",
+    "name": "G1 autonomous inventory feasibility",
+    "status": "Completed feasibility audit; experiment blocked",
+    "destination": "Main \u00a76.4; S5 (feasibility audit, no performance claim)"
+  },
+  {
+    "id": "E29",
+    "name": "G2 fixed-slot gold-filter intervention",
+    "status": "Completed identifiability audit; experiment blocked",
+    "destination": "Main \u00a76.4; S5 (intervention/identifiability audit)"
+  },
+  {
+    "id": "E30",
+    "name": "G3 schema-only participation sets",
+    "status": "Completed static audit; performance experiment not executed",
+    "destination": "Main \u00a76.4; S5 Table S15 (static participation-set accounting)"
+  },
+  {
+    "id": "E31",
+    "name": "Historical global compatibility family",
+    "status": "Completed legacy campaign",
+    "destination": "S8.1, Table S19 (historical campaign, separate baseline vintage)"
+  },
+  {
+    "id": "E32",
+    "name": "Historical relation-aware linking ablations",
+    "status": "Completed legacy campaign",
+    "destination": "S8.1, Table S19 (positive/negative ablations)"
+  },
+  {
+    "id": "E33",
+    "name": "Historical ambiguity-aware grounding",
+    "status": "Completed legacy campaign",
+    "destination": "S8.1, Table S19 (readiness/abstention trade-offs)"
+  },
+  {
+    "id": "E34",
+    "name": "Baseline staleness, hierarchical search and classical alternatives",
+    "status": "Completed comparison audit",
+    "destination": "S8.1, Tables S19\u2013S20 (baseline-vintage correction retained)"
+  },
+  {
+    "id": "E35",
+    "name": "Top-k schema and reranking feasibility",
+    "status": "Completed retrospective diagnostic",
+    "destination": "S8.2 (top-k feasibility, distinct from main top-1)"
+  },
+  {
+    "id": "E36",
+    "name": "Selective schema-grounding reranking",
+    "status": "Completed diagnostic",
+    "destination": "S8.2 (selection study, not unseen evaluation)"
+  },
+  {
+    "id": "E37",
+    "name": "Role/quantity Stage-A separability and cascade",
+    "status": "Completed negative feasibility diagnosis",
+    "destination": "S8.2 (diagnostic/cascade results)"
+  },
+  {
+    "id": "E38",
+    "name": "Strict-failure diagnosis and quick-fix precursor",
+    "status": "Completed diagnosis/prototype; other interventions only oracle projections",
+    "destination": "S8.3 (earlier error accounting, not a substitute prediction archive)"
+  },
+  {
+    "id": "E39",
+    "name": "Archived OpenAI two-stage schema/slot baseline",
+    "status": "Completed saved-record campaign",
+    "destination": "S8.5, Table S24 (archived scalar LLM metrics, distinct endpoint)"
+  },
+  {
+    "id": "E40",
+    "name": "Archived Mistral two-stage orig baseline",
+    "status": "Completed orig metric artifact; other variants unverified",
+    "destination": "S8.5, Table S24 (archived scalar LLM metrics, distinct endpoint)"
+  },
+  {
+    "id": "E41",
+    "name": "Optional Gemini scalar-benchmark rerun",
+    "status": "Partially prepared/blocked; no full completed benchmark established",
+    "destination": "S8.5 (preflight/infrastructure only; no authenticated completed full benchmark)"
+  },
+  {
+    "id": "E42",
+    "name": "CloudRift Qwen relationship extension",
+    "status": "Blocked before inference",
+    "destination": "S8.5 (blocked before inference; unattempted, not zero accuracy)"
+  },
+  {
+    "id": "E43",
+    "name": "Independent relationship reference-label protocol",
+    "status": "Proposed/prepared, not completed",
+    "destination": "Main \u00a76.4; S6.3 (prepared independent review, no accepted labels)"
+  },
+  {
+    "id": "E44",
+    "name": "Earlier synthetic global-consistency evaluation",
+    "status": "Completed synthetic exercise; real benchmark blocked",
+    "destination": "S8.6 (synthetic archival context only; not real-data scientific comparison)"
+  },
+  {
+    "id": "E45",
+    "name": "Neural/scorer scaffolds and proposed external supervision",
+    "status": "Implemented/proposed; completed non-smoke runs not verified",
+    "destination": "S3.6 and S8.4 (scaffolds/proposals; no fabricated completed neural results)"
+  },
+  {
+    "id": "E46",
+    "name": "Historical prediction recovery and source integrity",
+    "status": "Completed archival investigation; recovery inconclusive/negative",
+    "destination": "Main \u00a76.3; S3.3 (archive integrity and missing mappings)"
+  },
+  {
+    "id": "E47",
+    "name": "Public metrics and release provenance check",
+    "status": "Completed provenance audit; no performance experiment",
+    "destination": "Declarations; S3.5; reference/availability report (provenance, not performance)"
+  }
+]

@@ -1,0 +1,29 @@
+[
+  {
+    "url": "https://huggingface.co/api/datasets/SoroushVahidi/nl-optimization-instantiation-metrics",
+    "status": 200,
+    "id": "SoroushVahidi/nl-optimization-instantiation-metrics",
+    "sha": "24a047fa5d661be6cfcf75980ac8f62e6c942243",
+    "lastModified": "2026-08-24T22:55:47.000Z",
+    "gated": false,
+    "license": "cc-by-nc-sa-4.0"
+  },
+  {
+    "url": "https://huggingface.co/api/datasets/udell-lab/NLP4LP",
+    "status": 200,
+    "id": "udell-lab/NLP4LP",
+    "sha": "f0f2abb5d4fa01812ab2c818dd350f6c34041d15",
+    "lastModified": "2026-08-17T02:38:02.000Z",
+    "gated": "auto",
+    "license": "cc-by-nc-4.0"
+  },
+  {
+    "url": "https://huggingface.co/api/datasets/shushulei/OptMATH-Train",
+    "status": 200,
+    "id": "shushulei/OptMATH-Train",
+    "sha": "2c1fbcb448da6c8b3fb267f73e20c83a7c5bf63f",
+    "lastModified": "2026-03-02T15:22:42.000Z",
+    "gated": false,
+    "license": "unknown"
+  }
+]
