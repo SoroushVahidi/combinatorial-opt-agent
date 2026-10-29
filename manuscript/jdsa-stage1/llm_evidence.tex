@@ -1,0 +1,57 @@
+\subsection{Implementation Provenance and Corrected Predicates}
+All four evaluated systems attempt the same 18 source problem numbers, selected before the comparison by the fixed \texttt{comparison-nlp4lp-common-18-v1} manifest. These numbers map to zero-based NLP4LP query IDs; retained input hashes agree for every Python system. Full rendered prompt retention is incomplete. No model inference or solver execution is repeated in this correction.
+
+\begin{table}[htbp]\centering\small
+\caption{Actual historical implementation and configuration, not original-author performance reproduction.}\label{tab:llm-provenance}
+\begin{tabularx}{\linewidth}{@{}lXX@{}}\toprule
+System & Model/implementation & Settings and actual solver\\\midrule
+PaMOP & Project-maintained reconstruction; Azure GPT-5.4 & $T=0.2$; decomposition; at most 5 correction iterations; AMPL/Gurobi\\
+Zero-shot & Azure GPT-5.4 fixed prompt & $T=0$; one generation; 8192-token cap; gurobipy\\
+OptMATH & Adapted released Qwen2.5-7B checkpoint & $T=0.8$; sampling; seed 0; 8192-token cap; gurobipy\\
+ORLM & Adapted released LLaMA-3-8B checkpoint & Greedy; seed 0; 8192-token cap; coptpy unavailable\\\bottomrule
+\end{tabularx}\end{table}
+The Azure responses identify \path{gpt-5.4-2026-03-05}. OptMATH checkpoint revision is \path{617fe77}; upstream code is \path{f15bbc4477c70db85ad148df8bcc1b780bca0f8c}. ORLM checkpoint revision is \path{94fdc3c5738c6536d4880dc19a78f215529181c5}; upstream code is \path{33bc47d0a1d1710d24ab839118bdf4cb89b9e31b}. Generation adaptations identify local \path{69df7c030fabb3bd785684b68a844929487603b9}, except ORLM at \path{1831396b0b3d4428415e354b0a4e1fcbc658df26}. The later direct-Gurobi execution script is at \path{0197f0cf737f162bd65128c532c708177f475e33}; it is absent from the earlier generation commit. These stages have separate provenance. Successful logs name Gurobi 13.0.2; 12 PaMOP successes name that solver and one is solved by AMPL presolve. These records do not certify every environment default or hosted weight byte.
+
+The corrected Python comparison uses the original round-first predicate in main Eq.~\eqref{M-eq:common18-objective-proxy}, after extraction of the terminal optimum and full printed token. Unrounded $5\%$ sensitivity changes no label on the 31 successful runs. Parse for Python means code extraction; a separate syntax check of all archived code passes but is not a semantic test. PaMOP's absolute-$10^{-6}$ aggregate is withheld: exact equality of rounded display text is insufficient precision evidence. A conservative uncertainty of one last displayed unit yields two robust disagreements and nine unresolved comparisons among 11 available executed references; the two no-reference cases are separate. We do not report a selective $0/2$ accuracy or infer a new exact-agreement fraction.
+
+\begin{table}[htbp]\centering\small
+\caption{Noninterchangeable failure and assessment stages from archived records.}\label{tab:llm-failures}
+\begin{tabularx}{\linewidth}{@{}lXr@{}}\toprule
+System & Stage/outcome & Count\\\midrule
+PaMOP & Successful without / after correction & 9 / 4\\
+PaMOP & Final parse failure & 5\\
+PaMOP & Executed: robust discrepancy / precision unresolved / no reference & 2 / 9 / 2\\
+OptMATH & Unsuccessful process / objective disagreement among comparable executions & 3 / 4\\
+Zero-shot & Unsuccessful process / objective disagreement among comparable executions & 2 / 4\\
+ORLM & Execution environment unavailable & 18\\\bottomrule
+\end{tabularx}\end{table}
+
+\subsection{Per-Case Outcomes and Precision Boundaries}
+P denotes final parse failure, E an unsuccessful process, N an unavailable execution environment, Y+ a classifiable objective match, Y-- a classifiable discrepancy, Y? a successful run without a numerical reference, and U an unresolved absolute-precision comparison. U is neither a failed model nor a confirmed agreement. The historical five false feasibility flags on failed Python processes are excluded. Each source record and its hash is identified in the local versioned correction ledger.
+\begin{table}[htbp]\centering\small
+\caption{Common-18 corrected dispositions from archived records; no regenerated programs or solves.}\label{tab:llm-cases}
+\begin{tabular}{rcccc}\toprule
+Problem ID & PaMOP & OptMATH & ORLM & Zero-shot\\\midrule
+14 & Y-- & Y+ & N & Y+\\
+23 & U & Y+ & N & Y+\\
+34 & U & Y+ & N & Y+\\
+59 & U & Y-- & N & Y--\\
+69 & U & Y-- & N & Y--\\
+72 & U & Y+ & N & Y+\\
+84 & P & Y+ & N & Y+\\
+88 & U & Y+ & N & Y+\\
+96 & Y-- & Y-- & N & Y--\\
+117 & P & Y-- & N & Y+\\
+190 & P & Y+ & N & Y+\\
+202 & U & Y+ & N & Y+\\
+208 & U & Y+ & N & Y+\\
+219 & Y? & E & N & E\\
+232 & P & E & N & Y--\\
+237 & Y? & E & N & E\\
+254 & U & Y+ & N & Y+\\
+262 & P & Y+ & N & Y+\\
+\bottomrule\end{tabular}\end{table}
+
+For PaMOP case 254 the retained generated LP minimizes $100x+72y$ subject to $60x+40y\geq10000$, $x\geq(x+y)/3$ and nonnegative variables. Since $100x+72y\geq(5/3)(60x+40y)\geq50000/3$, with equality at $x=500/3,y=0$, the mathematical model has objective $50000/3$. This algebraic witness explains the display-rounding artifact but is not a recovered full-precision historical solver return or a complete source-semantic validation. The printed summary $16666.66667$ is still insufficient at absolute $10^{-6}$, so the case remains U in the machine-measurement ledger.
+
+The archived comparison contains no evaluated common-18 generation for DeepOR or OR-R1. Their historical August 2026 availability context is retained, with no fabricated zero accuracy. Different prompts, adaptations, sampling and correction budgets, reference predicates and execution availability prevent a provider/model ranking. No scalar-only readiness score is entered as executable-formulation performance.

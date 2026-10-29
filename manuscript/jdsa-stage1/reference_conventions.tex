@@ -1,0 +1,86 @@
+\subsection{Reference Conventions and Correction-Only Reanalysis}
+\label{app:reference-conventions}
+
+All 12 previously flagged percentage slots were inspected against the
+original query, parameter descriptions, schema equations and reference-code
+annotations. A separate versioned overlay, \texttt{numerical\_reference\_v2},
+contains ten fractional-reference corrections (Table~\ref{tab:reference-overlay}).
+The literal percentage and a direct share-coefficient equation establish
+each conversion: a share $p$ in $X\geq p(X+Y)$ or its rearrangement
+$(1-p)X\geq pY$ must use the fraction, not percentage points. Upper bounds
+reverse the inequality. These corrections do not alter original reference
+files, any historical measurements, or inference predictions. They establish
+a source/schema-consistent convention, not dataset-maintainer approval or
+correctness of every other constraint in an instance.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Complete fractional-reference change inventory. IDs abbreviate
+\texttt{nlp4lp\_test\_ID}; all values are scalar. Every entry has full source
+text, a literal span, equation/code witnesses, hashes and a confirmed
+evidence classification in the overlay.}
+\label{tab:reference-overlay}
+\begin{tabular}{@{}rlcc@{}}
+\toprule
+ID & Parameter & Original & Fractional reference\\
+\midrule
+48 & MinLycheePercentage & 40 & 0.40\\
+78 & MinChickenCurryPercentage & 25 & 0.25\\
+102 & MinPercentageAdultVaccines & 70 & 0.70\\
+157 & MaxRickshawPercentage & 40 & 0.40\\
+170 & MinBoatTripPercentage & 50 & 0.50\\
+174 & MaxPercentageLabradors & 60 & 0.60\\
+177 & MaxCompanyCarRidePercentage & 60 & 0.60\\
+180 & MinCarTripPercentage & 30 & 0.30\\
+187 & MaxVanPercentage & 30 & 0.30\\
+215 & MaxTrolleyTransportPercentage & 40 & 0.40\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The two remaining flags are the two snack-mix parameters in query 206.
+They retain 20 and 35 as percentage points: the complementary-ingredient
+constraint explicitly uses $(100-p)/100$. Converting those references alone
+would break that equation. Instead, a separate formulation overlay inserts
+the missing divisions in the other ingredient constraint:
+\begin{equation}
+ (p_1/100)x_1+(p_2/100)x_2\leq b_{\mathrm{cat}},
+ \label{eq:snack-overlay}
+\end{equation}
+where $p_1=20$, $p_2=35$, $x_1,x_2$ are mix masses in kilograms, and
+$b_{\mathrm{cat}}=20$ kilograms is the available cat-paw ingredient.
+This is an algebraic/dimensional correction only; no model is executed.
+Thus a percent-named parameter does not imply a universal fractional
+reference representation. Query 102 additionally has a metadata-key alias,
+and query 177 a pluralized coefficient identifier in another constraint;
+the numerical overlay does not repair those independent schema defects.
+
+Reanalysis is restricted to predictions actually saved. None of the ten
+changed-reference cases is in the 49-query primary factorial, so all of its
+metrics and the 240-test family are unchanged. Only development case 177
+has affected factorial predictions; the existing version-1 sensitivity is
+reusable because its correction is unchanged. It adds no fully correct
+development instance. Reference-only cases without predictions are not run.
+
+For the distinct, pre-ratio Stage-A cache, saved selections over all 331
+queries and 1,847 gold scalar slots permit a separate correction-only
+comparison: numerical exact slots change from 348 to 356, tolerance-correct
+slots from 401 to 409, and full type-compatible tolerance instances remain
+6/331. Missing saved selections count wrong. These are not replacements
+for the headline typed-greedy 7/331 or constrained 40/331 results, whose
+historical per-slot values are unavailable. The Stage-A counts use actual
+saved selections; an earlier metadata-filtered error partition counted 394
+correct slots because seven otherwise correct saved selections lack slots
+in the later metadata-only snapshot. The inventory difference is explicitly
+reconciled, rather than described as an experimental change.
+
+The historical numerical tolerance remains
+$|\hat y-y|/\max(1,|y|)\leq0.20$: for fractions it is absolute 0.20,
+so prediction 0.40 passes against reference 0.25. It is not uniformly a
+20\% relative tolerance. The pilot's numerical exact criterion uses the
+same scaling with threshold $10^{-9}$, not bitwise equality. Slot-level
+numeric correctness does not impose a type gate; full-instance correctness
+also requires the schema, all gold keys and compatible types. Candidate-pool
+coverage instead asks whether any permitted option could satisfy a criterion,
+without claiming that inference retained or selected it. No new tolerance
+is chosen and no gold value is used during selection.

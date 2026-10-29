@@ -1,0 +1,210 @@
+%% Prepared for submission to SN Computer Science (Springer Nature).
+%% Built on the official Springer Nature LaTeX authoring template
+%% (sn-jnl.cls) with the sn-basic reference style and numbered
+%% bracketed citations, per SN Computer Science's submission guidelines.
+%% Migrated 2026-08-27 from the corrected manuscript/dke/main.tex (the
+%% Data & Knowledge Engineering / elsarticle version); all scientific
+%% corrections from that migration (Exact20 denominator, residual-error
+%% decomposition, DeepOR/OR-R1 and OptMATH provenance wording, evaluation
+%% dates, runtime/complexity, StrictInstantiationReady motivation) are
+%% retained as migration history; metric definitions were revised 2026-10-27. See
+%% docs/SNCS_STAGE3_MANUSCRIPT_SPRINGER_REPOSITORY_FINALIZATION_2026-08-27.md
+%% for the full audit trail.
+
+\documentclass[pdflatex,sn-basic,Numbered]{sn-jnl}
+
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{url}
+\usepackage{placeins}
+\usepackage{xr-hyper}
+\usepackage{hyperref}
+% Avoid duplicate caption destinations in the preserved Springer template.
+\hypersetup{hypertexnames=false}
+
+\raggedbottom
+
+\externaldocument[M-]{main}[Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf]
+\begin{document}
+\title[Supplement: Scalar Grounding]{Supplementary Material: Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study}
+\author*[1]{\fnm{Soroush} \sur{Vahidi}}\email{sv96@njit.edu}
+\affil*[1]{\orgname{New Jersey Institute of Technology}, \orgaddress{\city{Newark}, \country{USA}}}
+\maketitle
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\theequation}{S\arabic{equation}}
+This supplement preserves secondary evidence, population boundaries and source provenance. It accompanies the main article and includes the archived 217-relationship Gemini--DeepSeek--Cohere audit, with explicit recovery and denominator accounting. No new model predictions or experiments were produced for M5.
+\FloatBarrier
+\section{System Context and Secondary Protocol Tables}
+\begin{table}[htbp]
+\centering
+\caption{Task-level comparison landscape for recent natural-language optimization modeling systems.
+This table is deliberately \emph{not} a leaderboard: systems differ in output type, supervision, and
+evaluation protocol, so accuracy numbers are omitted. Abbreviations: Ret.\ = retrieval/memory;
+Sol.\ = solver feedback during generation or training; FT = fine-tuning or RL training;
+Comp.\ = directly comparable
+to the InstantiationReady / Exact20 (on hits) protocol of this paper.}
+\label{tab:comparison_landscape}
+\scriptsize
+\setlength{\tabcolsep}{2.4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{@{}lccccccc@{}}
+\toprule
+Method & Year & Task & Output & Ret. & Sol. & FT & Comp. \\
+\midrule
+OptiMUS & 2024 & End-to-end (MI)LP & Model+code & no & yes & no & no \\
+OptLLM & 2024 & NL$\rightarrow$model/code & Model+code & no & yes & no$^{*}$ & no \\
+Chain-of-Experts & 2024 & Multi-agent OR & Model+code & no & yes & no & no \\
+LLMOPT & 2025 & Fine-tuned modeling & Model+code & no & yes & yes & no \\
+OPT2CODE & 2025 & Retrieval+codegen & Solver code & yes & yes & no & no \\
+ORLM & 2025 & Training+feedback & Model+code & no & yes & yes & no \\
+OptMATH & 2025 & Data synthesis & Model+code & no & yes & yes & no \\
+SIRL & 2025 & Solver-informed RL & Model+code & no & yes & yes & no \\
+OR-R1 & 2026 & Test-time RL & Model+code & no & yes & yes & no \\
+DeepOR & 2026 & Foundation OR & Formulation & --- & yes & yes & no \\
+OptimAI & 2025 & Multi-agent NL-OR & Model+code & no & yes & no & no \\
+AlphaOPT & 2025 & Experience library & Model+code & yes & yes & no$^{\ddagger}$ & no \\
+ORThought & 2026 & Logistics CoT & Model+code & no & yes & no & no \\
+Ours & 2026 & Fixed-catalog inst. & Schema+scalars & yes & no & no & yes \\
+\bottomrule
+\end{tabular}
+
+\vspace{1mm}
+\raggedright
+\footnotesize
+$^{*}$OptLLM supports both prompting and fine-tuned variants.
+$^{\ddagger}$Library learning without weight updates.
+``---'' denotes information not established from a verified public artifact at the time of writing.
+Direct comparability (Comp.) is ``yes'' only for systems that share our fixed-catalog scalar-instantiation
+task and InstantiationReady / Exact20 protocol; end-to-end solver accuracy is a different metric.
+\end{table}
+\begin{table}[htbp]
+\centering
+\caption{Retrieval methods used for schema identification.}
+\label{tab:retrieval_backbones}
+\small
+\begin{tabularx}{\linewidth}{l l X}
+\toprule
+Method & Representation & Role in pipeline \\
+\midrule
+BM25 & Probabilistic lexical weighting & Sparse lexical baseline \\
+TF--IDF & Weighted bag-of-words cosine similarity & Primary lexical baseline \\
+LSA & Latent projection of TF--IDF features & Lower-dimensional lexical-semantic baseline \\
+BGE-M3 & Pretrained dense text embeddings & Modern semantic retrieval baseline \\
+\bottomrule
+\end{tabularx}
+\end{table}
+\begin{table}[htbp]
+\centering
+\caption{Summary of the experimental blocks used in the paper.}
+\label{tab:exp_blocks}
+\small
+\begin{tabularx}{\linewidth}{X X X}
+\toprule
+Block & Primary purpose & Main outputs \\
+\midrule
+Main benchmark & Retrieval and scalar grounding on \textsc{NLP4LP} & Schema R@1, Coverage, TypeMatch, Exact20 (on hits), InstantiationReady \\
+Robustness analyses & Sensitivity to degraded input and lexical overlap & Orig / noisy / short retrieval comparisons, overlap-based stress tests \\
+Numeric-extraction ablation & Isolate effect of corrected ratio-word extraction & TypeMatch and InstantiationReady changes (baseline vs.\ ratio-aware extraction) \\
+Retrospective paired analysis & Quantify observed paired differences & Group-bootstrap intervals, exact swap tests and Holm adjustment \\
+Proxy checks (60 inst.) & Coverage/type and rendered-template checks & Historical proxy and template-completion rates \\
+Extended proxy checks (269 inst.) & Same lightweight checks on a code-available subset & Schema hit, proxy and template-completion rates \\
+Restricted solver-backed execution (20 inst.) & Reported reference-program execution via SciPy HiGHS shim & Executable, solver-success, feasible, and objective-produced rates \\
+\bottomrule
+\end{tabularx}
+\end{table}
+\FloatBarrier
+\section{Secondary Retrieval and Restricted Execution Diagnostics}
+\begin{table}[htbp]
+\centering
+\caption{Historical sanitized-retrieval aggregates (\textit{Schema R@1}; 331 queries per cell). The 331-document diagnostic index uses 256-dimensional LSA and differs from the 335-document index in Table~\ref{M-tab:nlp4lp-retrieval-main}. Per-condition predictions are unavailable; agreement with the retained aggregate is not prediction-level verification.}
+\label{tab:nlp4lp-overlap}
+\small
+\begin{tabular}{lccc}
+  \toprule
+  Sanitization & TF--IDF & BM25 & LSA \\
+  \midrule
+  None (baseline)               & 0.9063 & 0.8852 & 0.8459 \\
+  Numbers removed               & 0.9063 & 0.8973 & 0.8459 \\
+  Stopwords removed             & 0.9124 & 0.9063 & 0.9184 \\
+  Numbers \& stopwords removed  & 0.9124 & 0.9063 & 0.9184 \\
+  \bottomrule
+\end{tabular}
+\end{table}
+\begin{table}[htbp]
+\centering
+\caption{Historically reported 60-case proxy checks using optimization-role relation repair; per-instance outputs are unavailable for reconstruction. All rates divide by 60. Proxy and template-completion predicates are defined in the text; neither checks numerical correctness.}
+\label{tab:eng-structural}
+\small
+\begin{tabular}{lccc}
+  \toprule
+  Baseline & Schema Hit & Coverage/type proxy & Template complete \\
+  \midrule
+  TF--IDF & 0.9333 & 0.7500 & 0.7500 \\
+  BM25    & 0.9000 & 0.7333 & 0.7333 \\
+  Oracle  & 1.0000 & 0.7667 & 0.7833 \\
+  \bottomrule
+\end{tabular}
+\end{table}
+\begin{table}[htbp]
+\centering
+\caption{Historically reported gold-assisted execution on 20 instances (SciPy HiGHS MILP shim); per-instance outputs and the original manifest are unavailable for reconstruction. Every rate divides by 20.}
+\label{tab:eng-solver}
+\small
+\begin{tabular}{lcccc}
+  \toprule
+  Baseline & Executable & Solver Success & Feasible & Objective Produced \\
+  \midrule
+  TF--IDF & 0.95 & 0.80 & 0.80 & 0.80 \\
+  Oracle  & 0.95 & 0.75 & 0.75 & 0.75 \\
+  \bottomrule
+\end{tabular}
+\end{table}
+\FloatBarrier
+\section{Cached Grounding, References and Reproduction}
+\label{app:grounding-diagnostics}
+\input{grounding_diagnostics}
+\input{reference_conventions}
+\input{reproduction_map}
+\input{supervision_diagnostics}
+\FloatBarrier
+\section{LLM Formulation Provenance and Individual Outcomes}
+\begin{table}[htbp]
+  \centering
+  \caption{External-baseline provenance on the common-18 subset. The PaMOP row is a project reconstruction; adapted rows use released checkpoints with project-maintained interfaces. Ours is listed for context only; native metrics are not comparable to Table~\ref{M-tab:ext-outcomes}.}
+  \label{tab:ext-context}
+  \small
+  \setlength{\tabcolsep}{3pt}
+  \renewcommand{\arraystretch}{1.15}
+  \begin{tabular}{@{}>{\raggedright\arraybackslash}p{1.9cm}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}p{3.55cm}c@{}}
+    \toprule
+    System & Provenance & Output representation & Solver environment / status & Cases \\
+    \midrule
+    Ours (this paper) & NATIVE & Scalar slot assignments on retrieved schema & No solver call in core benchmark & 18 \\
+    PaMOP \cite{pan2025pamop} & Project reconstruction & AMPL formulation + solver code & Local AMPL/Gurobi; 13/18 successful & 18 \\
+    ORLM \cite{huang2025orlm} & ADAPTED- OFFICIAL & LP formulation + solver code & Solver dependency (\texttt{coptpy}) unavailable; execution blocked & 18 \\
+    OptMATH \cite{lu2025optmath} & ADAPTED- OFFICIAL & LP formulation + solver code & Gurobi (\texttt{gurobipy}); 15/18 executed & 18 \\
+    Generic LLM (GPT-5.4- 2026-03-05) & GENERIC- ZERO-SHOT & Gurobi solver code, zero-shot & Gurobi (\texttt{gurobipy}); 16/18 executed & 18 \\
+    DeepOR \cite{xiao2026deepor} & --- & Formulation (paper-described) & No evaluable artifact located in the August 2026 audit & 0 \\
+    OR-R1 \cite{ding2026orr1} & --- & Formulation + solver code & Official code found; checkpoint unavailable in the August 2026 audit & 0 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+\input{llm_evidence}
+\FloatBarrier
+\section{Closed Slot-Participation Audit}
+\label{app:g3}
+\input{closed_audits}
+\FloatBarrier
+\section{Relationship-Labeling Evidence and Recovery}
+\input{relationship_supplement}
+
+\bibliography{references}
+\end{document}
