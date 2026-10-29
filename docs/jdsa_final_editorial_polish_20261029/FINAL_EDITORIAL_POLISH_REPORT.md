@@ -9,7 +9,7 @@ Date: 29 October 2026.
 ## B. Final-polish branch and commit
 
 Branch: `manuscript/jdsa-final-editorial-polish-20261029`, created in an isolated worktree directly from the exact source commit.
-Manuscript/package commit: recorded below after the initial commit and remote verification.
+Manuscript/package commit: `df4fa55f4e572c1a2ed10f300f727953755f73bf` (direct child of the authoritative Phase 4 commit).
 The final report commit adds verification documentation only. No earlier branch or existing artifact was modified.
 The final documents and editable inputs are in `manuscript/jdsa-final-review/`.
 
@@ -303,7 +303,7 @@ The public source commit and its complete GitHub tree were checked read-only. Hi
 
 The Hugging Face API returned HTTP 200 and the unchanged historical v1.2 revision `24a047fa5d661be6cfcf75980ac8f62e6c942243`, last modified 24 August 2026, with the existing CC BY-NC-SA 4.0 license. No dataset or model was modified. See [Hugging Face check](AVAILABILITY_CHECKS.json) and [GitHub check](GITHUB_AVAILABILITY_CHECK.json).
 
-Remote PDF, ZIP and report verification will be recorded here after pushing the dedicated branch.
+The dedicated branch was pushed successfully. Public HTTP 200 downloads of both PDFs and the ZIP matched the local build bytes and SHA-256 values. [Remote artifact verification](REMOTE_ARTIFACT_VERIFICATION.json) records immutable URLs and checksums at the manuscript/package commit. The final report and verification documentation are committed separately; the final branch HEAD and public report are checked after that documentation commit. The manuscript package is unchanged by that final documentation commit.
 
 ## I. Remaining genuine submission blocker
 
