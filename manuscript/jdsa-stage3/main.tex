@@ -25,12 +25,8 @@
 \usepackage{orcidlink}
 \raggedbottom
 
-% Use the standard PDF named-destination URL parameter for online companion links.
-\makeatletter
-\def\XR@@dURL#1#2#3#4#5\\{%
-  \unexpanded{{#1}{#2}{#3}{nameddest=#4}}{\XR@URL}}
-\makeatother
-\externaldocument[S-]{supplement}[https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf]
+% Use standard PDF destinations in the corrected local companion document.
+\externaldocument[S-]{supplement}[ESM_1.pdf]
 \begin{document}
 
 \title[Retrieval-Assisted Scalar Grounding]{Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study}
@@ -69,12 +65,12 @@ RQ1 uses the 331-query NLP4LP frame to establish the retrieval context. RQ2 join
 The contributions are correspondingly focused:
 \label{subsec:intro_contributions}
 \begin{enumerate}
-\item An explicit diagnostic protocol linking retrieval, coverage/type readiness and complete stored-reference scalar agreement to their input assistance and denominators. Readiness-conditioned agreement makes the limitation of a favorable intermediate check directly inspectable.
+\item A diagnostic protocol for reference-assisted supplied-slot grounding, linking retrieval, coverage/type readiness and complete stored-reference scalar agreement to their input assistance and denominators. Readiness-conditioned agreement makes the limitation of a favorable intermediate check directly inspectable.
 \item A saved-record analysis of the 331-query benchmark that quantifies the readiness--grounding discrepancy, gives a mutually exclusive residual partition and preserves conditional Exact20 populations.
 \item A separation of whole-procedure comparisons from frozen-score assignment controls, showing what the retained candidate, scoring and search records can explain, together with a versioned reanalysis package and stated reconstruction limits.
 \end{enumerate}
 
-The contribution is an evaluation methodology and its empirical application, not a new retrieval or matching algorithm. Semantic fidelity remains a further validation requirement: the supplementary relationship judgments and author/AI-assisted contrasts illustrate that boundary, without supplying independent semantic gold or provider-performance claims. Other formulation, extraction and historical auxiliary results are preserved in Online Resource 1 under their own protocols.
+The contribution is the operationalization and empirical application of these diagnostics to supplied-slot grounding. It claims neither priority for component-level evaluation nor a new retrieval or matching algorithm. Semantic fidelity remains a further validation requirement: the supplementary relationship judgments and author/AI-assisted contrasts illustrate that boundary, without supplying independent semantic gold or provider-performance claims. Other formulation, extraction and historical auxiliary results are preserved in Online Resource 1 under their own protocols.
 
 Section~\ref{sec:related_work} positions the methodology. Sections~\ref{sec:task} and~\ref{sec:methodology} define its endpoints and comparisons. Section~\ref{sec:experiments} answers RQ1--RQ3; Section~\ref{sec:discussion} interprets their scope and remaining weaknesses.
 
@@ -90,11 +86,15 @@ Text2Opt-Bench studies solver-verified optimization problems whose numerical dat
 \label{subsec:rw_llm_generation}\label{subsec:rw_retrieval_memory}
 NL4Opt and Ner4Opt examine optimization-related extraction and representations \cite{ramamonjison2023nl4opt,kadioglu2024ner4opt}. OptiMUS and PaMOP generate formulations or solver code with feedback \cite{ahmaditeshnizi2024optimus_icml,pan2025pamop}, whereas OptMATH, ORLM and DeepOR develop data or trained modeling systems \cite{lu2025optmath,huang2025orlm,xiao2026deepor}. Retrieval supporting code generation, as in OPT2CODE, differs from selecting the parameter inventory itself \cite{ahmed2025opt2code}. Online Resource 1, Table~\ref{S-tab:comparison_landscape} and Section~\ref{S-app:related-context}, retain the broader system context. Their end-to-end outcomes cannot be substituted for scalar-binding measurements.
 
+Refai and Ahmed evaluate generated formulations at the component level, including decision-variable and constraint precision/recall and constraint/objective root mean squared error \cite{refai2026component}. OPT-Engine varies optimization-problem complexity to diagnose formulation and solving limitations, including constraint formulation \cite{chen2026optengine}. These works share our diagnostic motivation. Here, complete stored-reference agreement is conditioned on readiness in a reference-assisted scalar inventory; ordered gate accounting and fixed-score decoder comparisons delimit the failures and attributions supported by that setting.
+
+OptMATH synthesizes modeling data through back-translation and forward checking \cite{lu2025optmath}; our external extraction check does not evaluate that synthesis framework or full-pipeline transfer. Autoformulation combines LLM-guided Monte Carlo tree search with symbolic pruning over formulations \cite{astorga2025autoformulation}. Its search space includes modeling decisions absent from our supplied-slot assignment controls. These task distinctions do not constitute empirical comparisons with either system.
+
 Compatibility and validity checks also differ from semantic validation. Constrained semantic-role inference and PICARD impose structural restrictions \cite{punyakanok2004ilp,scholak2021picard}; EquivaMap checks mappings between formulations that preserve feasibility and optimality \cite{zhai2025equivamap}. Our stored-scalar test establishes neither that equivalence nor fidelity to the source description. These stronger endpoints help delimit the meaning of a positive diagnostic result.
 
 \subsection{Methodological Position}
 \label{subsec:rw_position}
-We contribute joint endpoint reporting, explicit conditional populations and controlled attribution within saved records. Classical maximum-sum assignment \cite{kuhn1955assignment}, existing retrievers and existing grounders serve as diagnostic instruments. The six-method comparison fixes retrieval and queries but changes several grounding components; the separate factorial isolates decoder changes with scores held fixed. This distinction prevents interpreting every numerical improvement as a search effect or every ready output as a correct formulation.
+For reference-assisted supplied slots, we combine complete-reference-agreement reporting, ordered gate accounting, explicit conditional populations and controlled attribution within saved records. Classical maximum-sum assignment \cite{kuhn1955assignment}, existing retrievers and existing grounders serve as diagnostic instruments. The six-method comparison fixes retrieval and queries but changes several grounding components; the separate factorial isolates decoder changes with scores held fixed. This distinction prevents interpreting every numerical improvement as a search effect or every ready output as a correct formulation.
 
 \section{Problem Setting and Evaluation Framework}
 \label{sec:task}
@@ -451,7 +451,7 @@ RQ1 establishes that target-schema identification is comparatively strong in the
 
 RQ3 shows why optimizing a single intermediate score is insufficient. Whole grounding procedures can increase complete agreement while lowering readiness; abstention and conditional Exact20 denominators make their trade-offs especially important. Only fixed-candidate, fixed-score comparisons isolate decoder behavior. The 49-query controls show slot-level improvements without a net whole-instance gain, and the exact-objective diagnostics distinguish pruning failures from scores that prefer incorrect mappings. These finite observations do not establish that global search, learned representations or mathematical constraints are generally ineffective.
 
-The methodological recommendation is to report the endpoint sequence jointly, state the supplied information and conditional populations, and reserve causal attribution for controls that actually hold other components fixed. This complements Text2Opt-Bench's modeling--binding analysis \cite{gao2026models}; it adds neither a new matching algorithm nor evidence that numerical binding failures were first identified here. For practical systems, provenance-bearing bindings and explicit abstention are plausible review aids, but their deployment effectiveness remains unmeasured.
+The methodological recommendation is to report the endpoint sequence jointly, state the supplied information and conditional populations, and reserve causal attribution for controls that actually hold other components fixed. This complements Text2Opt-Bench's modeling--binding analysis \cite{gao2026models}, Refai and Ahmed's component-level formulation evaluation \cite{refai2026component}, and OPT-Engine's complexity-based diagnosis \cite{chen2026optengine}. Our narrower contribution concerns readiness-conditioned complete reference agreement and fixed-score attribution in supplied-slot grounding; it adds neither a new matching algorithm nor priority for identifying numerical binding failures. For practical systems, provenance-bearing bindings and explicit abstention are plausible review aids, but their deployment effectiveness remains unmeasured.
 
 \subsection{Where Numerical Diagnostics Stop}
 \label{sec:llm}\label{subsec:numerical-grounding-challenges}
@@ -505,7 +505,7 @@ Online Resource 1 contains secondary results, statistical and recovery protocols
 
 \noindent\textbf{Data availability.} The \href{https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0}{Hugging Face evidence at the exact revision} publishes sanitized metrics, assignment score/choice projections, relationship label/validity ledgers, common-18 numerical outcomes and author/AI-assisted D1 cases. Historical v1.2 is preserved separately at revision \path{24a047fa5d661be6cfcf75980ac8f62e6c942243}. Author-owned evidence is CC BY-NC-SA 4.0 without relicensing third-party material. Complete M5 originals, raw provider prose and private reviews remain local. NLP4LP requires separate gated access; OptMATH source licensing and provider-specific raw-output redistribution permissions remain unresolved. The package supplies upstream-access instructions, not those source corpora.
 
-\noindent\textbf{Code availability.} The \href{https://github.com/SoroushVahidi/combinatorial-opt-agent}{public project repository} hosts the project. The immutable \href{https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0}{GitHub evidence release} contains MIT-licensed verification code, manifests and pinned reanalysis dependencies. Editable manuscript sources, the article and Online Resource 1 are archived in \href{https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0}{manuscript release v1.0.0}, with a separate claim-location crosswalk and audit reports; they do not overwrite the evidence release. The numerical-summary derivation is recorded separately from its authenticated inputs.
+\noindent\textbf{Code availability.} The \href{https://github.com/SoroushVahidi/combinatorial-opt-agent}{public project repository} hosts the project. The immutable \href{https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0}{GitHub evidence release} contains MIT-licensed verification code, manifests and pinned reanalysis dependencies. The baseline manuscript sources, article and Online Resource 1 are archived in \href{https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0}{manuscript release v1.0.0}, with a separate claim-location crosswalk and audit reports; they do not overwrite the evidence release. The numerical-summary derivation is recorded separately from its authenticated inputs. This attribution correction remains an unreleased author-review revision.
 
 \noindent\textbf{Reproducibility.} The public package reproduces supported saved-record calculations, not the original inference experiments. Sanitized relationship and common-18 projections support ledger/numerical reanalysis but omit raw responses, programs and source witnesses needed for full validation. Missing observations and runtime details are listed in Section~\ref{subsec:limitations}; no newly generated output substitutes for them. All editorial and consistency calculations use authenticated records without model inference or solver experiments. Online Resource 1, Section~\ref{S-app:reproduction}, gives exact revisions, commands and evidence classifications.
 

@@ -27,12 +27,8 @@
 \renewcommand{\arraystretch}{1.18}
 \raggedbottom
 
-% Use the standard PDF named-destination URL parameter for online companion links.
-\makeatletter
-\def\XR@@dURL#1#2#3#4#5\\{%
-  \unexpanded{{#1}{#2}{#3}{nameddest=#4}}{\XR@URL}}
-\makeatother
-\externaldocument[M-]{main}[https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf]
+% Use standard PDF destinations in the corrected local companion document.
+\externaldocument[M-]{main}[manuscript.pdf]
 \begin{document}
 \title[Online Resource 1: Scalar Grounding]{Online Resource 1: Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study}
 \author*[1]{\fnm{Soroush} \sur{Vahidi}}\email{sv96@njit.edu}

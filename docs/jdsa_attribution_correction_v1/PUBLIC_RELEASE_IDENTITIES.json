@@ -1,0 +1,76 @@
+{
+  "jdsa-manuscript-v1.0.0": {
+    "id": 428402665,
+    "tag_name": "jdsa-manuscript-v1.0.0",
+    "published_at": "2026-10-29T21:15:36Z",
+    "assets": [
+      {
+        "name": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+        "id": 689932833,
+        "digest": "sha256:e1a5ba63437ce378c320db0ecea96098bd5a586ef8bf8aea0a11046dbd554766",
+        "size": 444142
+      },
+      {
+        "name": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Source.zip",
+        "id": 689932836,
+        "digest": "sha256:d99b074ba128acb30dd5736ad171b5432b7b0a37beb598f6f8794dd0e06e6d36",
+        "size": 1013756
+      },
+      {
+        "name": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf",
+        "id": 689932834,
+        "digest": "sha256:0b724ecdbf2bbdbcd531960e4f7e6951bdb4fdb607fa4f94c3efbfaa50962fa4",
+        "size": 435970
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "id": 689932838,
+        "digest": "sha256:c960e2d10d0586143a11c80d1c97d59f24796e1a7ac518b9225f4952f4fe9105",
+        "size": 438
+      }
+    ]
+  },
+  "jdsa-evidence-v2.0.0": {
+    "id": 428219113,
+    "tag_name": "jdsa-evidence-v2.0.0",
+    "published_at": "2026-10-29T18:00:26Z",
+    "assets": [
+      {
+        "name": "ASSET_CHECKSUMS.sha256",
+        "id": 689425730,
+        "digest": "sha256:e4ddd389251cbc25676bdb200f58f56c3e1467d44fda2f2b432eea8b6a00a5ef",
+        "size": 438
+      },
+      {
+        "name": "CHECKSUMS.sha256",
+        "id": 689425698,
+        "digest": "sha256:5774384af147d70b0b8b46f485e616d327957938e82c67e39a13afa445208ca8",
+        "size": 24088
+      },
+      {
+        "name": "jdsa-evidence-v2.0.0.zip",
+        "id": 689425703,
+        "digest": "sha256:de7f968bd4dbf4dfc9efa67818c461c0aa48b2993e704823bbf1b321ce44bd37",
+        "size": 1154571
+      },
+      {
+        "name": "release_manifest.json",
+        "id": 689425699,
+        "digest": "sha256:ac20ad695b7ceea866890376ef5e08751921bbcb520c017624727524e79b8b38",
+        "size": 35957
+      },
+      {
+        "name": "verification-receipt.json",
+        "id": 689425696,
+        "digest": "sha256:7660af14b8fe26107b05668ae7c91dc324d1b118ab2e4ae69842c974ab8f4fd5",
+        "size": 1300
+      },
+      {
+        "name": "verification.json",
+        "id": 689425700,
+        "digest": "sha256:1bacf16801ae0a3ab10e175a8f41965c6318a2b43d33abee1d66717d2a93350b",
+        "size": 1431318
+      }
+    ]
+  }
+}

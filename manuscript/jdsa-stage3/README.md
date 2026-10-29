@@ -1,3 +1,5 @@
+> Correction branch: the editable sources here now include the bounded attribution revision documented in [correction note v1](../../docs/jdsa_attribution_correction_v1/CORRECTION_NOTE_V1.md). The existing PDFs, `.bbl` files and submission ZIP in this directory remain the preserved v1.0.0 artifacts; they are not rebuilt copies of the corrected sources. Revised author-review PDFs are in [jdsa-attribution-correction-v1](../jdsa-attribution-correction-v1/). Download that PDF pair together for cross-document links. No release has been replaced. The v1.0.0 instructions below describe the historical release.
+
 # Manuscript v1.0.0: editable submission sources
 
 *Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study*, Soroush Vahidi.

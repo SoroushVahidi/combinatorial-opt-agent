@@ -1,0 +1,72 @@
+[
+  {
+    "document": "manuscript.pdf",
+    "page": 2,
+    "render_sha256": "ac6059f79b118f5095a87e5f41b12d96aba3ab929ede6a0108a84556508fe535",
+    "previous_review_render_identical": true,
+    "review": "PASS: visible text, citations, tables, margins and page numbering inspected; identical prior renders reused only where SHA comparison passed."
+  },
+  {
+    "document": "manuscript.pdf",
+    "page": 3,
+    "render_sha256": "6cd25651df12b1b0531caeb0ade09a83c5c381fb697f4a312be29da5a73a2e21",
+    "previous_review_render_identical": true,
+    "review": "PASS: visible text, citations, tables, margins and page numbering inspected; identical prior renders reused only where SHA comparison passed."
+  },
+  {
+    "document": "manuscript.pdf",
+    "page": 11,
+    "render_sha256": "af3b106d66db964705f4f81efe536804d98f6da740ca73fd4aa7479f5be66b5e",
+    "previous_review_render_identical": true,
+    "review": "PASS: visible text, citations, tables, margins and page numbering inspected; identical prior renders reused only where SHA comparison passed."
+  },
+  {
+    "document": "manuscript.pdf",
+    "page": 14,
+    "render_sha256": "9aac2cd89291a2d7f453195959a4f2129ff7a0fc5dab011ac35fbf0b0392210f",
+    "previous_review_render_identical": false,
+    "review": "PASS: visible text, citations, tables, margins and page numbering inspected; identical prior renders reused only where SHA comparison passed."
+  },
+  {
+    "document": "manuscript.pdf",
+    "page": 15,
+    "render_sha256": "f231f952c7a749554575a5a475b5e4e5d404cdd530c87357d3b0acd557b32907",
+    "previous_review_render_identical": true,
+    "review": "PASS: visible text, citations, tables, margins and page numbering inspected; identical prior renders reused only where SHA comparison passed."
+  },
+  {
+    "document": "manuscript.pdf",
+    "page": 16,
+    "render_sha256": "1b47c8db8493aafb8dd94169e8b71f85430c4a308a3e303e96235b5efb2540e7",
+    "previous_review_render_identical": true,
+    "review": "PASS: visible text, citations, tables, margins and page numbering inspected; identical prior renders reused only where SHA comparison passed."
+  },
+  {
+    "document": "ESM_1.pdf",
+    "page": 10,
+    "render_sha256": "6023b18bf07f370af73e45614e1d380cd3a0a939bda1c2144fd04f4ae6af6532",
+    "previous_review_render_identical": false,
+    "review": "PASS: visible text, citations, tables, margins and page numbering inspected; identical prior renders reused only where SHA comparison passed."
+  },
+  {
+    "document": "ESM_1.pdf",
+    "page": 26,
+    "render_sha256": "a32673f7cead4083bf5afdaea7010e6818768c7bbabc3574ef14c68d5fa5baee",
+    "previous_review_render_identical": true,
+    "review": "PASS: visible text, citations, tables, margins and page numbering inspected; identical prior renders reused only where SHA comparison passed."
+  },
+  {
+    "document": "ESM_1.pdf",
+    "page": 28,
+    "render_sha256": "18ec5c85362e3bf4cbeb135502ef8f7620f8bd0030b2767ce772cd90e3350bb7",
+    "previous_review_render_identical": true,
+    "review": "PASS: visible text, citations, tables, margins and page numbering inspected; identical prior renders reused only where SHA comparison passed."
+  },
+  {
+    "document": "ESM_1.pdf",
+    "page": 29,
+    "render_sha256": "873bb88b1eb140155dc3585570bacc2e6e34bedd8f4a388bc6bffa79397f05c4",
+    "previous_review_render_identical": true,
+    "review": "PASS: visible text, citations, tables, margins and page numbering inspected; identical prior renders reused only where SHA comparison passed."
+  }
+]

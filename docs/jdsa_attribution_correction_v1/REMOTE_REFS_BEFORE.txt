@@ -1,0 +1,4 @@
+d3071ba31eaf7babdf1e7fe234d8527191ed93de	refs/heads/main
+209fa982c0a0e2087bd021cbc7a9f57d94256c8f	refs/tags/jdsa-evidence-v2.0.0
+972d270d94aadb00c291ba3d19e89c761d40abff	refs/tags/jdsa-manuscript-v1.0.0
+00adeca9d3d761da7f8ee2e5dcee7fc8d535f2bc	refs/tags/jdsa-manuscript-v1.0.0^{}

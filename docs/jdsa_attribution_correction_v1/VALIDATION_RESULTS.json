@@ -1,0 +1,1946 @@
+{
+  "baseline": "00adeca9d3d761da7f8ee2e5dcee7fc8d535f2bc",
+  "original_topk_commit": "2d386ccce98398bb0aa5540a9c1ccc5f5eb0c6cd",
+  "checks": [
+    {
+      "check": "unique approved source replacement manuscript/jdsa-stage3/additional_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "unique approved source replacement manuscript/jdsa-stage3/additional_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "unique approved source replacement manuscript/jdsa-stage3/additional_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "unique approved source replacement manuscript/jdsa-stage3/additional_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "unique approved source replacement manuscript/jdsa-stage3/additional_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "unique approved source replacement manuscript/jdsa-stage3/additional_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "unique approved source replacement manuscript/jdsa-stage3/additional_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "source equals baseline plus approved edits manuscript/jdsa-stage3/additional_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "unique approved source replacement manuscript/jdsa-stage3/main.tex",
+      "pass": true
+    },
+    {
+      "check": "unique approved source replacement manuscript/jdsa-stage3/main.tex",
+      "pass": true
+    },
+    {
+      "check": "unique approved source replacement manuscript/jdsa-stage3/main.tex",
+      "pass": true
+    },
+    {
+      "check": "unique approved source replacement manuscript/jdsa-stage3/main.tex",
+      "pass": true
+    },
+    {
+      "check": "unique approved source replacement manuscript/jdsa-stage3/main.tex",
+      "pass": true
+    },
+    {
+      "check": "unique approved source replacement manuscript/jdsa-stage3/main.tex",
+      "pass": true
+    },
+    {
+      "check": "unique approved source replacement manuscript/jdsa-stage3/main.tex",
+      "pass": true
+    },
+    {
+      "check": "unique approved source replacement manuscript/jdsa-stage3/main.tex",
+      "pass": true
+    },
+    {
+      "check": "unique approved source replacement manuscript/jdsa-stage3/main.tex",
+      "pass": true
+    },
+    {
+      "check": "source equals baseline plus approved edits manuscript/jdsa-stage3/main.tex",
+      "pass": true
+    },
+    {
+      "check": "source equals baseline plus approved edits manuscript/jdsa-stage3/references.bib",
+      "pass": true
+    },
+    {
+      "check": "unique approved source replacement manuscript/jdsa-stage3/reproduction_map.tex",
+      "pass": true
+    },
+    {
+      "check": "source equals baseline plus approved edits manuscript/jdsa-stage3/reproduction_map.tex",
+      "pass": true
+    },
+    {
+      "check": "unique approved source replacement manuscript/jdsa-stage3/supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "unique approved source replacement manuscript/jdsa-stage3/supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "source equals baseline plus approved edits manuscript/jdsa-stage3/supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "README preserves original content",
+      "pass": true
+    },
+    {
+      "check": "evidence evaluators datasets archives and historical PDFs unchanged",
+      "pass": true
+    },
+    {
+      "check": "same table labels main",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:nlp4lp-retrieval-main",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:nlp4lp-downstream-main",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:ready-conditioned",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:nlp4lp-error-taxonomy",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:nlp4lp-grounding-baselines",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:grounding-factorial-diagnostic",
+      "pass": true
+    },
+    {
+      "check": "same labels main",
+      "pass": true
+    },
+    {
+      "check": "same table labels supplement",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:comparison_landscape",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:retrieval_backbones",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:exp_blocks",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:nlp4lp-prefix-postfix",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:strict-instready",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:nlp4lp-significance",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:nlp4lp-overlap",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:eng-structural",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:eng-solver",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:reference-overlay",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:population-map",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:input-dependencies",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:ext-outcomes",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:ext-context",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:llm-provenance",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:llm-failures",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:llm-cases",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:g3-inventory",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:relationship-validity",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:relationship-requests",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:relationship-labels",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:relationship-clusters",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:legacy-grounding",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:staleness-grounding",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:ranked-retrieval",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:cached-ceilings",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:full-joint-pilot",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:archived-scalar-llm",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:d1-a",
+      "pass": true
+    },
+    {
+      "check": "unchanged table body tab:d1-b",
+      "pass": true
+    },
+    {
+      "check": "same labels supplement",
+      "pass": true
+    },
+    {
+      "check": "all main scientific numerals preserved",
+      "pass": true
+    },
+    {
+      "check": "original top-ten frame",
+      "pass": true
+    },
+    {
+      "check": "oracle A identity",
+      "pass": true
+    },
+    {
+      "check": "oracle C identity",
+      "pass": true
+    },
+    {
+      "check": "oracle B identity",
+      "pass": true
+    },
+    {
+      "check": "two precise losses",
+      "pass": true
+    },
+    {
+      "check": "original oracle CSV A",
+      "pass": true
+    },
+    {
+      "check": "original oracle CSV C",
+      "pass": true
+    },
+    {
+      "check": "original oracle CSV B",
+      "pass": true
+    },
+    {
+      "check": "original summary oracle A",
+      "pass": true
+    },
+    {
+      "check": "original summary oracle C",
+      "pass": true
+    },
+    {
+      "check": "original summary oracle B",
+      "pass": true
+    },
+    {
+      "check": "original top-five heuristic unchanged",
+      "pass": true
+    },
+    {
+      "check": "original A implementation",
+      "pass": true
+    },
+    {
+      "check": "original C implementation",
+      "pass": true
+    },
+    {
+      "check": "historical Hit@5 definition",
+      "pass": true
+    },
+    {
+      "check": "authenticated metric baseline",
+      "pass": true
+    },
+    {
+      "check": "unchanged independent gate counts baseline",
+      "pass": true
+    },
+    {
+      "check": "existing indicators agree baseline",
+      "pass": true
+    },
+    {
+      "check": "authenticated metric bge",
+      "pass": true
+    },
+    {
+      "check": "unchanged independent gate counts bge",
+      "pass": true
+    },
+    {
+      "check": "existing indicators agree bge",
+      "pass": true
+    },
+    {
+      "check": "authenticated metric constrained",
+      "pass": true
+    },
+    {
+      "check": "unchanged independent gate counts constrained",
+      "pass": true
+    },
+    {
+      "check": "existing indicators agree constrained",
+      "pass": true
+    },
+    {
+      "check": "authenticated metric maxweight",
+      "pass": true
+    },
+    {
+      "check": "unchanged independent gate counts maxweight",
+      "pass": true
+    },
+    {
+      "check": "existing indicators agree maxweight",
+      "pass": true
+    },
+    {
+      "check": "authenticated metric oracle",
+      "pass": true
+    },
+    {
+      "check": "unchanged independent gate counts oracle",
+      "pass": true
+    },
+    {
+      "check": "existing indicators agree oracle",
+      "pass": true
+    },
+    {
+      "check": "authenticated metric ratio",
+      "pass": true
+    },
+    {
+      "check": "unchanged independent gate counts ratio",
+      "pass": true
+    },
+    {
+      "check": "existing indicators agree ratio",
+      "pass": true
+    },
+    {
+      "check": "authenticated metric role",
+      "pass": true
+    },
+    {
+      "check": "unchanged independent gate counts role",
+      "pass": true
+    },
+    {
+      "check": "existing indicators agree role",
+      "pass": true
+    },
+    {
+      "check": "authenticated metric semantic",
+      "pass": true
+    },
+    {
+      "check": "unchanged independent gate counts semantic",
+      "pass": true
+    },
+    {
+      "check": "existing indicators agree semantic",
+      "pass": true
+    },
+    {
+      "check": "authenticated metric structured",
+      "pass": true
+    },
+    {
+      "check": "unchanged independent gate counts structured",
+      "pass": true
+    },
+    {
+      "check": "existing indicators agree structured",
+      "pass": true
+    },
+    {
+      "check": "authenticated metric typed",
+      "pass": true
+    },
+    {
+      "check": "unchanged independent gate counts typed",
+      "pass": true
+    },
+    {
+      "check": "existing indicators agree typed",
+      "pass": true
+    },
+    {
+      "check": "constrained 41 versus 40",
+      "pass": true
+    },
+    {
+      "check": "unchanged frozen verifier 9737 PASS",
+      "pass": true
+    },
+    {
+      "check": "clean final compilation main",
+      "pass": true
+    },
+    {
+      "check": "clean BibTeX main",
+      "pass": true
+    },
+    {
+      "check": "page number main1",
+      "pass": true
+    },
+    {
+      "check": "page number main2",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.kadioglu2024ner4opt",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.ramamonjison2022autoformulation",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.ramamonjison2023nl4opt",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.deng2021strug",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.wang2020ratsql",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.gao2026models",
+      "pass": true
+    },
+    {
+      "check": "internal destination mainsubsection.19",
+      "pass": true
+    },
+    {
+      "check": "internal destination mainsection.11",
+      "pass": true
+    },
+    {
+      "check": "internal destination mainsection.15",
+      "pass": true
+    },
+    {
+      "check": "internal destination mainsection.30",
+      "pass": true
+    },
+    {
+      "check": "internal destination mainsection.39",
+      "pass": true
+    },
+    {
+      "check": "internal destination mainsection.58",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.deng2021strug",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.wang2020ratsql",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.almasian2023cqe",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.roy2017udg",
+      "pass": true
+    },
+    {
+      "check": "page number main3",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.gao2026models",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.kadioglu2024ner4opt",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.ramamonjison2023nl4opt",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.pan2025pamop",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.huang2025orlm",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.xiao2026deepor",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.ahmed2025opt2code",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 190, 'from': Rect(172.48399353027344, 457.6820068359375, 184.78199768066406, 468.530029296875), 'file': 'ESM_1.pdf#nameddest=table.4', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 191, 'from': Rect(236.20199584960938, 457.6820068359375, 253.3820037841797, 468.530029296875), 'file': 'ESM_1.pdf#nameddest=section.104', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.refai2026component",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.chen2026optengine",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.astorga2025autoformulation",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.punyakanok2004ilp",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.scholak2021picard",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.zhai2025equivamap",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.kuhn1955assignment",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.nlp4lp_dataset",
+      "pass": true
+    },
+    {
+      "check": "page number main4",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 224, 'from': Rect(468.49200439453125, 243.7490234375, 488.3840026855469, 254.59698486328125), 'file': 'ESM_1.pdf#nameddest=subsection.31', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "internal destination mainsubsection.61",
+      "pass": true
+    },
+    {
+      "check": "page number main5",
+      "pass": true
+    },
+    {
+      "check": "internal destination mainequation.22",
+      "pass": true
+    },
+    {
+      "check": "internal destination mainequation.23",
+      "pass": true
+    },
+    {
+      "check": "internal destination mainequation.26",
+      "pass": true
+    },
+    {
+      "check": "page number main6",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.nlp4lp_dataset",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal destination mainsubsection.19",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.chen2024m3embedding",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.deerwester1990lsa",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.pedregosa2011sklearn",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.robertson2009bm25",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 258, 'from': Rect(123.52300262451172, 364.0940246582031, 136.24200439453125, 376.0500183105469), 'file': 'ESM_1.pdf#nameddest=table.6', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.lhoest2021datasets",
+      "pass": true
+    },
+    {
+      "check": "internal destination mainequation.18",
+      "pass": true
+    },
+    {
+      "check": "internal destination mainsubsection.21",
+      "pass": true
+    },
+    {
+      "check": "internal destination mainalgorithm.34",
+      "pass": true
+    },
+    {
+      "check": "internal destination mainfigure.36",
+      "pass": true
+    },
+    {
+      "check": "page number main7",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 279, 'from': Rect(345.2309875488281, 660.927001953125, 365.3609924316406, 672.8820190429688), 'file': 'ESM_1.pdf#nameddest=subsection.26', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 280, 'from': Rect(368.31500244140625, 660.927001953125, 388.4440002441406, 672.8820190429688), 'file': 'ESM_1.pdf#nameddest=subsection.31', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "page number main8",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.holm1979followup",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 282, 'from': Rect(171.85499572753906, 179.72601318359375, 184.57400512695312, 190.57501220703125), 'file': 'ESM_1.pdf#nameddest=table.17', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "internal destination mainsubsection.62",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 323, 'from': Rect(110.5459976196289, 443.72601318359375, 131.16799926757812, 454.57501220703125), 'file': 'ESM_1.pdf#nameddest=subsection.31', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "internal destination maintable.42",
+      "pass": true
+    },
+    {
+      "check": "internal destination maintable.45",
+      "pass": true
+    },
+    {
+      "check": "internal destination maintable.47",
+      "pass": true
+    },
+    {
+      "check": "page number main9",
+      "pass": true
+    },
+    {
+      "check": "internal destination mainequation.25",
+      "pass": true
+    },
+    {
+      "check": "internal destination mainequation.29",
+      "pass": true
+    },
+    {
+      "check": "internal destination maintable.50",
+      "pass": true
+    },
+    {
+      "check": "internal destination mainsubsection.51",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 344, 'from': Rect(392.2359924316406, 409.3700256347656, 404.7449951171875, 420.1080017089844), 'file': 'ESM_1.pdf#nameddest=section.9', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "internal destination maintable.53",
+      "pass": true
+    },
+    {
+      "check": "page number main10",
+      "pass": true
+    },
+    {
+      "check": "internal destination mainequation.24",
+      "pass": true
+    },
+    {
+      "check": "internal destination maintable.56",
+      "pass": true
+    },
+    {
+      "check": "internal destination mainsubsection.37",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 358, 'from': Rect(498.7760009765625, 554.3200073242188, 519.0339965820312, 565.1680297851562), 'file': 'ESM_1.pdf#nameddest=subsection.26', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "page number main11",
+      "pass": true
+    },
+    {
+      "check": "internal destination maintable.45",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.gao2026models",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.refai2026component",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.chen2026optengine",
+      "pass": true
+    },
+    {
+      "check": "page number main12",
+      "pass": true
+    },
+    {
+      "check": "internal destination maincite.zhai2025equivamap",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 376, 'from': Rect(234.18600463867188, 323.72601318359375, 254.8090057373047, 334.57501220703125), 'file': 'ESM_1.pdf#nameddest=subsection.63', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 377, 'from': Rect(108.70800018310547, 455.8370056152344, 133.9459991455078, 464.63702392578125), 'file': 'ESM_1.pdf#nameddest=subsection.99', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 378, 'from': Rect(113.86499786376953, 515.7260131835938, 126.58399963378906, 526.5750122070312), 'file': 'ESM_1.pdf#nameddest=section.40', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 379, 'from': Rect(131.2530059814453, 515.7260131835938, 156.95700073242188, 526.5750122070312), 'file': 'ESM_1.pdf#nameddest=subsection.98', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 380, 'from': Rect(179.01300048828125, 515.7260131835938, 199.63600158691406, 526.5750122070312), 'file': 'ESM_1.pdf#nameddest=subsection.74', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "internal destination mainsubsection.19",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 382, 'from': Rect(483.63299560546875, 215.72601318359375, 503.781005859375, 226.57501220703125), 'file': 'ESM_1.pdf#nameddest=subsection.27', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 384, 'from': Rect(402.5369873046875, 645.6589965820312, 423.1600036621094, 656.5070190429688), 'file': 'ESM_1.pdf#nameddest=subsection.31', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "page number main13",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 389, 'from': Rect(269.7179870605469, 159.7490234375, 282.43701171875, 170.59698486328125), 'file': 'ESM_1.pdf#nameddest=section.56', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 390, 'from': Rect(138.43499755859375, 243.19500732421875, 159.05799865722656, 255.1510009765625), 'file': 'ESM_1.pdf#nameddest=subsection.72', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "page number main14",
+      "pass": true
+    },
+    {
+      "check": "internal destination mainsubsection.61",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 403, 'from': Rect(220.32000732421875, 375.7490234375, 240.21200561523438, 386.5970153808594), 'file': 'ESM_1.pdf#nameddest=subsection.31', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "page number main15",
+      "pass": true
+    },
+    {
+      "check": "page number main16",
+      "pass": true
+    },
+    {
+      "check": "no clipped page content main",
+      "pass": true
+    },
+    {
+      "check": "embedded fonts main",
+      "pass": true
+    },
+    {
+      "check": "clean final compilation supplement",
+      "pass": true
+    },
+    {
+      "check": "clean BibTeX supplement",
+      "pass": true
+    },
+    {
+      "check": "page number supplement1",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsection.2",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsection.9",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.10",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.15",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsection.18",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsection.25",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.26",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.27",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.34",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.37",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.38",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.39",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsection.40",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.41",
+      "pass": true
+    },
+    {
+      "check": "page number supplement2",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.46",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.49",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.53",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsection.56",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsection.59",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.60",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.63",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.69",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.72",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsection.73",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.74",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.75",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.76",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.77",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsection.78",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.79",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.84",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.87",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.92",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.93",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.96",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsection.97",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.98",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.99",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsection.104",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.105",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.106",
+      "pass": true
+    },
+    {
+      "check": "page number supplement3",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.4",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.8",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsection.104",
+      "pass": true
+    },
+    {
+      "check": "page number supplement4",
+      "pass": true
+    },
+    {
+      "check": "page number supplement5",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 251, 'from': Rect(338.4259948730469, 140.29901123046875, 351.2799987792969, 149.40301513671875), 'file': 'manuscript.pdf#nameddest=subsection.38', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 252, 'from': Rect(310.6109924316406, 305.6409912109375, 316.8529968261719, 315.634033203125), 'file': 'manuscript.pdf#nameddest=equation.27', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.12",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.14",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.17",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 262, 'from': Rect(345.7229919433594, 578.8809814453125, 360.70098876953125, 589.72900390625), 'file': 'manuscript.pdf#nameddest=subsection.38', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.77",
+      "pass": true
+    },
+    {
+      "check": "page number supplement6",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.20",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.22",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.24",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.74",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 268, 'from': Rect(202.29600524902344, 335.780029296875, 208.48699951171875, 344.8840026855469), 'file': 'manuscript.pdf#nameddest=table.42', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "page number supplement7",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 292, 'from': Rect(177.77999877929688, 291.197021484375, 192.7570037841797, 302.0450439453125), 'file': 'manuscript.pdf#nameddest=subsection.37', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 293, 'from': Rect(350.3320007324219, 291.197021484375, 357.4049987792969, 302.0450439453125), 'file': 'manuscript.pdf#nameddest=table.56', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 294, 'from': Rect(223.1479949951172, 363.197021484375, 245.2100067138672, 374.0450134277344), 'file': 'manuscript.pdf#nameddest=subsubsection.54', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.huang2017beamfollowup",
+      "pass": true
+    },
+    {
+      "check": "page number supplement8",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.27",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.29",
+      "pass": true
+    },
+    {
+      "check": "page number supplement9",
+      "pass": true
+    },
+    {
+      "check": "page number supplement10",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.33",
+      "pass": true
+    },
+    {
+      "check": "page number supplement11",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.36",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 331, 'from': Rect(345.19500732421875, 371.1280212402344, 352.16900634765625, 383.0830078125), 'file': 'manuscript.pdf#nameddest=equation.28', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 332, 'from': Rect(363.0060119628906, 371.1280212402344, 374.9620056152344, 383.0830078125), 'file': 'manuscript.pdf#nameddest=equation.29', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "page number supplement12",
+      "pass": true
+    },
+    {
+      "check": "page number supplement13",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 344, 'from': Rect(200.35299682617188, 575.6820068359375, 214.8209991455078, 586.530029296875), 'file': 'manuscript.pdf#nameddest=subsection.60', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.63",
+      "pass": true
+    },
+    {
+      "check": "page number supplement14",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.43",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.45",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.48",
+      "pass": true
+    },
+    {
+      "check": "page number supplement15",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.43",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.pan2025pamop",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.huang2025orlm",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.xiao2026deepor",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.ding2026orr1",
+      "pass": true
+    },
+    {
+      "check": "page number supplement16",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.52",
+      "pass": true
+    },
+    {
+      "check": "page number supplement17",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.55",
+      "pass": true
+    },
+    {
+      "check": "page number supplement18",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.58",
+      "pass": true
+    },
+    {
+      "check": "page number supplement19",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.62",
+      "pass": true
+    },
+    {
+      "check": "page number supplement20",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.65",
+      "pass": true
+    },
+    {
+      "check": "page number supplement21",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.67",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementequation.68",
+      "pass": true
+    },
+    {
+      "check": "page number supplement22",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.71",
+      "pass": true
+    },
+    {
+      "check": "page number supplement23",
+      "pass": true
+    },
+    {
+      "check": "page number supplement24",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.22",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.24",
+      "pass": true
+    },
+    {
+      "check": "page number supplement25",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.38",
+      "pass": true
+    },
+    {
+      "check": "page number supplement26",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.holm1979followup",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.17",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.17",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.20",
+      "pass": true
+    },
+    {
+      "check": "companion destination {'kind': 3, 'xref': 458, 'from': Rect(252.09100341796875, 267.19500732421875, 258.9649963378906, 279.1510009765625), 'file': 'manuscript.pdf#nameddest=table.42', 'id': ''}",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.14",
+      "pass": true
+    },
+    {
+      "check": "page number supplement27",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.81",
+      "pass": true
+    },
+    {
+      "check": "page number supplement28",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.83",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.86",
+      "pass": true
+    },
+    {
+      "check": "page number supplement29",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.77",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.89",
+      "pass": true
+    },
+    {
+      "check": "page number supplement30",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.91",
+      "pass": true
+    },
+    {
+      "check": "page number supplement31",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.27",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.38",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.95",
+      "pass": true
+    },
+    {
+      "check": "page number supplement32",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.99",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsubsection.72",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.81",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementsection.40",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "page number supplement33",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.101",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.103",
+      "pass": true
+    },
+    {
+      "check": "page number supplement34",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.101",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementtable.4",
+      "pass": true
+    },
+    {
+      "check": "page number supplement35",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.pan2025pamop",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.huang2025orlm",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.xiao2026deepor",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.ahmed2025opt2code",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.astorga2025autoformulation",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.xiao2024chainofexperts",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.yu2026uncertainty",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.jiang2025llmopt",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.zhang2024optllm",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.chen2025solver",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.ding2026orr1",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.li2026solver",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.xie2026escaping",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.zhang2026dual",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.kong2025alphaopt",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.yang2026orthought",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.affolter2019nli",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.yu2018spider",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplementcite.miplibnl2026",
+      "pass": true
+    },
+    {
+      "check": "page number supplement36",
+      "pass": true
+    },
+    {
+      "check": "page number supplement37",
+      "pass": true
+    },
+    {
+      "check": "page number supplement38",
+      "pass": true
+    },
+    {
+      "check": "no clipped page content supplement",
+      "pass": true
+    },
+    {
+      "check": "embedded fonts supplement",
+      "pass": true
+    }
+  ],
+  "oracles": {
+    "A": {
+      "ready": 268,
+      "schema_hits": 325,
+      "wrong_schema_ready": 0
+    },
+    "C": {
+      "ready": 270,
+      "schema_hits": 322,
+      "wrong_schema_ready": 2
+    },
+    "B": {
+      "ready": 286,
+      "schema_hits": 293,
+      "wrong_schema_ready": 32
+    }
+  },
+  "oracle_A_losses": [
+    {
+      "query": "nlp4lp_test_286",
+      "gold_rank": 4,
+      "gold_coverage": 0.6666666666666666
+    },
+    {
+      "query": "nlp4lp_test_299",
+      "gold_rank": 6,
+      "gold_coverage": 0.5
+    }
+  ],
+  "candidate_csv_sha256": "e7fd444b059b52247a5cf1a4927eb29c7fe408af9e004f569868643caa3ce632",
+  "protected_arms": {
+    "baseline": {
+      "ready": 257,
+      "strict": 247,
+      "full": 6,
+      "eligible_full": 6
+    },
+    "bge": {
+      "ready": 273,
+      "strict": 265,
+      "full": 3,
+      "eligible_full": 3
+    },
+    "constrained": {
+      "ready": 252,
+      "strict": 242,
+      "full": 40,
+      "eligible_full": 41
+    },
+    "maxweight": {
+      "ready": 246,
+      "strict": 236,
+      "full": 37,
+      "eligible_full": 37
+    },
+    "oracle": {
+      "ready": 281,
+      "strict": 281,
+      "full": 8,
+      "eligible_full": 8
+    },
+    "ratio": {
+      "ready": 265,
+      "strict": 255,
+      "full": 7,
+      "eligible_full": 7
+    },
+    "role": {
+      "ready": 244,
+      "strict": 234,
+      "full": 35,
+      "eligible_full": 35
+    },
+    "semantic": {
+      "ready": 237,
+      "strict": 230,
+      "full": 9,
+      "eligible_full": 9
+    },
+    "structured": {
+      "ready": 233,
+      "strict": 223,
+      "full": 46,
+      "eligible_full": 46
+    },
+    "typed": {
+      "ready": 265,
+      "strict": 255,
+      "full": 7,
+      "eligible_full": 7
+    }
+  },
+  "frozen_verifier": {
+    "status": "PASS",
+    "checks_passed": 9737,
+    "report_sha256": "1bacf16801ae0a3ab10e175a8f41965c6318a2b43d33abee1d66717d2a93350b"
+  },
+  "pdfs": {
+    "manuscript.pdf": {
+      "pages": 16,
+      "sha256": "2d16b5aae4bebcd82d64316d513251217817e7cb01129cdb38b80e5ddd1f96e9",
+      "cross_document_links": [
+        {
+          "page": 3,
+          "target": "ESM_1.pdf",
+          "destination": "table.4",
+          "kind": 3
+        },
+        {
+          "page": 3,
+          "target": "ESM_1.pdf",
+          "destination": "section.104",
+          "kind": 3
+        },
+        {
+          "page": 4,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.31",
+          "kind": 3
+        },
+        {
+          "page": 6,
+          "target": "ESM_1.pdf",
+          "destination": "table.6",
+          "kind": 3
+        },
+        {
+          "page": 7,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.26",
+          "kind": 3
+        },
+        {
+          "page": 7,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.31",
+          "kind": 3
+        },
+        {
+          "page": 8,
+          "target": "ESM_1.pdf",
+          "destination": "table.17",
+          "kind": 3
+        },
+        {
+          "page": 8,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.31",
+          "kind": 3
+        },
+        {
+          "page": 9,
+          "target": "ESM_1.pdf",
+          "destination": "section.9",
+          "kind": 3
+        },
+        {
+          "page": 10,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.26",
+          "kind": 3
+        },
+        {
+          "page": 12,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.63",
+          "kind": 3
+        },
+        {
+          "page": 12,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.99",
+          "kind": 3
+        },
+        {
+          "page": 12,
+          "target": "ESM_1.pdf",
+          "destination": "section.40",
+          "kind": 3
+        },
+        {
+          "page": 12,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.98",
+          "kind": 3
+        },
+        {
+          "page": 12,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.74",
+          "kind": 3
+        },
+        {
+          "page": 12,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.27",
+          "kind": 3
+        },
+        {
+          "page": 12,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.31",
+          "kind": 3
+        },
+        {
+          "page": 13,
+          "target": "ESM_1.pdf",
+          "destination": "section.56",
+          "kind": 3
+        },
+        {
+          "page": 13,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.72",
+          "kind": 3
+        },
+        {
+          "page": 14,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.31",
+          "kind": 3
+        }
+      ],
+      "warnings": [
+        "Package hyperref Warning: Difference (4) between bookmark levels is greater "
+      ],
+      "underfull_boxes": 60,
+      "latex_diagnostics": [],
+      "metadata": {
+        "format": "PDF 1.5",
+        "title": "Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study",
+        "author": "Soroush Vahidi",
+        "subject": "Diagnostic study of retrieval-assisted scalar grounding",
+        "keywords": "natural language processing, optimization modeling, information retrieval, semantic grounding",
+        "creator": "LaTeX with hyperref",
+        "producer": "pdfTeX-1.40.25",
+        "creationDate": "D:20261029183906-04'00'",
+        "modDate": "D:20261029183906-04'00'",
+        "trapped": "",
+        "encryption": null
+      }
+    },
+    "ESM_1.pdf": {
+      "pages": 38,
+      "sha256": "7cdb128b534cd6738561d5330716480685ff8aefb9c12ffeb1fa681301438d22",
+      "cross_document_links": [
+        {
+          "page": 5,
+          "target": "manuscript.pdf",
+          "destination": "subsection.38",
+          "kind": 3
+        },
+        {
+          "page": 5,
+          "target": "manuscript.pdf",
+          "destination": "equation.27",
+          "kind": 3
+        },
+        {
+          "page": 5,
+          "target": "manuscript.pdf",
+          "destination": "subsection.38",
+          "kind": 3
+        },
+        {
+          "page": 6,
+          "target": "manuscript.pdf",
+          "destination": "table.42",
+          "kind": 3
+        },
+        {
+          "page": 7,
+          "target": "manuscript.pdf",
+          "destination": "subsection.37",
+          "kind": 3
+        },
+        {
+          "page": 7,
+          "target": "manuscript.pdf",
+          "destination": "table.56",
+          "kind": 3
+        },
+        {
+          "page": 7,
+          "target": "manuscript.pdf",
+          "destination": "subsubsection.54",
+          "kind": 3
+        },
+        {
+          "page": 11,
+          "target": "manuscript.pdf",
+          "destination": "equation.28",
+          "kind": 3
+        },
+        {
+          "page": 11,
+          "target": "manuscript.pdf",
+          "destination": "equation.29",
+          "kind": 3
+        },
+        {
+          "page": 13,
+          "target": "manuscript.pdf",
+          "destination": "subsection.60",
+          "kind": 3
+        },
+        {
+          "page": 26,
+          "target": "manuscript.pdf",
+          "destination": "table.42",
+          "kind": 3
+        }
+      ],
+      "warnings": [],
+      "underfull_boxes": 39,
+      "latex_diagnostics": [],
+      "metadata": {
+        "format": "PDF 1.5",
+        "title": "Online Resource 1: Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study",
+        "author": "Soroush Vahidi",
+        "subject": "Supplementary evidence and reproduction boundaries",
+        "keywords": "natural language processing, optimization modeling, information retrieval, semantic grounding",
+        "creator": "LaTeX with hyperref",
+        "producer": "pdfTeX-1.40.25",
+        "creationDate": "D:20261029183906-04'00'",
+        "modDate": "D:20261029183906-04'00'",
+        "trapped": "",
+        "encryption": null
+      }
+    }
+  },
+  "status": "PASS"
+}

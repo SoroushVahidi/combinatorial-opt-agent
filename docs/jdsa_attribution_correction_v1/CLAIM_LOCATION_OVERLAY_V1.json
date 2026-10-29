@@ -1,0 +1,3105 @@
+{
+  "overlay_version": "jdsa-attribution-correction-v1",
+  "baseline_commit": "00adeca9d3d761da7f8ee2e5dcee7fc8d535f2bc",
+  "prior_crosswalk": "docs/jdsa_manuscript_v1_20261029/CLAIM_LOCATION_CROSSWALK_V1.json",
+  "prior_crosswalk_sha256": "c11324a5efa537ad5a16bcfbbf520b3f75ff3924f8737beba8573113dec44cc6",
+  "immutable_claim_manifest": "reproducibility/jdsa-v2.0.0/claims.json",
+  "immutable_claim_manifest_sha256": "eac4470ab15c0e9041460095dc411c2ab38c34e9e5e54306d7c40c6173ec2039",
+  "scope": "Current locations for prior mapped IDs, not a new evidence manifest or assertion of textual equivalence. Evidence limitations/classifications remain unchanged. E35 and the historical P@5 display name are qualified by CORRECTION_NOTE_V1.md.",
+  "locations": {
+    "subsec:intro_contributions": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 66,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "1",
+      "pdf_page": "2"
+    },
+    "sec:related_work": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 78,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "2",
+      "pdf_page": "2"
+    },
+    "subsec:rw_binding": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 80,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "2.1",
+      "pdf_page": "2"
+    },
+    "subsec:rw_llm_generation": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 86,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "2.2",
+      "pdf_page": "3"
+    },
+    "subsec:rw_retrieval_memory": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 86,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "2.2",
+      "pdf_page": "3"
+    },
+    "subsec:rw_position": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 96,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "2.3",
+      "pdf_page": "3"
+    },
+    "sec:task": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 100,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "3",
+      "pdf_page": "3"
+    },
+    "subsec:method_problem": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 102,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "3.1",
+      "pdf_page": "3"
+    },
+    "eq:top1_schema": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 107,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "1",
+      "pdf_page": "3"
+    },
+    "eq:eligible_slots": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 116,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "2",
+      "pdf_page": "4"
+    },
+    "subsec:assistance-setting": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 121,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "3.2",
+      "pdf_page": "4"
+    },
+    "subsec:inference-dependencies": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 130,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "3.3",
+      "pdf_page": "4"
+    },
+    "subsec:metrics": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 133,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "3.4",
+      "pdf_page": "4"
+    },
+    "eq:coverage": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 141,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "3",
+      "pdf_page": "5"
+    },
+    "eq:typematch": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 149,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "4",
+      "pdf_page": "5"
+    },
+    "eq:bounded_error": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 156,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "5",
+      "pdf_page": "5"
+    },
+    "eq:exact20": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 165,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "6",
+      "pdf_page": "5"
+    },
+    "eq:instantiation_ready": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 175,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "7",
+      "pdf_page": "5"
+    },
+    "eq:strict_instantiation_ready": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 183,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "8",
+      "pdf_page": "5"
+    },
+    "eq:full-scalar": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 193,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "9",
+      "pdf_page": "5"
+    },
+    "eq:conditional-agreement": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 199,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "10",
+      "pdf_page": "5"
+    },
+    "sec:methodology": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 204,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "4",
+      "pdf_page": "6"
+    },
+    "sec:method": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 204,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "4",
+      "pdf_page": "6"
+    },
+    "subsec:method_retrieval": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 206,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "4.1",
+      "pdf_page": "6"
+    },
+    "subsec:exp_setup": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 206,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "4.1",
+      "pdf_page": "6"
+    },
+    "subsec:method_instantiation": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 212,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "4.2",
+      "pdf_page": "6"
+    },
+    "subsec:method_design": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 212,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "4.2",
+      "pdf_page": "6"
+    },
+    "eq:typed_assignment": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 218,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "11",
+      "pdf_page": "6"
+    },
+    "alg:instantiation": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 224,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "1",
+      "pdf_page": "7"
+    },
+    "fig:instantiation-pipeline": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 253,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "1",
+      "pdf_page": "7"
+    },
+    "subsec:method_controls": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 259,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "4.3",
+      "pdf_page": "6"
+    },
+    "subsec:exp_significance": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 267,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "4.4",
+      "pdf_page": "8"
+    },
+    "sec:experiments": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 275,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "5",
+      "pdf_page": "8"
+    },
+    "subsec:exp_retrieval": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 277,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "5.1",
+      "pdf_page": "8"
+    },
+    "tab:nlp4lp-retrieval-main": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 284,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "1",
+      "pdf_page": "8"
+    },
+    "subsec:exp_downstream": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 301,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "5.2",
+      "pdf_page": "8"
+    },
+    "tab:nlp4lp-downstream-main": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 308,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "2",
+      "pdf_page": "9"
+    },
+    "tab:ready-conditioned": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 335,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "3",
+      "pdf_page": "9"
+    },
+    "subsec:exp_error": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 349,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "5.2.1",
+      "pdf_page": "9"
+    },
+    "tab:nlp4lp-error-taxonomy": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 360,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "4",
+      "pdf_page": "10"
+    },
+    "subsec:exp_grounding_baselines": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 380,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "5.3",
+      "pdf_page": "9"
+    },
+    "tab:nlp4lp-grounding-baselines": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 389,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "5",
+      "pdf_page": "11"
+    },
+    "subsec:grounding-followup": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 413,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "5.3.1",
+      "pdf_page": "10"
+    },
+    "tab:grounding-factorial-diagnostic": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 423,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "6",
+      "pdf_page": "11"
+    },
+    "sec:discussion": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 448,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "6",
+      "pdf_page": "10"
+    },
+    "sec:llm": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 457,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "6.2",
+      "pdf_page": "12"
+    },
+    "subsec:numerical-grounding-challenges": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 457,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "6.2",
+      "pdf_page": "12"
+    },
+    "subsec:relationship-audit": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 460,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "6.2",
+      "pdf_page": "12"
+    },
+    "subsec:d1": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 463,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "6.2",
+      "pdf_page": "12"
+    },
+    "subsec:limitations": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 470,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "6.3",
+      "pdf_page": "12"
+    },
+    "subsec:reanalysis": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 478,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "6.4",
+      "pdf_page": "12"
+    },
+    "subsec:future_work": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 478,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "6.4",
+      "pdf_page": "12"
+    },
+    "subsec:closed-audits": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 478,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "6.4",
+      "pdf_page": "12"
+    },
+    "sec:conclusion": {
+      "document": "main",
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 484,
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "number": "7",
+      "pdf_page": "13"
+    },
+    "tab:comparison_landscape": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/supplement.tex",
+      "line": 63,
+      "source_sha256": "96ce5ed0540f20f19c6d8cb0e6867789ddf4b626e5c248743817d7601464eb49",
+      "number": "S1",
+      "pdf_page": "3"
+    },
+    "tab:retrieval_backbones": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/supplement.tex",
+      "line": 101,
+      "source_sha256": "96ce5ed0540f20f19c6d8cb0e6867789ddf4b626e5c248743817d7601464eb49",
+      "number": "S2",
+      "pdf_page": "4"
+    },
+    "tab:exp_blocks": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/supplement.tex",
+      "line": 117,
+      "source_sha256": "96ce5ed0540f20f19c6d8cb0e6867789ddf4b626e5c248743817d7601464eb49",
+      "number": "S3",
+      "pdf_page": "4"
+    },
+    "tab:nlp4lp-overlap": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/supplement.tex",
+      "line": 140,
+      "source_sha256": "96ce5ed0540f20f19c6d8cb0e6867789ddf4b626e5c248743817d7601464eb49",
+      "number": "S7",
+      "pdf_page": "6"
+    },
+    "tab:eng-structural": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/supplement.tex",
+      "line": 156,
+      "source_sha256": "96ce5ed0540f20f19c6d8cb0e6867789ddf4b626e5c248743817d7601464eb49",
+      "number": "S8",
+      "pdf_page": "6"
+    },
+    "tab:eng-solver": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/supplement.tex",
+      "line": 171,
+      "source_sha256": "96ce5ed0540f20f19c6d8cb0e6867789ddf4b626e5c248743817d7601464eb49",
+      "number": "S9",
+      "pdf_page": "7"
+    },
+    "app:grounding-diagnostics": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/supplement.tex",
+      "line": 184,
+      "source_sha256": "96ce5ed0540f20f19c6d8cb0e6867789ddf4b626e5c248743817d7601464eb49",
+      "number": "S4",
+      "pdf_page": "7"
+    },
+    "app:common18": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/supplement.tex",
+      "line": 190,
+      "source_sha256": "96ce5ed0540f20f19c6d8cb0e6867789ddf4b626e5c248743817d7601464eb49",
+      "number": "S5",
+      "pdf_page": "14"
+    },
+    "tab:ext-context": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/supplement.tex",
+      "line": 196,
+      "source_sha256": "96ce5ed0540f20f19c6d8cb0e6867789ddf4b626e5c248743817d7601464eb49",
+      "number": "S14",
+      "pdf_page": "15"
+    },
+    "app:g3": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/supplement.tex",
+      "line": 216,
+      "source_sha256": "96ce5ed0540f20f19c6d8cb0e6867789ddf4b626e5c248743817d7601464eb49",
+      "number": "S6",
+      "pdf_page": "18"
+    },
+    "app:additional-evidence": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/supplement.tex",
+      "line": 225,
+      "source_sha256": "96ce5ed0540f20f19c6d8cb0e6867789ddf4b626e5c248743817d7601464eb49",
+      "number": "S9",
+      "pdf_page": "26"
+    },
+    "app:extraction-details": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/supplement.tex",
+      "line": 230,
+      "source_sha256": "96ce5ed0540f20f19c6d8cb0e6867789ddf4b626e5c248743817d7601464eb49",
+      "number": "S10.1",
+      "pdf_page": "32"
+    },
+    "subsec:exp_external_validation": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/supplement.tex",
+      "line": 230,
+      "source_sha256": "96ce5ed0540f20f19c6d8cb0e6867789ddf4b626e5c248743817d7601464eb49",
+      "number": "S10.1",
+      "pdf_page": "32"
+    },
+    "app:d1-details": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/supplement.tex",
+      "line": 241,
+      "source_sha256": "96ce5ed0540f20f19c6d8cb0e6867789ddf4b626e5c248743817d7601464eb49",
+      "number": "S10.2",
+      "pdf_page": "33"
+    },
+    "app:related-context": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/supplement.tex",
+      "line": 246,
+      "source_sha256": "96ce5ed0540f20f19c6d8cb0e6867789ddf4b626e5c248743817d7601464eb49",
+      "number": "S11",
+      "pdf_page": "34"
+    },
+    "app:core-support": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/supporting_core.tex",
+      "line": 2,
+      "source_sha256": "98c6777ecebf37bc87a6bcb734d7a625188031038222cce91c28f5a92b842edf",
+      "number": "S2",
+      "pdf_page": "4"
+    },
+    "app:extraction-ablation": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/supporting_core.tex",
+      "line": 5,
+      "source_sha256": "98c6777ecebf37bc87a6bcb734d7a625188031038222cce91c28f5a92b842edf",
+      "number": "S2.1",
+      "pdf_page": "5"
+    },
+    "tab:nlp4lp-prefix-postfix": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/supporting_core.tex",
+      "line": 11,
+      "source_sha256": "98c6777ecebf37bc87a6bcb734d7a625188031038222cce91c28f5a92b842edf",
+      "number": "S4",
+      "pdf_page": "5"
+    },
+    "tab:strict-instready": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/supporting_core.tex",
+      "line": 32,
+      "source_sha256": "98c6777ecebf37bc87a6bcb734d7a625188031038222cce91c28f5a92b842edf",
+      "number": "S5",
+      "pdf_page": "5"
+    },
+    "app:paired-comparisons": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/supporting_core.tex",
+      "line": 48,
+      "source_sha256": "98c6777ecebf37bc87a6bcb734d7a625188031038222cce91c28f5a92b842edf",
+      "number": "S2.2",
+      "pdf_page": "5"
+    },
+    "tab:nlp4lp-significance": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/supporting_core.tex",
+      "line": 54,
+      "source_sha256": "98c6777ecebf37bc87a6bcb734d7a625188031038222cce91c28f5a92b842edf",
+      "number": "S6",
+      "pdf_page": "6"
+    },
+    "app:factorial-details": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/grounding_diagnostics.tex",
+      "line": 2,
+      "source_sha256": "398507da693c923d4a664af4cca75d4ee9abbe2987e4c9c67c5cfaf48c42dcbf",
+      "number": "S4.1",
+      "pdf_page": "7"
+    },
+    "app:reference-conventions": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/reference_conventions.tex",
+      "line": 2,
+      "source_sha256": "9bbb6d0ba4e7a72b23629c8dceb50bb640afb4f4c332731bd80dcefd2f50c7af",
+      "number": "S4.2",
+      "pdf_page": "8"
+    },
+    "tab:reference-overlay": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/reference_conventions.tex",
+      "line": 20,
+      "source_sha256": "9bbb6d0ba4e7a72b23629c8dceb50bb640afb4f4c332731bd80dcefd2f50c7af",
+      "number": "S10",
+      "pdf_page": "8"
+    },
+    "eq:snack-overlay": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/reference_conventions.tex",
+      "line": 46,
+      "source_sha256": "9bbb6d0ba4e7a72b23629c8dceb50bb640afb4f4c332731bd80dcefd2f50c7af",
+      "number": "S1",
+      "pdf_page": "9"
+    },
+    "app:reproduction": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/reproduction_map.tex",
+      "line": 2,
+      "source_sha256": "8b52a9e7542236e84d41aff2a4a953ce30ce2087c715b8f31f6e5d4c44536da8",
+      "number": "S4.3",
+      "pdf_page": "9"
+    },
+    "tab:population-map": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/reproduction_map.tex",
+      "line": 11,
+      "source_sha256": "8b52a9e7542236e84d41aff2a4a953ce30ce2087c715b8f31f6e5d4c44536da8",
+      "number": "S11",
+      "pdf_page": "10"
+    },
+    "app:input-dependencies": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/reproduction_map.tex",
+      "line": 43,
+      "source_sha256": "8b52a9e7542236e84d41aff2a4a953ce30ce2087c715b8f31f6e5d4c44536da8",
+      "number": "S4.4",
+      "pdf_page": "11"
+    },
+    "tab:input-dependencies": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/reproduction_map.tex",
+      "line": 48,
+      "source_sha256": "8b52a9e7542236e84d41aff2a4a953ce30ce2087c715b8f31f6e5d4c44536da8",
+      "number": "S12",
+      "pdf_page": "12"
+    },
+    "app:supervision-audit": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/supervision_diagnostics.tex",
+      "line": 2,
+      "source_sha256": "d8994e82be3d4c94f4ffa1e8b0a6c3651f5205c13f774f5a2b9325cd9efe002a",
+      "number": "S4.6",
+      "pdf_page": "12"
+    },
+    "app:nl4opt-audit": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/supervision_diagnostics.tex",
+      "line": 15,
+      "source_sha256": "d8994e82be3d4c94f4ffa1e8b0a6c3651f5205c13f774f5a2b9325cd9efe002a",
+      "number": "S4.7",
+      "pdf_page": "13"
+    },
+    "subsec:exp_external": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/common18_overview.tex",
+      "line": 2,
+      "source_sha256": "223259f972c61f4d93acf2be409dd7a1868bae6ef8eb702cf27463c0d7582400",
+      "number": "S5.1",
+      "pdf_page": "14"
+    },
+    "tab:ext-outcomes": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/common18_overview.tex",
+      "line": 9,
+      "source_sha256": "223259f972c61f4d93acf2be409dd7a1868bae6ef8eb702cf27463c0d7582400",
+      "number": "S13",
+      "pdf_page": "14"
+    },
+    "tab:llm-provenance": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/llm_evidence.tex",
+      "line": 6,
+      "source_sha256": "7a87a535ef010b26dfa6381f9f9efa038e728d60cab7af0a3881934024730580",
+      "number": "S15",
+      "pdf_page": "16"
+    },
+    "eq:common18-objective-proxy": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/llm_evidence.tex",
+      "line": 22,
+      "source_sha256": "7a87a535ef010b26dfa6381f9f9efa038e728d60cab7af0a3881934024730580",
+      "number": "S2",
+      "pdf_page": "16"
+    },
+    "tab:llm-failures": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/llm_evidence.tex",
+      "line": 34,
+      "source_sha256": "7a87a535ef010b26dfa6381f9f9efa038e728d60cab7af0a3881934024730580",
+      "number": "S16",
+      "pdf_page": "17"
+    },
+    "tab:llm-cases": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/llm_evidence.tex",
+      "line": 48,
+      "source_sha256": "7a87a535ef010b26dfa6381f9f9efa038e728d60cab7af0a3881934024730580",
+      "number": "S17",
+      "pdf_page": "18"
+    },
+    "tab:g3-inventory": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/closed_audits.tex",
+      "line": 4,
+      "source_sha256": "dd120cfff450457a959e860c5616f425f16e7c04ed3275cec4de846b4b58a4a2",
+      "number": "S18",
+      "pdf_page": "19"
+    },
+    "app:relationship-overview": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/relationship_evidence.tex",
+      "line": 2,
+      "source_sha256": "d3f361cb002332cd7e3bde582080ba30a257055a19e419dc3b9e2bf5950ce5de",
+      "number": "S7.1",
+      "pdf_page": "19"
+    },
+    "tab:relationship-validity": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/relationship_evidence.tex",
+      "line": 6,
+      "source_sha256": "d3f361cb002332cd7e3bde582080ba30a257055a19e419dc3b9e2bf5950ce5de",
+      "number": "S19",
+      "pdf_page": "19"
+    },
+    "app:relationship-evidence": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/relationship_supplement.tex",
+      "line": 1,
+      "source_sha256": "c9a91624bebe3b3cb45e4c53e597a62b4cc56e4ed1c49f992e3e93adafe4e151",
+      "number": "S7.2",
+      "pdf_page": "20"
+    },
+    "tab:relationship-requests": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/relationship_supplement.tex",
+      "line": 9,
+      "source_sha256": "c9a91624bebe3b3cb45e4c53e597a62b4cc56e4ed1c49f992e3e93adafe4e151",
+      "number": "S20",
+      "pdf_page": "21"
+    },
+    "tab:relationship-labels": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/relationship_supplement.tex",
+      "line": 21,
+      "source_sha256": "c9a91624bebe3b3cb45e4c53e597a62b4cc56e4ed1c49f992e3e93adafe4e151",
+      "number": "S21",
+      "pdf_page": "21"
+    },
+    "eq:fleiss": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/relationship_supplement.tex",
+      "line": 36,
+      "source_sha256": "c9a91624bebe3b3cb45e4c53e597a62b4cc56e4ed1c49f992e3e93adafe4e151",
+      "number": "S3",
+      "pdf_page": "21"
+    },
+    "tab:relationship-clusters": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/relationship_supplement.tex",
+      "line": 50,
+      "source_sha256": "c9a91624bebe3b3cb45e4c53e597a62b4cc56e4ed1c49f992e3e93adafe4e151",
+      "number": "S22",
+      "pdf_page": "23"
+    },
+    "app:future-reference": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/relationship_supplement.tex",
+      "line": 76,
+      "source_sha256": "c9a91624bebe3b3cb45e4c53e597a62b4cc56e4ed1c49f992e3e93adafe4e151",
+      "number": "S7.4",
+      "pdf_page": "23"
+    },
+    "app:restricted-details": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/preserved_results_details.tex",
+      "line": 2,
+      "source_sha256": "5365f96a28dc561028c348e59826e1d6aacdeb45d89ca4355c65f093ca27124f",
+      "number": "S8.1",
+      "pdf_page": "23"
+    },
+    "subsec:exp_engineering": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/preserved_results_details.tex",
+      "line": 2,
+      "source_sha256": "5365f96a28dc561028c348e59826e1d6aacdeb45d89ca4355c65f093ca27124f",
+      "number": "S8.1",
+      "pdf_page": "23"
+    },
+    "app:runtime-details": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/preserved_results_details.tex",
+      "line": 27,
+      "source_sha256": "5365f96a28dc561028c348e59826e1d6aacdeb45d89ca4355c65f093ca27124f",
+      "number": "S8.2",
+      "pdf_page": "25"
+    },
+    "subsec:exp_runtime": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/preserved_results_details.tex",
+      "line": 27,
+      "source_sha256": "5365f96a28dc561028c348e59826e1d6aacdeb45d89ca4355c65f093ca27124f",
+      "number": "S8.2",
+      "pdf_page": "25"
+    },
+    "app:occurrence-boundary": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/preserved_results_details.tex",
+      "line": 33,
+      "source_sha256": "5365f96a28dc561028c348e59826e1d6aacdeb45d89ca4355c65f093ca27124f",
+      "number": "S8.3",
+      "pdf_page": "25"
+    },
+    "app:statistical-history": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/preserved_results_details.tex",
+      "line": 41,
+      "source_sha256": "5365f96a28dc561028c348e59826e1d6aacdeb45d89ca4355c65f093ca27124f",
+      "number": "S8.4",
+      "pdf_page": "25"
+    },
+    "tab:legacy-grounding": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/additional_evidence.tex",
+      "line": 7,
+      "source_sha256": "86e9469456078a8cd36504a10714a3148475392172be7fedad398329f1149a97",
+      "number": "S23",
+      "pdf_page": "27"
+    },
+    "tab:staleness-grounding": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/additional_evidence.tex",
+      "line": 36,
+      "source_sha256": "86e9469456078a8cd36504a10714a3148475392172be7fedad398329f1149a97",
+      "number": "S24",
+      "pdf_page": "28"
+    },
+    "tab:ranked-retrieval": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/additional_evidence.tex",
+      "line": 57,
+      "source_sha256": "86e9469456078a8cd36504a10714a3148475392172be7fedad398329f1149a97",
+      "number": "S25",
+      "pdf_page": "29"
+    },
+    "tab:cached-ceilings": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/additional_evidence.tex",
+      "line": 81,
+      "source_sha256": "86e9469456078a8cd36504a10714a3148475392172be7fedad398329f1149a97",
+      "number": "S26",
+      "pdf_page": "30"
+    },
+    "tab:full-joint-pilot": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/additional_evidence.tex",
+      "line": 94,
+      "source_sha256": "86e9469456078a8cd36504a10714a3148475392172be7fedad398329f1149a97",
+      "number": "S27",
+      "pdf_page": "30"
+    },
+    "tab:archived-scalar-llm": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/additional_evidence.tex",
+      "line": 118,
+      "source_sha256": "86e9469456078a8cd36504a10714a3148475392172be7fedad398329f1149a97",
+      "number": "S28",
+      "pdf_page": "32"
+    },
+    "tab:d1-a": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/d1_contrasts.tex",
+      "line": 4,
+      "source_sha256": "82393866f7134b601c2f4fe3221ef283996eb8bb38a4132d80f3a2006e6fc8f1",
+      "number": "S29",
+      "pdf_page": "33"
+    },
+    "tab:d1-b": {
+      "document": "supplement",
+      "source": "manuscript/jdsa-stage3/d1_contrasts.tex",
+      "line": 17,
+      "source_sha256": "82393866f7134b601c2f4fe3221ef283996eb8bb38a4132d80f3a2006e6fc8f1",
+      "number": "S30",
+      "pdf_page": "34"
+    }
+  },
+  "mapped_claims": {
+    "named_objects": [
+      {
+        "claim_id": "tab:nlp4lp-retrieval-main",
+        "location_labels": [
+          "tab:nlp4lp-retrieval-main"
+        ]
+      },
+      {
+        "claim_id": "tab:nlp4lp-downstream-main",
+        "location_labels": [
+          "tab:nlp4lp-downstream-main"
+        ]
+      },
+      {
+        "claim_id": "tab:nlp4lp-grounding-baselines",
+        "location_labels": [
+          "tab:nlp4lp-grounding-baselines"
+        ]
+      },
+      {
+        "claim_id": "tab:nlp4lp-error-taxonomy",
+        "location_labels": [
+          "tab:nlp4lp-error-taxonomy"
+        ]
+      },
+      {
+        "claim_id": "tab:nlp4lp-prefix-postfix",
+        "location_labels": [
+          "tab:nlp4lp-prefix-postfix"
+        ]
+      },
+      {
+        "claim_id": "tab:nlp4lp-significance",
+        "location_labels": [
+          "tab:nlp4lp-significance"
+        ]
+      },
+      {
+        "claim_id": "tab:strict-instready",
+        "location_labels": [
+          "tab:strict-instready"
+        ]
+      },
+      {
+        "claim_id": "tab:ext-outcomes",
+        "location_labels": [
+          "tab:ext-outcomes"
+        ]
+      },
+      {
+        "claim_id": "tab:relationship-validity",
+        "location_labels": [
+          "tab:relationship-validity"
+        ]
+      },
+      {
+        "claim_id": "fig:instantiation-pipeline",
+        "location_labels": [
+          "fig:instantiation-pipeline"
+        ]
+      },
+      {
+        "claim_id": "alg:instantiation",
+        "location_labels": [
+          "alg:instantiation"
+        ]
+      },
+      {
+        "claim_id": "tab:comparison_landscape",
+        "location_labels": [
+          "tab:comparison_landscape"
+        ]
+      },
+      {
+        "claim_id": "tab:retrieval_backbones",
+        "location_labels": [
+          "tab:retrieval_backbones"
+        ]
+      },
+      {
+        "claim_id": "tab:exp_blocks",
+        "location_labels": [
+          "tab:exp_blocks"
+        ]
+      },
+      {
+        "claim_id": "tab:nlp4lp-overlap",
+        "location_labels": [
+          "tab:nlp4lp-overlap"
+        ]
+      },
+      {
+        "claim_id": "tab:eng-structural",
+        "location_labels": [
+          "tab:eng-structural"
+        ]
+      },
+      {
+        "claim_id": "tab:eng-solver",
+        "location_labels": [
+          "tab:eng-solver"
+        ]
+      },
+      {
+        "claim_id": "tab:grounding-factorial-diagnostic",
+        "location_labels": [
+          "tab:grounding-factorial-diagnostic"
+        ]
+      },
+      {
+        "claim_id": "tab:reference-overlay",
+        "location_labels": [
+          "tab:reference-overlay"
+        ]
+      },
+      {
+        "claim_id": "tab:population-map",
+        "location_labels": [
+          "tab:population-map"
+        ]
+      },
+      {
+        "claim_id": "tab:input-dependencies",
+        "location_labels": [
+          "tab:input-dependencies"
+        ]
+      },
+      {
+        "claim_id": "tab:ext-context",
+        "location_labels": [
+          "tab:ext-context"
+        ]
+      },
+      {
+        "claim_id": "tab:llm-provenance",
+        "location_labels": [
+          "tab:llm-provenance"
+        ]
+      },
+      {
+        "claim_id": "tab:llm-failures",
+        "location_labels": [
+          "tab:llm-failures"
+        ]
+      },
+      {
+        "claim_id": "tab:llm-cases",
+        "location_labels": [
+          "tab:llm-cases"
+        ]
+      },
+      {
+        "claim_id": "tab:g3-inventory",
+        "location_labels": [
+          "tab:g3-inventory"
+        ]
+      },
+      {
+        "claim_id": "tab:relationship-requests",
+        "location_labels": [
+          "tab:relationship-requests"
+        ]
+      },
+      {
+        "claim_id": "tab:relationship-labels",
+        "location_labels": [
+          "tab:relationship-labels"
+        ]
+      },
+      {
+        "claim_id": "tab:relationship-clusters",
+        "location_labels": [
+          "tab:relationship-clusters"
+        ]
+      },
+      {
+        "claim_id": "tab:legacy-grounding",
+        "location_labels": [
+          "tab:legacy-grounding"
+        ]
+      },
+      {
+        "claim_id": "tab:staleness-grounding",
+        "location_labels": [
+          "tab:staleness-grounding"
+        ]
+      },
+      {
+        "claim_id": "tab:ranked-retrieval",
+        "location_labels": [
+          "tab:ranked-retrieval"
+        ]
+      },
+      {
+        "claim_id": "tab:cached-ceilings",
+        "location_labels": [
+          "tab:cached-ceilings"
+        ]
+      },
+      {
+        "claim_id": "tab:full-joint-pilot",
+        "location_labels": [
+          "tab:full-joint-pilot"
+        ]
+      },
+      {
+        "claim_id": "tab:archived-scalar-llm",
+        "location_labels": [
+          "tab:archived-scalar-llm"
+        ]
+      },
+      {
+        "claim_id": "tab:d1-a",
+        "location_labels": [
+          "tab:d1-a"
+        ]
+      },
+      {
+        "claim_id": "tab:d1-b",
+        "location_labels": [
+          "tab:d1-b"
+        ]
+      }
+    ],
+    "numerical_passages": [
+      {
+        "claim_id": "main.tex:L28",
+        "location_labels": [
+          "subsec:intro_contributions",
+          "subsec:exp_retrieval",
+          "subsec:exp_downstream",
+          "subsec:grounding-followup"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L30",
+        "location_labels": [
+          "subsec:intro_contributions",
+          "subsec:exp_retrieval",
+          "subsec:exp_downstream",
+          "subsec:grounding-followup"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L32",
+        "location_labels": [
+          "subsec:intro_contributions",
+          "subsec:exp_retrieval",
+          "subsec:exp_downstream",
+          "subsec:grounding-followup"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L47",
+        "location_labels": [
+          "subsec:intro_contributions"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L55",
+        "location_labels": [
+          "subsec:intro_contributions"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L57",
+        "location_labels": [
+          "subsec:intro_contributions"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L59",
+        "location_labels": [
+          "subsec:intro_contributions"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L75",
+        "location_labels": [
+          "subsec:rw_llm_generation"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L79",
+        "location_labels": [
+          "sec:related_work",
+          "app:related-context"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L81",
+        "location_labels": [
+          "sec:related_work",
+          "app:related-context"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L83",
+        "location_labels": [
+          "subsec:rw_retrieval_memory"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L87",
+        "location_labels": [
+          "sec:related_work",
+          "app:related-context"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L89",
+        "location_labels": [
+          "subsec:rw_binding"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L93",
+        "location_labels": [
+          "sec:related_work",
+          "app:related-context"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L95",
+        "location_labels": [
+          "sec:related_work",
+          "app:related-context"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L97",
+        "location_labels": [
+          "subsec:rw_position"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L106",
+        "location_labels": [
+          "eq:top1_schema"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L113",
+        "location_labels": [
+          "subsec:method_problem"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L115",
+        "location_labels": [
+          "eq:eligible_slots"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L127",
+        "location_labels": [
+          "subsec:assistance-setting",
+          "subsec:inference-dependencies"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L129",
+        "location_labels": [
+          "subsec:assistance-setting",
+          "subsec:inference-dependencies"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L138",
+        "location_labels": [
+          "eq:coverage",
+          "eq:typematch"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L158",
+        "location_labels": [
+          "eq:bounded_error",
+          "eq:exact20"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L174",
+        "location_labels": [
+          "eq:instantiation_ready",
+          "eq:strict_instantiation_ready"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L196",
+        "location_labels": [
+          "subsec:method_retrieval",
+          "subsec:method_instantiation",
+          "subsec:method_controls"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L198",
+        "location_labels": [
+          "subsec:method_retrieval",
+          "subsec:method_instantiation",
+          "subsec:method_controls"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L207",
+        "location_labels": [
+          "eq:typed_assignment"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L214",
+        "location_labels": [
+          "subsec:method_retrieval",
+          "subsec:method_instantiation",
+          "subsec:method_controls"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L216",
+        "location_labels": [
+          "alg:instantiation"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L243",
+        "location_labels": [
+          "fig:instantiation-pipeline"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L258",
+        "location_labels": [
+          "subsec:exp_setup",
+          "subsec:exp_significance",
+          "app:reproduction"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L260",
+        "location_labels": [
+          "subsec:exp_setup",
+          "subsec:exp_significance",
+          "app:reproduction"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L262",
+        "location_labels": [
+          "subsec:exp_setup",
+          "subsec:exp_significance",
+          "app:reproduction"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L264",
+        "location_labels": [
+          "subsec:exp_setup",
+          "subsec:exp_significance",
+          "app:reproduction"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L268",
+        "location_labels": [
+          "sec:experiments"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L272",
+        "location_labels": [
+          "subsec:exp_retrieval"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L276",
+        "location_labels": [
+          "tab:nlp4lp-retrieval-main",
+          "subsec:exp_downstream"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L299",
+        "location_labels": [
+          "subsec:exp_downstream"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L301",
+        "location_labels": [
+          "tab:nlp4lp-downstream-main"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L322",
+        "location_labels": [
+          "subsec:exp_grounding_baselines"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L331",
+        "location_labels": [
+          "subsec:exp_grounding_baselines"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L333",
+        "location_labels": [
+          "subsec:exp_grounding_baselines"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L335",
+        "location_labels": [
+          "tab:nlp4lp-grounding-baselines"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L356",
+        "location_labels": [
+          "subsec:exp_error"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L365",
+        "location_labels": [
+          "subsec:exp_error"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L367",
+        "location_labels": [
+          "subsec:exp_error"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L369",
+        "location_labels": [
+          "tab:nlp4lp-error-taxonomy",
+          "subsec:grounding-followup"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L395",
+        "location_labels": [
+          "subsec:grounding-followup",
+          "app:factorial-details"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L397",
+        "location_labels": [
+          "subsec:grounding-followup",
+          "app:factorial-details"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L400",
+        "location_labels": [
+          "subsec:exp_significance"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L404",
+        "location_labels": [
+          "tab:nlp4lp-prefix-postfix"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L427",
+        "location_labels": [
+          "tab:nlp4lp-significance"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L450",
+        "location_labels": [
+          "app:statistical-history",
+          "app:core-support"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L452",
+        "location_labels": [
+          "tab:strict-instready",
+          "subsec:exp_engineering"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L475",
+        "location_labels": [
+          "subsec:exp_runtime"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L478",
+        "location_labels": [
+          "subsec:numerical-grounding-challenges"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L485",
+        "location_labels": [
+          "subsec:exp_external"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L489",
+        "location_labels": [
+          "tab:ext-outcomes"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L507",
+        "location_labels": [
+          "app:common18",
+          "tab:ext-outcomes"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L509",
+        "location_labels": [
+          "app:common18",
+          "tab:ext-outcomes"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L511",
+        "location_labels": [
+          "subsec:exp_external_validation"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L517",
+        "location_labels": [
+          "subsec:d1"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L521",
+        "location_labels": [
+          "subsec:d1",
+          "app:d1-details"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L532",
+        "location_labels": [
+          "sec:discussion",
+          "subsec:limitations",
+          "subsec:reanalysis"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L539",
+        "location_labels": [
+          "subsec:limitations"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L543",
+        "location_labels": [
+          "sec:discussion",
+          "subsec:limitations",
+          "subsec:reanalysis"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L545",
+        "location_labels": [
+          "sec:discussion",
+          "subsec:limitations",
+          "subsec:reanalysis"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L547",
+        "location_labels": [
+          "sec:discussion",
+          "subsec:limitations",
+          "subsec:reanalysis"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L549",
+        "location_labels": [
+          "subsec:future_work",
+          "subsec:closed-audits"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L553",
+        "location_labels": [
+          "sec:discussion",
+          "subsec:limitations",
+          "subsec:reanalysis"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L555",
+        "location_labels": [
+          "sec:conclusion"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L562",
+        "location_labels": [
+          "sec:conclusion"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L572",
+        "location_labels": [
+          "app:reproduction",
+          "subsec:reanalysis"
+        ]
+      },
+      {
+        "claim_id": "main.tex:L578",
+        "location_labels": [
+          "app:reproduction",
+          "subsec:reanalysis"
+        ]
+      },
+      {
+        "claim_id": "reproduction_map.tex:L4",
+        "location_labels": [
+          "app:reproduction",
+          "app:input-dependencies"
+        ]
+      },
+      {
+        "claim_id": "reproduction_map.tex:L6",
+        "location_labels": [
+          "app:reproduction",
+          "app:input-dependencies"
+        ]
+      },
+      {
+        "claim_id": "reproduction_map.tex:L8",
+        "location_labels": [
+          "tab:population-map"
+        ]
+      },
+      {
+        "claim_id": "reproduction_map.tex:L33",
+        "location_labels": [
+          "app:reproduction",
+          "app:input-dependencies"
+        ]
+      },
+      {
+        "claim_id": "reproduction_map.tex:L35",
+        "location_labels": [
+          "app:reproduction",
+          "app:input-dependencies"
+        ]
+      },
+      {
+        "claim_id": "reproduction_map.tex:L37",
+        "location_labels": [
+          "app:reproduction",
+          "app:input-dependencies"
+        ]
+      },
+      {
+        "claim_id": "reproduction_map.tex:L39",
+        "location_labels": [
+          "app:reproduction",
+          "app:input-dependencies"
+        ]
+      },
+      {
+        "claim_id": "reproduction_map.tex:L43",
+        "location_labels": [
+          "app:reproduction",
+          "app:input-dependencies"
+        ]
+      },
+      {
+        "claim_id": "reproduction_map.tex:L45",
+        "location_labels": [
+          "app:reproduction",
+          "app:input-dependencies"
+        ]
+      },
+      {
+        "claim_id": "reproduction_map.tex:L47",
+        "location_labels": [
+          "app:reproduction",
+          "app:input-dependencies"
+        ]
+      },
+      {
+        "claim_id": "reproduction_map.tex:L70",
+        "location_labels": [
+          "app:reproduction",
+          "app:input-dependencies"
+        ]
+      },
+      {
+        "claim_id": "reproduction_map.tex:L82",
+        "location_labels": [
+          "app:reproduction",
+          "app:input-dependencies"
+        ]
+      },
+      {
+        "claim_id": "reproduction_map.tex:L90",
+        "location_labels": [
+          "app:reproduction",
+          "app:input-dependencies"
+        ]
+      },
+      {
+        "claim_id": "reproduction_map.tex:L93",
+        "location_labels": [
+          "app:reproduction",
+          "app:input-dependencies"
+        ]
+      },
+      {
+        "claim_id": "reference_conventions.tex:L4",
+        "location_labels": [
+          "app:reference-conventions"
+        ]
+      },
+      {
+        "claim_id": "reference_conventions.tex:L16",
+        "location_labels": [
+          "tab:reference-overlay"
+        ]
+      },
+      {
+        "claim_id": "reference_conventions.tex:L41",
+        "location_labels": [
+          "eq:snack-overlay"
+        ]
+      },
+      {
+        "claim_id": "reference_conventions.tex:L58",
+        "location_labels": [
+          "app:reference-conventions"
+        ]
+      },
+      {
+        "claim_id": "reference_conventions.tex:L65",
+        "location_labels": [
+          "app:reference-conventions"
+        ]
+      },
+      {
+        "claim_id": "reference_conventions.tex:L77",
+        "location_labels": [
+          "app:reference-conventions"
+        ]
+      },
+      {
+        "claim_id": "supervision_diagnostics.tex:L4",
+        "location_labels": [
+          "app:supervision-audit",
+          "app:nl4opt-audit"
+        ]
+      },
+      {
+        "claim_id": "supervision_diagnostics.tex:L8",
+        "location_labels": [
+          "app:supervision-audit",
+          "app:nl4opt-audit"
+        ]
+      },
+      {
+        "claim_id": "supervision_diagnostics.tex:L10",
+        "location_labels": [
+          "app:supervision-audit",
+          "app:nl4opt-audit"
+        ]
+      },
+      {
+        "claim_id": "supervision_diagnostics.tex:L17",
+        "location_labels": [
+          "app:supervision-audit",
+          "app:nl4opt-audit"
+        ]
+      },
+      {
+        "claim_id": "supervision_diagnostics.tex:L19",
+        "location_labels": [
+          "app:supervision-audit",
+          "app:nl4opt-audit"
+        ]
+      },
+      {
+        "claim_id": "grounding_diagnostics.tex:L4",
+        "location_labels": [
+          "subsec:grounding-followup",
+          "app:factorial-details"
+        ]
+      },
+      {
+        "claim_id": "grounding_diagnostics.tex:L6",
+        "location_labels": [
+          "subsec:grounding-followup",
+          "app:factorial-details"
+        ]
+      },
+      {
+        "claim_id": "grounding_diagnostics.tex:L20",
+        "location_labels": [
+          "tab:grounding-factorial-diagnostic"
+        ]
+      },
+      {
+        "claim_id": "grounding_diagnostics.tex:L44",
+        "location_labels": [
+          "subsec:grounding-followup",
+          "app:factorial-details"
+        ]
+      },
+      {
+        "claim_id": "grounding_diagnostics.tex:L61",
+        "location_labels": [
+          "subsec:grounding-followup",
+          "app:factorial-details"
+        ]
+      },
+      {
+        "claim_id": "grounding_diagnostics.tex:L75",
+        "location_labels": [
+          "subsec:grounding-followup",
+          "app:factorial-details"
+        ]
+      },
+      {
+        "claim_id": "pipeline_figure.tex:L1",
+        "location_labels": [
+          "fig:instantiation-pipeline"
+        ]
+      },
+      {
+        "claim_id": "closed_audits.tex:L3",
+        "location_labels": [
+          "tab:g3-inventory"
+        ]
+      },
+      {
+        "claim_id": "closed_audits.tex:L15",
+        "location_labels": [
+          "app:g3"
+        ]
+      },
+      {
+        "claim_id": "closed_audits.tex:L17",
+        "location_labels": [
+          "app:g3"
+        ]
+      },
+      {
+        "claim_id": "relationship_supplement.tex:L1",
+        "location_labels": [
+          "app:relationship-evidence"
+        ]
+      },
+      {
+        "claim_id": "relationship_supplement.tex:L4",
+        "location_labels": [
+          "app:relationship-evidence",
+          "app:future-reference"
+        ]
+      },
+      {
+        "claim_id": "relationship_supplement.tex:L6",
+        "location_labels": [
+          "app:relationship-evidence",
+          "app:future-reference"
+        ]
+      },
+      {
+        "claim_id": "relationship_supplement.tex:L8",
+        "location_labels": [
+          "tab:relationship-requests"
+        ]
+      },
+      {
+        "claim_id": "relationship_supplement.tex:L18",
+        "location_labels": [
+          "app:relationship-evidence",
+          "app:future-reference"
+        ]
+      },
+      {
+        "claim_id": "relationship_supplement.tex:L20",
+        "location_labels": [
+          "tab:relationship-labels"
+        ]
+      },
+      {
+        "claim_id": "relationship_supplement.tex:L29",
+        "location_labels": [
+          "eq:fleiss"
+        ]
+      },
+      {
+        "claim_id": "relationship_supplement.tex:L38",
+        "location_labels": [
+          "app:relationship-evidence",
+          "app:future-reference"
+        ]
+      },
+      {
+        "claim_id": "relationship_supplement.tex:L40",
+        "location_labels": [
+          "app:relationship-evidence",
+          "app:future-reference"
+        ]
+      },
+      {
+        "claim_id": "relationship_supplement.tex:L42",
+        "location_labels": [
+          "app:relationship-evidence",
+          "app:future-reference"
+        ]
+      },
+      {
+        "claim_id": "relationship_supplement.tex:L45",
+        "location_labels": [
+          "app:relationship-evidence",
+          "app:future-reference"
+        ]
+      },
+      {
+        "claim_id": "relationship_supplement.tex:L47",
+        "location_labels": [
+          "tab:relationship-clusters"
+        ]
+      },
+      {
+        "claim_id": "relationship_supplement.tex:L71",
+        "location_labels": [
+          "app:relationship-evidence",
+          "app:future-reference"
+        ]
+      },
+      {
+        "claim_id": "relationship_supplement.tex:L73",
+        "location_labels": [
+          "app:future-reference"
+        ]
+      },
+      {
+        "claim_id": "preserved_results_details.tex:L4",
+        "location_labels": [
+          "app:restricted-details",
+          "app:runtime-details",
+          "app:occurrence-boundary",
+          "app:statistical-history"
+        ]
+      },
+      {
+        "claim_id": "preserved_results_details.tex:L6",
+        "location_labels": [
+          "app:restricted-details",
+          "app:runtime-details",
+          "app:occurrence-boundary",
+          "app:statistical-history"
+        ]
+      },
+      {
+        "claim_id": "preserved_results_details.tex:L8",
+        "location_labels": [
+          "app:restricted-details",
+          "app:runtime-details",
+          "app:occurrence-boundary",
+          "app:statistical-history"
+        ]
+      },
+      {
+        "claim_id": "preserved_results_details.tex:L10",
+        "location_labels": [
+          "app:restricted-details",
+          "app:runtime-details",
+          "app:occurrence-boundary",
+          "app:statistical-history"
+        ]
+      },
+      {
+        "claim_id": "preserved_results_details.tex:L15",
+        "location_labels": [
+          "app:restricted-details",
+          "app:runtime-details",
+          "app:occurrence-boundary",
+          "app:statistical-history"
+        ]
+      },
+      {
+        "claim_id": "preserved_results_details.tex:L18",
+        "location_labels": [
+          "app:restricted-details",
+          "app:runtime-details",
+          "app:occurrence-boundary",
+          "app:statistical-history"
+        ]
+      },
+      {
+        "claim_id": "preserved_results_details.tex:L23",
+        "location_labels": [
+          "app:restricted-details",
+          "app:runtime-details",
+          "app:occurrence-boundary",
+          "app:statistical-history"
+        ]
+      },
+      {
+        "claim_id": "preserved_results_details.tex:L29",
+        "location_labels": [
+          "app:restricted-details",
+          "app:runtime-details",
+          "app:occurrence-boundary",
+          "app:statistical-history"
+        ]
+      },
+      {
+        "claim_id": "preserved_results_details.tex:L37",
+        "location_labels": [
+          "app:restricted-details",
+          "app:runtime-details",
+          "app:occurrence-boundary",
+          "app:statistical-history"
+        ]
+      },
+      {
+        "claim_id": "preserved_results_details.tex:L43",
+        "location_labels": [
+          "app:restricted-details",
+          "app:runtime-details",
+          "app:occurrence-boundary",
+          "app:statistical-history"
+        ]
+      },
+      {
+        "claim_id": "preserved_results_details.tex:L45",
+        "location_labels": [
+          "app:restricted-details",
+          "app:runtime-details",
+          "app:occurrence-boundary",
+          "app:statistical-history"
+        ]
+      },
+      {
+        "claim_id": "preserved_results_details.tex:L48",
+        "location_labels": [
+          "app:restricted-details",
+          "app:runtime-details",
+          "app:occurrence-boundary",
+          "app:statistical-history"
+        ]
+      },
+      {
+        "claim_id": "supplement.tex:L5",
+        "location_labels": [
+          "tab:comparison_landscape",
+          "tab:exp_blocks"
+        ]
+      },
+      {
+        "claim_id": "supplement.tex:L22",
+        "location_labels": [
+          "tab:comparison_landscape",
+          "tab:exp_blocks"
+        ]
+      },
+      {
+        "claim_id": "supplement.tex:L25",
+        "location_labels": [
+          "tab:comparison_landscape",
+          "tab:exp_blocks"
+        ]
+      },
+      {
+        "claim_id": "supplement.tex:L38",
+        "location_labels": [
+          "tab:comparison_landscape"
+        ]
+      },
+      {
+        "claim_id": "supplement.tex:L73",
+        "location_labels": [
+          "tab:retrieval_backbones",
+          "tab:exp_blocks",
+          "tab:nlp4lp-overlap",
+          "tab:eng-structural",
+          "tab:eng-solver",
+          "app:grounding-diagnostics",
+          "app:common18",
+          "tab:ext-context",
+          "app:g3"
+        ]
+      },
+      {
+        "claim_id": "supplement.tex:L208",
+        "location_labels": [
+          "app:extraction-details"
+        ]
+      },
+      {
+        "claim_id": "llm_evidence.tex:L1",
+        "location_labels": [
+          "app:common18",
+          "eq:common18-objective-proxy"
+        ]
+      },
+      {
+        "claim_id": "llm_evidence.tex:L4",
+        "location_labels": [
+          "tab:llm-provenance"
+        ]
+      },
+      {
+        "claim_id": "llm_evidence.tex:L15",
+        "location_labels": [
+          "app:common18",
+          "eq:common18-objective-proxy"
+        ]
+      },
+      {
+        "claim_id": "llm_evidence.tex:L18",
+        "location_labels": [
+          "eq:common18-objective-proxy"
+        ]
+      },
+      {
+        "claim_id": "llm_evidence.tex:L25",
+        "location_labels": [
+          "app:common18",
+          "eq:common18-objective-proxy"
+        ]
+      },
+      {
+        "claim_id": "llm_evidence.tex:L27",
+        "location_labels": [
+          "app:common18",
+          "eq:common18-objective-proxy"
+        ]
+      },
+      {
+        "claim_id": "llm_evidence.tex:L29",
+        "location_labels": [
+          "app:common18",
+          "eq:common18-objective-proxy"
+        ]
+      },
+      {
+        "claim_id": "llm_evidence.tex:L32",
+        "location_labels": [
+          "tab:llm-failures"
+        ]
+      },
+      {
+        "claim_id": "llm_evidence.tex:L44",
+        "location_labels": [
+          "tab:llm-cases"
+        ]
+      },
+      {
+        "claim_id": "llm_evidence.tex:L70",
+        "location_labels": [
+          "app:common18",
+          "eq:common18-objective-proxy"
+        ]
+      },
+      {
+        "claim_id": "llm_evidence.tex:L72",
+        "location_labels": [
+          "app:common18",
+          "eq:common18-objective-proxy"
+        ]
+      },
+      {
+        "claim_id": "relationship_evidence.tex:L1",
+        "location_labels": [
+          "subsec:relationship-audit"
+        ]
+      },
+      {
+        "claim_id": "relationship_evidence.tex:L5",
+        "location_labels": [
+          "tab:relationship-validity"
+        ]
+      },
+      {
+        "claim_id": "relationship_evidence.tex:L16",
+        "location_labels": [
+          "app:relationship-overview",
+          "app:relationship-evidence"
+        ]
+      },
+      {
+        "claim_id": "relationship_evidence.tex:L18",
+        "location_labels": [
+          "app:relationship-overview",
+          "app:relationship-evidence"
+        ]
+      },
+      {
+        "claim_id": "additional_evidence.tex:L1",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "additional_evidence.tex:L3",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "additional_evidence.tex:L6",
+        "location_labels": [
+          "tab:legacy-grounding"
+        ]
+      },
+      {
+        "claim_id": "additional_evidence.tex:L33",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "additional_evidence.tex:L35",
+        "location_labels": [
+          "tab:staleness-grounding"
+        ]
+      },
+      {
+        "claim_id": "additional_evidence.tex:L53",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "additional_evidence.tex:L56",
+        "location_labels": [
+          "tab:ranked-retrieval"
+        ]
+      },
+      {
+        "claim_id": "additional_evidence.tex:L71",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "additional_evidence.tex:L73",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "additional_evidence.tex:L75",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "additional_evidence.tex:L78",
+        "location_labels": [
+          "tab:cached-ceilings"
+        ]
+      },
+      {
+        "claim_id": "additional_evidence.tex:L89",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "additional_evidence.tex:L91",
+        "location_labels": [
+          "tab:full-joint-pilot"
+        ]
+      },
+      {
+        "claim_id": "additional_evidence.tex:L103",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "additional_evidence.tex:L105",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "additional_evidence.tex:L108",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "additional_evidence.tex:L110",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "additional_evidence.tex:L112",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "additional_evidence.tex:L115",
+        "location_labels": [
+          "tab:archived-scalar-llm"
+        ]
+      },
+      {
+        "claim_id": "additional_evidence.tex:L125",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "additional_evidence.tex:L127",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "additional_evidence.tex:L130",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "d1_contrasts.tex:L1",
+        "location_labels": [
+          "app:d1-details"
+        ]
+      },
+      {
+        "claim_id": "d1_contrasts.tex:L3",
+        "location_labels": [
+          "tab:d1-a"
+        ]
+      },
+      {
+        "claim_id": "d1_contrasts.tex:L16",
+        "location_labels": [
+          "tab:d1-b"
+        ]
+      },
+      {
+        "claim_id": "d1_contrasts.tex:L29",
+        "location_labels": [
+          "app:d1-details"
+        ]
+      },
+      {
+        "claim_id": "d1_contrasts.tex:L31",
+        "location_labels": [
+          "app:d1-details"
+        ]
+      }
+    ],
+    "investigations": [
+      {
+        "claim_id": "E01",
+        "location_labels": [
+          "subsec:exp_retrieval",
+          "tab:ranked-retrieval"
+        ]
+      },
+      {
+        "claim_id": "E02",
+        "location_labels": [
+          "subsec:exp_retrieval",
+          "tab:ranked-retrieval"
+        ]
+      },
+      {
+        "claim_id": "E03",
+        "location_labels": [
+          "subsec:exp_downstream",
+          "subsec:exp_error"
+        ]
+      },
+      {
+        "claim_id": "E04",
+        "location_labels": [
+          "app:core-support",
+          "subsec:exp_significance"
+        ]
+      },
+      {
+        "claim_id": "E05",
+        "location_labels": [
+          "subsec:exp_grounding_baselines"
+        ]
+      },
+      {
+        "claim_id": "E06",
+        "location_labels": [
+          "subsec:exp_downstream",
+          "subsec:exp_error"
+        ]
+      },
+      {
+        "claim_id": "E07",
+        "location_labels": [
+          "subsec:grounding-followup",
+          "app:factorial-details"
+        ]
+      },
+      {
+        "claim_id": "E08",
+        "location_labels": [
+          "tab:cached-ceilings",
+          "tab:full-joint-pilot",
+          "app:factorial-details"
+        ]
+      },
+      {
+        "claim_id": "E09",
+        "location_labels": [
+          "subsec:grounding-followup",
+          "app:factorial-details"
+        ]
+      },
+      {
+        "claim_id": "E10",
+        "location_labels": [
+          "subsec:grounding-followup",
+          "app:factorial-details"
+        ]
+      },
+      {
+        "claim_id": "E11",
+        "location_labels": [
+          "tab:cached-ceilings",
+          "tab:full-joint-pilot",
+          "app:factorial-details"
+        ]
+      },
+      {
+        "claim_id": "E12",
+        "location_labels": [
+          "app:reference-conventions"
+        ]
+      },
+      {
+        "claim_id": "E13",
+        "location_labels": [
+          "app:core-support",
+          "subsec:exp_significance"
+        ]
+      },
+      {
+        "claim_id": "E14",
+        "location_labels": [
+          "tab:nlp4lp-overlap",
+          "app:statistical-history"
+        ]
+      },
+      {
+        "claim_id": "E15",
+        "location_labels": [
+          "app:restricted-details"
+        ]
+      },
+      {
+        "claim_id": "E16",
+        "location_labels": [
+          "app:restricted-details"
+        ]
+      },
+      {
+        "claim_id": "E17",
+        "location_labels": [
+          "app:restricted-details"
+        ]
+      },
+      {
+        "claim_id": "E18",
+        "location_labels": [
+          "app:common18"
+        ]
+      },
+      {
+        "claim_id": "E19",
+        "location_labels": [
+          "app:relationship-evidence",
+          "app:nl4opt-audit",
+          "app:future-reference"
+        ]
+      },
+      {
+        "claim_id": "E20",
+        "location_labels": [
+          "app:d1-details"
+        ]
+      },
+      {
+        "claim_id": "E21",
+        "location_labels": [
+          "app:relationship-evidence",
+          "app:nl4opt-audit",
+          "app:future-reference"
+        ]
+      },
+      {
+        "claim_id": "E22",
+        "location_labels": [
+          "app:supervision-audit",
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "E23",
+        "location_labels": [
+          "app:supervision-audit",
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "E24",
+        "location_labels": [
+          "app:supervision-audit",
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "E25",
+        "location_labels": [
+          "app:supervision-audit",
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "E26",
+        "location_labels": [
+          "app:supervision-audit",
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "E27",
+        "location_labels": [
+          "app:extraction-details"
+        ]
+      },
+      {
+        "claim_id": "E28",
+        "location_labels": [
+          "app:g3"
+        ]
+      },
+      {
+        "claim_id": "E29",
+        "location_labels": [
+          "app:g3"
+        ]
+      },
+      {
+        "claim_id": "E30",
+        "location_labels": [
+          "app:g3"
+        ]
+      },
+      {
+        "claim_id": "E31",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "E32",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "E33",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "E34",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "E35",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "E36",
+        "location_labels": [
+          "app:statistical-history"
+        ]
+      },
+      {
+        "claim_id": "E37",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "E38",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "E39",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "E40",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "E41",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "E42",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "E43",
+        "location_labels": [
+          "app:relationship-evidence",
+          "app:nl4opt-audit",
+          "app:future-reference"
+        ]
+      },
+      {
+        "claim_id": "E44",
+        "location_labels": [
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "E45",
+        "location_labels": [
+          "app:supervision-audit",
+          "app:additional-evidence"
+        ]
+      },
+      {
+        "claim_id": "E46",
+        "location_labels": [
+          "app:reproduction"
+        ]
+      },
+      {
+        "claim_id": "E47",
+        "location_labels": [
+          "app:reproduction"
+        ]
+      }
+    ]
+  },
+  "correction_passages": [
+    {
+      "source": "manuscript/jdsa-stage3/additional_evidence.tex",
+      "line": 73,
+      "description": "C01 / E35: A/C configuration attribution, no changed observation"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/additional_evidence.tex",
+      "line": 54,
+      "description": "C02: historical P@5 is Hit@5"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/additional_evidence.tex",
+      "line": 59,
+      "description": "C02 / tab:ranked-retrieval: display heading only"
+    }
+  ],
+  "citations": [
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 52,
+      "keys": [
+        "ramamonjison2022autoformulation",
+        "ramamonjison2023nl4opt",
+        "kadioglu2024ner4opt",
+        "ahmaditeshnizi2024optimus_icml"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 52,
+      "keys": [
+        "deng2021strug",
+        "wang2020ratsql"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 52,
+      "keys": [
+        "gao2026models"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 81,
+      "keys": [
+        "deng2021strug"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 81,
+      "keys": [
+        "wang2020ratsql"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 81,
+      "keys": [
+        "almasian2023cqe",
+        "roy2017udg"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 83,
+      "keys": [
+        "gao2026models"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 87,
+      "keys": [
+        "ramamonjison2023nl4opt",
+        "kadioglu2024ner4opt"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 87,
+      "keys": [
+        "ahmaditeshnizi2024optimus_icml",
+        "pan2025pamop"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 87,
+      "keys": [
+        "lu2025optmath",
+        "huang2025orlm",
+        "xiao2026deepor"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 87,
+      "keys": [
+        "ahmed2025opt2code"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 89,
+      "keys": [
+        "refai2026component"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 89,
+      "keys": [
+        "chen2026optengine"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 91,
+      "keys": [
+        "lu2025optmath"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 91,
+      "keys": [
+        "astorga2025autoformulation"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 93,
+      "keys": [
+        "punyakanok2004ilp",
+        "scholak2021picard"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 93,
+      "keys": [
+        "zhai2025equivamap"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 97,
+      "keys": [
+        "kuhn1955assignment"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 104,
+      "keys": [
+        "nlp4lp_dataset"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 207,
+      "keys": [
+        "nlp4lp_dataset",
+        "ahmaditeshnizi2024optimus_icml"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 209,
+      "keys": [
+        "robertson2009bm25",
+        "pedregosa2011sklearn",
+        "deerwester1990lsa",
+        "chen2024m3embedding"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 209,
+      "keys": [
+        "lhoest2021datasets"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 268,
+      "keys": [
+        "holm1979followup"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 454,
+      "keys": [
+        "gao2026models"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 454,
+      "keys": [
+        "refai2026component"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 454,
+      "keys": [
+        "chen2026optengine"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/main.tex",
+      "line": 458,
+      "keys": [
+        "zhai2025equivamap"
+      ],
+      "document": "main"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/supplement.tex",
+      "line": 205,
+      "keys": [
+        "pan2025pamop"
+      ],
+      "document": "supplement"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/supplement.tex",
+      "line": 206,
+      "keys": [
+        "huang2025orlm"
+      ],
+      "document": "supplement"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/supplement.tex",
+      "line": 207,
+      "keys": [
+        "lu2025optmath"
+      ],
+      "document": "supplement"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/supplement.tex",
+      "line": 209,
+      "keys": [
+        "xiao2026deepor"
+      ],
+      "document": "supplement"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/supplement.tex",
+      "line": 210,
+      "keys": [
+        "ding2026orr1"
+      ],
+      "document": "supplement"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/supplement.tex",
+      "line": 231,
+      "keys": [
+        "lu2025optmath"
+      ],
+      "document": "supplement"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/grounding_diagnostics.tex",
+      "line": 21,
+      "keys": [
+        "huang2017beamfollowup"
+      ],
+      "document": "supplement"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/preserved_results_details.tex",
+      "line": 43,
+      "keys": [
+        "holm1979followup"
+      ],
+      "document": "supplement"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/related_context.tex",
+      "line": 2,
+      "keys": [
+        "ahmaditeshnizi2024optimus_icml",
+        "pan2025pamop"
+      ],
+      "document": "supplement"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/related_context.tex",
+      "line": 2,
+      "keys": [
+        "lu2025optmath",
+        "huang2025orlm",
+        "xiao2026deepor"
+      ],
+      "document": "supplement"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/related_context.tex",
+      "line": 4,
+      "keys": [
+        "ahmed2025opt2code"
+      ],
+      "document": "supplement"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/related_context.tex",
+      "line": 4,
+      "keys": [
+        "astorga2025autoformulation",
+        "yu2026uncertainty",
+        "xiao2024chainofexperts"
+      ],
+      "document": "supplement"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/related_context.tex",
+      "line": 4,
+      "keys": [
+        "zhang2024optllm",
+        "jiang2025llmopt"
+      ],
+      "document": "supplement"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/related_context.tex",
+      "line": 4,
+      "keys": [
+        "chen2025solver",
+        "ding2026orr1"
+      ],
+      "document": "supplement"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/related_context.tex",
+      "line": 4,
+      "keys": [
+        "zhang2026dual",
+        "xie2026escaping",
+        "li2026solver"
+      ],
+      "document": "supplement"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/related_context.tex",
+      "line": 4,
+      "keys": [
+        "kong2025alphaopt",
+        "yang2026orthought"
+      ],
+      "document": "supplement"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/related_context.tex",
+      "line": 7,
+      "keys": [
+        "yu2018spider",
+        "affolter2019nli"
+      ],
+      "document": "supplement"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/related_context.tex",
+      "line": 7,
+      "keys": [
+        "miplibnl2026"
+      ],
+      "document": "supplement"
+    }
+  ]
+}
