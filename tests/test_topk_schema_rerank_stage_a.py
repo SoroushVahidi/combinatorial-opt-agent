@@ -85,6 +85,7 @@ def test_exact_mcnemar_helper():
     assert exact_mcnemar_p(3, 3) == 1.0
 
 
+@pytest.mark.requires_research_data
 def test_full_diagnostic_preserves_current_baseline(tmp_path):
     if os.environ.get("PYTHONHASHSEED") != "0":
         pytest.skip("baseline regression is defined for PYTHONHASHSEED=0")

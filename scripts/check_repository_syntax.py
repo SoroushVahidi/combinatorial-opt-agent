@@ -17,7 +17,7 @@ def main():
                     warnings.simplefilter("error")
                     ast.parse(path.read_bytes(), filename=name)
                 counts["python"] += 1
-            elif path.suffix == ".sh":
+            elif path.suffix in (".sh", ".sbatch", ".slurm"):
                 result = subprocess.run(["bash", "-n", str(path)], capture_output=True, text=True)
                 if result.returncode:
                     errors.append(result.stderr.strip())
