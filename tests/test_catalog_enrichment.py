@@ -12,7 +12,6 @@ Covers:
 from __future__ import annotations
 
 import json
-import socket
 import tempfile
 from copy import deepcopy
 from pathlib import Path
@@ -23,17 +22,6 @@ import pytest
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
-
-def _github_reachable(host: str = "raw.githubusercontent.com", port: int = 443, timeout: float = 3.0) -> bool:
-    try:
-        with socket.create_connection((host, port), timeout=timeout):
-            return True
-    except OSError:
-        return False
-
-
-GITHUB_AVAILABLE = _github_reachable()
-
 
 def _complete_problem(**overrides) -> dict:
     base = {
@@ -349,17 +337,17 @@ class TestFetchFormulationFromWeb:
         result = fetch_formulation_from_web(problem, timeout=2)
         assert result is None
 
-    def test_network_failure_returns_none(self):
-        """When the network is unavailable the function returns None gracefully."""
+    def test_network_failure_returns_none(self, monkeypatch):
         from retrieval.catalog_enrichment import fetch_formulation_from_web
-        # Use an invalid timeout to force a fast failure regardless of connectivity
+        from urllib.error import URLError
+        def unavailable(*args, **kwargs):
+            raise URLError("fixture: unavailable")
+        monkeypatch.setattr("retrieval.catalog_enrichment.urllib.request.urlopen", unavailable)
         problem = {"id": "gurobi_ex_facility_location", "name": "Facility Location",
                    "source": "gurobi_modeling_examples"}
-        # We just verify it never raises; the return value depends on connectivity
-        result = fetch_formulation_from_web(problem, timeout=0)
-        assert result is None or isinstance(result, dict)
+        assert fetch_formulation_from_web(problem, timeout=2) is None
 
-    @pytest.mark.skipif(not GITHUB_AVAILABLE, reason="GitHub raw content not reachable")
+    @pytest.mark.requires_network
     def test_gurobi_facility_location_enriched(self):
         """With network access, facility_location notebook is parsed successfully."""
         from retrieval.catalog_enrichment import fetch_formulation_from_web
@@ -374,7 +362,7 @@ class TestFetchFormulationFromWeb:
         assert isinstance(result, dict)
         assert any(k in result for k in ("variables", "objective", "constraints"))
 
-    @pytest.mark.skipif(not GITHUB_AVAILABLE, reason="GitHub raw content not reachable")
+    @pytest.mark.requires_network
     def test_gurobi_agricultural_pricing_enriched(self):
         """With network access, agricultural_pricing notebook is parsed."""
         from retrieval.catalog_enrichment import fetch_formulation_from_web

@@ -1,3 +1,7 @@
+> Historical research-stage document. For current manuscript and evidence navigation,
+> see the [documentation index](README.md). Earlier status and authority labels below
+> remain scoped to their original stage.
+
 # Current repository status (reviewer-facing)
 
 > **HISTORICAL / PRE-DKE (as of 2026-08-27).** Predates both the KAIS and DKE venue switches and

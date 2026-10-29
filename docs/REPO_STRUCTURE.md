@@ -1,3 +1,7 @@
+> Historical research-stage document. For current manuscript and evidence navigation,
+> see the [documentation index](README.md). Earlier status and authority labels below
+> remain scoped to their original stage.
+
 # Repository Structure
 
 Annotated directory map. **See [`../PROJECT_STATUS.md`](../PROJECT_STATUS.md) first**

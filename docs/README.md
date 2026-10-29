@@ -1,10 +1,16 @@
 # Documentation index
 
-Canonical documentation for the EAAI companion codebase. **Start with the reviewer row**, then drill into scope and reproduction.
+Current navigation: [repository overview](../README.md),
+[manuscript index](../manuscript/MANUSCRIPT_README.md),
+[public evidence and claim map](JDSA_REPRODUCIBILITY.md),
+[testing](TESTING.md), [access and licensing](DATA_ACCESS_AND_LICENSING.md).
+
+The EAAI-oriented tables below are retained as historical documentation. Their
+"canonical" and "current" labels refer to that earlier manuscript stage.
 
 ---
 
-## Reviewer-facing (canonical story)
+## Historical EAAI reviewer documentation
 
 | Doc | Role |
 |-----|------|

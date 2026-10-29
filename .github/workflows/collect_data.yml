@@ -2,15 +2,16 @@ name: Collect Optimization Data
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - "collectors/**"
-      - "pipeline/**"
+    inputs:
+      confirm_research_run:
+        description: "Acquire upstream data only after reviewing access and redistribution terms"
+        type: boolean
+        required: true
+        default: false
 
 jobs:
   collect:
+    if: ${{ inputs.confirm_research_run }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -18,6 +19,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
@@ -32,8 +35,5 @@ jobs:
           python pipeline/run_collection.py \
             --sources nl4opt gurobi_optimods gurobi_examples
 
-      - name: Upload processed data
-        uses: actions/upload-artifact@v4
-        with:
-          name: processed-data
-          path: data/processed/
+      # No automatic upload of processed third-party data. Use authorized local
+      # infrastructure when retaining raw outputs is necessary; review rights first.

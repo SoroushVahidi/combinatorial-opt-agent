@@ -1,96 +1,38 @@
 # Contributing
 
-This is a companion research repository for the EAAI manuscript on retrieval-assisted
-instantiation of natural-language optimization problems.  Contributions should respect
-the experimental integrity of the published results.
+This research repository supports fixed-catalog retrieval and assisted scalar
+grounding. Start with the [repository overview](README.md) and
+[testing guide](docs/TESTING.md). Use an isolated branch/worktree and preserve
+uncommitted, untracked and ignored research material.
 
----
+## Development and review
 
-## Development setup
+Install `requirements-dev.txt` for minimal maintenance tests. Broader research
+requirements are optional and not historical environment pins. Do not run models,
+solvers, data acquisition or provider calls during routine maintenance. Tests needing
+these capabilities must use the explicit markers and opt-ins in the testing guide.
 
-```bash
-git clone https://github.com/SoroushVahidi/combinatorial-opt-agent.git
-cd combinatorial-opt-agent
-python -m venv venv && source venv/bin/activate   # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-pip install -r requirements-dev.txt
-```
+Keep implementation changes, documentation, tests and scientific reanalysis clearly
+separated in review. New retrieval baselines belong in `retrieval/`; grounding
+methods and diagnostics use existing `tools/` conventions. Add synthetic fixture
+coverage before changing adapters or evaluation behavior. Do not silently alter
+benchmark results, denominators, schemas or scientific claims.
 
-No special environment variables are needed for most contributions.  Downstream
-benchmark scripts additionally require `HF_TOKEN` for access to the gated
-`udell-lab/NLP4LP` dataset — see [`docs/HOW_TO_REPRODUCE.md`](docs/HOW_TO_REPRODUCE.md) for setup.
+## Preservation rules
 
----
+- Permanent manuscript/evidence tags, approved PDFs, source packages, manifests and
+  checksums are immutable. New releases require separate review and new versions.
+- Preserve historical predictions, statistical inputs, source annotations, negative
+  results and environment/solver records even when not cited by the current paper.
+- Do not publish raw provider conversations, credentials, excluded M5 archives or
+  additional gated/licensing-uncertain source material. See [data restrictions](docs/DATA_ACCESS_AND_LICENSING.md).
+- Never run legacy recursive cleanup scripts against an active research worktree.
+- Branch/worktree deletion requires positive activity and ancestry checks, including
+  owner/cluster evidence. Absence of a local process alone is insufficient.
 
-## Running the test suite
+The [manuscript index](manuscript/MANUSCRIPT_README.md) identifies the final public
+pre-submission version and retained earlier journal packages. Historical EAAI/SNCS
+"source of truth" documents retain their original scope, not current authority.
 
-```bash
-python -m pytest tests/ -q
-```
-
-All tests are CPU-only and self-contained.  Tests tagged `requires_network` are skipped
-when `HF_TOKEN` is absent.  The full suite (~1 400 tests) should pass without any
-external services.
-
----
-
-## Validating paper artifacts
-
-```bash
-python scripts/paper/run_repo_validation.py
-```
-
-This checks that all required tables, figures, analysis reports, and canonical
-documents are present and structurally sound.  Run this before submitting a PR that
-touches `results/paper/` or `analysis/eaai_*`.
-
----
-
-## Protected paths — do not overwrite casually
-
-- `results/paper/` — camera-ready artifacts; regenerate only via
-  `tools/build_eaai_camera_ready_figures.py`
-- `analysis/eaai_*` — experiment reports; regenerate only by re-running the canonical
-  experiment scripts (see [`docs/HOW_TO_REPRODUCE.md`](docs/HOW_TO_REPRODUCE.md))
-- `docs/EAAI_SOURCE_OF_TRUTH.md` — manuscript authority; edit only when the manuscript
-  itself changes
-
----
-
-## Adding a new grounding method
-
-1. Add extraction / scoring logic in `tools/nlp4lp_downstream_utility.py` under the
-   appropriate section (see the module docstring table of contents).
-2. Add a method key to the `--method` choices in `main()` and a dispatch branch in
-   `run_setting()`.
-3. Add unit tests in `tests/` following the naming pattern `test_<method_name>.py`.
-4. Run `python -m pytest tests/ -q` to confirm all tests pass.
-
----
-
-## Adding a new retrieval baseline
-
-Add the baseline class in `retrieval/baselines.py` (inheriting from `BaseRetriever`)
-and register it in `retrieval/search.py`.  Add tests in `tests/test_baselines.py`.
-
----
-
-## Code style
-
-- Python 3.10+; type hints encouraged
-- No hard-coded absolute paths; use `ROOT = Path(__file__).resolve().parent.parent`
-- Keep secrets out of source files; use `.env` (gitignored) or environment variables
-- Do not silently change benchmark numbers or rewrite docs to claim stronger results
-  than the artifacts support
-
----
-
-## Source-of-truth locations
-
-| What | Where |
-|------|-------|
-| Paper framing, authoritative claims | `docs/EAAI_SOURCE_OF_TRUTH.md` |
-| Canonical metrics + provenance | `docs/RESULTS_PROVENANCE.md` |
-| Camera-ready tables | `results/paper/eaai_camera_ready_tables/` |
-| Camera-ready figures | `results/paper/eaai_camera_ready_figures/` |
-| Experiment reports | `analysis/eaai_*_report.md` |
+Use Python 3.10+ and relative project paths; keep secrets in process environment or
+ignored local configuration. Run the minimal offline checks before opening a PR.

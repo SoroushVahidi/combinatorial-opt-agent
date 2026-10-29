@@ -49,6 +49,7 @@ def test_tfidf_returns_top_k_and_scores():
         assert isinstance(score, (int, float))
 
 
+@pytest.mark.requires_models
 @pytest.mark.requires_network
 def test_sbert_returns_top_k_and_scores():
     """SBERT baseline rank() returns exactly top_k items with (problem_id, score)."""
@@ -78,6 +79,7 @@ def test_get_baseline():
         get_baseline("unknown")
 
 
+@pytest.mark.requires_models
 @pytest.mark.requires_network
 def test_e5_returns_top_k_and_scores():
     """E5 baseline rank() returns exactly top_k items with (problem_id, score)."""
@@ -95,6 +97,7 @@ def test_e5_returns_top_k_and_scores():
         assert isinstance(score, (int, float))
 
 
+@pytest.mark.requires_models
 @pytest.mark.requires_network
 def test_bge_returns_top_k_and_scores():
     """BGE baseline rank() returns exactly top_k items with (problem_id, score)."""

@@ -1,0 +1,193 @@
+{
+  "status": "PASS",
+  "existing_worktrees": 31,
+  "checks": [
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-d1-final-pair-audit",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-d1-semantic-diagnostics",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-g2-gold-eligibility-ablation",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-grounding-followup",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-jdsa-evidence-v2",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-jdsa-final-polish",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-jdsa-main-publish",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-jdsa-phase1",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-jdsa-phase2",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-jdsa-phase3",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-jdsa-phase4",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-jdsa-release-v1",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-jdsa-stage1",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-jdsa-stage2",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-jdsa-stage3",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-jdsa-stage3-audit",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-joint-grounding",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-manuscript-attribution-notes",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-manuscript-m1",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-manuscript-m3",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-manuscript-m4",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-manuscript-m5",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-metric-audit",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-nl4opt-label-audit",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-scientific-revision-phase1",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-scientific-revision-phase2",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-scientific-revision-phase3",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-sncs-corrections",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-supervised-feasibility",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-wulver-attribution",
+      "head_unchanged": true,
+      "tracked_untracked_status_and_observed_file_hashes_unchanged": true,
+      "ignored_listing_unchanged": true
+    }
+  ],
+  "scope": "All existing HEADs, tracked/untracked statuses, changed-file SHA-256 hashes and ignored path listings match the before snapshot. Ignored directory contents were not recursively read; no mutation was performed in any existing worktree."
+}

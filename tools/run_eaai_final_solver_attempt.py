@@ -293,7 +293,7 @@ def _patch_optimus_code(code: str, params_path: str) -> str:
 def _is_solver_compatible(code: str) -> bool:
     if not code:
         return False
-    forbidden = ["addGenConstr", "setPWLObj", "max_(", "min_(", "abs_(", "\*\*", "gp."]
+    forbidden = ["addGenConstr", "setPWLObj", "max_(", "min_(", "abs_(", r"\*\*", "gp."]
     return not any(tok in code for tok in forbidden)
 
 

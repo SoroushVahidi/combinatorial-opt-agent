@@ -1,3 +1,7 @@
+> Historical research-stage document. For current manuscript and evidence navigation,
+> see the [documentation index](README.md). Earlier status and authority labels below
+> remain scoped to their original stage.
+
 # Reviewer Guide
 
 A concise entry point for reviewers evaluating this companion research repository.

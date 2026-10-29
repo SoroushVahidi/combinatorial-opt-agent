@@ -1,0 +1,185 @@
+{
+  "status": "PASS",
+  "baseline": "2ed093db6c31b905d533693c8f6fe8ef70fe3833",
+  "baseline_files": 1490,
+  "unchanged_scientific_directory_files": 670,
+  "changed_baseline_files": [
+    {
+      "path": ".github/workflows/check-hf-access.yml",
+      "deleted": false
+    },
+    {
+      "path": ".github/workflows/collect_data.yml",
+      "deleted": false
+    },
+    {
+      "path": ".github/workflows/downstream_benchmark.yml",
+      "deleted": false
+    },
+    {
+      "path": ".github/workflows/nlp4lp.yml",
+      "deleted": false
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "deleted": false
+    },
+    {
+      "path": "README.md",
+      "deleted": false
+    },
+    {
+      "path": "baselines/pamop/tests/test_data.py",
+      "deleted": false
+    },
+    {
+      "path": "docs/CURRENT_STATUS.md",
+      "deleted": false
+    },
+    {
+      "path": "docs/README.md",
+      "deleted": false
+    },
+    {
+      "path": "docs/REPO_STRUCTURE.md",
+      "deleted": false
+    },
+    {
+      "path": "docs/REVIEWER_GUIDE.md",
+      "deleted": false
+    },
+    {
+      "path": "manuscript/MANUSCRIPT_README.md",
+      "deleted": false
+    },
+    {
+      "path": "pytest.ini",
+      "deleted": false
+    },
+    {
+      "path": "results/eswa_revision/14_reports/FINAL_ESWA_EXPERIMENT_SUMMARY.md",
+      "deleted": false
+    },
+    {
+      "path": "scripts/check_docs_integrity.py",
+      "deleted": false
+    },
+    {
+      "path": "scripts/get_cardinal_nl4opt.py",
+      "deleted": false
+    },
+    {
+      "path": "tests/conftest.py",
+      "deleted": false
+    },
+    {
+      "path": "tests/test_baselines.py",
+      "deleted": false
+    },
+    {
+      "path": "tests/test_catalog_enrichment.py",
+      "deleted": false
+    },
+    {
+      "path": "tests/test_selective_grounding_rerank_production.py",
+      "deleted": false
+    },
+    {
+      "path": "tests/test_short_query.py",
+      "deleted": false
+    },
+    {
+      "path": "tests/test_topk_schema_rerank_stage_a.py",
+      "deleted": false
+    },
+    {
+      "path": "tools/run_eaai_final_solver_attempt.py",
+      "deleted": false
+    }
+  ],
+  "archives": [
+    {
+      "path": "Retrieval_Assisted_Instantiation_of_Natural_Language_Optimization_Problems.zip",
+      "sha256": "c8e1c5569a716cd63876dec2f7de8f590372363176ee0fa70757800562e3b84e",
+      "members": 14,
+      "crc": "PASS",
+      "unchanged": true
+    },
+    {
+      "path": "manuscript/KAIS_submission_source.zip",
+      "sha256": "5be5147d1e5a54f911156ceae5140ec9c9e5b5dba86f72a933b638dbfbd90e2f",
+      "members": 8,
+      "crc": "PASS",
+      "unchanged": true
+    },
+    {
+      "path": "manuscript/jdsa/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Submission_Source.zip",
+      "sha256": "e8e9a9028675fbfaae756ea4783a5c2414871f3b68621749652398a4748bd815",
+      "members": 10,
+      "crc": "PASS",
+      "unchanged": true
+    },
+    {
+      "path": "manuscript/sncs/Retrieval-Assisted-Instantiation_SN-Computer-Science_LaTeX-Source.zip",
+      "sha256": "76d7c45804dae759a01075629082da0b9491c7f34a043012e95343be8fc78b50",
+      "members": 5,
+      "crc": "PASS",
+      "unchanged": true
+    },
+    {
+      "path": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Source.zip",
+      "sha256": "d99b074ba128acb30dd5736ad171b5432b7b0a37beb598f6f8794dd0e06e6d36",
+      "members": 30,
+      "crc": "PASS",
+      "unchanged": true
+    }
+  ],
+  "workflows": [
+    {
+      "name": "check-hf-access.yml",
+      "triggers": [
+        "workflow_dispatch"
+      ],
+      "contents_permissions": "read",
+      "research_dispatch": true
+    },
+    {
+      "name": "collect_data.yml",
+      "triggers": [
+        "workflow_dispatch"
+      ],
+      "contents_permissions": "read",
+      "research_dispatch": true
+    },
+    {
+      "name": "downstream_benchmark.yml",
+      "triggers": [
+        "workflow_dispatch"
+      ],
+      "contents_permissions": "read",
+      "research_dispatch": true
+    },
+    {
+      "name": "maintenance.yml",
+      "triggers": [
+        "pull_request",
+        "push"
+      ],
+      "contents_permissions": "read",
+      "research_dispatch": false
+    },
+    {
+      "name": "nlp4lp.yml",
+      "triggers": [
+        "workflow_dispatch"
+      ],
+      "contents_permissions": "read",
+      "research_dispatch": true
+    }
+  ],
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "private_material_added": false,
+  "scope_note": "Only code, synthetic test fixtures and documentation; no added research records, credentials, provider conversations or raw archives.",
+  "validated_scope_commit": "410928bf0856acc69d5c3656e41d6eff603f2a99",
+  "tracked_files_at_validation": 1512
+}

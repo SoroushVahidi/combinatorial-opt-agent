@@ -74,6 +74,7 @@ def test_rank_fn_does_not_mutate_base_rank_results():
     assert ranked == [("a", 1.0), ("b", 0.99)]
 
 
+@pytest.mark.requires_research_data
 def test_production_candidate_regression(tmp_path):
     if os.environ.get("PYTHONHASHSEED") != "0":
         pytest.skip("aggregate regression is defined for PYTHONHASHSEED=0")
