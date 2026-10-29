@@ -1,0 +1,50 @@
+[
+  {
+    "file": "main.tex",
+    "before": "\\noindent\\textbf{Code availability.} The immutable \\href{https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0}{GitHub evidence release} contains MIT-licensed verification code, manifests and pinned reanalysis dependencies. Revised manuscript sources are on the \\href{https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/manuscript/jdsa-stage3-submission-audit-20261029/manuscript/jdsa-stage3}{Stage 3 manuscript branch}, with a separate \\href{https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/manuscript/jdsa-stage3-submission-audit-20261029/docs/jdsa_stage3_20261029}{claim-location crosswalk and audit reports}; they do not overwrite the release. The numerical-summary derivation is recorded separately from its authenticated inputs.",
+    "after": "\\noindent\\textbf{Code availability.} The \\href{https://github.com/SoroushVahidi/combinatorial-opt-agent}{public project repository} hosts the project. The immutable \\href{https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0}{GitHub evidence release} contains MIT-licensed verification code, manifests and pinned reanalysis dependencies. Editable manuscript sources, the article and Online Resource 1 are archived in \\href{https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0}{manuscript release v1.0.0}, with a separate claim-location crosswalk and audit reports; they do not overwrite the evidence release. The numerical-summary derivation is recorded separately from its authenticated inputs.",
+    "reason": "Replace two temporary branch URLs with the permanent manuscript release and identify the project repository; preserve the immutable code/evidence release."
+  },
+  {
+    "file": "main.tex",
+    "before": "{versioned JDSA evidence release} publishes",
+    "after": "{Hugging Face evidence at the exact revision} publishes",
+    "reason": "Describe the already pinned data destination explicitly; URL and data scope unchanged."
+  },
+  {
+    "file": "main.tex",
+    "before": "\\externaldocument[S-]{supplement}[ESM_1.pdf]",
+    "after": "\\externaldocument[S-]{supplement}[https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf]",
+    "reason": "Use the exact permanent supplemental asset URL for cross-document navigation regardless of local download filename."
+  },
+  {
+    "file": "supplement.tex",
+    "before": "\\externaldocument[M-]{main}[manuscript.pdf]",
+    "after": "\\externaldocument[M-]{main}[https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf]",
+    "reason": "Use the exact permanent manuscript asset URL for cross-document navigation regardless of local download filename."
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before": "{Hugging Face mirror} is pinned",
+    "after": "{exact-version Hugging Face evidence} is pinned",
+    "reason": "Make the pinned data link descriptive."
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before": "The immutable claim manifest keeps original locations; the Stage 3 crosswalk records revised locations separately.",
+    "after": "The immutable claim manifest keeps original locations; the \\href{https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0}{versioned manuscript release} provides revised sources, a separate claim-location crosswalk and audit reports.",
+    "reason": "Provide the permanent manuscript destination in Online Resource 1 while preserving the evidence manifest."
+  },
+  {
+    "file": "main.tex",
+    "before": "\\externaldocument[S-]{supplement}[https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf]",
+    "after": "% Use the standard PDF named-destination URL parameter for online companion links.\n\\makeatletter\n\\def\\XR@@dURL#1#2#3#4#5\\\\{%\n  \\unexpanded{{#1}{#2}{#3}{nameddest=#4}}{\\XR@URL}}\n\\makeatother\n\\externaldocument[S-]{supplement}[https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf]",
+    "reason": "Encode imported PDF targets with the standard #nameddest= parameter while preserving reference numbers, text and pages."
+  },
+  {
+    "file": "supplement.tex",
+    "before": "\\externaldocument[M-]{main}[https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf]",
+    "after": "% Use the standard PDF named-destination URL parameter for online companion links.\n\\makeatletter\n\\def\\XR@@dURL#1#2#3#4#5\\\\{%\n  \\unexpanded{{#1}{#2}{#3}{nameddest=#4}}{\\XR@URL}}\n\\makeatother\n\\externaldocument[M-]{main}[https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf]",
+    "reason": "Encode imported PDF targets with the standard #nameddest= parameter while preserving reference numbers, text and pages."
+  }
+]

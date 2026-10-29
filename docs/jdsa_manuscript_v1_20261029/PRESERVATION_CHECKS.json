@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "checked_at_utc": "2026-10-29T21:15:07.888569+00:00",
+  "baseline": "e12c413c18e6d1f068d29509e7f9108e7ef51f65",
+  "main_unchanged": "a3f0dde397341a41842a30ddb946e7966706351b",
+  "remote_refs": [
+    "e12c413c18e6d1f068d29509e7f9108e7ef51f65\trefs/heads/manuscript/jdsa-stage3-submission-audit-20261029",
+    "209fa982c0a0e2087bd021cbc7a9f57d94256c8f\trefs/tags/jdsa-evidence-v2.0.0"
+  ],
+  "target_tag_absent": true,
+  "only_changed_paths": [
+    "manuscript/jdsa-stage3/",
+    "docs/jdsa_manuscript_v1_20261029/"
+  ],
+  "evidence_modified": false,
+  "hugging_face_writes": 0,
+  "journal_submission": false
+}

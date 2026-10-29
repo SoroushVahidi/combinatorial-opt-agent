@@ -1,0 +1,26 @@
+name                                 type              encoding         emb sub uni object ID
+------------------------------------ ----------------- ---------------- --- --- --- ---------
+DYEDEQ+CMR17                         Type 1            Builtin          yes yes yes    194  0
+AHKKUT+CMR12                         Type 1            Builtin          yes yes yes    195  0
+OCNOTV+CMR8                          Type 1            Builtin          yes yes yes    196  0
+TQWFHW+CMR7                          Type 1            Builtin          yes yes yes    197  0
+CRELNP+CMR10                         Type 1            Builtin          yes yes yes    198  0
+FKTWXF+CMBX10                        Type 1            Builtin          yes yes yes    199  0
+OMMDEX+CMBX12                        Type 1            Builtin          yes yes yes    201  0
+MDHJVF+CMBX8                         Type 1            Builtin          yes yes yes    242  0
+HGERLR+CMTI8                         Type 1            Builtin          yes yes yes    244  0
+GXYVHN+CMR9                          Type 1            Builtin          yes yes yes    245  0
+STRXBK+CMSY9                         Type 1            Builtin          yes yes yes    246  0
+YWNQIV+CMSY7                         Type 1            Builtin          yes yes yes    247  0
+YFDYSI+CMCSC10                       Type 1            Builtin          yes yes yes    260  0
+GQETMP+CMMI8                         Type 1            Builtin          yes yes yes    277  0
+LRKIGO+CMR5                          Type 1            Builtin          yes yes yes    278  0
+QUEREG+CMMI9                         Type 1            Builtin          yes yes yes    279  0
+HNLGDM+CMMI10                        Type 1            Builtin          yes yes yes    280  0
+EMTPGW+CMTT10                        Type 1            Builtin          yes yes yes    309  0
+UCMXCV+CMSY10                        Type 1            Builtin          yes yes yes    310  0
+EQHENR+CMTT8                         Type 1            Builtin          yes yes yes    313  0
+QFVNMY+CMMI7                         Type 1            Builtin          yes yes yes    343  0
+SQCTUC+CMTT9                         Type 1            Builtin          yes yes yes    373  0
+VLNHBR+CMEX10                        Type 1            Builtin          yes yes yes    387  0
+TIUTDB+CMTI10                        Type 1            Builtin          yes yes yes    447  0

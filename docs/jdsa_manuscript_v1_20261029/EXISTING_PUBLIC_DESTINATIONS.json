@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "checked_at_utc": "2026-10-29T21:12:45.032912+00:00",
+  "anonymous_get": [
+    {
+      "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent",
+      "status": 200,
+      "final_url": "https://github.com/SoroushVahidi/combinatorial-opt-agent"
+    },
+    {
+      "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0",
+      "status": 200,
+      "final_url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0"
+    },
+    {
+      "url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0",
+      "status": 200,
+      "final_url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0"
+    },
+    {
+      "url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/resolve/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0/release_manifest.json",
+      "status": 200,
+      "final_url": "https://huggingface.co/api/resolve-cache/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/f94012872211ab6a828147bb138fbe8ab695b982/releases%2Fjdsa-evidence-v2.0.0%2Frelease_manifest.json?%2Fdatasets%2FSoroushVahidi%2Fnl-optimization-instantiation-metrics%2Fresolve%2Ff94012872211ab6a828147bb138fbe8ab695b982%2Freleases%2Fjdsa-evidence-v2.0.0%2Frelease_manifest.json=&etag=%22a501cfdf21bc65989a3f78b385110f14bda015cc%22",
+      "sha256": "ac20ad695b7ceea866890376ef5e08751921bbcb520c017624727524e79b8b38",
+      "local_manifest_identical": true
+    }
+  ]
+}

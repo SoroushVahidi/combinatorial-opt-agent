@@ -1,0 +1,103 @@
+{
+  "status": "PASS",
+  "baseline": "e12c413c18e6d1f068d29509e7f9108e7ef51f65",
+  "method": "Exact source reconstruction by applying only the listed hyperlink/availability-display changes to the baseline; every other TeX byte must match. Bibliography, styles, build script unchanged.",
+  "source_files": [
+    {
+      "file": "manuscript/jdsa-stage3/Fig1.tex",
+      "only_documented_link_edits": true,
+      "unchanged": true
+    },
+    {
+      "file": "manuscript/jdsa-stage3/additional_evidence.tex",
+      "only_documented_link_edits": true,
+      "unchanged": true
+    },
+    {
+      "file": "manuscript/jdsa-stage3/closed_audits.tex",
+      "only_documented_link_edits": true,
+      "unchanged": true
+    },
+    {
+      "file": "manuscript/jdsa-stage3/common18_overview.tex",
+      "only_documented_link_edits": true,
+      "unchanged": true
+    },
+    {
+      "file": "manuscript/jdsa-stage3/d1_contrasts.tex",
+      "only_documented_link_edits": true,
+      "unchanged": true
+    },
+    {
+      "file": "manuscript/jdsa-stage3/grounding_diagnostics.tex",
+      "only_documented_link_edits": true,
+      "unchanged": true
+    },
+    {
+      "file": "manuscript/jdsa-stage3/llm_evidence.tex",
+      "only_documented_link_edits": true,
+      "unchanged": true
+    },
+    {
+      "file": "manuscript/jdsa-stage3/main.tex",
+      "only_documented_link_edits": true,
+      "unchanged": false
+    },
+    {
+      "file": "manuscript/jdsa-stage3/pipeline_figure.tex",
+      "only_documented_link_edits": true,
+      "unchanged": true
+    },
+    {
+      "file": "manuscript/jdsa-stage3/preserved_results_details.tex",
+      "only_documented_link_edits": true,
+      "unchanged": true
+    },
+    {
+      "file": "manuscript/jdsa-stage3/ready_conditioned_rows.tex",
+      "only_documented_link_edits": true,
+      "unchanged": true
+    },
+    {
+      "file": "manuscript/jdsa-stage3/reference_conventions.tex",
+      "only_documented_link_edits": true,
+      "unchanged": true
+    },
+    {
+      "file": "manuscript/jdsa-stage3/related_context.tex",
+      "only_documented_link_edits": true,
+      "unchanged": true
+    },
+    {
+      "file": "manuscript/jdsa-stage3/relationship_evidence.tex",
+      "only_documented_link_edits": true,
+      "unchanged": true
+    },
+    {
+      "file": "manuscript/jdsa-stage3/relationship_supplement.tex",
+      "only_documented_link_edits": true,
+      "unchanged": true
+    },
+    {
+      "file": "manuscript/jdsa-stage3/reproduction_map.tex",
+      "only_documented_link_edits": true,
+      "unchanged": false
+    },
+    {
+      "file": "manuscript/jdsa-stage3/supervision_diagnostics.tex",
+      "only_documented_link_edits": true,
+      "unchanged": true
+    },
+    {
+      "file": "manuscript/jdsa-stage3/supplement.tex",
+      "only_documented_link_edits": true,
+      "unchanged": false
+    },
+    {
+      "file": "manuscript/jdsa-stage3/supporting_core.tex",
+      "only_documented_link_edits": true,
+      "unchanged": true
+    }
+  ],
+  "new_model_or_solver_experiments": false
+}

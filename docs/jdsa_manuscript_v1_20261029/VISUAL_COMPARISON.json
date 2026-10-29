@@ -1,0 +1,364 @@
+{
+  "manuscript.pdf": {
+    "pages": 15,
+    "changed_pages": [
+      3,
+      4,
+      5,
+      7,
+      8,
+      9,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "page_checks": [
+      {
+        "page": 1,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "9e21f8074fc4e782a23f005e7795c7aa717272e39c3e1845c29d2037708989d2",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 2,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "d3376306877bcb681b198ee42e6513fa36b3c36169b3b7767c9998178ed8676e",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 3,
+        "pixels_unchanged_from_reviewed_stage3": false,
+        "render_sha256": "24489fe0b9ff8084d1664f36bed0d7eab769bd32ba7d49c90a4818400f28ef29",
+        "render": "/tmp/jdsa-release-visual/manuscript-03.png",
+        "review": "Visually inspected at 105 dpi: no clipping, overlap or layout defect."
+      },
+      {
+        "page": 4,
+        "pixels_unchanged_from_reviewed_stage3": false,
+        "render_sha256": "3f4a63bcb3b4d61328e0d1ffbff6185fd2d1ce6f4ab910ef3adb300bb6f9f3ca",
+        "render": "/tmp/jdsa-release-visual/manuscript-04.png",
+        "review": "Visually inspected at 105 dpi: no clipping, overlap or layout defect."
+      },
+      {
+        "page": 5,
+        "pixels_unchanged_from_reviewed_stage3": false,
+        "render_sha256": "5ab05d434e8778d0b025024502a1ae9435d6e780c5906e3a7f6d9fdf2df74ba2",
+        "render": "/tmp/jdsa-release-visual/manuscript-05.png",
+        "review": "Visually inspected at 105 dpi: no clipping, overlap or layout defect."
+      },
+      {
+        "page": 6,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "45de0ee1a0ded980c240a08a7bd329545c72c397b001566d01e08d7028c51742",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 7,
+        "pixels_unchanged_from_reviewed_stage3": false,
+        "render_sha256": "095b99f8e243ca26a039ebf71cc6a37018f6d702dbf6cffbff528677559b4212",
+        "render": "/tmp/jdsa-release-visual/manuscript-07.png",
+        "review": "Visually inspected at 105 dpi: no clipping, overlap or layout defect."
+      },
+      {
+        "page": 8,
+        "pixels_unchanged_from_reviewed_stage3": false,
+        "render_sha256": "8031bd336f1520dcc927de44f2019cfc5bf1db2e5d022e93cf3c45706a2d12da",
+        "render": "/tmp/jdsa-release-visual/manuscript-08.png",
+        "review": "Visually inspected at 105 dpi: no clipping, overlap or layout defect."
+      },
+      {
+        "page": 9,
+        "pixels_unchanged_from_reviewed_stage3": false,
+        "render_sha256": "e111013a2cd8dba8f4d4a7dee92e83c7a555c9a53b6027d45f17e6a833f4720c",
+        "render": "/tmp/jdsa-release-visual/manuscript-09.png",
+        "review": "Visually inspected at 105 dpi: no clipping, overlap or layout defect."
+      },
+      {
+        "page": 10,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "24d5e17caa9eec0ce62f4e85d951320b7d070bf47b2c6a80e9d2a3b510480990",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 11,
+        "pixels_unchanged_from_reviewed_stage3": false,
+        "render_sha256": "0a8a2791af2d5c45e6e1a65700cc94e0da043d2af5a28e484580117da77fdf9d",
+        "render": "/tmp/jdsa-release-visual/manuscript-11.png",
+        "review": "Visually inspected at 105 dpi: no clipping, overlap or layout defect."
+      },
+      {
+        "page": 12,
+        "pixels_unchanged_from_reviewed_stage3": false,
+        "render_sha256": "5a39cf1ab70f927bfbe78bdf4f45f0e9a868ef0360908dc0ea8f835b35b50a65",
+        "render": "/tmp/jdsa-release-visual/manuscript-12.png",
+        "review": "Visually inspected at 105 dpi: no clipping, overlap or layout defect."
+      },
+      {
+        "page": 13,
+        "pixels_unchanged_from_reviewed_stage3": false,
+        "render_sha256": "d04b97c99663269d3c97c3c454db2c43c99e3ad110a53c45f107eef185fc40ed",
+        "render": "/tmp/jdsa-release-visual/manuscript-13.png",
+        "review": "Visually inspected at 105 dpi: no clipping, overlap or layout defect."
+      },
+      {
+        "page": 14,
+        "pixels_unchanged_from_reviewed_stage3": false,
+        "render_sha256": "1d51d9b205268549cbb58ff8086dc9998539f850660d5840be16a22178f7b000",
+        "render": "/tmp/jdsa-release-visual/manuscript-14.png",
+        "review": "Visually inspected at 105 dpi: no clipping, overlap or layout defect."
+      },
+      {
+        "page": 15,
+        "pixels_unchanged_from_reviewed_stage3": false,
+        "render_sha256": "1ddce9f928f71e4b179f4c1d49aee66c8f72020776f1cf675e7d29eaf451d10e",
+        "render": "/tmp/jdsa-release-visual/manuscript-15.png",
+        "review": "Visually inspected at 105 dpi: no clipping, overlap or layout defect."
+      }
+    ]
+  },
+  "ESM_1.pdf": {
+    "pages": 37,
+    "changed_pages": [
+      5,
+      6,
+      7,
+      9,
+      12,
+      13,
+      26
+    ],
+    "page_checks": [
+      {
+        "page": 1,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "e39a03193a5ba3ecb4ce97e1735e5f367eafe586970ba52479851c8787659f41",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 2,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "a6d54f70ae30d8c364dc101a7895a73c4cd374353fed2e77b314b4a7bddf8b7c",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 3,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "fae5e6a17d512ff0ab7695073f67fc6e464e3620a1a78b6965ffb330234a1232",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 4,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "0d387c6f23eb0f9dcee352515f0d82b60273a300d14e323d47d616d850625903",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 5,
+        "pixels_unchanged_from_reviewed_stage3": false,
+        "render_sha256": "c5c23504828b117676e45b142d6afbd6af2dfddd33ccb71a4e249180d76bb6b9",
+        "render": "/tmp/jdsa-release-visual/ESM_1-05.png",
+        "review": "Visually inspected at 105 dpi: no clipping, overlap or layout defect."
+      },
+      {
+        "page": 6,
+        "pixels_unchanged_from_reviewed_stage3": false,
+        "render_sha256": "77c126e77585d03887c656c6c8c7788f9ee6adfb5dcdf44e9979d54611cb748d",
+        "render": "/tmp/jdsa-release-visual/ESM_1-06.png",
+        "review": "Visually inspected at 105 dpi: no clipping, overlap or layout defect."
+      },
+      {
+        "page": 7,
+        "pixels_unchanged_from_reviewed_stage3": false,
+        "render_sha256": "8bf28a1e8ec32e8835be1257f5809ad01d1b6a5443c150c3994b2bd29605f3cd",
+        "render": "/tmp/jdsa-release-visual/ESM_1-07.png",
+        "review": "Visually inspected at 105 dpi: no clipping, overlap or layout defect."
+      },
+      {
+        "page": 8,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "5b0f0bfce202fb7d220ae007a1d358badadd12c898fca0f12eb81d7b689a42b0",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 9,
+        "pixels_unchanged_from_reviewed_stage3": false,
+        "render_sha256": "abdf8dc53b2109bf16c346ae63de9795c461f647d2ad39db841cbb4846c19548",
+        "render": "/tmp/jdsa-release-visual/ESM_1-09.png",
+        "review": "Visually inspected at 105 dpi: no clipping, overlap or layout defect."
+      },
+      {
+        "page": 10,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "e9873b318aa1db9e9b52577123a5bdbf144df91b16a6ca006b27327af5372aa8",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 11,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "99bc65dbc4b1d58d5bd6413a95495cc66a561abed3e7114e2bc87cd1763aa331",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 12,
+        "pixels_unchanged_from_reviewed_stage3": false,
+        "render_sha256": "d82baf5d121de389fab424ecad0ae436e802e0488287a5293c6ce9d968c32921",
+        "render": "/tmp/jdsa-release-visual/ESM_1-12.png",
+        "review": "Visually inspected at 105 dpi: no clipping, overlap or layout defect."
+      },
+      {
+        "page": 13,
+        "pixels_unchanged_from_reviewed_stage3": false,
+        "render_sha256": "a903b12e33508c00c879c53c8c349e805f9278fe2a92f7918a1e52cc3d26419b",
+        "render": "/tmp/jdsa-release-visual/ESM_1-13.png",
+        "review": "Visually inspected at 105 dpi: no clipping, overlap or layout defect."
+      },
+      {
+        "page": 14,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "24a161a7629bc330705673ff32aa6b68bcc07eef0a4722e61dd01f9e4856947b",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 15,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "5adb58ac7dc51305f6dc854164a24885db1b1076dd366bfbf65ca767b6fdf7a3",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 16,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "9b127a87f1aa64ed7fe601e9eca50d2305b68958084d8b05c49eafddc854ba93",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 17,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "43dc4dc8c30b1d8e16c79b381d320c82a82dd4eb2ef0e5ba5645c6796696a871",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 18,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "04f8304fc6642ccbcc08907b3d8e0d2f0cabcf5519629c62f51cb1348a34b3ff",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 19,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "e93b666864aa35fa187ce9b949973174e65da39c662ad2ff3a46405f429edb37",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 20,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "418224b828b3ebe09fa0cd61696fc807dc27c70df149bc5208e4d08827b48733",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 21,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "54f417363ed2749e49c709f07fdeafceccbe85e61268c02e746347976556ab79",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 22,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "273e5cfa2019da486ee81bbe32c1982fe8d57f51385ba9a8104376d421c8deae",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 23,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "8189a17590eef1edb21e24a80090d4511ac037a5df08ef2bd0e4634d4ea14858",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 24,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "845c508a72e7a100d763958fe6198512c0aa323fb2d83a68970a3d01d799e093",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 25,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "27f7952b2e319aa66939b4ca9e16375b855d149194ce8b1cbeeaf8089f0bcc45",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 26,
+        "pixels_unchanged_from_reviewed_stage3": false,
+        "render_sha256": "ae115e35e02f017ba71df44a1200c37b50f4c5655e4d4fb18c8c7896f0767478",
+        "render": "/tmp/jdsa-release-visual/ESM_1-26.png",
+        "review": "Visually inspected at 105 dpi: no clipping, overlap or layout defect."
+      },
+      {
+        "page": 27,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "250b87223fcbd820e3b396a73f9f1bf775d68709f8504fc8fbce81aedf799feb",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 28,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "15bd9ade6509a5f0a17bbee4b7c59b5992f661f017b12f7a41bb33f8ad1e7a7c",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 29,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "aa1ce5909d8b10364a944137e1d842f1c6f377c9d83b69d71a7fa87b11f77d62",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 30,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "d7cee577ed7ffaf44a42528fa64319162e304b4bed442e42ccf200d523ea9a1f",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 31,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "8d93667d9004e2d01179e442c60048dcdfb2ed6e5862ecbbd59c4672aff2ef5b",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 32,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "df6d1249d03b2d44c18035ad3b4a86147c26950add26d8e5ff8876fe9ad1ebb0",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 33,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "ade81d03bd924476aca0aa47f0c6705d6cf4bed7d520cb60b4ab0402a03ac070",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 34,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "460bb4534f129763482e773067d44a16df6b9c8ce0ee7ef16f0379800b312f2d",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 35,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "54ba5b1ebc94104e61a830bee66185aed3b9c5b21f6039c992ba427209cc2591",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 36,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "d46fe3f124d258efc80103046a80fdef174550a73e6090589ff3f8cffe3e8a04",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      },
+      {
+        "page": 37,
+        "pixels_unchanged_from_reviewed_stage3": true,
+        "render_sha256": "6d9be105a70d023c3804d9cf269b9abc8fffd3c565d1062d52bc00edb1653d6d",
+        "review": "Pixel-identical to the visually inspected Stage 3 page."
+      }
+    ]
+  }
+}

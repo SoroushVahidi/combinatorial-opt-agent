@@ -25,7 +25,12 @@
 \usepackage{orcidlink}
 \raggedbottom
 
-\externaldocument[S-]{supplement}[ESM_1.pdf]
+% Use the standard PDF named-destination URL parameter for online companion links.
+\makeatletter
+\def\XR@@dURL#1#2#3#4#5\\{%
+  \unexpanded{{#1}{#2}{#3}{nameddest=#4}}{\XR@URL}}
+\makeatother
+\externaldocument[S-]{supplement}[https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf]
 \begin{document}
 
 \title[Retrieval-Assisted Scalar Grounding]{Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study}
@@ -498,9 +503,9 @@ Online Resource 1 contains secondary results, statistical and recovery protocols
 
 \noindent\textbf{Author contributions.} Soroush Vahidi: Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data curation, Writing -- original draft, Writing -- review \& editing, Visualization. This single-author paper uses the standard CRediT taxonomy to describe the contributions of the sole author.
 
-\noindent\textbf{Data availability.} The \href{https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0}{versioned JDSA evidence release} publishes sanitized metrics, assignment score/choice projections, relationship label/validity ledgers, common-18 numerical outcomes and author/AI-assisted D1 cases. Historical v1.2 is preserved separately at revision \path{24a047fa5d661be6cfcf75980ac8f62e6c942243}. Author-owned evidence is CC BY-NC-SA 4.0 without relicensing third-party material. Complete M5 originals, raw provider prose and private reviews remain local. NLP4LP requires separate gated access; OptMATH source licensing and provider-specific raw-output redistribution permissions remain unresolved. The package supplies upstream-access instructions, not those source corpora.
+\noindent\textbf{Data availability.} The \href{https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0}{Hugging Face evidence at the exact revision} publishes sanitized metrics, assignment score/choice projections, relationship label/validity ledgers, common-18 numerical outcomes and author/AI-assisted D1 cases. Historical v1.2 is preserved separately at revision \path{24a047fa5d661be6cfcf75980ac8f62e6c942243}. Author-owned evidence is CC BY-NC-SA 4.0 without relicensing third-party material. Complete M5 originals, raw provider prose and private reviews remain local. NLP4LP requires separate gated access; OptMATH source licensing and provider-specific raw-output redistribution permissions remain unresolved. The package supplies upstream-access instructions, not those source corpora.
 
-\noindent\textbf{Code availability.} The immutable \href{https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0}{GitHub evidence release} contains MIT-licensed verification code, manifests and pinned reanalysis dependencies. Revised manuscript sources are on the \href{https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/manuscript/jdsa-stage3-submission-audit-20261029/manuscript/jdsa-stage3}{Stage 3 manuscript branch}, with a separate \href{https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/manuscript/jdsa-stage3-submission-audit-20261029/docs/jdsa_stage3_20261029}{claim-location crosswalk and audit reports}; they do not overwrite the release. The numerical-summary derivation is recorded separately from its authenticated inputs.
+\noindent\textbf{Code availability.} The \href{https://github.com/SoroushVahidi/combinatorial-opt-agent}{public project repository} hosts the project. The immutable \href{https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0}{GitHub evidence release} contains MIT-licensed verification code, manifests and pinned reanalysis dependencies. Editable manuscript sources, the article and Online Resource 1 are archived in \href{https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0}{manuscript release v1.0.0}, with a separate claim-location crosswalk and audit reports; they do not overwrite the evidence release. The numerical-summary derivation is recorded separately from its authenticated inputs.
 
 \noindent\textbf{Reproducibility.} The public package reproduces supported saved-record calculations, not the original inference experiments. Sanitized relationship and common-18 projections support ledger/numerical reanalysis but omit raw responses, programs and source witnesses needed for full validation. Missing observations and runtime details are listed in Section~\ref{subsec:limitations}; no newly generated output substitutes for them. All editorial and consistency calculations use authenticated records without model inference or solver experiments. Online Resource 1, Section~\ref{S-app:reproduction}, gives exact revisions, commands and evidence classifications.
 
