@@ -81,7 +81,15 @@
       "deleted": false
     },
     {
+      "path": "tests/test_selective_grounding_rerank_production.py",
+      "deleted": false
+    },
+    {
       "path": "tests/test_short_query.py",
+      "deleted": false
+    },
+    {
+      "path": "tests/test_topk_schema_rerank_stage_a.py",
       "deleted": false
     },
     {
@@ -171,5 +179,7 @@
   ],
   "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
   "private_material_added": false,
-  "scope_note": "Only code, synthetic test fixtures and documentation; no added research records, credentials, provider conversations or raw archives."
+  "scope_note": "Only code, synthetic test fixtures and documentation; no added research records, credentials, provider conversations or raw archives.",
+  "validated_scope_commit": "410928bf0856acc69d5c3656e41d6eff603f2a99",
+  "tracked_files_at_validation": 1512
 }

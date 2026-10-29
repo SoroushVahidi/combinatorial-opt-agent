@@ -5,7 +5,7 @@
 | Command/check | Result |
 |---|---|
 | `python scripts/check_repository_syntax.py` | PASS: 404 Python files, 62 shell/SLURM scripts; warnings treated as errors |
-| `python scripts/check_docs_integrity.py` | PASS: zero broken tracked destinations/conflict markers; final count recorded in readiness receipt |
+| `python scripts/check_docs_integrity.py` | PASS: 317 destinations at implementation/report snapshot; zero broken tracked destinations/conflict markers |
 | Minimal five-file suite documented in TESTING.md | PASS: 38 tests, including 14 Cardinal fixtures |
 | `python -m pytest -q` | 1,610 passed, 9 skipped; no provider/model/solver calls |
 | `python -m pytest -q baselines/ --import-mode=importlib` | 218 passed, 7 skipped; live dataset tests not enabled |
