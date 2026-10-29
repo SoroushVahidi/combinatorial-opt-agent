@@ -1,0 +1,259 @@
+{
+  "before": {
+    "checked_at_utc": "2026-10-29T21:36:51.607161+00:00",
+    "releases": {
+      "jdsa-manuscript-v1.0.0": {
+        "id": 428402665,
+        "commit": "00adeca9d3d761da7f8ee2e5dcee7fc8d535f2bc",
+        "remote_tag_refs": [
+          "972d270d94aadb00c291ba3d19e89c761d40abff\trefs/tags/jdsa-manuscript-v1.0.0",
+          "00adeca9d3d761da7f8ee2e5dcee7fc8d535f2bc\trefs/tags/jdsa-manuscript-v1.0.0^{}"
+        ],
+        "name": "Retrieval-Assisted Scalar Grounding for Natural-Language Optimization \u2014 Manuscript and Supplement",
+        "body_sha256": "6e15de3a9486bd9ae508b7e452bff808debca63f874ec5893b95b8d0910fcbc1",
+        "prerelease": true,
+        "published_at": "2026-10-29T21:15:36Z",
+        "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0",
+        "public_http_status": 200,
+        "assets": [
+          {
+            "name": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+            "id": 689932833,
+            "bytes": 444142,
+            "sha256": "e1a5ba63437ce378c320db0ecea96098bd5a586ef8bf8aea0a11046dbd554766",
+            "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+            "content_type": "application/pdf"
+          },
+          {
+            "name": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Source.zip",
+            "id": 689932836,
+            "bytes": 1013756,
+            "sha256": "d99b074ba128acb30dd5736ad171b5432b7b0a37beb598f6f8794dd0e06e6d36",
+            "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Source.zip",
+            "content_type": "application/zip"
+          },
+          {
+            "name": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf",
+            "id": 689932834,
+            "bytes": 435970,
+            "sha256": "0b724ecdbf2bbdbcd531960e4f7e6951bdb4fdb607fa4f94c3efbfaa50962fa4",
+            "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf",
+            "content_type": "application/pdf"
+          },
+          {
+            "name": "SHA256SUMS.txt",
+            "id": 689932838,
+            "bytes": 438,
+            "sha256": "c960e2d10d0586143a11c80d1c97d59f24796e1a7ac518b9225f4952f4fe9105",
+            "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/SHA256SUMS.txt",
+            "content_type": "text/plain; charset=utf-8"
+          }
+        ]
+      },
+      "jdsa-evidence-v2.0.0": {
+        "id": 428219113,
+        "commit": "209fa982c0a0e2087bd021cbc7a9f57d94256c8f",
+        "remote_tag_refs": [
+          "209fa982c0a0e2087bd021cbc7a9f57d94256c8f\trefs/tags/jdsa-evidence-v2.0.0"
+        ],
+        "name": "JDSA evidence v2.0.0 \u2014 saved-record reanalysis",
+        "body_sha256": "3410ab11dd8327eabc25d67462e5dba6c753b96b2932f20725d8942ab3d8f891",
+        "prerelease": false,
+        "published_at": "2026-10-29T18:00:26Z",
+        "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0",
+        "public_http_status": 200,
+        "assets": [
+          {
+            "name": "ASSET_CHECKSUMS.sha256",
+            "id": 689425730,
+            "bytes": 438,
+            "sha256": "e4ddd389251cbc25676bdb200f58f56c3e1467d44fda2f2b432eea8b6a00a5ef",
+            "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-evidence-v2.0.0/ASSET_CHECKSUMS.sha256",
+            "content_type": "application/octet-stream"
+          },
+          {
+            "name": "CHECKSUMS.sha256",
+            "id": 689425698,
+            "bytes": 24088,
+            "sha256": "5774384af147d70b0b8b46f485e616d327957938e82c67e39a13afa445208ca8",
+            "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-evidence-v2.0.0/CHECKSUMS.sha256",
+            "content_type": "application/octet-stream"
+          },
+          {
+            "name": "jdsa-evidence-v2.0.0.zip",
+            "id": 689425703,
+            "bytes": 1154571,
+            "sha256": "de7f968bd4dbf4dfc9efa67818c461c0aa48b2993e704823bbf1b321ce44bd37",
+            "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-evidence-v2.0.0/jdsa-evidence-v2.0.0.zip",
+            "content_type": "application/zip"
+          },
+          {
+            "name": "release_manifest.json",
+            "id": 689425699,
+            "bytes": 35957,
+            "sha256": "ac20ad695b7ceea866890376ef5e08751921bbcb520c017624727524e79b8b38",
+            "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-evidence-v2.0.0/release_manifest.json",
+            "content_type": "application/json"
+          },
+          {
+            "name": "verification-receipt.json",
+            "id": 689425696,
+            "bytes": 1300,
+            "sha256": "7660af14b8fe26107b05668ae7c91dc324d1b118ab2e4ae69842c974ab8f4fd5",
+            "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-evidence-v2.0.0/verification-receipt.json",
+            "content_type": "application/json"
+          },
+          {
+            "name": "verification.json",
+            "id": 689425700,
+            "bytes": 1431318,
+            "sha256": "1bacf16801ae0a3ab10e175a8f41965c6318a2b43d33abee1d66717d2a93350b",
+            "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-evidence-v2.0.0/verification.json",
+            "content_type": "application/json"
+          }
+        ]
+      }
+    },
+    "hugging_face": {
+      "revision": "f94012872211ab6a828147bb138fbe8ab695b982",
+      "tree_url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0",
+      "manifest_url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/resolve/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0/release_manifest.json",
+      "manifest_sha256": "ac20ad695b7ceea866890376ef5e08751921bbcb520c017624727524e79b8b38",
+      "manifest_matches_published_github_archive": true,
+      "archive_file_count": 172,
+      "manifest_payload_count": 170,
+      "tree_http_status": 200
+    },
+    "status": "PASS"
+  },
+  "after": {
+    "checked_at_utc": "2026-10-29T21:40:16.909141+00:00",
+    "releases": {
+      "jdsa-manuscript-v1.0.0": {
+        "id": 428402665,
+        "commit": "00adeca9d3d761da7f8ee2e5dcee7fc8d535f2bc",
+        "remote_tag_refs": [
+          "972d270d94aadb00c291ba3d19e89c761d40abff\trefs/tags/jdsa-manuscript-v1.0.0",
+          "00adeca9d3d761da7f8ee2e5dcee7fc8d535f2bc\trefs/tags/jdsa-manuscript-v1.0.0^{}"
+        ],
+        "name": "Retrieval-Assisted Scalar Grounding for Natural-Language Optimization \u2014 Manuscript and Supplement",
+        "body_sha256": "6e15de3a9486bd9ae508b7e452bff808debca63f874ec5893b95b8d0910fcbc1",
+        "prerelease": true,
+        "published_at": "2026-10-29T21:15:36Z",
+        "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0",
+        "public_http_status": 200,
+        "assets": [
+          {
+            "name": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+            "id": 689932833,
+            "bytes": 444142,
+            "sha256": "e1a5ba63437ce378c320db0ecea96098bd5a586ef8bf8aea0a11046dbd554766",
+            "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+            "content_type": "application/pdf"
+          },
+          {
+            "name": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Source.zip",
+            "id": 689932836,
+            "bytes": 1013756,
+            "sha256": "d99b074ba128acb30dd5736ad171b5432b7b0a37beb598f6f8794dd0e06e6d36",
+            "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Source.zip",
+            "content_type": "application/zip"
+          },
+          {
+            "name": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf",
+            "id": 689932834,
+            "bytes": 435970,
+            "sha256": "0b724ecdbf2bbdbcd531960e4f7e6951bdb4fdb607fa4f94c3efbfaa50962fa4",
+            "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf",
+            "content_type": "application/pdf"
+          },
+          {
+            "name": "SHA256SUMS.txt",
+            "id": 689932838,
+            "bytes": 438,
+            "sha256": "c960e2d10d0586143a11c80d1c97d59f24796e1a7ac518b9225f4952f4fe9105",
+            "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/SHA256SUMS.txt",
+            "content_type": "text/plain; charset=utf-8"
+          }
+        ]
+      },
+      "jdsa-evidence-v2.0.0": {
+        "id": 428219113,
+        "commit": "209fa982c0a0e2087bd021cbc7a9f57d94256c8f",
+        "remote_tag_refs": [
+          "209fa982c0a0e2087bd021cbc7a9f57d94256c8f\trefs/tags/jdsa-evidence-v2.0.0"
+        ],
+        "name": "JDSA evidence v2.0.0 \u2014 saved-record reanalysis",
+        "body_sha256": "3410ab11dd8327eabc25d67462e5dba6c753b96b2932f20725d8942ab3d8f891",
+        "prerelease": false,
+        "published_at": "2026-10-29T18:00:26Z",
+        "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0",
+        "public_http_status": 200,
+        "assets": [
+          {
+            "name": "ASSET_CHECKSUMS.sha256",
+            "id": 689425730,
+            "bytes": 438,
+            "sha256": "e4ddd389251cbc25676bdb200f58f56c3e1467d44fda2f2b432eea8b6a00a5ef",
+            "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-evidence-v2.0.0/ASSET_CHECKSUMS.sha256",
+            "content_type": "application/octet-stream"
+          },
+          {
+            "name": "CHECKSUMS.sha256",
+            "id": 689425698,
+            "bytes": 24088,
+            "sha256": "5774384af147d70b0b8b46f485e616d327957938e82c67e39a13afa445208ca8",
+            "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-evidence-v2.0.0/CHECKSUMS.sha256",
+            "content_type": "application/octet-stream"
+          },
+          {
+            "name": "jdsa-evidence-v2.0.0.zip",
+            "id": 689425703,
+            "bytes": 1154571,
+            "sha256": "de7f968bd4dbf4dfc9efa67818c461c0aa48b2993e704823bbf1b321ce44bd37",
+            "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-evidence-v2.0.0/jdsa-evidence-v2.0.0.zip",
+            "content_type": "application/zip"
+          },
+          {
+            "name": "release_manifest.json",
+            "id": 689425699,
+            "bytes": 35957,
+            "sha256": "ac20ad695b7ceea866890376ef5e08751921bbcb520c017624727524e79b8b38",
+            "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-evidence-v2.0.0/release_manifest.json",
+            "content_type": "application/json"
+          },
+          {
+            "name": "verification-receipt.json",
+            "id": 689425696,
+            "bytes": 1300,
+            "sha256": "7660af14b8fe26107b05668ae7c91dc324d1b118ab2e4ae69842c974ab8f4fd5",
+            "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-evidence-v2.0.0/verification-receipt.json",
+            "content_type": "application/json"
+          },
+          {
+            "name": "verification.json",
+            "id": 689425700,
+            "bytes": 1431318,
+            "sha256": "1bacf16801ae0a3ab10e175a8f41965c6318a2b43d33abee1d66717d2a93350b",
+            "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-evidence-v2.0.0/verification.json",
+            "content_type": "application/json"
+          }
+        ]
+      }
+    },
+    "hugging_face": {
+      "revision": "f94012872211ab6a828147bb138fbe8ab695b982",
+      "tree_url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0",
+      "manifest_url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/resolve/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0/release_manifest.json",
+      "manifest_sha256": "ac20ad695b7ceea866890376ef5e08751921bbcb520c017624727524e79b8b38",
+      "manifest_matches_published_github_archive": true,
+      "archive_file_count": 172,
+      "manifest_payload_count": 170,
+      "tree_http_status": 200
+    },
+    "status": "PASS"
+  },
+  "status": "PASS",
+  "release_metadata_and_all_asset_hashes_unchanged": true,
+  "exact_hf_manifest_unchanged": true
+}

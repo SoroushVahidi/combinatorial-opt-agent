@@ -1,5 +1,7 @@
 # Submission Metadata — SN Computer Science
 
+> **Archival relocation — 2026-10-29 (Query 2):** Use the [retained descriptive SNCS PDF](Retrieval-Assisted-Instantiation_SN-Computer-Science_Manuscript.pdf). The redundant `manuscript/sncs/main.pdf` and `manuscript/sncs/submission_package/main.pdf` copies were byte-identical to this retained file (351,282 bytes; SHA-256 `98d12f1c39d248fc90e5c02736196678313168e8d06072770513e4a989035ff1`). The original dated build/upload statements and filenames below are preserved as historical records. This cleanup does not rebuild or revise the manuscript; source packages and all scientific evidence remain unchanged.
+
 Verified information for Editorial Manager entry. Nothing below is invented; fields the author must personally confirm are marked explicitly.
 
 ## Manuscript

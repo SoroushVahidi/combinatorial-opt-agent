@@ -1,0 +1,1093 @@
+{
+  "checked_at_utc": "2026-10-29T21:40:16.810075+00:00",
+  "scope": "Inventory before cleanup worktree creation; the new isolated cleanup worktree/branch is described separately. No deletion authorization.",
+  "refs": [
+    {
+      "scope": "local",
+      "name": "audit/d1-final-controlled-pairs-20261029",
+      "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "historical": {
+        "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+        "decision": "KEEP"
+      },
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "18\t3",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "audit/nl4opt-relationship-qc-20261027",
+      "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "historical": {
+        "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+        "decision": "REQUIRES_INVESTIGATION"
+      },
+      "handoff_classification": "REQUIRES_INVESTIGATION",
+      "ahead_behind_main": "18\t3",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "audit/sncs-metric-definitions-20261027",
+      "sha": "5fe08d9e23d0d534b023ff60eed4299648092cd0",
+      "historical": {
+        "sha": "5fe08d9e23d0d534b023ff60eed4299648092cd0",
+        "decision": "KEEP"
+      },
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "1\t3",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "audit/supervised-grounding-feasibility-20261027",
+      "sha": "bd5e04c2aae50acf7f6f3d907f89e92542ad7c0a",
+      "historical": {
+        "sha": "bd5e04c2aae50acf7f6f3d907f89e92542ad7c0a",
+        "decision": "KEEP"
+      },
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "17\t3",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "experiments/d1-semantic-failure-diagnostics-20261029",
+      "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "historical": {
+        "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+        "decision": "KEEP"
+      },
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "18\t3",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "main",
+      "sha": "a3f0dde397341a41842a30ddb946e7966706351b",
+      "historical": {
+        "sha": "a3f0dde397341a41842a30ddb946e7966706351b",
+        "decision": "KEEP"
+      },
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "0\t1",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "manuscript/jdsa-abstract-introduction-stage1-20261029",
+      "sha": "67fb2b51700429e0338d2ac63eeebd321095846e",
+      "historical": {
+        "sha": "67fb2b51700429e0338d2ac63eeebd321095846e",
+        "decision": "KEEP"
+      },
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "19\t3",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "manuscript/jdsa-canonical-main-20261029",
+      "sha": "d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+      "historical": {
+        "sha": "d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "0\t0",
+      "current_ancestry_pass": true,
+      "retained_anchor": "d3071ba31eaf7babdf1e7fe234d8527191ed93de"
+    },
+    {
+      "scope": "local",
+      "name": "manuscript/jdsa-final-editorial-polish-20261029",
+      "sha": "9d8c501c58415e766d0d5773cf7cbb576da66cfa",
+      "historical": {
+        "sha": "9d8c501c58415e766d0d5773cf7cbb576da66cfa",
+        "decision": "KEEP"
+      },
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "6\t1",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "manuscript/jdsa-permanent-release-v1-20261029",
+      "sha": "0db80afe6122b1b20fd28d4f3a440001e645cdf1",
+      "historical": null,
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "8\t0",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "manuscript/jdsa-phase1-evidence-results-20261029",
+      "sha": "a09032a23c4c44a5d6d2a5215b3a8c1ca3b1a650",
+      "historical": {
+        "sha": "a09032a23c4c44a5d6d2a5215b3a8c1ca3b1a650",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "1\t1",
+      "current_ancestry_pass": true,
+      "retained_anchor": "9d8c501c58415e766d0d5773cf7cbb576da66cfa"
+    },
+    {
+      "scope": "local",
+      "name": "manuscript/jdsa-phase2-scientific-consolidation-20261029",
+      "sha": "8fbf3d073c54a4103ef06263084ea7d3fded57b3",
+      "historical": {
+        "sha": "8fbf3d073c54a4103ef06263084ea7d3fded57b3",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "2\t1",
+      "current_ancestry_pass": true,
+      "retained_anchor": "9d8c501c58415e766d0d5773cf7cbb576da66cfa"
+    },
+    {
+      "scope": "local",
+      "name": "manuscript/jdsa-phase3-journal-preparation-20261029",
+      "sha": "49827d274cae995005681fb03a299a5363583861",
+      "historical": {
+        "sha": "49827d274cae995005681fb03a299a5363583861",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "3\t1",
+      "current_ancestry_pass": true,
+      "retained_anchor": "9d8c501c58415e766d0d5773cf7cbb576da66cfa"
+    },
+    {
+      "scope": "local",
+      "name": "manuscript/jdsa-phase4-final-consistency-20261029",
+      "sha": "cea99e86d33ad83219b9bf711c310e929ae18409",
+      "historical": {
+        "sha": "cea99e86d33ad83219b9bf711c310e929ae18409",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "4\t1",
+      "current_ancestry_pass": true,
+      "retained_anchor": "9d8c501c58415e766d0d5773cf7cbb576da66cfa"
+    },
+    {
+      "scope": "local",
+      "name": "manuscript/jdsa-stage2-scientific-restructure-20261029",
+      "sha": "60785b0d144365413dd3b44b577bff901043ddd7",
+      "historical": null,
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "4\t0",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "manuscript/jdsa-stage3-final-editorial-20261029",
+      "sha": "65c4b00f99ed73e32e063b303d3d2fd91ba7876b",
+      "historical": null,
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "6\t0",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "manuscript/jdsa-stage3-submission-audit-20261029",
+      "sha": "e12c413c18e6d1f068d29509e7f9108e7ef51f65",
+      "historical": null,
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "6\t0",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "manuscript/m1-scientific-restructure-20261028",
+      "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "historical": {
+        "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+        "decision": "KEEP"
+      },
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "18\t3",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "manuscript/m3-scientific-corrections-20261028",
+      "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "historical": {
+        "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+        "decision": "KEEP"
+      },
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "18\t3",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "manuscript/m4-final-editorial-20261028",
+      "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "historical": {
+        "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+        "decision": "KEEP"
+      },
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "18\t3",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "manuscript/m5-llm-open-reproducibility-20261028",
+      "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "historical": {
+        "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+        "decision": "KEEP"
+      },
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "18\t3",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "manuscript/scientific-revision-phase1-20261027",
+      "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "historical": {
+        "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+        "decision": "KEEP"
+      },
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "18\t3",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "manuscript/scientific-revision-phase2-20261027",
+      "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "historical": {
+        "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+        "decision": "KEEP"
+      },
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "18\t3",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "manuscript/scientific-revision-phase3-20261028",
+      "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "historical": {
+        "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+        "decision": "KEEP"
+      },
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "18\t3",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "manuscript/sncs-evidence-corrections-20261027",
+      "sha": "64aa80670ace66c158ef9976e69d2cfd6b6b05ba",
+      "historical": {
+        "sha": "64aa80670ace66c158ef9976e69d2cfd6b6b05ba",
+        "decision": "KEEP"
+      },
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "16\t3",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "manuscript/sncs-grounding-attribution-notes-20261027",
+      "sha": "a2391c0747a67242586695bcca63ef8a262aed24",
+      "historical": {
+        "sha": "a2391c0747a67242586695bcca63ef8a262aed24",
+        "decision": "KEEP"
+      },
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "9\t3",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "reproducibility/jdsa-evidence-v2-20261029",
+      "sha": "3296f3bd20128077cd94a4eac82f0b5fe73e2946",
+      "historical": null,
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "2\t0",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "research/constraint-grounding-pilot-20261027",
+      "sha": "df408d347d732a87730ee819063d7a79f059d85e",
+      "historical": {
+        "sha": "df408d347d732a87730ee819063d7a79f059d85e",
+        "decision": "KEEP"
+      },
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "6\t3",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "research/g2-gold-eligibility-ablation-20261028",
+      "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "historical": {
+        "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+        "decision": "KEEP"
+      },
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "18\t3",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "research/grounding-followup-20261027",
+      "sha": "47c4733cd200b68a26077c8cc442e93d72b9a79f",
+      "historical": {
+        "sha": "47c4733cd200b68a26077c8cc442e93d72b9a79f",
+        "decision": "KEEP"
+      },
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "15\t3",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "research/nl4opt-human-annotation-20261027",
+      "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "historical": {
+        "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+        "decision": "REQUIRES_INVESTIGATION"
+      },
+      "handoff_classification": "REQUIRES_INVESTIGATION",
+      "ahead_behind_main": "18\t3",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "research/nl4opt-label-recovery-v2-20261027",
+      "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "historical": {
+        "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+        "decision": "KEEP"
+      },
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "18\t3",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "research/nl4opt-three-model-labeling-20261027",
+      "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "historical": {
+        "sha": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+        "decision": "REQUIRES_INVESTIGATION"
+      },
+      "handoff_classification": "REQUIRES_INVESTIGATION",
+      "ahead_behind_main": "18\t3",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "local",
+      "name": "research/wulver-grounding-attribution-20261027",
+      "sha": "45dd183cd2624c63625f5198370676c088002b03",
+      "historical": {
+        "sha": "45dd183cd2624c63625f5198370676c088002b03",
+        "decision": "KEEP"
+      },
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "11\t3",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "remote",
+      "name": "SoroushVahidi-patch-1",
+      "sha": "70913652bd8ff042667fa29746b62c24a5bc84c2",
+      "historical": {
+        "sha": "70913652bd8ff042667fa29746b62c24a5bc84c2",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "0\t134",
+      "current_ancestry_pass": true,
+      "retained_anchor": "d3071ba31eaf7babdf1e7fe234d8527191ed93de"
+    },
+    {
+      "scope": "remote",
+      "name": "codex/connect-codex-to-another-repository",
+      "sha": "5e4730c419000b3ed24175bbec37844816013938",
+      "historical": {
+        "sha": "5e4730c419000b3ed24175bbec37844816013938",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "0\t257",
+      "current_ancestry_pass": true,
+      "retained_anchor": "d3071ba31eaf7babdf1e7fe234d8527191ed93de"
+    },
+    {
+      "scope": "remote",
+      "name": "codex/normalize-datasets-and-build-schema-catalog",
+      "sha": "0a2e79548fe9c74026a685cbf478b385f1b83788",
+      "historical": {
+        "sha": "0a2e79548fe9c74026a685cbf478b385f1b83788",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "0\t161",
+      "current_ancestry_pass": true,
+      "retained_anchor": "d3071ba31eaf7babdf1e7fe234d8527191ed93de"
+    },
+    {
+      "scope": "remote",
+      "name": "copilot/analyze-combinatorial-optimization-bot",
+      "sha": "007bdf9c2d4723b8da2606dfde3c20677f15daa0",
+      "historical": {
+        "sha": "007bdf9c2d4723b8da2606dfde3c20677f15daa0",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "0\t217",
+      "current_ancestry_pass": true,
+      "retained_anchor": "d3071ba31eaf7babdf1e7fe234d8527191ed93de"
+    },
+    {
+      "scope": "remote",
+      "name": "copilot/clean-repo-for-manuscript-support",
+      "sha": "37ffd55c9beb68cfd48289a6fe72535c12e086c4",
+      "historical": {
+        "sha": "37ffd55c9beb68cfd48289a6fe72535c12e086c4",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "0\t206",
+      "current_ancestry_pass": true,
+      "retained_anchor": "d3071ba31eaf7babdf1e7fe234d8527191ed93de"
+    },
+    {
+      "scope": "remote",
+      "name": "copilot/cleanup-repository-for-public-quality",
+      "sha": "da32805d24e53094e93966dbf99e5cb0ca41d558",
+      "historical": {
+        "sha": "da32805d24e53094e93966dbf99e5cb0ca41d558",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "0\t146",
+      "current_ancestry_pass": true,
+      "retained_anchor": "d3071ba31eaf7babdf1e7fe234d8527191ed93de"
+    },
+    {
+      "scope": "remote",
+      "name": "copilot/create-instances-set-cover-problem",
+      "sha": "18ec926b8f05aabbec0bbbf212332361ff1efbd3",
+      "historical": {
+        "sha": "18ec926b8f05aabbec0bbbf212332361ff1efbd3",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "0\t271",
+      "current_ancestry_pass": true,
+      "retained_anchor": "d3071ba31eaf7babdf1e7fe234d8527191ed93de"
+    },
+    {
+      "scope": "remote",
+      "name": "copilot/experiment-overview",
+      "sha": "4f025995e44338ff4688c6f331e0b6011ebab40e",
+      "historical": {
+        "sha": "4f025995e44338ff4688c6f331e0b6011ebab40e",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "0\t299",
+      "current_ancestry_pass": true,
+      "retained_anchor": "d3071ba31eaf7babdf1e7fe234d8527191ed93de"
+    },
+    {
+      "scope": "remote",
+      "name": "copilot/group-1-hard-family-improvements",
+      "sha": "b3db74c9406165a063f781a48179d60414b98329",
+      "historical": {
+        "sha": "b3db74c9406165a063f781a48179d60414b98329",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "0\t287",
+      "current_ancestry_pass": true,
+      "retained_anchor": "d3071ba31eaf7babdf1e7fe234d8527191ed93de"
+    },
+    {
+      "scope": "remote",
+      "name": "copilot/identify-program-weakpoint",
+      "sha": "c15dd9d9f6fd6cdd9cf355748dd706558f786c84",
+      "historical": {
+        "sha": "c15dd9d9f6fd6cdd9cf355748dd706558f786c84",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "0\t259",
+      "current_ancestry_pass": true,
+      "retained_anchor": "d3071ba31eaf7babdf1e7fe234d8527191ed93de"
+    },
+    {
+      "scope": "remote",
+      "name": "copilot/inspect-downstream-slot-grounding",
+      "sha": "f0982d5c23b89e8067b5592fcb43b5bf28d4ad9f",
+      "historical": {
+        "sha": "f0982d5c23b89e8067b5592fcb43b5bf28d4ad9f",
+        "decision": "REQUIRES_INVESTIGATION"
+      },
+      "handoff_classification": "REQUIRES_INVESTIGATION",
+      "ahead_behind_main": "3\t300",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "remote",
+      "name": "copilot/main-branch-description",
+      "sha": "a4bcc8a57af8c40e46a0cb674ee5e74450049b28",
+      "historical": {
+        "sha": "a4bcc8a57af8c40e46a0cb674ee5e74450049b28",
+        "decision": "KEEP"
+      },
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "1\t338",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "remote",
+      "name": "copilot/normalize-data-sources-audit",
+      "sha": "31baa4aee9804f4b5aef90f17e7a667107d7feb3",
+      "historical": {
+        "sha": "31baa4aee9804f4b5aef90f17e7a667107d7feb3",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "0\t196",
+      "current_ancestry_pass": true,
+      "retained_anchor": "d3071ba31eaf7babdf1e7fe234d8527191ed93de"
+    },
+    {
+      "scope": "remote",
+      "name": "copilot/polish-clean-reorganize-repo",
+      "sha": "a74d1b6893903d912417192e1565442ea4b3e6e7",
+      "historical": {
+        "sha": "a74d1b6893903d912417192e1565442ea4b3e6e7",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "0\t149",
+      "current_ancestry_pass": true,
+      "retained_anchor": "d3071ba31eaf7babdf1e7fe234d8527191ed93de"
+    },
+    {
+      "scope": "remote",
+      "name": "copilot/prepare-research-codebase-eaai-paper",
+      "sha": "6291c76a570722a4cf77440f41ece4ea238561da",
+      "historical": {
+        "sha": "6291c76a570722a4cf77440f41ece4ea238561da",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "0\t182",
+      "current_ancestry_pass": true,
+      "retained_anchor": "d3071ba31eaf7babdf1e7fe234d8527191ed93de"
+    },
+    {
+      "scope": "remote",
+      "name": "copilot/second-hard-family-pass-problem-7",
+      "sha": "f12dc0231d99c34ba0d0256bbc362fb7cb38d3df",
+      "historical": {
+        "sha": "f12dc0231d99c34ba0d0256bbc362fb7cb38d3df",
+        "decision": "REQUIRES_INVESTIGATION"
+      },
+      "handoff_classification": "REQUIRES_INVESTIGATION",
+      "ahead_behind_main": "2\t300",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "remote",
+      "name": "copilot/setup-project-scaffolding-ai-agent",
+      "sha": "7b9ea2bc19c781d0327022c41f38358e7862b2a2",
+      "historical": {
+        "sha": "7b9ea2bc19c781d0327022c41f38358e7862b2a2",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "0\t244",
+      "current_ancestry_pass": true,
+      "retained_anchor": "d3071ba31eaf7babdf1e7fe234d8527191ed93de"
+    },
+    {
+      "scope": "remote",
+      "name": "copilot/test-program-on-iphone",
+      "sha": "086e1de529c758f2230c33e671906ea335591bca",
+      "historical": {
+        "sha": "086e1de529c758f2230c33e671906ea335591bca",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "0\t255",
+      "current_ancestry_pass": true,
+      "retained_anchor": "d3071ba31eaf7babdf1e7fe234d8527191ed93de"
+    },
+    {
+      "scope": "remote",
+      "name": "copilot/update-repository-for-eaai-manuscript",
+      "sha": "1584a4f6cd1036e6a540527df953a36aea2ebf8f",
+      "historical": {
+        "sha": "1584a4f6cd1036e6a540527df953a36aea2ebf8f",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "0\t209",
+      "current_ancestry_pass": true,
+      "retained_anchor": "d3071ba31eaf7babdf1e7fe234d8527191ed93de"
+    },
+    {
+      "scope": "remote",
+      "name": "kais-final-submission-prep",
+      "sha": "2822908c2677ffb6649530335608b41f4ef221f9",
+      "historical": {
+        "sha": "2822908c2677ffb6649530335608b41f4ef221f9",
+        "decision": "REQUIRES_INVESTIGATION"
+      },
+      "handoff_classification": "REQUIRES_INVESTIGATION",
+      "ahead_behind_main": "3\t108",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "remote",
+      "name": "main",
+      "sha": "d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+      "historical": {
+        "sha": "d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+        "decision": "KEEP"
+      },
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "0\t0",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "remote",
+      "name": "manuscript/jdsa-final-editorial-polish-20261029",
+      "sha": "9d8c501c58415e766d0d5773cf7cbb576da66cfa",
+      "historical": {
+        "sha": "9d8c501c58415e766d0d5773cf7cbb576da66cfa",
+        "decision": "KEEP"
+      },
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "6\t1",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "remote",
+      "name": "manuscript/jdsa-permanent-release-v1-20261029",
+      "sha": "0db80afe6122b1b20fd28d4f3a440001e645cdf1",
+      "historical": null,
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "8\t0",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "remote",
+      "name": "manuscript/jdsa-phase1-evidence-results-20261029",
+      "sha": "a09032a23c4c44a5d6d2a5215b3a8c1ca3b1a650",
+      "historical": {
+        "sha": "a09032a23c4c44a5d6d2a5215b3a8c1ca3b1a650",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "1\t1",
+      "current_ancestry_pass": true,
+      "retained_anchor": "9d8c501c58415e766d0d5773cf7cbb576da66cfa"
+    },
+    {
+      "scope": "remote",
+      "name": "manuscript/jdsa-phase2-scientific-consolidation-20261029",
+      "sha": "8fbf3d073c54a4103ef06263084ea7d3fded57b3",
+      "historical": {
+        "sha": "8fbf3d073c54a4103ef06263084ea7d3fded57b3",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "2\t1",
+      "current_ancestry_pass": true,
+      "retained_anchor": "9d8c501c58415e766d0d5773cf7cbb576da66cfa"
+    },
+    {
+      "scope": "remote",
+      "name": "manuscript/jdsa-phase3-journal-preparation-20261029",
+      "sha": "49827d274cae995005681fb03a299a5363583861",
+      "historical": {
+        "sha": "49827d274cae995005681fb03a299a5363583861",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "3\t1",
+      "current_ancestry_pass": true,
+      "retained_anchor": "9d8c501c58415e766d0d5773cf7cbb576da66cfa"
+    },
+    {
+      "scope": "remote",
+      "name": "manuscript/jdsa-phase4-final-consistency-20261029",
+      "sha": "cea99e86d33ad83219b9bf711c310e929ae18409",
+      "historical": {
+        "sha": "cea99e86d33ad83219b9bf711c310e929ae18409",
+        "decision": "SAFE_TO_DELETE"
+      },
+      "handoff_classification": "SAFE_TO_DELETE",
+      "ahead_behind_main": "4\t1",
+      "current_ancestry_pass": true,
+      "retained_anchor": "9d8c501c58415e766d0d5773cf7cbb576da66cfa"
+    },
+    {
+      "scope": "remote",
+      "name": "manuscript/jdsa-stage2-scientific-restructure-20261029",
+      "sha": "60785b0d144365413dd3b44b577bff901043ddd7",
+      "historical": null,
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "4\t0",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "remote",
+      "name": "manuscript/jdsa-stage3-final-editorial-20261029",
+      "sha": "65c4b00f99ed73e32e063b303d3d2fd91ba7876b",
+      "historical": null,
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "6\t0",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "remote",
+      "name": "manuscript/jdsa-stage3-submission-audit-20261029",
+      "sha": "e12c413c18e6d1f068d29509e7f9108e7ef51f65",
+      "historical": null,
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "6\t0",
+      "current_ancestry_pass": null
+    },
+    {
+      "scope": "remote",
+      "name": "reproducibility/jdsa-evidence-v2-20261029",
+      "sha": "3296f3bd20128077cd94a4eac82f0b5fe73e2946",
+      "historical": null,
+      "handoff_classification": "KEEP",
+      "ahead_behind_main": "2\t0",
+      "current_ancestry_pass": null
+    }
+  ],
+  "worktrees": [
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent",
+      "HEAD": "a3f0dde397341a41842a30ddb946e7966706351b",
+      "branch": "refs/heads/main",
+      "dirty_count": 123,
+      "commits_absent_from_remote_heads": 0,
+      "ignored_entry_count": 47,
+      "changed_file_metadata_digest": "856a3b8fc44dc522a0b3d4e139d14c17cb9d4b22e93770944523c66e14dcdf4e",
+      "active_process_count": 3
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-d1-final-pair-audit",
+      "HEAD": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "branch": "refs/heads/audit/d1-final-controlled-pairs-20261029",
+      "dirty_count": 25,
+      "commits_absent_from_remote_heads": 18,
+      "ignored_entry_count": 0,
+      "changed_file_metadata_digest": "f251a94af2c4834de2a1605b2ffb131a36a401c90468c2471ce5be91bd5c7edc",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-d1-semantic-diagnostics",
+      "HEAD": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "branch": "refs/heads/experiments/d1-semantic-failure-diagnostics-20261029",
+      "dirty_count": 653,
+      "commits_absent_from_remote_heads": 18,
+      "ignored_entry_count": 15,
+      "changed_file_metadata_digest": "f0e7e7d19469871e09ab821f8c5f21e07aa378942ba76c75fd702ed73c2f618d",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-g2-gold-eligibility-ablation",
+      "HEAD": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "branch": "refs/heads/research/g2-gold-eligibility-ablation-20261028",
+      "dirty_count": 16,
+      "commits_absent_from_remote_heads": 18,
+      "ignored_entry_count": 0,
+      "changed_file_metadata_digest": "397f6709595daef8f13cbe79848db0a43a2ea38a6303bf55c3ed1adf91cd2861",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-grounding-followup",
+      "HEAD": "47c4733cd200b68a26077c8cc442e93d72b9a79f",
+      "branch": "refs/heads/research/grounding-followup-20261027",
+      "dirty_count": 0,
+      "commits_absent_from_remote_heads": 15,
+      "ignored_entry_count": 8,
+      "changed_file_metadata_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-jdsa-evidence-v2",
+      "HEAD": "3296f3bd20128077cd94a4eac82f0b5fe73e2946",
+      "branch": "refs/heads/reproducibility/jdsa-evidence-v2-20261029",
+      "dirty_count": 0,
+      "commits_absent_from_remote_heads": 0,
+      "ignored_entry_count": 0,
+      "changed_file_metadata_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-jdsa-final-polish",
+      "HEAD": "9d8c501c58415e766d0d5773cf7cbb576da66cfa",
+      "branch": "refs/heads/manuscript/jdsa-final-editorial-polish-20261029",
+      "dirty_count": 0,
+      "commits_absent_from_remote_heads": 0,
+      "ignored_entry_count": 0,
+      "changed_file_metadata_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-jdsa-main-publish",
+      "HEAD": "d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+      "branch": "refs/heads/manuscript/jdsa-canonical-main-20261029",
+      "dirty_count": 0,
+      "commits_absent_from_remote_heads": 0,
+      "ignored_entry_count": 0,
+      "changed_file_metadata_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-jdsa-phase1",
+      "HEAD": "a09032a23c4c44a5d6d2a5215b3a8c1ca3b1a650",
+      "branch": "refs/heads/manuscript/jdsa-phase1-evidence-results-20261029",
+      "dirty_count": 0,
+      "commits_absent_from_remote_heads": 0,
+      "ignored_entry_count": 0,
+      "changed_file_metadata_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-jdsa-phase2",
+      "HEAD": "8fbf3d073c54a4103ef06263084ea7d3fded57b3",
+      "branch": "refs/heads/manuscript/jdsa-phase2-scientific-consolidation-20261029",
+      "dirty_count": 0,
+      "commits_absent_from_remote_heads": 0,
+      "ignored_entry_count": 0,
+      "changed_file_metadata_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-jdsa-phase3",
+      "HEAD": "49827d274cae995005681fb03a299a5363583861",
+      "branch": "refs/heads/manuscript/jdsa-phase3-journal-preparation-20261029",
+      "dirty_count": 0,
+      "commits_absent_from_remote_heads": 0,
+      "ignored_entry_count": 0,
+      "changed_file_metadata_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-jdsa-phase4",
+      "HEAD": "cea99e86d33ad83219b9bf711c310e929ae18409",
+      "branch": "refs/heads/manuscript/jdsa-phase4-final-consistency-20261029",
+      "dirty_count": 0,
+      "commits_absent_from_remote_heads": 0,
+      "ignored_entry_count": 0,
+      "changed_file_metadata_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-jdsa-release-v1",
+      "HEAD": "0db80afe6122b1b20fd28d4f3a440001e645cdf1",
+      "branch": "refs/heads/manuscript/jdsa-permanent-release-v1-20261029",
+      "dirty_count": 0,
+      "commits_absent_from_remote_heads": 0,
+      "ignored_entry_count": 0,
+      "changed_file_metadata_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-jdsa-stage1",
+      "HEAD": "67fb2b51700429e0338d2ac63eeebd321095846e",
+      "branch": "refs/heads/manuscript/jdsa-abstract-introduction-stage1-20261029",
+      "dirty_count": 26,
+      "commits_absent_from_remote_heads": 19,
+      "ignored_entry_count": 11,
+      "changed_file_metadata_digest": "eeac8b49cb8d7523e1436d51c9f7048677fa01a1ccc3b163dbe8e49670f548ea",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-jdsa-stage2",
+      "HEAD": "60785b0d144365413dd3b44b577bff901043ddd7",
+      "branch": "refs/heads/manuscript/jdsa-stage2-scientific-restructure-20261029",
+      "dirty_count": 0,
+      "commits_absent_from_remote_heads": 0,
+      "ignored_entry_count": 0,
+      "changed_file_metadata_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-jdsa-stage3",
+      "HEAD": "65c4b00f99ed73e32e063b303d3d2fd91ba7876b",
+      "branch": "refs/heads/manuscript/jdsa-stage3-final-editorial-20261029",
+      "dirty_count": 0,
+      "commits_absent_from_remote_heads": 0,
+      "ignored_entry_count": 1,
+      "changed_file_metadata_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-jdsa-stage3-audit",
+      "HEAD": "e12c413c18e6d1f068d29509e7f9108e7ef51f65",
+      "branch": "refs/heads/manuscript/jdsa-stage3-submission-audit-20261029",
+      "dirty_count": 0,
+      "commits_absent_from_remote_heads": 0,
+      "ignored_entry_count": 0,
+      "changed_file_metadata_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-joint-grounding",
+      "HEAD": "df408d347d732a87730ee819063d7a79f059d85e",
+      "branch": "refs/heads/research/constraint-grounding-pilot-20261027",
+      "dirty_count": 0,
+      "commits_absent_from_remote_heads": 6,
+      "ignored_entry_count": 18,
+      "changed_file_metadata_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-manuscript-attribution-notes",
+      "HEAD": "a2391c0747a67242586695bcca63ef8a262aed24",
+      "branch": "refs/heads/manuscript/sncs-grounding-attribution-notes-20261027",
+      "dirty_count": 0,
+      "commits_absent_from_remote_heads": 9,
+      "ignored_entry_count": 1,
+      "changed_file_metadata_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-manuscript-m1",
+      "HEAD": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "branch": "refs/heads/manuscript/m1-scientific-restructure-20261028",
+      "dirty_count": 120,
+      "commits_absent_from_remote_heads": 18,
+      "ignored_entry_count": 10,
+      "changed_file_metadata_digest": "4c0bf3e61a44bfe4731a4b1610367a5f5eb48fd7dc780ea819cde6e84983a1fd",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-manuscript-m3",
+      "HEAD": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "branch": "refs/heads/manuscript/m3-scientific-corrections-20261028",
+      "dirty_count": 37,
+      "commits_absent_from_remote_heads": 18,
+      "ignored_entry_count": 17,
+      "changed_file_metadata_digest": "8f4db18bbac06246a10526371820580a70c44564bd0211563e6b9809ea2644f7",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-manuscript-m4",
+      "HEAD": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "branch": "refs/heads/manuscript/m4-final-editorial-20261028",
+      "dirty_count": 236,
+      "commits_absent_from_remote_heads": 18,
+      "ignored_entry_count": 23,
+      "changed_file_metadata_digest": "cc3f7ac7ad58a4d86a8fb26fa5bc48663fddf9d2148b33fd98834a0ac58e49e9",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-manuscript-m5",
+      "HEAD": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "branch": "refs/heads/manuscript/m5-llm-open-reproducibility-20261028",
+      "dirty_count": 1131,
+      "commits_absent_from_remote_heads": 18,
+      "ignored_entry_count": 38,
+      "changed_file_metadata_digest": "d2c7862bddd4ca76c77e1550f6cacfedef1c24a08afda2e2af6d33bc692decde",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-metric-audit",
+      "HEAD": "5fe08d9e23d0d534b023ff60eed4299648092cd0",
+      "branch": "refs/heads/audit/sncs-metric-definitions-20261027",
+      "dirty_count": 0,
+      "commits_absent_from_remote_heads": 1,
+      "ignored_entry_count": 8,
+      "changed_file_metadata_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-nl4opt-label-audit",
+      "HEAD": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "branch": "refs/heads/research/nl4opt-label-recovery-v2-20261027",
+      "dirty_count": 618,
+      "commits_absent_from_remote_heads": 18,
+      "ignored_entry_count": 12,
+      "changed_file_metadata_digest": "50a0e58ee417cf3cdf355fa8d1d5f64288820c0bab2ce10a691e927f020c134a",
+      "active_process_count": 3
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-scientific-revision-phase1",
+      "HEAD": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "branch": "refs/heads/manuscript/scientific-revision-phase1-20261027",
+      "dirty_count": 47,
+      "commits_absent_from_remote_heads": 18,
+      "ignored_entry_count": 5,
+      "changed_file_metadata_digest": "584bc7e0c4a4f1af0095438ba148290499e7958c0dc19840b9cbe69a556e5b0d",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-scientific-revision-phase2",
+      "HEAD": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "branch": "refs/heads/manuscript/scientific-revision-phase2-20261027",
+      "dirty_count": 142,
+      "commits_absent_from_remote_heads": 18,
+      "ignored_entry_count": 5,
+      "changed_file_metadata_digest": "7704d358fcd0dba9e9232e44843076e1a609efe1be75136c89a207de70056f39",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-scientific-revision-phase3",
+      "HEAD": "7324dfdacef5e102d57a2e64288e824fb267a44e",
+      "branch": "refs/heads/manuscript/scientific-revision-phase3-20261028",
+      "dirty_count": 75,
+      "commits_absent_from_remote_heads": 18,
+      "ignored_entry_count": 5,
+      "changed_file_metadata_digest": "807df4c45c286b2254de077c5a34294fc96d4f9bc0fab956d7b76281ec8be268",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-sncs-corrections",
+      "HEAD": "64aa80670ace66c158ef9976e69d2cfd6b6b05ba",
+      "branch": "refs/heads/manuscript/sncs-evidence-corrections-20261027",
+      "dirty_count": 0,
+      "commits_absent_from_remote_heads": 16,
+      "ignored_entry_count": 13,
+      "changed_file_metadata_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-supervised-feasibility",
+      "HEAD": "bd5e04c2aae50acf7f6f3d907f89e92542ad7c0a",
+      "branch": "refs/heads/audit/supervised-grounding-feasibility-20261027",
+      "dirty_count": 0,
+      "commits_absent_from_remote_heads": 17,
+      "ignored_entry_count": 3,
+      "changed_file_metadata_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "active_process_count": 0
+    },
+    {
+      "worktree": "/home/soroush/combinatorial-opt-agent-wulver-attribution",
+      "HEAD": "45dd183cd2624c63625f5198370676c088002b03",
+      "branch": "refs/heads/research/wulver-grounding-attribution-20261027",
+      "dirty_count": 0,
+      "commits_absent_from_remote_heads": 11,
+      "ignored_entry_count": 6,
+      "changed_file_metadata_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "active_process_count": 0
+    }
+  ]
+}
