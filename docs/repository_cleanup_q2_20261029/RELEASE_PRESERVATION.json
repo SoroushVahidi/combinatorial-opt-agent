@@ -255,5 +255,19 @@
   },
   "status": "PASS",
   "release_metadata_and_all_asset_hashes_unchanged": true,
-  "exact_hf_manifest_unchanged": true
+  "exact_hf_manifest_unchanged": true,
+  "after_push_confirmation": {
+    "verified_at_utc": "2026-10-29T21:44:47.822263+00:00",
+    "releases": [
+      {
+        "tag": "jdsa-manuscript-v1.0.0",
+        "unchanged_metadata_and_asset_digests": true
+      },
+      {
+        "tag": "jdsa-evidence-v2.0.0",
+        "unchanged_metadata_and_asset_digests": true
+      }
+    ],
+    "exact_hf_manifest_unchanged": true
+  }
 }

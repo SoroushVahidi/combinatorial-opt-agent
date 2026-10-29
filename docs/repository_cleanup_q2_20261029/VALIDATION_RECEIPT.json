@@ -139,5 +139,70 @@
     "new_query2_reports_and_receipts": 10,
     "delivery": 1490
   },
-  "new_report_links": "PASS"
+  "new_report_links": "PASS",
+  "remote_publication": {
+    "status": "PASS",
+    "verified_commit": "34514e28bc46e5a622266e61e8202adb19ad39dd",
+    "verified_at_utc": "2026-10-29T21:44:19.930397+00:00",
+    "remote_main_unchanged": "d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+    "local_main_unchanged": "a3f0dde397341a41842a30ddb946e7966706351b",
+    "all_existing_remote_refs_and_tags_unchanged": true,
+    "all_existing_local_refs_and_tags_unchanged": true,
+    "only_added_remote_ref": "refs/heads/cleanup/repository-q2-safe-files-20261029",
+    "diff_against_origin_main": [
+      "M\t.gitignore",
+      "D\tdata/processed/.gitkeep",
+      "M\tdocs/SNCS_STAGE4_FINAL_SUBMISSION_AUDIT.md",
+      "A\tdocs/repository_cleanup_q2_20261029/01_EXECUTION_REPORT.md",
+      "A\tdocs/repository_cleanup_q2_20261029/02_REMOVED_FILES.md",
+      "A\tdocs/repository_cleanup_q2_20261029/03_PRESERVED_FILES.md",
+      "A\tdocs/repository_cleanup_q2_20261029/04_VALIDATION_RESULTS.md",
+      "A\tdocs/repository_cleanup_q2_20261029/05_QUERY3_HANDOFF.md",
+      "A\tdocs/repository_cleanup_q2_20261029/AUDIT_RECOVERY.json",
+      "A\tdocs/repository_cleanup_q2_20261029/HANDOFF_INVENTORY.json",
+      "A\tdocs/repository_cleanup_q2_20261029/RELEASE_PRESERVATION.json",
+      "A\tdocs/repository_cleanup_q2_20261029/VALIDATION_RECEIPT.json",
+      "A\tdocs/repository_cleanup_q2_20261029/WORKTREE_PRESERVATION.json",
+      "M\tmanuscript/sncs/FINAL_UPLOAD_MANIFEST.md",
+      "M\tmanuscript/sncs/SUBMISSION_METADATA.md",
+      "D\tmanuscript/sncs/main.pdf",
+      "D\tmanuscript/sncs/submission_package/main.pdf",
+      "D\tnotebooks/.gitkeep",
+      "D\toutputs/consistency_benchmark/.gitkeep",
+      "D\tvalidation/.gitkeep"
+    ],
+    "report_downloads": [
+      {
+        "path": "docs/repository_cleanup_q2_20261029/01_EXECUTION_REPORT.md",
+        "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/34514e28bc46e5a622266e61e8202adb19ad39dd/docs/repository_cleanup_q2_20261029/01_EXECUTION_REPORT.md",
+        "status": 200,
+        "sha256": "88f4e75158d4dd09dc01a0f63586b948119a7bf174556027e2a72f5c8b3fb1dd"
+      },
+      {
+        "path": "docs/repository_cleanup_q2_20261029/02_REMOVED_FILES.md",
+        "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/34514e28bc46e5a622266e61e8202adb19ad39dd/docs/repository_cleanup_q2_20261029/02_REMOVED_FILES.md",
+        "status": 200,
+        "sha256": "14562a137825720d8f66127032538ace174728ffcd9d061a2fa9af08aeba6485"
+      },
+      {
+        "path": "docs/repository_cleanup_q2_20261029/03_PRESERVED_FILES.md",
+        "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/34514e28bc46e5a622266e61e8202adb19ad39dd/docs/repository_cleanup_q2_20261029/03_PRESERVED_FILES.md",
+        "status": 200,
+        "sha256": "69c2a48e702ec46cdd7eaea970faa16c192ea01f28483e30d102a9ff761db95a"
+      },
+      {
+        "path": "docs/repository_cleanup_q2_20261029/04_VALIDATION_RESULTS.md",
+        "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/34514e28bc46e5a622266e61e8202adb19ad39dd/docs/repository_cleanup_q2_20261029/04_VALIDATION_RESULTS.md",
+        "status": 200,
+        "sha256": "1d7855331385f9734ec49a0940570a761d36787b3297ba0c98019791c5a50840"
+      },
+      {
+        "path": "docs/repository_cleanup_q2_20261029/05_QUERY3_HANDOFF.md",
+        "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/34514e28bc46e5a622266e61e8202adb19ad39dd/docs/repository_cleanup_q2_20261029/05_QUERY3_HANDOFF.md",
+        "status": 200,
+        "sha256": "57d34028f4f67edf9578d701444ad3d67381aa129f8e1dc3dc245697305ffeb5"
+      }
+    ],
+    "working_tree_clean": true
+  }
 }

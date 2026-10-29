@@ -29,3 +29,7 @@ Both new permanent releases were independently downloaded and authenticated. The
 ## Remaining issues
 
 The pre-existing Cardinal downloader syntax error, one historical Markdown link and one Python escape warning remain. Nineteen investigation files and six investigation branches remain unresolved and preserved. Full historical reproduction, raw-source redistribution questions and remote-job inactivity are not established by this cleanup. [Validation](04_VALIDATION_RESULTS.md) distinguishes these limits from successful Query 2 checks; [Query 3 handoff](05_QUERY3_HANDOFF.md) gives the bounded next actions.
+
+## Remote publication verification
+
+The cleanup implementation commit `34514e28bc46e5a622266e61e8202adb19ad39dd` was pushed and independently verified at origin. Its diff against `origin/main` has exactly the approved six deletions, four modifications and ten report/receipt additions. All five reports were anonymously downloaded and byte-matched. Existing local/remote refs and every release tag remained unchanged; both release metadata/asset digests and the exact Hugging Face manifest were rechecked after push. This subsequent documentation-only verification commit changes no cleanup implementation or scientific artifact. The final delivery commit is returned in the task response.
