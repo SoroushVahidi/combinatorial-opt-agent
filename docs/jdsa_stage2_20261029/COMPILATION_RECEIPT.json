@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "engine": "pdfTeX 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian)",
+  "procedure": "Fresh temporary build; initial pdfLaTeX per document, BibTeX per document, three paired cross-reference passes",
+  "documents": {
+    "main": {
+      "path": "manuscript/jdsa-stage2/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+      "sha256": "ccfb7f861fa8cef8de2872436b6a6472b517c67cef2051e582eb437c18b8a13e",
+      "bytes": 442951,
+      "pages": 15,
+      "final_log_sha256": "565106d67f9a9643a34a45fe9ac66d426068fdd457e8e9e5581c2fccc0c2df69",
+      "bibtex_log_sha256": "2199355609f7798618798b728d1046beafb36a79d9d287ea08615603c212d7c7",
+      "undefined_references": 0,
+      "overfull_boxes": 0,
+      "missing_characters": 0,
+      "bibtex_warnings": 0
+    },
+    "supplement": {
+      "path": "manuscript/jdsa-stage2/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf",
+      "sha256": "051f365eb4cf86b3194525792ed3f8571dee5c4c3902a7d3ce9033a679dddc28",
+      "bytes": 426796,
+      "pages": 36,
+      "final_log_sha256": "ee932da9b2cec4d8ad118343677a0d2d1da1f3b9448fb7c42c09e7300d1e87a2",
+      "bibtex_log_sha256": "e908b1c9ee739d34766a816ea25c6aeb1b3ebe0385ce0308089d340146f6bdc3",
+      "undefined_references": 0,
+      "overfull_boxes": 0,
+      "missing_characters": 0,
+      "bibtex_warnings": 0
+    }
+  },
+  "visual_review": {
+    "all_pages_contact_sheets_inspected": true,
+    "main_pages": 15,
+    "supplement_pages": 36,
+    "detail_pages": [
+      "main 9 (conditional table and endpoint definitions)",
+      "main 11 (factorial table and semantic-boundary discussion)"
+    ],
+    "findings": "No clipping, overlapping objects, broken math glyphs or visibly unresolved reference markers found. Supplement retains wide-table single-column layout."
+  },
+  "zero_new_inference_or_solver_experiments": true
+}

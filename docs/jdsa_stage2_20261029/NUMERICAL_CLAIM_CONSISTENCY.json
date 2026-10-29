@@ -1,0 +1,3050 @@
+{
+  "abstract_words": 220,
+  "baseline": "3296f3bd20128077cd94a4eac82f0b5fe73e2946",
+  "checks": [
+    {
+      "check": "all220 original claim objects parsed",
+      "status": "PASS"
+    },
+    {
+      "check": "unchanged canonical source manuscript/jdsa/source/main.tex",
+      "status": "PASS"
+    },
+    {
+      "check": "unchanged canonical source manuscript/jdsa/source/reproduction_map.tex",
+      "status": "PASS"
+    },
+    {
+      "check": "unchanged canonical source manuscript/jdsa/source/reference_conventions.tex",
+      "status": "PASS"
+    },
+    {
+      "check": "unchanged canonical source manuscript/jdsa/source/supervision_diagnostics.tex",
+      "status": "PASS"
+    },
+    {
+      "check": "unchanged canonical source manuscript/jdsa/source/grounding_diagnostics.tex",
+      "status": "PASS"
+    },
+    {
+      "check": "unchanged canonical source manuscript/jdsa/source/pipeline_figure.tex",
+      "status": "PASS"
+    },
+    {
+      "check": "unchanged canonical source manuscript/jdsa/source/closed_audits.tex",
+      "status": "PASS"
+    },
+    {
+      "check": "unchanged canonical source manuscript/jdsa/source/relationship_supplement.tex",
+      "status": "PASS"
+    },
+    {
+      "check": "unchanged canonical source manuscript/jdsa/source/preserved_results_details.tex",
+      "status": "PASS"
+    },
+    {
+      "check": "unchanged canonical source manuscript/jdsa/source/supplement.tex",
+      "status": "PASS"
+    },
+    {
+      "check": "unchanged canonical source manuscript/jdsa/source/llm_evidence.tex",
+      "status": "PASS"
+    },
+    {
+      "check": "unchanged canonical source manuscript/jdsa/source/grounding_summary.tex",
+      "status": "PASS"
+    },
+    {
+      "check": "unchanged canonical source manuscript/jdsa/source/relationship_evidence.tex",
+      "status": "PASS"
+    },
+    {
+      "check": "unchanged canonical source manuscript/jdsa/source/additional_evidence.tex",
+      "status": "PASS"
+    },
+    {
+      "check": "unchanged canonical source manuscript/jdsa/source/d1_contrasts.tex",
+      "status": "PASS"
+    },
+    {
+      "check": "immutable sources/evidence unchanged",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA AUDIT.md",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA ENVIRONMENT.md",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA LICENSE_DATA.md",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA LICENSE_SOFTWARE",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA LIMITATIONS.md",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA PUBLICATION_REVIEW.md",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA README.md",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA UPSTREAM_ACCESS.md",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA claims.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA data/assignment_controls.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA data/common18_cases.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA data/d1_author_decisions.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA data/d1_cases.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA data/g3_counts.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA data/llm217_missing20.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA data/llm217_per_judgment.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA data/llm217_requests.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA data/llm217_validation.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA data/reference_overlay.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA data/relationship_stages.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA expected/PRESERVED_PAIRED_STATISTICS.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA expected/PRESERVED_TEXT_GROUPS.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA expected/SAVED_METRIC_CHECKS.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA expected/common18_summary.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA expected/d1_audit.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA expected/manuscript_cells.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA provenance/build_sources.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA provenance/investigation_sources.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA provenance/investigations.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA provenance/m5_inventory.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA provenance/manuscript_sources.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA provenance/providers.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA provenance/publication_scan.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA requirements-validation.txt",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/baseline_staleness_audit_2026-08-12/nlp4lp_downstream_per_query_orig_bm25.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/baseline_staleness_audit_2026-08-12/nlp4lp_downstream_per_query_orig_lsa.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/baseline_staleness_audit_2026-08-12/nlp4lp_downstream_per_query_orig_oracle.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/baseline_staleness_audit_2026-08-12/nlp4lp_downstream_per_query_orig_tfidf.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/baseline_staleness_audit_2026-08-12/nlp4lp_downstream_per_query_orig_tfidf_acceptance_rerank.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/baseline_staleness_audit_2026-08-12/nlp4lp_downstream_per_query_orig_tfidf_constrained.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/baseline_staleness_audit_2026-08-12/nlp4lp_downstream_per_query_orig_tfidf_hierarchical_acceptance_rerank.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/baseline_staleness_audit_2026-08-12/nlp4lp_downstream_per_query_orig_tfidf_hierarchical_structured_grounding.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/baseline_staleness_audit_2026-08-12/nlp4lp_downstream_per_query_orig_tfidf_max_weight_matching.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/baseline_staleness_audit_2026-08-12/nlp4lp_downstream_per_query_orig_tfidf_optimization_role_repair.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/baseline_staleness_audit_2026-08-12/nlp4lp_downstream_per_query_orig_tfidf_search_structured_grounding.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/baseline_staleness_audit_2026-08-12/nlp4lp_downstream_per_query_orig_tfidf_semantic_ir_repair.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/dense_retrieval_bge_m3/nlp4lp_downstream_per_query_noisy_bge_m3.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/dense_retrieval_bge_m3/nlp4lp_downstream_per_query_orig_bge_m3.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/dense_retrieval_bge_m3/nlp4lp_downstream_per_query_short_bge_m3.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/01_retrieval/retrieval_results.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_bm25.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_lsa.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_oracle.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_acceptance_rerank.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_ambiguity_aware_abstain.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_ambiguity_aware_beam.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_ambiguity_aware_full.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_ambiguity_candidate_greedy.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_constrained.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_global_compat_full.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_global_compat_local.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_global_compat_pairwise.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_hierarchical_acceptance_rerank.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_optimization_role_repair.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_relation_aware_basic.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_relation_aware_full.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_relation_aware_ops.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_relation_aware_semantic.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_semantic_ir_repair.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_bm25.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_lsa.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_oracle.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_acceptance_rerank.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_ambiguity_aware_abstain.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_ambiguity_aware_beam.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_ambiguity_aware_full.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_ambiguity_candidate_greedy.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_constrained.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_global_compat_full.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_global_compat_local.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_global_compat_pairwise.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_hierarchical_acceptance_rerank.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_optimization_role_repair.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_relation_aware_basic.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_relation_aware_full.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_relation_aware_ops.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_relation_aware_semantic.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_semantic_ir_repair.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_bm25.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_lsa.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_oracle.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_acceptance_rerank.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_ambiguity_aware_abstain.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_ambiguity_aware_beam.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_ambiguity_aware_full.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_ambiguity_candidate_greedy.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_constrained.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_global_compat_full.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_global_compat_local.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_global_compat_pairwise.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_hierarchical_acceptance_rerank.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_optimization_role_repair.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_relation_aware_basic.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_relation_aware_full.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_relation_aware_ops.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_relation_aware_semantic.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_semantic_ir_repair.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/final_resubmission_method/nlp4lp_downstream_per_query_orig_tfidf.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/grounding_followup_2026-10-27/audit/factorial_all_24.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/grounding_followup_2026-10-27/audit/factorial_per_query.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/grounding_followup_2026-10-27/audit/search_retention_saved.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/grounding_followup_2026-10-27/audit/single_factor_paired_tests.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/grounding_followup_2026-10-27/slurm_1462557/distinct_retention_per_query.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/joint_grounding_2026-10-27/candidate_recall_per_query.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/joint_grounding_2026-10-27/pilot_per_query.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/joint_grounding_2026-10-27/pilot_summary.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/joint_grounding_2026-10-27/type_aware_candidate_ceiling.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/learned_grounding_p0/ablation_results.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/learned_grounding_p0/test_results.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/oracle_recomputation_2026-08-15/nlp4lp_downstream_per_query_orig_oracle.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/paper/eaai_camera_ready_tables/table2_engineering_structural_subset.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/paper/eaai_camera_ready_tables/table3_executable_attempt_with_blockers.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/paper/eaai_camera_ready_tables/table4_final_solver_backed_subset.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/paper/nlp4lp_downstream_per_query_noisy_bm25.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/paper/nlp4lp_downstream_per_query_noisy_lsa.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/paper/nlp4lp_downstream_per_query_noisy_openai.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/paper/nlp4lp_downstream_per_query_noisy_tfidf.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/paper/nlp4lp_downstream_per_query_orig_bm25.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/paper/nlp4lp_downstream_per_query_orig_lsa.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/paper/nlp4lp_downstream_per_query_orig_openai.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/paper/nlp4lp_downstream_per_query_orig_tfidf.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/paper/nlp4lp_downstream_per_query_short_bm25.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/paper/nlp4lp_downstream_per_query_short_lsa.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/paper/nlp4lp_downstream_per_query_short_openai.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/paper/nlp4lp_downstream_per_query_short_tfidf.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/rerun/mistral/run_903088/paper/nlp4lp_downstream_per_query_orig_mistral.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/selective_grounding_rerank/nlp4lp_downstream_per_query_orig_tfidf.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/sncs_corrections_2026-10-27/cached_stage_a_reference_reanalysis.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/sncs_corrections_2026-10-27/corrected_paired_statistics.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/stage6_matched_grounding_baselines_2026-08-27/nlp4lp_downstream_per_query_orig_tfidf.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/stage6_matched_grounding_baselines_2026-08-27/nlp4lp_downstream_per_query_orig_tfidf_constrained.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/stage6_matched_grounding_baselines_2026-08-27/nlp4lp_downstream_per_query_orig_tfidf_max_weight_matching.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/stage6_matched_grounding_baselines_2026-08-27/nlp4lp_downstream_per_query_orig_tfidf_optimization_role_repair.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/stage6_matched_grounding_baselines_2026-08-27/nlp4lp_downstream_per_query_orig_tfidf_search_structured_grounding.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA results/stage6_matched_grounding_baselines_2026-08-27/nlp4lp_downstream_per_query_orig_tfidf_semantic_ir_repair.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA summaries/g3_inventory.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA summaries/results/external_validation/optmath/aggregate_metrics.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA summaries/results/external_validation/optmath/final_verification/classifier_validation.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA summaries/results/external_validation/optmath/final_verification/verified_metrics.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA summaries/results/final_resubmission_method/runtime.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA summaries/results/grounding_followup_2026-10-27/audit/audit.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA summaries/results/grounding_followup_2026-10-27/slurm_1462557/summary.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA summaries/results/joint_grounding_2026-10-27/candidate_recall_summary.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA summaries/results/joint_grounding_2026-10-27/completed_run_reanalysis.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA summaries/results/joint_grounding_2026-10-27/error_category_summary.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA summaries/results/role_quantity_stage_a/summary.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA summaries/results/sncs_corrections_2026-10-27/cached_stage_a_reference_summary.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA summaries/results/sncs_corrections_2026-10-27/external_extraction_aggregation_correction.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA summaries/results/strict_failure_quick_fix/summary.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA summaries/results/topk_schema_rerank_stage_a/summary.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA summaries/results/wulver_grounding_attribution_2026-10-27/slurm_1462366/summary.json",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA test_verifier.py",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA upstream_required/baselines/comparison/objective_evidence.py",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA upstream_required/tools/validate_common18_m3.py",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA upstream_required/tools/verify_llm217_m5.py",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA verify.py",
+      "status": "PASS"
+    },
+    {
+      "check": "evidence SHA verify_saved_metrics.py",
+      "status": "PASS"
+    },
+    {
+      "check": "frozen release verifier PASS",
+      "status": "PASS"
+    },
+    {
+      "check": "two independent conditional derivations and edge tests",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input main",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input relationship_evidence",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input main",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input supplement",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input grounding_diagnostics",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input reference_conventions",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input reproduction_map",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input supervision_diagnostics",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input llm_evidence",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input closed_audits",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input relationship_supplement",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input preserved_results_details",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input additional_evidence",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input d1_contrasts",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input supplement",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input supporting_core",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input grounding_diagnostics",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input reference_conventions",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input reproduction_map",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input supervision_diagnostics",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input common18_overview",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input llm_evidence",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input closed_audits",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input relationship_evidence",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input relationship_supplement",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input preserved_results_details",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input additional_evidence",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input d1_contrasts",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input related_context",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "one label per float",
+      "status": "PASS"
+    },
+    {
+      "check": "all37 original numbered objects retained",
+      "status": "PASS"
+    },
+    {
+      "check": "exactly one new table",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells alg:instantiation",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells fig:instantiation-pipeline",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:nlp4lp-retrieval-main",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:nlp4lp-downstream-main",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:nlp4lp-grounding-baselines",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:nlp4lp-error-taxonomy",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:nlp4lp-prefix-postfix",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:nlp4lp-significance",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:strict-instready",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:ext-outcomes",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:relationship-validity",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:comparison_landscape",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:retrieval_backbones",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:exp_blocks",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:nlp4lp-overlap",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:eng-structural",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:eng-solver",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:grounding-factorial-diagnostic",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:reference-overlay",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:population-map",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:input-dependencies",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:ext-context",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:llm-provenance",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:llm-failures",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:llm-cases",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:g3-inventory",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:relationship-requests",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:relationship-labels",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:relationship-clusters",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:legacy-grounding",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:staleness-grounding",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:ranked-retrieval",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:cached-ceilings",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:full-joint-pilot",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:archived-scalar-llm",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:d1-a",
+      "status": "PASS"
+    },
+    {
+      "check": "preserved numerical cells tab:d1-b",
+      "status": "PASS"
+    },
+    {
+      "check": "unique main labels",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:intro_contributions",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label sec:related_work",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:rw_binding",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:rw_llm_generation",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:rw_retrieval_memory",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:rw_position",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label sec:task",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:method_problem",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label eq:top1_schema",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label eq:eligible_slots",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:assistance-setting",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:inference-dependencies",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:metrics",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label eq:coverage",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label eq:typematch",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label eq:bounded_error",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label eq:exact20",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label eq:instantiation_ready",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label eq:strict_instantiation_ready",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label eq:full-scalar",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label eq:conditional-agreement",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label sec:methodology",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label sec:method",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:method_retrieval",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:exp_setup",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:method_instantiation",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:method_design",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label eq:typed_assignment",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label alg:instantiation",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label fig:instantiation-pipeline",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:method_controls",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:exp_significance",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label sec:experiments",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:exp_retrieval",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:nlp4lp-retrieval-main",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:exp_downstream",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:nlp4lp-downstream-main",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:ready-conditioned",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:exp_error",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:nlp4lp-error-taxonomy",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:exp_grounding_baselines",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:nlp4lp-grounding-baselines",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:grounding-followup",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:grounding-factorial-diagnostic",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label sec:discussion",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label sec:llm",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:numerical-grounding-challenges",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:relationship-audit",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:d1",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:limitations",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:reanalysis",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:future_work",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:closed-audits",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label sec:conclusion",
+      "status": "PASS"
+    },
+    {
+      "check": "unique supplement labels",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:comparison_landscape",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:retrieval_backbones",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:exp_blocks",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label app:core-support",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label app:extraction-ablation",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:nlp4lp-prefix-postfix",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:strict-instready",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label app:paired-comparisons",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:nlp4lp-significance",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:nlp4lp-overlap",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:eng-structural",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:eng-solver",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label app:grounding-diagnostics",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label app:factorial-details",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label app:reference-conventions",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:reference-overlay",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label eq:snack-overlay",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label app:reproduction",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:population-map",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label app:input-dependencies",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:input-dependencies",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label app:supervision-audit",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label app:nl4opt-audit",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label app:common18",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:exp_external",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:ext-outcomes",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:ext-context",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:llm-provenance",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label eq:common18-objective-proxy",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:llm-failures",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:llm-cases",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label app:g3",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:g3-inventory",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label app:relationship-overview",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:relationship-validity",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label app:relationship-evidence",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:relationship-requests",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:relationship-labels",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label eq:fleiss",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:relationship-clusters",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label app:future-reference",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label app:restricted-details",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:exp_engineering",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label app:runtime-details",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:exp_runtime",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label app:occurrence-boundary",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label app:statistical-history",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label app:additional-evidence",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:legacy-grounding",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:staleness-grounding",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:ranked-retrieval",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:cached-ceilings",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:full-joint-pilot",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:archived-scalar-llm",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label app:extraction-details",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label subsec:exp_external_validation",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label app:d1-details",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:d1-a",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label tab:d1-b",
+      "status": "PASS"
+    },
+    {
+      "check": "globally distinct label app:related-context",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:subsec:assistance-setting",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix subsec:assistance-setting",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:sec:related_work",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix sec:related_work",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:sec:task",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix sec:task",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:sec:methodology",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix sec:methodology",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:sec:experiments",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix sec:experiments",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:sec:discussion",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix sec:discussion",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:S-tab:comparison_landscape",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix S-tab:comparison_landscape",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:S-app:related-context",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix S-app:related-context",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:S-app:reproduction",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix S-app:reproduction",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:subsec:limitations",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix subsec:limitations",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:eq:coverage",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix eq:coverage",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:eq:typematch",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix eq:typematch",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:eq:instantiation_ready",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix eq:instantiation_ready",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:subsec:assistance-setting",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix subsec:assistance-setting",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:S-tab:retrieval_backbones",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix S-tab:retrieval_backbones",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:eq:eligible_slots",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix eq:eligible_slots",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:subsec:metrics",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix subsec:metrics",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:alg:instantiation",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix alg:instantiation",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:fig:instantiation-pipeline",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix fig:instantiation-pipeline",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:S-app:factorial-details",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix S-app:factorial-details",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:S-app:reproduction",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix S-app:reproduction",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:S-tab:nlp4lp-significance",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix S-tab:nlp4lp-significance",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:subsec:reanalysis",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix subsec:reanalysis",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:S-app:reproduction",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix S-app:reproduction",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:tab:nlp4lp-retrieval-main",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:nlp4lp-retrieval-main",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:tab:nlp4lp-downstream-main",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:nlp4lp-downstream-main",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:eq:exact20",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix eq:exact20",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:tab:ready-conditioned",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:ready-conditioned",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:eq:conditional-agreement",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix eq:conditional-agreement",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:tab:nlp4lp-error-taxonomy",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:nlp4lp-error-taxonomy",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:subsec:exp_grounding_baselines",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix subsec:exp_grounding_baselines",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:S-app:core-support",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix S-app:core-support",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:eq:bounded_error",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix eq:bounded_error",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:tab:nlp4lp-grounding-baselines",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:nlp4lp-grounding-baselines",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:tab:nlp4lp-downstream-main",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:nlp4lp-downstream-main",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:tab:grounding-factorial-diagnostic",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:grounding-factorial-diagnostic",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:subsec:method_controls",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix subsec:method_controls",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:S-app:factorial-details",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix S-app:factorial-details",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:S-app:relationship-evidence",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix S-app:relationship-evidence",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:S-app:d1-details",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix S-app:d1-details",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:S-app:common18",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix S-app:common18",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:S-app:extraction-details",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix S-app:extraction-details",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:S-app:restricted-details",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix S-app:restricted-details",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:subsec:assistance-setting",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix subsec:assistance-setting",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:S-app:reference-conventions",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix S-app:reference-conventions",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:S-app:reproduction",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix S-app:reproduction",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:S-app:g3",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix S-app:g3",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:S-app:future-reference",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix S-app:future-reference",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:subsec:limitations",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix subsec:limitations",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference main:S-app:reproduction",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix S-app:reproduction",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:app:reproduction",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix app:reproduction",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:app:related-context",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix app:related-context",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:nlp4lp-prefix-postfix",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:nlp4lp-prefix-postfix",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:strict-instready",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:strict-instready",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:M-subsec:exp_significance",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix M-subsec:exp_significance",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:M-eq:strict_instantiation_ready",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix M-eq:strict_instantiation_ready",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:nlp4lp-significance",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:nlp4lp-significance",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:M-subsec:exp_significance",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix M-subsec:exp_significance",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:app:statistical-history",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix app:statistical-history",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:M-tab:nlp4lp-retrieval-main",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix M-tab:nlp4lp-retrieval-main",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:M-subsec:method_controls",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix M-subsec:method_controls",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:M-tab:grounding-factorial-diagnostic",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix M-tab:grounding-factorial-diagnostic",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:M-subsec:grounding-followup",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix M-subsec:grounding-followup",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:app:reference-conventions",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix app:reference-conventions",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:reference-overlay",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:reference-overlay",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:population-map",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:population-map",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:M-eq:full-scalar",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix M-eq:full-scalar",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:M-eq:conditional-agreement",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix M-eq:conditional-agreement",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:M-subsec:relationship-audit",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix M-subsec:relationship-audit",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:app:relationship-evidence",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix app:relationship-evidence",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:ext-outcomes",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:ext-outcomes",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:ext-outcomes",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:ext-outcomes",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:llm-cases",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:llm-cases",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:llm-provenance",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:llm-provenance",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:relationship-validity",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:relationship-validity",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:eq:fleiss",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix eq:fleiss",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:eng-structural",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:eng-structural",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:eng-solver",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:eng-solver",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:app:supervision-audit",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix app:supervision-audit",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:nlp4lp-significance",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:nlp4lp-significance",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:nlp4lp-significance",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:nlp4lp-significance",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:nlp4lp-overlap",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:nlp4lp-overlap",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:M-tab:nlp4lp-retrieval-main",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix M-tab:nlp4lp-retrieval-main",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:strict-instready",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:strict-instready",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:legacy-grounding",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:legacy-grounding",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:staleness-grounding",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:staleness-grounding",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:ranked-retrieval",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:ranked-retrieval",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:M-subsec:exp_significance",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix M-subsec:exp_significance",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:cached-ceilings",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:cached-ceilings",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:full-joint-pilot",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:full-joint-pilot",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:app:reference-conventions",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix app:reference-conventions",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:app:supervision-audit",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix app:supervision-audit",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:archived-scalar-llm",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:archived-scalar-llm",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:app:d1-details",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix app:d1-details",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:app:future-reference",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix app:future-reference",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:legacy-grounding",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:legacy-grounding",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:M-sec:llm",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix M-sec:llm",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:d1-a",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:d1-a",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:d1-b",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:d1-b",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:d1-a",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:d1-a",
+      "status": "PASS"
+    },
+    {
+      "check": "defined reference supplement:tab:comparison_landscape",
+      "status": "PASS"
+    },
+    {
+      "check": "correct cross-document prefix tab:comparison_landscape",
+      "status": "PASS"
+    },
+    {
+      "check": "abstract150to250words",
+      "status": "PASS"
+    },
+    {
+      "check": "main two-column Springer class",
+      "status": "PASS"
+    },
+    {
+      "check": "RQ in introduction/results RQ1",
+      "status": "PASS"
+    },
+    {
+      "check": "RQ in introduction/results RQ2",
+      "status": "PASS"
+    },
+    {
+      "check": "RQ in introduction/results RQ3",
+      "status": "PASS"
+    },
+    {
+      "check": "new reported fraction 7/265=2.64",
+      "status": "PASS"
+    },
+    {
+      "check": "new reported fraction 258/265=97.36",
+      "status": "PASS"
+    },
+    {
+      "check": "new reported fraction 7/255=2.75",
+      "status": "PASS"
+    },
+    {
+      "check": "derived table matches source",
+      "status": "PASS"
+    },
+    {
+      "check": "protected count 40/331",
+      "status": "PASS"
+    },
+    {
+      "check": "protected count 41",
+      "status": "PASS"
+    },
+    {
+      "check": "protected count 291",
+      "status": "PASS"
+    },
+    {
+      "check": "protected count 303",
+      "status": "PASS"
+    },
+    {
+      "check": "protected count 320",
+      "status": "PASS"
+    },
+    {
+      "check": "protected count 285",
+      "status": "PASS"
+    },
+    {
+      "check": "protected count 240",
+      "status": "PASS"
+    },
+    {
+      "check": "protected count 16",
+      "status": "PASS"
+    },
+    {
+      "check": "protected auxiliary interpretation 23{,}241/28{,}799=0.8070",
+      "status": "PASS"
+    },
+    {
+      "check": "protected auxiliary interpretation 0.8135",
+      "status": "PASS"
+    },
+    {
+      "check": "protected auxiliary interpretation withhold its aggregate objective-agreement",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input main",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input relationship_evidence",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input supplement",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input grounding_diagnostics",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input reference_conventions",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input reproduction_map",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input supervision_diagnostics",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input llm_evidence",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input closed_audits",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input relationship_supplement",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input preserved_results_details",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input additional_evidence",
+      "status": "PASS"
+    },
+    {
+      "check": "acyclic input d1_contrasts",
+      "status": "PASS"
+    },
+    {
+      "check": "clean final LaTeX log main",
+      "status": "PASS"
+    },
+    {
+      "check": "clean final LaTeX log supplement",
+      "status": "PASS"
+    }
+  ],
+  "checks_passed": 685,
+  "citation_delta": {
+    "added": [],
+    "removed": []
+  },
+  "frozen_verification": {
+    "checks_passed": 9737,
+    "sha256": "1bacf16801ae0a3ab10e175a8f41965c6318a2b43d33abee1d66717d2a93350b",
+    "status": "PASS"
+  },
+  "new_diagnostics": {
+    "boundary_tests": 5,
+    "independent_implementations": "float row indicators versus Decimal set intersections with schema-ID equality",
+    "matched_arms": 10,
+    "new_model_calls": 0,
+    "new_solver_calls": 0,
+    "population_subset_checks": 10
+  },
+  "numbered_objects": [
+    {
+      "baseline_float_sha256": "8dd314890c1ac03586d8964c461ed4b3c376b6c82e40669b82d1f61bfb52d419",
+      "id": "alg:instantiation",
+      "numeric_cell_tokens": 1,
+      "revised_float_sha256": "8dd314890c1ac03586d8964c461ed4b3c376b6c82e40669b82d1f61bfb52d419",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "7587eb77f1d052d4a905fd1554f46635a10724448c2a505432d3f3f42df80eb7",
+      "id": "fig:instantiation-pipeline",
+      "numeric_cell_tokens": 1,
+      "revised_float_sha256": "dd3bb578b87c2db2e1168b2120067217552de314a91367c238f74e874afc4753",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "ac12e4760ce3e73094a98344c45d45e2bce69f9bea44ecc12ebd500a389976ba",
+      "id": "tab:nlp4lp-retrieval-main",
+      "numeric_cell_tokens": 20,
+      "revised_float_sha256": "ac12e4760ce3e73094a98344c45d45e2bce69f9bea44ecc12ebd500a389976ba",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "89e31e15450e613fc4ca41b027b7cef58828422579a31efa4485b5186f92e0f0",
+      "id": "tab:nlp4lp-downstream-main",
+      "numeric_cell_tokens": 20,
+      "revised_float_sha256": "89e31e15450e613fc4ca41b027b7cef58828422579a31efa4485b5186f92e0f0",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "5abbd19ce94c07751dc405bd781111791e2015f74ffa98223524df68f009856b",
+      "id": "tab:nlp4lp-grounding-baselines",
+      "numeric_cell_tokens": 42,
+      "revised_float_sha256": "5abbd19ce94c07751dc405bd781111791e2015f74ffa98223524df68f009856b",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "f34003f74a4cab444d9b53fe193f0f90c4d50c24665cb865ddccd827d9d67005",
+      "id": "tab:nlp4lp-error-taxonomy",
+      "numeric_cell_tokens": 24,
+      "revised_float_sha256": "c997ec0b1a5f0873d26d33e582586a0ebd8bf778b87a5f114166c02f0c2495a3",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "42eb59ce68db2b2fa22793f8a8ea0823abce6bcf9079ec276e82c292fd9cc19a",
+      "id": "tab:nlp4lp-prefix-postfix",
+      "numeric_cell_tokens": 15,
+      "revised_float_sha256": "9e03235c0926af59be402d79fb395790834fb25c029ae577110ca9c2e8d7a51b",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "1dbc0dd41ce4dff8d8e389d430c9726c31b1261c33aec3c2831bd96ace776e41",
+      "id": "tab:nlp4lp-significance",
+      "numeric_cell_tokens": 24,
+      "revised_float_sha256": "1dbc0dd41ce4dff8d8e389d430c9726c31b1261c33aec3c2831bd96ace776e41",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "7095a757a5c76e6d13d9694a63a515b7cf06c92e323a89e84d60b15082a422a4",
+      "id": "tab:strict-instready",
+      "numeric_cell_tokens": 12,
+      "revised_float_sha256": "e6cbb04f4d957b7d3bf6922a337cbac8baf7d480dff0771e9442519cae5a40e5",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "749eb82f45e6ce9604f0ff0838a12f1e5207f78551a06c395e3b9e87b1d49671",
+      "id": "tab:ext-outcomes",
+      "numeric_cell_tokens": 33,
+      "revised_float_sha256": "253eb6857a26e493813b728c1a8f9567c6889febf952f248e3287ead8e0800ab",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "e7ecc2b66829d20000e847845f6035056a3ff67486bd24ac881cbae35ec8623f",
+      "id": "tab:relationship-validity",
+      "numeric_cell_tokens": 20,
+      "revised_float_sha256": "b90a1d43f08e3eeb199b46d73471b53214b571a16c7f9fa7de414aeb226cb57b",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "9de85cfcfe3938c405e32275bb1555b2df6708c1734d3623bcc21fce731599c6",
+      "id": "tab:comparison_landscape",
+      "numeric_cell_tokens": 16,
+      "revised_float_sha256": "1868a680a6608aaeba8177fa3915284684f6c545d9d8036838ef09706f366025",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "4c891fd9f6b76963c0d60ec1f4d7bed285924a3bb111ce2f825e4eb1b3d1ea0e",
+      "id": "tab:retrieval_backbones",
+      "numeric_cell_tokens": 0,
+      "revised_float_sha256": "4c891fd9f6b76963c0d60ec1f4d7bed285924a3bb111ce2f825e4eb1b3d1ea0e",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "f6d5507117b210b1556ce910867c9c59a03cbd717aff2bb737dc472161eb9c8f",
+      "id": "tab:exp_blocks",
+      "numeric_cell_tokens": 4,
+      "revised_float_sha256": "f6d5507117b210b1556ce910867c9c59a03cbd717aff2bb737dc472161eb9c8f",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "41cd0b9dae9f60489f1dd9584ff45e1287bab9661813a011f47e60bf9c4bef08",
+      "id": "tab:nlp4lp-overlap",
+      "numeric_cell_tokens": 12,
+      "revised_float_sha256": "41cd0b9dae9f60489f1dd9584ff45e1287bab9661813a011f47e60bf9c4bef08",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "0f4d96fd3463523c47de99dc4075b7a40fa499afab3fd53758cd5567c227508c",
+      "id": "tab:eng-structural",
+      "numeric_cell_tokens": 9,
+      "revised_float_sha256": "0f4d96fd3463523c47de99dc4075b7a40fa499afab3fd53758cd5567c227508c",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "4db0653aaf62952dd70b404d0032ca6deb031ef2c41a79ea8b4fc40ab0633675",
+      "id": "tab:eng-solver",
+      "numeric_cell_tokens": 8,
+      "revised_float_sha256": "4db0653aaf62952dd70b404d0032ca6deb031ef2c41a79ea8b4fc40ab0633675",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "f2e565e2cd15cd967ff2806229208bcf4a0a35e550d7cdbcc9d945163e7f5a6b",
+      "id": "tab:grounding-factorial-diagnostic",
+      "numeric_cell_tokens": 24,
+      "revised_float_sha256": "c06474423df7049c92cfcf9b29020d7415e1d5bb3b8a2dc1e1b9773f56c9c948",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "f3dbe444f8086375d414a3ad7cd27c62f2538f4805e3343a4126e5a61102ce46",
+      "id": "tab:reference-overlay",
+      "numeric_cell_tokens": 30,
+      "revised_float_sha256": "54168651f271168553b3f39f71345dae16fb2b9ce6bd6af7fe7a22ab2692bb3a",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "917d7dcdfb804ee0a9910dfa2490fb4078aded1ba6e770ea035861c544162d79",
+      "id": "tab:population-map",
+      "numeric_cell_tokens": 26,
+      "revised_float_sha256": "3094f1be30a437cc378f2de23ac10aa77f68f3dad172425e1d8d89a4117bb36c",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "fb2cef0b951cc83973f7ded8cb189a134cc4042bfa82bbe2dcb1d5eefd0223ae",
+      "id": "tab:input-dependencies",
+      "numeric_cell_tokens": 0,
+      "revised_float_sha256": "fb2cef0b951cc83973f7ded8cb189a134cc4042bfa82bbe2dcb1d5eefd0223ae",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "9f46824e1d2cd57cadfa9d658c518364aa47daf3c44d701ccf7716f99ef5227e",
+      "id": "tab:ext-context",
+      "numeric_cell_tokens": 23,
+      "revised_float_sha256": "647a9b2137a37baa559587e4bd673c603c6b4246231cf39fe86271931ac1a6da",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "ac3a084053800631683172db43d9a343903a6f6d42bca207f357f0c5fac7734b",
+      "id": "tab:llm-provenance",
+      "numeric_cell_tokens": 13,
+      "revised_float_sha256": "ac3a084053800631683172db43d9a343903a6f6d42bca207f357f0c5fac7734b",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "6edbfbc4d2a14e3f0f1d413bcb08398d9834280eb75c132bb2a712c7ccfab760",
+      "id": "tab:llm-failures",
+      "numeric_cell_tokens": 11,
+      "revised_float_sha256": "6edbfbc4d2a14e3f0f1d413bcb08398d9834280eb75c132bb2a712c7ccfab760",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "0f76a92648e4b37abd1f9368ef4d680745df2c3b5328fa3fccdfd3132d93076e",
+      "id": "tab:llm-cases",
+      "numeric_cell_tokens": 18,
+      "revised_float_sha256": "0f76a92648e4b37abd1f9368ef4d680745df2c3b5328fa3fccdfd3132d93076e",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "a9851ccee88a29421eb5ee437fd65ed348f423460a172b306790ae7b3a313966",
+      "id": "tab:g3-inventory",
+      "numeric_cell_tokens": 8,
+      "revised_float_sha256": "a9851ccee88a29421eb5ee437fd65ed348f423460a172b306790ae7b3a313966",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "074d576498867dedaf17d655932b722c8956cb77fb3d1d59a53b76d42394a4a0",
+      "id": "tab:relationship-requests",
+      "numeric_cell_tokens": 14,
+      "revised_float_sha256": "074d576498867dedaf17d655932b722c8956cb77fb3d1d59a53b76d42394a4a0",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "c7cc390f715d7aeb9b1d282e5ca0ec69eecab9b389aa905767e11be3db5a11e7",
+      "id": "tab:relationship-labels",
+      "numeric_cell_tokens": 15,
+      "revised_float_sha256": "c7cc390f715d7aeb9b1d282e5ca0ec69eecab9b389aa905767e11be3db5a11e7",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "3222780561fad712ad0b8770c5e806ed7c68b0daaf7bcf869b58606f45b0ed6e",
+      "id": "tab:relationship-clusters",
+      "numeric_cell_tokens": 118,
+      "revised_float_sha256": "3222780561fad712ad0b8770c5e806ed7c68b0daaf7bcf869b58606f45b0ed6e",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "4662da0a7192527536ffb6066fb5d8a9b046b57956fab422311b1690b3b441be",
+      "id": "tab:legacy-grounding",
+      "numeric_cell_tokens": 60,
+      "revised_float_sha256": "4662da0a7192527536ffb6066fb5d8a9b046b57956fab422311b1690b3b441be",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "4635c1d45acb626253699280a3c5caaebc5b43206a147848e97debcd9e9eae8e",
+      "id": "tab:staleness-grounding",
+      "numeric_cell_tokens": 13,
+      "revised_float_sha256": "4635c1d45acb626253699280a3c5caaebc5b43206a147848e97debcd9e9eae8e",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "d128a345f03d6d614988ed5ca457027d58a738ca8e41925675762ae9d5acca43",
+      "id": "tab:ranked-retrieval",
+      "numeric_cell_tokens": 40,
+      "revised_float_sha256": "d128a345f03d6d614988ed5ca457027d58a738ca8e41925675762ae9d5acca43",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "9d677fa90583667c83468b8ac5d9dfc0d14b76dd0cbe52f371b3538b37f88d32",
+      "id": "tab:cached-ceilings",
+      "numeric_cell_tokens": 24,
+      "revised_float_sha256": "9d677fa90583667c83468b8ac5d9dfc0d14b76dd0cbe52f371b3538b37f88d32",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "0e6e8878403ca60d3dac6fbf0857e451b000e5e95472934dbd7d8abe3c011c8d",
+      "id": "tab:full-joint-pilot",
+      "numeric_cell_tokens": 24,
+      "revised_float_sha256": "0e6e8878403ca60d3dac6fbf0857e451b000e5e95472934dbd7d8abe3c011c8d",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "dcb382d6fde425f8df54002afd65c5140b392a72d18ac4dfd8439c687ef32a50",
+      "id": "tab:archived-scalar-llm",
+      "numeric_cell_tokens": 16,
+      "revised_float_sha256": "dcb382d6fde425f8df54002afd65c5140b392a72d18ac4dfd8439c687ef32a50",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "68c00ee8d2869322b368cb4fcc456d1fd78469b6c1eddada0e91c6c7fc73b817",
+      "id": "tab:d1-a",
+      "numeric_cell_tokens": 19,
+      "revised_float_sha256": "68c00ee8d2869322b368cb4fcc456d1fd78469b6c1eddada0e91c6c7fc73b817",
+      "status": "PASS"
+    },
+    {
+      "baseline_float_sha256": "ac8e34b9617e6f31224c2417f2e1b7798a7bf3a96b53393b319a87d851661324",
+      "id": "tab:d1-b",
+      "numeric_cell_tokens": 24,
+      "revised_float_sha256": "ac8e34b9617e6f31224c2417f2e1b7798a7bf3a96b53393b319a87d851661324",
+      "status": "PASS"
+    }
+  ],
+  "numeric_literal_presence_delta": {
+    "added": [
+      "0.0",
+      "0030",
+      "1.10",
+      "1.13",
+      "2.3.5",
+      "2.33",
+      "2.43",
+      "2.64",
+      "2.75",
+      "2.85",
+      "3.12",
+      "9,737",
+      "97.36"
+    ],
+    "interpretation": "Coverage aid, not semantic equivalence test; see the manually reviewed claim crosswalk.",
+    "removed": [
+      "0.370807",
+      "0.501643",
+      "10,000"
+    ]
+  },
+  "scope": "Numerical preservation plus authenticated saved-record/derived diagnostic verification; no new inference or semantic ground truth",
+  "status": "PASS"
+}

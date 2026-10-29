@@ -1,0 +1,22 @@
+{
+  "main": {
+    "pages": 15,
+    "page_size_points": [
+      595.2760009765625,
+      841.8900146484375
+    ],
+    "out_of_page_text_spans": [],
+    "all_pages_rendered": true,
+    "pdf_links": 164
+  },
+  "supplement": {
+    "pages": 36,
+    "page_size_points": [
+      595.2760009765625,
+      841.8900146484375
+    ],
+    "out_of_page_text_spans": [],
+    "all_pages_rendered": true,
+    "pdf_links": 136
+  }
+}

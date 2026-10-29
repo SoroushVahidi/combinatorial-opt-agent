@@ -1,0 +1,55 @@
+{
+  "status": "PASS",
+  "scope": "New Stage 2 source/report files only; credential/private-home-path patterns and relative Markdown targets. PDFs inspected through extracted text separately. This is not a proof of absent sensitive data.",
+  "files_checked": 49,
+  "sensitive_pattern_hits": [],
+  "broken_relative_markdown_links": [],
+  "pdf_text_checks": [
+    {
+      "file": "manuscript/jdsa-stage2/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf",
+      "sensitive_pattern_hits": [],
+      "external_pdf_targets": [
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf#nameddest=equation.27",
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf#nameddest=equation.28",
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf#nameddest=equation.29",
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf#nameddest=subsection.37",
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf#nameddest=subsection.38",
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf#nameddest=subsection.60",
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf#nameddest=subsubsection.54",
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf#nameddest=table.42",
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf#nameddest=table.56"
+      ]
+    },
+    {
+      "file": "manuscript/jdsa-stage2/Fig1.pdf",
+      "sensitive_pattern_hits": [],
+      "external_pdf_targets": []
+    },
+    {
+      "file": "manuscript/jdsa-stage2/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+      "sensitive_pattern_hits": [],
+      "external_pdf_targets": [
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf#nameddest=section.103",
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf#nameddest=section.39",
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf#nameddest=section.55",
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf#nameddest=section.8",
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf#nameddest=subsection.25",
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf#nameddest=subsection.26",
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf#nameddest=subsection.30",
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf#nameddest=subsection.62",
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf#nameddest=subsection.71",
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf#nameddest=subsection.73",
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf#nameddest=subsection.97",
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf#nameddest=subsection.98",
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf#nameddest=table.16",
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf#nameddest=table.3",
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf#nameddest=table.5"
+      ]
+    }
+  ],
+  "pdf_cross_document_destinations": {
+    "status": "PASS",
+    "links_checked": 33,
+    "missing": []
+  }
+}

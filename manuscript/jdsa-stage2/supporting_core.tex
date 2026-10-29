@@ -1,0 +1,70 @@
+\section{Supporting Core Diagnostics and Statistical Procedures}
+\label{app:core-support}
+The following tables preserve the extraction, paired-statistic and schema-gate checks supporting RQ2 and RQ3. They use the same frozen observations as the main paper; relocation does not define a new comparison family.
+\subsection{Ratio-Word Extraction and Readiness Gates}
+\label{app:extraction-ablation}
+The ratio-word correction raises Strict readiness from $247/331$ to $255/331$, with eight gains and no losses, while complete scalar-tolerance success changes from six to seven. Table~\ref{tab:nlp4lp-prefix-postfix} retains every original ablation cell. Table~\ref{tab:strict-instready} separates ordinary readiness from its schema-gated variant; neither checks values.
+\begin{table}[t]
+  \centering
+  \renewcommand{\arraystretch}{1.18}
+  \caption{Numeric-extraction ablation on the original queries, comparing the baseline and ratio-aware extraction configurations of the TF--IDF typed-greedy method. The ratio-aware configuration corrects multiplicative ratio-word numeric expressions. The strict coarse-readiness count (of 331) rises from 247 to 255; $\Delta$ is ratio-aware minus baseline; see Section~\ref{M-subsec:exp_significance} for the significance test.}
+  \label{tab:nlp4lp-prefix-postfix}
+  \small
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{lccc}
+    \toprule
+    Metric & Base & Ratio & $\Delta$ \\
+    \midrule
+% BEGIN GENERATED metric_audit_ablation_rows.tex
+Coverage & 0.8794 & 0.8886 & +0.0091 \\
+TypeMatch & 0.8515 & 0.8665 & +0.0150 \\
+Exact20 (on hits) & 0.2449 & 0.2614 & +0.0165 \\
+Coarse readiness & 0.7764 & 0.8006 & +0.0242 \\
+Strict readiness & 0.7462 & 0.7704 & +0.0242 \\
+% END GENERATED metric_audit_ablation_rows.tex
+    \bottomrule
+  \end{tabular}
+\end{table}
+\begin{table}[t]
+\centering
+  \renewcommand{\arraystretch}{1.18}
+\caption{Sensitivity check: canonical \textit{InstantiationReady} versus the stricter \textit{StrictInstantiationReady} (Eq.~\eqref{M-eq:strict_instantiation_ready}), all 331 original queries, computed from saved per-query metric records. $\Delta$ is standard minus strict; $n_{\text{differ}}$ counts queries whose readiness label changes.}
+\label{tab:strict-instready}
+\small
+\setlength{\tabcolsep}{2.4pt}
+\begin{tabular}{lcccc}
+  \toprule
+  Method & Ready & Strict & $\Delta$ & $n_{\text{differ}}$ \\
+  \midrule
+% BEGIN GENERATED metric_audit_strict_rows.tex
+TF--IDF base & 0.7764 & 0.7462 & 0.0302 & 10 \\
+TF--IDF ratio & 0.8006 & 0.7704 & 0.0302 & 10 \\
+Oracle-TG & 0.8489 & 0.8489 & 0.0000 & 0 \\
+% END GENERATED metric_audit_strict_rows.tex
+  \bottomrule
+\end{tabular}
+\end{table}
+\subsection{Retrospective Paired Comparisons}
+\label{app:paired-comparisons}
+Table~\ref{tab:nlp4lp-significance} retains the five previously displayed contrasts within the full 16-test retrieval/readiness family. The other contrasts are the BGE--TF--IDF retrieval comparison and ten ordinary/Strict comparisons against five grounding alternatives. These are distinct from the 240 factorial tests. Main Section~\ref{M-subsec:exp_significance} specifies the procedures; Section~\ref{app:statistical-history} preserves their correction history.
+\begin{table*}[t]
+\centering
+  \renewcommand{\arraystretch}{1.18}
+\caption{Correction-only paired reanalysis of the saved 331-query gate records (327 text groups). Difference is the first configuration minus the second; CI is a marginal 95\% paired group-bootstrap interval. Exact p-values use groupwise method swaps; the final column adjusts the stated family of 16 tests. All comparisons are exploratory.}
+\label{tab:nlp4lp-significance}
+\small
+\setlength{\tabcolsep}{2.3pt}
+\begin{tabular}{@{}p{0.42\linewidth}cccc@{}}
+\toprule
+Comparison & Diff & 95\% CI & $p$ & Holm $p$\\
+\midrule
+% BEGIN CORRECTED SIGNIFICANCE
+TFIDF ratio -- Oracle (coarse) & $-0.0483$ & $[-0.0751,-0.0240]$ & $<0.001$ & $0.0028$ \\
+TFIDF ratio -- Oracle (Strict) & $-0.0785$ & $[-0.1108,-0.0486]$ & $<0.001$ & $<0.001$ \\
+TFIDF ratio -- baseline (Strict) & $+0.0242$ & $[0.0091,0.0423]$ & $0.0078$ & $0.0302$ \\
+BGE-M3 -- TFIDF ratio (coarse) & $+0.0242$ & $[0.0030,0.0455]$ & $0.0386$ & $0.0386$ \\
+BGE-M3 -- TFIDF ratio (Strict) & $+0.0302$ & $[0.0091,0.0534]$ & $0.0129$ & $0.0302$ \\
+% END CORRECTED SIGNIFICANCE
+\bottomrule
+\end{tabular}
+\end{table*}

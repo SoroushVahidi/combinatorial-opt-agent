@@ -1,0 +1,152 @@
+{
+  "schema_version": 1,
+  "baseline": "3296f3bd20128077cd94a4eac82f0b5fe73e2946",
+  "scope": "Stage 2 manuscript source and PDF artifacts; separate from immutable evidence release",
+  "files": [
+    {
+      "path": "manuscript/jdsa-stage2/.gitignore",
+      "bytes": 73,
+      "sha256": "8b6e55052b8f1ddecadd4eae07851508a2fbc82193f87c3e7a912521bc9648c3"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/Fig1.pdf",
+      "bytes": 51158,
+      "sha256": "59cf528cc5ab6b0b2023c9c0b86fdd9ddcd4e901911ef300de0e2e9d201a46f8"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/Fig1.tex",
+      "bytes": 150,
+      "sha256": "ed5f89a843169fe14eb294150210a744f5346bd5497302eb5c28cd8a0061e023"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/README.md",
+      "bytes": 2244,
+      "sha256": "39ad182c2d8ab6558f0a861a99495c6f8145eacf111996a439f8752053bbe3f2"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+      "bytes": 442951,
+      "sha256": "ccfb7f861fa8cef8de2872436b6a6472b517c67cef2051e582eb437c18b8a13e"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf",
+      "bytes": 426796,
+      "sha256": "051f365eb4cf86b3194525792ed3f8571dee5c4c3902a7d3ce9033a679dddc28"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/additional_evidence.tex",
+      "bytes": 15122,
+      "sha256": "54781b16d878225ccdd3f547eca89106ae158fc54940817ce4560b2f74752520"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/build.sh",
+      "bytes": 1579,
+      "sha256": "1952327b7bbb5e7586ff354005618a8682a090f0c8a1d94c3c0a03d7cf0454f9"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/closed_audits.tex",
+      "bytes": 2564,
+      "sha256": "83feab4b81fc3ee1373b6c8c26dbfa6f258c08cb3fb79c65d1db57d4a8e1254c"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/common18_overview.tex",
+      "bytes": 1684,
+      "sha256": "223259f972c61f4d93acf2be409dd7a1868bae6ef8eb702cf27463c0d7582400"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/d1_contrasts.tex",
+      "bytes": 4926,
+      "sha256": "82393866f7134b601c2f4fe3221ef283996eb8bb38a4132d80f3a2006e6fc8f1"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/grounding_diagnostics.tex",
+      "bytes": 3917,
+      "sha256": "eda5f8740c64e59e7d223cdbf267503ce0021c5b6736c61137560f048e806645"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/llm_evidence.tex",
+      "bytes": 8715,
+      "sha256": "ccb64152063a5ff7f9116a6162fcd0b2ca3d8654daf3ad978a65d36c9ce0b02f"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/main.tex",
+      "bytes": 59417,
+      "sha256": "1191c20c6d169ce01e948073e1cb59143ab29174e2593af44aeeeebfcfa9fbb6"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/orcidlink.sty",
+      "bytes": 2483,
+      "sha256": "f1a6b71cdd115d8024969da302c63c93c937f6de0d783657f96e92ccfed4aa69"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/pipeline_figure.tex",
+      "bytes": 1088,
+      "sha256": "8693933108ff023468c019cee84b840702c8c7b7292a5a00284fdad23bddfb27"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/preserved_results_details.tex",
+      "bytes": 10033,
+      "sha256": "082884e917f678481970ed4abacc4b67ba3d7b995922557869e37a5f3f8102d4"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/ready_conditioned_rows.tex",
+      "bytes": 173,
+      "sha256": "73183524b2876899f50c0cfa43523ff3284e4d8ed9d85a7cc617c0fe6df00082"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/reference_conventions.tex",
+      "bytes": 4715,
+      "sha256": "9bbb6d0ba4e7a72b23629c8dceb50bb640afb4f4c332731bd80dcefd2f50c7af"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/references.bib",
+      "bytes": 23968,
+      "sha256": "6632d047b5c4933c4f55f09658c17ee98af921b86fa0f4337ab46732737a9b70"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/related_context.tex",
+      "bytes": 2325,
+      "sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/relationship_evidence.tex",
+      "bytes": 1349,
+      "sha256": "d3f361cb002332cd7e3bde582080ba30a257055a19e419dc3b9e2bf5950ce5de"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/relationship_supplement.tex",
+      "bytes": 10925,
+      "sha256": "648fe27e7c55daa95c413494e81dd9414a860b2934b33967b9a23a4d64226034"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/reproduction_map.tex",
+      "bytes": 8772,
+      "sha256": "5d548fcb0f5f903be5e2ad8decc8d2cec2c872b040859db8382971a32a3e8b06"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/sn-basic.bst",
+      "bytes": 35515,
+      "sha256": "4b368414cc5593169907933b417aacfdb0ce905866a39bdf55d21aad65e9d46c"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/sn-jnl.cls",
+      "bytes": 55857,
+      "sha256": "36d0c3273a59d48dc6a9c7b080dfa1ec50dc10229d8751568d1f2e490ffa5ecc"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/supervision_diagnostics.tex",
+      "bytes": 4503,
+      "sha256": "0dd0714082f0aa2d318bb780859976cfe3d3adc018727f992e140a222ce6ea3e"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/supplement.tex",
+      "bytes": 12880,
+      "sha256": "4eb4795e32ccab6afe991654646d0a81c2d9d6146211010feeebedc0407c53ac"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/supporting_core.tex",
+      "bytes": 4319,
+      "sha256": "99604f333cf24e1cf27487d14331829a353671a339506755d2951077f1763a8d"
+    }
+  ]
+}

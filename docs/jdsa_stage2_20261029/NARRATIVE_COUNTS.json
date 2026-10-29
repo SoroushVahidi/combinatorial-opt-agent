@@ -1,0 +1,17 @@
+{
+  "before": {
+    "main": 7621,
+    "supplement": 7661,
+    "total": 15282
+  },
+  "after": {
+    "main": 4713,
+    "supplement": 7678,
+    "total": 12391
+  },
+  "reduction_percent": {
+    "main": 38.16,
+    "supplement": -0.22,
+    "total": 18.92
+  }
+}
