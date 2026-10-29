@@ -2,24 +2,21 @@
 
 ## Current JDSA manuscript
 
-**Retrieval-Assisted Scalar Grounding for Natural-Language Optimization**
+**Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study**
 
-Target journal: **International Journal of Data Science and Analytics**.
-The final verified package is canonical at [`manuscript/jdsa/`](manuscript/jdsa/).
+Public pre-submission author-review version for the **International Journal of Data Science and Analytics**; no journal acceptance or publication is implied.
+Scientific source: corrected commit `d3583fa28fcdb87f7a446f764ca3225ab5f855d3`.
+Canonical current package: [`manuscript/jdsa-stage3/`](https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa-stage3).
 
-- [Main manuscript PDF (22 pages)](https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf)
-- [Supplementary PDF (32 pages)](https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf)
-- [Editable-source ZIP](https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Submission_Source.zip)
-- [LaTeX source directory](https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa/source)
-- [Build instructions](https://github.com/SoroushVahidi/combinatorial-opt-agent/blob/main/manuscript/jdsa/BUILD.md)
+- [Current manuscript PDF](https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa-stage3/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf)
+- [Current supplement — Online Resource 1](https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa-stage3/ESM_1.pdf)
+- [Matching editable submission-source ZIP](https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa-stage3/JDSA_Stage3_Submission_Source.zip)
+- [Build instructions](https://github.com/SoroushVahidi/combinatorial-opt-agent/blob/main/manuscript/jdsa-stage3/README.md)
+- [Historical manuscript v1.0.0 release](https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0): immutable earlier version, superseded scientifically by the current corrected manuscript.
+- [Immutable scientific evidence release](https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0)
+- [Exact Hugging Face evidence](https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0)
 
-
-The final analysis preserves its distinctions among assisted grounding, validity,
-agreement and semantic correctness. Historical Hugging Face v1.2 and the local,
-unreleased M5 evidence are described separately in the paper. Repository publication
-is not a journal submission. See the [manuscript index](manuscript/MANUSCRIPT_README.md).
-The SNCS, DKE and KAIS packages below are retained as separate journal artifacts;
-they are not the current JDSA package.
+Saved-record reanalysis is distinct from complete experimental reproduction and independent semantic validation. Restricted originals and historical evidence limitations remain as stated in the manuscript. Download the current PDF pair together for cross-document links. Separate SNCS, DKE and KAIS materials remain historical journal packages.
 
 Historical companion repository for the paper **"Retrieval-Assisted Instantiation of Natural-Language Optimization Problems"**, submitted to **SN Computer Science** (Springer Nature) on 2026-08-26, submission ID SNCS-D-26-07548. The repository implements and evaluates a two-stage pipeline — fixed-catalog schema retrieval (TF--IDF / BM25 / LSA / BGE-M3) followed by deterministic, inference-time-LLM-free scalar-parameter grounding — on the **NLP4LP** benchmark (331 queries, 335-candidate schema catalog), together with restricted structural, solver-backed, and external-baseline validation subsets. This is a research artifact repository, not a production product.
 

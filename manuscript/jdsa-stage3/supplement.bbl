@@ -1,0 +1,169 @@
+\begin{thebibliography}{23}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{\url{https://doi.org/#1}}
+\providecommand{\eprint}[2][]{\url{#2}}
+ \bibcommenthead
+
+\bibitem[{Affolter et~al.(2019)Affolter, Stockinger, and
+  Bernstein}]{affolter2019nli}
+Affolter K, Stockinger K, Bernstein A (2019) A comparative survey of recent
+  natural language interfaces for databases. The VLDB Journal 28(5):793--819.
+  \doi{10.1007/s00778-019-00567-8}
+
+\bibitem[{AhmadiTeshnizi et~al.(2024)AhmadiTeshnizi, Gao, and
+  Udell}]{ahmaditeshnizi2024optimus_icml}
+AhmadiTeshnizi A, Gao W, Udell M (2024) {OptiMUS}: Scalable optimization
+  modeling with {(MI)LP} solvers and large language models. In: Proceedings of
+  the 41st International Conference on Machine Learning, Proceedings of Machine
+  Learning Research, vol 235. PMLR, pp 577--596,
+  \urlprefix\url{https://proceedings.mlr.press/v235/ahmaditeshnizi24a.html}
+
+\bibitem[{Ahmed and Choudhury(2025)}]{ahmed2025opt2code}
+Ahmed T, Choudhury S (2025) {OPT2CODE}: A retrieval-augmented framework for
+  solving linear programming problems. Natural Language Processing Journal
+  13:100185. \doi{10.1016/j.nlp.2025.100185}
+
+\bibitem[{Astorga et~al.(2025)Astorga, Liu, Xiao, and Van
+  Der~Schaar}]{astorga2025autoformulation}
+Astorga N, Liu T, Xiao Y, et~al (2025) Autoformulation of mathematical
+  optimization models using {LLM}s. In: Proceedings of the 42nd International
+  Conference on Machine Learning ({ICML} 2025), Proceedings of Machine Learning
+  Research, vol 267. PMLR, pp 1864--1886,
+  \urlprefix\url{https://proceedings.mlr.press/v267/astorga25a.html}
+
+\bibitem[{Chen et~al.(2025)Chen, Xia, Shao, Ge, and Ye}]{chen2025solver}
+Chen Y, Xia J, Shao S, et~al (2025) Solver-informed {RL}: Grounding large
+  language models for authentic optimization modeling. In: Advances in Neural
+  Information Processing Systems (NeurIPS), pp 106027--106069,
+  \doi{10.52202/085713-3539}
+
+\bibitem[{Ding et~al.(2026)Ding, Tan, Zhang, and Chen}]{ding2026orr1}
+Ding Z, Tan Z, Zhang J, et~al (2026) {OR-R1}: Automating modeling and solving
+  of operations research optimization problem via test-time reinforcement
+  learning. In: Proceedings of the Fortieth AAAI Conference on Artificial
+  Intelligence ({AAAI}-26), pp 228--236, \doi{10.1609/aaai.v40i1.36983}
+
+\bibitem[{Holm(1979)}]{holm1979followup}
+Holm S (1979) A simple sequentially rejective multiple test procedure.
+  Scandinavian Journal of Statistics 6(2):65--70.
+  \urlprefix\url{https://www.jstor.org/stable/4615733}
+
+\bibitem[{Huang et~al.(2025)Huang, Tang, Hu, Jiang, Zheng, Ge, Wang, and
+  Wang}]{huang2025orlm}
+Huang C, Tang Z, Hu S, et~al (2025) {ORLM}: A customizable framework in
+  training large models for automated optimization modeling. Operations
+  Research 73(6):2986--3009. \doi{10.1287/opre.2024.1233}
+
+\bibitem[{Huang et~al.(2017)Huang, Zhao, and Ma}]{huang2017beamfollowup}
+Huang L, Zhao K, Ma M (2017) When to finish? optimal beam search for neural
+  text generation (modulo beam size). In: Proceedings of the 2017 Conference on
+  Empirical Methods in Natural Language Processing, pp 2134--2139,
+  \doi{10.18653/v1/D17-1227}
+
+\bibitem[{Jiang et~al.(2025)Jiang, Shu, Qian, Lu, Zhou, Zhou, and
+  Yu}]{jiang2025llmopt}
+Jiang C, Shu X, Qian H, et~al (2025) {LLMOPT}: Learning to define and solve
+  general optimization problems from scratch. In: Proceedings of the Thirteenth
+  International Conference on Learning Representations,
+  \urlprefix\url{https://proceedings.iclr.cc/paper_files/paper/2025/file/fbe6dd68b0cf2b1d43b458d2b8ca31b0-Paper-Conference.pdf}
+
+\bibitem[{Kong et~al.(2026)Kong, Qu, Guo, Ouyang, Jiang, Zheng, Ma, Zhuang,
+  Tang, Li, Wang, Koutsopoulos, Wang, Wu, and Zhao}]{kong2025alphaopt}
+Kong M, Qu A, Guo X, et~al (2026) {AlphaOPT}: Formulating optimization programs
+  with self-improving {LLM} experience library. In: Proceedings of the 32nd ACM
+  SIGKDD Conference on Knowledge Discovery and Data Mining V.2. ACM, pp
+  2389--2400, \doi{10.1145/3770855.3817974}
+
+\bibitem[{Li et~al.(2026{\natexlab{a}})Li, Wang, Xue, Zhang, and
+  Jin}]{li2026solver}
+Li Y, Wang H, Xue B, et~al (2026{\natexlab{a}}) Solver-independent automated
+  problem formulation via {LLM}s for high-cost simulation-driven design. In:
+  Findings of the Association for Computational Linguistics: ACL 2026.
+  Association for Computational Linguistics, pp 2138--2153,
+  \doi{10.18653/v1/2026.findings-acl.102}
+
+\bibitem[{Li et~al.(2026{\natexlab{b}})Li, Lu, Wei, Chen, Liu, Lan, Zhang, and
+  Wen}]{miplibnl2026}
+Li Z, Lu H, Wei T, et~al (2026{\natexlab{b}}) Constructing industrial-scale
+  optimization modeling benchmark. In: Proceedings of the 43rd International
+  Conference on Machine Learning, Proceedings of Machine Learning Research, vol
+  306. PMLR, pp 68993--69036,
+  \urlprefix\url{https://proceedings.mlr.press/v306/li26dz.html}
+
+\bibitem[{Lu et~al.(2025)Lu, Xie, Wu, Ren, Chen, and Wen}]{lu2025optmath}
+Lu H, Xie Z, Wu Y, et~al (2025) {OptMATH}: A scalable bidirectional data
+  synthesis framework for optimization modeling. In: Proceedings of the 42nd
+  International Conference on Machine Learning ({ICML} 2025), Proceedings of
+  Machine Learning Research, vol 267. PMLR, pp 40769--40802,
+  \urlprefix\url{https://proceedings.mlr.press/v267/lu25o.html}
+
+\bibitem[{Pan et~al.(2025)Pan, Fang, Wu, Zhang, Hu, Li, and Li}]{pan2025pamop}
+Pan X, Fang J, Wu F, et~al (2025) Guiding large language models in modeling
+  optimization problems via question partitioning. In: Proceedings of the
+  Thirty-Fourth International Joint Conference on Artificial Intelligence
+  ({IJCAI}-25), pp 2657--2665, \doi{10.24963/ijcai.2025/296}
+
+\bibitem[{Xiao et~al.(2024)Xiao, Zhang, Wu, Xu, Wang, Han, Fu, Zhong, Zeng,
+  Song, and Chen}]{xiao2024chainofexperts}
+Xiao Z, Zhang D, Wu Y, et~al (2024) Chain-of-experts: When {LLM}s meet complex
+  operations research problems. In: Proceedings of the Twelfth International
+  Conference on Learning Representations, pp 48519--48537,
+  \urlprefix\url{https://proceedings.iclr.cc/paper_files/paper/2024/hash/d45ee77826332c100a1e15f7765b99ff-Abstract-Conference.html}
+
+\bibitem[{Xiao et~al.(2026)Xiao, Wang, Han, Guan, Zhu, Xie, Xu, Wu, Yu, Liu,
+  Fu, Chen, and Zhang}]{xiao2026deepor}
+Xiao Z, Wang YJ, Han X, et~al (2026) {DeepOR}: A deep reasoning foundation
+  model for optimization modeling. In: Proceedings of the Fortieth AAAI
+  Conference on Artificial Intelligence ({AAAI}-26), pp 34052--34060,
+  \doi{10.1609/aaai.v40i40.40699}
+
+\bibitem[{Xie et~al.(2026)Xie, Chen, Hu, Wu, Xu, Zhang, and
+  Li}]{xie2026escaping}
+Xie W, Chen Y, Hu YX, et~al (2026) Escaping the sisyphus dilemma: Experience
+  replay for robust text-to-optimization modeling. In: Findings of the
+  Association for Computational Linguistics: ACL 2026. Association for
+  Computational Linguistics, pp 14100--14116,
+  \doi{10.18653/v1/2026.findings-acl.690}
+
+\bibitem[{Yang et~al.(2026)Yang, Zhou, Li, Su, Angeloudis, and
+  Hu}]{yang2026orthought}
+Yang B, Zhou Q, Li J, et~al (2026) {ORThought}: Benchmarking and automating
+  logistics optimization modeling via structured {LLM} reasoning. Artificial
+  Intelligence for Transportation 6:100059. \doi{10.1016/j.ait.2026.100059}
+
+\bibitem[{Yu et~al.(2026)Yu, Zhao, Li, Liu, Cheng, Chen, Zhao, Chen, and
+  Chen}]{yu2026uncertainty}
+Yu L, Zhao X, Li D, et~al (2026) Uncertainty-aware test-time search for
+  optimization problem solving. In: Proceedings of the 64th Annual Meeting of
+  the Association for Computational Linguistics (Volume 1: Long Papers).
+  Association for Computational Linguistics, pp 42658--42669,
+  \doi{10.18653/v1/2026.acl-long.1975}
+
+\bibitem[{Yu et~al.(2018)Yu, Zhang, Yang, Yasunaga, Wang, Li, Ma, Li, Yao,
+  Roman, Zhang, and Radev}]{yu2018spider}
+Yu T, Zhang R, Yang K, et~al (2018) {Spider}: A large-scale human-labeled
+  dataset for complex and cross-domain semantic parsing and text-to-{SQL} task.
+  In: Proceedings of the 2018 Conference on Empirical Methods in Natural
+  Language Processing. Association for Computational Linguistics, pp
+  3911--3921, \doi{10.18653/v1/D18-1425}
+
+\bibitem[{Zhang et~al.(2024)Zhang, Wang, Guo, Wang, Lin, Yang, and
+  Yin}]{zhang2024optllm}
+Zhang J, Wang W, Guo S, et~al (2024) Solving general
+  natural-language-description optimization problems with large language
+  models. In: Proceedings of the 2024 Conference of the North American Chapter
+  of the Association for Computational Linguistics: Human Language Technologies
+  (Volume 6: Industry Track). Association for Computational Linguistics, pp
+  483--490, \doi{10.18653/v1/2024.naacl-industry.42}
+
+\bibitem[{Zhang et~al.(2026)Zhang, Wan, Zhang, Yang, Zhang, Wei, and
+  Liu}]{zhang2026dual}
+Zhang X, Wan Y, Zhang B, et~al (2026) Dual-cluster memory agent: Resolving
+  multi-paradigm ambiguity in optimization problem solving. In: Proceedings of
+  the 64th Annual Meeting of the Association for Computational Linguistics
+  (Volume 1: Long Papers). Association for Computational Linguistics, pp
+  5895--5908, \doi{10.18653/v1/2026.acl-long.266}
+
+\end{thebibliography}

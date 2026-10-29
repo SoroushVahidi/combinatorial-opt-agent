@@ -1,0 +1,16 @@
+\begin{tikzpicture}[>=Stealth, every node/.style={font=\small,align=center},
+  box/.style={draw,rounded corners=2pt,minimum height=9mm,text width=27mm,inner sep=3pt}]
+\node[box,fill=blue!8] (query) at (0,0) {Query text};
+\node[box,fill=blue!8,text width=32mm] (mentions) at (4,0) {Extract and type\\indexed mentions};
+\node[box,fill=green!8] (schema) at (0,-1.4) {Retrieved schema\\all parameter keys};
+\node[box,fill=green!8,text width=32mm] (slots) at (4,-1.4) {Eligible slots\\$P_{\rm all}(\hat{s})\cap K_G(q)$};
+\node[box,fill=gray!8,dashed] (gold) at (0,-2.8) {Gold scalar keys\\benchmark assistance};
+\node[box,fill=violet!8,text width=28mm,minimum height=12mm] (assign) at (8,-.7) {Typed greedy\\no mention-index reuse};
+\node[box,fill=yellow!12,text width=28mm] (output) at (8,-2.5) {Partial scalar\\slot--value mapping};
+\draw[->] (query) -- (mentions);
+\draw[->] (schema) -- (slots);
+\draw[->,dashed] (gold.east) -| (slots.south);
+\draw[->] (mentions.east) -- (assign.north west);
+\draw[->] (slots.east) -- (assign.south west);
+\draw[->] (assign) -- (output);
+\end{tikzpicture}

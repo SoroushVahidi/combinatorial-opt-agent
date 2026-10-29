@@ -1,3 +1,5 @@
+> Historical publication record for `d3071ba31eaf7babdf1e7fe234d8527191ed93de`. Its old PDF paths refer to [that immutable tree](https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/d3071ba31eaf7babdf1e7fe234d8527191ed93de/manuscript/jdsa). The current corrected package is [Stage 3](../../manuscript/jdsa-stage3/README.md); the original report below is retained as historical evidence.
+
 # Canonical JDSA publication verification
 
 Paper: **Retrieval-Assisted Scalar Grounding for Natural-Language Optimization**

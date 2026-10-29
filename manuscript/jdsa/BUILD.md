@@ -1,3 +1,5 @@
+> HISTORICAL BUILD ONLY. This package is retired from current submission use. Use [the corrected Stage 3 build](../jdsa-stage3/README.md). The instructions below document the preserved older archive.
+
 # Build the JDSA manuscript and supplement
 
 Install TeX Live with pdfLaTeX and BibTeX, including amsmath, graphicx, tabularx,

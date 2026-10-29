@@ -1,0 +1,11 @@
+{
+  "scientific_source": "d3583fa28fcdb87f7a446f764ca3225ab5f855d3",
+  "main.tex": {
+    "before": "This attribution correction remains an unreleased author-review revision.",
+    "after": "The current corrected sources and matching PDFs are available in the repository's \\href{https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa-stage3}{current manuscript directory}; this remains a pre-submission author-review version."
+  },
+  "supplement.tex": {
+    "before": "[manuscript.pdf]",
+    "after": "[Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf]"
+  }
+}

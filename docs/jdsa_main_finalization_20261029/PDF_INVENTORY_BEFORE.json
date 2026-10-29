@@ -1,0 +1,186 @@
+[
+  {
+    "path": "manuscript/KAIS_cover_letter.pdf",
+    "sha256": "89174a1d28373d4e0f57c9984794004efa8f0df7eb78acf5487f573ad5c493db",
+    "pages": 1,
+    "title": "",
+    "first_page_excerpt": "Soroush Vahidi\nYing Wu College of Computing\nNew Jersey Institute of Technology\nNewark, NJ, USA\nsv96@njit.edu\nJuly 23, 2026\nDear Editors of Knowledge and Information Systems,\nPlease consider my manuscript, entitled \u201cRetrieval-Assisted Instantiation of Natural-Language Op-\ntimization Problems,\u201d for publication in Knowledge and Information Systems.\nEngineering and decision-support settings often begin with optimization problems stated in natural\nlan",
+    "disposition": "preserve: separate manuscript or figure/scientific asset"
+  },
+  {
+    "path": "manuscript/dke/figures/figure3_engineering_validation_comparison.pdf",
+    "sha256": "e065b14ce926540e261df25107c2a502f915b0e0da070f5d9539fea667079c01",
+    "pages": 1,
+    "title": "",
+    "first_page_excerpt": "TF\u2013IDF\nBM25\nOracle\n0.0\n0.2\n0.4\n0.6\n0.8\n1.0\n0.75\n0.73\n0.77\n0.75\n0.73\n0.78\nStructural validity\nInstantiation completeness\n",
+    "disposition": "preserve: separate manuscript or figure/scientific asset"
+  },
+  {
+    "path": "manuscript/dke/figures/figure4_final_solver_backed_subset.pdf",
+    "sha256": "44e65500474e86eeb4524904a9b8ec0555c4a30cb6bfd18383f709f610a81548",
+    "pages": 1,
+    "title": "",
+    "first_page_excerpt": "TF\u2013IDF\nOracle\n0.0\n0.2\n0.4\n0.6\n0.8\n1.0\n0.95\n0.95\n0.80\n0.75\n0.80\n0.75\n0.80\n0.75\nExecutable\nSolver success\nFeasible\nObjective produced\n",
+    "disposition": "preserve: separate manuscript or figure/scientific asset"
+  },
+  {
+    "path": "manuscript/dke/main.pdf",
+    "sha256": "6bb13ac6ffb381a3a8bc0c1bcde83112146ddcb64dabdd3d463cff51d216f717",
+    "pages": 28,
+    "title": "Retrieval-Assisted Instantiation of Natural-Language Optimization Problems",
+    "first_page_excerpt": "Retrieval-Assisted Instantiation of Natural-Language Optimization\nProblems\nSoroush Vahidia,1,\u2217\naDepartment of Computer Science, New Jersey Institute of Technology, Newark, NJ, USA\nAbstract\nMany engineering optimization problems are \ufb01rst described in natural language and only later translated into\nformal mathematical models, but this translation remains di\ufb03cult to automate reliably. Rather than tar-\ngeting full generative model synthesis, this pap",
+    "disposition": "preserve: separate manuscript or figure/scientific asset"
+  },
+  {
+    "path": "manuscript/figures/figure3_engineering_validation_comparison.pdf",
+    "sha256": "c6c5c392d3ea9a57df395213e5bf0bf33ee6f286a023f0a31a6a92efa0ca1a35",
+    "pages": 1,
+    "title": "",
+    "first_page_excerpt": "TFIDF\nBM25\nORACLE\n0.0\n0.2\n0.4\n0.6\n0.8\n1.0\n0.75\n0.73\n0.77\n0.75\n0.73\n0.78\nstructural valid\ninst. complete\n",
+    "disposition": "preserve: separate manuscript or figure/scientific asset"
+  },
+  {
+    "path": "manuscript/figures/figure4_final_solver_backed_subset.pdf",
+    "sha256": "43e30df5a28053d04e89476c98b8bc65a8aae59c7007e3d1d55a4752676d6904",
+    "pages": 1,
+    "title": "",
+    "first_page_excerpt": "TFIDF\nORACLE\n0.0\n0.2\n0.4\n0.6\n0.8\n1.0\n0.95\n0.95\n0.80\n0.75\n0.80\n0.75\n0.80\n0.75\nexecutable\nsolver success\nfeasible\nobjective\n",
+    "disposition": "preserve: separate manuscript or figure/scientific asset"
+  },
+  {
+    "path": "manuscript/jdsa/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+    "sha256": "bb5c15cbba6de018f1b7da97bcd723f352340fb4b8d607b9fa6cef88fa13c42f",
+    "pages": 22,
+    "title": "",
+    "first_page_excerpt": "Retrieval-Assisted Scalar Grounding for Natural-Language\nOptimization: A Diagnostic Study\nSoroush Vahidi\n1*\n1*Department of Computer Science, Ying Wu College of Computing, New Jersey Institute\nof Technology, University Heights, Newark, 07102-1982, NJ, USA.\nCorresponding author(s). E-mail(s): sv96@njit.edu;\nAbstract\nTranslating natural-language requirements into optimization models requires both selecting a mathe-\nmatical structure and grounding i",
+    "disposition": "remove superseded JDSA document; recover at d3071ba31eaf7babdf1e7fe234d8527191ed93de"
+  },
+  {
+    "path": "manuscript/jdsa/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf",
+    "sha256": "604f99963a58386d39676832206f07eb3e18ce669960e40fa2b57a7e68712ffe",
+    "pages": 32,
+    "title": "",
+    "first_page_excerpt": "Supplementary Material: Retrieval-Assisted Scalar\nGrounding for Natural-Language Optimization: A\nDiagnostic Study\nSoroush Vahidi1*\n1*New Jersey Institute of Technology, Newark, USA.\nCorresponding author(s). E-mail(s): sv96@njit.edu;\nOnline Resource 1. International Journal of Data Science and Analytics.\nORCID: 0000-0003-1934-6282.\nThis supplement preserves secondary evidence, population boundaries and source\nprovenance. It accompanies the main ar",
+    "disposition": "remove superseded JDSA document; recover at d3071ba31eaf7babdf1e7fe234d8527191ed93de"
+  },
+  {
+    "path": "manuscript/jdsa/source/figures/Fig1.pdf",
+    "sha256": "59cf528cc5ab6b0b2023c9c0b86fdd9ddcd4e901911ef300de0e2e9d201a46f8",
+    "pages": 1,
+    "title": "",
+    "first_page_excerpt": "Query text\nExtract and type\nindexed mentions\nRetrieved schema\nall parameter keys\nEligible slots\nPall(\u02c6s) \u2229KG(q)\nGold scalar keys\nbenchmark\nassistance\nTyped greedy\nno mention-\nindex reuse\nPartial scalar\nslot\u2013value mapping\n",
+    "disposition": "preserve: separate manuscript or figure/scientific asset"
+  },
+  {
+    "path": "manuscript/jdsa/source/figures/pipeline_corrected.pdf",
+    "sha256": "cf24f9e99eeb7996661b51050989d7a9e37c77be11b70581898fd7707f6d6308",
+    "pages": 1,
+    "title": "",
+    "first_page_excerpt": "Query text\nExtract and type\nindexed mentions\nRetrieved schema\nparameter keys\nEligible slots\nP(\u02c6s) \u2229KG(q)\nGold scalar keys\nbenchmark\nassistance\nTyped greedy\nno mention-\nindex reuse\nPartial scalar\nslot\u2013value mapping\n",
+    "disposition": "preserve: separate manuscript or figure/scientific asset"
+  },
+  {
+    "path": "manuscript/jdsa/source/figures/pipeline_m1.pdf",
+    "sha256": "59cf528cc5ab6b0b2023c9c0b86fdd9ddcd4e901911ef300de0e2e9d201a46f8",
+    "pages": 1,
+    "title": "",
+    "first_page_excerpt": "Query text\nExtract and type\nindexed mentions\nRetrieved schema\nall parameter keys\nEligible slots\nPall(\u02c6s) \u2229KG(q)\nGold scalar keys\nbenchmark\nassistance\nTyped greedy\nno mention-\nindex reuse\nPartial scalar\nslot\u2013value mapping\n",
+    "disposition": "preserve: separate manuscript or figure/scientific asset"
+  },
+  {
+    "path": "manuscript/main.pdf",
+    "sha256": "00ab05242be3890eb3e0dfcd381220fba2d6c7a7513d9474756fa2a42158859d",
+    "pages": 37,
+    "title": "",
+    "first_page_excerpt": "Retrieval-Assisted Instantiation of\nNatural-Language Optimization Problems\nSoroush Vahidi1*\n1*Ying Wu College of Computing, New Jersey Institute of Technology,\nUniversity Heights, Newark, 07102-1982, NJ, USA.\nCorresponding author(s). E-mail(s): sv96@njit.edu (ORCID:\n0000-0003-1934-6282);\nAbstract\nMany engineering optimization problems are first described in natural language\nand only later translated into formal mathematical models, but this trans",
+    "disposition": "preserve: separate manuscript or figure/scientific asset"
+  },
+  {
+    "path": "manuscript/sncs/Retrieval-Assisted-Instantiation_SN-Computer-Science_Manuscript.pdf",
+    "sha256": "98d12f1c39d248fc90e5c02736196678313168e8d06072770513e4a989035ff1",
+    "pages": 25,
+    "title": "",
+    "first_page_excerpt": "Retrieval-Assisted Instantiation of\nNatural-Language Optimization Problems\nSoroush Vahidi1*\n1*Department of Computer Science, Ying Wu College of Computing, New\nJersey Institute of Technology, University Heights, Newark, 07102-1982,\nNJ, USA.\nCorresponding author(s). E-mail(s): sv96@njit.edu (ORCID:\n0000-0003-1934-6282);\nAbstract\nPurpose: Many optimization problems are first described in natural language\nbefore being formalized as mathematical mode",
+    "disposition": "preserve: separate manuscript or figure/scientific asset"
+  },
+  {
+    "path": "manuscript/sncs/main.pdf",
+    "sha256": "98d12f1c39d248fc90e5c02736196678313168e8d06072770513e4a989035ff1",
+    "pages": 25,
+    "title": "",
+    "first_page_excerpt": "Retrieval-Assisted Instantiation of\nNatural-Language Optimization Problems\nSoroush Vahidi1*\n1*Department of Computer Science, Ying Wu College of Computing, New\nJersey Institute of Technology, University Heights, Newark, 07102-1982,\nNJ, USA.\nCorresponding author(s). E-mail(s): sv96@njit.edu (ORCID:\n0000-0003-1934-6282);\nAbstract\nPurpose: Many optimization problems are first described in natural language\nbefore being formalized as mathematical mode",
+    "disposition": "preserve: separate manuscript or figure/scientific asset"
+  },
+  {
+    "path": "manuscript/sncs/submission_package/main.pdf",
+    "sha256": "98d12f1c39d248fc90e5c02736196678313168e8d06072770513e4a989035ff1",
+    "pages": 25,
+    "title": "",
+    "first_page_excerpt": "Retrieval-Assisted Instantiation of\nNatural-Language Optimization Problems\nSoroush Vahidi1*\n1*Department of Computer Science, Ying Wu College of Computing, New\nJersey Institute of Technology, University Heights, Newark, 07102-1982,\nNJ, USA.\nCorresponding author(s). E-mail(s): sv96@njit.edu (ORCID:\n0000-0003-1934-6282);\nAbstract\nPurpose: Many optimization problems are first described in natural language\nbefore being formalized as mathematical mode",
+    "disposition": "preserve: separate manuscript or figure/scientific asset"
+  },
+  {
+    "path": "manuscript/submission_package/figures/figure3_engineering_validation_comparison.pdf",
+    "sha256": "c6c5c392d3ea9a57df395213e5bf0bf33ee6f286a023f0a31a6a92efa0ca1a35",
+    "pages": 1,
+    "title": "",
+    "first_page_excerpt": "TFIDF\nBM25\nORACLE\n0.0\n0.2\n0.4\n0.6\n0.8\n1.0\n0.75\n0.73\n0.77\n0.75\n0.73\n0.78\nstructural valid\ninst. complete\n",
+    "disposition": "preserve: separate manuscript or figure/scientific asset"
+  },
+  {
+    "path": "manuscript/submission_package/figures/figure4_final_solver_backed_subset.pdf",
+    "sha256": "43e30df5a28053d04e89476c98b8bc65a8aae59c7007e3d1d55a4752676d6904",
+    "pages": 1,
+    "title": "",
+    "first_page_excerpt": "TFIDF\nORACLE\n0.0\n0.2\n0.4\n0.6\n0.8\n1.0\n0.95\n0.95\n0.80\n0.75\n0.80\n0.75\n0.80\n0.75\nexecutable\nsolver success\nfeasible\nobjective\n",
+    "disposition": "preserve: separate manuscript or figure/scientific asset"
+  },
+  {
+    "path": "manuscript/submission_package/main.pdf",
+    "sha256": "986578113ccf2b7cb3fe4528556110b6dbabb72f9bea37b869d1901d7c584024",
+    "pages": 37,
+    "title": "",
+    "first_page_excerpt": "Retrieval-Assisted Instantiation of\nNatural-Language Optimization Problems\nSoroush Vahidi1*\n1*Ying Wu College of Computing, New Jersey Institute of Technology,\nUniversity Heights, Newark, 07102-1982, NJ, USA.\nCorresponding author(s). E-mail(s): sv96@njit.edu (ORCID:\n0000-0003-1934-6282);\nAbstract\nMany engineering optimization problems are first described in natural language\nand only later translated into formal mathematical models, but this trans",
+    "disposition": "preserve: separate manuscript or figure/scientific asset"
+  },
+  {
+    "path": "results/paper/eaai_camera_ready_figures/figure1_pipeline_overview.pdf",
+    "sha256": "f20ed3986169203bfed96e0714370ded120c978b379dd50329fbfe11313cb577",
+    "pages": 1,
+    "title": "figure1_pipeline_overview",
+    "first_page_excerpt": "",
+    "disposition": "preserve: separate manuscript or figure/scientific asset"
+  },
+  {
+    "path": "results/paper/eaai_camera_ready_figures/figure2_main_benchmark_comparison.pdf",
+    "sha256": "e4e656d8da6bf87d3c47620028fc26f8ffbf82be5549ed0ab795e78ebd1cbfd3",
+    "pages": 1,
+    "title": "figure2_main_benchmark_comparison.pdf.tmp",
+    "first_page_excerpt": "",
+    "disposition": "preserve: separate manuscript or figure/scientific asset"
+  },
+  {
+    "path": "results/paper/eaai_camera_ready_figures/figure3_engineering_validation_comparison.pdf",
+    "sha256": "e065b14ce926540e261df25107c2a502f915b0e0da070f5d9539fea667079c01",
+    "pages": 1,
+    "title": "",
+    "first_page_excerpt": "TF\u2013IDF\nBM25\nOracle\n0.0\n0.2\n0.4\n0.6\n0.8\n1.0\n0.75\n0.73\n0.77\n0.75\n0.73\n0.78\nStructural validity\nInstantiation completeness\n",
+    "disposition": "preserve: separate manuscript or figure/scientific asset"
+  },
+  {
+    "path": "results/paper/eaai_camera_ready_figures/figure4_final_solver_backed_subset.pdf",
+    "sha256": "44e65500474e86eeb4524904a9b8ec0555c4a30cb6bfd18383f709f610a81548",
+    "pages": 1,
+    "title": "",
+    "first_page_excerpt": "TF\u2013IDF\nOracle\n0.0\n0.2\n0.4\n0.6\n0.8\n1.0\n0.95\n0.95\n0.80\n0.75\n0.80\n0.75\n0.80\n0.75\nExecutable\nSolver success\nFeasible\nObjective produced\n",
+    "disposition": "preserve: separate manuscript or figure/scientific asset"
+  },
+  {
+    "path": "results/paper/eaai_camera_ready_figures/figure5_failure_breakdown.pdf",
+    "sha256": "b73479312d4d50043ad604e27a91f76a1efa153bd66c2b139f83cdf9d438cef4",
+    "pages": 1,
+    "title": "figure5_failure_breakdown",
+    "first_page_excerpt": "",
+    "disposition": "preserve: separate manuscript or figure/scientific asset"
+  }
+]

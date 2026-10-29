@@ -1,0 +1,2154 @@
+{
+  "baseline_main": "d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+  "scientific_source": "d3583fa28fcdb87f7a446f764ca3225ab5f855d3",
+  "checks": [
+    {
+      "check": "authoritative scientific source identity references.bib",
+      "pass": true
+    },
+    {
+      "check": "authoritative scientific source identity ready_conditioned_rows.tex",
+      "pass": true
+    },
+    {
+      "check": "unique navigation edit main.tex",
+      "pass": true
+    },
+    {
+      "check": "authoritative scientific source identity main.tex",
+      "pass": true
+    },
+    {
+      "check": "authoritative scientific source identity sn-basic.bst",
+      "pass": true
+    },
+    {
+      "check": "authoritative scientific source identity reproduction_map.tex",
+      "pass": true
+    },
+    {
+      "check": "authoritative scientific source identity reference_conventions.tex",
+      "pass": true
+    },
+    {
+      "check": "authoritative scientific source identity supervision_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "authoritative scientific source identity grounding_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "authoritative scientific source identity pipeline_figure.tex",
+      "pass": true
+    },
+    {
+      "check": "authoritative scientific source identity closed_audits.tex",
+      "pass": true
+    },
+    {
+      "check": "authoritative scientific source identity relationship_supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "authoritative scientific source identity preserved_results_details.tex",
+      "pass": true
+    },
+    {
+      "check": "authoritative scientific source identity Fig1.tex",
+      "pass": true
+    },
+    {
+      "check": "authoritative scientific source identity supporting_core.tex",
+      "pass": true
+    },
+    {
+      "check": "authoritative scientific source identity common18_overview.tex",
+      "pass": true
+    },
+    {
+      "check": "unique navigation edit supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "authoritative scientific source identity supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "authoritative scientific source identity llm_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "authoritative scientific source identity orcidlink.sty",
+      "pass": true
+    },
+    {
+      "check": "authoritative scientific source identity relationship_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "authoritative scientific source identity sn-jnl.cls",
+      "pass": true
+    },
+    {
+      "check": "authoritative scientific source identity additional_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "authoritative scientific source identity d1_contrasts.tex",
+      "pass": true
+    },
+    {
+      "check": "authoritative scientific source identity related_context.tex",
+      "pass": true
+    },
+    {
+      "check": "scientific/data/code paths unchanged",
+      "pass": true
+    },
+    {
+      "check": "PDF disposition manuscript/KAIS_cover_letter.pdf",
+      "pass": true
+    },
+    {
+      "check": "PDF disposition manuscript/dke/figures/figure3_engineering_validation_comparison.pdf",
+      "pass": true
+    },
+    {
+      "check": "PDF disposition manuscript/dke/figures/figure4_final_solver_backed_subset.pdf",
+      "pass": true
+    },
+    {
+      "check": "PDF disposition manuscript/dke/main.pdf",
+      "pass": true
+    },
+    {
+      "check": "PDF disposition manuscript/figures/figure3_engineering_validation_comparison.pdf",
+      "pass": true
+    },
+    {
+      "check": "PDF disposition manuscript/figures/figure4_final_solver_backed_subset.pdf",
+      "pass": true
+    },
+    {
+      "check": "PDF disposition manuscript/jdsa/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+      "pass": true
+    },
+    {
+      "check": "PDF disposition manuscript/jdsa/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf",
+      "pass": true
+    },
+    {
+      "check": "PDF disposition manuscript/jdsa/source/figures/Fig1.pdf",
+      "pass": true
+    },
+    {
+      "check": "PDF disposition manuscript/jdsa/source/figures/pipeline_corrected.pdf",
+      "pass": true
+    },
+    {
+      "check": "PDF disposition manuscript/jdsa/source/figures/pipeline_m1.pdf",
+      "pass": true
+    },
+    {
+      "check": "PDF disposition manuscript/main.pdf",
+      "pass": true
+    },
+    {
+      "check": "PDF disposition manuscript/sncs/Retrieval-Assisted-Instantiation_SN-Computer-Science_Manuscript.pdf",
+      "pass": true
+    },
+    {
+      "check": "PDF disposition manuscript/sncs/main.pdf",
+      "pass": true
+    },
+    {
+      "check": "PDF disposition manuscript/sncs/submission_package/main.pdf",
+      "pass": true
+    },
+    {
+      "check": "PDF disposition manuscript/submission_package/figures/figure3_engineering_validation_comparison.pdf",
+      "pass": true
+    },
+    {
+      "check": "PDF disposition manuscript/submission_package/figures/figure4_final_solver_backed_subset.pdf",
+      "pass": true
+    },
+    {
+      "check": "PDF disposition manuscript/submission_package/main.pdf",
+      "pass": true
+    },
+    {
+      "check": "PDF disposition results/paper/eaai_camera_ready_figures/figure1_pipeline_overview.pdf",
+      "pass": true
+    },
+    {
+      "check": "PDF disposition results/paper/eaai_camera_ready_figures/figure2_main_benchmark_comparison.pdf",
+      "pass": true
+    },
+    {
+      "check": "PDF disposition results/paper/eaai_camera_ready_figures/figure3_engineering_validation_comparison.pdf",
+      "pass": true
+    },
+    {
+      "check": "PDF disposition results/paper/eaai_camera_ready_figures/figure4_final_solver_backed_subset.pdf",
+      "pass": true
+    },
+    {
+      "check": "PDF disposition results/paper/eaai_camera_ready_figures/figure5_failure_breakdown.pdf",
+      "pass": true
+    },
+    {
+      "check": "frozen verifier 9737 PASS",
+      "pass": true
+    },
+    {
+      "check": "ZIP CRC",
+      "pass": true
+    },
+    {
+      "check": "flat ZIP",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source ESM_1.pdf",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source Fig1.pdf",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source Fig1.tex",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source README.md",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source additional_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source build.sh",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source closed_audits.tex",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source common18_overview.tex",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source d1_contrasts.tex",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source grounding_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source llm_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source main.bbl",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source main.tex",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source orcidlink.sty",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source package_source.py",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source pipeline_figure.tex",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source preserved_results_details.tex",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source ready_conditioned_rows.tex",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source reference_conventions.tex",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source references.bib",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source related_context.tex",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source relationship_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source relationship_supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source reproduction_map.tex",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source sn-basic.bst",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source sn-jnl.cls",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source supervision_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source supplement.bbl",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "ZIP member equals final source supporting_core.tex",
+      "pass": true
+    },
+    {
+      "check": "independent clean build byte identity Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+      "pass": true
+    },
+    {
+      "check": "no unresolved build diagnostics main",
+      "pass": true
+    },
+    {
+      "check": "BibTeX clean main",
+      "pass": true
+    },
+    {
+      "check": "page numbering main1",
+      "pass": true
+    },
+    {
+      "check": "page numbering main2",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.kadioglu2024ner4opt",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.ramamonjison2022autoformulation",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.ramamonjison2023nl4opt",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.deng2021strug",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.wang2020ratsql",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.gao2026models",
+      "pass": true
+    },
+    {
+      "check": "internal named destination mainsubsection.19",
+      "pass": true
+    },
+    {
+      "check": "internal named destination mainsection.11",
+      "pass": true
+    },
+    {
+      "check": "internal named destination mainsection.15",
+      "pass": true
+    },
+    {
+      "check": "internal named destination mainsection.30",
+      "pass": true
+    },
+    {
+      "check": "internal named destination mainsection.39",
+      "pass": true
+    },
+    {
+      "check": "internal named destination mainsection.58",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.deng2021strug",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.wang2020ratsql",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.almasian2023cqe",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.roy2017udg",
+      "pass": true
+    },
+    {
+      "check": "page numbering main3",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.gao2026models",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.kadioglu2024ner4opt",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.ramamonjison2023nl4opt",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.pan2025pamop",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.huang2025orlm",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.xiao2026deepor",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.ahmed2025opt2code",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main3table.4",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main3section.104",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.refai2026component",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.chen2026optengine",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.astorga2025autoformulation",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.punyakanok2004ilp",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.scholak2021picard",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.zhai2025equivamap",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.kuhn1955assignment",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.nlp4lp_dataset",
+      "pass": true
+    },
+    {
+      "check": "page numbering main4",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main4subsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal named destination mainsubsection.61",
+      "pass": true
+    },
+    {
+      "check": "page numbering main5",
+      "pass": true
+    },
+    {
+      "check": "internal named destination mainequation.22",
+      "pass": true
+    },
+    {
+      "check": "internal named destination mainequation.23",
+      "pass": true
+    },
+    {
+      "check": "internal named destination mainequation.26",
+      "pass": true
+    },
+    {
+      "check": "page numbering main6",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.nlp4lp_dataset",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal named destination mainsubsection.19",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.chen2024m3embedding",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.deerwester1990lsa",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.pedregosa2011sklearn",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.robertson2009bm25",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main6table.6",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.lhoest2021datasets",
+      "pass": true
+    },
+    {
+      "check": "internal named destination mainequation.18",
+      "pass": true
+    },
+    {
+      "check": "internal named destination mainsubsection.21",
+      "pass": true
+    },
+    {
+      "check": "internal named destination mainalgorithm.34",
+      "pass": true
+    },
+    {
+      "check": "internal named destination mainfigure.36",
+      "pass": true
+    },
+    {
+      "check": "page numbering main7",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main7subsection.26",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main7subsection.31",
+      "pass": true
+    },
+    {
+      "check": "page numbering main8",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.holm1979followup",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main8table.17",
+      "pass": true
+    },
+    {
+      "check": "internal named destination mainsubsection.62",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main8subsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maintable.42",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maintable.45",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maintable.47",
+      "pass": true
+    },
+    {
+      "check": "page numbering main9",
+      "pass": true
+    },
+    {
+      "check": "internal named destination mainequation.25",
+      "pass": true
+    },
+    {
+      "check": "internal named destination mainequation.29",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maintable.50",
+      "pass": true
+    },
+    {
+      "check": "internal named destination mainsubsection.51",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main9section.9",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maintable.53",
+      "pass": true
+    },
+    {
+      "check": "page numbering main10",
+      "pass": true
+    },
+    {
+      "check": "internal named destination mainequation.24",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maintable.56",
+      "pass": true
+    },
+    {
+      "check": "internal named destination mainsubsection.37",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main10subsection.26",
+      "pass": true
+    },
+    {
+      "check": "page numbering main11",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maintable.45",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.gao2026models",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.refai2026component",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.chen2026optengine",
+      "pass": true
+    },
+    {
+      "check": "page numbering main12",
+      "pass": true
+    },
+    {
+      "check": "internal named destination maincite.zhai2025equivamap",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main12subsection.63",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main12subsection.99",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main12section.40",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main12subsection.98",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main12subsection.74",
+      "pass": true
+    },
+    {
+      "check": "internal named destination mainsubsection.19",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main12subsection.27",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main12subsection.31",
+      "pass": true
+    },
+    {
+      "check": "page numbering main13",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main13section.56",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main13subsection.72",
+      "pass": true
+    },
+    {
+      "check": "page numbering main14",
+      "pass": true
+    },
+    {
+      "check": "internal named destination mainsubsection.61",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main14subsection.31",
+      "pass": true
+    },
+    {
+      "check": "page numbering main15",
+      "pass": true
+    },
+    {
+      "check": "page numbering main16",
+      "pass": true
+    },
+    {
+      "check": "page text within bounds main",
+      "pass": true
+    },
+    {
+      "check": "all fonts embedded main",
+      "pass": true
+    },
+    {
+      "check": "same page count as corrected PDF main",
+      "pass": true
+    },
+    {
+      "check": "independent clean build byte identity ESM_1.pdf",
+      "pass": true
+    },
+    {
+      "check": "no unresolved build diagnostics supplement",
+      "pass": true
+    },
+    {
+      "check": "BibTeX clean supplement",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement1",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsection.2",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsection.9",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.10",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.15",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsection.18",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsection.25",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.26",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.27",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.34",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.37",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.38",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.39",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsection.40",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.41",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement2",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.46",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.49",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.53",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsection.56",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsection.59",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.60",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.63",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.69",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.72",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsection.73",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.74",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.75",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.76",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.77",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsection.78",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.79",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.84",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.87",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.92",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.93",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.96",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsection.97",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.98",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.99",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsection.104",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.105",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.106",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement3",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.4",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.8",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsection.104",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement4",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement5",
+      "pass": true
+    },
+    {
+      "check": "companion named destination supplement5subsection.38",
+      "pass": true
+    },
+    {
+      "check": "companion named destination supplement5equation.27",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.12",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.14",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.17",
+      "pass": true
+    },
+    {
+      "check": "companion named destination supplement5subsection.38",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.77",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement6",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.20",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.22",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.24",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.74",
+      "pass": true
+    },
+    {
+      "check": "companion named destination supplement6table.42",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement7",
+      "pass": true
+    },
+    {
+      "check": "companion named destination supplement7subsection.37",
+      "pass": true
+    },
+    {
+      "check": "companion named destination supplement7table.56",
+      "pass": true
+    },
+    {
+      "check": "companion named destination supplement7subsubsection.54",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.huang2017beamfollowup",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement8",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.27",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.29",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement9",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement10",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.33",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement11",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.36",
+      "pass": true
+    },
+    {
+      "check": "companion named destination supplement11equation.28",
+      "pass": true
+    },
+    {
+      "check": "companion named destination supplement11equation.29",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement12",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement13",
+      "pass": true
+    },
+    {
+      "check": "companion named destination supplement13subsection.60",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.63",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement14",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.43",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.45",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.48",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement15",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.43",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.pan2025pamop",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.huang2025orlm",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.xiao2026deepor",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.ding2026orr1",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement16",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.52",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement17",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.55",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement18",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.58",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement19",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.62",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement20",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.65",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement21",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.67",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementequation.68",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement22",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.71",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement23",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement24",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.22",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.24",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement25",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.38",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement26",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.holm1979followup",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.17",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.17",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.20",
+      "pass": true
+    },
+    {
+      "check": "companion named destination supplement26table.42",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.14",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement27",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.81",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement28",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.83",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.86",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement29",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.77",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.89",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement30",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.91",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement31",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.27",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.38",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.95",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement32",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.99",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsubsection.72",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.81",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementsection.40",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement33",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.101",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.103",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement34",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.101",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementtable.4",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement35",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.pan2025pamop",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.huang2025orlm",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.xiao2026deepor",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.ahmed2025opt2code",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.astorga2025autoformulation",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.xiao2024chainofexperts",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.yu2026uncertainty",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.jiang2025llmopt",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.zhang2024optllm",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.chen2025solver",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.ding2026orr1",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.li2026solver",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.xie2026escaping",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.zhang2026dual",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.kong2025alphaopt",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.yang2026orthought",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.affolter2019nli",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.yu2018spider",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplementcite.miplibnl2026",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement36",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement37",
+      "pass": true
+    },
+    {
+      "check": "page numbering supplement38",
+      "pass": true
+    },
+    {
+      "check": "page text within bounds supplement",
+      "pass": true
+    },
+    {
+      "check": "all fonts embedded supplement",
+      "pass": true
+    },
+    {
+      "check": "same page count as corrected PDF supplement",
+      "pass": true
+    },
+    {
+      "check": "supplement text and rendering preserved",
+      "pass": true
+    },
+    {
+      "check": "navigation target README.md https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa-stage3",
+      "pass": true
+    },
+    {
+      "check": "navigation target README.md https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa-stage3/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+      "pass": true
+    },
+    {
+      "check": "navigation target README.md https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa-stage3/ESM_1.pdf",
+      "pass": true
+    },
+    {
+      "check": "navigation target README.md https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa-stage3/JDSA_Stage3_Submission_Source.zip",
+      "pass": true
+    },
+    {
+      "check": "navigation target README.md https://github.com/SoroushVahidi/combinatorial-opt-agent/blob/main/manuscript/jdsa-stage3/README.md",
+      "pass": true
+    },
+    {
+      "check": "navigation target README.md manuscript/sncs/main.tex",
+      "pass": true
+    },
+    {
+      "check": "navigation target README.md manuscript/dke/main.tex",
+      "pass": true
+    },
+    {
+      "check": "navigation target README.md docs/BASELINE_STALENESS_AUDIT_2026-08-12.md",
+      "pass": true
+    },
+    {
+      "check": "navigation target README.md docs/SNCS_STAGE1_MANUSCRIPT_REPOSITORY_AUDIT_2026-08-26.md",
+      "pass": true
+    },
+    {
+      "check": "navigation target README.md docs/SNCS_STAGE2_LOCAL_WULVER_GITHUB_AUDIT_2026-08-27.md",
+      "pass": true
+    },
+    {
+      "check": "navigation target README.md docs/SNCS_STAGE3_MANUSCRIPT_SPRINGER_REPOSITORY_FINALIZATION_2026-08-27.md",
+      "pass": true
+    },
+    {
+      "check": "navigation target README.md docs/DKE_SOURCE_OF_TRUTH.md",
+      "pass": true
+    },
+    {
+      "check": "navigation target README.md docs/SNCS_RESULT_MANIFEST_2026-08-27.json",
+      "pass": true
+    },
+    {
+      "check": "navigation target README.md docs/SNCS_REPRODUCIBILITY.md",
+      "pass": true
+    },
+    {
+      "check": "navigation target README.md docs/DKE_SOURCE_OF_TRUTH.md",
+      "pass": true
+    },
+    {
+      "check": "navigation target README.md docs/NEGATIVE_RESULTS.md",
+      "pass": true
+    },
+    {
+      "check": "navigation target README.md docs/HOW_TO_REPRODUCE.md",
+      "pass": true
+    },
+    {
+      "check": "navigation target README.md docs/SNCS_REPRODUCIBILITY.md",
+      "pass": true
+    },
+    {
+      "check": "navigation target README.md docs/wulver.md",
+      "pass": true
+    },
+    {
+      "check": "navigation target README.md LICENSE",
+      "pass": true
+    },
+    {
+      "check": "navigation target README.md CONTRIBUTING.md",
+      "pass": true
+    },
+    {
+      "check": "navigation target manuscript/MANUSCRIPT_README.md https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa-stage3",
+      "pass": true
+    },
+    {
+      "check": "navigation target manuscript/MANUSCRIPT_README.md https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa-stage3/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+      "pass": true
+    },
+    {
+      "check": "navigation target manuscript/MANUSCRIPT_README.md https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa-stage3/ESM_1.pdf",
+      "pass": true
+    },
+    {
+      "check": "navigation target manuscript/MANUSCRIPT_README.md https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa-stage3/JDSA_Stage3_Submission_Source.zip",
+      "pass": true
+    },
+    {
+      "check": "navigation target manuscript/MANUSCRIPT_README.md https://github.com/SoroushVahidi/combinatorial-opt-agent/blob/main/manuscript/jdsa-stage3/README.md",
+      "pass": true
+    },
+    {
+      "check": "navigation target manuscript/MANUSCRIPT_README.md sncs/",
+      "pass": true
+    },
+    {
+      "check": "navigation target manuscript/MANUSCRIPT_README.md dke/",
+      "pass": true
+    },
+    {
+      "check": "navigation target manuscript/jdsa/README.md ../jdsa-stage3/README.md",
+      "pass": true
+    },
+    {
+      "check": "navigation target manuscript/jdsa-stage3/README.md Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+      "pass": true
+    },
+    {
+      "check": "navigation target manuscript/jdsa-stage3/README.md ESM_1.pdf",
+      "pass": true
+    },
+    {
+      "check": "navigation target manuscript/jdsa-stage3/README.md JDSA_Stage3_Submission_Source.zip",
+      "pass": true
+    },
+    {
+      "check": "navigation target manuscript/jdsa-stage3/README.md SHA256SUMS.txt",
+      "pass": true
+    },
+    {
+      "check": "navigation target manuscript/jdsa-stage3/README.md ../../docs/jdsa_main_finalization_20261029/FINALIZATION_REPORT.md",
+      "pass": true
+    }
+  ],
+  "pdfs": {
+    "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf": {
+      "sha256": "9e7815c8fd66748bd41bf739577573697be8fb707b4ec744160533dddd2ed17b",
+      "pages": 16,
+      "cross_document_links": [
+        {
+          "page": 3,
+          "target": "ESM_1.pdf",
+          "destination": "table.4"
+        },
+        {
+          "page": 3,
+          "target": "ESM_1.pdf",
+          "destination": "section.104"
+        },
+        {
+          "page": 4,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.31"
+        },
+        {
+          "page": 6,
+          "target": "ESM_1.pdf",
+          "destination": "table.6"
+        },
+        {
+          "page": 7,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.26"
+        },
+        {
+          "page": 7,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.31"
+        },
+        {
+          "page": 8,
+          "target": "ESM_1.pdf",
+          "destination": "table.17"
+        },
+        {
+          "page": 8,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.31"
+        },
+        {
+          "page": 9,
+          "target": "ESM_1.pdf",
+          "destination": "section.9"
+        },
+        {
+          "page": 10,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.26"
+        },
+        {
+          "page": 12,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.63"
+        },
+        {
+          "page": 12,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.99"
+        },
+        {
+          "page": 12,
+          "target": "ESM_1.pdf",
+          "destination": "section.40"
+        },
+        {
+          "page": 12,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.98"
+        },
+        {
+          "page": 12,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.74"
+        },
+        {
+          "page": 12,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.27"
+        },
+        {
+          "page": 12,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.31"
+        },
+        {
+          "page": 13,
+          "target": "ESM_1.pdf",
+          "destination": "section.56"
+        },
+        {
+          "page": 13,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.72"
+        },
+        {
+          "page": 14,
+          "target": "ESM_1.pdf",
+          "destination": "subsection.31"
+        }
+      ],
+      "text_changed_pages_from_corrected": [
+        14,
+        15,
+        16
+      ],
+      "render_changed_pages_from_corrected": [
+        14,
+        15,
+        16
+      ],
+      "warnings": [
+        "Package hyperref Warning: Difference (4) between bookmark levels is greater "
+      ],
+      "underfull_notices": 60,
+      "metadata": {
+        "format": "PDF 1.5",
+        "title": "Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study",
+        "author": "Soroush Vahidi",
+        "subject": "Diagnostic study of retrieval-assisted scalar grounding",
+        "keywords": "natural language processing, optimization modeling, information retrieval, semantic grounding",
+        "creator": "LaTeX with hyperref",
+        "producer": "pdfTeX-1.40.25",
+        "creationDate": "D:20261029224520Z",
+        "modDate": "D:20261029224520Z",
+        "trapped": "",
+        "encryption": null
+      }
+    },
+    "ESM_1.pdf": {
+      "sha256": "d90456a7ac71cae6f7600964edb5fe6f2b62e08c80082b858801d237e80d7311",
+      "pages": 38,
+      "cross_document_links": [
+        {
+          "page": 5,
+          "target": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+          "destination": "subsection.38"
+        },
+        {
+          "page": 5,
+          "target": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+          "destination": "equation.27"
+        },
+        {
+          "page": 5,
+          "target": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+          "destination": "subsection.38"
+        },
+        {
+          "page": 6,
+          "target": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+          "destination": "table.42"
+        },
+        {
+          "page": 7,
+          "target": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+          "destination": "subsection.37"
+        },
+        {
+          "page": 7,
+          "target": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+          "destination": "table.56"
+        },
+        {
+          "page": 7,
+          "target": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+          "destination": "subsubsection.54"
+        },
+        {
+          "page": 11,
+          "target": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+          "destination": "equation.28"
+        },
+        {
+          "page": 11,
+          "target": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+          "destination": "equation.29"
+        },
+        {
+          "page": 13,
+          "target": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+          "destination": "subsection.60"
+        },
+        {
+          "page": 26,
+          "target": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+          "destination": "table.42"
+        }
+      ],
+      "text_changed_pages_from_corrected": [],
+      "render_changed_pages_from_corrected": [],
+      "warnings": [],
+      "underfull_notices": 39,
+      "metadata": {
+        "format": "PDF 1.5",
+        "title": "Online Resource 1: Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study",
+        "author": "Soroush Vahidi",
+        "subject": "Supplementary evidence and reproduction boundaries",
+        "keywords": "natural language processing, optimization modeling, information retrieval, semantic grounding",
+        "creator": "LaTeX with hyperref",
+        "producer": "pdfTeX-1.40.25",
+        "creationDate": "D:20261029224520Z",
+        "modDate": "D:20261029224520Z",
+        "trapped": "",
+        "encryption": null
+      }
+    }
+  },
+  "source_comparison": {
+    "references.bib": {
+      "sha256": "585783bce9f18285515a60b5040c88b260e67d3e255a381334c00e4d351be5d4",
+      "source_sha256": "585783bce9f18285515a60b5040c88b260e67d3e255a381334c00e4d351be5d4",
+      "navigation_edit": false
+    },
+    "ready_conditioned_rows.tex": {
+      "sha256": "73183524b2876899f50c0cfa43523ff3284e4d8ed9d85a7cc617c0fe6df00082",
+      "source_sha256": "73183524b2876899f50c0cfa43523ff3284e4d8ed9d85a7cc617c0fe6df00082",
+      "navigation_edit": false
+    },
+    "main.tex": {
+      "sha256": "33655f9c452e2afaca698395cfba26af42bc08bbf3dcc8a26894804f49891b7e",
+      "source_sha256": "732355df7b0e6814c874a105e5bb50267ac46421851fe3f8f4144d3233766df0",
+      "navigation_edit": true
+    },
+    "sn-basic.bst": {
+      "sha256": "4b368414cc5593169907933b417aacfdb0ce905866a39bdf55d21aad65e9d46c",
+      "source_sha256": "4b368414cc5593169907933b417aacfdb0ce905866a39bdf55d21aad65e9d46c",
+      "navigation_edit": false
+    },
+    "reproduction_map.tex": {
+      "sha256": "8b52a9e7542236e84d41aff2a4a953ce30ce2087c715b8f31f6e5d4c44536da8",
+      "source_sha256": "8b52a9e7542236e84d41aff2a4a953ce30ce2087c715b8f31f6e5d4c44536da8",
+      "navigation_edit": false
+    },
+    "reference_conventions.tex": {
+      "sha256": "9bbb6d0ba4e7a72b23629c8dceb50bb640afb4f4c332731bd80dcefd2f50c7af",
+      "source_sha256": "9bbb6d0ba4e7a72b23629c8dceb50bb640afb4f4c332731bd80dcefd2f50c7af",
+      "navigation_edit": false
+    },
+    "supervision_diagnostics.tex": {
+      "sha256": "d8994e82be3d4c94f4ffa1e8b0a6c3651f5205c13f774f5a2b9325cd9efe002a",
+      "source_sha256": "d8994e82be3d4c94f4ffa1e8b0a6c3651f5205c13f774f5a2b9325cd9efe002a",
+      "navigation_edit": false
+    },
+    "grounding_diagnostics.tex": {
+      "sha256": "398507da693c923d4a664af4cca75d4ee9abbe2987e4c9c67c5cfaf48c42dcbf",
+      "source_sha256": "398507da693c923d4a664af4cca75d4ee9abbe2987e4c9c67c5cfaf48c42dcbf",
+      "navigation_edit": false
+    },
+    "pipeline_figure.tex": {
+      "sha256": "8693933108ff023468c019cee84b840702c8c7b7292a5a00284fdad23bddfb27",
+      "source_sha256": "8693933108ff023468c019cee84b840702c8c7b7292a5a00284fdad23bddfb27",
+      "navigation_edit": false
+    },
+    "closed_audits.tex": {
+      "sha256": "dd120cfff450457a959e860c5616f425f16e7c04ed3275cec4de846b4b58a4a2",
+      "source_sha256": "dd120cfff450457a959e860c5616f425f16e7c04ed3275cec4de846b4b58a4a2",
+      "navigation_edit": false
+    },
+    "relationship_supplement.tex": {
+      "sha256": "c9a91624bebe3b3cb45e4c53e597a62b4cc56e4ed1c49f992e3e93adafe4e151",
+      "source_sha256": "c9a91624bebe3b3cb45e4c53e597a62b4cc56e4ed1c49f992e3e93adafe4e151",
+      "navigation_edit": false
+    },
+    "preserved_results_details.tex": {
+      "sha256": "5365f96a28dc561028c348e59826e1d6aacdeb45d89ca4355c65f093ca27124f",
+      "source_sha256": "5365f96a28dc561028c348e59826e1d6aacdeb45d89ca4355c65f093ca27124f",
+      "navigation_edit": false
+    },
+    "Fig1.tex": {
+      "sha256": "ed5f89a843169fe14eb294150210a744f5346bd5497302eb5c28cd8a0061e023",
+      "source_sha256": "ed5f89a843169fe14eb294150210a744f5346bd5497302eb5c28cd8a0061e023",
+      "navigation_edit": false
+    },
+    "supporting_core.tex": {
+      "sha256": "98c6777ecebf37bc87a6bcb734d7a625188031038222cce91c28f5a92b842edf",
+      "source_sha256": "98c6777ecebf37bc87a6bcb734d7a625188031038222cce91c28f5a92b842edf",
+      "navigation_edit": false
+    },
+    "common18_overview.tex": {
+      "sha256": "223259f972c61f4d93acf2be409dd7a1868bae6ef8eb702cf27463c0d7582400",
+      "source_sha256": "223259f972c61f4d93acf2be409dd7a1868bae6ef8eb702cf27463c0d7582400",
+      "navigation_edit": false
+    },
+    "supplement.tex": {
+      "sha256": "ce0758bb5fbce411aa1aa091273dcff04e3113f30cd6734dad7b0323811e0b95",
+      "source_sha256": "96ce5ed0540f20f19c6d8cb0e6867789ddf4b626e5c248743817d7601464eb49",
+      "navigation_edit": true
+    },
+    "llm_evidence.tex": {
+      "sha256": "7a87a535ef010b26dfa6381f9f9efa038e728d60cab7af0a3881934024730580",
+      "source_sha256": "7a87a535ef010b26dfa6381f9f9efa038e728d60cab7af0a3881934024730580",
+      "navigation_edit": false
+    },
+    "orcidlink.sty": {
+      "sha256": "f1a6b71cdd115d8024969da302c63c93c937f6de0d783657f96e92ccfed4aa69",
+      "source_sha256": "f1a6b71cdd115d8024969da302c63c93c937f6de0d783657f96e92ccfed4aa69",
+      "navigation_edit": false
+    },
+    "relationship_evidence.tex": {
+      "sha256": "d3f361cb002332cd7e3bde582080ba30a257055a19e419dc3b9e2bf5950ce5de",
+      "source_sha256": "d3f361cb002332cd7e3bde582080ba30a257055a19e419dc3b9e2bf5950ce5de",
+      "navigation_edit": false
+    },
+    "sn-jnl.cls": {
+      "sha256": "36d0c3273a59d48dc6a9c7b080dfa1ec50dc10229d8751568d1f2e490ffa5ecc",
+      "source_sha256": "36d0c3273a59d48dc6a9c7b080dfa1ec50dc10229d8751568d1f2e490ffa5ecc",
+      "navigation_edit": false
+    },
+    "additional_evidence.tex": {
+      "sha256": "86e9469456078a8cd36504a10714a3148475392172be7fedad398329f1149a97",
+      "source_sha256": "86e9469456078a8cd36504a10714a3148475392172be7fedad398329f1149a97",
+      "navigation_edit": false
+    },
+    "d1_contrasts.tex": {
+      "sha256": "82393866f7134b601c2f4fe3221ef283996eb8bb38a4132d80f3a2006e6fc8f1",
+      "source_sha256": "82393866f7134b601c2f4fe3221ef283996eb8bb38a4132d80f3a2006e6fc8f1",
+      "navigation_edit": false
+    },
+    "related_context.tex": {
+      "sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e",
+      "source_sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e",
+      "navigation_edit": false
+    }
+  },
+  "frozen_verifier": {
+    "checks_passed": 9737,
+    "status": "PASS",
+    "sha256": "1bacf16801ae0a3ab10e175a8f41965c6318a2b43d33abee1d66717d2a93350b",
+    "executed_from_unchanged_correction_worktree": true
+  },
+  "archive_members": [
+    "ESM_1.pdf",
+    "Fig1.pdf",
+    "Fig1.tex",
+    "README.md",
+    "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+    "additional_evidence.tex",
+    "build.sh",
+    "closed_audits.tex",
+    "common18_overview.tex",
+    "d1_contrasts.tex",
+    "grounding_diagnostics.tex",
+    "llm_evidence.tex",
+    "main.bbl",
+    "main.tex",
+    "orcidlink.sty",
+    "package_source.py",
+    "pipeline_figure.tex",
+    "preserved_results_details.tex",
+    "ready_conditioned_rows.tex",
+    "reference_conventions.tex",
+    "references.bib",
+    "related_context.tex",
+    "relationship_evidence.tex",
+    "relationship_supplement.tex",
+    "reproduction_map.tex",
+    "sn-basic.bst",
+    "sn-jnl.cls",
+    "supervision_diagnostics.tex",
+    "supplement.bbl",
+    "supplement.tex",
+    "supporting_core.tex"
+  ],
+  "navigation_links": [
+    {
+      "source": "README.md",
+      "target": "https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa-stage3"
+    },
+    {
+      "source": "README.md",
+      "target": "https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa-stage3/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf"
+    },
+    {
+      "source": "README.md",
+      "target": "https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa-stage3/ESM_1.pdf"
+    },
+    {
+      "source": "README.md",
+      "target": "https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa-stage3/JDSA_Stage3_Submission_Source.zip"
+    },
+    {
+      "source": "README.md",
+      "target": "https://github.com/SoroushVahidi/combinatorial-opt-agent/blob/main/manuscript/jdsa-stage3/README.md"
+    },
+    {
+      "source": "README.md",
+      "target": "manuscript/sncs/main.tex"
+    },
+    {
+      "source": "README.md",
+      "target": "manuscript/dke/main.tex"
+    },
+    {
+      "source": "README.md",
+      "target": "docs/BASELINE_STALENESS_AUDIT_2026-08-12.md"
+    },
+    {
+      "source": "README.md",
+      "target": "docs/SNCS_STAGE1_MANUSCRIPT_REPOSITORY_AUDIT_2026-08-26.md"
+    },
+    {
+      "source": "README.md",
+      "target": "docs/SNCS_STAGE2_LOCAL_WULVER_GITHUB_AUDIT_2026-08-27.md"
+    },
+    {
+      "source": "README.md",
+      "target": "docs/SNCS_STAGE3_MANUSCRIPT_SPRINGER_REPOSITORY_FINALIZATION_2026-08-27.md"
+    },
+    {
+      "source": "README.md",
+      "target": "docs/DKE_SOURCE_OF_TRUTH.md"
+    },
+    {
+      "source": "README.md",
+      "target": "docs/SNCS_RESULT_MANIFEST_2026-08-27.json"
+    },
+    {
+      "source": "README.md",
+      "target": "docs/SNCS_REPRODUCIBILITY.md"
+    },
+    {
+      "source": "README.md",
+      "target": "docs/DKE_SOURCE_OF_TRUTH.md"
+    },
+    {
+      "source": "README.md",
+      "target": "docs/NEGATIVE_RESULTS.md"
+    },
+    {
+      "source": "README.md",
+      "target": "docs/HOW_TO_REPRODUCE.md"
+    },
+    {
+      "source": "README.md",
+      "target": "docs/SNCS_REPRODUCIBILITY.md"
+    },
+    {
+      "source": "README.md",
+      "target": "docs/wulver.md"
+    },
+    {
+      "source": "README.md",
+      "target": "LICENSE"
+    },
+    {
+      "source": "README.md",
+      "target": "CONTRIBUTING.md"
+    },
+    {
+      "source": "manuscript/MANUSCRIPT_README.md",
+      "target": "https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa-stage3"
+    },
+    {
+      "source": "manuscript/MANUSCRIPT_README.md",
+      "target": "https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa-stage3/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf"
+    },
+    {
+      "source": "manuscript/MANUSCRIPT_README.md",
+      "target": "https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa-stage3/ESM_1.pdf"
+    },
+    {
+      "source": "manuscript/MANUSCRIPT_README.md",
+      "target": "https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa-stage3/JDSA_Stage3_Submission_Source.zip"
+    },
+    {
+      "source": "manuscript/MANUSCRIPT_README.md",
+      "target": "https://github.com/SoroushVahidi/combinatorial-opt-agent/blob/main/manuscript/jdsa-stage3/README.md"
+    },
+    {
+      "source": "manuscript/MANUSCRIPT_README.md",
+      "target": "sncs/"
+    },
+    {
+      "source": "manuscript/MANUSCRIPT_README.md",
+      "target": "dke/"
+    },
+    {
+      "source": "manuscript/jdsa/README.md",
+      "target": "../jdsa-stage3/README.md"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/README.md",
+      "target": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/README.md",
+      "target": "ESM_1.pdf"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/README.md",
+      "target": "JDSA_Stage3_Submission_Source.zip"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/README.md",
+      "target": "SHA256SUMS.txt"
+    },
+    {
+      "source": "manuscript/jdsa-stage3/README.md",
+      "target": "../../docs/jdsa_main_finalization_20261029/FINALIZATION_REPORT.md"
+    }
+  ],
+  "status": "PASS"
+}

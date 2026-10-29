@@ -1,0 +1,198 @@
+[
+  {
+    "status": "M",
+    "path": "README.md"
+  },
+  {
+    "status": "M",
+    "path": "docs/jdsa_canonical_publication_20261029/PUBLICATION_REPORT.md"
+  },
+  {
+    "status": "A",
+    "path": "docs/jdsa_main_finalization_20261029/BUILD_LOCATIONS.json"
+  },
+  {
+    "status": "A",
+    "path": "docs/jdsa_main_finalization_20261029/CHANGED_FILES.json"
+  },
+  {
+    "status": "A",
+    "path": "docs/jdsa_main_finalization_20261029/FINALIZATION_REPORT.md"
+  },
+  {
+    "status": "A",
+    "path": "docs/jdsa_main_finalization_20261029/PDF_INVENTORY_BEFORE.json"
+  },
+  {
+    "status": "A",
+    "path": "docs/jdsa_main_finalization_20261029/PUBLIC_ARTIFACT_IDENTITIES.json"
+  },
+  {
+    "status": "A",
+    "path": "docs/jdsa_main_finalization_20261029/SOURCE_LINK_CHANGES.json"
+  },
+  {
+    "status": "A",
+    "path": "docs/jdsa_main_finalization_20261029/VALIDATION.json"
+  },
+  {
+    "status": "A",
+    "path": "docs/jdsa_main_finalization_20261029/validate_finalization.py"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/MANUSCRIPT_README.md"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/.gitignore"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/ESM_1.pdf"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/Fig1.pdf"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/Fig1.tex"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/JDSA_Stage3_Submission_Source.zip"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/README.md"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/SHA256SUMS.txt"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/additional_evidence.tex"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/build.sh"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/closed_audits.tex"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/common18_overview.tex"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/d1_contrasts.tex"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/grounding_diagnostics.tex"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/llm_evidence.tex"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/main.bbl"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/main.tex"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/orcidlink.sty"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/package_source.py"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/pipeline_figure.tex"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/preserved_results_details.tex"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/ready_conditioned_rows.tex"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/reference_conventions.tex"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/references.bib"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/related_context.tex"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/relationship_evidence.tex"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/relationship_supplement.tex"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/reproduction_map.tex"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/sn-basic.bst"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/sn-jnl.cls"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/supervision_diagnostics.tex"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/supplement.bbl"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/supplement.tex"
+  },
+  {
+    "status": "A",
+    "path": "manuscript/jdsa-stage3/supporting_core.tex"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/jdsa/BUILD.md"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/jdsa/README.md"
+  },
+  {
+    "status": "D",
+    "path": "manuscript/jdsa/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf"
+  },
+  {
+    "status": "D",
+    "path": "manuscript/jdsa/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf"
+  }
+]
