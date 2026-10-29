@@ -1,22 +1,24 @@
 # Manuscript index
 
-## Current JDSA manuscript
+## Final public pre-submission version
 
-**Retrieval-Assisted Scalar Grounding for Natural-Language Optimization**
+**Retrieval-Assisted Scalar Grounding for Natural-Language Optimization** —
+Soroush Vahidi, 2026. Target: International Journal of Data Science and Analytics.
+This is a public pre-submission manuscript, not journal acceptance or publication.
 
-Target journal: **International Journal of Data Science and Analytics**.
-Canonical package: [`jdsa/`](jdsa/).
+[Permanent manuscript release v1.0.0](https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0) contains the approved manuscript,
+supplement, complete editable source ZIP and SHA256SUMS.txt. It is anchored at
+`00adeca9d3d761da7f8ee2e5dcee7fc8d535f2bc`. No DOI is invented.
 
-- [Main manuscript PDF (22 pages)](https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf)
-- [Supplementary PDF (32 pages)](https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf)
-- [Editable-source ZIP](https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Submission_Source.zip)
-- [LaTeX source directory](https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa/source)
-- [Build instructions](https://github.com/SoroushVahidi/combinatorial-opt-agent/blob/main/manuscript/jdsa/BUILD.md)
+- [Manuscript PDF](https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf)
+- [Supplement PDF](https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf)
+- [Editable LaTeX source ZIP](https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Source.zip)
 
-
-The Stage 1 JDSA package has been superseded and removed from the current tree.
-Its history remains in Git. The final review and publication checks are linked
-from the canonical package README.
+See the [public reproducibility index](../docs/JDSA_REPRODUCIBILITY.md) for separate
+evidence and access limitations. [The checked-in JDSA package](jdsa/) is an earlier
+version preserved unchanged; its PDFs and build instructions do not supersede the
+release. Previous Stage 1 sources remain in Git history. No manuscript-release
+branch has been merged as part of repository cleanup.
 
 ## Preserved separate journal packages
 

@@ -4,7 +4,7 @@
 **Branch:** `copilot/main-branch-description` (commit `e3fdaf4`)  
 **Prepared for:** Expert Systems with Applications (ESWA) revised manuscript
 
-> **Strict audit:** For an evidence-driven, status-labelled audit of exactly which experiments are truly measured vs placeholder/scaffolding, see [`docs/EXPERIMENT_AUDIT.md`](../../../docs/EXPERIMENT_AUDIT.md).
+> **Strict audit:** For an evidence-driven, status-labelled audit of exactly which experiments are truly measured vs placeholder/scaffolding, see [`docs/archive/EXPERIMENT_AUDIT.md`](../../../docs/archive/EXPERIMENT_AUDIT.md).
 
 ---
 
