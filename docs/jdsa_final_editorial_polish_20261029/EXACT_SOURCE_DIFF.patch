@@ -1,0 +1,129 @@
+--- phase4/additional_evidence.tex
++++ final-review/additional_evidence.tex
+@@ -1,4 +1,4 @@
+-The accompanying evidence register, \path{docs/jdsa_revision_phase1_20261029/EXPERIMENT_EVIDENCE_REGISTER.md}, assigns 47 investigation groups to explicit publication destinations. These are not 47 independent samples or 47 completed performance experiments. The register distinguishes completed, partial, inconclusive, blocked and proposed work, identifies source hashes and commits, and separates saved-prediction verification from metric reaggregation and summary-only evidence. The following additions preserve relevant work previously absent or only briefly mentioned; they do not replace the main matched comparison. No experiment, prediction, model call or solver run was performed for this revision.
++The accompanying evidence register, \path{docs/jdsa_revision_phase1_20261029/EXPERIMENT_EVIDENCE_REGISTER.md}, assigns 47 investigation groups to explicit publication destinations. These are not 47 independent samples or 47 completed performance experiments. The register distinguishes completed, partial, inconclusive, blocked and proposed work, identifies source hashes and commits, and separates saved-prediction verification from metric reaggregation and summary-only evidence. The following sections report complementary archived investigations; they do not replace the main matched comparison. These analyses use saved records without additional experiments, predictions, model calls or solver runs.
+ 
+ \subsection{Earlier Grounding Campaigns and Baseline-Version Corrections}
+ The archived ESWA-era campaign evaluates 20 configurations over the same 331-query frame in three variants. Table~\ref{tab:legacy-grounding} reaggregates ordinary readiness from its preserved per-query CSVs. The historical typed baseline has 175 ready original queries, not the 174 stated in one older narrative summary; the retained row observations take precedence. These are historical configurations, not new evaluations of current code. Coverage, TypeMatch, conditional Exact20 and ordered partitions from all 60 files remain in the accompanying offline check record.
+--- phase4/main.tex
++++ final-review/main.tex
+@@ -1,4 +1,4 @@
+-%% JDSA Phase 4 author-review source; no journal submission or author approval implied.
++%% JDSA final editorial-polish source.
+ 
+ \documentclass[pdflatex,iicol,sn-basic,Numbered]{sn-jnl}
+ 
+@@ -20,7 +20,7 @@
+ \usepackage{orcidlink}
+ \raggedbottom
+ 
+-\externaldocument[S-]{supplement}[ESM_1_Retrieval_Assisted_Scalar_Grounding_JDSA_Phase4_Supplement.pdf]
++\externaldocument[S-]{supplement}[ESM_1_Retrieval_Assisted_Scalar_Grounding_JDSA_Final_Review_Supplement.pdf]
+ \begin{document}
+ 
+ \title[Retrieval-Assisted Scalar Grounding]{Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study}
+@@ -571,17 +571,17 @@
+ 
+ \noindent\textbf{Ethics approval and consent to participate.} Not applicable; this study did not involve human participants, human data, or animals. No independently accepted human reference-annotation study was completed for the 217 relationships. D1 comprises author-reviewed synthetic contrasts with language-model assistance, rather than participant data; the separate independent validation protocol remains uncompleted.
+ 
+-\noindent\textbf{Consent for publication.} Not applicable to participant data; the manuscript and submission declarations remain subject to the author's final review.
++\noindent\textbf{Consent for publication.} Not applicable; this study did not involve participant data.
+ 
+ \noindent\textbf{Author contributions.} Soroush Vahidi: Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data curation, Writing -- original draft, Writing -- review \& editing, Visualization. This single-author paper uses the standard CRediT taxonomy to describe the contributions of the sole author.
+ 
+-\noindent\textbf{Data availability.} Historical v1.2 derived metrics are public at \url{https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics}, under their existing CC BY-NC-SA 4.0 license. NLP4LP is obtained separately from \texttt{udell-lab/NLP4LP}; its current public card identifies CC BY-NC 4.0 and gated access. We provide upstream access instructions rather than redistribute that local cache. OptMATH raw data have an unresolved dataset license and are likewise obtained upstream. The MIT-licensed NL4Opt source subset, relationship prompts, per-case judgments, validity calculations and recovery lineage are prepared in a separate local release candidate, with account identifiers removed from copies. This M5 candidate is prepared for author inspection and has not been uploaded. Online Resource 1, Section~\ref{S-app:reproduction} distinguishes directly verifiable results from missing historical predictions.
+-
+-\noindent\textbf{Code availability.} Historical code is public at \url{https://github.com/SoroushVahidi/combinatorial-opt-agent}. The local M5 candidate adds deterministic verification entry points, manifests, source hashes and corrected evaluators. Its file-level inventory records included artifacts, sanitized derivatives, original licenses and concrete exclusions; this evidence bundle has not been uploaded. The present manuscript source and supplementary summaries are available on the dedicated JDSA Phase 4 branch. Publishing those documents does not release the M5 evidence bundle.
+-
+-\noindent\textbf{Reproducibility.} This revision uses frozen records and adds no model inference, solver execution or performance experiment. Released query metrics support aggregate checks; archived formulation logs support conditional objective comparisons; archived relationship responses support independent structure/agreement checks. Missing original headline scalar mappings, subset manifests, some rendered prompts and full-precision PaMOP returns prevent complete historical replay. Provider serving defaults and weight bytes are not fully authenticated. Compiling the source package reproduces the document, not missing measurements.
+-
+-\noindent\textbf{Declaration of generative AI and AI-assisted technologies in the writing process.} During preparation the author used ChatGPT and Gemini to improve readability and language. OpenAI Codex later assisted manuscript revisions, evidence organization and deterministic validation. The author reviewed and edited the original work and remains responsible for its content; the present journal-preparation revision and the separate M5 release candidate await author review.
++\noindent\textbf{Data availability.} The \href{https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics}{historical v1.2 derived metrics} are public under their existing CC BY-NC-SA 4.0 license. NLP4LP is obtained separately from \texttt{udell-lab/NLP4LP}; its current public card identifies CC BY-NC 4.0 and gated access. We provide upstream access instructions rather than redistribute that local cache. OptMATH raw data have an unresolved dataset license and are likewise obtained upstream. The MIT-licensed NL4Opt source subset, relationship prompts, per-case judgments, validity calculations and recovery lineage are prepared in a separate local release candidate, with account identifiers removed from copies. This M5 evidence bundle remains local and has not been uploaded. Online Resource 1, Section~\ref{S-app:reproduction} distinguishes directly verifiable results from missing historical predictions.
++
++\noindent\textbf{Code availability.} Historical code is public at \url{https://github.com/SoroushVahidi/combinatorial-opt-agent}. The local M5 candidate adds deterministic verification entry points, manifests, source hashes and corrected evaluators. Its file-level inventory records included artifacts, sanitized derivatives, original licenses and concrete exclusions; this evidence bundle has not been uploaded. The manuscript source and supplementary material are available in the repository's \href{https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/manuscript/jdsa-final-editorial-polish-20261029/manuscript/jdsa-final-review}{versioned source package}. Publishing those documents does not release the M5 evidence bundle.
++
++\noindent\textbf{Reproducibility.} The reported analyses are based on frozen experimental records; their reanalysis involves no new model inference, solver execution or performance experiment. Released query metrics support aggregate checks; archived formulation logs support conditional objective comparisons; archived relationship responses support independent structure/agreement checks. Missing original headline scalar mappings, subset manifests, some rendered prompts and full-precision PaMOP returns prevent complete historical replay. Provider serving defaults and weight bytes are not fully authenticated. Compiling the source package reproduces the document, not missing measurements.
++
++\noindent\textbf{Declaration of generative AI and AI-assisted technologies in the writing process.} The author used ChatGPT and Gemini to improve readability and language. OpenAI Codex assisted manuscript editing, evidence organization and deterministic validation. The author reviewed and edited the original work and remains responsible for its content.
+ 
+ \noindent\textbf{Declaration of AI assistance in software development.} The author used Claude, Cursor and GitHub Copilot for coding assistance and reviewed, verified, tested and edited the resulting code. OpenAI Codex later assisted code corrections and offline verification scripts. The author retains responsibility for the implementation and reported results. Scientific LLM calls are identified separately; the evaluated scalar-grounding procedure uses no generative LLM inference.
+ 
+--- phase4/relationship_evidence.tex
++++ final-review/relationship_evidence.tex
+@@ -3,7 +3,7 @@
+ A separate study asks three model services to judge 217 occurrence--declaration relationships each: Gemini through Vertex AI, DeepSeek through io.net and Command A through Cohere. The 651 judgment targets come from 16 NL4Opt training problems \cite{ramamonjison2023nl4opt}, selected for category coverage and anticipated difficulty from a previously inspected 100-problem frame. Relationships share source texts and declarations, so the population is selected and clustered. The four decisions---\texttt{CORRECT}, \texttt{INCORRECT}, \texttt{AMBIGUOUS} and \texttt{CANNOT\_DETERMINE}---are model assertions. No independently accepted human reference labels exist for these targets.
+ 
+ \begin{table*}[htbp]\centering\small
+-\caption{Structural validity on the same 217 relationship targets per service. Final counts combine original-valid objects, deterministic offline repairs and historically generated valid replacements under a revised format. They are not single-pass or equal-treatment accuracy estimates. No new calls were made for this revision.}\label{tab:relationship-validity}
++\caption{Structural validity on the same 217 relationship targets per service. Final counts combine original-valid objects, deterministic offline repairs and historically generated valid replacements under a revised format. They are not single-pass or equal-treatment accuracy estimates. The counts are derived from archived responses.}\label{tab:relationship-validity}
+ \setlength{\tabcolsep}{3.5pt}
+ \begin{tabular}{@{}lrrrr@{}}\toprule
+ Service/model family & Original valid & Offline repairs & Valid replacements & Final valid\\\midrule
+--- phase4/reproduction_map.tex
++++ final-review/reproduction_map.tex
+@@ -42,7 +42,7 @@
+ 
+ The M3 correction uses \path{tools/reaggregate_common18_m3.py} and the pure \path{baselines/comparison/objective_evidence.py} module. From a checkout containing the M3 correction scripts, run \texttt{python} with script argument \path{tools/reaggregate_common18_m3.py}, \texttt{--output} and a separate local audit directory. The command reads saved records only and never overwrites historical results. Independent verification and regression instructions accompany the local correction ledger under \path{docs/manuscript_m3_2026-10-28/}. This ledger identifies every case, source hash, historical/corrected disposition and precision exclusion.
+ 
+-The M5 local release candidate supplies a machine-readable file inventory, hashes, excluded-file reasons and offline commands in \path{reproducibility/m5/README.md}. Its deterministic entry point, \path{tools/verify_llm217_m5.py}, reconstructs judgments from frozen HTTP responses without importing historical validators or model SDKs. The 651-row judgment ledger and the 20 invalid-case IDs are derived exports; originals are preserved. Account/project identifiers are removed only from explicitly marked candidate release copies, with separate original and release hashes. No raw NLP4LP cache or OptMATH problem corpus is redistributed. The already public derived-metrics dataset keeps its existing CC BY-NC-SA 4.0 license; NL4Opt source material keeps its MIT notice. M5 is a local author-review candidate, not an uploaded release.
++The M5 local release candidate supplies a machine-readable file inventory, hashes, excluded-file reasons and offline commands in \path{reproducibility/m5/README.md}. Its deterministic entry point, \path{tools/verify_llm217_m5.py}, reconstructs judgments from frozen HTTP responses without importing historical validators or model SDKs. The 651-row judgment ledger and the 20 invalid-case IDs are derived exports; originals are preserved. Account/project identifiers are removed only from explicitly marked candidate release copies, with separate original and release hashes. No raw NLP4LP cache or OptMATH problem corpus is redistributed. The already public derived-metrics dataset keeps its existing CC BY-NC-SA 4.0 license; NL4Opt source material keeps its MIT notice. M5 remains a local evidence bundle, not an uploaded release.
+ 
+ Direct offline checks reproduce retained metric aggregates, corrected common-18 text measurements and relationship validity/agreement. Fresh source-level evaluation requires separately obtained upstream data and appropriate dependencies; it was not run here. Historical aggregates without membership records and missing original headline scalar maps remain verifiable only to their retained evidence boundaries. No reconstructed output fills these gaps.
+ 
+@@ -79,7 +79,7 @@
+ rate is unidentified. Nor does stored-reference tolerance certify source
+ semantics when the references themselves contain errors.
+ 
+-The absence of new fitting in this revision does not establish evaluation
++Reanalysis without additional model fitting does not establish evaluation
+ independence. The earlier learned train/development/test subsets all come
+ from the 331-query evaluation-origin corpus; retained grouping records
+ identify train/development and development/test crossings. The 49-case
+@@ -88,6 +88,6 @@
+ quarantine is not an NLP4LP split and was not applied to these tables.
+ 
+ \subsection{Provisional Availability and Outstanding Releases}
+-The public Hugging Face metrics are the historical v1.2 dataset at revision \path{24a047fa5d661be6cfcf75980ac8f62e6c942243}. They are not an uploaded M5 release. The public GitHub repository retains historical records, including comparison fields superseded by the documented terminal-objective correction. The Phase 2 branch publishes manuscript sources, supplementary summaries and deterministic aggregate checks; it does not publish the local M3/M5 evidence bundles or private author-review records.
++The public Hugging Face metrics are the historical v1.2 dataset at revision \path{24a047fa5d661be6cfcf75980ac8f62e6c942243}. They are not an uploaded M5 release. The public GitHub repository retains historical records, including comparison fields superseded by the documented terminal-objective correction. The public repository provides manuscript sources, supplementary summaries and deterministic aggregate checks; it does not publish the local M3/M5 evidence bundles or private author-review records.
+ 
+-Final source-level reproducibility would benefit from a separately reviewed additive release of the corrected common-18 ledger/evaluator, permitted relationship prompts and responses with recovery lineage, their independent validators, and the nonprivate D1 case/reference package. Such a release requires its own artifact and access review. It cannot recover missing headline scalar mappings, unavailable corrected extraction rows, full-precision PaMOP returns or incomplete historical environments and prompts. Upstream access conditions continue to apply; no dataset or Hugging Face record was changed for this manuscript revision.
++Final source-level reproducibility would benefit from a separately reviewed additive release of the corrected common-18 ledger/evaluator, permitted relationship prompts and responses with recovery lineage, their independent validators, and the nonprivate D1 case/reference package. Such a release requires its own artifact and access review. It cannot recover missing headline scalar mappings, unavailable corrected extraction rows, full-precision PaMOP returns or incomplete historical environments and prompts. Upstream access conditions continue to apply; the public Hugging Face dataset remains the historical v1.2 release.
+--- phase4/supervision_diagnostics.tex
++++ final-review/supervision_diagnostics.tex
+@@ -16,4 +16,4 @@
+ 
+ The audit reads 713 NL4Opt source problems at pinned revision \texttt{49f1e0d66b7fdcd33305a7f281c2a7c13f5620ea}. Its 3,114 positive proposals and 3,246 ambiguous links are derived occurrence--declaration candidates. They do not constitute new independent human annotations. A conservative source-template investigation propagates quarantine to 399 problems; 314 remain unflagged but uncertified. Earlier lexical-screen negatives and later structural-template concerns are compatible because they test different relations. Quarantine counts are precautionary grouping outcomes, not measured contamination or semantic-error rates.
+ 
+-A separate relationship-labeling recovery audit is discussed in the main paper. Its numerical provider comparison, recovery protocol and complete-case denominators appear in main Section~\ref{M-subsec:relationship-audit} and Online Resource 1, Section~\ref{app:relationship-evidence}. No machine consensus has been accepted as a human semantic reference, and no model is trained from that packet for this revision.
++A separate relationship-labeling recovery audit is discussed in the main paper. Its numerical provider comparison, recovery protocol and complete-case denominators appear in main Section~\ref{M-subsec:relationship-audit} and Online Resource 1, Section~\ref{app:relationship-evidence}. No machine consensus has been accepted as a human semantic reference, and no model was trained from that packet in the reported analyses.
+--- phase4/supplement.tex
++++ final-review/supplement.tex
+@@ -1,4 +1,4 @@
+-%% JDSA Phase 4 author-review source; no journal submission or author approval implied.
++%% JDSA final editorial-polish source.
+ 
+ \documentclass[pdflatex,sn-basic,Numbered]{sn-jnl}
+ 
+@@ -22,7 +22,7 @@
+ \renewcommand{\arraystretch}{1.18}
+ \raggedbottom
+ 
+-\externaldocument[M-]{main}[Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_JDSA_Phase4.pdf]
++\externaldocument[M-]{main}[Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_JDSA_Final_Review.pdf]
+ \begin{document}
+ \title[Supplement: Scalar Grounding]{Supplementary Material: Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study}
+ \author*[1]{\fnm{Soroush} \sur{Vahidi}}\email{sv96@njit.edu}
+@@ -32,10 +32,10 @@
+ \renewcommand{\thetable}{S\arabic{table}}
+ \renewcommand{\thefigure}{S\arabic{figure}}
+ \renewcommand{\theequation}{S\arabic{equation}}
+-\noindent\textbf{Online Resource 1.} International Journal of Data Science and Analytics (author-review manuscript).\par
++\noindent\textbf{Online Resource 1.} International Journal of Data Science and Analytics.\par
+ \noindent ORCID: \href{https://orcid.org/0000-0003-1934-6282}{0000-0003-1934-6282}.\par
+ 
+-This supplement preserves secondary evidence, population boundaries and source provenance. It accompanies the main article and includes the archived 217-relationship Gemini--DeepSeek--Cohere audit, with explicit recovery and denominator accounting. No new model predictions or experiments were produced for this revision.
++This supplement preserves secondary evidence, population boundaries and source provenance. It accompanies the main article and includes the archived 217-relationship Gemini--DeepSeek--Cohere audit, with explicit recovery and denominator accounting. The analyses reported here use archived predictions and experimental records.
+ \section{System Context and Secondary Protocol Tables}
+ \begin{table}[htbp]
+ \centering

@@ -1,0 +1,92 @@
+[
+  {
+    "file": "main.tex",
+    "before": "Not applicable to participant data; the manuscript and submission declarations remain subject to the author's final review.",
+    "after": "Not applicable; this study did not involve participant data.",
+    "reason": "Remove pending-review language without changing the declaration."
+  },
+  {
+    "file": "main.tex",
+    "before": "This M5 candidate is prepared for author inspection and has not been uploaded.",
+    "after": "This M5 evidence bundle remains local and has not been uploaded.",
+    "reason": "Retain nonpublication status without internal inspection language."
+  },
+  {
+    "file": "main.tex",
+    "before": "The present manuscript source and supplementary summaries are available on the dedicated JDSA Phase 4 branch.",
+    "after": "The manuscript source and supplementary material are available in the repository's \\href{https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/manuscript/jdsa-final-editorial-polish-20261029/manuscript/jdsa-final-review}{versioned source package}.",
+    "reason": "Replace preparation-phase prose with a precise public artifact link."
+  },
+  {
+    "file": "main.tex",
+    "before": "This revision uses frozen records and adds no model inference, solver execution or performance experiment.",
+    "after": "The reported analyses are based on frozen experimental records; their reanalysis involves no new model inference, solver execution or performance experiment.",
+    "reason": "Describe the analysis and its limits rather than a revision."
+  },
+  {
+    "file": "main.tex",
+    "before": "During preparation the author used ChatGPT and Gemini to improve readability and language. OpenAI Codex later assisted manuscript revisions, evidence organization and deterministic validation. The author reviewed and edited the original work and remains responsible for its content; the present journal-preparation revision and the separate M5 release candidate await author review.",
+    "after": "The author used ChatGPT and Gemini to improve readability and language. OpenAI Codex assisted manuscript editing, evidence organization and deterministic validation. The author reviewed and edited the original work and remains responsible for its content.",
+    "reason": "Preserve AI-use disclosure and responsibility; remove pending internal review status."
+  },
+  {
+    "file": "relationship_evidence.tex",
+    "before": "No new calls were made for this revision.",
+    "after": "The counts are derived from archived responses.",
+    "reason": "Replace editorial timing in Table 9 caption with evidence provenance; table data unchanged."
+  },
+  {
+    "file": "supplement.tex",
+    "before": "International Journal of Data Science and Analytics (author-review manuscript).",
+    "after": "International Journal of Data Science and Analytics.",
+    "reason": "Remove internal review designation from Online Resource 1 identification."
+  },
+  {
+    "file": "supplement.tex",
+    "before": "No new model predictions or experiments were produced for this revision.",
+    "after": "The analyses reported here use archived predictions and experimental records.",
+    "reason": "Describe the evidence basis without editorial-process language."
+  },
+  {
+    "file": "supervision_diagnostics.tex",
+    "before": "no model is trained from that packet for this revision.",
+    "after": "no model was trained from that packet in the reported analyses.",
+    "reason": "Preserve the no-training qualification without revision framing."
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before": "M5 is a local author-review candidate, not an uploaded release.",
+    "after": "M5 remains a local evidence bundle, not an uploaded release.",
+    "reason": "Preserve local-only evidence status without editorial review wording."
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before": "The absence of new fitting in this revision does not establish evaluation\nindependence.",
+    "after": "Reanalysis without additional model fitting does not establish evaluation\nindependence.",
+    "reason": "Preserve the evaluation-independence limitation in scientific language."
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before": "The Phase 2 branch publishes manuscript sources, supplementary summaries and deterministic aggregate checks; it does not publish the local M3/M5 evidence bundles or private author-review records.",
+    "after": "The public repository provides manuscript sources, supplementary summaries and deterministic aggregate checks; it does not publish the local M3/M5 evidence bundles or private author-review records.",
+    "reason": "Replace obsolete editorial-phase framing while preserving the public/local distinction."
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before": "Upstream access conditions continue to apply; no dataset or Hugging Face record was changed for this manuscript revision.",
+    "after": "Upstream access conditions continue to apply; the public Hugging Face dataset remains the historical v1.2 release.",
+    "reason": "State the public dataset version rather than repository-maintenance activity."
+  },
+  {
+    "file": "additional_evidence.tex",
+    "before": "The following additions preserve relevant work previously absent or only briefly mentioned; they do not replace the main matched comparison. No experiment, prediction, model call or solver run was performed for this revision.",
+    "after": "The following sections report complementary archived investigations; they do not replace the main matched comparison. These analyses use saved records without additional experiments, predictions, model calls or solver runs.",
+    "reason": "Remove revision history while preserving evidentiary scope and no-new-execution qualification."
+  },
+  {
+    "file": "main.tex",
+    "before": "Historical v1.2 derived metrics are public at \\url{https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics}, under their existing CC BY-NC-SA 4.0 license.",
+    "after": "The \\href{https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics}{historical v1.2 derived metrics} are public under their existing CC BY-NC-SA 4.0 license.",
+    "reason": "Use descriptive hyperlink text at the unchanged dataset URL to prevent the long URL splitting across pages after declaration shortening."
+  }
+]
