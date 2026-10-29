@@ -1,0 +1,55 @@
+{
+  "status": "PASS",
+  "method": "Extract flat ZIP outside all worktrees; build.sh with env -i, PATH=/usr/bin:/bin, fresh HOME, LANG=C.UTF-8, TZ=UTC. Existing system TeX installation; no OS/container isolation claimed. All LaTeX auxiliary and bibliography outputs regenerated.",
+  "command": "env -i PATH=/usr/bin:/bin HOME=<fresh temporary home> LANG=C.UTF-8 TZ=UTC OUTPUT_DIR=<temporary output> sh build.sh",
+  "network_or_inference_required": false,
+  "documents": [
+    {
+      "file": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+      "pages": 15,
+      "text_identical": true,
+      "all_page_pixels_identical_at_72dpi": true,
+      "released_sha256": "275c93618bd2c68ca943603cab953c8a466eb9a0f6d641a92d92da280c5a9d68",
+      "clean_rebuilt_sha256": "fbf761c1ba28975447a15a12ae1fce02794da067c1839a2eddaab91f4647897b",
+      "final_whitespace_cleanup_matches_visually_reviewed_render": true
+    },
+    {
+      "file": "ESM_1.pdf",
+      "pages": 37,
+      "text_identical": true,
+      "all_page_pixels_identical_at_72dpi": true,
+      "released_sha256": "9b014d411b495c65c1c03f7e0e924ee574cb8f21e4745492589c41d8214965aa",
+      "clean_rebuilt_sha256": "4de602b9e987b00a2cc8f3ff8ca477a9a396a67f6c5c1d90e2abdd4e35ac9cc4",
+      "final_whitespace_cleanup_matches_visually_reviewed_render": true
+    }
+  ],
+  "byte_identity_note": "Creation/modification timestamps and PDF identifiers differ; every rendered page and extracted text are identical.",
+  "build_log_sha256": "7e0bc29cdc77c57b806264af5dd7249d34db7af87fd28552b5fea09e69e4c6a0",
+  "final_logs": {
+    "main": {
+      "sha256": "5829be484a3767a06777d0ad8a7d06c1f3321a72474f94562defee8f11748dcc",
+      "unresolved_or_overfull_diagnostics": [],
+      "bibtex_warnings": 0,
+      "underfull_diagnostics": 56
+    },
+    "supplement": {
+      "sha256": "6f0ddd9bc045b587c5c1437bd625541a2ba02ec6bf14842f12fb6b64a3db1f05",
+      "unresolved_or_overfull_diagnostics": [],
+      "bibtex_warnings": 0,
+      "underfull_diagnostics": 41
+    }
+  },
+  "tool_versions": {
+    "pdflatex": "pdfTeX 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian)",
+    "bibtex": "BibTeX 0.99d (TeX Live 2023/Debian)"
+  },
+  "flat_zip_members": 33,
+  "all_manifest_hashes_match": true,
+  "editable_figure_build": {
+    "status": "PASS",
+    "entry": "Fig1.tex",
+    "engine": "pdfLaTeX",
+    "standalone_source_compiled": true,
+    "log_sha256": "848b1d01140aa0ba00be6ddffbc21f5cb48c57a7c7e4ef49bd155bcd9b9ffffe"
+  }
+}

@@ -1,0 +1,914 @@
+{
+  "status": "PASS",
+  "documents": {
+    "main": {
+      "path": "manuscript/jdsa-stage3/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+      "pages": 15,
+      "bytes": 444821,
+      "sha256": "275c93618bd2c68ca943603cab953c8a466eb9a0f6d641a92d92da280c5a9d68",
+      "metadata": {
+        "format": "PDF 1.5",
+        "title": "Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study",
+        "author": "Soroush Vahidi",
+        "subject": "JDSA Regular Paper; final editorial version",
+        "keywords": "scalar grounding, optimization modeling, retrieval, reproducibility",
+        "creator": "LaTeX with hyperref",
+        "producer": "pdfTeX-1.40.25",
+        "creationDate": "D:20261029164104-04'00'",
+        "modDate": "D:20261029164104-04'00'",
+        "trapped": "",
+        "encryption": null
+      },
+      "language": [
+        "string",
+        "en-US"
+      ],
+      "font_embedding": "PASS",
+      "font_inventory": [
+        "HITGJR+CMR17                         Type 1            Builtin          yes yes yes    132  0",
+        "AHKKUT+CMR12                         Type 1            Builtin          yes yes yes    133  0",
+        "BALWXZ+CMR8                          Type 1            Builtin          yes yes yes    134  0",
+        "FVUQNB+CMR7                          Type 1            Builtin          yes yes yes    135  0",
+        "VUJIZM+CMR10                         Type 1            Builtin          yes yes yes    136  0",
+        "HDLHKX+CMBX9                         Type 1            Builtin          yes yes yes    138  0",
+        "MDOHTF+CMR9                          Type 1            Builtin          yes yes yes    139  0",
+        "RQJIWA+CMBX8                         Type 1            Builtin          yes yes yes    140  0",
+        "GZNVWU+CMBX10                        Type 1            Builtin          yes yes yes    142  0",
+        "GSFCTN+CMBX12                        Type 1            Builtin          yes yes yes    143  0",
+        "UBWURF+CMSY10                        Type 1            Builtin          yes yes yes    201  0",
+        "UPSLAJ+CMMI10                        Type 1            Builtin          yes yes yes    202  0",
+        "JPUAUI+CMMI7                         Type 1            Builtin          yes yes yes    203  0",
+        "KLIBXE+CMSY7                         Type 1            Builtin          yes yes yes    205  0",
+        "HAHQKT+CMTI10                        Type 1            Builtin          yes yes yes    206  0",
+        "YQSCRP+MSBM10                        Type 1            Builtin          yes yes yes    208  0",
+        "VADPSD+CMEX10                        Type 1            Builtin          yes yes yes    228  0",
+        "THXNBD+CMMI5                         Type 1            Builtin          yes yes yes    247  0",
+        "QFGKIG+CMTT10                        Type 1            Builtin          yes yes yes    248  0",
+        "HMPEFZ+CMSY5                         Type 1            Builtin          yes yes yes    265  0",
+        "POWUVC+CMR5                          Type 1            Builtin          yes yes yes    266  0",
+        "CXYKVY+CMMI9                         Type 1            Builtin          yes yes yes    280  0",
+        "PCSNIP+CMSY9                         Type 1            Builtin          yes yes yes    281  0",
+        "MDOHTF+CMR9                          Type 1            Custom           yes yes yes    287  0",
+        "CXYKVY+CMMI9                         Type 1            Custom           yes yes yes    290  0",
+        "XRFIXA+CMR6                          Type 1            Custom           yes yes yes    293  0",
+        "PCSNIP+CMSY9                         Type 1            Custom           yes yes yes    296  0",
+        "HYSXMT+CMMI6                         Type 1            Custom           yes yes yes    299  0",
+        "ECJUNH+CMTI8                         Type 1            Builtin          yes yes yes    332  0",
+        "XBMSBZ+CMMI8                         Type 1            Builtin          yes yes yes    333  0",
+        "YTLFOJ+CMSY8                         Type 1            Builtin          yes yes yes    334  0",
+        "UXWIZI+CMTI9                         Type 1            Builtin          yes yes yes    359  0"
+      ],
+      "out_of_page_text": [],
+      "pages_checked": [
+        {
+          "page": 1,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            66.89800262451172,
+            125.08193969726562,
+            522.11572265625,
+            716.8755493164062
+          ]
+        },
+        {
+          "page": 2,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            74.83499908447266,
+            75.83133697509766,
+            530.3377075195312,
+            716.8755493164062
+          ]
+        },
+        {
+          "page": 3,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            66.38999938964844,
+            75.8004379272461,
+            522.13525390625,
+            716.8755493164062
+          ]
+        },
+        {
+          "page": 4,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            74.47599792480469,
+            74.2856216430664,
+            530.3477783203125,
+            716.8755493164062
+          ]
+        },
+        {
+          "page": 5,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            66.51899719238281,
+            75.8004379272461,
+            522.3794555664062,
+            716.87548828125
+          ]
+        },
+        {
+          "page": 6,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            74.47599792480469,
+            75.95616912841797,
+            530.3275146484375,
+            716.8755493164062
+          ]
+        },
+        {
+          "page": 7,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            66.46099853515625,
+            75.54191589355469,
+            522.4110717773438,
+            716.8755493164062
+          ]
+        },
+        {
+          "page": 8,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            74.33699798583984,
+            74.09876251220703,
+            530.3334350585938,
+            716.8755493164062
+          ]
+        },
+        {
+          "page": 9,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            65.88800048828125,
+            73.00476837158203,
+            522.3804931640625,
+            716.8755493164062
+          ]
+        },
+        {
+          "page": 10,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            74.47599792480469,
+            73.00476837158203,
+            530.3173828125,
+            716.8755493164062
+          ]
+        },
+        {
+          "page": 11,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            66.53900146484375,
+            72.90108489990234,
+            522.3651733398438,
+            716.8755493164062
+          ]
+        },
+        {
+          "page": 12,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            73.26000213623047,
+            75.90130615234375,
+            530.0895385742188,
+            716.8755493164062
+          ]
+        },
+        {
+          "page": 13,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            66.38999938964844,
+            75.90752410888672,
+            522.29638671875,
+            716.8755493164062
+          ]
+        },
+        {
+          "page": 14,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            73.66899871826172,
+            75.8004379272461,
+            530.3385009765625,
+            716.87548828125
+          ]
+        },
+        {
+          "page": 15,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            66.89799499511719,
+            75.8004379272461,
+            522.4035034179688,
+            716.8755493164062
+          ]
+        }
+      ],
+      "outline_entries": 30,
+      "pdfua_tagging": "Not claimed; standard pdfLaTeX output is not a tagged PDF/UA document."
+    },
+    "supplement": {
+      "path": "manuscript/jdsa-stage3/ESM_1.pdf",
+      "pages": 37,
+      "bytes": 429499,
+      "sha256": "9b014d411b495c65c1c03f7e0e924ee574cb8f21e4745492589c41d8214965aa",
+      "metadata": {
+        "format": "PDF 1.5",
+        "title": "Online Resource 1: Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study",
+        "author": "Soroush Vahidi",
+        "subject": "Online Resource 1; supplementary evidence and reproducibility",
+        "keywords": "scalar grounding, optimization modeling, retrieval, reproducibility",
+        "creator": "LaTeX with hyperref",
+        "producer": "pdfTeX-1.40.25",
+        "creationDate": "D:20261029164104-04'00'",
+        "modDate": "D:20261029164104-04'00'",
+        "trapped": "",
+        "encryption": null
+      },
+      "language": [
+        "string",
+        "en-US"
+      ],
+      "font_embedding": "PASS",
+      "font_inventory": [
+        "DYEDEQ+CMR17                         Type 1            Builtin          yes yes yes    178  0",
+        "AHKKUT+CMR12                         Type 1            Builtin          yes yes yes    179  0",
+        "OCNOTV+CMR8                          Type 1            Builtin          yes yes yes    180  0",
+        "TQWFHW+CMR7                          Type 1            Builtin          yes yes yes    181  0",
+        "CRELNP+CMR10                         Type 1            Builtin          yes yes yes    182  0",
+        "OOZXTW+CMBX10                        Type 1            Builtin          yes yes yes    183  0",
+        "OMMDEX+CMBX12                        Type 1            Builtin          yes yes yes    201  0",
+        "MDHJVF+CMBX8                         Type 1            Builtin          yes yes yes    211  0",
+        "HGERLR+CMTI8                         Type 1            Builtin          yes yes yes    213  0",
+        "GXYVHN+CMR9                          Type 1            Builtin          yes yes yes    214  0",
+        "STRXBK+CMSY9                         Type 1            Builtin          yes yes yes    215  0",
+        "YWNQIV+CMSY7                         Type 1            Builtin          yes yes yes    216  0",
+        "YFDYSI+CMCSC10                       Type 1            Builtin          yes yes yes    229  0",
+        "GGQRTC+CMMI8                         Type 1            Builtin          yes yes yes    246  0",
+        "LRKIGO+CMR5                          Type 1            Builtin          yes yes yes    247  0",
+        "QUEREG+CMMI9                         Type 1            Builtin          yes yes yes    248  0",
+        "HNLGDM+CMMI10                        Type 1            Builtin          yes yes yes    249  0",
+        "EMTPGW+CMTT10                        Type 1            Builtin          yes yes yes    278  0",
+        "UCMXCV+CMSY10                        Type 1            Builtin          yes yes yes    279  0",
+        "EQHENR+CMTT8                         Type 1            Builtin          yes yes yes    282  0",
+        "QFVNMY+CMMI7                         Type 1            Builtin          yes yes yes    303  0",
+        "SQCTUC+CMTT9                         Type 1            Builtin          yes yes yes    337  0",
+        "VLNHBR+CMEX10                        Type 1            Builtin          yes yes yes    339  0",
+        "TIUTDB+CMTI10                        Type 1            Builtin          yes yes yes    403  0"
+      ],
+      "out_of_page_text": [],
+      "pages_checked": [
+        {
+          "page": 1,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            99.71199798583984,
+            135.04495239257812,
+            472.6621398925781,
+            654.853515625
+          ]
+        },
+        {
+          "page": 2,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            124.59500122070312,
+            72.7225570678711,
+            495.2831115722656,
+            654.853515625
+          ]
+        },
+        {
+          "page": 3,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            99.71199798583984,
+            72.7225570678711,
+            472.2073059082031,
+            654.853515625
+          ]
+        },
+        {
+          "page": 4,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            124.23600006103516,
+            74.09876251220703,
+            496.621337890625,
+            654.853515625
+          ]
+        },
+        {
+          "page": 5,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            99.71199798583984,
+            74.09876251220703,
+            472.5767517089844,
+            654.853515625
+          ]
+        },
+        {
+          "page": 6,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            124.23600006103516,
+            73.44873809814453,
+            495.2352600097656,
+            654.853515625
+          ]
+        },
+        {
+          "page": 7,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            99.71199798583984,
+            74.09876251220703,
+            472.631103515625,
+            654.853515625
+          ]
+        },
+        {
+          "page": 8,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            124.21600341796875,
+            75.84683227539062,
+            497.1795654296875,
+            654.853515625
+          ]
+        },
+        {
+          "page": 9,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            98.90499877929688,
+            75.95616912841797,
+            472.6573181152344,
+            654.853515625
+          ]
+        },
+        {
+          "page": 10,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            124.23600006103516,
+            75.90130615234375,
+            497.1590270996094,
+            654.853515625
+          ]
+        },
+        {
+          "page": 11,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            99.71199798583984,
+            75.8004379272461,
+            472.63763427734375,
+            654.853515625
+          ]
+        },
+        {
+          "page": 12,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            124.25199890136719,
+            74.1615982055664,
+            496.910888671875,
+            654.853515625
+          ]
+        },
+        {
+          "page": 13,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            99.71199798583984,
+            75.95616912841797,
+            472.63641357421875,
+            654.853515625
+          ]
+        },
+        {
+          "page": 14,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            124.21600341796875,
+            74.09876251220703,
+            497.1647033691406,
+            654.853515625
+          ]
+        },
+        {
+          "page": 15,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            99.71199798583984,
+            74.09876251220703,
+            471.8534851074219,
+            654.853515625
+          ]
+        },
+        {
+          "page": 16,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            124.23600006103516,
+            74.09876251220703,
+            497.17437744140625,
+            654.853515625
+          ]
+        },
+        {
+          "page": 17,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            98.90499877929688,
+            74.09876251220703,
+            472.3992919921875,
+            654.853515625
+          ]
+        },
+        {
+          "page": 18,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            124.25199890136719,
+            74.09876251220703,
+            495.5606689453125,
+            654.853515625
+          ]
+        },
+        {
+          "page": 19,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            99.71199798583984,
+            75.94831085205078,
+            472.6270446777344,
+            654.853515625
+          ]
+        },
+        {
+          "page": 20,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            124.09600067138672,
+            75.81587219238281,
+            497.16473388671875,
+            654.853515625
+          ]
+        },
+        {
+          "page": 21,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            98.90499877929688,
+            75.95616912841797,
+            472.64520263671875,
+            654.853515625
+          ]
+        },
+        {
+          "page": 22,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            124.21600341796875,
+            75.8004379272461,
+            497.16473388671875,
+            654.853515625
+          ]
+        },
+        {
+          "page": 23,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            99.81199645996094,
+            74.09876251220703,
+            472.41168212890625,
+            654.853515625
+          ]
+        },
+        {
+          "page": 24,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            124.23600006103516,
+            75.8004379272461,
+            497.1869201660156,
+            654.853515625
+          ]
+        },
+        {
+          "page": 25,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            99.69200134277344,
+            75.71908569335938,
+            472.6419677734375,
+            654.853515625
+          ]
+        },
+        {
+          "page": 26,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            123.42900085449219,
+            75.84868621826172,
+            497.15570068359375,
+            654.853515625
+          ]
+        },
+        {
+          "page": 27,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            99.71199798583984,
+            74.09876251220703,
+            472.6170959472656,
+            654.853515625
+          ]
+        },
+        {
+          "page": 28,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            124.59500122070312,
+            74.09876251220703,
+            495.25115966796875,
+            654.853515625
+          ]
+        },
+        {
+          "page": 29,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            99.572998046875,
+            75.84868621826172,
+            472.39654541015625,
+            654.853515625
+          ]
+        },
+        {
+          "page": 30,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            124.23600006103516,
+            75.82360076904297,
+            497.1954345703125,
+            654.853515625
+          ]
+        },
+        {
+          "page": 31,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            98.90499877929688,
+            75.95616912841797,
+            472.6700134277344,
+            654.853515625
+          ]
+        },
+        {
+          "page": 32,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            123.42900085449219,
+            75.8004379272461,
+            497.1913757324219,
+            654.853515625
+          ]
+        },
+        {
+          "page": 33,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            99.72799682617188,
+            80.58979034423828,
+            470.6882019042969,
+            654.853515625
+          ]
+        },
+        {
+          "page": 34,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            124.23600006103516,
+            75.8004379272461,
+            497.1840515136719,
+            654.853515625
+          ]
+        },
+        {
+          "page": 35,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            100.07099914550781,
+            72.7225570678711,
+            472.658447265625,
+            654.853515625
+          ]
+        },
+        {
+          "page": 36,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            124.5949935913086,
+            75.8004379272461,
+            496.92742919921875,
+            654.853515625
+          ]
+        },
+        {
+          "page": 37,
+          "page_number_present": true,
+          "rendered": true,
+          "text_bbox": [
+            100.07099914550781,
+            75.87791442871094,
+            472.658447265625,
+            654.853515625
+          ]
+        }
+      ],
+      "outline_entries": 42,
+      "pdfua_tagging": "Not claimed; standard pdfLaTeX output is not a tagged PDF/UA document."
+    }
+  },
+  "cross_document_links": [
+    {
+      "source": "main",
+      "page": 3,
+      "target": "ESM_1.pdf",
+      "destination": "table.4",
+      "status": "PASS"
+    },
+    {
+      "source": "main",
+      "page": 3,
+      "target": "ESM_1.pdf",
+      "destination": "section.104",
+      "status": "PASS"
+    },
+    {
+      "source": "main",
+      "page": 4,
+      "target": "ESM_1.pdf",
+      "destination": "subsection.31",
+      "status": "PASS"
+    },
+    {
+      "source": "main",
+      "page": 6,
+      "target": "ESM_1.pdf",
+      "destination": "table.6",
+      "status": "PASS"
+    },
+    {
+      "source": "main",
+      "page": 7,
+      "target": "ESM_1.pdf",
+      "destination": "subsection.26",
+      "status": "PASS"
+    },
+    {
+      "source": "main",
+      "page": 7,
+      "target": "ESM_1.pdf",
+      "destination": "subsection.31",
+      "status": "PASS"
+    },
+    {
+      "source": "main",
+      "page": 7,
+      "target": "ESM_1.pdf",
+      "destination": "table.17",
+      "status": "PASS"
+    },
+    {
+      "source": "main",
+      "page": 8,
+      "target": "ESM_1.pdf",
+      "destination": "subsection.31",
+      "status": "PASS"
+    },
+    {
+      "source": "main",
+      "page": 9,
+      "target": "ESM_1.pdf",
+      "destination": "section.9",
+      "status": "PASS"
+    },
+    {
+      "source": "main",
+      "page": 10,
+      "target": "ESM_1.pdf",
+      "destination": "subsection.26",
+      "status": "PASS"
+    },
+    {
+      "source": "main",
+      "page": 11,
+      "target": "ESM_1.pdf",
+      "destination": "subsection.63",
+      "status": "PASS"
+    },
+    {
+      "source": "main",
+      "page": 11,
+      "target": "ESM_1.pdf",
+      "destination": "subsection.99",
+      "status": "PASS"
+    },
+    {
+      "source": "main",
+      "page": 12,
+      "target": "ESM_1.pdf",
+      "destination": "section.40",
+      "status": "PASS"
+    },
+    {
+      "source": "main",
+      "page": 12,
+      "target": "ESM_1.pdf",
+      "destination": "subsection.98",
+      "status": "PASS"
+    },
+    {
+      "source": "main",
+      "page": 12,
+      "target": "ESM_1.pdf",
+      "destination": "subsection.74",
+      "status": "PASS"
+    },
+    {
+      "source": "main",
+      "page": 12,
+      "target": "ESM_1.pdf",
+      "destination": "subsection.27",
+      "status": "PASS"
+    },
+    {
+      "source": "main",
+      "page": 12,
+      "target": "ESM_1.pdf",
+      "destination": "subsection.31",
+      "status": "PASS"
+    },
+    {
+      "source": "main",
+      "page": 12,
+      "target": "ESM_1.pdf",
+      "destination": "section.56",
+      "status": "PASS"
+    },
+    {
+      "source": "main",
+      "page": 12,
+      "target": "ESM_1.pdf",
+      "destination": "subsection.72",
+      "status": "PASS"
+    },
+    {
+      "source": "main",
+      "page": 13,
+      "target": "ESM_1.pdf",
+      "destination": "subsection.31",
+      "status": "PASS"
+    },
+    {
+      "source": "supplement",
+      "page": 5,
+      "target": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+      "destination": "subsection.38",
+      "status": "PASS"
+    },
+    {
+      "source": "supplement",
+      "page": 5,
+      "target": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+      "destination": "equation.27",
+      "status": "PASS"
+    },
+    {
+      "source": "supplement",
+      "page": 5,
+      "target": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+      "destination": "subsection.38",
+      "status": "PASS"
+    },
+    {
+      "source": "supplement",
+      "page": 6,
+      "target": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+      "destination": "table.42",
+      "status": "PASS"
+    },
+    {
+      "source": "supplement",
+      "page": 7,
+      "target": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+      "destination": "subsection.37",
+      "status": "PASS"
+    },
+    {
+      "source": "supplement",
+      "page": 7,
+      "target": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+      "destination": "table.56",
+      "status": "PASS"
+    },
+    {
+      "source": "supplement",
+      "page": 7,
+      "target": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+      "destination": "subsubsection.54",
+      "status": "PASS"
+    },
+    {
+      "source": "supplement",
+      "page": 11,
+      "target": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+      "destination": "equation.28",
+      "status": "PASS"
+    },
+    {
+      "source": "supplement",
+      "page": 11,
+      "target": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+      "destination": "equation.29",
+      "status": "PASS"
+    },
+    {
+      "source": "supplement",
+      "page": 13,
+      "target": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+      "destination": "subsection.60",
+      "status": "PASS"
+    },
+    {
+      "source": "supplement",
+      "page": 26,
+      "target": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+      "destination": "table.42",
+      "status": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "checked_at_utc": "2026-10-29T20:40:35.654898+00:00",
+  "files_scanned": 59,
+  "zip_members_scanned": 33,
+  "scan_scope": "All new source/report text, extracted PDF text and ZIP contents; API-token/private-key/credential-assignment/home-path patterns plus contextual review. Not a guarantee against every possible secret format.",
+  "credential_findings": [],
+  "context_review": "No raw M5 files, source corpora, provider response prose/account metadata or private reviews added. Author/contact details and public acknowledgement names are intentional manuscript metadata. The sole /tmp path is the documented generic output /tmp/jdsa-verification.json, not a private original location.",
+  "protected_baseline_tree_objects": {
+    "manuscript/jdsa": "5a2b060c300c30175251dc20dcdf65a00d51fbdf",
+    "manuscript/jdsa-stage2": "5c0e098aa6b8b3a146b7f0eb925d0170f5da8f6b",
+    "reproducibility/jdsa-v2.0.0": "1613affc57d0628d1ac6443891c910e0fff42e07",
+    "docs/jdsa_stage2_20261029": "025884b1ddcde29a4052f4d44b07c497c513241b"
+  },
+  "public_main_sha": "d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+  "local_main_sha": "a3f0dde397341a41842a30ddb946e7966706351b",
+  "stage2_remote_tip": "60785b0d144365413dd3b44b577bff901043ddd7",
+  "evidence_tag_target": "209fa982c0a0e2087bd021cbc7a9f57d94256c8f",
+  "hf_manifest_anonymous_match": {
+    "url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/resolve/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0/release_manifest.json",
+    "sha256": "ac20ad695b7ceea866890376ef5e08751921bbcb520c017624727524e79b8b38"
+  },
+  "original_checkout_untracked_directories_unchanged": [
+    "docs/manuscript_m2_2026-10-28/",
+    "docs/manuscript_m3_2026-10-28/",
+    "docs/repository_cleanup_audit_20261029/"
+  ]
+}

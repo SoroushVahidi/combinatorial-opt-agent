@@ -1,0 +1,130 @@
+The accompanying evidence register, \path{docs/jdsa_revision_phase1_20261029/EXPERIMENT_EVIDENCE_REGISTER.md}, assigns 47 investigation groups to explicit publication destinations. These are not 47 independent samples or 47 completed performance experiments. The register distinguishes completed, partial, inconclusive, blocked and proposed work, identifies source hashes and commits, and separates saved-prediction verification from metric reaggregation and summary-only evidence. The following sections report complementary archived investigations; they do not replace the main matched comparison. These analyses use saved records without additional experiments, predictions, model calls or solver runs.
+
+\subsection{Earlier Grounding Campaigns and Baseline-Version Corrections}
+The archived ESWA-era campaign evaluates 20 configurations over the same 331-query frame in three variants. Table~\ref{tab:legacy-grounding} reaggregates ordinary readiness from its preserved per-query CSVs. The historical typed baseline has 175 ready original queries, not the 174 stated in one older narrative summary; the retained row observations take precedence. These are historical configurations, not new evaluations of current code. Coverage, TypeMatch, conditional Exact20 and ordered partitions from all 60 files remain in the accompanying offline check record.
+
+\begin{table}[htbp]\centering\small
+\caption{Ordinary-ready counts in the retained legacy campaign; denominator 331 for every cell. These input-corruption and scoring variants are distinct from the ratio-aware main comparison. No historical significance claim is inferred from this descriptive table.}\label{tab:legacy-grounding}
+\begin{tabular}{@{}lrrr@{}}\toprule
+Historical method & Orig & Noisy & Short\\\midrule
+Typed greedy & 175 & 13 & 5\\
+BM25 + typed & 172 & 14 & 5\\
+LSA + typed & 168 & 14 & 4\\
+Oracle + typed & 188 & 14 & 5\\
+Constrained & 140 & 12 & 5\\
+Role repair & 146 & 0 & 2\\
+Semantic IR & 161 & 0 & 2\\
+Acceptance rerank & 174 & 14 & 7\\
+Hierarchical rerank & 172 & 14 & 7\\
+Global compatibility: local & 138 & 0 & 2\\
+Global compatibility: pairwise & 140 & 0 & 2\\
+Global compatibility: full & 143 & 0 & 2\\
+Relation-aware: basic & 165 & 0 & 2\\
+Relation-aware: operators & 155 & 0 & 2\\
+Relation-aware: semantic & 144 & 0 & 2\\
+Relation-aware: full & 138 & 0 & 2\\
+Ambiguity: candidate greedy & 140 & 0 & 2\\
+Ambiguity: beam & 140 & 0 & 2\\
+Ambiguity: abstain & 9 & 0 & 1\\
+Ambiguity: full & 139 & 0 & 2\\
+\bottomrule\end{tabular}\end{table}
+Global-compatibility local/pairwise/full, relation-aware basic/operators/semantic/full, and ambiguity candidate/beam/abstention/full therefore remain represented, including their negative readiness observations. The ambiguity-abstention configuration has original-query coverage $0.2207$. These measurements do not establish semantic error causes, calibrated confidence, or a general inability of richer grounding to improve complete numerical agreement. Older bootstrap sign-tail significance claims are not reused.
+
+A later same-version audit (Table~\ref{tab:staleness-grounding}) corrected a misleading comparison against stale typed-greedy readiness $0.5287$. Maximum-weight matching's $0.7432$ was lower than the audit's typed-greedy $0.7764$, not evidence of an improvement over that contemporaneous baseline. Its paired transitions contain seven rescues and 18 regressions. Search-structured and hierarchical-structured grounding both have 233 ready queries, without establishing that their assignments are identical. This audit predates the ratio-aware configuration; its Oracle and constrained values must not replace the later main-table values. The main paper's improved all-key counts remain a different, value-aware finding.
+
+\begin{table}[htbp]\centering\small
+\caption{August 12 baseline-staleness audit, saved ordinary-ready counts on 331 original queries per row. This is a separate historical configuration cohort.}\label{tab:staleness-grounding}
+\begin{tabular}{@{}lr@{}}\toprule
+Method & Ready /331\\\midrule
+Typed greedy & 257\\
+BM25 + typed & 253\\
+LSA + typed & 243\\
+Oracle + typed & 273\\
+Constrained & 248\\
+Role repair & 244\\
+Semantic IR & 237\\
+Acceptance rerank & 253\\
+Hierarchical rerank & 238\\
+Maximum-weight matching & 246\\
+Search structured & 233\\
+Hierarchical structured & 233\\
+\bottomrule\end{tabular}\end{table}
+
+\subsection{Ranked Retrieval, Reranking and Diagnostic Projections}
+Historical higher-rank retrieval aggregates are preserved in Table~\ref{tab:ranked-retrieval}. Main top-1 rates can be checked against retained schema IDs; the full original ranked lists needed to independently recalculate every higher-rank cell were not authenticated. The values below therefore retain aggregate-supported status and are not independent replications of retrieval.
+
+\begin{table}[htbp]\centering\small
+\caption{Archived ranked-retrieval summaries, 331 queries in each variant. All cells are historical aggregates; higher-rank metrics do not measure scalar correctness.}\label{tab:ranked-retrieval}
+\begin{tabular}{@{}llrrrr@{}}\toprule
+Variant & Method & P@5 & MRR@10 & nDCG@10 & Coverage@10\\\midrule
+orig & BM25 & 0.9668 & 0.9182 & 0.9325 & 0.9758\\
+orig & TF--IDF & 0.9637 & 0.9334 & 0.9451 & 0.9819\\
+orig & LSA & 0.9456 & 0.8904 & 0.9112 & 0.9758\\
+noisy & BM25 & 0.9728 & 0.9245 & 0.9386 & 0.9819\\
+noisy & TF--IDF & 0.9668 & 0.9315 & 0.9438 & 0.9819\\
+noisy & LSA & 0.9668 & 0.9240 & 0.9370 & 0.9758\\
+short & BM25 & 0.8792 & 0.8178 & 0.8454 & 0.9335\\
+short & TF--IDF & 0.8731 & 0.8202 & 0.8436 & 0.9184\\
+short & LSA & 0.8761 & 0.8096 & 0.8342 & 0.9124\\
+\bottomrule\end{tabular}\end{table}
+
+The top-$k$ diagnostic locates the 30 TF--IDF top-1 misses at ranks 2, 3, 4--5, 6--10 and beyond 10 in counts 9, 5, 4, 6 and 6. Thus 325 targets occur in the top ten. A gold-schema top-ten oracle yields 270 ordinary-ready queries, while a readiness-maximizing oracle yields 286, including 32 wrong-schema-ready cases. Among tested heuristic rules, the largest observed readiness count is 282, with 20 schema regressions. These are exposed diagnostic ceilings/rule comparisons, not deployable oracle performance or new held-out validation. The subsequent selective-reranking result is described in Section~\ref{app:statistical-history}.
+
+The role/quantity Stage-A audit examines 49 targeted wrong assignments on a 331-query frame: 28 are marked separable, 10 ambiguous and 11 not separable by its rules. It projects zero additional coarse-ready queries (257 before and after); its recorded all-query cascade has false-trigger rate 1.0. Readiness neutrality does not show that a corrected value would be scientifically irrelevant. The separate strict-failure precursor identifies 54 schema-hit/non-ready cases and 58 Oracle non-ready cases. Its ratio-word prototype moves Strict from 247 to 255 with eight gains and no losses, later confirmed by the completed extraction ablation. Oracle projections of 254 for perfect extraction, 271 for expected-type repair, 272 for reuse and 247 for candidate filtering are not executed repair-policy outcomes.
+
+\subsection{Candidate Availability and Full Pilot Preservation}
+Table~\ref{tab:cached-ceilings} retains the completed candidate availability analysis over 331 queries and 1,847 reference scalar slots. The cache contains 311 queries/1,705 rows; missing selections are not dropped from the frame. These numerical product-of-pools ceilings allow reuse and do not certify source-occurrence identity or a selected complete mapping. Adding the coarse-type requirement reduces the top-eight whole-query tolerance ceiling from 199 to 139.
+
+\begin{table}[htbp]\centering\small
+\caption{Archived candidate-pool ceilings, not achieved inference accuracy. Slot denominators 1847; query denominators 331.}\label{tab:cached-ceilings}
+\begin{tabular}{@{}lrrrr@{}}\toprule
+Pool & Exact slots & Tolerance slots & All exact queries & All tolerance queries\\\midrule
+1 & 773 & 823 & 22 & 23\\
+3 & 1227 & 1256 & 87 & 95\\
+5 & 1379 & 1404 & 146 & 155\\
+8 & 1456 & 1464 & 195 & 199\\
+all & 1467 & 1473 & 203 & 206\\
+\bottomrule\end{tabular}\end{table}
+
+For the original 50-query/280-slot pilot, Table~\ref{tab:full-joint-pilot} preserves all six fixed configurations. Independent and joint methods use identical cached pools and inventory; the explicit-constraint branch activates zero supported parameter-only relations, so its duplicate outcome is a no-op, not evidence against useful mathematical constraints. On the overlap-free 49-query slice the strongest local and joint variants still have three full-tolerance successes. The historical pre-ratio cached choice is a separate configuration with 69 exact/80 tolerance-correct slots and two exact/tolerance-complete instances on the 50 IDs; it does not replace the headline ratio-aware result.
+
+\begin{table}[htbp]\centering\small
+\caption{Saved original 50-query joint pilot. E/T denote numerical exact/tolerance counts; slot denominator 280 and full-instance denominator 50. Full instances additionally require all gold keys and compatible types.}\label{tab:full-joint-pilot}
+\begin{tabular}{@{}lrrrr@{}}\toprule
+Configuration & E slots & T slots & E full & T full\\\midrule
+Independent type &52&57&1&1\\
+Independent text/roles &128&139&1&2\\
+Joint text/roles &119&130&1&2\\
+Independent text + units/types &134&144&2&3\\
+Joint text + units/types &126&137&2&3\\
+Joint + explicit constraints &126&137&2&3\\
+\bottomrule\end{tabular}\end{table}
+
+The initial cached error accounting over 1,847 gold slots records 167 wrong-schema slots, 1,053 acceptable-value-present but wrongly selected, 26 acceptable-value-present but abstained, 394 correct selections, 155 without an acceptable value in the pool, 19 without a saved pool, 29 without standalone metadata, and four omitted by metadata. These sum to 1,847. Candidate presence does not prove that the mention remained available after earlier assignments or expressed the right role. Section~\ref{app:reference-conventions} reconciles the 394 metadata-filtered count with 401 when actual saved selections outside that later inventory are retained. Local/joint slot changes and all per-case outcomes remain in the original pilot artifacts; no later result substitutes for missing historical predictions.
+
+\subsection{Additional Learned-Model Evidence and Small Auxiliary Runs}
+Section~\ref{app:supervision-audit} preserves the central supervision findings. The earlier 200-step neural run used a reported 14,298-pair file and a test-as-train fallback; it establishes execution, not a valid held-out benchmark. The 184-step run on 35/7/8 problems records 5/59 slot selections and 0/8 legacy exact instances. The largest 230/50/50 run records 51/259 aligned-slot decisions, 51/280 overall, 0/45 legacy exact and 19/280 type matches. Its purported rule comparator conflicts with a later summary; neither is promoted into a clean causal learning comparison.
+
+P0's development ablation records 115/245 correct slot groups for logistic regression on combined features, 114/245 for boosted trees, 109/245 for engineered features alone and 58/245 for embedding features alone. Its 50-case coarse-readiness test results remain $0.80/0.78/0.78$ for independent/exact/repair decoding. The GAMS auxiliary run uses 17 models, 1,135 pairs and 85 heuristic positives but only two effective test problems: baseline 2/11 versus auxiliary 1/11 slot decisions, 0/2 exact for both. Targeted synthetic auxiliary training uses 155 pairs and one test problem: 0/8 versus 1/8 slot decisions, 0/1 exact both, and type matches 7/8 versus 0/8. These tiny, weakly supervised observations support neither broad transfer gains nor broad negative claims.
+
+Separate historical MiniLM schema-retrieval training has retained completed fitting records (including an 80,297-pair run), but addresses retrieval rather than occurrence binding. No completed non-smoke MS-MARCO MiniLM cross-encoder or NL4Opt auxiliary neural checkpoint was authenticated. Implementations, export stubs and proposed clean external-supervision protocols are not counted as model outcomes.
+
+\subsection{Archived Two-Stage LLM Scalar Baselines}
+The repository also retains older LLM schema-selection/slot-filling measurements (Table~\ref{tab:archived-scalar-llm}). These differ from both the common-18 program-generation study and the 217-item relationship audit. Rows are reaggregated from saved query metrics, not regenerated assignments. The historical provider tags do not by themselves authenticate exact model snapshots, complete prompts or serving defaults. Supplied catalogs/slot inventories and incomplete protocol lineage prevent treating these as autonomous or harmonized provider comparisons. The short-input row illustrates why high conditional Exact20 can coexist with very low readiness.
+
+\begin{table}[htbp]\centering\small
+\caption{Archived two-stage scalar-baseline observations. Each row has 331 queries. Exact20 uses the explicitly stated comparable schema-hit denominator; no provider ranking or semantic accuracy is inferred.}\label{tab:archived-scalar-llm}
+\begin{tabular}{@{}llrrrr@{}}\toprule
+Recorded tag & Variant & Schema hits & Ready & Exact20 & Comparable $n$\\\midrule
+openai & orig & 307 & 280 & 0.8291 & 294\\
+openai & noisy & 309 & 116 & 0.1461 & 171\\
+openai & short & 243 & 4 & 0.8730 & 63\\
+mistral & orig & 171 & 154 & 0.9101 & 157\\
+\bottomrule\end{tabular}\end{table}
+
+The optional Gemini scalar rerun has infrastructure/preflight records but no authenticated completed full-benchmark artifact in the inspected rerun directory. This does not negate the separate completed Gemini relationship study. The proposed CloudRift Qwen extension stopped before inference at its historical availability gate: all 217 targets were unattempted, not invalid judgments or zero-accuracy observations. No fourth-provider result is reported.
+
+\subsection{Semantic Contrast Construction and Unexecuted Studies}
+The completed D1 construction and all 12 author-validated pair summaries are preserved in Section~\ref{app:d1-details}. Its assisted annotation and shared construction lineage preclude independently blinded reference or provider-performance claims. The separate independent review protocol for the 217 relationships remains incomplete (Section~\ref{app:future-reference}).
+
+An earlier similarly named global-consistency implementation has only a synthetic catalog-derived report (331 cases; typed readiness 16 versus global 18 on original text); real-data evaluation was blocked. Its temporary harness and original outputs are not authenticated here. Those artificial-reference figures are retained as historical context, excluded from the scientific real-data comparison, and not confused with the completed global-compatibility family in Table~\ref{tab:legacy-grounding}. DeepOR and OR-R1 have no evaluated common-18 generations; their availability context remains in Section~\ref{app:common18}. G1--G3 are closed feasibility/identifiability findings, not zero-performance experiments. These statuses preserve the research record without fabricating observations.

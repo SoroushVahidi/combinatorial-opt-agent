@@ -1,0 +1,646 @@
+[
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "%% JDSA Stage 2 scientific restructuring; baseline and immutable evidence preserved.",
+    "after": "%% JDSA Stage 3 final editorial pass; Stage 2 and immutable evidence preserved.",
+    "occurrences": 1,
+    "reason": "Identify editorial version"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "Supplementary relationship judgments and author/AI-assisted contrasts delimit semantic interpretation rather than establish accuracy.",
+    "after": "Supplementary relationship judgments and author/artificial-intelligence-assisted contrasts delimit semantic interpretation rather than establish accuracy.",
+    "occurrences": 1,
+    "reason": "Avoid undefined AI abbreviation in Abstract"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "between intermediate checks without claiming",
+    "after": "between intermediate checks and numerical agreement without claiming",
+    "occurrences": 1,
+    "reason": "Clarify the diagnostic relation"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "The contributions are correspondingly focused:",
+    "after": "The contributions are:",
+    "occurrences": 1,
+    "reason": "Remove unnecessary transition"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "independent semantic gold or provider-performance claims",
+    "after": "independent semantic reference labels or provider-performance claims",
+    "occurrences": 1,
+    "reason": "Use explicit terminology"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "text-to-SQL \\cite{deng2021strug}",
+    "after": "natural-language interfaces to structured query language (SQL) \\cite{deng2021strug}",
+    "occurrences": 1,
+    "reason": "Define SQL at first mention in main"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "the separate factorial isolates decoder changes within fixed scores",
+    "after": "the separate factorial study isolates decoder changes with scores held fixed",
+    "occurrences": 1,
+    "reason": "Clarify controlled comparison"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "mis-specify the eligible slot set",
+    "after": "specify the wrong eligible slot set",
+    "occurrences": 1,
+    "reason": "Copyediting for precision and readability"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "when the parameters metadata is not a dictionary",
+    "after": "when the parameter metadata is not a dictionary",
+    "occurrences": 1,
+    "reason": "Copyediting for precision and readability"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "this narrower blindness does not make the complete pipeline autonomous",
+    "after": "withholding these values does not make the complete pipeline autonomous",
+    "occurrences": 1,
+    "reason": "Copyediting for precision and readability"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "The lexical path uses catalog-fitted TF--IDF, cosine ranking, numeric parsing and typed assignment.",
+    "after": "The lexical path uses catalog-fitted term frequency--inverse document frequency (TF--IDF), cosine ranking, numeric parsing and typed assignment.",
+    "occurrences": 1,
+    "reason": "Define acronym at first main-text use"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "The CSV field \\texttt{exact20}",
+    "after": "The comma-separated values (CSV) field \\texttt{exact20}",
+    "occurrences": 1,
+    "reason": "Define CSV"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "For brevity write $I_i$",
+    "after": "For brevity, write $I_i$",
+    "occurrences": 1,
+    "reason": "Punctuation"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "Schema R@1} is",
+    "after": "Schema R@1} (top-1 schema accuracy) is",
+    "occurrences": 1,
+    "reason": "Define metric label in prose"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "No additional type gate is imposed on this numerical comparison.",
+    "after": "This numerical comparison imposes no additional type gate.",
+    "occurrences": 1,
+    "reason": "Copyediting for precision and readability"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "Typed greedy visits the run's slot order and assigns an unused indexed mention:",
+    "after": "Typed greedy follows the run's slot order and assigns an unused indexed mention:",
+    "occurrences": 1,
+    "reason": "Copyediting for precision and readability"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "t_i^*=\\arg\\max_{t\\in\\mathcal T\\setminus\\mathcal U_{i-1}}\\mathrm{compat}(p_i,t).",
+    "after": "\\tau_j^*=\\arg\\max_{t\\in\\mathcal T\\setminus\\mathcal U_{j-1}}\\mathrm{compat}(p_j,t).",
+    "occurrences": 1,
+    "reason": "Distinguish mention selection from query-level type score t_i"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "Compatibility orders coarse type preference, absolute magnitude and raw surface text, retaining source order for remaining ties.",
+    "after": "The compatibility rule ranks mentions by coarse-type preference, absolute magnitude and raw surface text, retaining source order for remaining ties.",
+    "occurrences": 1,
+    "reason": "Copyediting for precision and readability"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "each slot $p_i \\in",
+    "after": "each slot $p_j \\in",
+    "occurrences": 1,
+    "reason": "Consistent algorithm notation after separating query and slot indices"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "\\mathcal{C}_i",
+    "after": "\\mathcal{C}_j",
+    "occurrences": 3,
+    "reason": "Consistent algorithm notation after separating query and slot indices"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "mention $t_i^{*}$",
+    "after": "mention $\\tau_j^{*}$",
+    "occurrences": 1,
+    "reason": "Consistent algorithm notation after separating query and slot indices"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "A[p_i]",
+    "after": "A[p_j]",
+    "occurrences": 1,
+    "reason": "Consistent algorithm notation after separating query and slot indices"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "\\mathrm{value}(t_i^{*})",
+    "after": "\\mathrm{value}(\\tau_j^{*})",
+    "occurrences": 1,
+    "reason": "Consistent algorithm notation after separating query and slot indices"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "\\{t_i^{*}\\}",
+    "after": "\\{\\tau_j^{*}\\}",
+    "occurrences": 1,
+    "reason": "Consistent algorithm notation after separating query and slot indices"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "semantic-IR repair. Candidates",
+    "after": "semantic intermediate-representation (IR) repair. Candidates",
+    "occurrences": 1,
+    "reason": "Define IR before table use"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "Typed greedy and constrained assignment already both prevent mention reuse",
+    "after": "Typed greedy and constrained assignment both prevent mention reuse",
+    "occurrences": 1,
+    "reason": "Copyediting for precision and readability"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "Online Resource 1, Sections~\\ref{S-app:factorial-details}--\\ref{S-app:reproduction}, preserves all populations and controls.",
+    "after": "Online Resource 1, Sections~\\ref{S-app:factorial-details}--\\ref{S-app:reproduction}, documents all populations and controls.",
+    "occurrences": 1,
+    "reason": "Copyediting for precision and readability"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "All inference is retrospective.",
+    "after": "All statistical inference is retrospective.",
+    "occurrences": 1,
+    "reason": "Avoid conflating statistical inference with model calls"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "The factorial uses its separate 240-test family",
+    "after": "The factorial study uses a separate 240-test family",
+    "occurrences": 1,
+    "reason": "Copyediting for precision and readability"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "Recorded sub-millisecond cell times include instrumentation and are not clean speed comparisons.",
+    "after": "Recorded sub-millisecond cell times include instrumentation and do not support controlled speed comparisons.",
+    "occurrences": 1,
+    "reason": "Copyediting for precision and readability"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "On the overlap-free 49-query slice, strongest local and joint selection",
+    "after": "On the overlap-free 49-query slice, the strongest local and joint selection",
+    "occurrences": 1,
+    "reason": "Copyediting for precision and readability"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "The 119 determinate unanimous, 77 disputed and one unresolved complete cases expose different assertions, not which service is correct.",
+    "after": "The complete cases comprise 119 determinate unanimous cases, 77 disputed cases and one unresolved case. These categories describe agreement, not which service is correct.",
+    "occurrences": 1,
+    "reason": "Copyediting for precision and readability"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "The 12 D1 pairs comprise 24 author/AI-assisted samples",
+    "after": "The 12 D1 pairs comprise 24 author/artificial-intelligence (AI)-assisted samples",
+    "occurrences": 1,
+    "reason": "Define AI on first main-text occurrence outside Abstract"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "They supply neither provider predictions nor independently blinded gold",
+    "after": "They supply neither provider predictions nor independently blinded reference labels",
+    "occurrences": 1,
+    "reason": "Copyediting for precision and readability"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "PaMOP objective agreement remains withheld for unresolved precision.",
+    "after": "PaMOP objective agreement remains withheld because numerical precision is unresolved.",
+    "occurrences": 1,
+    "reason": "Copyediting for precision and readability"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "The common-18 formulation comparison, OptMATH extraction check and historical 60/269/20-case proxies/executions answer different questions",
+    "after": "The common-18 formulation comparison, OptMATH extraction check and historical 60/269/20-case proxy and execution studies answer different questions",
+    "occurrences": 1,
+    "reason": "Copyediting for precision and readability"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "BGE lacks an authenticated hash seed/device/environment",
+    "after": "BGE-M3 lacks an authenticated hash seed, device and environment",
+    "occurrences": 1,
+    "reason": "Copyediting for precision and readability"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "protocol remains uncompleted",
+    "after": "protocol remains incomplete",
+    "occurrences": 2,
+    "reason": "Copyediting for precision and readability"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "Scientific LLM calls are identified separately",
+    "after": "Scientific large language model (LLM) calls are identified separately",
+    "occurrences": 1,
+    "reason": "Define LLM in main"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "manuscript/jdsa-stage2-scientific-restructure-20261029/manuscript/jdsa-stage2}{Stage 2 manuscript branch}",
+    "after": "manuscript/jdsa-stage3-final-editorial-20261029/manuscript/jdsa-stage3}{final manuscript branch}",
+    "occurrences": 1,
+    "reason": "Point readers to final sources"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf",
+    "after": "ESM_1.pdf",
+    "occurrences": 1,
+    "reason": "Journal supplementary upload name and paired PDF target"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "Method & $F^G/I$ & \\% & $F^G/S$ & \\%",
+    "after": "Method & $|F^G|/|I|$ & \\% & $|F^G|/|S|$ & \\%",
+    "occurrences": 1,
+    "reason": "Use cardinalities rather than division of success sets"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "TFIDF",
+    "after": "TF--IDF",
+    "occurrences": 3,
+    "reason": "Standardize displayed method abbreviation without changing metrics"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/supporting_core.tex",
+    "before": "TFIDF",
+    "after": "TF--IDF",
+    "occurrences": 5,
+    "reason": "Standardize displayed method abbreviation without changing metrics"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "InstReady and Strict measure coarse readiness",
+    "after": "InstReady (ordinary readiness) and Strict (schema-gated readiness) measure structural readiness",
+    "occurrences": 1,
+    "reason": "Make table abbreviations self-contained"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/supplement.tex",
+    "before": "%% JDSA Stage 2 supplement; immutable evidence release unchanged.",
+    "after": "%% JDSA Stage 3 Online Resource 1; immutable evidence release unchanged.",
+    "occurrences": 1,
+    "reason": "Identify editorial version"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/supplement.tex",
+    "before": "Supplementary Material: Retrieval-Assisted",
+    "after": "Online Resource 1: Retrieval-Assisted",
+    "occurrences": 1,
+    "reason": "Clearly label Online Resource on title page"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/supplement.tex",
+    "before": "\\affil*[1]{\\orgname{New Jersey Institute of Technology}, \\orgaddress{\\city{Newark}, \\country{USA}}}",
+    "after": "\\affil*[1]{\\orgdiv{Department of Computer Science, Ying Wu College of Computing}, \\orgname{New Jersey Institute of Technology}, \\orgaddress{\\city{Newark}, \\state{NJ}, \\country{USA}}}",
+    "occurrences": 1,
+    "reason": "Align author affiliation across documents"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/supplement.tex",
+    "before": "\\section{System Context and Secondary Protocol Tables}",
+    "after": "\\clearpage\n\\setcounter{tocdepth}{1}\n\\tableofcontents\n\\clearpage\n\\section{System Context and Secondary Protocol Tables}\nTables~\\ref{tab:comparison_landscape}--\\ref{tab:exp_blocks} summarize the system landscape, retrieval methods and experimental blocks. Abbreviations used below are natural language (NL), linear programming (LP), mixed-integer linear programming (MILP), large language model (LLM), artificial intelligence (AI) and reinforcement learning (RL).",
+    "occurrences": 1,
+    "reason": "Add linked section-level navigation and define recurring abbreviations"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/supplement.tex",
+    "before": "\\section{Secondary Retrieval and Restricted Execution Diagnostics}",
+    "after": "\\section{Secondary Retrieval and Restricted Execution Diagnostics}\nTable~\\ref{tab:nlp4lp-overlap} retains the historical retrieval aggregates. Tables~\\ref{tab:eng-structural} and~\\ref{tab:eng-solver} retain the restricted proxy and execution results; their predicates and evidence limits are detailed in Section~\\ref{app:restricted-details}.",
+    "occurrences": 1,
+    "reason": "Introduce tables in consecutive order and direct readers to definitions"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/supplement.tex",
+    "before": "Pooled raw AST code-value overlap recall",
+    "after": "Pooled raw abstract-syntax-tree (AST) code-value overlap recall",
+    "occurrences": 1,
+    "reason": "Define AST"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/supplement.tex",
+    "before": "95\\% instance-bootstrap CI",
+    "after": "95\\% instance-bootstrap confidence interval (CI)",
+    "occurrences": 1,
+    "reason": "Define abbreviation locally"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/supplement.tex",
+    "before": "Its corrected per-instance counts are unavailable for independent rebootstrap of that historical CI.",
+    "after": "Its corrected per-instance counts are unavailable, so that historical interval cannot be independently recomputed by bootstrap.",
+    "occurrences": 1,
+    "reason": "Clarify unavailable evidence"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/supplement.tex",
+    "before": "The saved automatic category counts classify",
+    "after": "\n\nThe saved automatic category counts classify",
+    "occurrences": 1,
+    "reason": "Split dense extraction paragraph by estimand"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/supplement.tex",
+    "before": "Two independently coded classifiers agree",
+    "after": "\n\nTwo independently coded classifiers agree",
+    "occurrences": 1,
+    "reason": "Separate classifier agreement from extraction recall"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/grounding_diagnostics.tex",
+    "before": "All24 cells",
+    "after": "All 24 cells",
+    "occurrences": 1,
+    "reason": "Repair missing space"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/grounding_diagnostics.tex",
+    "before": "given in Appendix~",
+    "after": "given in Section~",
+    "occurrences": 1,
+    "reason": "Correct supplement section reference terminology"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/grounding_diagnostics.tex",
+    "before": "Thus reclaiming this alias budget supplies no observed\ncorrectness gain for this frozen objective.",
+    "after": "Thus removing these duplicate mappings yields no observed\ncorrectness gain for this frozen objective.",
+    "occurrences": 1,
+    "reason": "Replace opaque alias-budget wording"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/reproduction_map.tex",
+    "before": "the Stage 2 crosswalk records revised locations separately.",
+    "after": "the Stage 2 and final editorial crosswalks record revised locations separately.",
+    "occurrences": 1,
+    "reason": "Preserve crosswalk lineage"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/reproduction_map.tex",
+    "before": "HF directory",
+    "after": "Hugging Face directory",
+    "occurrences": 1,
+    "reason": "Avoid undefined abbreviation"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/reproduction_map.tex",
+    "before": "Relationship QC",
+    "after": "Relationship quality checks",
+    "occurrences": 1,
+    "reason": "Expand table abbreviation"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/reproduction_map.tex",
+    "before": "The observed $7\\leq255\\leq265$ relation yields descriptive conditional agreement",
+    "after": "The observed counts $7\\leq255\\leq265$ support the descriptive conditional agreement fractions",
+    "occurrences": 1,
+    "reason": "Clarify that subset counts, not inequality alone, define fractions"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/supporting_core.tex",
+    "before": "relocation does not define a new comparison family",
+    "after": "their presentation does not define a new comparison family",
+    "occurrences": 1,
+    "reason": "Remove revision-process phrasing"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/supporting_core.tex",
+    "before": "CI is a marginal",
+    "after": "CI denotes a marginal",
+    "occurrences": 1,
+    "reason": "Caption grammar"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/supporting_core.tex",
+    "before": "standard minus strict",
+    "after": "ordinary minus Strict",
+    "occurrences": 1,
+    "reason": "Consistent readiness terminology"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/supervision_diagnostics.tex",
+    "before": "The probability outputs have not been shown calibrated",
+    "after": "The probability outputs have not been shown to be calibrated",
+    "occurrences": 1,
+    "reason": "Grammar"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/supervision_diagnostics.tex",
+    "before": "No machine consensus has been accepted as a human semantic reference",
+    "after": "No model consensus has been accepted as a human semantic reference",
+    "occurrences": 1,
+    "reason": "Consistent terminology"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/common18_overview.tex",
+    "before": "The following sections retain the full configurations",
+    "after": "The following sections document the retained configurations",
+    "occurrences": 1,
+    "reason": "Avoid implying complete historical runtime reconstruction"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/llm_evidence.tex",
+    "before": "Full rendered prompt retention is incomplete.",
+    "after": "The complete rendered prompts were not retained.",
+    "occurrences": 1,
+    "reason": "Plain statement of missing evidence"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/llm_evidence.tex",
+    "before": "ORLM has code extracted on all 18 cases but no execution",
+    "after": "Code was extracted for ORLM on all 18 cases, but execution was unavailable",
+    "occurrences": 1,
+    "reason": "Grammar"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/llm_evidence.tex",
+    "before": "For continuity the reported Python proxy",
+    "after": "For continuity, the reported Python proxy",
+    "occurrences": 1,
+    "reason": "Punctuation"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/relationship_supplement.tex",
+    "before": "The complete source-file SHA256",
+    "after": "The complete source-file SHA-256",
+    "occurrences": 1,
+    "reason": "Consistent hash naming"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/relationship_supplement.tex",
+    "before": "All retained study calls are dated October 27, 2026 (UTC).",
+    "after": "All retained study calls are dated October 27, 2026 (Coordinated Universal Time; UTC).",
+    "occurrences": 1,
+    "reason": "Define timestamp standard"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/relationship_supplement.tex",
+    "before": "No interval or inferential model treats the 217 relationships as independent.",
+    "after": "No reported interval or inferential model treats the 217 relationships as independent.",
+    "occurrences": 1,
+    "reason": "Scope statement to reported analysis"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/relationship_supplement.tex",
+    "before": "Prepared but Uncompleted",
+    "after": "Prepared but Incomplete",
+    "occurrences": 1,
+    "reason": "Conventional wording"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/relationship_supplement.tex",
+    "before": "The complete-case category marginals",
+    "after": "Table~\\ref{tab:relationship-clusters} reports the per-problem dispositions. The complete-case category marginals",
+    "occurrences": 1,
+    "reason": "Explicit table callout"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/preserved_results_details.tex",
+    "before": "peak RSS $\\approx 198$",
+    "after": "peak resident set size (RSS) $\\approx 198$",
+    "occurrences": 1,
+    "reason": "Define runtime abbreviation"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/preserved_results_details.tex",
+    "before": "240-endpoint family",
+    "after": "240-test family",
+    "occurrences": 1,
+    "reason": "Distinguish number of tests from four endpoints"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/additional_evidence.tex",
+    "before": "substitutes missing historical predictions",
+    "after": "substitutes for missing historical predictions",
+    "occurrences": 1,
+    "reason": "Grammar"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/additional_evidence.tex",
+    "before": "The subsequent selective-reranking result is described in main Section~\\ref{M-subsec:exp_significance}.",
+    "after": "The subsequent selective-reranking result is described in Section~\\ref{app:statistical-history}.",
+    "occurrences": 1,
+    "reason": "Correct the destination to the actual historical reranking discussion"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/additional_evidence.tex",
+    "before": "DeepOR and OR-R1 have no evaluated common-18 generations; their availability context remains in Section~\\ref{M-sec:llm}.",
+    "after": "DeepOR and OR-R1 have no evaluated common-18 generations; their availability context remains in Section~\\ref{app:common18}.",
+    "occurrences": 1,
+    "reason": "Point to actual availability details"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/additional_evidence.tex",
+    "before": "$.80/.78/.78$",
+    "after": "$0.80/0.78/0.78$",
+    "occurrences": 1,
+    "reason": "Use leading zeros for proportions"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/additional_evidence.tex",
+    "before": "remains uncompleted",
+    "after": "remains incomplete",
+    "occurrences": 1,
+    "reason": "Conventional wording"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/d1_contrasts.tex",
+    "before": "Four retained first-pass labels are not certified independently blinded labels.",
+    "after": "The four retained first-pass labels are not certified as independently blinded labels.",
+    "occurrences": 1,
+    "reason": "Grammar"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "\\hypersetup{hypertexnames=false}",
+    "after": "\\hypersetup{hypertexnames=false, bookmarksnumbered=true,\n  pdftitle={Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study},\n  pdfauthor={Soroush Vahidi}, pdfsubject={JDSA Regular Paper; final editorial version},\n  pdfkeywords={scalar grounding, optimization modeling, retrieval, reproducibility},\n  pdflang={en-US}}",
+    "occurrences": 1,
+    "reason": "Set accurate PDF metadata, document language and numbered navigation"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/supplement.tex",
+    "before": "\\hypersetup{hypertexnames=false}",
+    "after": "\\hypersetup{hypertexnames=false, bookmarksnumbered=true,\n  pdftitle={Online Resource 1: Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study},\n  pdfauthor={Soroush Vahidi}, pdfsubject={Online Resource 1; supplementary evidence and reproducibility},\n  pdfkeywords={scalar grounding, optimization modeling, retrieval, reproducibility},\n  pdflang={en-US}}",
+    "occurrences": 1,
+    "reason": "Set accurate PDF metadata, document language and numbered navigation"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "Supplementary relationship judgments and author/artificial-intelligence-assisted contrasts delimit semantic interpretation rather than establish accuracy.",
+    "after": "Supplementary relationship judgments and contrasts constructed with author and artificial intelligence assistance delimit semantic interpretation rather than establish accuracy.",
+    "occurrences": 1,
+    "reason": "Clarify first-use abbreviations and avoid repeated definitions"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "supplementary relationship judgments and author/AI-assisted contrasts",
+    "after": "supplementary relationship judgments and contrasts constructed with author and artificial intelligence (AI) assistance",
+    "occurrences": 1,
+    "reason": "Clarify first-use abbreviations and avoid repeated definitions"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "24 author/artificial-intelligence (AI)-assisted samples",
+    "after": "24 author/AI-assisted samples",
+    "occurrences": 1,
+    "reason": "Clarify first-use abbreviations and avoid repeated definitions"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/supplement.tex",
+    "before": "\\setcounter{tocdepth}{1}",
+    "after": "\\setcounter{tocdepth}{1}\n\\makeatletter\n\\renewcommand{\\l@section}{\\@dottedtocline{1}{0em}{2.5em}}\n\\makeatother",
+    "occurrences": 1,
+    "reason": "Widen section-number field for S10/S11 in contents"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "E(q,\\hat{s}) = K_G(q) \\cap P_{\\mathrm{all}}(\\hat{s}),",
+    "after": "E(q,\\hat{s}) = K_G(q) \\cap P_{\\mathrm{all}}(\\hat{s}).",
+    "occurrences": 1,
+    "reason": "End complete displayed definition with a period"
+  },
+  {
+    "file": "manuscript/jdsa-stage3/main.tex",
+    "before": "= \\mathbf{1}[H_i=1\\ \\wedge\\ c_i\\geq0.8\\ \\wedge\\ t_i\\geq0.8],",
+    "after": "= \\mathbf{1}[H_i=1\\ \\wedge\\ c_i\\geq0.8\\ \\wedge\\ t_i\\geq0.8].",
+    "occurrences": 1,
+    "reason": "End displayed readiness definition with a period"
+  }
+]

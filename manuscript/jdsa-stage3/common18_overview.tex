@@ -1,0 +1,21 @@
+\subsection{Formulation Execution and Objective Agreement}
+\label{subsec:exp_external}
+The same 18 historically selected NLP4LP problems were attempted by a project reconstruction of PaMOP, adapted OptMATH and ORLM models, and zero-shot GPT-5.4. Table~\ref{tab:ext-outcomes} preserves the original comparison with corrected terminal-objective accounting. Different prompts, weights, correction budgets and solver interfaces prevent equal-treatment ranking; the scalar-only pipeline is outside these columns. The following sections document the retained configurations, failures, conditional denominators and PaMOP precision withholding.
+
+\begin{table}[t]
+\centering
+  \renewcommand{\arraystretch}{1.18}\small
+\caption{Offline reaggregation of archived common-18 records. Every system attempted generation on the same 18 cases. Parse denotes a retained AMPL parse or Python code extraction; Run denotes successful process/solve completion. Obj. counts valid numerical text extractions among successful runs, and Ref. counts available reference objectives among those extractions. Agreement is conditional on classifiable executed reference comparisons. W/H means withheld for insufficient precision; N/A means an unavailable execution environment.}
+\label{tab:ext-outcomes}
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+System & Parse /18 & Run /18 & Obj./run & Ref./obj. & Agree./comp.\\
+\midrule
+PaMOP reconstruction & 13/18 & 13/18 & 13/13 & 11/13 & W/H\\
+OptMATH adaptation & 18/18 & 15/18 & 15/15 & 15/15 & 11/15\\
+ORLM adaptation & 18/18 & N/A & N/A & N/A & N/A\\
+GPT-5.4 zero-shot & 18/18 & 16/18 & 16/16 & 16/16 & 12/16\\
+\bottomrule
+\end{tabular}
+\end{table}

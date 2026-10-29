@@ -1,0 +1,278 @@
+{
+  "status": "PASS",
+  "method": "Every page reviewed as rendered contact sheets; additional full-page inspection of dense mathematical, algorithm/figure and conditional-denominator layouts. Compared clean-package renders to final PDFs on every page.",
+  "documents": {
+    "main": {
+      "pages": [
+        {
+          "page": 1,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 2,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 3,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 4,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 5,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 6,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 7,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 8,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 9,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 10,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 11,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 12,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 13,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 14,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 15,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        }
+      ]
+    },
+    "supplement": {
+      "pages": [
+        {
+          "page": 1,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 2,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 3,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 4,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 5,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 6,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 7,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 8,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 9,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 10,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 11,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 12,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 13,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 14,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 15,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 16,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 17,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 18,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 19,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 20,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 21,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 22,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 23,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 24,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 25,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 26,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 27,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 28,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 29,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 30,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 31,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 32,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 33,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 34,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 35,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 36,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        },
+        {
+          "page": 37,
+          "visual_review": "PASS",
+          "review_scope": "layout, captions, equations/tables, text clipping, numbering and reference rendering"
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Visual review is not a formal PDF/UA or screen-reader audit.",
+    "Cross-file targets resolve in the PDF pair; web-browser support varies."
+  ]
+}

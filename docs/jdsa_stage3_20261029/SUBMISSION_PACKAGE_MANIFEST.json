@@ -1,0 +1,174 @@
+{
+  "status": "PASS",
+  "archive_path": "manuscript/jdsa-stage3/JDSA_Submission_Source_20261029.zip",
+  "sha256": "ef3df1770f7499311d15316fdf8c41cec23776054d372e00fbb755f496220e87",
+  "bytes": 1022633,
+  "flat_layout": true,
+  "files": [
+    {
+      "path": "ESM_1.pdf",
+      "bytes": 429499,
+      "sha256": "9b014d411b495c65c1c03f7e0e924ee574cb8f21e4745492589c41d8214965aa"
+    },
+    {
+      "path": "Fig1.pdf",
+      "bytes": 51158,
+      "sha256": "59cf528cc5ab6b0b2023c9c0b86fdd9ddcd4e901911ef300de0e2e9d201a46f8"
+    },
+    {
+      "path": "Fig1.tex",
+      "bytes": 150,
+      "sha256": "ed5f89a843169fe14eb294150210a744f5346bd5497302eb5c28cd8a0061e023"
+    },
+    {
+      "path": "MANIFEST.sha256",
+      "bytes": 2740,
+      "sha256": "89fe3b29f3b04c149c090fd7701a770e3a7fecb9212f8907f258e1e100b1086e"
+    },
+    {
+      "path": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+      "bytes": 444821,
+      "sha256": "275c93618bd2c68ca943603cab953c8a466eb9a0f6d641a92d92da280c5a9d68"
+    },
+    {
+      "path": "SUBMISSION_README.txt",
+      "bytes": 2706,
+      "sha256": "436a772a1b389be85cd0ea9ca9583ec9a0890629d8d0119b704f68fed98dc99b"
+    },
+    {
+      "path": "additional_evidence.tex",
+      "bytes": 15124,
+      "sha256": "89bd8f11c4e54ee66f45272dff7e40634ef37f672e42f078d4a42c1ea5392e26"
+    },
+    {
+      "path": "build.sh",
+      "bytes": 1504,
+      "sha256": "5f0fe16910ec83a20e5e9d8af6837fb598027a6d5ab312b6417ec722f03e9bd7"
+    },
+    {
+      "path": "closed_audits.tex",
+      "bytes": 2564,
+      "sha256": "83feab4b81fc3ee1373b6c8c26dbfa6f258c08cb3fb79c65d1db57d4a8e1254c"
+    },
+    {
+      "path": "common18_overview.tex",
+      "bytes": 1690,
+      "sha256": "ce6f19e7684a2c2e9f422c8629a8daca3bb801bf0438db94028f96a6ed50e8f9"
+    },
+    {
+      "path": "d1_contrasts.tex",
+      "bytes": 4933,
+      "sha256": "1185b1887ba5f01268257912b8c4ba6eee337254a27db093a50dc87a752ca3d9"
+    },
+    {
+      "path": "grounding_diagnostics.tex",
+      "bytes": 3920,
+      "sha256": "9f5fa0ee3b89367205a26ef84edf7c31198795d23c5eed71b110e4cbc6caa46f"
+    },
+    {
+      "path": "llm_evidence.tex",
+      "bytes": 8737,
+      "sha256": "4e36ab8ecb2f2268c8b487d48ab2fefc63606962c6771443f3e455258ca21299"
+    },
+    {
+      "path": "main.aux",
+      "bytes": 19874,
+      "sha256": "ba39f22d8e40f12e9f4d14c015c3e9a4771fa04556ca051417f234bc786fa95e"
+    },
+    {
+      "path": "main.bbl",
+      "bytes": 10314,
+      "sha256": "3b2c372620b7c5adf650177e4b6b0f65eb8f8045996c8db60cf010a5a73c5811"
+    },
+    {
+      "path": "main.tex",
+      "bytes": 60157,
+      "sha256": "707c62d55c1cdae6548fe5f36c8bb724fb0fe6989a0b384fda5003e565087132"
+    },
+    {
+      "path": "orcidlink.sty",
+      "bytes": 2483,
+      "sha256": "f1a6b71cdd115d8024969da302c63c93c937f6de0d783657f96e92ccfed4aa69"
+    },
+    {
+      "path": "pipeline_figure.tex",
+      "bytes": 1088,
+      "sha256": "8693933108ff023468c019cee84b840702c8c7b7292a5a00284fdad23bddfb27"
+    },
+    {
+      "path": "preserved_results_details.tex",
+      "bytes": 10049,
+      "sha256": "138b1d5c3da0a126f849e5691968e4caa707d5c7d2a2fce74e9411053651ca2e"
+    },
+    {
+      "path": "ready_conditioned_rows.tex",
+      "bytes": 173,
+      "sha256": "73183524b2876899f50c0cfa43523ff3284e4d8ed9d85a7cc617c0fe6df00082"
+    },
+    {
+      "path": "reference_conventions.tex",
+      "bytes": 4715,
+      "sha256": "9bbb6d0ba4e7a72b23629c8dceb50bb640afb4f4c332731bd80dcefd2f50c7af"
+    },
+    {
+      "path": "references.bib",
+      "bytes": 24344,
+      "sha256": "af270ccbea4bb318b18d02facbcd9d4da624784a3ef51890bf61379fdbba8736"
+    },
+    {
+      "path": "related_context.tex",
+      "bytes": 2325,
+      "sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e"
+    },
+    {
+      "path": "relationship_evidence.tex",
+      "bytes": 1349,
+      "sha256": "d3f361cb002332cd7e3bde582080ba30a257055a19e419dc3b9e2bf5950ce5de"
+    },
+    {
+      "path": "relationship_supplement.tex",
+      "bytes": 11038,
+      "sha256": "26b22902a94fc55757b84ec0b580b08e40b1a89c3a0063f3132ffef9b9bcc363"
+    },
+    {
+      "path": "reproduction_map.tex",
+      "bytes": 8827,
+      "sha256": "dd5d06acfd00daefc9c0af9760b32ac43ba7480a24cad13a7f61afe43c0f8d6d"
+    },
+    {
+      "path": "sn-basic.bst",
+      "bytes": 35515,
+      "sha256": "4b368414cc5593169907933b417aacfdb0ce905866a39bdf55d21aad65e9d46c"
+    },
+    {
+      "path": "sn-jnl.cls",
+      "bytes": 55857,
+      "sha256": "36d0c3273a59d48dc6a9c7b080dfa1ec50dc10229d8751568d1f2e490ffa5ecc"
+    },
+    {
+      "path": "supervision_diagnostics.tex",
+      "bytes": 4507,
+      "sha256": "98231db7a6d72512ffb58c5794d3c4fa4c53081660095afd14b43449997ee89c"
+    },
+    {
+      "path": "supplement.aux",
+      "bytes": 30944,
+      "sha256": "959905dab983f7b80495ec74c949df4b598de6d7319752171b166ef47097ab91"
+    },
+    {
+      "path": "supplement.bbl",
+      "bytes": 9528,
+      "sha256": "02627f7c3b8c49511069d806ea4d0a292fb02956515469f258408ab609f96c4f"
+    },
+    {
+      "path": "supplement.tex",
+      "bytes": 14163,
+      "sha256": "4c0a74eadaa449588ee62f5dabc1a9075a331a9f6cb8ab01f41090a013cea371"
+    },
+    {
+      "path": "supporting_core.tex",
+      "bytes": 4342,
+      "sha256": "958526706446fe94638e97053f09c83eebe93e0998cd42f81010bdd5c167109d"
+    }
+  ]
+}

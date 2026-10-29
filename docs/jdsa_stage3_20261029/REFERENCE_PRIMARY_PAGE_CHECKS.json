@@ -1,0 +1,46 @@
+{
+  "checked_on": "2026-10-29",
+  "method": "Primary publisher pages read through web tools; supplements HTTP metadata ledger, does not erase failed HTTP attempts.",
+  "checks": [
+    {
+      "key": "huang2025orlm",
+      "url": "https://pubsonline.informs.org/doi/10.1287/opre.2024.1233",
+      "finding": "Publisher article: title, authors, 2025, 73(6), 2986\u20133009 and DOI."
+    },
+    {
+      "key": "kuhn1955assignment",
+      "url": "https://onlinelibrary.wiley.com/doi/10.1002/nav.3800020109",
+      "finding": "Publisher article: title, author, March 1955, 2(1\u20132), 83\u201397 and DOI."
+    },
+    {
+      "key": "roy2017udg",
+      "url": "https://ojs.aaai.org/index.php/AAAI/article/view/10959",
+      "finding": "Official AAAI article: title, authors, 2017, 31(1) and DOI; no unverified page range added."
+    },
+    {
+      "key": "ding2026orr1",
+      "url": "https://ojs.aaai.org/index.php/AAAI/article/view/36983",
+      "finding": "Official AAAI article: title, authors, proceedings year and DOI."
+    },
+    {
+      "key": "kadioglu2024ner4opt",
+      "url": "https://link.springer.com/journal/10601/volumes-and-issues/29-3",
+      "finding": "Combined issue is 3\u20134 despite abbreviated article metadata showing issue 3; retained 3\u20134."
+    },
+    {
+      "key": "ramamonjison2023nl4opt",
+      "url": "https://proceedings.mlr.press/v220/ramamonjison23a.html",
+      "finding": "Recommended publisher BibTeX/citation says 2022; HTML metadata/PDF masthead show 2023. Existing ambiguity note retained."
+    },
+    {
+      "key": "gao2026models",
+      "url": "https://proceedings.colm.cc/paper_files/paper/2026/hash/6feb9b30798abcfae937760d183605e1-Abstract-Conference.html",
+      "finding": "Official COLM 2026 pre-proceedings; no DOI invented."
+    },
+    {
+      "key": "chen2025solver",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/98555b92e5dedbdad5921049281995bc-Abstract-Conference.html",
+      "finding": "Official NeurIPS 38/2025 proceedings, 106027\u2013106069; online metadata date 2026 is not substituted for conference year."
+    }
+  ]
+}

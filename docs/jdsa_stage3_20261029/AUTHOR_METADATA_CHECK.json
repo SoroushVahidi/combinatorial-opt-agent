@@ -1,0 +1,25 @@
+{
+  "url": "https://pub.orcid.org/v3.0/0000-0003-1934-6282/person",
+  "orcid": "0000-0003-1934-6282",
+  "source_author": "Soroush Vahidi",
+  "email_preserved": "sv96@njit.edu",
+  "public_name": {
+    "created-date": {
+      "value": 1657347715674
+    },
+    "last-modified-date": {
+      "value": 1657347715674
+    },
+    "given-names": {
+      "value": "Soroush"
+    },
+    "family-name": {
+      "value": "Vahidi"
+    },
+    "credit-name": null,
+    "source": null,
+    "visibility": "public",
+    "path": "0000-0003-1934-6282"
+  },
+  "status": "PUBLIC_RECORD_RETRIEVED"
+}

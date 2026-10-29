@@ -1,0 +1,512 @@
+%% JDSA Stage 3 final editorial pass; Stage 2 and immutable evidence preserved.
+
+\documentclass[pdflatex,iicol,sn-basic,Numbered]{sn-jnl}
+
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{xurl}
+\usepackage{microtype}
+\usepackage{xr-hyper}
+\usepackage{hyperref}
+% Avoid duplicate caption destinations in the preserved Springer template.
+\hypersetup{hypertexnames=false, bookmarksnumbered=true,
+  pdftitle={Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study},
+  pdfauthor={Soroush Vahidi}, pdfsubject={JDSA Regular Paper; final editorial version},
+  pdfkeywords={scalar grounding, optimization modeling, retrieval, reproducibility},
+  pdflang={en-US}}
+
+\usepackage{orcidlink}
+\raggedbottom
+
+\externaldocument[S-]{supplement}[ESM_1.pdf]
+\begin{document}
+
+\title[Retrieval-Assisted Scalar Grounding]{Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study}
+
+\author*[1]{\fnm{Soroush} \sur{Vahidi}\,\orcidlink{0000-0003-1934-6282}}\email{sv96@njit.edu}
+
+\affil*[1]{\orgdiv{Department of Computer Science, Ying Wu College of Computing}, \orgname{New Jersey Institute of Technology}, \orgaddress{\street{University Heights}, \city{Newark}, \postcode{07102-1982}, \state{NJ}, \country{USA}}}
+
+\abstract{Retrieval and structural checks can make a natural-language optimization output appear usable without establishing complete numerical grounding. We study this diagnostic gap through three questions: fixed-catalog schema identification, the validity of coverage/type readiness as a numerical check, and the mechanisms behind grounding outcomes. On 331 queries from the NLP4LP natural-language optimization benchmark and 335 schema documents, term frequency--inverse document frequency retrieval and a pretrained dense encoder identify the target schema for 301 and 313 queries. Ratio-aware lexical grounding passes coarse readiness on 265 queries, but only seven satisfy the complete stored-reference scalar-tolerance criterion: 2.64\% of the readiness-passing population. A mutually exclusive residual partition separates retrieval, coverage, type and numerical failures. Six grounding procedures under fixed retrieval yield between seven and 46 complete successes, while changing candidates, scoring, abstention and decoding together. A separate 49-query frozen-score assignment study improves exact slot counts without increasing the five whole-instance tolerance successes, delimiting what can be attributed to search. The methodological contribution is joint reporting of retrieval, readiness and complete scalar agreement with explicit assistance, denominators and evidence boundaries. Reference-derived inventories and benchmark exposure restrict these findings to assisted grounding. Supplementary relationship judgments and contrasts constructed with author and artificial intelligence assistance delimit semantic interpretation rather than establish accuracy. A versioned public release supports saved-record reanalysis; missing historical predictions and restricted originals prevent full experimental reproduction.}
+
+\keywords{natural language processing, optimization modeling, knowledge representation, information retrieval, semantic grounding, intelligent information systems}
+
+\maketitle
+
+
+\bmhead{Acknowledgements}
+
+The author thanks his mother for emotional support, Professor Ioannis Koutis for academic guidance, NJIT for Wulver computing access, and Anders Borum for complimentary Secure ShellFish access. Cohere Labs Catalyst, Google Cloud Research Credits and io.net supported the author's broader research; their use for this study's experiments is not established. Study-specific educational credits and in-kind support are distinguished in Statements and Declarations.
+
+\section{Introduction}
+Natural-language optimization interfaces must connect a decision problem's quantities to the right parameters and mathematical roles. Retrieving a suitable template supplies part of that structure; filling its slots supplies another part. Neither operation alone establishes that the resulting numerical mapping expresses the intended problem. A capacity and a cost may share a value, and reversing a bound can preserve both the number and its type.
+
+Entity extraction, structured representations and formulation generation address different parts of this translation \cite{ramamonjison2022autoformulation,ramamonjison2023nl4opt,kadioglu2024ner4opt,ahmaditeshnizi2024optimus_icml}. Structured grounding in database interfaces distinguishes schema elements from their links to textual values \cite{deng2021strug,wang2020ratsql}; Text2Opt-Bench explicitly separates modeling from data binding \cite{gao2026models}. Numerical binding difficulties are therefore established concerns. The question addressed here is methodological: which intermediate measurements reveal these failures, and which favorable measurements can coexist with an incomplete numerical result?
+
+We use retrieval-assisted scalar grounding as an inspectable diagnostic setting. A retriever selects a document from a fixed catalog, and an existing deterministic procedure assigns extracted numerical mentions to scalar slots. Its output is a partial parameter mapping. The benchmark supplies reference-derived inventory information and contains all target schemas; Section~\ref{subsec:assistance-setting} specifies these restrictions. This controlled scope permits analysis of the relation between intermediate checks and numerical agreement without claiming autonomous model formulation.
+
+Three research questions organize the paper:
+\begin{enumerate}
+\item \textbf{RQ1---Schema retrieval:} How well does fixed-catalog retrieval identify the benchmark's target schema?
+\item \textbf{RQ2---Diagnostic validity:} How often do structural coverage and type-readiness checks conceal failures of complete numerical grounding?
+\item \textbf{RQ3---Grounding mechanisms:} What do matched grounding comparisons and frozen-score assignment controls reveal about candidate availability, scoring, abstention, and search?
+\end{enumerate}
+
+RQ1 uses the 331-query NLP4LP frame to establish the retrieval context. RQ2 jointly reports schema hits, coarse readiness and agreement across every required stored-reference scalar, then partitions the residual failures. RQ3 distinguishes a six-method comparison on that same frame from a narrower 49-query assignment control. The former evaluates whole grounding procedures; the latter fixes candidate pools and scores within decoder comparisons. Neither population is an untouched confirmatory sample.
+
+The contributions are:
+\label{subsec:intro_contributions}
+\begin{enumerate}
+\item An explicit diagnostic protocol linking retrieval, coverage/type readiness and complete stored-reference scalar agreement to their input assistance and denominators. Readiness-conditioned agreement makes the limitation of a favorable intermediate check directly inspectable.
+\item A saved-record analysis of the 331-query benchmark that quantifies the readiness--grounding discrepancy, gives a mutually exclusive residual partition and preserves conditional Exact20 populations.
+\item A separation of whole-procedure comparisons from frozen-score assignment controls, showing what the retained candidate, scoring and search records can explain, together with a versioned reanalysis package and stated reconstruction limits.
+\end{enumerate}
+
+The contribution is an evaluation methodology and its empirical application, not a new retrieval or matching algorithm. Semantic fidelity remains a further validation requirement: the supplementary relationship judgments and contrasts constructed with author and artificial intelligence (AI) assistance illustrate that boundary, without supplying independent semantic reference labels or provider-performance claims. Other formulation, extraction and historical auxiliary results are preserved in Online Resource 1 under their own protocols.
+
+Section~\ref{sec:related_work} positions the methodology. Sections~\ref{sec:task} and~\ref{sec:methodology} define its endpoints and comparisons. Section~\ref{sec:experiments} answers RQ1--RQ3; Section~\ref{sec:discussion} interprets their scope and remaining weaknesses.
+
+\section{Related Work}
+\label{sec:related_work}
+\subsection{Structured Grounding and Numerical Binding}
+\label{subsec:rw_binding}
+StruG learns column grounding, value grounding and column--value mapping for natural-language interfaces to structured query language (SQL) \cite{deng2021strug}; RAT-SQL encodes schema relations and linking \cite{wang2020ratsql}. Quantity interpretation also associates values with units and concepts \cite{almasian2023cqe,roy2017udg}. These precedents show why identifying an element and linking it to textual evidence are distinct operations. Their learned representations do not implement the supplied-slot protocol evaluated here.
+
+Text2Opt-Bench studies solver-verified optimization problems whose numerical data scale while the formulation structure can remain simple \cite{gao2026models}. Its BIND interventions separate oracle-assisted data externalization from trained binding specialists; an untrained two-stage pipeline also has documented failures. Our study neither reproduces these interventions nor claims priority for separating modeling and binding. It addresses a narrower measurement question: how much complete stored-reference scalar agreement remains among outputs that pass coverage/type checks, and which explanations survive when assignment inputs and scores are fixed? Text2Opt-Bench's scaling and intervention results are not directly comparable to these exposed-catalog conditional diagnostics.
+
+\subsection{Formulation Systems and Evaluation Endpoints}
+\label{subsec:rw_llm_generation}\label{subsec:rw_retrieval_memory}
+NL4Opt and Ner4Opt examine optimization-related extraction and representations \cite{ramamonjison2023nl4opt,kadioglu2024ner4opt}. OptiMUS and PaMOP generate formulations or solver code with feedback \cite{ahmaditeshnizi2024optimus_icml,pan2025pamop}, whereas OptMATH, ORLM and DeepOR develop data or trained modeling systems \cite{lu2025optmath,huang2025orlm,xiao2026deepor}. Retrieval supporting code generation, as in OPT2CODE, differs from selecting the parameter inventory itself \cite{ahmed2025opt2code}. Online Resource 1, Table~\ref{S-tab:comparison_landscape} and Section~\ref{S-app:related-context}, retain the broader system context. Their end-to-end outcomes cannot be substituted for scalar-binding measurements.
+
+Compatibility and validity checks also differ from semantic validation. Constrained semantic-role inference and PICARD impose structural restrictions \cite{punyakanok2004ilp,scholak2021picard}; EquivaMap checks mappings between formulations that preserve feasibility and optimality \cite{zhai2025equivamap}. Our stored-scalar test establishes neither that equivalence nor fidelity to the source description. These stronger endpoints help delimit the meaning of a positive diagnostic result.
+
+\subsection{Methodological Position}
+\label{subsec:rw_position}
+We contribute joint endpoint reporting, explicit conditional populations and controlled attribution within saved records. Classical maximum-sum assignment \cite{kuhn1955assignment}, existing retrievers and existing grounders serve as diagnostic instruments. The six-method comparison fixes retrieval and queries but changes several grounding components; the separate factorial study isolates decoder changes with scores held fixed. This distinction prevents interpreting every numerical improvement as a search effect or every ready output as a correct formulation.
+
+\section{Problem Setting and Evaluation Framework}
+\label{sec:task}
+\subsection{Problem Formulation}
+\label{subsec:method_problem}
+
+Given a query, the system returns a top-1 catalog schema and a partial mapping of its scalar parameters \cite{nlp4lp_dataset}. Schema retrieval ranks $\mathcal{S}=\{s_1,\dots,s_M\}$ and returns
+\begin{equation}
+\hat{s}=\arg\max_{s \in \mathcal{S}} \mathrm{score}(q,s).
+\label{eq:top1_schema}
+\end{equation}
+Parameter instantiation then extracts numeric mentions and assigns them to scalar slots of $\hat{s}$ with deterministic rules. Incorrect retrieval can specify the wrong eligible slot set even when the query contains usable numeric evidence.
+
+A \emph{schema} comprises the retrieved template and its parameter structure. The core task excludes complete program synthesis and list-, vector- or dictionary-valued recovery. Numerical grounding is rule-based; optional dense retrieval uses a pretrained encoder.
+
+Let $K_G(q)$ contain keys whose gold values are numeric scalars (integers or floats, excluding booleans), and let $P_{\mathrm{all}}(\hat{s})$ contain \emph{all} keys in the predicted schema's parameter-metadata dictionary, falling back to all keys in its reference parameter record when the parameter metadata is not a dictionary. This original construction does not first select entries by scalar shape. The benchmark constructs assignments on the eligible set
+\begin{equation}
+E(q,\hat{s}) = K_G(q) \cap P_{\mathrm{all}}(\hat{s}).
+\label{eq:eligible_slots}
+\end{equation}
+Thus gold scalar status filters the slot inventory \emph{before} assignment; gold keys affect both prediction construction and evaluation. Gold numerical magnitudes are not supplied to the mention-selection rule. Let $y_q : K_G(q) \to \mathbb{R}$ be the gold map and $\hat{y}_{q}$ the partial assignment on $A(q) \subseteq E(q,\hat{s})$; masked inputs may leave a raw unknown token rather than a numeric value. Retrieval quality is top-1 schema match; downstream quality is how well eligible scalars can be filled from text.
+
+\subsection{Evaluation Inputs and Reference Assistance}
+\label{subsec:assistance-setting}
+
+Reference access must be distinguished from reference scoring. The main four-arm and matched-baseline experiments are \emph{gold-assisted}: the expected scalar count and slot identities depend on $K_G(q)$ before a value is chosen. Slot-name type heuristics consequently also operate on reference-derived names. The numeric selector does not receive the gold magnitudes, objective coefficients or constraint identities as separate targets; withholding these values does not make the complete pipeline autonomous.
+
+The catalog itself is benchmark-derived. Its builder pairs each test description with the same record's parameterized description (falling back to its description and a metadata signature). The retained catalog contains 331 test-record documents plus four fillers; all 331 target IDs are present, and six query--target texts match exactly. This is a known-template identification setting, not a held-out template-generation test. Unsupervised fitting of an index is compatible with that setting, but does not establish independence from the evaluation source.
+
+The later joint/factorial controls remove the query-specific gold-key filter, yet retain the selected reference template's slot names, shapes and descriptions, with types inferred heuristically from names. They remain \emph{partially assisted}; available parameter relations also come from that template. Their results measure assignment conditional on supplied structure. By contrast, the 20-case execution check additionally retains reference code and unfilled scalar/structured values and is gold-assisted. Online Resource 1, Section~\ref{S-app:reproduction} identifies these boundaries and separates prediction reconstruction from aggregation. No autonomous formulation score, or adjustment estimating one from these conditional scores, is identifiable from the saved records.
+
+\subsection{Inference Dependencies and Practical Scope}
+\label{subsec:inference-dependencies}
+The lexical path uses catalog-fitted term frequency--inverse document frequency (TF--IDF), cosine ranking, numeric parsing and typed assignment. It needs neither generative-model calls nor task-specific neural training; optional BGE-M3 retrieval uses a pretrained encoder. External generation and relationship studies use model services separately. With cached dependencies and metadata, lexical inference is local, but no comparative cost, privacy or reliability benefit is measured. Historical replay also depends on the run's ordering and environment (Section~\ref{subsec:limitations}).
+
+\subsection{Metric Levels and Denominators}\label{subsec:metrics}
+\textit{Schema R@1} (top-1 schema accuracy) is $N^{-1}\sum_{i=1}^N H_i$, where $H_i=\mathbf{1}[\hat{s}_i=s_i^*]$ and $N=331$. For downstream metrics, write $E_i=E(q_i,\hat{s}_i)$ and let $A_i\subseteq E_i$ be the assigned slots. Let $T_i\subseteq A_i$ contain assignments accepted by the implemented coarse-type compatibility predicate. This is not literal type equality: an integer mention is accepted for a float slot, and integer or float mentions are accepted for currency slots, in addition to same-type matches. Expected slot types are inferred heuristically from names, not annotated semantic roles. Define
+\begin{equation}
+\begin{gathered}
+c_i=\begin{cases}|A_i|/|E_i|,& |E_i|>0,\\0,& |E_i|=0,\end{cases}
+\\[3pt]
+\textit{Coverage}=\frac{1}{N}\sum_{i=1}^N c_i,
+\end{gathered}
+\label{eq:coverage}
+\end{equation}
+\begin{equation}
+\begin{gathered}
+t_i=\begin{cases}|T_i|/|A_i|,& |A_i|>0,\\0,& |A_i|=0,\end{cases}
+\\[3pt]
+\textit{TypeMatch}=\frac{1}{N}\sum_{i=1}^N t_i.
+\end{gathered}
+\label{eq:typematch}
+\end{equation}
+Coverage and TypeMatch in Eqs.~\eqref{eq:coverage} and~\eqref{eq:typematch} are \emph{macro-averages over queries}, including zero-denominator queries as zero. They are not pooled slot ratios. Separate type-stratified diagnostic files pool slots by type and therefore use a different aggregation. An abstention leaves a slot unfilled, reducing coverage; TypeMatch conditions on assigned slots within each query, then averages across all queries. Missing retrieval yields an empty eligible set and zero coverage and type score. A masked mention can count as assigned while lacking a comparable numerical value; the implemented unknown mention type does not pass the coarse-type predicate.
+
+For a schema-hit query, let $C_i\subseteq A_i$ contain slots with both a numeric prediction and numeric gold value. For each comparable slot,
+\begin{equation}
+ e_{i,s}=\frac{|\hat{y}_{i,s}-y_{i,s}|}{\max(1.0,|y_{i,s}|)}.
+\label{eq:bounded_error}
+\end{equation}
+A slot passes the inclusive tolerance rule if $e_{i,s}\leq0.20$: absolute error at most $0.20$ for $|y|<1$, otherwise relative error at most $20\%$. This numerical comparison imposes no additional type gate. With $J=\{i:H_i=1,\ |C_i|>0\}$,
+\begin{equation}
+\begin{gathered}
+x_i=\frac{1}{|C_i|}\sum_{s\in C_i}\mathbf{1}[e_{i,s}\leq0.20],
+\\[3pt]
+\textit{Exact20 (on hits)}=\frac{1}{|J|}\sum_{i\in J}x_i.
+\end{gathered}
+\label{eq:exact20}
+\end{equation}
+The comma-separated values (CSV) field \texttt{exact20} stores $x_i$, a fraction of slots, not a whole-query indicator. It is blank on schema misses or when $C_i$ is empty. Such queries are excluded, rather than zero-filled, in the reported Exact20 mean; an empty $J$ is reported as unavailable. Main-table denominators are 291, 291, 303, and 320 \emph{queries} for TF--IDF baseline, TF--IDF ratio-aware, BGE-M3, and Oracle. Missing numerical predictions do not count as errors in this conditional metric, so abstention can improve Exact20 while lowering coverage. Its method-dependent subsets do not support an unconditional accuracy ranking.
+
+\textit{InstantiationReady} retains its historical metric identifier for reproducibility and is described here as \emph{coarse readiness}:
+\begin{equation}
+\begin{gathered}
+\mathit{InstantiationReady}_i\\[2pt]
+=\mathbf{1}[c_i\geq0.8\ \wedge\ t_i\geq0.8].
+\end{gathered}
+\label{eq:instantiation_ready}
+\end{equation}
+The score in Eq.~\eqref{eq:instantiation_ready} is averaged over all $N$ queries. It checks neither schema correctness nor numerical values, and can tolerate unfilled or incompatible slots. StrictInstantiationReady additionally requires $H_i=1$; it still does not check values.
+\begin{equation}
+\begin{gathered}
+\mathit{StrictInstantiationReady}_i\\[2pt]
+= \mathbf{1}[H_i=1\ \wedge\ c_i\geq0.8\ \wedge\ t_i\geq0.8].
+\end{gathered}
+\label{eq:strict_instantiation_ready}
+\end{equation} Empty eligible or assigned sets fail both readiness criteria. Thus an $80\%$ coarse-readiness rate is not an $80\%$ correct-instance rate.
+
+
+To state the complete endpoint explicitly, let $F_i^G$ indicate a schema hit with every required scalar assigned, comparable, type-compatible and within tolerance:
+\begin{equation}
+\begin{split}
+F_i^G=\mathbf{1}[\,&H_i=1,\ K_G(q_i)\ne\varnothing,\\
+&A_i=C_i=T_i=K_G(q_i),\\
+&\max_{s\in K_G(q_i)}e_{i,s}\leq0.20\,].
+\end{split}\label{eq:full-scalar}
+\end{equation}
+An empty required set fails this criterion. Unlike conditional Exact20, $F_i^G$ cannot reward missing keys or incomparable values. For brevity, write $I_i$ and $S_i$ for ordinary and Strict readiness. The corresponding success sets satisfy $F^G\subseteq S\subseteq I$, so we also report
+\begin{equation}
+\rho_I=\frac{\sum_i F_i^G}{\sum_i I_i},\qquad
+\rho_S=\frac{\sum_i F_i^G}{\sum_i S_i}.
+\label{eq:conditional-agreement}
+\end{equation}
+These fractions describe agreement among a method's ready outputs; a zero denominator would be unavailable. They are not semantic precision estimates. Their denominators are method-dependent subsets of the same exposed benchmark. We add no independence-based uncertainty interval or new hypothesis test for these descriptive summaries.
+
+\section{Methods and Experimental Setup}
+\label{sec:methodology}\label{sec:method}
+\subsection{RQ1: Retrieval Protocol}
+\label{subsec:method_retrieval}\label{subsec:exp_setup}
+We use the 331 historically designated test queries of NLP4LP \cite{nlp4lp_dataset,ahmaditeshnizi2024optimus_icml}, with one target schema each in the fixed 335-document catalog described in Section~\ref{subsec:assistance-setting}. The variants are \emph{orig} (full text), \emph{noisy} (controlled lexical corruption and numeric masking) and \emph{short} (first sentence). Repeated development use prevents treating the split name as evidence of an untouched test set.
+
+BM25, TF--IDF cosine retrieval, latent semantic analysis (LSA) and off-the-shelf BGE-M3 supply the retrieval comparisons \cite{robertson2009bm25,pedregosa2011sklearn,deerwester1990lsa,chen2024m3embedding}; Table~\ref{S-tab:retrieval_backbones} summarizes their representations. Classical indexes fit the catalog without query-label supervision. Only the top-1 schema enters grounding. Uniform random retrieval supplies the theoretical reference $1/335\approx0.0030$. Oracle selection substitutes the target schema as a control, not a guaranteed upper bound on other grounders. BGE reporting metadata specifies float32, L2-normalized 1024-dimensional embeddings and cosine similarity, but does not authenticate the executed device or complete environment. Dataset tooling uses Hugging Face \texttt{datasets} \cite{lhoest2021datasets}.
+
+\subsection{RQ2: Grounding and Endpoint Diagnosis}
+\label{subsec:method_instantiation}\label{subsec:method_design}
+The rule-based extractor recognizes integers, decimals, written numbers, fractions, percentages, currency-like forms and comma-separated magnitudes; ratio-aware extraction adds supported multiplicative words such as ``twice'' and ``triple''. Masked tokens remain numerically unknown. Surface cues assign percent, integer, currency or float types; parameter-name heuristics assign expected slot types. Eligible slots follow Eq.~\eqref{eq:eligible_slots} and compatibility follows Section~\ref{subsec:metrics}.
+
+Typed greedy follows the run's slot order and assigns an unused indexed mention:
+\begin{equation}
+\tau_j^*=\arg\max_{t\in\mathcal T\setminus\mathcal U_{j-1}}\mathrm{compat}(p_j,t).
+\label{eq:typed_assignment}
+\end{equation}
+The compatibility rule ranks mentions by coarse-type preference, absolute magnitude and raw surface text, retaining source order for remaining ties. Mention indices are not reused; equal values at distinct occurrences remain distinct candidates. Slot iteration follows Python set order, so replay requires its historical interpreter/hash configuration. Optional lexical role cues are absent from the headline configurations. Algorithm~\ref{alg:instantiation} and Figure~\ref{fig:instantiation-pipeline} show this protocol.
+
+\begin{algorithm*}[t]
+\caption{Deterministic parameter instantiation: extract and type mentions; intersect predicted parameter keys with gold scalar keys; assign without token reuse under a deterministic compatibility rule.}
+\label{alg:instantiation}
+\small
+\begin{algorithmic}[1]
+\Require Query text $q$, predicted schema $\hat{s}$, gold scalar keys $K_G(q)$
+\Ensure Slot--value mapping $A$
+\State Extract numeric mentions $\mathcal{T}$ from $q$
+\State Infer a coarse type for each mention in $\mathcal{T}$
+\State Obtain parameter keys from schema $\hat{s}$
+\State Set $\mathcal{P}=P_{\mathrm{all}}(\hat{s})\cap K_G(q)$; use the run's set iteration order
+\State Infer an expected type for each slot in $\mathcal{P}$
+\State Initialize assignments $A \leftarrow \emptyset$ and used-mention set $\mathcal{U}\leftarrow \emptyset$
+\For{each slot $p_j \in \mathcal{P}$}
+    \State Define candidate set $\mathcal{C}_j \leftarrow \mathcal{T} \setminus \mathcal{U}$
+    \If{$\mathcal{C}_j = \emptyset$}
+        \State \textbf{continue}
+    \EndIf
+    \State Score mentions in $\mathcal{C}_j$ using a deterministic slot--mention compatibility rule
+    \State Select the highest-ranked mention $\tau_j^{*}$
+    \State Assign $A[p_j] \leftarrow \mathrm{value}(\tau_j^{*})$ if numeric; otherwise retain its raw unknown token
+    \State Update $\mathcal{U} \leftarrow \mathcal{U} \cup \{\tau_j^{*}\}$
+\EndFor
+\State \Return $A$
+\end{algorithmic}
+\end{algorithm*}
+
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=0.78\textwidth]{Fig1.pdf}
+  \caption{Schema-conditioned deterministic parameter instantiation. The query supplies typed numeric mentions. All predicted-schema metadata keys, with reference-key fallback, are intersected with gold scalar keys to form participating slots; this benchmark assistance is explicit. Assignment consumes mention indices, not unique numerical values. The diagram describes the historical typed-greedy protocol; the later metadata-only factorial protocol uses a different inventory}
+  \label{fig:instantiation-pipeline}
+\end{figure*}
+
+The four headline arms are TF--IDF with baseline extraction, TF--IDF with ratio-aware extraction, BGE-M3 with ratio-aware grounding, and Oracle typed greedy. Their saved query metrics support the endpoints and ordered residual partition. The two ratio-aware retrieval arms use the same grounding implementation, but their frozen assignments differ even on shared hits; we do not assign every observed numerical difference to retrieval. Core endpoints require no solver execution. Independent row-indicator and decimal set-intersection calculations verify the new readiness-conditioned fractions from authenticated records.
+
+\subsection{RQ3: Whole-Procedure and Frozen-Score Comparisons}
+\label{subsec:method_controls}
+Six existing procedures share all 331 original queries and TF--IDF retrieval: typed greedy, constrained assignment, maximum-weight matching, optimization-role repair, search-structured grounding and semantic intermediate-representation (IR) repair. Candidates, context, scoring, abstention and decoding can differ. Typed greedy and constrained assignment both prevent mention reuse and share ratio-aware patterns, but use different token/mention constructors; the other procedures retain their intrinsic enriched extractors. Methods were selected before computing this matched comparison, without additional tuning against its labels, but earlier benchmark exposure remains. This is a comparison of complete procedures, not a decoder ablation.
+
+The separate factorial fixes candidates and edge-score matrices within each decoder pair. Its design crosses two candidate constructors, three scorers, two decoders and two mention-reuse policies: 24 cells on 49 primary queries and 277 scalar slots. Canonical lexical slot order and a zero-score null option are shared within a pair. The ordinal type-preference control is an explicit cardinalization, not a reconstruction of every historical greedy decision. Contextual scores and a version without percent/currency marker bonuses supply the other scorers. Under unrestricted reuse with additive scores, independent per-slot maximization already solves the stated objective; one-to-one matching is a diagnostic restriction rather than a law of formulation.
+
+The original collection has 64 cases: 49 primary, 12 development, one overlap-reconciliation and two reference-only. Query 291 is excluded from the primary slice because its delexicalized group crosses an earlier training/development boundary; this exclusion does not establish independence from prior exposure. The earlier 50-query/280-slot joint pilot and its overlap-free 49-query slice are kept distinct. Their saved beam, exact-objective and value/type-distinct enumeration records diagnose availability, retention and selection without new decoding or solving. Online Resource 1, Sections~\ref{S-app:factorial-details}--\ref{S-app:reproduction}, documents all populations and controls.
+
+\subsection{Retrospective Statistics and Evidence Integrity}
+\label{subsec:exp_significance}
+All statistical inference is retrospective. The primary 331-query comparisons use 327 frozen delexicalized text groups, marginal 95\% group-percentile bootstrap intervals ($B=10{,}000$, NumPy seed 42), exact groupwise method-swap tests and Holm adjustment over 16 retrieval/readiness contrasts \cite{holm1979followup}. Supplementary Table~\ref{S-tab:nlp4lp-significance} preserves five displayed contrasts; the complete family also includes BGE--TF--IDF retrieval and ten readiness comparisons with grounding alternatives. Exact query-level McNemar checks remain in the release, without replacing the group tests.
+
+The factorial study uses a separate 240-test family over one-factor contrasts and four endpoints. Its historical exploratory bootstrap uses Python's seeded generator, $B=2000$, seed 42 and the retained order-statistic interval procedure, rather than the primary NumPy procedure. Grouping and multiplicity adjustment do not remove benchmark exposure or make the marginal intervals simultaneous.
+
+The immutable evidence release authenticates all inputs used here. Headline CSVs preserve query metrics but not original scalar mappings; later cached assignment controls preserve choices. We reaggregate their respective observations and never substitute a newer prediction for a missing historical one. Section~\ref{subsec:reanalysis} and Online Resource 1, Section~\ref{S-app:reproduction}, distinguish public reanalysis from unavailable historical reproduction.
+
+\section{Results Organized by Research Question}
+\label{sec:experiments}
+\subsection{RQ1: Fixed-Catalog Schema Retrieval}
+\label{subsec:exp_retrieval}
+BGE-M3 identifies the target on $313/331$ original queries ($94.56\%$), compared with TF--IDF's $301/331$ ($90.94\%$). The paired discordances are 15 BGE-only and three TF--IDF-only hits; the retrospective exact test gives $p=0.0075$ and Holm-adjusted $p=0.0302$ within the 16-test family. Noisy-query rates remain close to their original counterparts, whereas first-sentence truncation reduces every method's retrieval rate (Table~\ref{tab:nlp4lp-retrieval-main}). Means across variants, computed before rounding, are $0.9013$, $0.8640$, $0.8469$ and $0.8328$ for BGE-M3, TF--IDF, BM25 and LSA. RQ1 therefore establishes strong target identification within this catalog; it does not test new-schema discovery.
+
+\begin{table}[t]
+  \centering
+  \renewcommand{\arraystretch}{1.18}
+  \caption{Schema retrieval accuracy across query variants, reported as \textit{Schema R@1}. Each nonrandom value is reconstructed from saved top-1 schema IDs over all 331 test queries in the corresponding variant. The random baseline is the theoretical top-1 chance rate under uniform schema selection over the 335 candidate schemas, i.e., $1/335 \approx 0.0030$. Best result in each column is shown in bold.}
+  \label{tab:nlp4lp-retrieval-main}
+  \small
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{lcccc}
+    \toprule
+    Baseline & Orig & Noisy & Short & Avg. \\
+    \midrule
+    Random  & 0.0030 & 0.0030 & 0.0030 & 0.0030 \\
+    LSA     & 0.8459 & 0.8882 & 0.7644 & 0.8328 \\
+    BM25    & 0.8822 & 0.8912 & 0.7674 & 0.8469 \\
+    TF--IDF & 0.9094 & 0.9033 & 0.7795 & 0.8640 \\
+    BGE-M3 & \textbf{0.9456} & \textbf{0.9426} & \textbf{0.8157} & \textbf{0.9013} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{RQ2: What Readiness Conceals}
+\label{subsec:exp_downstream}
+Ratio-aware TF--IDF passes ordinary readiness on 265 queries ($80.06\%$ of 331) and Strict readiness on 255, including ten wrong-schema outputs in the ordinary-ready set. Only seven satisfy complete scalar tolerance ($2.11\%$ of 331). BGE-M3 and Oracle likewise have $273/331$ and $281/331$ ordinary-ready cases, but only $3/331$ and $8/331$ complete successes. Table~\ref{tab:nlp4lp-downstream-main} retains the separate metric levels. Exact20 remains conditional on comparable schema hits; its larger TF--IDF value is not an unconditional superiority result.
+
+\begin{table*}[t]
+  \centering
+  \renewcommand{\arraystretch}{1.18}
+  \caption{Main downstream diagnostics on the original queries, computed from frozen evaluation records. InstReady (ordinary readiness) and Strict (schema-gated readiness) measure structural readiness without checking numerical values. \textit{Coverage}, \textit{TypeMatch}, \textit{InstantiationReady}, and \textit{StrictInstantiationReady} use the full 331-query denominator. \textit{Exact20} (on hits) is conditional on schema-hit cases with comparable predicted and gold numeric values. Best non-oracle result in each column is shown in bold.}
+  \label{tab:nlp4lp-downstream-main}
+  \small
+  \setlength{\tabcolsep}{3.2pt}
+  \renewcommand{\arraystretch}{1.12}
+  \begin{tabular}{@{}lccccc@{}}
+    \toprule
+    Method & Coverage & TypeMatch & Exact20 & InstReady & Strict \\
+    \midrule
+% BEGIN GENERATED metric_audit_main_rows.tex
+TF--IDF-TG (baseline extr.) & 0.8794 & 0.8515 & 0.2449 & 0.7764 & 0.7462 \\
+TF--IDF-TG (ratio-aware extr.) & 0.8886 & 0.8665 & \textbf{0.2614} & 0.8006 & 0.7704 \\
+BGE-M3 + ratio-aware & \textbf{0.9154} & \textbf{0.8946} & 0.2436 & \textbf{0.8248} & \textbf{0.8006} \\
+Oracle-TG & 0.9416 & 0.9230 & 0.2505 & 0.8489 & 0.8489 \\
+% END GENERATED metric_audit_main_rows.tex
+    \bottomrule
+  \end{tabular}
+
+  \vspace{2mm}
+  \raggedright
+  \small
+  TF--IDF-TG denotes typed-greedy grounding; Oracle-TG uses the reference schema. Exact20 macro-averages the per-query slot fractions in Eq.~\eqref{eq:exact20} over 291, 291, 303 and 320 comparable schema-hit queries, respectively; noncomparable cases are excluded. All cells aggregate saved query metrics, not retained scalar mappings.
+\end{table*}
+
+The readiness-conditioned summary makes the discrepancy explicit (Table~\ref{tab:ready-conditioned}). Of the 265 ordinary-ready ratio-aware outputs, $7/265=2.64\%$ satisfy $F^G$, leaving $258/265=97.36\%$ that do not. Adding the schema gate changes the conditional fraction only to $7/255=2.75\%$: 248 Strict-ready outputs still fail complete agreement. These are direct intersections of saved query-level gates, independently checked against their subset relations, not new experiments. The method-dependent denominators share the exposed benchmark and cannot be treated as independent samples or compared as semantic precision.
+
+\begin{table}[t]\centering\small
+\caption{Complete stored-reference scalar agreement among ready outputs (Eq.~\eqref{eq:conditional-agreement}). Each fraction states its numerator and conditional query denominator; percentages are descriptive. All four configurations start from the same 331-query frame.}
+\label{tab:ready-conditioned}
+\setlength{\tabcolsep}{2.2pt}
+\begin{tabular}{@{}lrrrr@{}}\toprule
+Method & $|F^G|/|I|$ & \% & $|F^G|/|S|$ & \%\\\midrule
+% BEGIN DERIVED READY CONDITIONED ROWS
+TF--IDF base & 6/257 & 2.33 & 6/247 & 2.43 \\
+TF--IDF ratio & 7/265 & 2.64 & 7/255 & 2.75 \\
+BGE-M3 & 3/273 & 1.10 & 3/265 & 1.13 \\
+Oracle & 8/281 & 2.85 & 8/281 & 2.85 \\
+% END DERIVED READY CONDITIONED ROWS
+\bottomrule\end{tabular}
+\end{table}
+
+\subsubsection{Mutually Exclusive Residual Failures}
+\label{subsec:exp_error}
+Table~\ref{tab:nlp4lp-error-taxonomy} partitions all 331 cases in order: schema miss, incomplete eligible coverage, incompatible types, stored-value disagreement and scalar-tolerance success. Here full coverage and type checks require $c_i=t_i=1$, stronger than readiness's 0.8 thresholds. Missing comparable numerical evidence cannot pass. Every successful case in these four arms also covers all required reference scalar keys; Section~\ref{subsec:exp_grounding_baselines} identifies the eligible-only exception in another method.
+
+For ratio-aware TF--IDF the partition is $30+31+49+214+7=331$. Value disagreement accounts for $214/331=64.65\%$ of all queries and $214/221=96.83\%$ of those passing the schema/full-coverage/full-type gates. The corresponding conditional failures are $228/231=98.70\%$ for BGE-M3 and $239/247=96.76\%$ for Oracle. Their gate-passing populations differ. RQ2 thus identifies numerical agreement as the dominant residual boundary in these records, without assigning each mismatch a linguistic cause.
+
+The BGE and ratio-aware TF--IDF arms share 298 schema hits but differ in Exact20 on 162 of them. Only TF--IDF records its hash seed; absent BGE runtime details and original scalar maps prevent attributing these differences to retrieval alone. The ratio-word ablation is better delimited: Strict readiness improves by eight cases with no losses ($247\to255$), while complete scalar success changes from six to seven; the exact paired/group $p=0.0078125$, adjusted to $0.0302$. Supporting ablation and schema-gate tables remain in Online Resource 1, Section~\ref{S-app:core-support}.
+
+\begin{table*}[t]
+  \centering
+  \renewcommand{\arraystretch}{1.18}
+  \caption{Mutually exclusive residual partition reconstructed from saved query metrics on all 331 original queries per configuration. Categories apply in the stated order; full coverage and types mean $c_i=t_i=1$. Full scalar agreement requires all eligible scalar values within the inclusive tolerance of Eq.~\eqref{eq:bounded_error}, and does not certify complete model correctness. TF--IDF columns differ only in extraction; numerical differences involving BGE-M3 are descriptive (see text).}
+  \label{tab:nlp4lp-error-taxonomy}
+  \small
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{lrrrr}
+    \toprule
+    Category & TF--IDF base & TF--IDF ratio & BGE-M3 & Oracle \\
+    \midrule
+    % BEGIN GENERATED metric_audit_residual_rows.tex
+Wrong schema & 30 & 30 & 18 & 0 \\
+Incomplete coverage & 48 & 31 & 33 & 35 \\
+Type mismatch & 61 & 49 & 49 & 49 \\
+Value inaccurate & 186 & 214 & 228 & 239 \\
+Full scalar agreement & 6 & 7 & 3 & 8 \\
+Total & 331 & 331 & 331 & 331 \\
+% END GENERATED metric_audit_residual_rows.tex
+    \bottomrule
+  \end{tabular}
+\end{table*}
+
+\subsection{RQ3: Grounding Mechanisms and Their Identifiable Effects}
+\label{subsec:exp_grounding_baselines}
+With queries and TF--IDF retrieval fixed, the six grounding procedures yield $7$, $40$, $37$, $35$, $46$ and $9$ complete all-key successes out of 331 (Table~\ref{tab:nlp4lp-grounding-baselines}). Search-structured grounding reaches the largest count, $46/331=13.90\%$, but most queries still fail. Constrained assignment gains 36 complete successes and loses three relative to typed greedy. Its historical eligible-only count is 41; query 102 fills three of seven required keys and is excluded from the all-key count of 40.
+
+Typed greedy instead has the highest ordinary and Strict readiness rates, $0.8006$ and $0.7704$; all five alternatives are lower, with Holm-adjusted $p\leq0.0059$ for the ten readiness contrasts. Conditional Exact20 can improve as coverage falls because incomparable/abstained slots leave its denominator. The all-key endpoint prevents that omission from becoming a complete success. Its descriptive ordering is not a multiplicity-adjusted superiority claim. Since candidates, scoring, abstention and decoding change together, these observations establish a procedure-level trade-off, not an isolated benefit of global search.
+
+\begin{table*}[t]
+  \centering
+  \renewcommand{\arraystretch}{1.18}
+  \caption{Matched same-task grounding baselines from saved metrics on the $331$ original queries with TF--IDF retrieval held fixed. Queries and retrieval are fixed under the gold-assisted inventory rule; candidate construction, context, scoring, abstention and decoding can differ. Best InstantiationReady / StrictInstantiationReady values are shown in bold. Full$_G$ requires the correct schema, all gold scalar keys, compatible types and complete stored-reference scalar tolerance; its denominator is 331 for every row.}
+  \label{tab:nlp4lp-grounding-baselines}
+  \small
+  \setlength{\tabcolsep}{2.2pt}
+  \renewcommand{\arraystretch}{1.12}
+  \begin{tabular}{@{}lcccccc@{}}
+    \toprule
+    Grounding method & Coverage & TypeMatch & Exact20 & InstReady & Strict & Full$_G$ \\
+    \midrule
+    Typed greedy (reference) & 0.8886 & 0.8665 & 0.2614 & \textbf{0.8006} & \textbf{0.7704} & 7/331 \\
+    Constrained assignment & 0.8531 & 0.8745 & 0.5772 & 0.7613 & 0.7311 & 40/331 \\
+    Max-weight matching & 0.8436 & 0.8740 & 0.5225 & 0.7432 & 0.7130 & 37/331 \\
+    Optimization-role repair & 0.8436 & 0.8724 & 0.5210 & 0.7372 & 0.7069 & 35/331 \\
+    Search-structured grounding & 0.8195 & 0.8795 & 0.6397 & 0.7039 & 0.6737 & 46/331 \\
+    Semantic-IR repair & 0.8131 & 0.8483 & 0.4949 & 0.7160 & 0.6949 & 9/331 \\
+    \bottomrule
+  \end{tabular}
+
+  \vspace{2mm}
+  \raggedright
+  \small
+  IR denotes intermediate representation. Typed greedy and constrained assignment share ratio-aware patterns but use different token/mention constructors and context. Their comparison changes scoring, abstention and decoding together; it does not isolate global search. The other rows use intrinsic enriched extractors as part of their grounding definitions. \textit{Exact20 (on hits)} denominators are 291 comparable schema-hit queries for all rows except semantic-IR repair (285), under the same exclude-noncomparable convention as Table~\ref{tab:nlp4lp-downstream-main}.
+\end{table*}
+
+\subsubsection{Frozen-Score Assignment on 49 Queries}
+\label{subsec:grounding-followup}
+Table~\ref{tab:grounding-factorial-diagnostic} moves to the narrower 49-query/277-slot population defined in Section~\ref{subsec:method_controls}. Under contextual scores and one-to-one assignment, greedy-to-exact decoding raises exact slot counts from 106 to 136 for typed candidates and from 100 to 133 for rich candidates. Full-tolerance success remains $5/49$, with one gained and one lost query. The corresponding historical exact-slot bootstrap intervals are $[3.14,17.95]$ and $[4.07,18.84]$ percentage points; the full-tolerance difference interval is $[-6.12,6.12]$. Neither contextual decoder contrast survives the separate 240-test Holm family (adjusted $p=1$).
+
+\begin{table*}[t]
+\centering
+\caption{One-to-one factorial controls on the same 49 queries and 277 gold
+scalar slots. Entries show greedy $\rightarrow$ exact maximum-sum assignment.
+E/T denote numerical exact/tolerance-correct counts. Full instances also
+require compatible types and every gold scalar key. These controls are
+distinct from the historical 331-query configurations.}
+\label{tab:grounding-factorial-diagnostic}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}llcccc@{}}
+\toprule
+Pool & Scorer & E slots & T slots & E full & T full\\
+\midrule
+Typed & Ordinal & $71\to71$ & $87\to86$ & $3\to3$ & $3\to3$\\
+Typed & Context & $106\to136$ & $117\to145$ & $3\to4$ & $5\to5$\\
+Typed & No marker bonus & $97\to137$ & $111\to146$ & $3\to4$ & $5\to5$\\
+Rich & Ordinal & $67\to67$ & $81\to81$ & $3\to3$ & $3\to3$\\
+Rich & Context & $100\to133$ & $111\to142$ & $3\to4$ & $5\to5$\\
+Rich & No marker bonus & $97\to135$ & $111\to144$ & $3\to4$ & $5\to5$\\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+All reusable-mention additive-score decoder pairs agree, as the separable objective predicts. Some contextual-versus-ordinal slot contrasts survive multiplicity adjustment, but no whole-instance endpoint does. These results isolate conditional assignment differences; they neither establish whole-instance equivalence nor explain all 33 additional historical constrained successes on the 331-query frame. Recorded sub-millisecond cell times include instrumentation and do not support controlled speed comparisons.
+
+\subsubsection{Candidate Availability, Scoring and Search Retention}
+The earlier 50-query joint pilot admits a criterion-correct mapping in 32 common pools, retains one in eight beam top-ten lists, and selects one in three. Exact-objective diagnosis distinguishes 23 strictly preferred incorrect optima, six correct/incorrect ties and three selected correct optima among those 32. Thus candidate availability alone does not ensure retention or favorable ranking. The explicit-constraint variant activated no supported parameter-only relations; its unchanged result is a no-op, not evidence against useful constraints.
+
+On the overlap-free 49-query slice, the strongest local and joint selection both retain three full-tolerance successes. Value/type-distinct exact enumeration leaves list retention at $9/49$ and selected success at $3/49$, with zero gained or lost cases. These preserved negative findings limit what additional search achieves for the frozen objectives. RQ3's answer is therefore conditional: improving candidate coverage or slot assignment need not improve whole-instance agreement, and more exhaustive search cannot overturn an objective that strictly prefers an incorrect mapping. Full pruning-stage counts, oracle restrictions and all 24 cells remain in Online Resource 1, Section~\ref{S-app:factorial-details}.
+
+\section{Discussion}
+\label{sec:discussion}
+\subsection{Interpreting RQ1--RQ3 Together}
+RQ1 establishes that target-schema identification is comparatively strong in the specified catalog, while RQ2 shows that this success does not carry through to complete scalar agreement. Readiness measures whether enough eligible slots receive type-compatible values. The residual partition asks where stricter checks first fail, and readiness-conditioned agreement asks what a positive readiness decision actually accompanies. Together these summaries expose the numerical gap without mistaking stage-of-failure accounting for adjudicated semantic causes.
+
+RQ3 shows why optimizing a single intermediate score is insufficient. Whole grounding procedures can increase complete agreement while lowering readiness; abstention and conditional Exact20 denominators make their trade-offs especially important. Only fixed-candidate, fixed-score comparisons isolate decoder behavior. The 49-query controls show slot-level improvements without a net whole-instance gain, and the exact-objective diagnostics distinguish pruning failures from scores that prefer incorrect mappings. These finite observations do not establish that global search, learned representations or mathematical constraints are generally ineffective.
+
+The methodological recommendation is to report the endpoint sequence jointly, state the supplied information and conditional populations, and reserve causal attribution for controls that actually hold other components fixed. This complements Text2Opt-Bench's modeling--binding analysis \cite{gao2026models}; it adds neither a new matching algorithm nor evidence that numerical binding failures were first identified here. For practical systems, provenance-bearing bindings and explicit abstention are plausible review aids, but their deployment effectiveness remains unmeasured.
+
+\subsection{Where Numerical Diagnostics Stop}
+\label{sec:llm}\label{subsec:numerical-grounding-challenges}
+Stored-reference agreement is narrower than semantic fidelity: equal values can arise from different occurrences, and the historical tolerance can accept materially different small proportions. Formulation equivalence additionally concerns variable mappings, feasible sets and objectives \cite{zhai2025equivamap}. The complementary studies illustrate these boundaries without becoming a fourth central research question.
+
+\label{subsec:relationship-audit}
+The 217-relationship study covers three services and 16 selected NL4Opt source problems. Historical repair/recovery yields $631/651$ structurally valid judgments and 197 complete cases with Fleiss' $\kappa=0.371$. The complete cases comprise 119 determinate unanimous cases, 77 disputed cases and one unresolved case. These categories describe agreement, not which service is correct. There are no independently accepted human labels; recovery conditions and complete-case membership change. Online Resource 1, Section~\ref{S-app:relationship-evidence}, retains the full validity and agreement accounting.
+
+\label{subsec:d1}
+The 12 D1 pairs comprise 24 author/AI-assisted samples across eight categories: ten meaning-changing pairs and two paraphrases. They illustrate bounds, units, roles and logical relations that numerical overlap cannot settle. They supply neither provider predictions nor independently blinded reference labels and do not explain measured pipeline error frequencies. All final decisions and annotation dependencies remain in Online Resource 1, Section~\ref{S-app:d1-details}.
+
+
+The common-18 formulation comparison, OptMATH extraction check and historical 60/269/20-case proxy and execution studies answer different questions and are preserved primarily in Online Resource 1, Sections~\ref{S-app:common18}, \ref{S-app:extraction-details} and~\ref{S-app:restricted-details}. Heterogeneous generation protocols prevent a common leaderboard; PaMOP objective agreement remains withheld because numerical precision is unresolved. Extraction recall is not full-framework transfer, and the subset proxies do not establish numerical correctness. Their positive and negative findings, single-run timing and auxiliary learning histories remain available without carrying the core conclusions.
+
+\subsection{Limitations and Threats to Validity}
+\label{subsec:limitations}
+\emph{Task and reference validity.} Section~\ref{subsec:assistance-setting} defines the exposed, known-catalog and reference-assisted task. Its scores do not identify autonomous performance. The scalar endpoint excludes structured parameters and model equivalence; metadata defects can omit keys (query 102 exposes three of seven; query 293 has no eligible slots). The supplementary reference overlay is not maintainer-certified gold, and the absolute $0.20$ tolerance below unit magnitude remains permissive. Section~\ref{S-app:reference-conventions} documents source-based corrections without rewriting historical predictions.
+
+\emph{Sampling and dependence.} One benchmark and its reused templates dominate the evidence. Grouping and the query-291 exclusion address known dependence without creating unseen templates. The medium-overlap stratum has only four queries. Historical learned scorers used evaluation-origin splits with confirmed group crossings; statistical families were specified retrospectively. Selected proxy, common-18 and relationship populations do not support population-wide rankings. The semantic evidence boundaries above preclude treating model agreement or assisted author labels as independent truth.
+
+\emph{Historical reconstruction.} Original headline scalar maps, complete 60/269/20 subset manifests/outcomes, full historical ranked lists, some rendered prompts and provider settings were not recovered. BGE-M3 lacks an authenticated hash seed, device and environment; PaMOP lacks sufficient full-precision returns; corrected OptMATH per-instance bootstrap counts are missing. Later caches cannot replace those observations. The independent reanalysis claim is bounded by the released records, as specified below.
+
+\subsection{Reanalysis, Availability and Future Validation}
+\label{subsec:reanalysis}\label{subsec:future_work}\label{subsec:closed-audits}
+The public \href{https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0}{\texttt{jdsa-evidence-v2.0.0}} package supports deterministic saved-record aggregation, grouped statistical checks and sanitized ledger/projection analysis. Its exact Hugging Face revision and source hashes are given in Online Resource 1, Section~\ref{S-app:reproduction}. Raw source-dependent checks that passed locally cannot be repeated from projections alone. Complete local M5 originals, private reviews and gated or permission-unclear third-party content are not public; historical v1.2 remains a separate frozen release.
+
+The G1--G3 feasibility audits found no validated autonomous inventory path or informative native fixed-slot filter-removal comparison; their static participation accounting is preserved in Online Resource 1, Section~\ref{S-app:g3}. They are not measured zero effects. Informative future studies need autonomous inventory discovery, retained occurrence-level predictions, independently reviewed templates and full-precision execution records. A separate independent relationship-review protocol remains incomplete (Section~\ref{S-app:future-reference}); D1 does not complete it. These are requirements for stronger validation, not experiments performed here.
+
+\section{Conclusion}
+\label{sec:conclusion}
+The three research questions support a focused diagnostic conclusion. Fixed-catalog retrieval identifies the target schema for 301 and 313 of 331 queries with TF--IDF and BGE-M3, respectively (RQ1). Yet ratio-aware TF--IDF achieves complete stored-reference scalar agreement on only seven of its 265 ready outputs; the ordered residual partition locates the dominant remaining boundary at numerical values (RQ2). Matched methods reach 46 complete successes, but multiple components change; frozen-score controls improve slot counts without increasing the five full-tolerance successes on their distinct 49-query population (RQ3).
+
+Joint reporting of retrieval, readiness and complete scalar agreement therefore provides a more informative diagnosis than any one score. The conclusions remain conditional on supplied structure, exposed populations and archived observations. Public saved-record reanalysis makes those measurements inspectable while preserving missing-evidence and semantic-validation limits; it does not turn them into autonomous formulation accuracy or independently established semantic truth.
+\backmatter
+
+\bmhead{Supplementary information}
+Online Resource 1 contains secondary results, statistical and recovery protocols, evidence provenance and the twelve semantic contrast pairs. Its section, table and equation numbers carry an S prefix.
+
+
+\section*{Statements and Declarations}
+
+\noindent\textbf{Funding.} This research did not receive any specific grant from funding agencies in the public, commercial, or not-for-profit sectors. The external large-language-model baseline experiments used Microsoft Azure OpenAI services; associated usage was supported by the standard Azure for Students educational credit available to the author. NJIT/Wulver infrastructure access and complimentary Secure ShellFish access were institutional and in-kind assistance. The archived relationship-labeling runs identify providers but do not establish which research-credit awards paid for their use.
+
+\noindent\textbf{Competing interests.} The author declares that there are no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
+
+\noindent\textbf{Ethics approval and consent to participate.} Not applicable; this study did not involve human participants, human data, or animals. No independently accepted human reference-annotation study was completed for the 217 relationships. D1 comprises author-reviewed synthetic contrasts with language-model assistance, rather than participant data; the separate independent validation protocol remains incomplete.
+
+\noindent\textbf{Consent for publication.} Not applicable; this study did not involve participant data.
+
+\noindent\textbf{Author contributions.} Soroush Vahidi: Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data curation, Writing -- original draft, Writing -- review \& editing, Visualization. This single-author paper uses the standard CRediT taxonomy to describe the contributions of the sole author.
+
+\noindent\textbf{Data availability.} The \href{https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0}{versioned JDSA evidence release} publishes sanitized metrics, assignment score/choice projections, relationship label/validity ledgers, common-18 numerical outcomes and author/AI-assisted D1 cases. Historical v1.2 is preserved separately at revision \path{24a047fa5d661be6cfcf75980ac8f62e6c942243}. Author-owned evidence is CC BY-NC-SA 4.0 without relicensing third-party material. Complete M5 originals, raw provider prose and private reviews remain local. NLP4LP requires separate gated access; OptMATH source licensing and provider-specific raw-output redistribution permissions remain unresolved. The package supplies upstream-access instructions, not those source corpora.
+
+\noindent\textbf{Code availability.} The immutable \href{https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0}{GitHub evidence release} contains MIT-licensed verification code, manifests and pinned reanalysis dependencies. Revised manuscript sources and the versioned claim-location crosswalk are on the \href{https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/manuscript/jdsa-stage3-final-editorial-20261029/manuscript/jdsa-stage3}{final manuscript branch}; they do not overwrite the release. The numerical-summary derivation is recorded separately from its authenticated inputs.
+
+\noindent\textbf{Reproducibility.} The public package reproduces supported saved-record calculations, not the original inference experiments. Sanitized relationship and common-18 projections support ledger/numerical reanalysis but omit raw responses, programs and source witnesses needed for full validation. Missing observations and runtime details are listed in Section~\ref{subsec:limitations}; no newly generated output substitutes for them. All restructuring calculations use authenticated records without model inference or solver experiments. Online Resource 1, Section~\ref{S-app:reproduction}, gives exact revisions, commands and evidence classifications.
+
+\noindent\textbf{Declaration of generative AI and AI-assisted technologies in the writing process.} The author used ChatGPT and Gemini to improve readability and language. OpenAI Codex assisted manuscript editing, evidence organization and deterministic validation. The author reviewed and edited the original work and remains responsible for its content.
+
+\noindent\textbf{Declaration of AI assistance in software development.} The author used Claude, Cursor and GitHub Copilot for coding assistance and reviewed, verified, tested and edited the resulting code. OpenAI Codex later assisted code corrections and offline verification scripts. The author retains responsibility for the implementation and reported results. Scientific large language model (LLM) calls are identified separately; the evaluated scalar-grounding procedure uses no generative LLM inference.
+
+\bibliography{references}
+
+\end{document}

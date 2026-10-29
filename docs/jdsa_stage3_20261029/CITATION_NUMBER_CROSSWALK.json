@@ -1,0 +1,256 @@
+[
+  {
+    "document": "main",
+    "stage2_pdf_authenticated": true,
+    "citations": [
+      {
+        "key": "nlp4lp_dataset",
+        "stage2_number": 1,
+        "stage3_number": 1
+      },
+      {
+        "key": "ahmaditeshnizi2024optimus_icml",
+        "stage2_number": 2,
+        "stage3_number": 2
+      },
+      {
+        "key": "ahmed2025opt2code",
+        "stage2_number": 3,
+        "stage3_number": 3
+      },
+      {
+        "key": "almasian2023cqe",
+        "stage2_number": 4,
+        "stage3_number": 4
+      },
+      {
+        "key": "chen2024m3embedding",
+        "stage2_number": 5,
+        "stage3_number": 5
+      },
+      {
+        "key": "deerwester1990lsa",
+        "stage2_number": 6,
+        "stage3_number": 6
+      },
+      {
+        "key": "deng2021strug",
+        "stage2_number": 7,
+        "stage3_number": 7
+      },
+      {
+        "key": "gao2026models",
+        "stage2_number": 8,
+        "stage3_number": 8
+      },
+      {
+        "key": "holm1979followup",
+        "stage2_number": 9,
+        "stage3_number": 9
+      },
+      {
+        "key": "huang2025orlm",
+        "stage2_number": 10,
+        "stage3_number": 10
+      },
+      {
+        "key": "kadioglu2024ner4opt",
+        "stage2_number": 11,
+        "stage3_number": 11
+      },
+      {
+        "key": "kuhn1955assignment",
+        "stage2_number": 12,
+        "stage3_number": 12
+      },
+      {
+        "key": "lhoest2021datasets",
+        "stage2_number": 13,
+        "stage3_number": 13
+      },
+      {
+        "key": "lu2025optmath",
+        "stage2_number": 14,
+        "stage3_number": 14
+      },
+      {
+        "key": "pan2025pamop",
+        "stage2_number": 15,
+        "stage3_number": 15
+      },
+      {
+        "key": "pedregosa2011sklearn",
+        "stage2_number": 16,
+        "stage3_number": 16
+      },
+      {
+        "key": "punyakanok2004ilp",
+        "stage2_number": 17,
+        "stage3_number": 17
+      },
+      {
+        "key": "ramamonjison2022autoformulation",
+        "stage2_number": 18,
+        "stage3_number": 18
+      },
+      {
+        "key": "ramamonjison2023nl4opt",
+        "stage2_number": 19,
+        "stage3_number": 19
+      },
+      {
+        "key": "robertson2009bm25",
+        "stage2_number": 20,
+        "stage3_number": 20
+      },
+      {
+        "key": "roy2017udg",
+        "stage2_number": 21,
+        "stage3_number": 21
+      },
+      {
+        "key": "scholak2021picard",
+        "stage2_number": 22,
+        "stage3_number": 22
+      },
+      {
+        "key": "wang2020ratsql",
+        "stage2_number": 23,
+        "stage3_number": 23
+      },
+      {
+        "key": "xiao2026deepor",
+        "stage2_number": 24,
+        "stage3_number": 24
+      },
+      {
+        "key": "zhai2025equivamap",
+        "stage2_number": 25,
+        "stage3_number": 25
+      }
+    ],
+    "stage3_final_bbl_sha256": "3b2c372620b7c5adf650177e4b6b0f65eb8f8045996c8db60cf010a5a73c5811"
+  },
+  {
+    "document": "supplement",
+    "stage2_pdf_authenticated": true,
+    "citations": [
+      {
+        "key": "affolter2019nli",
+        "stage2_number": 1,
+        "stage3_number": 1
+      },
+      {
+        "key": "ahmaditeshnizi2024optimus_icml",
+        "stage2_number": 2,
+        "stage3_number": 2
+      },
+      {
+        "key": "ahmed2025opt2code",
+        "stage2_number": 3,
+        "stage3_number": 3
+      },
+      {
+        "key": "astorga2025autoformulation",
+        "stage2_number": 4,
+        "stage3_number": 4
+      },
+      {
+        "key": "chen2025solver",
+        "stage2_number": 5,
+        "stage3_number": 5
+      },
+      {
+        "key": "ding2026orr1",
+        "stage2_number": 6,
+        "stage3_number": 6
+      },
+      {
+        "key": "holm1979followup",
+        "stage2_number": 7,
+        "stage3_number": 7
+      },
+      {
+        "key": "huang2025orlm",
+        "stage2_number": 8,
+        "stage3_number": 8
+      },
+      {
+        "key": "huang2017beamfollowup",
+        "stage2_number": 9,
+        "stage3_number": 9
+      },
+      {
+        "key": "jiang2025llmopt",
+        "stage2_number": 10,
+        "stage3_number": 10
+      },
+      {
+        "key": "kong2025alphaopt",
+        "stage2_number": 11,
+        "stage3_number": 11
+      },
+      {
+        "key": "li2026solver",
+        "stage2_number": 12,
+        "stage3_number": 12
+      },
+      {
+        "key": "miplibnl2026",
+        "stage2_number": 13,
+        "stage3_number": 13
+      },
+      {
+        "key": "lu2025optmath",
+        "stage2_number": 14,
+        "stage3_number": 14
+      },
+      {
+        "key": "pan2025pamop",
+        "stage2_number": 15,
+        "stage3_number": 15
+      },
+      {
+        "key": "xiao2024chainofexperts",
+        "stage2_number": 16,
+        "stage3_number": 16
+      },
+      {
+        "key": "xiao2026deepor",
+        "stage2_number": 17,
+        "stage3_number": 17
+      },
+      {
+        "key": "xie2026escaping",
+        "stage2_number": 18,
+        "stage3_number": 18
+      },
+      {
+        "key": "yang2026orthought",
+        "stage2_number": 19,
+        "stage3_number": 19
+      },
+      {
+        "key": "yu2026uncertainty",
+        "stage2_number": 20,
+        "stage3_number": 20
+      },
+      {
+        "key": "yu2018spider",
+        "stage2_number": 21,
+        "stage3_number": 21
+      },
+      {
+        "key": "zhang2024optllm",
+        "stage2_number": 22,
+        "stage3_number": 22
+      },
+      {
+        "key": "zhang2026dual",
+        "stage2_number": 23,
+        "stage3_number": 23
+      }
+    ],
+    "stage3_final_bbl_sha256": "02627f7c3b8c49511069d806ea4d0a292fb02956515469f258408ab609f96c4f"
+  }
+]

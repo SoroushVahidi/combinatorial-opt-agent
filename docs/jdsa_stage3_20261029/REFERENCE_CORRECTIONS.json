@@ -1,0 +1,154 @@
+[
+  {
+    "key": "lhoest2021datasets",
+    "field": "author",
+    "before": "Lhoest, Quentin and Villanova del Moral, Albert and Jernite, Yacine and Thakur, Abhishek and von Platen, Patrick and Patil, Suraj and Chaumond, Julien and Drame, Mariama and Plu, Julien and Tunstall, Lewis and others",
+    "after": "Lhoest, Quentin and Villanova del Moral, Albert and Jernite, Yacine and Thakur, Abhishek and von Platen, Patrick and Patil, Suraj and Chaumond, Julien and Drame, Mariama and Plu, Julien and Tunstall, Lewis and Davison, Joe and {\\v{S}}a{\\v{s}}ko, Mario and Chhablani, Gunjan and Malik, Bhavitvya and Brandeis, Simon and Le Scao, Teven and Sanh, Victor and Xu, Canwen and Patry, Nicolas and McMillan-Major, Angelina and Schmid, Philipp and Gugger, Sylvain and Delangue, Cl{\\'e}ment and Matussi{\\`e}re, Th{\\'e}o and Debut, Lysandre and Bekman, Stas and Cistac, Pierric and Goehringer, Thibault and Mustar, Victor and Lagunas, Fran{\\c{c}}ois and Rush, Alexander and Wolf, Thomas",
+    "reason": "Match the publisher author list and name parsing",
+    "primary_source": "https://aclanthology.org/2021.emnlp-demo.21.bib"
+  },
+  {
+    "key": "ramamonjison2022autoformulation",
+    "field": "author",
+    "before": "Ramamonjison, Rindranirina and Li, Haley and Yu, Timothy T. L. and He, Shiqi and Rengan, Vishnu and Banitalebi-Dehkordi, Amin and Zhou, Zirui and Zhang, Yong",
+    "after": "Ramamonjison, Rindra and Li, Haley and Yu, Timothy and He, Shiqi and Rengan, Vishnu and Banitalebi-dehkordi, Amin and Zhou, Zirui and Zhang, Yong",
+    "reason": "Match the publisher author list and name parsing",
+    "primary_source": "https://aclanthology.org/2022.emnlp-industry.4.bib"
+  },
+  {
+    "key": "deng2021strug",
+    "field": "author",
+    "before": "Deng, Xiang and Hassan Awadallah, Ahmed and Meek, Christopher and Polozov, Oleksandr and Sun, Huan and Richardson, Matthew",
+    "after": "Deng, Xiang and Awadallah, Ahmed Hassan and Meek, Christopher and Polozov, Oleksandr and Sun, Huan and Richardson, Matthew",
+    "reason": "Match the publisher author list and name parsing",
+    "primary_source": "https://aclanthology.org/2021.naacl-main.105.bib"
+  },
+  {
+    "key": "deng2021strug",
+    "field": "booktitle",
+    "before": "Proceedings of NAACL-HLT",
+    "after": "Proceedings of the 2021 Conference of the {N}orth {A}merican Chapter of the {A}ssociation for {C}omputational {L}inguistics: Human Language Technologies",
+    "reason": "Replace abbreviated venue with verified full proceedings title",
+    "primary_source": "https://aclanthology.org/2021.naacl-main.105.bib"
+  },
+  {
+    "key": "punyakanok2004ilp",
+    "field": "booktitle",
+    "before": "Proceedings of COLING",
+    "after": "{COLING} 2004: Proceedings of the 20th International Conference on Computational Linguistics",
+    "reason": "Replace abbreviated venue with verified full proceedings title",
+    "primary_source": "https://aclanthology.org/C04-1197.bib"
+  },
+  {
+    "key": "almasian2023cqe",
+    "field": "booktitle",
+    "before": "Proceedings of EMNLP",
+    "after": "Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing",
+    "reason": "Replace abbreviated venue with verified full proceedings title",
+    "primary_source": "https://aclanthology.org/2023.emnlp-main.793.bib"
+  },
+  {
+    "key": "pedregosa2011sklearn",
+    "field": "number",
+    "before": null,
+    "after": "85",
+    "reason": "Complete journal article-number metadata",
+    "primary_source": "https://jmlr.org/papers/v12/pedregosa11a.html"
+  },
+  {
+    "key": "pedregosa2011sklearn",
+    "field": "url",
+    "before": null,
+    "after": "https://jmlr.org/papers/v12/pedregosa11a.html",
+    "reason": "Add authoritative article link; no DOI invented",
+    "primary_source": "https://jmlr.org/papers/v12/pedregosa11a.html"
+  },
+  {
+    "key": "jiang2025llmopt",
+    "field": "pages",
+    "before": null,
+    "after": "101580--101606",
+    "reason": "Add missing official proceedings page range",
+    "primary_source": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/fbe6dd68b0cf2b1d43b458d2b8ca31b0-Abstract-Conference.html"
+  },
+  {
+    "key": "chen2025solver",
+    "field": "pages",
+    "before": null,
+    "after": "106027--106069",
+    "reason": "Add missing official proceedings page range; retain conference year 2025",
+    "primary_source": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/98555b92e5dedbdad5921049281995bc-Abstract-Conference.html"
+  },
+  {
+    "key": "kadioglu2024ner4opt",
+    "field": "author",
+    "before": "Kadioglu, Serdar and Dakle, Parag Pravin and Uppuluri, Karthik and Politi, Regina and Raghavan, Preethi and Rallabandi, SaiKrishna and Srinivasamurthy, Ravisutha",
+    "after": "Kad{\\i}o{\\u g}lu, Serdar and Dakle, Parag Pravin and Uppuluri, Karthik and Politi, Regina and Raghavan, Preethi and Rallabandi, SaiKrishna and Srinivasamurthy, Ravisutha",
+    "reason": "Restore author diacritics confirmed by publisher",
+    "primary_source": "https://link.springer.com/article/10.1007/s10601-024-09376-5"
+  },
+  {
+    "key": "kuhn1955assignment",
+    "field": "url",
+    "before": "https://onlinelibrary.wiley.com/doi/10.1002/nav.3800020109",
+    "after": null,
+    "reason": "Omit redundant publisher URL from printed entry; full DOI link is retained. Original URL remains in this audit.",
+    "primary_source": "https://onlinelibrary.wiley.com/doi/10.1002/nav.3800020109"
+  },
+  {
+    "key": "almasian2023cqe",
+    "field": "url",
+    "before": "https://aclanthology.org/2023.emnlp-main.793/",
+    "after": null,
+    "reason": "Omit redundant publisher URL from printed entry; full DOI link is retained. Original URL remains in this audit.",
+    "primary_source": "https://aclanthology.org/2023.emnlp-main.793/"
+  },
+  {
+    "key": "deng2021strug",
+    "field": "url",
+    "before": "https://aclanthology.org/2021.naacl-main.105/",
+    "after": null,
+    "reason": "Omit redundant publisher URL from printed entry; full DOI link is retained. Original URL remains in this audit.",
+    "primary_source": "https://aclanthology.org/2021.naacl-main.105/"
+  },
+  {
+    "key": "huang2017beamfollowup",
+    "field": "url",
+    "before": "https://aclanthology.org/D17-1227/",
+    "after": null,
+    "reason": "Omit redundant publisher URL from printed entry; full DOI link is retained. Original URL remains in this audit.",
+    "primary_source": "https://aclanthology.org/D17-1227/"
+  },
+  {
+    "key": "yu2018spider",
+    "field": "url",
+    "before": "https://aclanthology.org/D18-1425/",
+    "after": null,
+    "reason": "Omit redundant publisher URL from printed entry; full DOI link is retained. Original URL remains in this audit.",
+    "primary_source": "https://aclanthology.org/D18-1425/"
+  },
+  {
+    "key": "zhang2024optllm",
+    "field": "url",
+    "before": "https://aclanthology.org/2024.naacl-industry.42/",
+    "after": null,
+    "reason": "Omit redundant publisher URL from printed entry; full DOI link is retained. Original URL remains in this audit.",
+    "primary_source": "https://aclanthology.org/2024.naacl-industry.42/"
+  },
+  {
+    "key": "ramamonjison2022autoformulation",
+    "field": "url",
+    "before": "https://aclanthology.org/2022.emnlp-industry.4/",
+    "after": null,
+    "reason": "Omit redundant publisher URL from printed entry; full DOI link is retained. Original URL remains in this audit.",
+    "primary_source": "https://aclanthology.org/2022.emnlp-industry.4/"
+  },
+  {
+    "key": "lhoest2021datasets",
+    "field": "url",
+    "before": "https://aclanthology.org/2021.emnlp-demo.21/",
+    "after": null,
+    "reason": "Omit redundant publisher URL from printed entry; full DOI link is retained. Original URL remains in this audit.",
+    "primary_source": "https://aclanthology.org/2021.emnlp-demo.21/"
+  }
+]
