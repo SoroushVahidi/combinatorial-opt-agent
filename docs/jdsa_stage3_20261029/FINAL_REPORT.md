@@ -10,7 +10,7 @@
 - Hugging Face evidence revision: `f94012872211ab6a828147bb138fbe8ab695b982`.
 - Main, Stage 2, historical manuscripts and the evidence payload remain unchanged. No branches were merged or deleted. No journal submission, inference or solver experiment was performed.
 
-Publication commit identities and independent anonymous-download verification are recorded in `PUBLICATION_VERIFICATION.json` after the artifact commit is pushed. This report is included in that artifact commit; a later receipt commit may add the verification result without changing the PDFs or evidence.
+Artifact commit: `675b89bc0806e6f8dccc266e3fad462d6418c93c`. All 60 new files were independently downloaded without authentication and matched their reviewed local bytes. [Publication verification](PUBLICATION_VERIFICATION.json) records each public URL and hash. A following documentation commit records this receipt and these links; the PDF/source/evidence bytes are unchanged.
 
 ## Final deliverables
 
@@ -40,3 +40,10 @@ Publication commit identities and independent anonymous-download verification ar
 No new unsupported numerical claim or unresolved scientific inconsistency was found. Preserved limitations include missing historical scalar assignments and run settings; the distinction between historical HF v1.2, public sanitized v2 and unreleased M5; restricted third-party content; nonindependent D1/relationship labels; PaMOP withholding and corrected OptMATH estimands. The public release enables saved-record reanalysis rather than original inference reproduction.
 
 Some publisher websites could not be independently accessed in full, and their entries were retained with explicit verification limits. PDFs are not formally PDF/UA-tagged, and cross-file link behavior depends on the viewer. The author should confirm declarations/contact details and review portal requirements before any submission. These do not require changing the scientific results or starting another restructuring pass.
+
+## Immutable public downloads
+
+- [Final manuscript PDF](https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/675b89bc0806e6f8dccc266e3fad462d6418c93c/manuscript/jdsa-stage3/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf)
+- [Online Resource 1 PDF](https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/675b89bc0806e6f8dccc266e3fad462d6418c93c/manuscript/jdsa-stage3/ESM_1.pdf)
+- [Complete submission-source ZIP](https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/675b89bc0806e6f8dccc266e3fad462d6418c93c/manuscript/jdsa-stage3/JDSA_Submission_Source_20261029.zip)
+- [Stage 3 report directory](https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/manuscript/jdsa-stage3-final-editorial-20261029/docs/jdsa_stage3_20261029)
