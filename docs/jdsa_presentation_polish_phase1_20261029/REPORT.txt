@@ -1,0 +1,107 @@
+JDSA PRESENTATION POLISH — PHASE 1
+Baseline: 1e90184923c753ed18652951f2037525fffad383 (verified remote main).
+Canonical source: manuscript/jdsa-stage3/main.tex; bibliography: manuscript/jdsa-stage3/references.bib.
+Branch: manuscript/jdsa-presentation-polish-20261029.
+Worktree: /home/soroush/combinatorial-opt-agent-jdsa-presentation-polish.
+Scientific provenance: d3583fa28fcdb87f7a446f764ca3225ab5f855d3, integrated into the verified main baseline.
+The main manuscript index, package README and finalization report all identify jdsa-stage3 as canonical; the title, 331-query/335-schema frame and 7/265 result were confirmed. The original checkout was two commits behind remote main and was not used as the baseline. No target branch existed locally or remotely before creation. Other worktrees and the three original uncommitted docs directories were left untouched.
+
+Exact changed files:
+- manuscript/jdsa-stage3/ESM_1.pdf
+- manuscript/jdsa-stage3/JDSA_Stage3_Submission_Source.zip
+- manuscript/jdsa-stage3/README.md
+- manuscript/jdsa-stage3/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf
+- manuscript/jdsa-stage3/SHA256SUMS.txt
+- manuscript/jdsa-stage3/main.bbl
+- manuscript/jdsa-stage3/main.tex
+- manuscript/jdsa-stage3/references.bib
+- manuscript/jdsa-stage3/supplement.bbl
+- docs/jdsa_presentation_polish_phase1_20261029/AUDIT.json
+- docs/jdsa_presentation_polish_phase1_20261029/REPORT.txt
+- docs/jdsa_presentation_polish_phase1_20261029/VALIDATION.json
+- docs/jdsa_presentation_polish_phase1_20261029/verify_phase1.py
+
+Visible links (original destinations retained; duplicate evidence URL replaced with internal navigation):
+- Section 6.4 Reanalysis
+  Visible: https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0
+  Destination: https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0
+- Data availability
+  Visible: https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics
+  Destination: https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics
+- Data availability (pinned revision)
+  Visible: f94012872211ab6a828147bb138fbe8ab695b982
+  Destination: https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0
+  Printed directory: releases/jdsa-evidence-v2.0.0
+  Original exact destination retained on the printed revision; stable dataset URL links to itself. Historical v1.2 revision 24a047fa5d661be6cfcf75980ac8f62e6c942243 remains unchanged.
+- Code availability
+  Visible: https://github.com/SoroushVahidi/combinatorial-opt-agent
+  Destination: https://github.com/SoroushVahidi/combinatorial-opt-agent
+- Code availability (duplicate evidence URL)
+  Visible: jdsa-evidence-v2.0.0 release linked in Section 6.4
+  Destination: internal subsection.62 (subsec:reanalysis); original external URL printed once in Section 6.4
+- Code availability (historical manuscript)
+  Visible: https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0
+  Destination: https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0
+- Code availability (current canonical sources and supplementary material)
+  Visible: https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa-stage3
+  Destination: https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa-stage3
+
+Bibliography corrections and primary records:
+- References [10]: Moved essential COLM 2026 pre-proceedings status into the proceedings title; removed the editorial assertion that no DOI has yet been assigned. No final-publication status or DOI invented.
+  https://proceedings.colm.cc/paper_files/paper/2026/hash/6feb9b30798abcfae937760d183605e1-Abstract-Conference.html
+- References [14]: Protected Hungarian capitalization against BibTeX sentence-case conversion; all bibliographic fields and DOI retained.
+  https://onlinelibrary.wiley.com/doi/10.1002/nav.3800020109
+- References [21]: Removed publisher citation year/PDF masthead editorial note from the printed entry. Preserved 2022 citation year per publisher citation/BibTeX, and preserved the 2023 masthead distinction in a source comment.
+  https://proceedings.mlr.press/v220/ramamonjison23a.html
+- References [7]: Protected OPT-Engine capitalization.
+  https://proceedings.mlr.press/v306/chen26o.html
+- References [5, 7, 16, 28]: Used consistent full ICML proceedings titles without redundant acronym/year suffixes; years, volumes, pages, authors and PMLR provenance retained.
+  https://proceedings.mlr.press/v267/astorga25a.html
+  https://proceedings.mlr.press/v306/chen26o.html
+  https://proceedings.mlr.press/v267/lu25o.html
+  https://proceedings.mlr.press/v267/zhai25a.html
+- References [4, 9, 15, 19]: Added verified ACL or COLING publisher fields to match the treatment of other conference entries.
+  https://aclanthology.org/2023.emnlp-main.793/
+  https://aclanthology.org/2021.naacl-main.105/
+  https://aclanthology.org/2021.emnlp-demo.21/
+  https://aclanthology.org/C04-1197/
+- References all 28 main references: Retained Springer sn-basic punctuation, sentence case, numbered citations and full journal names (allowed by JDSA when an abbreviation is uncertain). Suppressed redundant URL prefixes; retained every existing DOI as a full https://doi.org/ link. Literal monospaced URL characters fix underscore and angle-bracket copying. No DOI, author, year, page range, volume or source identity changed. All printed entries cited; uncited database history retained without printing.
+  https://link.springer.com/journal/41060/submission-guidelines
+
+Front matter:
+- Postal address now prints University Heights, Newark, NJ 07102-1982, USA.
+- Title, author, affiliation identity, corresponding email, ORCID, abstract and six keywords are unchanged.
+- Abstract: 219 whitespace-separated words; keywords: 6. JDSA requires 150–250 words and 4–6 keywords. Existing sn-jnl [iicol,sn-basic,Numbered] format retained; no template/style file changed.
+- Requirements source: https://link.springer.com/journal/41060/submission-guidelines
+
+Compilation and preservation:
+- Clean established pdfLaTeX/BibTeX paired build and independent source-ZIP extraction/build succeeded. Both independent PDFs match the committed pair byte for byte.
+- Main article: 16 pages, 28 printed references, all cited. Supplement: 38 pages, 23 printed references, all cited. Citation identity/order preserved in both.
+- Final logs: zero undefined citations/references, multiply-defined labels, missing characters or overfull boxes; BibTeX logs clean.
+- All 197 internal named links and all 31 cross-document named destinations resolve. Main has 76 external annotation rectangles (URLs can span multiple rectangles). Every printed main URL/pinned hash agrees with its actual PDF annotation, including literal underscores and ASCII angle brackets. All original external destinations remain present.
+- The xurl package already supplies line breaking. Applying the URL font after maketitle avoids the template reset that otherwise corrupts copying of underscores and angle brackets. No global font or layout changes.
+- All six edited article URLs returned HTTP 200 with expected destinations. All 28 reference records received network checks; access limitations are itemized below and in AUDIT.json.
+- Source comparison: all manuscript scientific text outside four authorized location/address lines is exact, with URL configuration/comments excluded. All equations, tables, algorithms, captions, citations, abstract and author lines are exact. Evidence qualifications in edited availability paragraphs are retained.
+- Extracted scientific text and numerical sequence through Section 6.3 are identical after removing pagination, whitespace and discretionary line hyphens. Extracted conclusion, protected declarations and reproducibility/AI disclosures also match. Every supplement scientific-source file and its extracted text before the bibliography is unchanged.
+- Main pages 2–11 render identically to baseline. Main pages 1 and 12–16 and supplement bibliography pages 35–36 were rendered and visually inspected: readable, no clipping. All other supplement pages render identically.
+- Supplement PDF/bibliography refresh is limited to two shared ICML citation-title formatting changes. No supplementary scientific content changed.
+- Source ZIP, generated bibliographies and checksums were refreshed together. No generic main.pdf committed; no old manuscript, release, source database entry, evidence record or supplementary source deleted.
+- No inference, experiments, predictions, solver execution, evidence regeneration or scientific evaluation was performed.
+- 21916 checks passed in verify_phase1.py (includes per-word page-bound checks). Full details: VALIDATION.json.
+
+Commands:
+KEEP_BUILD=1 OUTPUT_DIR=/tmp/jdsa-presentation-polish-20261029/output sh manuscript/jdsa-stage3/build.sh
+python3 manuscript/jdsa-stage3/package_source.py
+KEEP_BUILD=1 sh /tmp/jdsa-presentation-polish-20261029/package-check/build.sh
+python3 docs/jdsa_presentation_polish_phase1_20261029/verify_phase1.py /tmp/jdsa-build.NDDTjS /tmp/jdsa-presentation-polish-20261029/package-check
+git diff --check
+
+Remaining limitations / later-phase items:
+- No blocking Phase 1 issue. Existing nonfatal main bookmark-level warning retained; it does not leave an unresolved destination. Main underfull notices decreased from 60 to 56; supplement retains 39. These are distinct from overfull/clipped content.
+- Bibliography references 8, 11, 12, 13, 14 and 23 encountered access challenges in direct requests; browser-accessible primary records corroborated 8, 12, 13, 14 and 23. References 3 and 22 resolved to Elsevier redirects, but article pages returned access blocks. Existing destinations and bibliographic facts retained. All six edited article URLs returned HTTP 200 with expected destinations.
+- COLM remains explicitly pre-proceedings; check its final publisher record before actual submission. No final status or DOI inferred.
+- The canonical-source URL continues to point to main exactly as in the baseline; this presentation revision is available on its dedicated branch until Phase 4 integration.
+- Phases 2–4 prose/repetition, table-boldface, caption and comprehensive-polish work was not undertaken.
+
+Publication boundary:
+This report records completed local validation before committing/pushing. The final conversation response supplies the resulting commit SHA and confirms the remote branch. No main merge/push or release operation is part of Phase 1.

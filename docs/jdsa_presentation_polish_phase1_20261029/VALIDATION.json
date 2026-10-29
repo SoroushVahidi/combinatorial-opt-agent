@@ -1,0 +1,1541 @@
+{
+  "baseline": "1e90184923c753ed18652951f2037525fffad383",
+  "build_directory": "/tmp/jdsa-build.NDDTjS",
+  "checks": [
+    {
+      "check": "scientific manuscript source outside the four allowed lines is byte-identical",
+      "pass": true
+    },
+    {
+      "check": "unchanged equation environments",
+      "pass": true
+    },
+    {
+      "check": "unchanged align environments",
+      "pass": true
+    },
+    {
+      "check": "unchanged tabular environments",
+      "pass": true
+    },
+    {
+      "check": "unchanged tabularx environments",
+      "pass": true
+    },
+    {
+      "check": "unchanged algorithm environments",
+      "pass": true
+    },
+    {
+      "check": "unchanged algorithmic environments",
+      "pass": true
+    },
+    {
+      "check": "unchanged source lines containing \\cite",
+      "pass": true
+    },
+    {
+      "check": "unchanged source lines containing \\caption",
+      "pass": true
+    },
+    {
+      "check": "unchanged source lines containing \\abstract",
+      "pass": true
+    },
+    {
+      "check": "unchanged source lines containing \\keywords",
+      "pass": true
+    },
+    {
+      "check": "unchanged source lines containing \\author",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/template source ready_conditioned_rows.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/template source sn-basic.bst",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/template source reproduction_map.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/template source reference_conventions.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/template source supervision_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/template source grounding_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/template source pipeline_figure.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/template source closed_audits.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/template source relationship_supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/template source preserved_results_details.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/template source Fig1.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/template source supporting_core.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/template source common18_overview.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/template source supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/template source llm_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/template source orcidlink.sty",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/template source relationship_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/template source sn-jnl.cls",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/template source additional_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/template source d1_contrasts.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/template source related_context.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged evidence qualifications following  package supports",
+      "pass": true
+    },
+    {
+      "check": "unchanged evidence qualifications following  publishes",
+      "pass": true
+    },
+    {
+      "check": "JDSA abstract and keyword limits",
+      "pass": true
+    },
+    {
+      "check": "existing two-column Springer class retained",
+      "pass": true
+    },
+    {
+      "check": "independent package build matches main",
+      "pass": true
+    },
+    {
+      "check": "page count preserved main",
+      "pass": true
+    },
+    {
+      "check": "clean final LaTeX log main",
+      "pass": true
+    },
+    {
+      "check": "clean BibTeX log main",
+      "pass": true
+    },
+    {
+      "check": "all printed references cited main",
+      "pass": true
+    },
+    {
+      "check": "citation identities and numbering preserved main",
+      "pass": true
+    },
+    {
+      "check": "every reference has a PDF destination main",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.kadioglu2024ner4opt",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.ramamonjison2022autoformulation",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.ramamonjison2023nl4opt",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.deng2021strug",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.wang2020ratsql",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.gao2026models",
+      "pass": true
+    },
+    {
+      "check": "internal link main:subsection.19",
+      "pass": true
+    },
+    {
+      "check": "internal link main:section.11",
+      "pass": true
+    },
+    {
+      "check": "internal link main:section.15",
+      "pass": true
+    },
+    {
+      "check": "internal link main:section.30",
+      "pass": true
+    },
+    {
+      "check": "internal link main:section.39",
+      "pass": true
+    },
+    {
+      "check": "internal link main:section.58",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.deng2021strug",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.wang2020ratsql",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.almasian2023cqe",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.roy2017udg",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.gao2026models",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.kadioglu2024ner4opt",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.ramamonjison2023nl4opt",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.pan2025pamop",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.huang2025orlm",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.xiao2026deepor",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.ahmed2025opt2code",
+      "pass": true
+    },
+    {
+      "check": "companion link main:table.4",
+      "pass": true
+    },
+    {
+      "check": "companion link main:section.104",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.refai2026component",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.chen2026optengine",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.astorga2025autoformulation",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.punyakanok2004ilp",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.scholak2021picard",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.zhai2025equivamap",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.kuhn1955assignment",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.nlp4lp_dataset",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal link main:subsection.61",
+      "pass": true
+    },
+    {
+      "check": "internal link main:equation.22",
+      "pass": true
+    },
+    {
+      "check": "internal link main:equation.23",
+      "pass": true
+    },
+    {
+      "check": "internal link main:equation.26",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.nlp4lp_dataset",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal link main:subsection.19",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.chen2024m3embedding",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.deerwester1990lsa",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.pedregosa2011sklearn",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.robertson2009bm25",
+      "pass": true
+    },
+    {
+      "check": "companion link main:table.6",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.lhoest2021datasets",
+      "pass": true
+    },
+    {
+      "check": "internal link main:equation.18",
+      "pass": true
+    },
+    {
+      "check": "internal link main:subsection.21",
+      "pass": true
+    },
+    {
+      "check": "internal link main:algorithm.34",
+      "pass": true
+    },
+    {
+      "check": "internal link main:figure.36",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.26",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.holm1979followup",
+      "pass": true
+    },
+    {
+      "check": "companion link main:table.17",
+      "pass": true
+    },
+    {
+      "check": "internal link main:subsection.62",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal link main:table.42",
+      "pass": true
+    },
+    {
+      "check": "internal link main:table.45",
+      "pass": true
+    },
+    {
+      "check": "internal link main:table.47",
+      "pass": true
+    },
+    {
+      "check": "internal link main:equation.25",
+      "pass": true
+    },
+    {
+      "check": "internal link main:equation.29",
+      "pass": true
+    },
+    {
+      "check": "internal link main:table.50",
+      "pass": true
+    },
+    {
+      "check": "internal link main:subsection.51",
+      "pass": true
+    },
+    {
+      "check": "companion link main:section.9",
+      "pass": true
+    },
+    {
+      "check": "internal link main:table.53",
+      "pass": true
+    },
+    {
+      "check": "internal link main:equation.24",
+      "pass": true
+    },
+    {
+      "check": "internal link main:table.56",
+      "pass": true
+    },
+    {
+      "check": "internal link main:subsection.37",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.26",
+      "pass": true
+    },
+    {
+      "check": "internal link main:table.45",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.gao2026models",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.refai2026component",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.chen2026optengine",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.zhai2025equivamap",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.63",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.99",
+      "pass": true
+    },
+    {
+      "check": "companion link main:section.40",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.98",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.74",
+      "pass": true
+    },
+    {
+      "check": "internal link main:subsection.19",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.27",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "companion link main:section.56",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.72",
+      "pass": true
+    },
+    {
+      "check": "internal link main:subsection.62",
+      "pass": true
+    },
+    {
+      "check": "internal link main:subsection.62",
+      "pass": true
+    },
+    {
+      "check": "internal link main:subsection.61",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://github.com/SoroushVahidi/combinatorial-opt-agent",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa-stage3",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://huggingface.co/datasets/udell-lab/NLP4LP",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://proceedings.mlr.press/v235/ahmaditeshnizi24a.html",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://doi.org/10.1016/j.nlp.2025.100185",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://doi.org/10.18653/v1/2023.emnlp-main.793",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://proceedings.mlr.press/v267/astorga25a.html",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://doi.org/10.18653/v1/2024.findings-acl.137",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://proceedings.mlr.press/v306/chen26o.html",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://doi.org/10.1002/(SICI)1097-4571(199009)41:6<391::AID-ASI1>3.0.CO;2-9",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://doi.org/10.18653/v1/2021.naacl-main.105",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://proceedings.colm.cc/paper_files/paper/2026/hash/6feb9b30798abcfae937760d183605e1-Abstract-Conference.html",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://www.jstor.org/stable/4615733",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://doi.org/10.1287/opre.2024.1233",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://doi.org/10.1007/s10601-024-09376-5",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://doi.org/10.1002/nav.3800020109",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://doi.org/10.18653/v1/2021.emnlp-demo.21",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://proceedings.mlr.press/v267/lu25o.html",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://doi.org/10.24963/ijcai.2025/296",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://aclanthology.org/C04-1197/",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://doi.org/10.18653/v1/2022.emnlp-industry.4",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://proceedings.mlr.press/v220/ramamonjison23a.html",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://doi.org/10.1016/j.neucom.2026.133981",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://doi.org/10.1561/1500000019",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://doi.org/10.1609/aaai.v31i1.10959",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://doi.org/10.18653/v1/2021.emnlp-main.779",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://doi.org/10.18653/v1/2020.acl-main.677",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://doi.org/10.1609/aaai.v40i40.40699",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash agrees with PDF annotation https://proceedings.mlr.press/v267/zhai25a.html",
+      "pass": true
+    },
+    {
+      "check": "all original external destinations retained",
+      "pass": true
+    },
+    {
+      "check": "extracted protected text from 7Conclusion",
+      "pass": true
+    },
+    {
+      "check": "extracted protected text from Reproducibility.",
+      "pass": true
+    },
+    {
+      "check": "extracted scientific text through Section 6.3 unchanged",
+      "pass": true
+    },
+    {
+      "check": "extracted scientific numerical sequence unchanged",
+      "pass": true
+    },
+    {
+      "check": "Newark postal address rendered correctly",
+      "pass": true
+    },
+    {
+      "check": "independent package build matches supplement",
+      "pass": true
+    },
+    {
+      "check": "page count preserved supplement",
+      "pass": true
+    },
+    {
+      "check": "clean final LaTeX log supplement",
+      "pass": true
+    },
+    {
+      "check": "clean BibTeX log supplement",
+      "pass": true
+    },
+    {
+      "check": "all printed references cited supplement",
+      "pass": true
+    },
+    {
+      "check": "citation identities and numbering preserved supplement",
+      "pass": true
+    },
+    {
+      "check": "every reference has a PDF destination supplement",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.2",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.9",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.10",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.15",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.18",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.25",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.26",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.27",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.34",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.37",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.39",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.40",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.41",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.46",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.49",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.53",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.56",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.59",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.60",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.63",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.69",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.72",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.73",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.74",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.75",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.76",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.77",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.78",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.79",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.84",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.87",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.92",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.93",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.96",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.97",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.98",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.99",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.104",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.105",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.106",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.4",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.8",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.104",
+      "pass": true
+    },
+    {
+      "check": "companion link supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "companion link supplement:equation.27",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.12",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.14",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.17",
+      "pass": true
+    },
+    {
+      "check": "companion link supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.77",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.20",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.22",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.24",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.74",
+      "pass": true
+    },
+    {
+      "check": "companion link supplement:table.42",
+      "pass": true
+    },
+    {
+      "check": "companion link supplement:subsection.37",
+      "pass": true
+    },
+    {
+      "check": "companion link supplement:table.56",
+      "pass": true
+    },
+    {
+      "check": "companion link supplement:subsubsection.54",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.huang2017beamfollowup",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.27",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.29",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.33",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.36",
+      "pass": true
+    },
+    {
+      "check": "companion link supplement:equation.28",
+      "pass": true
+    },
+    {
+      "check": "companion link supplement:equation.29",
+      "pass": true
+    },
+    {
+      "check": "companion link supplement:subsection.60",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.63",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.43",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.45",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.48",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.43",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.pan2025pamop",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.huang2025orlm",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.xiao2026deepor",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.ding2026orr1",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.52",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.55",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.58",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.62",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.65",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.67",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:equation.68",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.71",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.22",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.24",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.holm1979followup",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.17",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.17",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.20",
+      "pass": true
+    },
+    {
+      "check": "companion link supplement:table.42",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.14",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.81",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.83",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.86",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.77",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.89",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.91",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.27",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.95",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.99",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.72",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.81",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.40",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.101",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.103",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.101",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.4",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.pan2025pamop",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.huang2025orlm",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.xiao2026deepor",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.ahmed2025opt2code",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.astorga2025autoformulation",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.xiao2024chainofexperts",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.yu2026uncertainty",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.jiang2025llmopt",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.zhang2024optllm",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.chen2025solver",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.ding2026orr1",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.li2026solver",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.xie2026escaping",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.zhang2026dual",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.kong2025alphaopt",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.yang2026orthought",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.affolter2019nli",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.yu2018spider",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.miplibnl2026",
+      "pass": true
+    },
+    {
+      "check": "all extracted supplementary scientific text unchanged",
+      "pass": true
+    },
+    {
+      "check": "source ZIP CRC",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches ESM_1.pdf",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches Fig1.pdf",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches Fig1.tex",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches README.md",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches additional_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches build.sh",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches closed_audits.tex",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches common18_overview.tex",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches d1_contrasts.tex",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches grounding_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches llm_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches main.bbl",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches main.tex",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches orcidlink.sty",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches package_source.py",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches pipeline_figure.tex",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches preserved_results_details.tex",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches ready_conditioned_rows.tex",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches reference_conventions.tex",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches references.bib",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches related_context.tex",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches relationship_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches relationship_supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches reproduction_map.tex",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches sn-basic.bst",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches sn-jnl.cls",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches supervision_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches supplement.bbl",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "source ZIP member matches supporting_core.tex",
+      "pass": true
+    },
+    {
+      "check": "artifact checksum Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+      "pass": true
+    },
+    {
+      "check": "artifact checksum ESM_1.pdf",
+      "pass": true
+    },
+    {
+      "check": "artifact checksum JDSA_Stage3_Submission_Source.zip",
+      "pass": true
+    }
+  ],
+  "pdfs": {
+    "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf": {
+      "pages": 16,
+      "sha256": "a395620f0eb7e34aab41e40a3197fd21745969e272c0edc637044ec017d84aec",
+      "printed_references_all_cited": 28,
+      "link_annotation_counts_by_kind": {
+        "2": 76,
+        "4": 73,
+        "3": 20
+      },
+      "changed_render_pages": [
+        1,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "warnings": [
+        "Package hyperref Warning: Difference (4) between bookmark levels is greater "
+      ],
+      "underfull_notices": 56,
+      "external_destinations": [
+        "https://aclanthology.org/C04-1197/",
+        "https://doi.org/10.1002/(SICI)1097-4571(199009)41:6<391::AID-ASI1>3.0.CO;2-9",
+        "https://doi.org/10.1002/nav.3800020109",
+        "https://doi.org/10.1007/s10601-024-09376-5",
+        "https://doi.org/10.1016/j.neucom.2026.133981",
+        "https://doi.org/10.1016/j.nlp.2025.100185",
+        "https://doi.org/10.1287/opre.2024.1233",
+        "https://doi.org/10.1561/1500000019",
+        "https://doi.org/10.1609/aaai.v31i1.10959",
+        "https://doi.org/10.1609/aaai.v40i40.40699",
+        "https://doi.org/10.18653/v1/2020.acl-main.677",
+        "https://doi.org/10.18653/v1/2021.emnlp-demo.21",
+        "https://doi.org/10.18653/v1/2021.emnlp-main.779",
+        "https://doi.org/10.18653/v1/2021.naacl-main.105",
+        "https://doi.org/10.18653/v1/2022.emnlp-industry.4",
+        "https://doi.org/10.18653/v1/2023.emnlp-main.793",
+        "https://doi.org/10.18653/v1/2024.findings-acl.137",
+        "https://doi.org/10.24963/ijcai.2025/296",
+        "https://github.com/SoroushVahidi/combinatorial-opt-agent",
+        "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0",
+        "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0",
+        "https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa-stage3",
+        "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics",
+        "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0",
+        "https://huggingface.co/datasets/udell-lab/NLP4LP",
+        "https://orcid.org/0000-0003-1934-6282",
+        "https://proceedings.colm.cc/paper_files/paper/2026/hash/6feb9b30798abcfae937760d183605e1-Abstract-Conference.html",
+        "https://proceedings.mlr.press/v220/ramamonjison23a.html",
+        "https://proceedings.mlr.press/v235/ahmaditeshnizi24a.html",
+        "https://proceedings.mlr.press/v267/astorga25a.html",
+        "https://proceedings.mlr.press/v267/lu25o.html",
+        "https://proceedings.mlr.press/v267/zhai25a.html",
+        "https://proceedings.mlr.press/v306/chen26o.html",
+        "https://www.jstor.org/stable/4615733"
+      ]
+    },
+    "ESM_1.pdf": {
+      "pages": 38,
+      "sha256": "2a07d7efbae43f533565cecaed855125d8f4187311331f97fa63048724ce2c29",
+      "printed_references_all_cited": 23,
+      "link_annotation_counts_by_kind": {
+        "2": 51,
+        "4": 124,
+        "3": 11
+      },
+      "changed_render_pages": [
+        35,
+        36
+      ],
+      "warnings": [],
+      "underfull_notices": 39,
+      "external_destinations": [
+        "https://api.cohere.com/v2/chat",
+        "https://api.intelligence.io.solutions/api/v1/chat/completions",
+        "https://arxiv.org/abs/1807.03100",
+        "https://arxiv.org/abs/2403.01567",
+        "https://arxiv.org/abs/2504.16918",
+        "https://doi.org/10.1007/s00778-019-00567-8",
+        "https://doi.org/10.1016/j.ait.2026.100059",
+        "https://doi.org/10.1016/j.nlp.2025.100185",
+        "https://doi.org/10.1145/3770855.3817974",
+        "https://doi.org/10.1287/opre.2024.1233",
+        "https://doi.org/10.1609/aaai.v40i1.36983",
+        "https://doi.org/10.1609/aaai.v40i40.40699",
+        "https://doi.org/10.18653/v1/2024.naacl-industry.42",
+        "https://doi.org/10.18653/v1/2026.acl-long.1975",
+        "https://doi.org/10.18653/v1/2026.acl-long.266",
+        "https://doi.org/10.18653/v1/2026.findings-acl.102",
+        "https://doi.org/10.18653/v1/2026.findings-acl.690",
+        "https://doi.org/10.18653/v1/D17-1227",
+        "https://doi.org/10.18653/v1/D18-1425",
+        "https://doi.org/10.24963/ijcai.2025/296",
+        "https://doi.org/10.52202/085713-3539",
+        "https://github.com/SoroushVahidi/combinatorial-opt-agent/blob/00adeca9d3d761da7f8ee2e5dcee7fc8d535f2bc/docs/jdsa_manuscript_v1_20261029/CLAIM_LOCATION_CROSSWALK_V1.md",
+        "https://github.com/SoroushVahidi/combinatorial-opt-agent/blob/209fa982c0a0e2087bd021cbc7a9f57d94256c8f/reproducibility/jdsa-v2.0.0/claims.json",
+        "https://github.com/SoroushVahidi/combinatorial-opt-agent/blob/a09032a23c4c44a5d6d2a5215b3a8c1ca3b1a650/docs/jdsa_revision_phase1_20261029/EXPERIMENT_EVIDENCE_REGISTER.md",
+        "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0",
+        "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0",
+        "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0",
+        "https://orcid.org/0000-0003-1934-6282",
+        "https://proceedings.iclr.cc/paper_files/paper/2024/hash/d45ee77826332c100a1e15f7765b99ff-Abstract-Conference.html",
+        "https://proceedings.iclr.cc/paper_files/paper/2025/file/fbe6dd68b0cf2b1d43b458d2b8ca31b0-Paper-Conference.pdf",
+        "https://proceedings.mlr.press/v235/ahmaditeshnizi24a.html",
+        "https://proceedings.mlr.press/v267/astorga25a.html",
+        "https://proceedings.mlr.press/v267/lu25o.html",
+        "https://proceedings.mlr.press/v306/li26dz.html",
+        "https://www.jstor.org/stable/4615733"
+      ]
+    }
+  },
+  "front_matter": {
+    "abstract_words": 219,
+    "keywords": 6
+  },
+  "checks_passed": 21916,
+  "status": "PASS"
+}

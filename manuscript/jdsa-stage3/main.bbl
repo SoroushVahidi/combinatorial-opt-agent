@@ -31,15 +31,15 @@ Ahmed T, Choudhury S (2025) {OPT2CODE}: A retrieval-augmented framework for
   Gertz}]{almasian2023cqe}
 Almasian S, Kazakova V, G{\"o}ldner P, et~al (2023) {CQE}: A comprehensive
   quantity extractor. In: Proceedings of the 2023 Conference on Empirical
-  Methods in Natural Language Processing, pp 12845--12859,
-  \doi{10.18653/v1/2023.emnlp-main.793}
+  Methods in Natural Language Processing. Association for Computational
+  Linguistics, pp 12845--12859, \doi{10.18653/v1/2023.emnlp-main.793}
 
 \bibitem[{Astorga et~al.(2025)Astorga, Liu, Xiao, and Van
   Der~Schaar}]{astorga2025autoformulation}
 Astorga N, Liu T, Xiao Y, et~al (2025) Autoformulation of mathematical
   optimization models using {LLM}s. In: Proceedings of the 42nd International
-  Conference on Machine Learning ({ICML} 2025), Proceedings of Machine Learning
-  Research, vol 267. PMLR, pp 1864--1886,
+  Conference on Machine Learning, Proceedings of Machine Learning Research, vol
+  267. PMLR, pp 1864--1886,
   \urlprefix\url{https://proceedings.mlr.press/v267/astorga25a.html}
 
 \bibitem[{Chen et~al.(2024)Chen, Xiao, Zhang, Luo, Lian, and
@@ -51,10 +51,10 @@ Chen J, Xiao S, Zhang P, et~al (2024) {M3-Embedding}: Multi-linguality,
   \doi{10.18653/v1/2024.findings-acl.137}
 
 \bibitem[{Chen et~al.(2026)Chen, Cheng, Sun, Ling, and Ge}]{chen2026optengine}
-Chen Y, Cheng C, Sun Y, et~al (2026) {OPT}-engine: Benchmarking the limits of
+Chen Y, Cheng C, Sun Y, et~al (2026) {OPT-Engine}: Benchmarking the limits of
   {LLM}s in optimization modeling via complexity scaling. In: Proceedings of
-  the 43rd International Conference on Machine Learning ({ICML} 2026),
-  Proceedings of Machine Learning Research, vol 306. PMLR, pp 13807--13834,
+  the 43rd International Conference on Machine Learning, Proceedings of Machine
+  Learning Research, vol 306. PMLR, pp 13807--13834,
   \urlprefix\url{https://proceedings.mlr.press/v306/chen26o.html}
 
 \bibitem[{Deerwester et~al.(1990)Deerwester, Dumais, Furnas, Landauer, and
@@ -69,15 +69,15 @@ Deerwester S, Dumais ST, Furnas GW, et~al (1990) Indexing by latent semantic
 Deng X, Awadallah AH, Meek C, et~al (2021) Structure-grounded pretraining for
   text-to-{SQL}. In: Proceedings of the 2021 Conference of the North American
   Chapter of the Association for Computational Linguistics: Human Language
-  Technologies, pp 1337--1350, \doi{10.18653/v1/2021.naacl-main.105}
+  Technologies. Association for Computational Linguistics, pp 1337--1350,
+  \doi{10.18653/v1/2021.naacl-main.105}
 
 \bibitem[{Gao et~al.(2026)Gao, Ge, Berenbeim, Bastian, and
   Sala}]{gao2026models}
 Gao Z, Ge A, Berenbeim AM, et~al (2026) Models can model, but can't bind:
   Structured grounding in text-to-optimization. In: Conference on Language
-  Models,
-  \urlprefix\url{https://proceedings.colm.cc/paper_files/paper/2026/hash/6feb9b30798abcfae937760d183605e1-Abstract-Conference.html},
-  official COLM 2026 pre-proceedings; DOI not yet assigned
+  Models ({COLM} 2026), pre-proceedings,
+  \urlprefix\url{https://proceedings.colm.cc/paper_files/paper/2026/hash/6feb9b30798abcfae937760d183605e1-Abstract-Conference.html}
 
 \bibitem[{Holm(1979)}]{holm1979followup}
 Holm S (1979) A simple sequentially rejective multiple test procedure.
@@ -97,21 +97,22 @@ Kad{\i}o{\u g}lu S, Dakle PP, Uppuluri K, et~al (2024) {Ner4Opt}: Named entity
   29(3--4):261--299. \doi{10.1007/s10601-024-09376-5}
 
 \bibitem[{Kuhn(1955)}]{kuhn1955assignment}
-Kuhn HW (1955) The hungarian method for the assignment problem. Naval Research
-  Logistics Quarterly 2(1--2):83--97. \doi{10.1002/nav.3800020109}
+Kuhn HW (1955) The {Hungarian} method for the assignment problem. Naval
+  Research Logistics Quarterly 2(1--2):83--97. \doi{10.1002/nav.3800020109}
 
 \bibitem[{Lhoest et~al.(2021)Lhoest, Villanova~del Moral, Jernite, Thakur, von
   Platen, Patil, Chaumond, Drame, Plu, Tunstall et~al.}]{lhoest2021datasets}
 Lhoest Q, Villanova~del Moral A, Jernite Y, et~al (2021) Datasets: A community
   library for natural language processing. In: Proceedings of the 2021
   Conference on Empirical Methods in Natural Language Processing: System
-  Demonstrations, pp 175--184, \doi{10.18653/v1/2021.emnlp-demo.21}
+  Demonstrations. Association for Computational Linguistics, pp 175--184,
+  \doi{10.18653/v1/2021.emnlp-demo.21}
 
 \bibitem[{Lu et~al.(2025)Lu, Xie, Wu, Ren, Chen, and Wen}]{lu2025optmath}
 Lu H, Xie Z, Wu Y, et~al (2025) {OptMATH}: A scalable bidirectional data
   synthesis framework for optimization modeling. In: Proceedings of the 42nd
-  International Conference on Machine Learning ({ICML} 2025), Proceedings of
-  Machine Learning Research, vol 267. PMLR, pp 40769--40802,
+  International Conference on Machine Learning, Proceedings of Machine Learning
+  Research, vol 267. PMLR, pp 40769--40802,
   \urlprefix\url{https://proceedings.mlr.press/v267/lu25o.html}
 
 \bibitem[{Pan et~al.(2025)Pan, Fang, Wu, Zhang, Hu, Li, and Li}]{pan2025pamop}
@@ -130,7 +131,7 @@ Pedregosa F, Varoquaux G, Gramfort A, et~al (2011) Scikit-learn: Machine
   Zimak}]{punyakanok2004ilp}
 Punyakanok V, Roth D, Yih Wt, et~al (2004) Semantic role labeling via integer
   linear programming inference. In: COLING 2004: Proceedings of the 20th
-  International Conference on Computational Linguistics, pp 1346--1352,
+  International Conference on Computational Linguistics. COLING, pp 1346--1352,
   \urlprefix\url{https://aclanthology.org/C04-1197/}
 
 \bibitem[{Ramamonjison et~al.(2022{\natexlab{a}})Ramamonjison, Li, Yu, He,
@@ -149,8 +150,7 @@ Ramamonjison R, Yu T, Li R, et~al (2022{\natexlab{b}}) {NL4Opt} competition:
   Formulating optimization problems based on their natural language
   descriptions. In: Proceedings of the NeurIPS 2022 Competitions Track,
   Proceedings of Machine Learning Research, vol 220. PMLR, pp 189--203,
-  \urlprefix\url{https://proceedings.mlr.press/v220/ramamonjison23a.html},
-  publisher citation year 2022; proceedings PDF masthead 2023
+  \urlprefix\url{https://proceedings.mlr.press/v220/ramamonjison23a.html}
 
 \bibitem[{Refai and Ahmed(2026)}]{refai2026component}
 Refai D, Ahmed M (2026) A component-level evaluation framework for diagnosing
@@ -193,7 +193,7 @@ Xiao Z, Wang YJ, Han X, et~al (2026) {DeepOR}: A deep reasoning foundation
   Leqi}]{zhai2025equivamap}
 Zhai H, Lawless C, Vitercik E, et~al (2025) {E}quiva{M}ap: Leveraging {LLM}s
   for automatic equivalence checking of optimization formulations. In:
-  Proceedings of the 42nd International Conference on Machine Learning (ICML),
+  Proceedings of the 42nd International Conference on Machine Learning,
   Proceedings of Machine Learning Research, vol 267. PMLR, pp 74288--74305,
   \urlprefix\url{https://proceedings.mlr.press/v267/zhai25a.html}
 

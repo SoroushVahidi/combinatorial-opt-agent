@@ -1,0 +1,722 @@
+{
+  "baseline": "1e90184923c753ed18652951f2037525fffad383",
+  "date": "2026-10-29",
+  "visible_link_changes": [
+    {
+      "location": "Section 6.4 Reanalysis",
+      "previous_visible": "jdsa-evidence-v2.0.0",
+      "visible": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0",
+      "destination": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0"
+    },
+    {
+      "location": "Data availability",
+      "previous_visible": "Hugging Face evidence at the exact revision",
+      "visible": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics",
+      "destination": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics"
+    },
+    {
+      "location": "Data availability (pinned revision)",
+      "visible": "f94012872211ab6a828147bb138fbe8ab695b982",
+      "destination": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0",
+      "printed_directory": "releases/jdsa-evidence-v2.0.0",
+      "note": "Original exact destination retained on the printed revision; stable dataset URL links to itself. Historical v1.2 revision 24a047fa5d661be6cfcf75980ac8f62e6c942243 remains unchanged."
+    },
+    {
+      "location": "Code availability",
+      "previous_visible": "public project repository",
+      "visible": "https://github.com/SoroushVahidi/combinatorial-opt-agent",
+      "destination": "https://github.com/SoroushVahidi/combinatorial-opt-agent"
+    },
+    {
+      "location": "Code availability (duplicate evidence URL)",
+      "previous_visible": "GitHub evidence release",
+      "visible": "jdsa-evidence-v2.0.0 release linked in Section 6.4",
+      "destination": "internal subsection.62 (subsec:reanalysis); original external URL printed once in Section 6.4"
+    },
+    {
+      "location": "Code availability (historical manuscript)",
+      "previous_visible": "manuscript release v1.0.0",
+      "visible": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0",
+      "destination": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0"
+    },
+    {
+      "location": "Code availability (current canonical sources and supplementary material)",
+      "previous_visible": "current manuscript directory",
+      "visible": "https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa-stage3",
+      "destination": "https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa-stage3"
+    }
+  ],
+  "bibliography_corrections": [
+    {
+      "references": [
+        10
+      ],
+      "change": "Moved essential COLM 2026 pre-proceedings status into the proceedings title; removed the editorial assertion that no DOI has yet been assigned. No final-publication status or DOI invented.",
+      "primary_sources": [
+        "https://proceedings.colm.cc/paper_files/paper/2026/hash/6feb9b30798abcfae937760d183605e1-Abstract-Conference.html"
+      ]
+    },
+    {
+      "references": [
+        14
+      ],
+      "change": "Protected Hungarian capitalization against BibTeX sentence-case conversion; all bibliographic fields and DOI retained.",
+      "primary_sources": [
+        "https://onlinelibrary.wiley.com/doi/10.1002/nav.3800020109"
+      ]
+    },
+    {
+      "references": [
+        21
+      ],
+      "change": "Removed publisher citation year/PDF masthead editorial note from the printed entry. Preserved 2022 citation year per publisher citation/BibTeX, and preserved the 2023 masthead distinction in a source comment.",
+      "primary_sources": [
+        "https://proceedings.mlr.press/v220/ramamonjison23a.html"
+      ]
+    },
+    {
+      "references": [
+        7
+      ],
+      "change": "Protected OPT-Engine capitalization.",
+      "primary_sources": [
+        "https://proceedings.mlr.press/v306/chen26o.html"
+      ]
+    },
+    {
+      "references": [
+        5,
+        7,
+        16,
+        28
+      ],
+      "change": "Used consistent full ICML proceedings titles without redundant acronym/year suffixes; years, volumes, pages, authors and PMLR provenance retained.",
+      "primary_sources": [
+        "https://proceedings.mlr.press/v267/astorga25a.html",
+        "https://proceedings.mlr.press/v306/chen26o.html",
+        "https://proceedings.mlr.press/v267/lu25o.html",
+        "https://proceedings.mlr.press/v267/zhai25a.html"
+      ]
+    },
+    {
+      "references": [
+        4,
+        9,
+        15,
+        19
+      ],
+      "change": "Added verified ACL or COLING publisher fields to match the treatment of other conference entries.",
+      "primary_sources": [
+        "https://aclanthology.org/2023.emnlp-main.793/",
+        "https://aclanthology.org/2021.naacl-main.105/",
+        "https://aclanthology.org/2021.emnlp-demo.21/",
+        "https://aclanthology.org/C04-1197/"
+      ]
+    },
+    {
+      "references": "all 28 main references",
+      "change": "Retained Springer sn-basic punctuation, sentence case, numbered citations and full journal names (allowed by JDSA when an abbreviation is uncertain). Suppressed redundant URL prefixes; retained every existing DOI as a full https://doi.org/ link. Literal monospaced URL characters fix underscore and angle-bracket copying. No DOI, author, year, page range, volume or source identity changed. All printed entries cited; uncited database history retained without printing.",
+      "primary_sources": [
+        "https://link.springer.com/journal/41060/submission-guidelines"
+      ]
+    }
+  ],
+  "reference_and_link_network_checks": [
+    {
+      "reference": 1,
+      "key": "nlp4lp_dataset",
+      "url": "https://huggingface.co/datasets/udell-lab/NLP4LP",
+      "status": 200,
+      "resolved_url": "https://huggingface.co/datasets/udell-lab/NLP4LP",
+      "title": "udell-lab/NLP4LP · Datasets at Hugging Face",
+      "citation_metadata": {},
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "reference": 2,
+      "key": "ahmaditeshnizi2024optimus_icml",
+      "url": "https://proceedings.mlr.press/v235/ahmaditeshnizi24a.html",
+      "status": 200,
+      "resolved_url": "https://proceedings.mlr.press/v235/ahmaditeshnizi24a.html",
+      "title": "OptiMUS: Scalable Optimization Modeling with (MI)LP Solvers and Large Language Models",
+      "citation_metadata": {
+        "citation_publisher": "PMLR",
+        "citation_title": "OptiMUS: Scalable Optimization Modeling with (MI)LP Solvers and Large Language Models",
+        "citation_language": "en",
+        "citation_abstract_html_url": "https://proceedings.mlr.press/v235/ahmaditeshnizi24a.html",
+        "citation_pdf_url": "https://raw.githubusercontent.com/mlresearch/v235/main/assets/ahmaditeshnizi24a/ahmaditeshnizi24a.pdf",
+        "citation_firstpage": "577",
+        "citation_lastpage": "596",
+        "citation_author": "Madeleine Udell",
+        "citation_publication_date": "2024/07/08",
+        "citation_inbook_title": "International Conference on Machine Learning",
+        "citation_conference_title": "International Conference on Machine Learning",
+        "citation_issn": "2640-3498"
+      },
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "reference": 3,
+      "key": "ahmed2025opt2code",
+      "url": "https://doi.org/10.1016/j.nlp.2025.100185",
+      "status": 200,
+      "resolved_url": "https://linkinghub.elsevier.com/retrieve/pii/S2949719125000615",
+      "title": "Redirecting",
+      "citation_metadata": {},
+      "resolution_assessment": "DOI resolves to publisher redirect; article page access limited"
+    },
+    {
+      "reference": 4,
+      "key": "almasian2023cqe",
+      "url": "https://doi.org/10.18653/v1/2023.emnlp-main.793",
+      "status": 200,
+      "resolved_url": "https://aclanthology.org/2023.emnlp-main.793/",
+      "title": "CQE: A Comprehensive Quantity Extractor - ACL Anthology",
+      "citation_metadata": {
+        "citation_title": "CQE: A Comprehensive Quantity Extractor",
+        "citation_author": "Michael Gertz",
+        "citation_conference_title": "Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing",
+        "citation_publication_date": "2023/12",
+        "citation_pdf_url": "https://aclanthology.org/2023.emnlp-main.793.pdf",
+        "citation_firstpage": "12845",
+        "citation_lastpage": "12859",
+        "citation_doi": "10.18653/v1/2023.emnlp-main.793"
+      },
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "reference": 5,
+      "key": "astorga2025autoformulation",
+      "url": "https://proceedings.mlr.press/v267/astorga25a.html",
+      "status": 200,
+      "resolved_url": "https://proceedings.mlr.press/v267/astorga25a.html",
+      "title": "Autoformulation of Mathematical Optimization Models Using LLMs",
+      "citation_metadata": {
+        "citation_publisher": "PMLR",
+        "citation_title": "Autoformulation of Mathematical Optimization Models Using LLMs",
+        "citation_language": "en",
+        "citation_abstract_html_url": "https://proceedings.mlr.press/v267/astorga25a.html",
+        "citation_pdf_url": "https://raw.githubusercontent.com/mlresearch/v267/main/assets/astorga25a/astorga25a.pdf",
+        "citation_firstpage": "1864",
+        "citation_lastpage": "1886",
+        "citation_author": "Mihaela Van Der Schaar",
+        "citation_publication_date": "2025/10/06",
+        "citation_inbook_title": "International Conference on Machine Learning",
+        "citation_conference_title": "International Conference on Machine Learning",
+        "citation_issn": "2640-3498"
+      },
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "reference": 6,
+      "key": "chen2024m3embedding",
+      "url": "https://doi.org/10.18653/v1/2024.findings-acl.137",
+      "status": 200,
+      "resolved_url": "https://aclanthology.org/2024.findings-acl.137/",
+      "title": "M3-Embedding: Multi-Linguality, Multi-Functionality, Multi-Granularity Text Embeddings Through Self-Knowledge Distillation - ACL Anthology",
+      "citation_metadata": {
+        "citation_title": "M3-Embedding: Multi-Linguality, Multi-Functionality, Multi-Granularity Text Embeddings Through Self-Knowledge Distillation",
+        "citation_author": "Zheng Liu",
+        "citation_conference_title": "Findings of the Association for Computational Linguistics: ACL 2024",
+        "citation_publication_date": "2024/8",
+        "citation_pdf_url": "https://aclanthology.org/2024.findings-acl.137.pdf",
+        "citation_firstpage": "2318",
+        "citation_lastpage": "2335",
+        "citation_doi": "10.18653/v1/2024.findings-acl.137"
+      },
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "reference": 7,
+      "key": "chen2026optengine",
+      "url": "https://proceedings.mlr.press/v306/chen26o.html",
+      "status": 200,
+      "resolved_url": "https://proceedings.mlr.press/v306/chen26o.html",
+      "title": "OPT-Engine: Benchmarking the Limits of LLMs in Optimization Modeling via Complexity Scaling",
+      "citation_metadata": {
+        "citation_publisher": "PMLR",
+        "citation_title": "OPT-Engine: Benchmarking the Limits of LLMs in Optimization Modeling via Complexity Scaling",
+        "citation_language": "en",
+        "citation_abstract_html_url": "https://proceedings.mlr.press/v306/chen26o.html",
+        "citation_pdf_url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/chen26o/chen26o.pdf",
+        "citation_firstpage": "13807",
+        "citation_lastpage": "13834",
+        "citation_author": "Dongdong Ge",
+        "citation_publication_date": "2026/09/29",
+        "citation_inbook_title": "International Conference on Machine Learning",
+        "citation_conference_title": "International Conference on Machine Learning",
+        "citation_issn": "2640-3498"
+      },
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "reference": 8,
+      "key": "deerwester1990lsa",
+      "url": "https://doi.org/10.1002/(SICI)1097-4571(199009)41:6<391::AID-ASI1>3.0.CO;2-9",
+      "status": 403,
+      "resolved_url": "https://onlinelibrary.wiley.com/doi/10.1002/(SICI)1097-4571(199009)41:6%3C391::AID-ASI1%3E3.0.CO;2-9",
+      "title": "Just a moment...",
+      "citation_metadata": {},
+      "resolution_assessment": "publisher access challenge; destination retained"
+    },
+    {
+      "reference": 9,
+      "key": "deng2021strug",
+      "url": "https://doi.org/10.18653/v1/2021.naacl-main.105",
+      "status": 200,
+      "resolved_url": "https://aclanthology.org/2021.naacl-main.105/",
+      "title": "Structure-Grounded Pretraining for Text-to-SQL - ACL Anthology",
+      "citation_metadata": {
+        "citation_title": "Structure-Grounded Pretraining for Text-to-SQL",
+        "citation_author": "Matthew Richardson",
+        "citation_conference_title": "Proceedings of the 2021 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies",
+        "citation_publication_date": "2021/6",
+        "citation_pdf_url": "https://aclanthology.org/2021.naacl-main.105.pdf",
+        "citation_firstpage": "1337",
+        "citation_lastpage": "1350",
+        "citation_doi": "10.18653/v1/2021.naacl-main.105"
+      },
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "reference": 10,
+      "key": "gao2026models",
+      "url": "https://proceedings.colm.cc/paper_files/paper/2026/hash/6feb9b30798abcfae937760d183605e1-Abstract-Conference.html",
+      "status": 200,
+      "resolved_url": "https://proceedings.colm.cc/paper_files/paper/2026/hash/6feb9b30798abcfae937760d183605e1-Abstract-Conference.html",
+      "title": "Models Can Model, But Can’t Bind: Structured Grounding in Text-to-Optimization",
+      "citation_metadata": {
+        "citation_title": "Models Can Model, But Can’t Bind: Structured Grounding in Text-to-Optimization",
+        "citation_author": "Sala, Frederic",
+        "citation_journal_title": "Conference On Language Models",
+        "citation_volume": "3",
+        "citation_pdf_url": "proceedings.colm.cc/paper_files/paper/2026/file/6feb9b30798abcfae937760d183605e1-Paper-Conference.pdf",
+        "citation_publication_date": "2026-10-15"
+      },
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "reference": 11,
+      "key": "holm1979followup",
+      "url": "https://www.jstor.org/stable/4615733",
+      "status": 200,
+      "resolved_url": "https://www.jstor.org/stable/4615733",
+      "title": "Client Challenge",
+      "citation_metadata": {},
+      "resolution_assessment": "publisher access challenge; destination retained"
+    },
+    {
+      "reference": 12,
+      "key": "huang2025orlm",
+      "url": "https://doi.org/10.1287/opre.2024.1233",
+      "status": 403,
+      "resolved_url": "https://pubsonline.informs.org/doi/10.1287/opre.2024.1233",
+      "title": "Just a moment...",
+      "citation_metadata": {},
+      "resolution_assessment": "publisher access challenge; destination retained"
+    },
+    {
+      "reference": 13,
+      "key": "kadioglu2024ner4opt",
+      "url": "https://doi.org/10.1007/s10601-024-09376-5",
+      "status": 200,
+      "resolved_url": "https://link.springer.com/10.1007/s10601-024-09376-5",
+      "title": "Client Challenge",
+      "citation_metadata": {},
+      "resolution_assessment": "publisher access challenge; destination retained"
+    },
+    {
+      "reference": 14,
+      "key": "kuhn1955assignment",
+      "url": "https://doi.org/10.1002/nav.3800020109",
+      "status": 403,
+      "resolved_url": "https://onlinelibrary.wiley.com/doi/10.1002/nav.3800020109",
+      "title": "Just a moment...",
+      "citation_metadata": {},
+      "resolution_assessment": "publisher access challenge; destination retained"
+    },
+    {
+      "reference": 15,
+      "key": "lhoest2021datasets",
+      "url": "https://doi.org/10.18653/v1/2021.emnlp-demo.21",
+      "status": 200,
+      "resolved_url": "https://aclanthology.org/2021.emnlp-demo.21/",
+      "title": "Datasets: A Community Library for Natural Language Processing - ACL Anthology",
+      "citation_metadata": {
+        "citation_title": "Datasets: A Community Library for Natural Language Processing",
+        "citation_author": "Thomas Wolf",
+        "citation_conference_title": "Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing: System Demonstrations",
+        "citation_publication_date": "2021/11",
+        "citation_pdf_url": "https://aclanthology.org/2021.emnlp-demo.21.pdf",
+        "citation_firstpage": "175",
+        "citation_lastpage": "184",
+        "citation_doi": "10.18653/v1/2021.emnlp-demo.21"
+      },
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "reference": 16,
+      "key": "lu2025optmath",
+      "url": "https://proceedings.mlr.press/v267/lu25o.html",
+      "status": 200,
+      "resolved_url": "https://proceedings.mlr.press/v267/lu25o.html",
+      "title": "OptMATH: A Scalable Bidirectional Data Synthesis Framework for Optimization Modeling",
+      "citation_metadata": {
+        "citation_publisher": "PMLR",
+        "citation_title": "OptMATH: A Scalable Bidirectional Data Synthesis Framework for Optimization Modeling",
+        "citation_language": "en",
+        "citation_abstract_html_url": "https://proceedings.mlr.press/v267/lu25o.html",
+        "citation_pdf_url": "https://raw.githubusercontent.com/mlresearch/v267/main/assets/lu25o/lu25o.pdf",
+        "citation_firstpage": "40769",
+        "citation_lastpage": "40802",
+        "citation_author": "Zaiwen Wen",
+        "citation_publication_date": "2025/10/06",
+        "citation_inbook_title": "International Conference on Machine Learning",
+        "citation_conference_title": "International Conference on Machine Learning",
+        "citation_issn": "2640-3498"
+      },
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "reference": 17,
+      "key": "pan2025pamop",
+      "url": "https://doi.org/10.24963/ijcai.2025/296",
+      "status": 200,
+      "resolved_url": "https://ijcai.org/proceedings/2025/296",
+      "title": "Guiding Large Language Models in Modeling Optimization Problems via Question Partitioning | IJCAI",
+      "citation_metadata": {
+        "citation_title": "Guiding Large Language Models in Modeling Optimization Problems via Question Partitioning",
+        "citation_author": "Li, Xiang-Yang",
+        "citation_author_institution": "School of Computer Science and Technology , University of Science and Technology of China {px259637522 ,",
+        "citation_publication_date": "2025",
+        "citation_conference_title": "Proceedings of the Thirty-Fourth International Joint Conference on Artificial Intelligence",
+        "citation_publisher": "International Joint Conferences on Artificial Intelligence Organization",
+        "citation_firstpage": "2657",
+        "citation_lastpage": "2665",
+        "citation_doi": "10.24963/ijcai.2025/296",
+        "citation_pdf_url": "https://ijcai.org/proceedings/2025/0296.pdf",
+        "citation_abstract_html_url": "https://ijcai.org/proceedings/2025/296"
+      },
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "reference": 18,
+      "key": "pedregosa2011sklearn",
+      "url": "https://jmlr.org/papers/v12/pedregosa11a.html",
+      "status": 200,
+      "resolved_url": "https://jmlr.org/papers/v12/pedregosa11a.html",
+      "title": "Scikit-learn: Machine Learning in Python",
+      "citation_metadata": {
+        "citation_title": "Scikit-learn: Machine Learning in Python",
+        "citation_author": "Ãdouard Duchesnay",
+        "citation_journal_title": "Journal of Machine Learning Research",
+        "citation_volume": "12",
+        "citation_issue": "85",
+        "citation_firstpage": "2825",
+        "citation_lastpage": "2830",
+        "citation_pdf_url": "http://jmlr.org/papers/volume12/pedregosa11a/pedregosa11a.pdf",
+        "citation_publication_date": "2011",
+        "citation_public_url": "http://jmlr.org/papers/v12/pedregosa11a.html",
+        "citation_abstract_html_url": "http://jmlr.org/papers/v12/pedregosa11a.html",
+        "citation_issn": "1533-7928"
+      },
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "reference": 19,
+      "key": "punyakanok2004ilp",
+      "url": "https://aclanthology.org/C04-1197/",
+      "status": 200,
+      "resolved_url": "https://aclanthology.org/C04-1197/",
+      "title": "Semantic Role Labeling Via Integer Linear Programming Inference - ACL Anthology",
+      "citation_metadata": {
+        "citation_title": "Semantic Role Labeling Via Integer Linear Programming Inference",
+        "citation_author": "Dav Zimak",
+        "citation_conference_title": "COLING 2004: Proceedings of the 20th International Conference on Computational Linguistics",
+        "citation_publication_date": "2004",
+        "citation_pdf_url": "https://aclanthology.org/C04-1197.pdf",
+        "citation_firstpage": "1346",
+        "citation_lastpage": "1352"
+      },
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "reference": 20,
+      "key": "ramamonjison2022autoformulation",
+      "url": "https://doi.org/10.18653/v1/2022.emnlp-industry.4",
+      "status": 200,
+      "resolved_url": "https://aclanthology.org/2022.emnlp-industry.4/",
+      "title": "Augmenting Operations Research with Auto-Formulation of Optimization Models From Problem Descriptions - ACL Anthology",
+      "citation_metadata": {
+        "citation_title": "Augmenting Operations Research with Auto-Formulation of Optimization Models From Problem Descriptions",
+        "citation_author": "Yong Zhang",
+        "citation_conference_title": "Proceedings of the 2022 Conference on Empirical Methods in Natural Language Processing: Industry Track",
+        "citation_publication_date": "2022/12",
+        "citation_pdf_url": "https://aclanthology.org/2022.emnlp-industry.4.pdf",
+        "citation_firstpage": "29",
+        "citation_lastpage": "62",
+        "citation_doi": "10.18653/v1/2022.emnlp-industry.4"
+      },
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "reference": 21,
+      "key": "ramamonjison2023nl4opt",
+      "url": "https://proceedings.mlr.press/v220/ramamonjison23a.html",
+      "status": 200,
+      "resolved_url": "https://proceedings.mlr.press/v220/ramamonjison23a.html",
+      "title": "NL4Opt Competition: Formulating Optimization Problems Based on Their Natural Language Descriptions",
+      "citation_metadata": {
+        "citation_publisher": "PMLR",
+        "citation_title": "NL4Opt Competition: Formulating Optimization Problems Based on Their Natural Language Descriptions",
+        "citation_language": "en",
+        "citation_abstract_html_url": "https://proceedings.mlr.press/v220/ramamonjison23a.html",
+        "citation_pdf_url": "https://proceedings.mlr.press/v220/ramamonjison23a/ramamonjison23a.pdf",
+        "citation_firstpage": "189",
+        "citation_lastpage": "203",
+        "citation_author": "Yong Zhang",
+        "citation_publication_date": "2023/08/31",
+        "citation_inbook_title": "NeurIPS 2022 Competition Track",
+        "citation_conference_title": "NeurIPS 2022 Competition Track",
+        "citation_issn": "2640-3498"
+      },
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "reference": 22,
+      "key": "refai2026component",
+      "url": "https://doi.org/10.1016/j.neucom.2026.133981",
+      "status": 200,
+      "resolved_url": "https://linkinghub.elsevier.com/retrieve/pii/S0925231226013792",
+      "title": "Redirecting",
+      "citation_metadata": {},
+      "resolution_assessment": "DOI resolves to publisher redirect; article page access limited"
+    },
+    {
+      "reference": 23,
+      "key": "robertson2009bm25",
+      "url": "https://doi.org/10.1561/1500000019",
+      "status": 403,
+      "resolved_url": "https://www.emerald.com/ftinr/article/4/1-2/1/1326508/The-Probabilistic-Relevance-Framework-BM25-and",
+      "title": "Just a moment...",
+      "citation_metadata": {},
+      "resolution_assessment": "publisher access challenge; destination retained"
+    },
+    {
+      "reference": 24,
+      "key": "roy2017udg",
+      "url": "https://doi.org/10.1609/aaai.v31i1.10959",
+      "status": 200,
+      "resolved_url": "https://ojs.aaai.org/index.php/AAAI/article/view/10959",
+      "title": "Unit Dependency Graph and Its Application to Arithmetic Word Problem Solving\n\t\t\t\t\t\t\t| Proceedings of the AAAI Conference on Artificial Intelligence",
+      "citation_metadata": {
+        "DC.Creator.PersonalName": "Dan Roth",
+        "DC.Date.created": "2017-02-12",
+        "DC.Date.dateSubmitted": "2020-12-28",
+        "DC.Date.issued": "2017-02-11",
+        "DC.Date.modified": "2020-12-28",
+        "DC.Description": "\n      \n        Math word problems provide a natural abstraction to a range of natural language understanding problems that involve reasoning about quantities, such as interpreting election results, news about casualties, and the financial section of a newspaper.  Units associated with the quantities often provide information that is essential to support this reasoning. This paper proposes a principled way to capture and reason about units and shows how it can benefit an arithmetic word problem solver.  This paper presents the concept of Unit Dependency Graphs (UDGs), which provides a compact representation of the dependencies between units of numbers mentioned in a given problem. Inducing the UDG alleviates the brittleness of the unit extraction system and allows for a natural way to leverage domain knowledge about unit compatibility, for word problem solving. We introduce a decomposed model for inducing UDGs with minimal additional annotations, and use it to augment the expressions used in the arithmetic word problem solver of (Roy and Roth 2015) via a constrained inference framework. We show that introduction of UDGs reduces the error of the solver by over 10 %, surpassing all existing systems for solving arithmetic word problems. In addition, it also makes the system more robust to adaptation to new vocabulary and equation forms .\n      \n    ",
+        "DC.Format": "application/pdf",
+        "DC.Identifier": "10959",
+        "DC.Identifier.DOI": "10.1609/aaai.v31i1.10959",
+        "DC.Identifier.URI": "https://ojs.aaai.org/index.php/AAAI/article/view/10959",
+        "DC.Language": "en",
+        "DC.Rights": "",
+        "DC.Source": "Proceedings of the AAAI Conference on Artificial Intelligence",
+        "DC.Source.ISSN": "2374-3468",
+        "DC.Source.Issue": "1",
+        "DC.Source.Volume": "31",
+        "DC.Source.URI": "https://ojs.aaai.org/index.php/AAAI",
+        "DC.Subject": " Quantitative reasoning",
+        "DC.Title": "Unit Dependency Graph and Its Application to Arithmetic Word Problem Solving",
+        "DC.Type": "Text.Serial.Journal",
+        "DC.Type.articleType": "Main Track: NLP and Knowledge Representation",
+        "citation_journal_title": "Proceedings of the AAAI Conference on Artificial Intelligence",
+        "citation_journal_abbrev": "AAAI",
+        "citation_issn": "2374-3468",
+        "citation_author": "Dan Roth",
+        "citation_author_institution": "University of Illinois, Urbana Champaign",
+        "citation_title": "Unit Dependency Graph and Its Application to Arithmetic Word Problem Solving",
+        "citation_language": "en",
+        "citation_date": "2017/02/12",
+        "citation_volume": "31",
+        "citation_issue": "1",
+        "citation_doi": "10.1609/aaai.v31i1.10959",
+        "citation_abstract_html_url": "https://ojs.aaai.org/index.php/AAAI/article/view/10959",
+        "citation_keywords": " Quantitative reasoning",
+        "citation_pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/10959/10818"
+      },
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "reference": 25,
+      "key": "scholak2021picard",
+      "url": "https://doi.org/10.18653/v1/2021.emnlp-main.779",
+      "status": 200,
+      "resolved_url": "https://aclanthology.org/2021.emnlp-main.779/",
+      "title": "PICARD: Parsing Incrementally for Constrained Auto-Regressive Decoding from Language Models - ACL Anthology",
+      "citation_metadata": {
+        "citation_title": "PICARD: Parsing Incrementally for Constrained Auto-Regressive Decoding from Language Models",
+        "citation_author": "Dzmitry Bahdanau",
+        "citation_conference_title": "Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing",
+        "citation_publication_date": "2021/11",
+        "citation_pdf_url": "https://aclanthology.org/2021.emnlp-main.779.pdf",
+        "citation_firstpage": "9895",
+        "citation_lastpage": "9901",
+        "citation_doi": "10.18653/v1/2021.emnlp-main.779"
+      },
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "reference": 26,
+      "key": "wang2020ratsql",
+      "url": "https://doi.org/10.18653/v1/2020.acl-main.677",
+      "status": 200,
+      "resolved_url": "https://aclanthology.org/2020.acl-main.677/",
+      "title": "RAT-SQL: Relation-Aware Schema Encoding and Linking for Text-to-SQL Parsers - ACL Anthology",
+      "citation_metadata": {
+        "citation_title": "RAT-SQL: Relation-Aware Schema Encoding and Linking for Text-to-SQL Parsers",
+        "citation_author": "Matthew Richardson",
+        "citation_conference_title": "Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics",
+        "citation_publication_date": "2020/7",
+        "citation_pdf_url": "https://aclanthology.org/2020.acl-main.677.pdf",
+        "citation_firstpage": "7567",
+        "citation_lastpage": "7578",
+        "citation_doi": "10.18653/v1/2020.acl-main.677"
+      },
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "reference": 27,
+      "key": "xiao2026deepor",
+      "url": "https://doi.org/10.1609/aaai.v40i40.40699",
+      "status": 200,
+      "resolved_url": "https://ojs.aaai.org/index.php/AAAI/article/view/40699",
+      "title": "DeepOR: A Deep Reasoning Foundation Model for Optimization Modeling\n\t\t\t\t\t\t\t| Proceedings of the AAAI Conference on Artificial Intelligence",
+      "citation_metadata": {
+        "DC.Creator.PersonalName": "Dongxiang Zhang",
+        "DC.Date.created": "2026-03-14",
+        "DC.Date.dateSubmitted": "2020-09-10",
+        "DC.Date.issued": "2026-03-17",
+        "DC.Date.modified": "2026-03-18",
+        "DC.Description": "Optimization modeling plays a critical role in supporting optimal decision-making across various domains. Previous works have demonstrated that large language models (LLMs) tailored for optimization modeling have significantly automated and simplified this process. However, these models typically employ a straightforward input-output paradigm and struggle with challenging instances. In contrast, recent advances in general-purpose reasoning LLMs (RLLMs), such as DeepSeek-R1, have shown impressive capabilities in complex domains like mathematics and coding. In this paper, we introduce DeepOR, the first RLLM specifically designed for optimization modeling. Instead of directly outputting solutions, DeepOR explicitly performs multiple intermediate reasoning steps. To adapt a base LLM into an RLLM, we begin by synthesizing long chain-of-thought (CoT) data guided by a flowchart, which is automatically generated using a self-exploration algorithm. Once the training data are prepared, we employ supervised fine-tuning on the base LLM to endow it with reasoning capabilities tailored for optimization modeling. To fully leverage the model's reasoning potential, we further apply reinforcement learning with reward-shaping derived from solver feedback. Experimental results on benchmarks confirm that DeepOR consistently and significantly outperforms existing state-of-the-art approaches.",
+        "DC.Format": "",
+        "DC.Identifier": "40699",
+        "DC.Identifier.pageNumber": "34052-34060",
+        "DC.Identifier.DOI": "10.1609/aaai.v40i40.40699",
+        "DC.Identifier.URI": "https://ojs.aaai.org/index.php/AAAI/article/view/40699",
+        "DC.Language": "en",
+        "DC.Rights": "",
+        "DC.Source": "Proceedings of the AAAI Conference on Artificial Intelligence",
+        "DC.Source.ISSN": "2374-3468",
+        "DC.Source.Issue": "40",
+        "DC.Source.Volume": "40",
+        "DC.Source.URI": "https://ojs.aaai.org/index.php/AAAI",
+        "DC.Title": "DeepOR: A Deep Reasoning Foundation Model for Optimization Modeling",
+        "DC.Type": "Text.Serial.Journal",
+        "DC.Type.articleType": "AAAI Technical Track on Natural Language Processing V",
+        "citation_journal_title": "Proceedings of the AAAI Conference on Artificial Intelligence",
+        "citation_journal_abbrev": "AAAI",
+        "citation_issn": "2374-3468",
+        "citation_author": "Dongxiang Zhang",
+        "citation_author_institution": "Zhejiang University",
+        "citation_title": "DeepOR: A Deep Reasoning Foundation Model for Optimization Modeling",
+        "citation_language": "en",
+        "citation_date": "2026/03/14",
+        "citation_volume": "40",
+        "citation_issue": "40",
+        "citation_firstpage": "34052",
+        "citation_lastpage": "34060",
+        "citation_doi": "10.1609/aaai.v40i40.40699",
+        "citation_abstract_html_url": "https://ojs.aaai.org/index.php/AAAI/article/view/40699",
+        "citation_pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/40699/44660"
+      },
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "reference": 28,
+      "key": "zhai2025equivamap",
+      "url": "https://proceedings.mlr.press/v267/zhai25a.html",
+      "status": 200,
+      "resolved_url": "https://proceedings.mlr.press/v267/zhai25a.html",
+      "title": "EquivaMap: Leveraging LLMs for Automatic Equivalence Checking of Optimization Formulations",
+      "citation_metadata": {
+        "citation_publisher": "PMLR",
+        "citation_title": "EquivaMap: Leveraging LLMs for Automatic Equivalence Checking of Optimization Formulations",
+        "citation_language": "en",
+        "citation_abstract_html_url": "https://proceedings.mlr.press/v267/zhai25a.html",
+        "citation_pdf_url": "https://raw.githubusercontent.com/mlresearch/v267/main/assets/zhai25a/zhai25a.pdf",
+        "citation_firstpage": "74288",
+        "citation_lastpage": "74305",
+        "citation_author": "Liu Leqi",
+        "citation_publication_date": "2025/10/06",
+        "citation_inbook_title": "International Conference on Machine Learning",
+        "citation_conference_title": "International Conference on Machine Learning",
+        "citation_issn": "2640-3498"
+      },
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "context": "article link",
+      "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent",
+      "status": 200,
+      "resolved_url": "https://github.com/SoroushVahidi/combinatorial-opt-agent",
+      "title": "GitHub - SoroushVahidi/combinatorial-opt-agent: AI agent that converts natural language descriptions of combinatorial optimization problems into ILP/LP formulations · GitHub",
+      "citation_metadata": {},
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "context": "article link",
+      "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0",
+      "status": 200,
+      "resolved_url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0",
+      "title": "Release JDSA evidence v2.0.0 — saved-record reanalysis · SoroushVahidi/combinatorial-opt-agent · GitHub",
+      "citation_metadata": {},
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "context": "article link",
+      "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0",
+      "status": 200,
+      "resolved_url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0",
+      "title": "Release Retrieval-Assisted Scalar Grounding for Natural-Language Optimization — Manuscript and Supplement · SoroushVahidi/combinatorial-opt-agent · GitHub",
+      "citation_metadata": {},
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "context": "article link",
+      "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa-stage3",
+      "status": 200,
+      "resolved_url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa-stage3",
+      "title": "combinatorial-opt-agent/manuscript/jdsa-stage3 at main · SoroushVahidi/combinatorial-opt-agent · GitHub",
+      "citation_metadata": {},
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "context": "article link",
+      "url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics",
+      "status": 200,
+      "resolved_url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics",
+      "title": "SoroushVahidi/nl-optimization-instantiation-metrics · Datasets at Hugging Face",
+      "citation_metadata": {},
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    },
+    {
+      "context": "article link",
+      "url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0",
+      "status": 200,
+      "resolved_url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0",
+      "title": "SoroushVahidi/nl-optimization-instantiation-metrics at f94012872211ab6a828147bb138fbe8ab695b982",
+      "citation_metadata": {},
+      "resolution_assessment": "HTTP 200; expected destination/title observed"
+    }
+  ],
+  "additional_primary_records_consulted": [
+    "https://onlinelibrary.wiley.com/doi/10.1002/%28SICI%291097-4571%28199009%2941%3A6%3C391%3A%3AAID-ASI1%3E3.0.CO%3B2-9/abstract",
+    "https://pubsonline.informs.org/doi/10.1287/opre.2024.1233",
+    "https://link.springer.com/article/10.1007/s10601-024-09376-5",
+    "https://www.nowpublishers.com/article/DownloadEBook/INR-019",
+    "https://ojs.aaai.org/index.php/AAAI/article/view/10959"
+  ],
+  "network_limitations": "Bibliography references 8, 11, 12, 13, 14 and 23 encountered access challenges in direct requests; browser-accessible primary records corroborated 8, 12, 13, 14 and 23. References 3 and 22 resolved to Elsevier redirects, but article pages returned access blocks. Existing destinations and bibliographic facts retained. All six edited article URLs returned HTTP 200 with expected destinations."
+}

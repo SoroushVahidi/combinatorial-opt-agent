@@ -29,8 +29,8 @@ Ahmed T, Choudhury S (2025) {OPT2CODE}: A retrieval-augmented framework for
   Der~Schaar}]{astorga2025autoformulation}
 Astorga N, Liu T, Xiao Y, et~al (2025) Autoformulation of mathematical
   optimization models using {LLM}s. In: Proceedings of the 42nd International
-  Conference on Machine Learning ({ICML} 2025), Proceedings of Machine Learning
-  Research, vol 267. PMLR, pp 1864--1886,
+  Conference on Machine Learning, Proceedings of Machine Learning Research, vol
+  267. PMLR, pp 1864--1886,
   \urlprefix\url{https://proceedings.mlr.press/v267/astorga25a.html}
 
 \bibitem[{Chen et~al.(2025)Chen, Xia, Shao, Ge, and Ye}]{chen2025solver}
@@ -95,8 +95,8 @@ Li Z, Lu H, Wei T, et~al (2026{\natexlab{b}}) Constructing industrial-scale
 \bibitem[{Lu et~al.(2025)Lu, Xie, Wu, Ren, Chen, and Wen}]{lu2025optmath}
 Lu H, Xie Z, Wu Y, et~al (2025) {OptMATH}: A scalable bidirectional data
   synthesis framework for optimization modeling. In: Proceedings of the 42nd
-  International Conference on Machine Learning ({ICML} 2025), Proceedings of
-  Machine Learning Research, vol 267. PMLR, pp 40769--40802,
+  International Conference on Machine Learning, Proceedings of Machine Learning
+  Research, vol 267. PMLR, pp 40769--40802,
   \urlprefix\url{https://proceedings.mlr.press/v267/lu25o.html}
 
 \bibitem[{Pan et~al.(2025)Pan, Fang, Wu, Zhang, Hu, Li, and Li}]{pan2025pamop}
