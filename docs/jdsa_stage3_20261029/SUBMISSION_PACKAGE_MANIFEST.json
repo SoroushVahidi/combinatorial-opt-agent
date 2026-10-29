@@ -1,0 +1,159 @@
+{
+  "flat": true,
+  "files": [
+    {
+      "path": "ESM_1.pdf",
+      "bytes": 435506,
+      "sha256": "a664087bb3e07cf753e0ed90e8d8c5a7e3707197a81a144e29a3e443af6e2ac7"
+    },
+    {
+      "path": "Fig1.pdf",
+      "bytes": 51158,
+      "sha256": "5637cf6ace2cd6f0da473daadc56c97e3acf65fe6eeea972137abadf8e0a802a"
+    },
+    {
+      "path": "Fig1.tex",
+      "bytes": 150,
+      "sha256": "ed5f89a843169fe14eb294150210a744f5346bd5497302eb5c28cd8a0061e023"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3113,
+      "sha256": "463a3ae01bf282505581e03bd8b37565009e6e2575148b7a91ecf5ec2f5e16aa"
+    },
+    {
+      "path": "additional_evidence.tex",
+      "bytes": 15046,
+      "sha256": "9f3488b9d090c5bfbce5d3eafbcc2b9d4486641fe5e19eea18b2d4c91ade86ae"
+    },
+    {
+      "path": "build.sh",
+      "bytes": 1375,
+      "sha256": "cada0d7f3ebf0c3f3f1a1b27557a200eba65d5596a77205ad6e9798ade567314"
+    },
+    {
+      "path": "closed_audits.tex",
+      "bytes": 2591,
+      "sha256": "dd120cfff450457a959e860c5616f425f16e7c04ed3275cec4de846b4b58a4a2"
+    },
+    {
+      "path": "common18_overview.tex",
+      "bytes": 1684,
+      "sha256": "223259f972c61f4d93acf2be409dd7a1868bae6ef8eb702cf27463c0d7582400"
+    },
+    {
+      "path": "d1_contrasts.tex",
+      "bytes": 4926,
+      "sha256": "82393866f7134b601c2f4fe3221ef283996eb8bb38a4132d80f3a2006e6fc8f1"
+    },
+    {
+      "path": "grounding_diagnostics.tex",
+      "bytes": 3916,
+      "sha256": "398507da693c923d4a664af4cca75d4ee9abbe2987e4c9c67c5cfaf48c42dcbf"
+    },
+    {
+      "path": "llm_evidence.tex",
+      "bytes": 8802,
+      "sha256": "7a87a535ef010b26dfa6381f9f9efa038e728d60cab7af0a3881934024730580"
+    },
+    {
+      "path": "main.bbl",
+      "bytes": 9671,
+      "sha256": "e903b0ea7807cd77d24ee92f3e16849381b43c2f63e5c7b9b99d95b122852d35"
+    },
+    {
+      "path": "main.tex",
+      "bytes": 60073,
+      "sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+    },
+    {
+      "path": "manuscript.pdf",
+      "bytes": 443871,
+      "sha256": "168984b1f2356d668cd3022e9b30d76b4da06d5fd79d43372515bd0b74589b2e"
+    },
+    {
+      "path": "orcidlink.sty",
+      "bytes": 2483,
+      "sha256": "f1a6b71cdd115d8024969da302c63c93c937f6de0d783657f96e92ccfed4aa69"
+    },
+    {
+      "path": "pipeline_figure.tex",
+      "bytes": 1088,
+      "sha256": "8693933108ff023468c019cee84b840702c8c7b7292a5a00284fdad23bddfb27"
+    },
+    {
+      "path": "preserved_results_details.tex",
+      "bytes": 10029,
+      "sha256": "5365f96a28dc561028c348e59826e1d6aacdeb45d89ca4355c65f093ca27124f"
+    },
+    {
+      "path": "ready_conditioned_rows.tex",
+      "bytes": 173,
+      "sha256": "73183524b2876899f50c0cfa43523ff3284e4d8ed9d85a7cc617c0fe6df00082"
+    },
+    {
+      "path": "reference_conventions.tex",
+      "bytes": 4715,
+      "sha256": "9bbb6d0ba4e7a72b23629c8dceb50bb640afb4f4c332731bd80dcefd2f50c7af"
+    },
+    {
+      "path": "references.bib",
+      "bytes": 23007,
+      "sha256": "f23df4073bbcb692bf9125070ea5ad3cc209ac4b4a90203fe3386acc8b1f7e75"
+    },
+    {
+      "path": "related_context.tex",
+      "bytes": 2325,
+      "sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e"
+    },
+    {
+      "path": "relationship_evidence.tex",
+      "bytes": 1349,
+      "sha256": "d3f361cb002332cd7e3bde582080ba30a257055a19e419dc3b9e2bf5950ce5de"
+    },
+    {
+      "path": "relationship_supplement.tex",
+      "bytes": 11154,
+      "sha256": "c9a91624bebe3b3cb45e4c53e597a62b4cc56e4ed1c49f992e3e93adafe4e151"
+    },
+    {
+      "path": "reproduction_map.tex",
+      "bytes": 8839,
+      "sha256": "0c2af600e1d47008efb7f59c64bde40d02eef80d13ebffe71975a6023f003000"
+    },
+    {
+      "path": "sn-basic.bst",
+      "bytes": 35515,
+      "sha256": "4b368414cc5593169907933b417aacfdb0ce905866a39bdf55d21aad65e9d46c"
+    },
+    {
+      "path": "sn-jnl.cls",
+      "bytes": 55857,
+      "sha256": "36d0c3273a59d48dc6a9c7b080dfa1ec50dc10229d8751568d1f2e490ffa5ecc"
+    },
+    {
+      "path": "supervision_diagnostics.tex",
+      "bytes": 4481,
+      "sha256": "d8994e82be3d4c94f4ffa1e8b0a6c3651f5205c13f774f5a2b9325cd9efe002a"
+    },
+    {
+      "path": "supplement.bbl",
+      "bytes": 9097,
+      "sha256": "8e44adc9032779147db2a31e5e86d22e9c7ced276823646f401abab23e4a347f"
+    },
+    {
+      "path": "supplement.tex",
+      "bytes": 14048,
+      "sha256": "aaea5e29cfd2acf2c70d1927aa380df5518dd7886f31239493e1ff1f02a20780"
+    },
+    {
+      "path": "supporting_core.tex",
+      "bytes": 4331,
+      "sha256": "98c6777ecebf37bc87a6bcb734d7a625188031038222cce91c28f5a92b842edf"
+    }
+  ],
+  "archive": "manuscript/jdsa-stage3/JDSA_Stage3_Submission_Source.zip",
+  "archive_sha256": "c15ec3caa3a44d1c8cb958e22d88996f496785f570c38d4b497fb28bd9d89be7",
+  "archive_bytes": 1012397,
+  "note": "After the successful extracted-source build, only the README report hyperlink was changed; all build inputs and PDFs remain identical."
+}

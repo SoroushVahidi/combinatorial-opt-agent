@@ -1,0 +1,308 @@
+{
+  "checked_at_utc": "2026-10-29T20:49:03.096521+00:00",
+  "method": "Anonymous GET; HTTP success alone does not verify bibliographic content",
+  "links": [
+    {
+      "url": "https://aclanthology.org/C04-1197/",
+      "http_status": 200,
+      "final_url": "https://aclanthology.org/C04-1197/",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://api.cohere.com/v2/chat",
+      "http_status": 401,
+      "final_url": "https://api.cohere.com/v2/chat",
+      "status": "NOT_INDEPENDENTLY_ACCESSIBLE"
+    },
+    {
+      "url": "https://api.intelligence.io.solutions/api/v1/chat/completions",
+      "http_status": 405,
+      "final_url": "https://api.intelligence.io.solutions/api/v1/chat/completions",
+      "status": "NOT_INDEPENDENTLY_ACCESSIBLE"
+    },
+    {
+      "url": "https://arxiv.org/abs/1807.03100",
+      "http_status": 200,
+      "final_url": "https://arxiv.org/abs/1807.03100",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://arxiv.org/abs/2403.01567",
+      "http_status": 200,
+      "final_url": "https://arxiv.org/abs/2403.01567",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://arxiv.org/abs/2504.16918",
+      "http_status": 200,
+      "final_url": "https://arxiv.org/abs/2504.16918",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://doi.org/10.1002/(SICI)1097-4571(199009)41:6<391::AID-ASI1>3.0.CO;2-9",
+      "http_status": 403,
+      "final_url": "https://onlinelibrary.wiley.com/doi/10.1002/(SICI)1097-4571(199009)41:6%3C391::AID-ASI1%3E3.0.CO;2-9",
+      "status": "NOT_INDEPENDENTLY_ACCESSIBLE"
+    },
+    {
+      "url": "https://doi.org/10.1002/nav.3800020109",
+      "http_status": 403,
+      "final_url": "https://onlinelibrary.wiley.com/doi/10.1002/nav.3800020109",
+      "status": "NOT_INDEPENDENTLY_ACCESSIBLE"
+    },
+    {
+      "url": "https://doi.org/10.1007/s00778-019-00567-8",
+      "http_status": 200,
+      "final_url": "https://link.springer.com/article/10.1007/s00778-019-00567-8",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://doi.org/10.1007/s10601-024-09376-5",
+      "http_status": 200,
+      "final_url": "https://link.springer.com/article/10.1007/s10601-024-09376-5",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://doi.org/10.1016/j.ait.2026.100059",
+      "http_status": 200,
+      "final_url": "https://linkinghub.elsevier.com/retrieve/pii/S3050860626000141",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://doi.org/10.1016/j.nlp.2025.100185",
+      "http_status": 200,
+      "final_url": "https://linkinghub.elsevier.com/retrieve/pii/S2949719125000615",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://doi.org/10.1145/3770855.3817974",
+      "http_status": 403,
+      "final_url": "https://dl.acm.org/doi/10.1145/3770855.3817974",
+      "status": "NOT_INDEPENDENTLY_ACCESSIBLE"
+    },
+    {
+      "url": "https://doi.org/10.1287/opre.2024.1233",
+      "http_status": 403,
+      "final_url": "https://pubsonline.informs.org/doi/10.1287/opre.2024.1233",
+      "status": "NOT_INDEPENDENTLY_ACCESSIBLE"
+    },
+    {
+      "url": "https://doi.org/10.1561/1500000019",
+      "http_status": 403,
+      "final_url": "https://www.emerald.com/ftinr/article/4/1-2/1/1326508/The-Probabilistic-Relevance-Framework-BM25-and",
+      "status": "NOT_INDEPENDENTLY_ACCESSIBLE"
+    },
+    {
+      "url": "https://doi.org/10.1609/aaai.v31i1.10959",
+      "http_status": 200,
+      "final_url": "https://ojs.aaai.org/index.php/AAAI/article/view/10959",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://doi.org/10.1609/aaai.v40i1.36983",
+      "http_status": 200,
+      "final_url": "https://ojs.aaai.org/index.php/AAAI/article/view/36983",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://doi.org/10.1609/aaai.v40i40.40699",
+      "http_status": 200,
+      "final_url": "https://ojs.aaai.org/index.php/AAAI/article/view/40699",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://doi.org/10.18653/v1/2020.acl-main.677",
+      "http_status": 200,
+      "final_url": "https://aclanthology.org/2020.acl-main.677/",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://doi.org/10.18653/v1/2021.emnlp-demo.21",
+      "http_status": 200,
+      "final_url": "https://aclanthology.org/2021.emnlp-demo.21/",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://doi.org/10.18653/v1/2021.emnlp-main.779",
+      "http_status": 200,
+      "final_url": "https://aclanthology.org/2021.emnlp-main.779/",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://doi.org/10.18653/v1/2021.naacl-main.105",
+      "http_status": 200,
+      "final_url": "https://aclanthology.org/2021.naacl-main.105/",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://doi.org/10.18653/v1/2022.emnlp-industry.4",
+      "http_status": 200,
+      "final_url": "https://aclanthology.org/2022.emnlp-industry.4/",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://doi.org/10.18653/v1/2023.emnlp-main.793",
+      "http_status": 200,
+      "final_url": "https://aclanthology.org/2023.emnlp-main.793/",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://doi.org/10.18653/v1/2024.findings-acl.137",
+      "http_status": 200,
+      "final_url": "https://aclanthology.org/2024.findings-acl.137/",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://doi.org/10.18653/v1/2024.naacl-industry.42",
+      "http_status": 200,
+      "final_url": "https://aclanthology.org/2024.naacl-industry.42/",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://doi.org/10.18653/v1/2026.acl-long.1975",
+      "http_status": 200,
+      "final_url": "https://aclanthology.org/2026.acl-long.1975/",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://doi.org/10.18653/v1/2026.acl-long.266",
+      "http_status": 200,
+      "final_url": "https://aclanthology.org/2026.acl-long.266/",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://doi.org/10.18653/v1/2026.findings-acl.102",
+      "http_status": 200,
+      "final_url": "https://aclanthology.org/2026.findings-acl.102/",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://doi.org/10.18653/v1/2026.findings-acl.690",
+      "http_status": 200,
+      "final_url": "https://aclanthology.org/2026.findings-acl.690/",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://doi.org/10.18653/v1/D17-1227",
+      "http_status": 200,
+      "final_url": "https://aclanthology.org/D17-1227/",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://doi.org/10.18653/v1/D18-1425",
+      "http_status": 200,
+      "final_url": "https://aclanthology.org/D18-1425/",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://doi.org/10.24963/ijcai.2025/296",
+      "http_status": 200,
+      "final_url": "https://ijcai.org/proceedings/2025/296",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://doi.org/10.52202/085713-3539",
+      "http_status": 200,
+      "final_url": "https://www.proceedings.com/085713-3539.html",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0",
+      "http_status": 200,
+      "final_url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/manuscript/jdsa-stage3-submission-audit-20261029/docs/jdsa_stage3_20261029",
+      "status": "PENDING_BRANCH_PUBLICATION"
+    },
+    {
+      "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/manuscript/jdsa-stage3-submission-audit-20261029/manuscript/jdsa-stage3",
+      "status": "PENDING_BRANCH_PUBLICATION"
+    },
+    {
+      "url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0",
+      "http_status": 200,
+      "final_url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://huggingface.co/datasets/udell-lab/NLP4LP",
+      "http_status": 200,
+      "final_url": "https://huggingface.co/datasets/udell-lab/NLP4LP",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://link.springer.com/journal/41060/submission-guidelines",
+      "http_status": 200,
+      "final_url": "https://link.springer.com/journal/41060/submission-guidelines",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://orcid.org/0000-0003-1934-6282",
+      "http_status": 200,
+      "final_url": "https://orcid.org/0000-0003-1934-6282",
+      "status": "JAVASCRIPT_OR_ACCESS_CHALLENGE"
+    },
+    {
+      "url": "https://proceedings.colm.cc/paper_files/paper/2026/hash/6feb9b30798abcfae937760d183605e1-Abstract-Conference.html",
+      "http_status": 200,
+      "final_url": "https://proceedings.colm.cc/paper_files/paper/2026/hash/6feb9b30798abcfae937760d183605e1-Abstract-Conference.html",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/d45ee77826332c100a1e15f7765b99ff-Abstract-Conference.html",
+      "http_status": 200,
+      "final_url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/d45ee77826332c100a1e15f7765b99ff-Abstract-Conference.html",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2025/file/fbe6dd68b0cf2b1d43b458d2b8ca31b0-Paper-Conference.pdf",
+      "http_status": 200,
+      "final_url": "https://proceedings.iclr.cc/paper_files/paper/2025/file/fbe6dd68b0cf2b1d43b458d2b8ca31b0-Paper-Conference.pdf",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://proceedings.mlr.press/v220/ramamonjison23a.html",
+      "http_status": 200,
+      "final_url": "https://proceedings.mlr.press/v220/ramamonjison23a.html",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://proceedings.mlr.press/v235/ahmaditeshnizi24a.html",
+      "http_status": 200,
+      "final_url": "https://proceedings.mlr.press/v235/ahmaditeshnizi24a.html",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://proceedings.mlr.press/v267/astorga25a.html",
+      "http_status": 200,
+      "final_url": "https://proceedings.mlr.press/v267/astorga25a.html",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://proceedings.mlr.press/v267/lu25o.html",
+      "http_status": 200,
+      "final_url": "https://proceedings.mlr.press/v267/lu25o.html",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://proceedings.mlr.press/v267/zhai25a.html",
+      "http_status": 200,
+      "final_url": "https://proceedings.mlr.press/v267/zhai25a.html",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://proceedings.mlr.press/v306/li26dz.html",
+      "http_status": 200,
+      "final_url": "https://proceedings.mlr.press/v306/li26dz.html",
+      "status": "HTTP_SUCCESS_ONLY"
+    },
+    {
+      "url": "https://www.jstor.org/stable/4615733",
+      "http_status": 200,
+      "final_url": "https://www.jstor.org/stable/4615733",
+      "status": "JAVASCRIPT_OR_ACCESS_CHALLENGE"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+\subsection{Structural Validity Across Recovery Stages}
+\label{app:relationship-overview}
+Three services judged the same 217 occurrence--declaration targets from 16 selected NL4Opt training problems. The four labels (CORRECT, INCORRECT, AMBIGUOUS, CANNOT\_DETERMINE) are assertions, not accepted human reference judgments. Table~\ref{tab:relationship-validity} separates original validity, offline repairs and historical replacements. The following protocol account specifies the changing treatment, complete-case populations and limits of semantic interpretation.
+
+\begin{table}[htbp]\centering\small
+\caption{Structural validity on the same 217 relationship targets per service. Final counts combine original-valid objects, deterministic offline repairs and historically generated valid replacements under a revised format. They are not single-pass or equal-treatment accuracy estimates. The counts are derived from archived responses.}\label{tab:relationship-validity}
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{@{}lrrrr@{}}\toprule
+Service/model family & Original valid & Offline repairs & Valid replacements & Final valid\\\midrule
+Vertex AI/Gemini & 215 & 2 & 0 & 217/217\\
+io.net/DeepSeek & 180 & 33 & 4 & 217/217\\
+Cohere/Command A & 105 & 24 & 68 & 197/217\\\midrule
+Total & 500 & 59 & 72 & 631/651\\\bottomrule
+\end{tabular}\end{table}

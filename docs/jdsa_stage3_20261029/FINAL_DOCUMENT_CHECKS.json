@@ -1,0 +1,989 @@
+{
+  "status": "PASS",
+  "build_dir": "/tmp/jdsa-build.EzbgRq",
+  "source_numeric_checks": [
+    {
+      "file": "ready_conditioned_rows.tex",
+      "pass": true,
+      "removed": {},
+      "added": {}
+    },
+    {
+      "file": "main.tex",
+      "pass": true,
+      "removed": {},
+      "added": {}
+    },
+    {
+      "file": "reproduction_map.tex",
+      "pass": true,
+      "removed": {},
+      "added": {}
+    },
+    {
+      "file": "reference_conventions.tex",
+      "pass": true,
+      "removed": {},
+      "added": {}
+    },
+    {
+      "file": "supervision_diagnostics.tex",
+      "pass": true,
+      "removed": {},
+      "added": {}
+    },
+    {
+      "file": "grounding_diagnostics.tex",
+      "pass": true,
+      "removed": {},
+      "added": {}
+    },
+    {
+      "file": "pipeline_figure.tex",
+      "pass": true,
+      "removed": {},
+      "added": {}
+    },
+    {
+      "file": "closed_audits.tex",
+      "pass": true,
+      "removed": {},
+      "added": {}
+    },
+    {
+      "file": "relationship_supplement.tex",
+      "pass": true,
+      "removed": {},
+      "added": {}
+    },
+    {
+      "file": "preserved_results_details.tex",
+      "pass": true,
+      "removed": {},
+      "added": {}
+    },
+    {
+      "file": "Fig1.tex",
+      "pass": true,
+      "removed": {},
+      "added": {}
+    },
+    {
+      "file": "supporting_core.tex",
+      "pass": true,
+      "removed": {},
+      "added": {}
+    },
+    {
+      "file": "common18_overview.tex",
+      "pass": true,
+      "removed": {},
+      "added": {}
+    },
+    {
+      "file": "supplement.tex",
+      "pass": true,
+      "removed": {},
+      "added": {}
+    },
+    {
+      "file": "llm_evidence.tex",
+      "pass": true,
+      "removed": {},
+      "added": {}
+    },
+    {
+      "file": "relationship_evidence.tex",
+      "pass": true,
+      "removed": {},
+      "added": {}
+    },
+    {
+      "file": "additional_evidence.tex",
+      "pass": true,
+      "removed": {},
+      "added": {}
+    },
+    {
+      "file": "d1_contrasts.tex",
+      "pass": true,
+      "removed": {},
+      "added": {}
+    },
+    {
+      "file": "related_context.tex",
+      "pass": true,
+      "removed": {},
+      "added": {}
+    }
+  ],
+  "documents": {
+    "main": {
+      "file": "manuscript.pdf",
+      "sha256": "168984b1f2356d668cd3022e9b30d76b4da06d5fd79d43372515bd0b74589b2e",
+      "bytes": 443871,
+      "pages": 15,
+      "metadata": {
+        "format": "PDF 1.5",
+        "title": "Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study",
+        "author": "Soroush Vahidi",
+        "subject": "Diagnostic study of retrieval-assisted scalar grounding",
+        "keywords": "natural language processing, optimization modeling, information retrieval, semantic grounding",
+        "creator": "LaTeX with hyperref",
+        "producer": "pdfTeX-1.40.25",
+        "creationDate": "D:20261029164845-04'00'",
+        "modDate": "D:20261029164845-04'00'",
+        "trapped": "",
+        "encryption": null
+      },
+      "catalog_language": [
+        "string",
+        "en-US"
+      ],
+      "outline_entries": 30,
+      "page_checks": [
+        {
+          "page": 1,
+          "page_number_found": true,
+          "text_words": 352,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 2,
+          "page_number_found": true,
+          "text_words": 572,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 3,
+          "page_number_found": true,
+          "text_words": 570,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 4,
+          "page_number_found": true,
+          "text_words": 564,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 5,
+          "page_number_found": true,
+          "text_words": 584,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 6,
+          "page_number_found": true,
+          "text_words": 591,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 7,
+          "page_number_found": true,
+          "text_words": 399,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 8,
+          "page_number_found": true,
+          "text_words": 579,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 9,
+          "page_number_found": true,
+          "text_words": 566,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 10,
+          "page_number_found": true,
+          "text_words": 525,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 11,
+          "page_number_found": true,
+          "text_words": 568,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 12,
+          "page_number_found": true,
+          "text_words": 561,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 13,
+          "page_number_found": true,
+          "text_words": 599,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 14,
+          "page_number_found": true,
+          "text_words": 449,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 15,
+          "page_number_found": true,
+          "text_words": 443,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        }
+      ],
+      "outside_media_box": [],
+      "unembedded_fonts": [],
+      "final_latex_diagnostics": [],
+      "bibtex_warnings": [],
+      "internal_link_count": 0,
+      "bad_internal_links": [],
+      "cross_document_links": [
+        {
+          "page": 3,
+          "target": "ESM_1.pdf#nameddest=table.4",
+          "pass": true
+        },
+        {
+          "page": 3,
+          "target": "ESM_1.pdf#nameddest=section.104",
+          "pass": true
+        },
+        {
+          "page": 4,
+          "target": "ESM_1.pdf#nameddest=subsection.31",
+          "pass": true
+        },
+        {
+          "page": 5,
+          "target": "ESM_1.pdf#nameddest=table.6",
+          "pass": true
+        },
+        {
+          "page": 7,
+          "target": "ESM_1.pdf#nameddest=subsection.26",
+          "pass": true
+        },
+        {
+          "page": 7,
+          "target": "ESM_1.pdf#nameddest=subsection.31",
+          "pass": true
+        },
+        {
+          "page": 7,
+          "target": "ESM_1.pdf#nameddest=table.17",
+          "pass": true
+        },
+        {
+          "page": 8,
+          "target": "ESM_1.pdf#nameddest=subsection.31",
+          "pass": true
+        },
+        {
+          "page": 9,
+          "target": "ESM_1.pdf#nameddest=section.9",
+          "pass": true
+        },
+        {
+          "page": 11,
+          "target": "ESM_1.pdf#nameddest=subsection.26",
+          "pass": true
+        },
+        {
+          "page": 11,
+          "target": "ESM_1.pdf#nameddest=subsection.63",
+          "pass": true
+        },
+        {
+          "page": 11,
+          "target": "ESM_1.pdf#nameddest=subsection.99",
+          "pass": true
+        },
+        {
+          "page": 12,
+          "target": "ESM_1.pdf#nameddest=section.40",
+          "pass": true
+        },
+        {
+          "page": 12,
+          "target": "ESM_1.pdf#nameddest=subsection.98",
+          "pass": true
+        },
+        {
+          "page": 12,
+          "target": "ESM_1.pdf#nameddest=subsection.74",
+          "pass": true
+        },
+        {
+          "page": 12,
+          "target": "ESM_1.pdf#nameddest=subsection.27",
+          "pass": true
+        },
+        {
+          "page": 12,
+          "target": "ESM_1.pdf#nameddest=subsection.31",
+          "pass": true
+        },
+        {
+          "page": 12,
+          "target": "ESM_1.pdf#nameddest=section.56",
+          "pass": true
+        },
+        {
+          "page": 12,
+          "target": "ESM_1.pdf#nameddest=subsection.72",
+          "pass": true
+        },
+        {
+          "page": 13,
+          "target": "ESM_1.pdf#nameddest=subsection.31",
+          "pass": true
+        }
+      ],
+      "uri_count": 29,
+      "uris": [
+        "https://aclanthology.org/C04-1197/",
+        "https://doi.org/10.1002/(SICI)1097-4571(199009)41:6<391::AID-ASI1>3.0.CO;2-9",
+        "https://doi.org/10.1002/nav.3800020109",
+        "https://doi.org/10.1007/s10601-024-09376-5",
+        "https://doi.org/10.1016/j.nlp.2025.100185",
+        "https://doi.org/10.1287/opre.2024.1233",
+        "https://doi.org/10.1561/1500000019",
+        "https://doi.org/10.1609/aaai.v31i1.10959",
+        "https://doi.org/10.1609/aaai.v40i40.40699",
+        "https://doi.org/10.18653/v1/2020.acl-main.677",
+        "https://doi.org/10.18653/v1/2021.emnlp-demo.21",
+        "https://doi.org/10.18653/v1/2021.emnlp-main.779",
+        "https://doi.org/10.18653/v1/2021.naacl-main.105",
+        "https://doi.org/10.18653/v1/2022.emnlp-industry.4",
+        "https://doi.org/10.18653/v1/2023.emnlp-main.793",
+        "https://doi.org/10.18653/v1/2024.findings-acl.137",
+        "https://doi.org/10.24963/ijcai.2025/296",
+        "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0",
+        "https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/manuscript/jdsa-stage3-submission-audit-20261029/docs/jdsa_stage3_20261029",
+        "https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/manuscript/jdsa-stage3-submission-audit-20261029/manuscript/jdsa-stage3",
+        "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0",
+        "https://huggingface.co/datasets/udell-lab/NLP4LP",
+        "https://orcid.org/0000-0003-1934-6282",
+        "https://proceedings.colm.cc/paper_files/paper/2026/hash/6feb9b30798abcfae937760d183605e1-Abstract-Conference.html",
+        "https://proceedings.mlr.press/v220/ramamonjison23a.html",
+        "https://proceedings.mlr.press/v235/ahmaditeshnizi24a.html",
+        "https://proceedings.mlr.press/v267/lu25o.html",
+        "https://proceedings.mlr.press/v267/zhai25a.html",
+        "https://www.jstor.org/stable/4615733"
+      ],
+      "replacement_characters": 0,
+      "log_sha256": "515ffb69e25b5202b32fe635eb9e2aaec7a14c0b185a2906c310c1f3efce50d7"
+    },
+    "supplement": {
+      "file": "ESM_1.pdf",
+      "sha256": "a664087bb3e07cf753e0ed90e8d8c5a7e3707197a81a144e29a3e443af6e2ac7",
+      "bytes": 435506,
+      "pages": 37,
+      "metadata": {
+        "format": "PDF 1.5",
+        "title": "Online Resource 1: Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study",
+        "author": "Soroush Vahidi",
+        "subject": "Supplementary evidence and reproduction boundaries",
+        "keywords": "natural language processing, optimization modeling, information retrieval, semantic grounding",
+        "creator": "LaTeX with hyperref",
+        "producer": "pdfTeX-1.40.25",
+        "creationDate": "D:20261029164845-04'00'",
+        "modDate": "D:20261029164845-04'00'",
+        "trapped": "",
+        "encryption": null
+      },
+      "catalog_language": [
+        "string",
+        "en-US"
+      ],
+      "outline_entries": 42,
+      "page_checks": [
+        {
+          "page": 1,
+          "page_number_found": true,
+          "text_words": 338,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 2,
+          "page_number_found": true,
+          "text_words": 503,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 3,
+          "page_number_found": true,
+          "text_words": 330,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 4,
+          "page_number_found": true,
+          "text_words": 217,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 5,
+          "page_number_found": true,
+          "text_words": 239,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 6,
+          "page_number_found": true,
+          "text_words": 263,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 7,
+          "page_number_found": true,
+          "text_words": 415,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 8,
+          "page_number_found": true,
+          "text_words": 336,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 9,
+          "page_number_found": true,
+          "text_words": 463,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 10,
+          "page_number_found": true,
+          "text_words": 341,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 11,
+          "page_number_found": true,
+          "text_words": 300,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 12,
+          "page_number_found": true,
+          "text_words": 432,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 13,
+          "page_number_found": true,
+          "text_words": 435,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 14,
+          "page_number_found": true,
+          "text_words": 315,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 15,
+          "page_number_found": true,
+          "text_words": 317,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 16,
+          "page_number_found": true,
+          "text_words": 385,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 17,
+          "page_number_found": true,
+          "text_words": 332,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 18,
+          "page_number_found": true,
+          "text_words": 326,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 19,
+          "page_number_found": true,
+          "text_words": 267,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 20,
+          "page_number_found": true,
+          "text_words": 464,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 21,
+          "page_number_found": true,
+          "text_words": 323,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 22,
+          "page_number_found": true,
+          "text_words": 408,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 23,
+          "page_number_found": true,
+          "text_words": 286,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 24,
+          "page_number_found": true,
+          "text_words": 483,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 25,
+          "page_number_found": true,
+          "text_words": 461,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 26,
+          "page_number_found": true,
+          "text_words": 399,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 27,
+          "page_number_found": true,
+          "text_words": 269,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 28,
+          "page_number_found": true,
+          "text_words": 279,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 29,
+          "page_number_found": true,
+          "text_words": 372,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 30,
+          "page_number_found": true,
+          "text_words": 307,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 31,
+          "page_number_found": true,
+          "text_words": 388,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 32,
+          "page_number_found": true,
+          "text_words": 370,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 33,
+          "page_number_found": true,
+          "text_words": 418,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 34,
+          "page_number_found": true,
+          "text_words": 377,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 35,
+          "page_number_found": true,
+          "text_words": 301,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 36,
+          "page_number_found": true,
+          "text_words": 335,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        },
+        {
+          "page": 37,
+          "page_number_found": true,
+          "text_words": 285,
+          "size_pt": [
+            595.2760009765625,
+            841.8900146484375
+          ]
+        }
+      ],
+      "outside_media_box": [],
+      "unembedded_fonts": [],
+      "final_latex_diagnostics": [],
+      "bibtex_warnings": [],
+      "internal_link_count": 0,
+      "bad_internal_links": [],
+      "cross_document_links": [
+        {
+          "page": 5,
+          "target": "manuscript.pdf#nameddest=subsection.38",
+          "pass": true
+        },
+        {
+          "page": 5,
+          "target": "manuscript.pdf#nameddest=equation.27",
+          "pass": true
+        },
+        {
+          "page": 5,
+          "target": "manuscript.pdf#nameddest=subsection.38",
+          "pass": true
+        },
+        {
+          "page": 6,
+          "target": "manuscript.pdf#nameddest=table.42",
+          "pass": true
+        },
+        {
+          "page": 7,
+          "target": "manuscript.pdf#nameddest=subsection.37",
+          "pass": true
+        },
+        {
+          "page": 7,
+          "target": "manuscript.pdf#nameddest=table.56",
+          "pass": true
+        },
+        {
+          "page": 7,
+          "target": "manuscript.pdf#nameddest=subsubsection.54",
+          "pass": true
+        },
+        {
+          "page": 12,
+          "target": "manuscript.pdf#nameddest=equation.28",
+          "pass": true
+        },
+        {
+          "page": 12,
+          "target": "manuscript.pdf#nameddest=equation.29",
+          "pass": true
+        },
+        {
+          "page": 13,
+          "target": "manuscript.pdf#nameddest=subsection.60",
+          "pass": true
+        },
+        {
+          "page": 26,
+          "target": "manuscript.pdf#nameddest=table.42",
+          "pass": true
+        }
+      ],
+      "uri_count": 31,
+      "uris": [
+        "https://api.cohere.com/v2/chat",
+        "https://api.intelligence.io.solutions/api/v1/chat/completions",
+        "https://arxiv.org/abs/1807.03100",
+        "https://arxiv.org/abs/2403.01567",
+        "https://arxiv.org/abs/2504.16918",
+        "https://doi.org/10.1007/s00778-019-00567-8",
+        "https://doi.org/10.1016/j.ait.2026.100059",
+        "https://doi.org/10.1016/j.nlp.2025.100185",
+        "https://doi.org/10.1145/3770855.3817974",
+        "https://doi.org/10.1287/opre.2024.1233",
+        "https://doi.org/10.1609/aaai.v40i1.36983",
+        "https://doi.org/10.1609/aaai.v40i40.40699",
+        "https://doi.org/10.18653/v1/2024.naacl-industry.42",
+        "https://doi.org/10.18653/v1/2026.acl-long.1975",
+        "https://doi.org/10.18653/v1/2026.acl-long.266",
+        "https://doi.org/10.18653/v1/2026.findings-acl.102",
+        "https://doi.org/10.18653/v1/2026.findings-acl.690",
+        "https://doi.org/10.18653/v1/D17-1227",
+        "https://doi.org/10.18653/v1/D18-1425",
+        "https://doi.org/10.24963/ijcai.2025/296",
+        "https://doi.org/10.52202/085713-3539",
+        "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0",
+        "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0",
+        "https://orcid.org/0000-0003-1934-6282",
+        "https://proceedings.iclr.cc/paper_files/paper/2024/hash/d45ee77826332c100a1e15f7765b99ff-Abstract-Conference.html",
+        "https://proceedings.iclr.cc/paper_files/paper/2025/file/fbe6dd68b0cf2b1d43b458d2b8ca31b0-Paper-Conference.pdf",
+        "https://proceedings.mlr.press/v235/ahmaditeshnizi24a.html",
+        "https://proceedings.mlr.press/v267/astorga25a.html",
+        "https://proceedings.mlr.press/v267/lu25o.html",
+        "https://proceedings.mlr.press/v306/li26dz.html",
+        "https://www.jstor.org/stable/4615733"
+      ],
+      "replacement_characters": 0,
+      "log_sha256": "881e9035ad9bf9be8d85c069c1919e7d4565e6cd70d87f0559bac92bb3cc367c"
+    }
+  },
+  "uncited_numbered_objects": [],
+  "placeholder_matches": [],
+  "cited_keys": [
+    "affolter2019nli",
+    "ahmaditeshnizi2024optimus_icml",
+    "ahmed2025opt2code",
+    "almasian2023cqe",
+    "astorga2025autoformulation",
+    "chen2024m3embedding",
+    "chen2025solver",
+    "deerwester1990lsa",
+    "deng2021strug",
+    "ding2026orr1",
+    "gao2026models",
+    "holm1979followup",
+    "huang2017beamfollowup",
+    "huang2025orlm",
+    "jiang2025llmopt",
+    "kadioglu2024ner4opt",
+    "kong2025alphaopt",
+    "kuhn1955assignment",
+    "lhoest2021datasets",
+    "li2026solver",
+    "lu2025optmath",
+    "miplibnl2026",
+    "nlp4lp_dataset",
+    "pan2025pamop",
+    "pedregosa2011sklearn",
+    "punyakanok2004ilp",
+    "ramamonjison2022autoformulation",
+    "ramamonjison2023nl4opt",
+    "robertson2009bm25",
+    "roy2017udg",
+    "scholak2021picard",
+    "wang2020ratsql",
+    "xiao2024chainofexperts",
+    "xiao2026deepor",
+    "xie2026escaping",
+    "yang2026orthought",
+    "yu2018spider",
+    "yu2026uncertainty",
+    "zhai2025equivamap",
+    "zhang2024optllm",
+    "zhang2026dual"
+  ],
+  "all_bibliography_entries": [
+    "robertson2009bm25",
+    "deerwester1990lsa",
+    "pedregosa2011sklearn",
+    "lhoest2021datasets",
+    "nlp4lp_dataset",
+    "ramamonjison2022autoformulation",
+    "ramamonjison2023nl4opt",
+    "ahmaditeshnizi2024optimus_icml",
+    "zhang2024optllm",
+    "kadioglu2024ner4opt",
+    "ahmed2025opt2code",
+    "biemans2025explainableoptimization",
+    "powell2025scheduling_explanations",
+    "xiao2024chainofexperts",
+    "jiang2025llmopt",
+    "pan2025pamop",
+    "huang2025orlm",
+    "lu2025optmath",
+    "xiao2026deepor",
+    "affolter2019nli",
+    "yu2018spider",
+    "sheetrit2024rematch",
+    "astorga2025autoformulation",
+    "ding2026orr1",
+    "rizzi2025conceptual",
+    "atzeni2026semantic",
+    "miplibnl2026",
+    "zhai2025equivamap",
+    "chen2025solver",
+    "gao2026models",
+    "chen2024m3embedding",
+    "yu2026uncertainty",
+    "xie2026escaping",
+    "li2026solver",
+    "zhang2026dual",
+    "thind2025optimai",
+    "kong2025alphaopt",
+    "yang2026orthought",
+    "holm1979followup",
+    "huang2017beamfollowup",
+    "deng2021strug",
+    "roy2017udg",
+    "punyakanok2004ilp",
+    "almasian2023cqe",
+    "wang2018execution",
+    "wang2020ratsql",
+    "scholak2021picard",
+    "kuhn1955assignment"
+  ],
+  "uncited_bib_entries": [
+    "atzeni2026semantic",
+    "biemans2025explainableoptimization",
+    "powell2025scheduling_explanations",
+    "rizzi2025conceptual",
+    "sheetrit2024rematch",
+    "thind2025optimai",
+    "wang2018execution"
+  ],
+  "abstract_words": 222,
+  "keyword_count": 6
+}

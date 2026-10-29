@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "unpacked_directory": "/tmp/jdsa-stage3-unpacked.yy9gxh9y",
+  "command": "sh build.sh",
+  "documents": {
+    "manuscript.pdf": {
+      "pages": 15,
+      "all_page_pixels_identical_at_105dpi": true,
+      "delivered_sha256": "168984b1f2356d668cd3022e9b30d76b4da06d5fd79d43372515bd0b74589b2e",
+      "rebuilt_sha256": "8c5d259e8dd780e924e7d9b801df71776702b5b5666bfd963031adb04a55a932"
+    },
+    "ESM_1.pdf": {
+      "pages": 37,
+      "all_page_pixels_identical_at_105dpi": true,
+      "delivered_sha256": "a664087bb3e07cf753e0ed90e8d8c5a7e3707197a81a144e29a3e443af6e2ac7",
+      "rebuilt_sha256": "6e68ba8f8208232635eff42a25d30bd7982ee045ca41aaba23c1295451be7c3c"
+    }
+  },
+  "note": "PDF byte hashes can differ because creation times and IDs are generated at build time; all rendered pages must match."
+}

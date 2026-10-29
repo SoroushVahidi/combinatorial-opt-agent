@@ -1,0 +1,19 @@
+{
+  "checked_at_utc": "2026-10-29T20:55:02.972816+00:00",
+  "baseline_refs": {
+    "HEAD": "60785b0d144365413dd3b44b577bff901043ddd7",
+    "main": "a3f0dde397341a41842a30ddb946e7966706351b",
+    "manuscript/jdsa-stage2-scientific-restructure-20261029": "60785b0d144365413dd3b44b577bff901043ddd7"
+  },
+  "remote_refs": [
+    "60785b0d144365413dd3b44b577bff901043ddd7\trefs/heads/manuscript/jdsa-stage2-scientific-restructure-20261029",
+    "209fa982c0a0e2087bd021cbc7a9f57d94256c8f\trefs/tags/jdsa-evidence-v2.0.0"
+  ],
+  "tracked_baseline_changes": [],
+  "new_paths": [
+    "docs/jdsa_stage3_20261029/",
+    "manuscript/jdsa-stage3/"
+  ],
+  "flat_archive_integrity_and_current_source_hashes": "PASS",
+  "no_journal_submission": true
+}

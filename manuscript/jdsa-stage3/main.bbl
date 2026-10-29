@@ -1,0 +1,180 @@
+\begin{thebibliography}{25}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{\url{https://doi.org/#1}}
+\providecommand{\eprint}[2][]{\url{#2}}
+ \bibcommenthead
+
+\bibitem[{AhmadiTeshnizi et~al.(2024{\natexlab{a}})AhmadiTeshnizi, Gao, and
+  Udell}]{nlp4lp_dataset}
+AhmadiTeshnizi A, Gao W, Udell M (2024{\natexlab{a}}) {NLP4LP}: A dataset for
+  natural language to linear programming and mixed-integer linear programming.
+  Hugging Face dataset repository,
+  \urlprefix\url{https://huggingface.co/datasets/udell-lab/NLP4LP}, released
+  with OptiMUS (ICML 2024); gated dataset
+
+\bibitem[{AhmadiTeshnizi et~al.(2024{\natexlab{b}})AhmadiTeshnizi, Gao, and
+  Udell}]{ahmaditeshnizi2024optimus_icml}
+AhmadiTeshnizi A, Gao W, Udell M (2024{\natexlab{b}}) {OptiMUS}: Scalable
+  optimization modeling with {(MI)LP} solvers and large language models. In:
+  Proceedings of the 41st International Conference on Machine Learning,
+  Proceedings of Machine Learning Research, vol 235. PMLR, pp 577--596,
+  \urlprefix\url{https://proceedings.mlr.press/v235/ahmaditeshnizi24a.html}
+
+\bibitem[{Ahmed and Choudhury(2025)}]{ahmed2025opt2code}
+Ahmed T, Choudhury S (2025) {OPT2CODE}: A retrieval-augmented framework for
+  solving linear programming problems. Natural Language Processing Journal
+  13:100185. \doi{10.1016/j.nlp.2025.100185}
+
+\bibitem[{Almasian et~al.(2023)Almasian, Kazakova, G{\"o}ldner, and
+  Gertz}]{almasian2023cqe}
+Almasian S, Kazakova V, G{\"o}ldner P, et~al (2023) {CQE}: A comprehensive
+  quantity extractor. In: Proceedings of the 2023 Conference on Empirical
+  Methods in Natural Language Processing, pp 12845--12859,
+  \doi{10.18653/v1/2023.emnlp-main.793}
+
+\bibitem[{Chen et~al.(2024)Chen, Xiao, Zhang, Luo, Lian, and
+  Liu}]{chen2024m3embedding}
+Chen J, Xiao S, Zhang P, et~al (2024) {M3-Embedding}: Multi-linguality,
+  multi-functionality, multi-granularity text embeddings through self-knowledge
+  distillation. In: Findings of the Association for Computational Linguistics:
+  ACL 2024. Association for Computational Linguistics, pp 2318--2335,
+  \doi{10.18653/v1/2024.findings-acl.137}
+
+\bibitem[{Deerwester et~al.(1990)Deerwester, Dumais, Furnas, Landauer, and
+  Harshman}]{deerwester1990lsa}
+Deerwester S, Dumais ST, Furnas GW, et~al (1990) Indexing by latent semantic
+  analysis. Journal of the American Society for Information Science
+  41(6):391--407.
+  \doi{10.1002/(SICI)1097-4571(199009)41:6<391::AID-ASI1>3.0.CO;2-9}
+
+\bibitem[{Deng et~al.(2021)Deng, Awadallah, Meek, Polozov, Sun, and
+  Richardson}]{deng2021strug}
+Deng X, Awadallah AH, Meek C, et~al (2021) Structure-grounded pretraining for
+  text-to-{SQL}. In: Proceedings of the 2021 Conference of the North American
+  Chapter of the Association for Computational Linguistics: Human Language
+  Technologies, pp 1337--1350, \doi{10.18653/v1/2021.naacl-main.105}
+
+\bibitem[{Gao et~al.(2026)Gao, Ge, Berenbeim, Bastian, and
+  Sala}]{gao2026models}
+Gao Z, Ge A, Berenbeim AM, et~al (2026) Models can model, but can't bind:
+  Structured grounding in text-to-optimization. In: Conference on Language
+  Models,
+  \urlprefix\url{https://proceedings.colm.cc/paper_files/paper/2026/hash/6feb9b30798abcfae937760d183605e1-Abstract-Conference.html},
+  official COLM 2026 pre-proceedings; DOI not yet assigned
+
+\bibitem[{Holm(1979)}]{holm1979followup}
+Holm S (1979) A simple sequentially rejective multiple test procedure.
+  Scandinavian Journal of Statistics 6(2):65--70.
+  \urlprefix\url{https://www.jstor.org/stable/4615733}
+
+\bibitem[{Huang et~al.(2025)Huang, Tang, Hu, Jiang, Zheng, Ge, Wang, and
+  Wang}]{huang2025orlm}
+Huang C, Tang Z, Hu S, et~al (2025) {ORLM}: A customizable framework in
+  training large models for automated optimization modeling. Operations
+  Research 73(6):2986--3009. \doi{10.1287/opre.2024.1233}
+
+\bibitem[{Kad{\i}o{\u g}lu et~al.(2024)Kad{\i}o{\u g}lu, Dakle, Uppuluri,
+  Politi, Raghavan, Rallabandi, and Srinivasamurthy}]{kadioglu2024ner4opt}
+Kad{\i}o{\u g}lu S, Dakle PP, Uppuluri K, et~al (2024) {Ner4Opt}: Named entity
+  recognition for optimization modelling from natural language. Constraints
+  29(3--4):261--299. \doi{10.1007/s10601-024-09376-5}
+
+\bibitem[{Kuhn(1955)}]{kuhn1955assignment}
+Kuhn HW (1955) The hungarian method for the assignment problem. Naval Research
+  Logistics Quarterly 2(1--2):83--97. \doi{10.1002/nav.3800020109}
+
+\bibitem[{Lhoest et~al.(2021)Lhoest, Villanova~del Moral, Jernite, Thakur, von
+  Platen, Patil, Chaumond, Drame, Plu, Tunstall et~al.}]{lhoest2021datasets}
+Lhoest Q, Villanova~del Moral A, Jernite Y, et~al (2021) Datasets: A community
+  library for natural language processing. In: Proceedings of the 2021
+  Conference on Empirical Methods in Natural Language Processing: System
+  Demonstrations, pp 175--184, \doi{10.18653/v1/2021.emnlp-demo.21}
+
+\bibitem[{Lu et~al.(2025)Lu, Xie, Wu, Ren, Chen, and Wen}]{lu2025optmath}
+Lu H, Xie Z, Wu Y, et~al (2025) {OptMATH}: A scalable bidirectional data
+  synthesis framework for optimization modeling. In: Proceedings of the 42nd
+  International Conference on Machine Learning ({ICML} 2025), Proceedings of
+  Machine Learning Research, vol 267. PMLR, pp 40769--40802,
+  \urlprefix\url{https://proceedings.mlr.press/v267/lu25o.html}
+
+\bibitem[{Pan et~al.(2025)Pan, Fang, Wu, Zhang, Hu, Li, and Li}]{pan2025pamop}
+Pan X, Fang J, Wu F, et~al (2025) Guiding large language models in modeling
+  optimization problems via question partitioning. In: Proceedings of the
+  Thirty-Fourth International Joint Conference on Artificial Intelligence
+  ({IJCAI}-25), pp 2657--2665, \doi{10.24963/ijcai.2025/296}
+
+\bibitem[{Pedregosa et~al.(2011)Pedregosa, Varoquaux, Gramfort, Michel,
+  Thirion, Grisel, Blondel, Prettenhofer, Weiss, Dubourg, VanderPlas, Passos,
+  Cournapeau, Brucher, Perrot, and Duchesnay}]{pedregosa2011sklearn}
+Pedregosa F, Varoquaux G, Gramfort A, et~al (2011) Scikit-learn: Machine
+  learning in {P}ython. Journal of Machine Learning Research 12:2825--2830
+
+\bibitem[{Punyakanok et~al.(2004)Punyakanok, Roth, Yih, and
+  Zimak}]{punyakanok2004ilp}
+Punyakanok V, Roth D, Yih Wt, et~al (2004) Semantic role labeling via integer
+  linear programming inference. In: COLING 2004: Proceedings of the 20th
+  International Conference on Computational Linguistics, pp 1346--1352,
+  \urlprefix\url{https://aclanthology.org/C04-1197/}
+
+\bibitem[{Ramamonjison et~al.(2022{\natexlab{a}})Ramamonjison, Li, Yu, He,
+  Rengan, Banitalebi-Dehkordi, Zhou, and
+  Zhang}]{ramamonjison2022autoformulation}
+Ramamonjison R, Li H, Yu T, et~al (2022{\natexlab{a}}) Augmenting operations
+  research with auto-formulation of optimization models from problem
+  descriptions. In: Proceedings of the 2022 Conference on Empirical Methods in
+  Natural Language Processing: Industry Track. Association for Computational
+  Linguistics, pp 29--62, \doi{10.18653/v1/2022.emnlp-industry.4}
+
+\bibitem[{Ramamonjison et~al.(2022{\natexlab{b}})Ramamonjison, Yu, Li, Li,
+  Carenini, Ghaddar, He, Mostajabdaveh, Banitalebi-Dehkordi, Zhou, and
+  Zhang}]{ramamonjison2023nl4opt}
+Ramamonjison R, Yu T, Li R, et~al (2022{\natexlab{b}}) {NL4Opt} competition:
+  Formulating optimization problems based on their natural language
+  descriptions. In: Proceedings of the NeurIPS 2022 Competitions Track,
+  Proceedings of Machine Learning Research, vol 220. PMLR, pp 189--203,
+  \urlprefix\url{https://proceedings.mlr.press/v220/ramamonjison23a.html},
+  publisher citation year 2022; proceedings PDF masthead 2023
+
+\bibitem[{Robertson and Zaragoza(2009)}]{robertson2009bm25}
+Robertson S, Zaragoza H (2009) The probabilistic relevance framework: {BM25}
+  and beyond. Foundations and Trends in Information Retrieval 3(4):333--389.
+  \doi{10.1561/1500000019}
+
+\bibitem[{Roy and Roth(2017)}]{roy2017udg}
+Roy S, Roth D (2017) Unit dependency graph and its application to arithmetic
+  word problem solving. In: Proceedings of the AAAI Conference on Artificial
+  Intelligence, \doi{10.1609/aaai.v31i1.10959}
+
+\bibitem[{Scholak et~al.(2021)Scholak, Schucher, and
+  Bahdanau}]{scholak2021picard}
+Scholak T, Schucher N, Bahdanau D (2021) {PICARD}: Parsing incrementally for
+  constrained auto-regressive decoding from language models. In: Proceedings of
+  the 2021 Conference on Empirical Methods in Natural Language Processing.
+  Association for Computational Linguistics, pp 9895--9901,
+  \doi{10.18653/v1/2021.emnlp-main.779}
+
+\bibitem[{Wang et~al.(2020)Wang, Shin, Liu, Polozov, and
+  Richardson}]{wang2020ratsql}
+Wang B, Shin R, Liu X, et~al (2020) {RAT-SQL}: Relation-aware schema encoding
+  and linking for text-to-{SQL} parsers. In: Proceedings of the 58th Annual
+  Meeting of the Association for Computational Linguistics. Association for
+  Computational Linguistics, pp 7567--7578, \doi{10.18653/v1/2020.acl-main.677}
+
+\bibitem[{Xiao et~al.(2026)Xiao, Wang, Han, Guan, Zhu, Xie, Xu, Wu, Yu, Liu,
+  Fu, Chen, and Zhang}]{xiao2026deepor}
+Xiao Z, Wang YJ, Han X, et~al (2026) {DeepOR}: A deep reasoning foundation
+  model for optimization modeling. In: Proceedings of the Fortieth AAAI
+  Conference on Artificial Intelligence ({AAAI}-26), pp 34052--34060,
+  \doi{10.1609/aaai.v40i40.40699}
+
+\bibitem[{Zhai et~al.(2025)Zhai, Lawless, Vitercik, and
+  Leqi}]{zhai2025equivamap}
+Zhai H, Lawless C, Vitercik E, et~al (2025) {E}quiva{M}ap: Leveraging {LLM}s
+  for automatic equivalence checking of optimization formulations. In:
+  Proceedings of the 42nd International Conference on Machine Learning (ICML),
+  Proceedings of Machine Learning Research, vol 267. PMLR, pp 74288--74305,
+  \urlprefix\url{https://proceedings.mlr.press/v267/zhai25a.html}
+
+\end{thebibliography}

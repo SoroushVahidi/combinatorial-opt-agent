@@ -1,0 +1,75 @@
+[
+  {
+    "key": "ramamonjison2022autoformulation",
+    "before": "Ramamonjison, Rindranirina",
+    "after": "Ramamonjison, Rindra",
+    "reason": "Use the name printed in the ACL paper and publisher record."
+  },
+  {
+    "key": "ramamonjison2022autoformulation",
+    "before": "Yu, Timothy T. L.",
+    "after": "Yu, Timothy",
+    "reason": "Use the name printed in this paper, without unsupported additional initials."
+  },
+  {
+    "key": "kadioglu2024ner4opt",
+    "before": "Kadioglu, Serdar",
+    "after": "Kad{\\i}o{\\u g}lu, Serdar",
+    "reason": "Restore Turkish diacritics from publisher-deposited metadata."
+  },
+  {
+    "key": "deng2021strug",
+    "before": "Hassan Awadallah, Ahmed",
+    "after": "Awadallah, Ahmed Hassan",
+    "reason": "Match the ACL BibTeX family/given-name fields; preserve all three name components."
+  },
+  {
+    "key": "deng2021strug",
+    "before": "Proceedings of NAACL-HLT",
+    "after": "Proceedings of the 2021 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies",
+    "reason": "Use the verified full proceedings title."
+  },
+  {
+    "key": "almasian2023cqe",
+    "before": "Proceedings of EMNLP",
+    "after": "Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing",
+    "reason": "Use the verified full proceedings title."
+  },
+  {
+    "key": "punyakanok2004ilp",
+    "before": "Proceedings of COLING",
+    "after": "COLING 2004: Proceedings of the 20th International Conference on Computational Linguistics",
+    "reason": "Use the verified full proceedings title."
+  },
+  {
+    "key": "chen2025solver",
+    "before": "volume = {38},",
+    "after": "volume = {38}, pages = {106027--106069},",
+    "reason": "Add page range supplied in the official NeurIPS proceedings metadata; retain conference year 2025."
+  },
+  {
+    "keys": [
+      "lhoest2021datasets",
+      "ramamonjison2022autoformulation",
+      "zhang2024optllm",
+      "ahmed2025opt2code",
+      "biemans2025explainableoptimization",
+      "powell2025scheduling_explanations",
+      "pan2025pamop",
+      "yu2018spider",
+      "sheetrit2024rematch",
+      "chen2025solver",
+      "kong2025alphaopt",
+      "yang2026orthought",
+      "huang2017beamfollowup",
+      "deng2021strug",
+      "roy2017udg",
+      "almasian2023cqe",
+      "wang2018execution",
+      "wang2020ratsql",
+      "scholak2021picard",
+      "kuhn1955assignment"
+    ],
+    "reason": "Suppress redundant publisher URL fields when a full DOI link is already printed. Primary verification URLs remain in the audit ledger and baseline bibliography. This removes a nearly empty final reference page without changing margins or type size."
+  }
+]

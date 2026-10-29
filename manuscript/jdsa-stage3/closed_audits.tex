@@ -1,0 +1,17 @@
+The G1--G3 audits were bounded source/record investigations and produced no experimental predictions. G1 found missing validated autonomous slot discovery; G2 distinguished slot participation from mention-candidate filtering. For G3, let $P_{\mathrm{scalar}}(\hat{s})$ select only metadata entries whose declared shape is empty. Table~\ref{tab:g3-inventory} compares $K_G\cap P_{\mathrm{scalar}}$ against $P_{\mathrm{scalar}}$ using saved TF--IDF IDs, without running a decoder.
+
+\begin{table}[htbp]\centering\small
+\caption{Static G3 inventory accounting on 331 saved TF--IDF records; these are set counts, not performance outcomes.}\label{tab:g3-inventory}
+\begin{tabularx}{\linewidth}{@{}Xr@{}}\toprule
+Measure & Count\\\midrule
+Equal / different participation sets &301 /30\\
+Additional schema-slot occurrences &134\\
+Gold slots absent from predicted scalar metadata &172 /1847\\
+Changed cases missing required gold keys in both conditions &29\\
+Changed case without numeric scalar references &1\\
+Cases where strict metadata-scalar A differs from original fallback A &7\\\bottomrule
+\end{tabularx}\end{table}
+
+The original implementation intersects $K_G$ with all metadata keys, falling back to reference parameter keys; it does not first restrict shapes. Its saved slot counts sum to 1705, whereas strict metadata scalars give 1675, differing by 30 slots in seven cases. These baseline definitions cannot be interchanged. The changed cases add 134 occurrences: 132 keys are unannotated in the query reference, and two have symbolic string values. Their correctness is unknown, not automatically false. Whole-key success cannot distinguish the two conditions in 29 changed cases because both lack required keys; the remaining case cannot certify numeric scalar success. Equal-set cases supply no intervention under identical deterministic ordering. This is structural identifiability, not a measured zero effect or evidence of equivalence.
+
+Only query 102 is both a changed case, a schema hit and a source of shared numeric targets (three). Its metadata/reference names differ and existing percentage conventions are inconsistent. Wrong-schema shared names do not certify shared semantics. Added slots could compete for mentions under no reuse, but that mechanical possibility does not supply an informative performance study here. All 49 prior primary factorial cases have equal sets. No 10--20-case preflight or new 331-case run was executed or recommended. The closed audit preserves per-case inventories, hashes and exact denominators; no algorithm or reference repair was applied.

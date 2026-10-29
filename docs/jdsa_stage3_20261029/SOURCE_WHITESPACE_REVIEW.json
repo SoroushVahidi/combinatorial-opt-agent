@@ -1,0 +1,14 @@
+{
+  "note": "Non-rendering whitespace diagnostics retained in vendor files, generated evidence, patch context and two prose line endings. No compilation or visual overflow is implied. Vendor class/style bytes were preserved.",
+  "diagnostics_by_file": {
+    "docs/jdsa_stage3_20261029/EDITORIAL_DIFF.patch": 103,
+    "docs/jdsa_stage3_20261029/VISUAL_PAGE_REVIEW.csv": 53,
+    "docs/jdsa_stage3_20261029/build_logs/Fig1.log": 2,
+    "docs/jdsa_stage3_20261029/build_logs/main.log": 6,
+    "docs/jdsa_stage3_20261029/build_logs/supplement.log": 5,
+    "manuscript/jdsa-stage3/orcidlink.sty": 3,
+    "manuscript/jdsa-stage3/sn-basic.bst": 5,
+    "manuscript/jdsa-stage3/sn-jnl.cls": 1,
+    "manuscript/jdsa-stage3/supplement.tex": 2
+  }
+}

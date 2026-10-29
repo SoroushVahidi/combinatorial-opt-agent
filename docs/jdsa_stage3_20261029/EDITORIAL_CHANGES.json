@@ -1,0 +1,462 @@
+[
+  {
+    "file": "main.tex",
+    "before": "%% JDSA Stage 2",
+    "after": "%% JDSA Stage 3",
+    "reason": "Identify the isolated editorial version.",
+    "occurrences": 1
+  },
+  {
+    "file": "main.tex",
+    "before": "\\hypersetup{hypertexnames=false}",
+    "after": "\\hypersetup{hypertexnames=false,\n  pdftitle={Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study},\n  pdfauthor={Soroush Vahidi},\n  pdfsubject={Diagnostic study of retrieval-assisted scalar grounding},\n  pdfkeywords={natural language processing, optimization modeling, information retrieval, semantic grounding},\n  pdflang={en-US}}",
+    "reason": "Populate previously blank PDF metadata and identify document language.",
+    "occurrences": 1
+  },
+  {
+    "file": "supplement.tex",
+    "before": "%% JDSA Stage 2",
+    "after": "%% JDSA Stage 3",
+    "reason": "Identify the isolated editorial version.",
+    "occurrences": 1
+  },
+  {
+    "file": "supplement.tex",
+    "before": "\\hypersetup{hypertexnames=false}",
+    "after": "\\hypersetup{hypertexnames=false,\n  pdftitle={Online Resource 1: Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study},\n  pdfauthor={Soroush Vahidi},\n  pdfsubject={Supplementary evidence and reproduction boundaries},\n  pdfkeywords={natural language processing, optimization modeling, information retrieval, semantic grounding},\n  pdflang={en-US}}",
+    "reason": "Populate previously blank PDF metadata and identify document language.",
+    "occurrences": 1
+  },
+  {
+    "file": "main.tex",
+    "before": "and off-the-shelf BGE-M3 supply",
+    "after": "and the pretrained BGE-M3 encoder supply",
+    "reason": "Use neutral academic wording.",
+    "occurrences": 1
+  },
+  {
+    "file": "main.tex",
+    "before": "BM25, TF--IDF cosine retrieval, latent semantic analysis",
+    "after": "BM25, term frequency--inverse document frequency (TF--IDF) cosine retrieval, latent semantic analysis",
+    "reason": "Define the lexical abbreviation in the main text as well as the abstract.",
+    "occurrences": 1
+  },
+  {
+    "file": "main.tex",
+    "before": "search-structured grounding and semantic-IR repair.",
+    "after": "search-structured grounding and semantic intermediate-representation (IR) repair.",
+    "reason": "Define IR before the baseline table.",
+    "occurrences": 1
+  },
+  {
+    "file": "main.tex",
+    "before": "Sections~\\ref{S-app:factorial-details}--\\ref{S-app:reproduction}, preserves",
+    "after": "Sections~\\ref{S-app:factorial-details}--\\ref{S-app:reproduction}, preserve",
+    "reason": "Correct plural subject agreement.",
+    "occurrences": 1
+  },
+  {
+    "file": "main.tex",
+    "before": "E(q,\\hat{s}) = K_G(q) \\cap P_{\\mathrm{all}}(\\hat{s}),",
+    "after": "E(q,\\hat{s}) = K_G(q) \\cap P_{\\mathrm{all}}(\\hat{s}).",
+    "reason": "End the displayed definition before the next sentence.",
+    "occurrences": 1
+  },
+  {
+    "file": "main.tex",
+    "before": "c_i\\geq0.8\\ \\wedge\\ t_i\\geq0.8],",
+    "after": "c_i\\geq0.8\\ \\wedge\\ t_i\\geq0.8].",
+    "reason": "Use sentence punctuation at the end of the readiness definition.",
+    "occurrences": 1
+  },
+  {
+    "file": "main.tex",
+    "before": "Full$_G$",
+    "after": "$F^G$",
+    "reason": "Use the same complete-agreement notation in equations, table headings and captions.",
+    "occurrences": 2
+  },
+  {
+    "file": "main.tex",
+    "before": "TFIDF-TG",
+    "after": "TF--IDF-TG",
+    "reason": "Standardize the displayed TF--IDF spelling.",
+    "occurrences": 3
+  },
+  {
+    "file": "main.tex",
+    "before": "TF--IDF-TG denotes typed-greedy grounding;",
+    "after": "TF--IDF-TG denotes TF--IDF retrieval with typed-greedy grounding;",
+    "reason": "Define both components of the table abbreviation.",
+    "occurrences": 1
+  },
+  {
+    "file": "main.tex",
+    "before": "The corresponding success sets satisfy",
+    "after": "Writing $F^G$, $S$ and $I$ for the corresponding sets of queries, these sets satisfy",
+    "reason": "Define set notation separately from the query indicators.",
+    "occurrences": 1
+  },
+  {
+    "file": "main.tex",
+    "before": "Neither population is an untouched confirmatory sample.",
+    "after": "Neither population is an independent confirmatory sample.",
+    "reason": "Replace informal wording while preserving the exposure qualification.",
+    "occurrences": 1
+  },
+  {
+    "file": "main.tex",
+    "before": "incomparable/abstained slots",
+    "after": "slots with incomparable values or abstentions",
+    "reason": "Make the denominator explanation grammatical.",
+    "occurrences": 1
+  },
+  {
+    "file": "main.tex",
+    "before": "Historical repair/recovery yields",
+    "after": "Historical repair and recovery yield",
+    "reason": "Remove a compressed slash construction.",
+    "occurrences": 1
+  },
+  {
+    "file": "main.tex",
+    "before": "complete 60/269/20 subset manifests/outcomes",
+    "after": "complete manifests and outcomes for the 60/269/20-case subsets",
+    "reason": "Clarify the historical evidence limitation.",
+    "occurrences": 1
+  },
+  {
+    "file": "main.tex",
+    "before": "the separate factorial isolates decoder changes within fixed scores.",
+    "after": "the separate factorial isolates decoder changes with scores held fixed.",
+    "reason": "Clarify the controlled comparison.",
+    "occurrences": 1
+  },
+  {
+    "file": "main.tex",
+    "before": "All restructuring calculations",
+    "after": "All editorial and consistency calculations",
+    "reason": "Describe the final-pass scope accurately.",
+    "occurrences": 1
+  },
+  {
+    "file": "main.tex",
+    "before": "manuscript/jdsa-stage2-scientific-restructure-20261029/manuscript/jdsa-stage2}{Stage 2 manuscript branch}",
+    "after": "manuscript/jdsa-stage3-submission-audit-20261029/manuscript/jdsa-stage3}{Stage 3 manuscript branch}",
+    "reason": "Point readers to the final editable sources without modifying the evidence release.",
+    "occurrences": 1
+  },
+  {
+    "file": "main.tex",
+    "before": "and the versioned claim-location crosswalk are on the",
+    "after": "are on the",
+    "reason": "Avoid implying that the report is in the source directory.",
+    "occurrences": 1
+  },
+  {
+    "file": "main.tex",
+    "before": "Stage 3 manuscript branch}; they do not overwrite the release.",
+    "after": "Stage 3 manuscript branch}, with a separate \\href{https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/manuscript/jdsa-stage3-submission-audit-20261029/docs/jdsa_stage3_20261029}{claim-location crosswalk and audit reports}; they do not overwrite the release.",
+    "reason": "Link the versioned crosswalk and reports directly.",
+    "occurrences": 1
+  },
+  {
+    "file": "supplement.tex",
+    "before": "\\title[Supplement: Scalar Grounding]{Supplementary Material:",
+    "after": "\\title[Online Resource 1: Scalar Grounding]{Online Resource 1:",
+    "reason": "Identify the resource in the title and running head.",
+    "occurrences": 1
+  },
+  {
+    "file": "supplement.tex",
+    "before": "\\section{System Context and Secondary Protocol Tables}",
+    "after": "\\setcounter{tocdepth}{2}\n\\tableofcontents\n\\clearpage\n\\section{System Context and Secondary Protocol Tables}\nTables~\\ref{tab:comparison_landscape}--\\ref{tab:exp_blocks} summarize the system context, retrieval methods and experimental blocks.",
+    "reason": "Provide a linked contents list and explicit table callouts for reviewer navigation.",
+    "occurrences": 1
+  },
+  {
+    "file": "supplement.tex",
+    "before": "CoT = chain of thought;",
+    "after": "CoT = chain of thought; NL = natural language; (MI)LP = (mixed-integer) linear programming;",
+    "reason": "Expand abbreviations in the standalone table caption.",
+    "occurrences": 1
+  },
+  {
+    "file": "supplement.tex",
+    "before": "\\section{Secondary Retrieval and Restricted Execution Diagnostics}",
+    "after": "\\section{Secondary Retrieval and Restricted Execution Diagnostics}\nTable~\\ref{tab:nlp4lp-overlap} reports the historical sanitization aggregates. Tables~\\ref{tab:eng-structural} and~\\ref{tab:eng-solver} preserve the restricted proxy and execution checks; Section~\\ref{app:restricted-details} defines their predicates and limitations.",
+    "reason": "Introduce tables in order and link to their definitions.",
+    "occurrences": 1
+  },
+  {
+    "file": "supplement.tex",
+    "before": "\\input{common18_overview}",
+    "after": "\\input{common18_overview}\nTable~\\ref{tab:ext-context} identifies each system's provenance and execution environment.",
+    "reason": "Add the missing provenance-table callout.",
+    "occurrences": 1
+  },
+  {
+    "file": "supplement.tex",
+    "before": "GENERIC- ZERO-SHOT",
+    "after": "Generic zero-shot",
+    "reason": "Replace a machine-style display tag with readable wording.",
+    "occurrences": 1
+  },
+  {
+    "file": "supplement.tex",
+    "before": "ADAPTED- OFFICIAL",
+    "after": "Adapted official",
+    "reason": "Use readable provenance terminology without changing provenance.",
+    "occurrences": 2
+  },
+  {
+    "file": "supplement.tex",
+    "before": "NATIVE",
+    "after": "Native",
+    "reason": "Standardize table capitalization.",
+    "occurrences": 1
+  },
+  {
+    "file": "supplement.tex",
+    "before": "extraction only). Pooled",
+    "after": "extraction only).\n\nPooled",
+    "reason": "Separate sampling design from extraction outcomes.",
+    "occurrences": 1
+  },
+  {
+    "file": "supplement.tex",
+    "before": "The later verification summary reports",
+    "after": "\n\nThe later verification summary reports",
+    "reason": "Separate audit-calibrated micro/macro definitions from the raw measures.",
+    "occurrences": 1
+  },
+  {
+    "file": "supplement.tex",
+    "before": "Two independently coded classifiers agree",
+    "after": "\n\nTwo independently coded classifiers agree",
+    "reason": "Separate automated cross-validation from metric definitions.",
+    "occurrences": 1
+  },
+  {
+    "file": "grounding_diagnostics.tex",
+    "before": "All24",
+    "after": "All 24",
+    "reason": "Correct missing space.",
+    "occurrences": 1
+  },
+  {
+    "file": "grounding_diagnostics.tex",
+    "before": "Appendix~\\ref{app:reference-conventions}",
+    "after": "Section~\\ref{app:reference-conventions}",
+    "reason": "Match the supplement's section structure.",
+    "occurrences": 1
+  },
+  {
+    "file": "grounding_diagnostics.tex",
+    "before": "Thus reclaiming this alias budget supplies no observed\ncorrectness gain",
+    "after": "Thus removing duplicate mappings supplies no observed\ncorrectness gain",
+    "reason": "Replace opaque search jargon with the actual operation.",
+    "occurrences": 1
+  },
+  {
+    "file": "supporting_core.tex",
+    "before": "TFIDF",
+    "after": "TF--IDF",
+    "reason": "Standardize retrieval abbreviation across statistical tables.",
+    "occurrences": 5
+  },
+  {
+    "file": "supporting_core.tex",
+    "before": "Exact p-values",
+    "after": "Exact $p$-values",
+    "reason": "Standardize mathematical p notation.",
+    "occurrences": 1
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before": "the Stage 2 crosswalk",
+    "after": "the Stage 3 crosswalk",
+    "reason": "Identify the updated location overlay.",
+    "occurrences": 1
+  },
+  {
+    "file": "supervision_diagnostics.tex",
+    "before": "was actually fitted, rather than merely implemented.",
+    "after": "was fitted.",
+    "reason": "Remove unnecessary emphasis; later text separately distinguishes unverified runs.",
+    "occurrences": 1
+  },
+  {
+    "file": "supervision_diagnostics.tex",
+    "before": "a completed non-smoke run",
+    "after": "a completed run beyond a smoke test",
+    "reason": "Clarify development terminology.",
+    "occurrences": 1
+  },
+  {
+    "file": "supervision_diagnostics.tex",
+    "before": "The probability outputs have not been shown calibrated;",
+    "after": "Calibration of the probability outputs has not been established;",
+    "reason": "Correct awkward wording without implying a calibration result.",
+    "occurrences": 1
+  },
+  {
+    "file": "llm_evidence.tex",
+    "before": "Full available numerical tokens",
+    "after": "All available numerical tokens",
+    "reason": "Improve word choice.",
+    "occurrences": 1
+  },
+  {
+    "file": "llm_evidence.tex",
+    "before": "These stages are not interchangeable semantic diagnoses.",
+    "after": "These failure stages do not provide interchangeable semantic diagnoses.",
+    "reason": "Clarify the qualification.",
+    "occurrences": 1
+  },
+  {
+    "file": "llm_evidence.tex",
+    "before": "\\subsection{Implementation Provenance and Corrected Predicates}",
+    "after": "\\subsection{Implementation Provenance and Corrected Predicates}\nTable~\\ref{tab:llm-provenance} records the historical configurations.",
+    "reason": "Cite provenance in the correct table sequence.",
+    "occurrences": 1
+  },
+  {
+    "file": "llm_evidence.tex",
+    "before": "Table~\\ref{tab:llm-cases} gives each case's outcome, and Table~\\ref{tab:llm-provenance} records configurations.",
+    "after": "Table~\\ref{tab:llm-failures} summarizes these failure stages; Table~\\ref{tab:llm-cases} gives each case's outcome.",
+    "reason": "Introduce failure and case tables in order.",
+    "occurrences": 1
+  },
+  {
+    "file": "closed_audits.tex",
+    "before": "Equal /different",
+    "after": "Equal / different",
+    "reason": "Correct table spacing.",
+    "occurrences": 1
+  },
+  {
+    "file": "closed_audits.tex",
+    "before": "It compares $K_G",
+    "after": "Table~\\ref{tab:g3-inventory} compares $K_G",
+    "reason": "Add an explicit table callout and remove an ambiguous pronoun.",
+    "occurrences": 1
+  },
+  {
+    "file": "relationship_supplement.tex",
+    "before": "The complete source-file SHA256",
+    "after": "The complete source-file SHA-256 digest",
+    "reason": "Use the standard hash name.",
+    "occurrences": 1
+  },
+  {
+    "file": "relationship_supplement.tex",
+    "before": "The remaining original Cohere attempt",
+    "after": "Table~\\ref{tab:relationship-requests} records the HTTP attempts. The remaining original Cohere attempt",
+    "reason": "Make the request-count table explicit.",
+    "occurrences": 1
+  },
+  {
+    "file": "relationship_supplement.tex",
+    "before": "For $N=197$ complete items",
+    "after": "Table~\\ref{tab:relationship-labels} reports the final valid-label distributions.\n\nFor $N=197$ complete items",
+    "reason": "Introduce the label-distribution table.",
+    "occurrences": 1
+  },
+  {
+    "file": "relationship_supplement.tex",
+    "before": "The public v2 651-row derived ledger",
+    "after": "Table~\\ref{tab:relationship-clusters} gives the cluster-level accounting. The public v2 651-row derived ledger",
+    "reason": "Cite the per-problem table explicitly.",
+    "occurrences": 1
+  },
+  {
+    "file": "preserved_results_details.tex",
+    "before": "The factorial's separate 240-endpoint family",
+    "after": "The factorial's separate 240-test family",
+    "reason": "Distinguish four endpoints from the 240 tests.",
+    "occurrences": 1
+  },
+  {
+    "file": "additional_evidence.tex",
+    "before": "main Section~\\ref{M-subsec:exp_significance}",
+    "after": "Section~\\ref{app:statistical-history}",
+    "reason": "Correct the selective-reranking cross-reference to the passage that discusses it.",
+    "occurrences": 1
+  },
+  {
+    "file": "additional_evidence.tex",
+    "before": "Section~\\ref{M-sec:llm}",
+    "after": "Section~\\ref{app:common18}",
+    "reason": "Point to the detailed historical availability statement.",
+    "occurrences": 1
+  },
+  {
+    "file": "additional_evidence.tex",
+    "before": "$.80/.78/.78$",
+    "after": "$0.80/0.78/0.78$",
+    "reason": "Use leading zeroes consistently.",
+    "occurrences": 1
+  },
+  {
+    "file": "additional_evidence.tex",
+    "before": "No completed non-smoke MS-MARCO",
+    "after": "No completed MS-MARCO",
+    "reason": "Remove opaque shorthand; retain the authenticated-checkpoint limitation.",
+    "occurrences": 1
+  },
+  {
+    "file": "additional_evidence.tex",
+    "before": "The main paper's improved all-key counts",
+    "after": "The main paper's higher all-key counts",
+    "reason": "Use descriptive wording for a comparison that is not an adjusted superiority claim.",
+    "occurrences": 1
+  },
+  {
+    "file": "supplement.tex",
+    "reason": "Size contents number columns for S10/S11 without changing body margins."
+  },
+  {
+    "file": "main.tex; supplement.tex; build.sh",
+    "reason": "Name Online Resource 1 ESM_1.pdf as instructed by JDSA; update both directions of PDF links and use manuscript.pdf for the main article."
+  },
+  {
+    "file": "main.tex",
+    "before": "Supplementary relationship judgments and author/AI-assisted contrasts delimit semantic interpretation rather than establish accuracy.",
+    "after": "Supplementary relationship judgments and author contrasts assisted by artificial intelligence delimit semantic interpretation without establishing accuracy.",
+    "reason": "Avoid an undefined abbreviation in the abstract.",
+    "occurrences": 1
+  },
+  {
+    "file": "main.tex",
+    "before": "Online Resource 1, Sections~\\ref{S-app:factorial-details}--\\ref{S-app:reproduction}, preserve",
+    "after": "Online Resource 1 (Sections~\\ref{S-app:factorial-details}--\\ref{S-app:reproduction}) preserves",
+    "reason": "Make the singular subject and parenthetical section range unambiguous.",
+    "occurrences": 1
+  },
+  {
+    "file": "main.tex",
+    "before": "$F^G/I$ & \\% & $F^G/S$",
+    "after": "$|F^G|/|I|$ & \\% & $|F^G|/|S|$",
+    "reason": "Display ratios of set cardinalities rather than a quotient of sets.",
+    "occurrences": 1
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before": "Main Eqs.~\\eqref{M-eq:full-scalar}",
+    "after": "Table~\\ref{tab:input-dependencies} summarizes the supplied inputs. Main Eqs.~\\eqref{M-eq:full-scalar}",
+    "reason": "Add the final missing explicit table callout."
+  },
+  {
+    "file": "additional_evidence.tex",
+    "before": "Global-compatibility local/pairwise/full, relation-aware basic/operators/semantic/full, and ambiguity candidate/beam/abstention/full therefore remain represented, including their negative readiness observations.",
+    "after": "The global-compatibility, relation-aware and ambiguity configurations therefore remain represented, including their negative readiness observations.",
+    "reason": "Remove a redundant enumeration already present in Table S23 and eliminate visibly stretched prose."
+  },
+  {
+    "file": "supplement.tex",
+    "before": "\\bibliography{references}",
+    "after": "\\setlength{\\bibsep}{0.8em}\n\\bibliography{references}",
+    "reason": "Use modestly smaller inter-entry spacing in the supplement to avoid a final page containing only two reference lines; retain font size and margins."
+  }
+]

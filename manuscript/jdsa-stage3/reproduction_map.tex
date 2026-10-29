@@ -1,0 +1,69 @@
+\subsection{Populations, Evidence and Reproduction Boundaries}
+\label{app:reproduction}
+The public \href{https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0}{JDSA evidence v2.0.0} is a curated saved-record reanalysis package, not the complete local M5 bundle. Its evidence commit is \path{209fa982c0a0e2087bd021cbc7a9f57d94256c8f}; the \href{https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0}{Hugging Face mirror} is pinned to revision \path{f94012872211ab6a828147bb138fbe8ab695b982}. Historical v1.2 is retained at \path{24a047fa5d661be6cfcf75980ac8f62e6c942243}. The immutable claim manifest keeps original locations; the Stage 3 crosswalk records revised locations separately.
+
+We distinguish (i) public saved query metrics and statistical reanalysis; (ii) public sanitized score/choice, validity/label and objective-token projections; (iii) unreleased local raw observations; and (iv) historical summaries without authenticated original populations. Table~\ref{tab:population-map} preserves denominators. No later prediction replaces an absent original observation.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Evaluation populations and preserved evidence. These populations
+and configuration versions must not be interchanged.}
+\label{tab:population-map}
+\begin{tabularx}{\linewidth}{@{}lXl@{}}
+\toprule
+Evidence & Unit and denominator & Preserved evidence (not all public)\\
+\midrule
+Retrieval & 331 queries per variant & Top-1 schema IDs\\
+Main scalar diagnostics & 331 queries per arm & Query metrics, not slots\\
+Conditional Exact20 & 291/291/303/320 queries & Per-query fractions\\
+Pre-ratio Stage A & 1,705 rows / 311 queries & Mentions and selections\\
+Joint pilot & 50 queries; 280 gold scalars & 300 method/query traces\\
+Primary factorial & 49 queries; 277 gold scalars & Choices and matrices\\
+Initial factorial collection & 64 cases; mixed populations & 64 checkpoints\\
+Distinct-class enumeration & 49 primary queries & 49 saved checkpoints\\
+Subset proxy/solver checks & 60/269/20 filtered queries & Reports/aggregates\\
+External generation & Same 18 source problems & Local logs; public numeric ledger\\
+External extraction & 1,000 instances & Extracted sets and counts\\
+Relationship QC & 217 items / 16 problems & 651 public ledger rows\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The four headline metric CSVs match their first committed versions, whose runners serialized 13 metric columns and omitted scalar mappings. Integrity therefore supports aggregation, not recovery or corrected-reference reevaluation of original assignments. Saved top-1 IDs support retrieval rates; full historical ranked lists and per-condition sanitization predictions were not recovered. The corrected TF--IDF variant mean remains $(301+299+258)/(3\cdot331)=0.8640$ before rounding.
+
+The Stage-A cache contains 1,705 rows/311 queries; its separate full-frame reference sensitivity retains all 331 queries/1,847 scalars, counting missing selections as missing. The initial factorial collection comprises 49 primary, 12 development, one overlap-reconciliation and two reference-only cases. Local validation checked all 1,176 primary method/query choices against saved candidate values/type rules without rerunning a decoder. Public projections retain scores, indices and metric counts, omitting candidate text, values and source slot names. They permit arithmetic and consistency checks, not renewed source-dependent correctness validation.
+
+The released original metric paths retain the source directory names: \path{results/selective_grounding_rerank/}, \path{results/final_resubmission_method/}, \path{results/dense_retrieval_bge_m3/}, \path{results/oracle_recomputation_2026-08-15/} and \path{results/stage6_matched_grounding_baselines_2026-08-27/}. Complete local checkpoints remain under \path{results/wulver_grounding_attribution_2026-10-27/slurm_1462366/} and \path{results/grounding_followup_2026-10-27/slurm_1462557/}; their published projections are identified by the release manifest, not by assuming every original path is public.
+
+Public common-18 numeric tokens/dispositions and relationship labels/validity flags support reanalysis of their reported summaries. Raw generated programs, stdout, prompts, full provider responses and source quotations remain excluded. The original M3 evaluator \path{tools/reaggregate_common18_m3.py} and M5 raw-response validator \path{tools/verify_llm217_m5.py} require separately authorized original layouts; the default public verifier does not pretend those inputs exist. D1 publishes original project fixtures and final assisted-author decisions, excluding private review conversations.
+
+The 60/269/20 studies lack full original manifests/outcomes. Five reported examples from each of 60 and 269 include three shared IDs, but cannot reconstruct either population. The 20-case writer also omitted scalar maps. BGE's literal reporting metadata does not authenticate its executed weights, device, environment or hash seed. Historical rendered prompts/provider defaults are incomplete; PaMOP full precision and corrected OptMATH per-instance bootstrap inputs are missing. Unmatched loose blobs, later caches and replay configurations do not fill these gaps.
+
+\subsection{Input Dependencies and Identifiable Conclusions}
+\label{app:input-dependencies}
+\begin{table}[htbp]
+\centering\small
+\caption{Verified input boundaries. ``Reference-derived'' describes
+provenance even when a cached template is treated as a supplied catalog.}
+\label{tab:input-dependencies}
+\begin{tabularx}{\linewidth}{@{}lXX@{}}
+\toprule
+Stage & Prediction-time inputs & Reference use / interpretation\\
+\midrule
+Retrieval & Query; reference-derived catalog descriptions & Partially assisted known-template identification; target ID used only for scoring, except Oracle\\
+Main grounding & Query; selected template keys; query gold scalar eligibility & Gold-assisted assignment; gold magnitudes used only for scoring\\
+Joint/factorial controls & Cached mentions; template names, shapes, descriptions and available relations; name-inferred types & Partially assisted; no query gold-key filter or value-guided inference ranking\\
+Reference execution & Selected reference program; default parameters; predicted scalar replacements & Gold-assisted; structured and unfilled values retained\\
+External generators & Problem text; fixed prompt; model; own solver feedback where configured & Inspected prompts exclude reference targets; gold objectives score outputs\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Table~\ref{tab:input-dependencies} summarizes the supplied inputs. Main Eqs.~\eqref{M-eq:full-scalar}--\eqref{M-eq:conditional-agreement} formalize $F^G\subseteq S\subseteq I$. The observed $7\leq255\leq265$ relation yields descriptive conditional agreement, not autonomous or semantic accuracy. The broader eligible-only endpoint $F$ can include missing required keys; constrained query 102 is the documented exception. No adjustment from assisted to autonomous performance is identifiable without additional assumptions.
+
+Earlier learned train/development/test subsets derive from the 331-query evaluation-origin corpus and have recorded train/development and development/test group crossings. Removing the known query 291 crossing from the 49-case slice does not certify new families. The 399-problem NL4Opt quarantine is a separate audit, not an NLP4LP split applied to these results.
+
+\subsection{Public Verification and Access Restrictions}
+Extract the named evidence ZIP or its versioned HF directory. In a clean Python 3.12 environment, install \path{requirements-validation.txt} (NumPy 2.3.5), then run \texttt{python -I verify.py --output /tmp/jdsa-verification.json}. Outputs stay outside the immutable package. The manifest checks all 172 payload files; the machine-readable report separates supported arithmetic from historical and semantic limitations. Both independently downloaded releases passed 9,737 checks, with six integrity/statistics tests. File/network tracing found no private-path access or network calls during reanalysis; no new inference or scientific solver experiment was performed.
+
+Author-owned evidence uses CC BY-NC-SA 4.0 and software MIT without relicensing upstream content. NLP4LP has gated access and CC BY-NC 4.0 metadata; each user must obtain it under applicable terms. OptMATH source licensing and account-specific provider raw-output redistribution rights remain unresolved. NL4Opt source retains its MIT license but its raw corpus is not bundled here. Complete M5 originals, source witnesses and private author reviews remain local. These exclusions bound public verification even where local raw-record checks succeeded.

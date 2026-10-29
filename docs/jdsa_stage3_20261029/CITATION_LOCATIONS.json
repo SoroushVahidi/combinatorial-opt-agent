@@ -1,0 +1,386 @@
+[
+  {
+    "key": "huang2017beamfollowup",
+    "path": "manuscript/jdsa-stage3/grounding_diagnostics.tex",
+    "line": 21,
+    "source_sha256": "398507da693c923d4a664af4cca75d4ee9abbe2987e4c9c67c5cfaf48c42dcbf"
+  },
+  {
+    "key": "ramamonjison2022autoformulation",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 51,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "ramamonjison2023nl4opt",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 51,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "kadioglu2024ner4opt",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 51,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "ahmaditeshnizi2024optimus_icml",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 51,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "deng2021strug",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 51,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "wang2020ratsql",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 51,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "gao2026models",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 51,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "deng2021strug",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 80,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "wang2020ratsql",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 80,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "almasian2023cqe",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 80,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "roy2017udg",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 80,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "gao2026models",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 82,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "ramamonjison2023nl4opt",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 86,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "kadioglu2024ner4opt",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 86,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "ahmaditeshnizi2024optimus_icml",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 86,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "pan2025pamop",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 86,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "lu2025optmath",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 86,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "huang2025orlm",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 86,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "xiao2026deepor",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 86,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "ahmed2025opt2code",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 86,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "punyakanok2004ilp",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 88,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "scholak2021picard",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 88,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "zhai2025equivamap",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 88,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "kuhn1955assignment",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 92,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "nlp4lp_dataset",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 99,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "nlp4lp_dataset",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 202,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "ahmaditeshnizi2024optimus_icml",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 202,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "robertson2009bm25",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 204,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "pedregosa2011sklearn",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 204,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "deerwester1990lsa",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 204,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "chen2024m3embedding",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 204,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "lhoest2021datasets",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 204,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "holm1979followup",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 263,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "gao2026models",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 449,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "zhai2025equivamap",
+    "path": "manuscript/jdsa-stage3/main.tex",
+    "line": 453,
+    "source_sha256": "020e1291db081c0482998cf4c3863cbd7f8d9aaa7a613930acd68479adaf5fdd"
+  },
+  {
+    "key": "holm1979followup",
+    "path": "manuscript/jdsa-stage3/preserved_results_details.tex",
+    "line": 43,
+    "source_sha256": "5365f96a28dc561028c348e59826e1d6aacdeb45d89ca4355c65f093ca27124f"
+  },
+  {
+    "key": "ahmaditeshnizi2024optimus_icml",
+    "path": "manuscript/jdsa-stage3/related_context.tex",
+    "line": 2,
+    "source_sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e"
+  },
+  {
+    "key": "pan2025pamop",
+    "path": "manuscript/jdsa-stage3/related_context.tex",
+    "line": 2,
+    "source_sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e"
+  },
+  {
+    "key": "lu2025optmath",
+    "path": "manuscript/jdsa-stage3/related_context.tex",
+    "line": 2,
+    "source_sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e"
+  },
+  {
+    "key": "huang2025orlm",
+    "path": "manuscript/jdsa-stage3/related_context.tex",
+    "line": 2,
+    "source_sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e"
+  },
+  {
+    "key": "xiao2026deepor",
+    "path": "manuscript/jdsa-stage3/related_context.tex",
+    "line": 2,
+    "source_sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e"
+  },
+  {
+    "key": "ahmed2025opt2code",
+    "path": "manuscript/jdsa-stage3/related_context.tex",
+    "line": 4,
+    "source_sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e"
+  },
+  {
+    "key": "astorga2025autoformulation",
+    "path": "manuscript/jdsa-stage3/related_context.tex",
+    "line": 4,
+    "source_sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e"
+  },
+  {
+    "key": "yu2026uncertainty",
+    "path": "manuscript/jdsa-stage3/related_context.tex",
+    "line": 4,
+    "source_sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e"
+  },
+  {
+    "key": "xiao2024chainofexperts",
+    "path": "manuscript/jdsa-stage3/related_context.tex",
+    "line": 4,
+    "source_sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e"
+  },
+  {
+    "key": "zhang2024optllm",
+    "path": "manuscript/jdsa-stage3/related_context.tex",
+    "line": 4,
+    "source_sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e"
+  },
+  {
+    "key": "jiang2025llmopt",
+    "path": "manuscript/jdsa-stage3/related_context.tex",
+    "line": 4,
+    "source_sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e"
+  },
+  {
+    "key": "chen2025solver",
+    "path": "manuscript/jdsa-stage3/related_context.tex",
+    "line": 4,
+    "source_sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e"
+  },
+  {
+    "key": "ding2026orr1",
+    "path": "manuscript/jdsa-stage3/related_context.tex",
+    "line": 4,
+    "source_sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e"
+  },
+  {
+    "key": "zhang2026dual",
+    "path": "manuscript/jdsa-stage3/related_context.tex",
+    "line": 4,
+    "source_sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e"
+  },
+  {
+    "key": "xie2026escaping",
+    "path": "manuscript/jdsa-stage3/related_context.tex",
+    "line": 4,
+    "source_sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e"
+  },
+  {
+    "key": "li2026solver",
+    "path": "manuscript/jdsa-stage3/related_context.tex",
+    "line": 4,
+    "source_sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e"
+  },
+  {
+    "key": "kong2025alphaopt",
+    "path": "manuscript/jdsa-stage3/related_context.tex",
+    "line": 4,
+    "source_sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e"
+  },
+  {
+    "key": "yang2026orthought",
+    "path": "manuscript/jdsa-stage3/related_context.tex",
+    "line": 4,
+    "source_sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e"
+  },
+  {
+    "key": "yu2018spider",
+    "path": "manuscript/jdsa-stage3/related_context.tex",
+    "line": 7,
+    "source_sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e"
+  },
+  {
+    "key": "affolter2019nli",
+    "path": "manuscript/jdsa-stage3/related_context.tex",
+    "line": 7,
+    "source_sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e"
+  },
+  {
+    "key": "miplibnl2026",
+    "path": "manuscript/jdsa-stage3/related_context.tex",
+    "line": 7,
+    "source_sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e"
+  },
+  {
+    "key": "pan2025pamop",
+    "path": "manuscript/jdsa-stage3/supplement.tex",
+    "line": 204,
+    "source_sha256": "aaea5e29cfd2acf2c70d1927aa380df5518dd7886f31239493e1ff1f02a20780"
+  },
+  {
+    "key": "huang2025orlm",
+    "path": "manuscript/jdsa-stage3/supplement.tex",
+    "line": 205,
+    "source_sha256": "aaea5e29cfd2acf2c70d1927aa380df5518dd7886f31239493e1ff1f02a20780"
+  },
+  {
+    "key": "lu2025optmath",
+    "path": "manuscript/jdsa-stage3/supplement.tex",
+    "line": 206,
+    "source_sha256": "aaea5e29cfd2acf2c70d1927aa380df5518dd7886f31239493e1ff1f02a20780"
+  },
+  {
+    "key": "xiao2026deepor",
+    "path": "manuscript/jdsa-stage3/supplement.tex",
+    "line": 208,
+    "source_sha256": "aaea5e29cfd2acf2c70d1927aa380df5518dd7886f31239493e1ff1f02a20780"
+  },
+  {
+    "key": "ding2026orr1",
+    "path": "manuscript/jdsa-stage3/supplement.tex",
+    "line": 209,
+    "source_sha256": "aaea5e29cfd2acf2c70d1927aa380df5518dd7886f31239493e1ff1f02a20780"
+  },
+  {
+    "key": "lu2025optmath",
+    "path": "manuscript/jdsa-stage3/supplement.tex",
+    "line": 230,
+    "source_sha256": "aaea5e29cfd2acf2c70d1927aa380df5518dd7886f31239493e1ff1f02a20780"
+  }
+]

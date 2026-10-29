@@ -1,0 +1,4241 @@
+[
+  {
+    "key": "robertson2009bm25",
+    "fields": {
+      "author": "Robertson, Stephen and Zaragoza, Hugo",
+      "title": "The Probabilistic Relevance Framework: {BM25} and Beyond",
+      "journal": "Foundations and Trends in Information Retrieval",
+      "volume": "3",
+      "number": "4",
+      "pages": "333--389",
+      "year": "2009",
+      "doi": "10.1561/1500000019"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.1561%2F1500000019",
+        "http_status": 429,
+        "final_url": "https://api.crossref.org/works/10.1561%2F1500000019",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "primary",
+        "url": "https://www.nowpublishers.com/article/Details/INR-019",
+        "http_status": 403,
+        "final_url": "https://www.nowpublishers.com/article/Details/INR-019",
+        "sha256": "0d3e98ca727fc1201b436170af5a63f23348aaf146a3ac6234f6c4da283e8b34"
+      },
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.1561%2F1500000019",
+        "http_status": 200,
+        "sha256": "4d0e9f9e59a6f9ae44e1144e44280d006bebb36e1c6a08a0ed349b1660ce72ab",
+        "metadata": {
+          "title": [
+            "The Probabilistic Relevance Framework: BM25 and Beyond"
+          ],
+          "author": [
+            {
+              "given": "Stephen",
+              "family": "Robertson",
+              "sequence": "first",
+              "affiliation": [
+                {
+                  "name": "Microsoft Research , 7 J J Thomson Avenue, Cambridge CB3 0FB,",
+                  "place": [
+                    "UK"
+                  ]
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Hugo",
+              "family": "Zaragoza",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "Yahoo! Research, Av. Diagonal 177, Barcelona 08028, Spain"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            }
+          ],
+          "container-title": [
+            "Foundations and Trends® in Information Retrieval"
+          ],
+          "published": {
+            "date-parts": [
+              [
+                2009,
+                9,
+                17
+              ]
+            ]
+          },
+          "published-print": {
+            "date-parts": [
+              [
+                2009,
+                9,
+                17
+              ]
+            ]
+          },
+          "published-online": {
+            "date-parts": [
+              [
+                2009,
+                9,
+                17
+              ]
+            ]
+          },
+          "volume": "4",
+          "issue": "1-2",
+          "page": "1-174",
+          "DOI": "10.1561/1500000019"
+        }
+      }
+    ]
+  },
+  {
+    "key": "deerwester1990lsa",
+    "fields": {
+      "author": "Deerwester, Scott and Dumais, Susan T. and Furnas, George W. and Landauer, Thomas K. and Harshman, Richard",
+      "title": "Indexing by Latent Semantic Analysis",
+      "journal": "Journal of the American Society for Information Science",
+      "volume": "41",
+      "number": "6",
+      "pages": "391--407",
+      "year": "1990",
+      "doi": "10.1002/(SICI)1097-4571(199009)41:6<391::AID-ASI1>3.0.CO;2-9"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.1002%2F%28SICI%291097-4571%28199009%2941%3A6%3C391%3A%3AAID-ASI1%3E3.0.CO%3B2-9",
+        "http_status": 200,
+        "final_url": "https://api.crossref.org/works/10.1002%2F%28SICI%291097-4571%28199009%2941%3A6%3C391%3A%3AAID-ASI1%3E3.0.CO%3B2-9",
+        "sha256": "f122afec9e30d7f425fa798d6e918bdad8529d94ae5c6f086898bba84259ff95",
+        "metadata": {
+          "title": [
+            "Indexing by latent semantic analysis"
+          ],
+          "author": [
+            {
+              "given": "Scott",
+              "family": "Deerwester",
+              "sequence": "first",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Susan T.",
+              "family": "Dumais",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "George W.",
+              "family": "Furnas",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Thomas K.",
+              "family": "Landauer",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Richard",
+              "family": "Harshman",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            }
+          ],
+          "container-title": [
+            "Journal of the American Society for Information Science"
+          ],
+          "published": {
+            "date-parts": [
+              [
+                1990,
+                9
+              ]
+            ]
+          },
+          "published-print": {
+            "date-parts": [
+              [
+                1990,
+                9
+              ]
+            ]
+          },
+          "volume": "41",
+          "issue": "6",
+          "page": "391-407",
+          "DOI": "10.1002/(sici)1097-4571(199009)41:6<391::aid-asi1>3.0.co;2-9",
+          "type": "journal-article"
+        }
+      }
+    ]
+  },
+  {
+    "key": "pedregosa2011sklearn",
+    "fields": {
+      "author": "Pedregosa, Fabian and Varoquaux, Ga{\\\"e}l and Gramfort, Alexandre and Michel, Vincent and Thirion, Bertrand and Grisel, Olivier and Blondel, Mathieu and Prettenhofer, Peter and Weiss, Ron and Dubourg, Vincent and VanderPlas, Jake and Passos, Alexandre and Cournapeau, David and Brucher, Matthieu and Perrot, Matthieu and Duchesnay, {\\'E}douard",
+      "title": "Scikit-learn: Machine Learning in {P}ython",
+      "journal": "Journal of Machine Learning Research",
+      "volume": "12",
+      "pages": "2825--2830",
+      "year": "2011"
+    },
+    "checks": [
+      {
+        "kind": "primary",
+        "url": "https://jmlr.org/papers/v12/pedregosa11a.html",
+        "http_status": 200,
+        "final_url": "https://jmlr.org/papers/v12/pedregosa11a.html",
+        "sha256": "e39640aef7993fd6bbee627b71aa74d6e5e6c52c6d74777e00574833c38d5e51",
+        "metadata": {
+          "citation_title": [
+            "Scikit-learn: Machine Learning in Python"
+          ],
+          "citation_author": [
+            "Fabian Pedregosa",
+            "GaÃ«l Varoquaux",
+            "Alexandre Gramfort",
+            "Vincent Michel",
+            "Bertrand Thirion",
+            "Olivier Grisel",
+            "Mathieu Blondel",
+            "Peter Prettenhofer",
+            "Ron Weiss",
+            "Vincent Dubourg",
+            "Jake Vanderplas",
+            "Alexandre Passos",
+            "David Cournapeau",
+            "Matthieu Brucher",
+            "Matthieu Perrot",
+            "Ãdouard Duchesnay"
+          ],
+          "citation_journal_title": [
+            "Journal of Machine Learning Research"
+          ],
+          "citation_volume": [
+            "12"
+          ],
+          "citation_issue": [
+            "85"
+          ],
+          "citation_firstpage": [
+            "2825"
+          ],
+          "citation_lastpage": [
+            "2830"
+          ],
+          "citation_pdf_url": [
+            "http://jmlr.org/papers/volume12/pedregosa11a/pedregosa11a.pdf"
+          ],
+          "citation_publication_date": [
+            "2011"
+          ],
+          "citation_public_url": [
+            "http://jmlr.org/papers/v12/pedregosa11a.html"
+          ],
+          "citation_abstract_html_url": [
+            "http://jmlr.org/papers/v12/pedregosa11a.html"
+          ],
+          "citation_issn": [
+            "1533-7928"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "lhoest2021datasets",
+    "fields": {
+      "author": "Lhoest, Quentin and Villanova del Moral, Albert and Jernite, Yacine and Thakur, Abhishek and von Platen, Patrick and Patil, Suraj and Chaumond, Julien and Drame, Mariama and Plu, Julien and Tunstall, Lewis and others",
+      "title": "Datasets: A Community Library for Natural Language Processing",
+      "booktitle": "Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing: System Demonstrations",
+      "pages": "175--184",
+      "year": "2021",
+      "doi": "10.18653/v1/2021.emnlp-demo.21",
+      "url": "https://aclanthology.org/2021.emnlp-demo.21/"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.18653%2Fv1%2F2021.emnlp-demo.21",
+        "http_status": 429,
+        "final_url": "https://api.crossref.org/works/10.18653%2Fv1%2F2021.emnlp-demo.21",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "primary",
+        "url": "https://aclanthology.org/2021.emnlp-demo.21/",
+        "http_status": 200,
+        "final_url": "https://aclanthology.org/2021.emnlp-demo.21/",
+        "sha256": "f015bbaa809a69c89518e7983ecb29a1fa51e480a55f9a7e32368be84a1cdc3b",
+        "metadata": {
+          "citation_title": [
+            "Datasets: A Community Library for Natural Language Processing"
+          ],
+          "citation_author": [
+            "Quentin Lhoest",
+            "Albert Villanova del Moral",
+            "Yacine Jernite",
+            "Abhishek Thakur",
+            "Patrick von Platen",
+            "Suraj Patil",
+            "Julien Chaumond",
+            "Mariama Drame",
+            "Julien Plu",
+            "Lewis Tunstall",
+            "Joe Davison",
+            "Mario Šaško",
+            "Gunjan Chhablani",
+            "Bhavitvya Malik",
+            "Simon Brandeis",
+            "Teven Le Scao",
+            "Victor Sanh",
+            "Canwen Xu",
+            "Nicolas Patry",
+            "Angelina McMillan-Major",
+            "Philipp Schmid",
+            "Sylvain Gugger",
+            "Clément Delangue",
+            "Théo Matussière",
+            "Lysandre Debut",
+            "Stas Bekman",
+            "Pierric Cistac",
+            "Thibault Goehringer",
+            "Victor Mustar",
+            "François Lagunas",
+            "Alexander M. Rush",
+            "Thomas Wolf"
+          ],
+          "citation_conference_title": [
+            "Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing: System Demonstrations"
+          ],
+          "citation_publication_date": [
+            "2021/11"
+          ],
+          "citation_pdf_url": [
+            "https://aclanthology.org/2021.emnlp-demo.21.pdf"
+          ],
+          "citation_firstpage": [
+            "175"
+          ],
+          "citation_lastpage": [
+            "184"
+          ],
+          "citation_doi": [
+            "10.18653/v1/2021.emnlp-demo.21"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "nlp4lp_dataset",
+    "fields": {
+      "author": "AhmadiTeshnizi, Ali and Gao, Wenzhi and Udell, Madeleine",
+      "title": "{NLP4LP}: A Dataset for Natural Language to Linear Programming and Mixed-Integer Linear Programming",
+      "year": "2024",
+      "howpublished": "Hugging Face dataset repository",
+      "note": "Released with OptiMUS (ICML 2024); gated dataset",
+      "url": "https://huggingface.co/datasets/udell-lab/NLP4LP"
+    },
+    "checks": [
+      {
+        "kind": "primary",
+        "url": "https://huggingface.co/datasets/udell-lab/NLP4LP",
+        "http_status": 200,
+        "final_url": "https://huggingface.co/datasets/udell-lab/NLP4LP",
+        "sha256": "febc4bb7e82b4f38e5293482b11696b08b26624e4d50d07da32143ea925f549d",
+        "metadata": {}
+      }
+    ]
+  },
+  {
+    "key": "ramamonjison2022autoformulation",
+    "fields": {
+      "author": "Ramamonjison, Rindranirina and Li, Haley and Yu, Timothy T. L. and He, Shiqi and Rengan, Vishnu and Banitalebi-Dehkordi, Amin and Zhou, Zirui and Zhang, Yong",
+      "title": "Augmenting Operations Research with Auto-Formulation of Optimization Models From Problem Descriptions",
+      "booktitle": "Proceedings of the 2022 Conference on Empirical Methods in Natural Language Processing: Industry Track",
+      "pages": "29--62",
+      "year": "2022",
+      "publisher": "Association for Computational Linguistics",
+      "doi": "10.18653/v1/2022.emnlp-industry.4",
+      "url": "https://aclanthology.org/2022.emnlp-industry.4/"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.18653%2Fv1%2F2022.emnlp-industry.4",
+        "http_status": 200,
+        "final_url": "https://api.crossref.org/works/10.18653%2Fv1%2F2022.emnlp-industry.4",
+        "sha256": "8aa9f60ada28f831d027ab3b7152b82f12eacfacf5a8153f1a2b3cb93942ba90",
+        "metadata": {
+          "title": [
+            "Augmenting Operations Research with Auto-Formulation of Optimization Models From Problem Descriptions"
+          ],
+          "author": [
+            {
+              "given": "Rindra",
+              "family": "Ramamonjison",
+              "sequence": "first",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Haley",
+              "family": "Li",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Timothy",
+              "family": "Yu",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Shiqi",
+              "family": "He",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Vishnu",
+              "family": "Rengan",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Amin",
+              "family": "Banitalebi-dehkordi",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Zirui",
+              "family": "Zhou",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Yong",
+              "family": "Zhang",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            }
+          ],
+          "container-title": [
+            "Proceedings of the 2022 Conference on Empirical Methods in Natural Language Processing: Industry Track"
+          ],
+          "published": {
+            "date-parts": [
+              [
+                2022
+              ]
+            ]
+          },
+          "published-print": {
+            "date-parts": [
+              [
+                2022
+              ]
+            ]
+          },
+          "page": "29-62",
+          "DOI": "10.18653/v1/2022.emnlp-industry.4",
+          "type": "proceedings-article"
+        }
+      },
+      {
+        "kind": "primary",
+        "url": "https://aclanthology.org/2022.emnlp-industry.4/",
+        "http_status": 200,
+        "final_url": "https://aclanthology.org/2022.emnlp-industry.4/",
+        "sha256": "d223fc5fd0983786b9d6ae66f8cc8b4329c2e3c5dc9eb4f6f50bfb807a22c24f",
+        "metadata": {
+          "citation_title": [
+            "Augmenting Operations Research with Auto-Formulation of Optimization Models From Problem Descriptions"
+          ],
+          "citation_author": [
+            "Rindra Ramamonjison",
+            "Haley Li",
+            "Timothy Yu",
+            "Shiqi He",
+            "Vishnu Rengan",
+            "Amin Banitalebi-Dehkordi",
+            "Zirui Zhou",
+            "Yong Zhang"
+          ],
+          "citation_conference_title": [
+            "Proceedings of the 2022 Conference on Empirical Methods in Natural Language Processing: Industry Track"
+          ],
+          "citation_publication_date": [
+            "2022/12"
+          ],
+          "citation_pdf_url": [
+            "https://aclanthology.org/2022.emnlp-industry.4.pdf"
+          ],
+          "citation_firstpage": [
+            "29"
+          ],
+          "citation_lastpage": [
+            "62"
+          ],
+          "citation_doi": [
+            "10.18653/v1/2022.emnlp-industry.4"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "ramamonjison2023nl4opt",
+    "fields": {
+      "author": "Ramamonjison, Rindranirina and Yu, Timothy and Li, Raymond and Li, Haley and Carenini, Giuseppe and Ghaddar, Bissan and He, Shiqi and Mostajabdaveh, Mahdi and Banitalebi-Dehkordi, Amin and Zhou, Zirui and Zhang, Yong",
+      "title": "{NL4Opt} Competition: Formulating Optimization Problems Based on Their Natural Language Descriptions",
+      "booktitle": "Proceedings of the NeurIPS 2022 Competitions Track",
+      "series": "Proceedings of Machine Learning Research",
+      "volume": "220",
+      "pages": "189--203",
+      "year": "2022",
+      "publisher": "PMLR",
+      "note": "Publisher citation year 2022; proceedings PDF masthead 2023",
+      "url": "https://proceedings.mlr.press/v220/ramamonjison23a.html"
+    },
+    "checks": [
+      {
+        "kind": "primary",
+        "url": "https://proceedings.mlr.press/v220/ramamonjison23a.html",
+        "http_status": 200,
+        "final_url": "https://proceedings.mlr.press/v220/ramamonjison23a.html",
+        "sha256": "092f25f37f066e96dfa5e36bbaed638a6be6c5a54a8093f1644cd848292947b0",
+        "metadata": {
+          "citation_publisher": [
+            "PMLR"
+          ],
+          "citation_title": [
+            "NL4Opt Competition: Formulating Optimization Problems Based on Their Natural Language Descriptions"
+          ],
+          "citation_language": [
+            "en"
+          ],
+          "citation_abstract_html_url": [
+            "https://proceedings.mlr.press/v220/ramamonjison23a.html"
+          ],
+          "citation_pdf_url": [
+            "https://proceedings.mlr.press/v220/ramamonjison23a/ramamonjison23a.pdf"
+          ],
+          "citation_firstpage": [
+            "189"
+          ],
+          "citation_lastpage": [
+            "203"
+          ],
+          "citation_author": [
+            "Rindranirina Ramamonjison",
+            "Timothy Yu",
+            "Raymond Li",
+            "Haley Li",
+            "Giuseppe Carenini",
+            "Bissan Ghaddar",
+            "Shiqi He",
+            "Mahdi Mostajabdaveh",
+            "Amin Banitalebi-Dehkordi",
+            "Zirui Zhou",
+            "Yong Zhang"
+          ],
+          "citation_publication_date": [
+            "2023/08/31"
+          ],
+          "citation_inbook_title": [
+            "NeurIPS 2022 Competition Track"
+          ],
+          "citation_conference_title": [
+            "NeurIPS 2022 Competition Track"
+          ],
+          "citation_issn": [
+            "2640-3498"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "ahmaditeshnizi2024optimus_icml",
+    "fields": {
+      "author": "AhmadiTeshnizi, Ali and Gao, Wenzhi and Udell, Madeleine",
+      "title": "{OptiMUS}: Scalable Optimization Modeling with {(MI)LP} Solvers and Large Language Models",
+      "booktitle": "Proceedings of the 41st International Conference on Machine Learning",
+      "series": "Proceedings of Machine Learning Research",
+      "volume": "235",
+      "pages": "577--596",
+      "year": "2024",
+      "publisher": "PMLR",
+      "url": "https://proceedings.mlr.press/v235/ahmaditeshnizi24a.html"
+    },
+    "checks": [
+      {
+        "kind": "primary",
+        "url": "https://proceedings.mlr.press/v235/ahmaditeshnizi24a.html",
+        "http_status": 200,
+        "final_url": "https://proceedings.mlr.press/v235/ahmaditeshnizi24a.html",
+        "sha256": "ed587b8f5ac63673996c493951b8e5188d7531489aa3339a62fac614c1bec348",
+        "metadata": {
+          "citation_publisher": [
+            "PMLR"
+          ],
+          "citation_title": [
+            "OptiMUS: Scalable Optimization Modeling with (MI)LP Solvers and Large Language Models"
+          ],
+          "citation_language": [
+            "en"
+          ],
+          "citation_abstract_html_url": [
+            "https://proceedings.mlr.press/v235/ahmaditeshnizi24a.html"
+          ],
+          "citation_pdf_url": [
+            "https://raw.githubusercontent.com/mlresearch/v235/main/assets/ahmaditeshnizi24a/ahmaditeshnizi24a.pdf"
+          ],
+          "citation_firstpage": [
+            "577"
+          ],
+          "citation_lastpage": [
+            "596"
+          ],
+          "citation_author": [
+            "Ali Ahmaditeshnizi",
+            "Wenzhi Gao",
+            "Madeleine Udell"
+          ],
+          "citation_publication_date": [
+            "2024/07/08"
+          ],
+          "citation_inbook_title": [
+            "International Conference on Machine Learning"
+          ],
+          "citation_conference_title": [
+            "International Conference on Machine Learning"
+          ],
+          "citation_issn": [
+            "2640-3498"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "zhang2024optllm",
+    "fields": {
+      "author": "Zhang, Jihai and Wang, Wei and Guo, Siyan and Wang, Li and Lin, Fangquan and Yang, Cheng and Yin, Wotao",
+      "title": "Solving General Natural-Language-Description Optimization Problems with Large Language Models",
+      "booktitle": "Proceedings of the 2024 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 6: Industry Track)",
+      "pages": "483--490",
+      "year": "2024",
+      "publisher": "Association for Computational Linguistics",
+      "doi": "10.18653/v1/2024.naacl-industry.42",
+      "url": "https://aclanthology.org/2024.naacl-industry.42/"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.18653%2Fv1%2F2024.naacl-industry.42",
+        "http_status": 429,
+        "final_url": "https://api.crossref.org/works/10.18653%2Fv1%2F2024.naacl-industry.42",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "primary",
+        "url": "https://aclanthology.org/2024.naacl-industry.42/",
+        "http_status": 200,
+        "final_url": "https://aclanthology.org/2024.naacl-industry.42/",
+        "sha256": "62543a8643b611fc3884ee019d4e9e44e167807dc86ffde93228c23d7d7c3fbe",
+        "metadata": {
+          "citation_title": [
+            "Solving General Natural-Language-Description Optimization Problems with Large Language Models"
+          ],
+          "citation_author": [
+            "Jihai Zhang",
+            "Wei Wang",
+            "Siyan Guo",
+            "Li Wang",
+            "Fangquan Lin",
+            "Cheng Yang",
+            "Wotao Yin"
+          ],
+          "citation_conference_title": [
+            "Proceedings of the 2024 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 6: Industry Track)"
+          ],
+          "citation_publication_date": [
+            "2024/6"
+          ],
+          "citation_pdf_url": [
+            "https://aclanthology.org/2024.naacl-industry.42.pdf"
+          ],
+          "citation_firstpage": [
+            "483"
+          ],
+          "citation_lastpage": [
+            "490"
+          ],
+          "citation_doi": [
+            "10.18653/v1/2024.naacl-industry.42"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "kadioglu2024ner4opt",
+    "fields": {
+      "author": "Kadioglu, Serdar and Dakle, Parag Pravin and Uppuluri, Karthik and Politi, Regina and Raghavan, Preethi and Rallabandi, SaiKrishna and Srinivasamurthy, Ravisutha",
+      "title": "{Ner4Opt}: Named Entity Recognition for Optimization Modelling from Natural Language",
+      "journal": "Constraints",
+      "volume": "29",
+      "number": "3--4",
+      "pages": "261--299",
+      "year": "2024",
+      "doi": "10.1007/s10601-024-09376-5"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.1007%2Fs10601-024-09376-5",
+        "http_status": 200,
+        "final_url": "https://api.crossref.org/works/10.1007%2Fs10601-024-09376-5",
+        "sha256": "86a330b6a9ca9a51d0dfc6e30f937aec410299cbe6416bc1991cd35f64a2b873",
+        "metadata": {
+          "title": [
+            "Ner4Opt: named entity recognition for optimization modelling from natural language"
+          ],
+          "author": [
+            {
+              "ORCID": "https://orcid.org/0000-0002-4672-6830",
+              "authenticated-orcid": false,
+              "given": "Serdar",
+              "family": "Kadıoğlu",
+              "sequence": "first",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Parag",
+              "family": "Pravin Dakle",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Karthik",
+              "family": "Uppuluri",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Regina",
+              "family": "Politi",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Preethi",
+              "family": "Raghavan",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "SaiKrishna",
+              "family": "Rallabandi",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Ravisutha",
+              "family": "Srinivasamurthy",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            }
+          ],
+          "container-title": [
+            "Constraints"
+          ],
+          "published": {
+            "date-parts": [
+              [
+                2024,
+                11,
+                26
+              ]
+            ]
+          },
+          "published-online": {
+            "date-parts": [
+              [
+                2024,
+                11,
+                26
+              ]
+            ]
+          },
+          "published-print": {
+            "date-parts": [
+              [
+                2024,
+                12
+              ]
+            ]
+          },
+          "volume": "29",
+          "issue": "3-4",
+          "page": "261-299",
+          "DOI": "10.1007/s10601-024-09376-5",
+          "type": "journal-article"
+        }
+      }
+    ]
+  },
+  {
+    "key": "ahmed2025opt2code",
+    "fields": {
+      "author": "Ahmed, Tasnim and Choudhury, Salimur",
+      "title": "{OPT2CODE}: A Retrieval-Augmented Framework for Solving Linear Programming Problems",
+      "journal": "Natural Language Processing Journal",
+      "volume": "13",
+      "pages": "100185",
+      "year": "2025",
+      "issn": "2949-7191",
+      "doi": "10.1016/j.nlp.2025.100185",
+      "url": "https://www.sciencedirect.com/science/article/pii/S2949719125000615",
+      "keywords": "Linear programming, Large language models, Code generation, Retrieval-augmented generation, Gurobi, FICO Xpress"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.1016%2Fj.nlp.2025.100185",
+        "http_status": 200,
+        "final_url": "https://api.crossref.org/works/10.1016%2Fj.nlp.2025.100185",
+        "sha256": "2a3451f7b0bd96c49b032d900a3328f8fa183979a1b83eec5d380c3f51d99c42",
+        "metadata": {
+          "title": [
+            "OPT2CODE: A retrieval-augmented framework for solving linear programming problems"
+          ],
+          "author": [
+            {
+              "given": "Tasnim",
+              "family": "Ahmed",
+              "sequence": "first",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Salimur",
+              "family": "Choudhury",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            }
+          ],
+          "container-title": [
+            "Natural Language Processing Journal"
+          ],
+          "published": {
+            "date-parts": [
+              [
+                2025,
+                12
+              ]
+            ]
+          },
+          "published-print": {
+            "date-parts": [
+              [
+                2025,
+                12
+              ]
+            ]
+          },
+          "volume": "13",
+          "page": "100185",
+          "article-number": "100185",
+          "DOI": "10.1016/j.nlp.2025.100185",
+          "type": "journal-article"
+        }
+      },
+      {
+        "kind": "primary",
+        "url": "https://www.sciencedirect.com/science/article/pii/S2949719125000615",
+        "http_status": 403,
+        "final_url": "https://www.sciencedirect.com/science/article/pii/S2949719125000615",
+        "sha256": "f2220ad1b015f7813f4e568f3f4e3547daf556160362c8bda96788296d03365a"
+      }
+    ]
+  },
+  {
+    "key": "biemans2025explainableoptimization",
+    "fields": {
+      "author": "Biemans, Bram and Troubil, Pavel and Grau, Isel and Nuijten, Wim P. M.",
+      "title": "Explainable Optimization: Leveraging Large Language Models for User-Friendly Explanations",
+      "editor": "Guidotti, Riccardo and Schmid, Ute and Longo, Luca",
+      "booktitle": "Explainable Artificial Intelligence",
+      "series": "Communications in Computer and Information Science",
+      "volume": "2578",
+      "publisher": "Springer",
+      "address": "Cham",
+      "pages": "44--67",
+      "year": "2026",
+      "note": "xAI 2025, first online 12 October 2025",
+      "doi": "10.1007/978-3-032-08327-2_3",
+      "url": "https://link.springer.com/chapter/10.1007/978-3-032-08327-2_3"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.1007%2F978-3-032-08327-2_3",
+        "http_status": 200,
+        "final_url": "https://api.crossref.org/works/10.1007%2F978-3-032-08327-2_3",
+        "sha256": "f6199d56c3613dd8d5e2758f750accdb7998ae04f69cb37ca4607eb604b34bb1",
+        "metadata": {
+          "title": [
+            "Explainable Optimization: Leveraging Large Language Models for User-Friendly Explanations"
+          ],
+          "author": [
+            {
+              "given": "Bram",
+              "family": "Biemans",
+              "sequence": "first",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Pavel",
+              "family": "Troubil",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Isel",
+              "family": "Grau",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Wim P. M.",
+              "family": "Nuijten",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            }
+          ],
+          "container-title": [
+            "Communications in Computer and Information Science",
+            "Explainable Artificial Intelligence"
+          ],
+          "published": {
+            "date-parts": [
+              [
+                2025,
+                10,
+                12
+              ]
+            ]
+          },
+          "published-online": {
+            "date-parts": [
+              [
+                2025,
+                10,
+                12
+              ]
+            ]
+          },
+          "published-print": {
+            "date-parts": [
+              [
+                2026
+              ]
+            ]
+          },
+          "page": "44-67",
+          "DOI": "10.1007/978-3-032-08327-2_3",
+          "type": "book-chapter"
+        }
+      },
+      {
+        "kind": "primary",
+        "url": "https://link.springer.com/chapter/10.1007/978-3-032-08327-2_3",
+        "http_status": 200,
+        "final_url": "https://link.springer.com/chapter/10.1007/978-3-032-08327-2_3",
+        "sha256": "2639e02e27a898f4c9f0dfa3b5c14d78c410049d3ee6cd468681a196c9ddb89f",
+        "metadata": {
+          "citation_pdf_url": [
+            "https://link.springer.com/content/pdf/10.1007/978-3-032-08327-2_3.pdf"
+          ],
+          "citation_fulltext_html_url": [
+            "https://link.springer.com/chapter/10.1007/978-3-032-08327-2_3"
+          ],
+          "citation_abstract_html_url": [
+            "https://link.springer.com/chapter/10.1007/978-3-032-08327-2_3"
+          ],
+          "citation_inbook_title": [
+            "Explainable Artificial Intelligence"
+          ],
+          "citation_title": [
+            "Explainable Optimization: Leveraging Large Language Models for User-Friendly Explanations"
+          ],
+          "citation_publication_date": [
+            "2026"
+          ],
+          "citation_firstpage": [
+            "44"
+          ],
+          "citation_lastpage": [
+            "67"
+          ],
+          "citation_language": [
+            "en"
+          ],
+          "citation_doi": [
+            "10.1007/978-3-032-08327-2_3"
+          ],
+          "citation_issn": [
+            "1865-0937"
+          ],
+          "citation_isbn": [
+            "978-3-032-08327-2"
+          ],
+          "citation_conference_series_id": [
+            "springer/xai, dblp/XAI"
+          ],
+          "citation_conference_title": [
+            "World Conference on Explainable Artificial Intelligence"
+          ],
+          "citation_conference_abbrev": [
+            "xAI"
+          ],
+          "citation_author": [
+            "Biemans, Bram",
+            "Troubil, Pavel",
+            "Grau, Isel",
+            "Nuijten, Wim P. M."
+          ],
+          "citation_author_institution": [
+            "Eindhoven University of Technology",
+            "Eindhoven University of Technology",
+            "Dassault Systèmes",
+            "Eindhoven University of Technology",
+            "Eindhoven University of Technology",
+            "Eindhoven University of Technology",
+            "Eindhoven University of Technology"
+          ],
+          "citation_author_email": [
+            "pavel.troubil@3ds.com"
+          ],
+          "citation_publisher": [
+            "Springer, Cham"
+          ],
+          "citation_springer_api_url": [
+            "http://api.springer.com/xmldata/jats?q=doi:10.1007/978-3-032-08327-2_3&api_key="
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "powell2025scheduling_explanations",
+    "fields": {
+      "author": "Powell, Cheyenne and Riccardi, Annalisa",
+      "title": "Generating Textual Explanations for Scheduling Systems Leveraging the Reasoning Capabilities of Large Language Models",
+      "journal": "Journal of Intelligent Information Systems",
+      "volume": "63",
+      "number": "4",
+      "pages": "1287--1337",
+      "year": "2025",
+      "doi": "10.1007/s10844-025-00940-w",
+      "url": "https://doi.org/10.1007/s10844-025-00940-w",
+      "issn": "1573-7675"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.1007%2Fs10844-025-00940-w",
+        "http_status": 200,
+        "final_url": "https://api.crossref.org/works/10.1007%2Fs10844-025-00940-w",
+        "sha256": "5d8270f626f9b86f1b3ca4804b05849e9bba4dc0466cf606548118bbee3d73fa",
+        "metadata": {
+          "title": [
+            "Generating textual explanations for scheduling systems leveraging the reasoning capabilities of large language models"
+          ],
+          "author": [
+            {
+              "ORCID": "https://orcid.org/0000-0001-9343-0664",
+              "authenticated-orcid": false,
+              "given": "Cheyenne",
+              "family": "Powell",
+              "sequence": "first",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "ORCID": "https://orcid.org/0000-0001-5305-9450",
+              "authenticated-orcid": false,
+              "given": "Annalisa",
+              "family": "Riccardi",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            }
+          ],
+          "container-title": [
+            "Journal of Intelligent Information Systems"
+          ],
+          "published": {
+            "date-parts": [
+              [
+                2025,
+                4,
+                17
+              ]
+            ]
+          },
+          "published-online": {
+            "date-parts": [
+              [
+                2025,
+                4,
+                17
+              ]
+            ]
+          },
+          "published-print": {
+            "date-parts": [
+              [
+                2025,
+                8
+              ]
+            ]
+          },
+          "volume": "63",
+          "issue": "4",
+          "page": "1287-1337",
+          "DOI": "10.1007/s10844-025-00940-w",
+          "type": "journal-article"
+        }
+      },
+      {
+        "kind": "primary",
+        "url": "https://doi.org/10.1007/s10844-025-00940-w",
+        "http_status": 200,
+        "final_url": "https://link.springer.com/article/10.1007/s10844-025-00940-w",
+        "sha256": "c1d5eb075196ba1f4eb3e322123883de89fccdbd099cb9b75036c8656198cc01",
+        "metadata": {
+          "dc.title": [
+            "Generating textual explanations for scheduling systems leveraging the reasoning capabilities of large language models"
+          ],
+          "citation_pdf_url": [
+            "https://link.springer.com/content/pdf/10.1007/s10844-025-00940-w.pdf"
+          ],
+          "citation_fulltext_html_url": [
+            "https://link.springer.com/article/10.1007/s10844-025-00940-w"
+          ],
+          "citation_journal_title": [
+            "Journal of Intelligent Information Systems"
+          ],
+          "citation_journal_abbrev": [
+            "J Intell Inf Syst"
+          ],
+          "citation_publisher": [
+            "Springer US"
+          ],
+          "citation_issn": [
+            "1573-7675"
+          ],
+          "citation_title": [
+            "Generating textual explanations for scheduling systems leveraging the reasoning capabilities of large language models"
+          ],
+          "citation_volume": [
+            "63"
+          ],
+          "citation_issue": [
+            "4"
+          ],
+          "citation_publication_date": [
+            "2025/08"
+          ],
+          "citation_online_date": [
+            "2025/04/17"
+          ],
+          "citation_firstpage": [
+            "1287"
+          ],
+          "citation_lastpage": [
+            "1337"
+          ],
+          "citation_article_type": [
+            "Research"
+          ],
+          "citation_fulltext_world_readable": [
+            ""
+          ],
+          "citation_language": [
+            "en"
+          ],
+          "citation_doi": [
+            "10.1007/s10844-025-00940-w"
+          ],
+          "citation_springer_api_url": [
+            "http://api.springer.com/xmldata/jats?q=doi:10.1007/s10844-025-00940-w&api_key="
+          ],
+          "dc.creator": [
+            "Powell, Cheyenne",
+            "Riccardi, Annalisa"
+          ],
+          "citation_author": [
+            "Powell, Cheyenne",
+            "Riccardi, Annalisa"
+          ],
+          "citation_author_email": [
+            "cheyenne.powell@strath.ac.uk",
+            "annalisa.riccardi@strath.ac.uk"
+          ],
+          "citation_author_institution": [
+            "Mechanical and Aerospace Engineering, University of Strathclyde, Glasgow, Scotland, UK",
+            "Mechanical and Aerospace Engineering, University of Strathclyde, Glasgow, Scotland, UK"
+          ],
+          "citation_cover_date": [
+            "2025/08/01"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "xiao2024chainofexperts",
+    "fields": {
+      "pages": "48519--48537",
+      "author": "Xiao, Ziyang and Zhang, Dongxiang and Wu, Yangjun and Xu, Lilin and Wang, Yuan and Han, Xiongwei and Fu, Xiaojin and Zhong, Tao and Zeng, Jia and Song, Mingli and Chen, Gang",
+      "title": "Chain-of-Experts: When {LLM}s Meet Complex Operations Research Problems",
+      "booktitle": "Proceedings of the Twelfth International Conference on Learning Representations",
+      "year": "2024",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/d45ee77826332c100a1e15f7765b99ff-Abstract-Conference.html"
+    },
+    "checks": [
+      {
+        "kind": "primary",
+        "url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/d45ee77826332c100a1e15f7765b99ff-Abstract-Conference.html",
+        "http_status": 200,
+        "final_url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/d45ee77826332c100a1e15f7765b99ff-Abstract-Conference.html",
+        "sha256": "3a14f8226a47676463e510aac91591c861a28216a5c203363880e0ffad008f0d",
+        "metadata": {
+          "citation_title": [
+            "Chain-of-Experts: When LLMs Meet Complex Operations Research Problems"
+          ],
+          "citation_author": [
+            "Xiao, Ziyang",
+            "Zhang, Dongxiang",
+            "Wu, Yangjun",
+            "Xu, Lilin",
+            "Wang, Yuan",
+            "Han, Xiongwei",
+            "Fu, Xiaojin",
+            "Zhong, Tao",
+            "Zeng, Jia",
+            "Song, Mingli",
+            "Chen, Gang"
+          ],
+          "citation_journal_title": [
+            "International Conference on Learning Representations"
+          ],
+          "citation_volume": [
+            "2024"
+          ],
+          "citation_firstpage": [
+            "48519"
+          ],
+          "citation_lastpage": [
+            "48537"
+          ],
+          "citation_pdf_url": [
+            "https://proceedings.iclr.cc/paper_files/paper/2024/file/d45ee77826332c100a1e15f7765b99ff-Paper-Conference.pdf"
+          ],
+          "citation_publication_date": [
+            "2024-05-31"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "jiang2025llmopt",
+    "fields": {
+      "author": "Jiang, Caigao and Shu, Xiang and Qian, Hong and Lu, Xingyu and Zhou, Jun and Zhou, Aimin and Yu, Yang",
+      "title": "{LLMOPT}: Learning to Define and Solve General Optimization Problems from Scratch",
+      "booktitle": "Proceedings of the Thirteenth International Conference on Learning Representations",
+      "year": "2025",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2025/file/fbe6dd68b0cf2b1d43b458d2b8ca31b0-Paper-Conference.pdf"
+    },
+    "checks": [
+      {
+        "kind": "primary",
+        "url": "https://proceedings.iclr.cc/paper_files/paper/2025/file/fbe6dd68b0cf2b1d43b458d2b8ca31b0-Paper-Conference.pdf",
+        "http_status": 200,
+        "final_url": "https://proceedings.iclr.cc/paper_files/paper/2025/file/fbe6dd68b0cf2b1d43b458d2b8ca31b0-Paper-Conference.pdf",
+        "sha256": "af477137de53bfdf9648152e3d870c1d3fe56ba6e2a711354911a1bd14749b5c",
+        "metadata": {}
+      }
+    ]
+  },
+  {
+    "key": "pan2025pamop",
+    "fields": {
+      "author": "Pan, Xiaotian and Fang, Junhao and Wu, Feng and Zhang, Sijia and Hu, Yi-Xiang and Li, Shaoang and Li, Xiang-Yang",
+      "title": "Guiding Large Language Models in Modeling Optimization Problems via Question Partitioning",
+      "booktitle": "Proceedings of the Thirty-Fourth International Joint Conference on Artificial Intelligence ({IJCAI}-25)",
+      "pages": "2657--2665",
+      "year": "2025",
+      "doi": "10.24963/ijcai.2025/296",
+      "url": "https://www.ijcai.org/proceedings/2025/296"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.24963%2Fijcai.2025%2F296",
+        "http_status": 200,
+        "final_url": "https://api.crossref.org/works/10.24963%2Fijcai.2025%2F296",
+        "sha256": "8c2c23cd7352c3cdd2c056fd83461364136c6ae6c385549037a4c865d9dc268c",
+        "metadata": {
+          "title": [
+            "Guiding Large Language Models in Modeling Optimization Problems via Question Partitioning"
+          ],
+          "author": [
+            {
+              "given": "Xiaotian",
+              "family": "Pan",
+              "sequence": "first",
+              "affiliation": [
+                {
+                  "name": "University of Science and Technology of China"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Junhao",
+              "family": "Fang",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "University of Science and Technology of China"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Feng",
+              "family": "Wu",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "University of Science and Technology of China"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Sijia",
+              "family": "Zhang",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "University of Science and Technology of China"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Yi-Xiang",
+              "family": "Hu",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "University of Science and Technology of China"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Shaoang",
+              "family": "Li",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "University of Science and Technology of China"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Xiang-Yang",
+              "family": "Li",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "University of Science and Technology of China"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            }
+          ],
+          "container-title": [
+            "Proceedings of the Thirty-Fourth International Joint Conference on Artificial Intelligence"
+          ],
+          "published": {
+            "date-parts": [
+              [
+                2025,
+                9
+              ]
+            ]
+          },
+          "published-print": {
+            "date-parts": [
+              [
+                2025,
+                9
+              ]
+            ]
+          },
+          "page": "2657-2665",
+          "DOI": "10.24963/ijcai.2025/296",
+          "type": "proceedings-article"
+        }
+      },
+      {
+        "kind": "primary",
+        "url": "https://www.ijcai.org/proceedings/2025/296",
+        "http_status": 200,
+        "final_url": "https://ijcai.org/proceedings/2025/296",
+        "sha256": "96c0e9267735d9bb9609cd8a6df00465aa69a77e948c46e7f484eb9ba42e7554",
+        "metadata": {
+          "citation_title": [
+            "Guiding Large Language Models in Modeling Optimization Problems via Question Partitioning"
+          ],
+          "citation_author": [
+            "Pan, Xiaotian",
+            "Fang, Junhao",
+            "Wu, Feng",
+            "Zhang, Sijia",
+            "Hu, Yi-Xiang",
+            "Li, Shaoang",
+            "Li, Xiang-Yang"
+          ],
+          "citation_author_institution": [
+            "School of Computer Science and Technology , University of Science and Technology of China {px259637522 ,",
+            "School of Computer Science and Technology , University of Science and Technology of China {px259637522 ,",
+            "School of Computer Science and Technology , University of Science and Technology of China {px259637522 ,",
+            "School of Computer Science and Technology , University of Science and Technology of China {px259637522 ,",
+            "School of Computer Science and Technology , University of Science and Technology of China {px259637522 ,",
+            "School of Computer Science and Technology , University of Science and Technology of China {px259637522 ,",
+            "School of Computer Science and Technology , University of Science and Technology of China {px259637522 ,"
+          ],
+          "citation_publication_date": [
+            "2025"
+          ],
+          "citation_conference_title": [
+            "Proceedings of the Thirty-Fourth International Joint Conference on Artificial Intelligence"
+          ],
+          "citation_publisher": [
+            "International Joint Conferences on Artificial Intelligence Organization"
+          ],
+          "citation_firstpage": [
+            "2657"
+          ],
+          "citation_lastpage": [
+            "2665"
+          ],
+          "citation_doi": [
+            "10.24963/ijcai.2025/296"
+          ],
+          "citation_pdf_url": [
+            "https://ijcai.org/proceedings/2025/0296.pdf"
+          ],
+          "citation_abstract_html_url": [
+            "https://ijcai.org/proceedings/2025/296"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "huang2025orlm",
+    "fields": {
+      "author": "Huang, Chenyu and Tang, Zhengyang and Hu, Shixi and Jiang, Ruoqing and Zheng, Xin and Ge, Dongdong and Wang, Benyou and Wang, Zizhuo",
+      "title": "{ORLM}: A Customizable Framework in Training Large Models for Automated Optimization Modeling",
+      "journal": "Operations Research",
+      "volume": "73",
+      "number": "6",
+      "pages": "2986--3009",
+      "year": "2025",
+      "doi": "10.1287/opre.2024.1233"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.1287%2Fopre.2024.1233",
+        "http_status": 200,
+        "final_url": "https://api.crossref.org/works/10.1287%2Fopre.2024.1233",
+        "sha256": "4925f657bb6b91306b77efd06a2b48eb6ac90fb9edce736d81c9fcc66377863b",
+        "metadata": {
+          "title": [
+            "ORLM: A Customizable Framework in Training Large Models for Automated Optimization Modeling"
+          ],
+          "author": [
+            {
+              "ORCID": "https://orcid.org/0009-0009-6130-6285",
+              "authenticated-orcid": false,
+              "given": "Chenyu",
+              "family": "Huang",
+              "sequence": "first",
+              "affiliation": [
+                {
+                  "name": "Research Institute for Interdisciplinary Sciences, School of Information Management and Engineering, Shanghai University of Finance and Economics, Shanghai 200433, China"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Zhengyang",
+              "family": "Tang",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "School of Data Science, The Chinese University of Hong Kong, Shenzhen 518172, China; and School of Science and Engineering, The Chinese University of Hong Kong, Shenzhen 518172, China; and Shenzhen Research Institute of Big Data, Shenzhen 512182, China"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Shixi",
+              "family": "Hu",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "Cardinal Operations, Yangpu District, Shanghai 200433, China"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Ruoqing",
+              "family": "Jiang",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "Department of Economics, Columbia University, New York, New York 10027; and School of Economics and Management, Tsinghua University, Beijing 100084, China"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "ORCID": "https://orcid.org/0009-0003-6040-0655",
+              "authenticated-orcid": false,
+              "given": "Xin",
+              "family": "Zheng",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "Department of Economics, Duke University, Durham, North Carolina 27705"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "ORCID": "https://orcid.org/0009-0006-9328-527X",
+              "authenticated-orcid": false,
+              "given": "Dongdong",
+              "family": "Ge",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "Antai College of Economics and Management, Shanghai Jiao Tong University, Shanghai 200030, China"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "ORCID": "https://orcid.org/0000-0002-1501-9914",
+              "authenticated-orcid": false,
+              "given": "Benyou",
+              "family": "Wang",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "School of Data Science, The Chinese University of Hong Kong, Shenzhen 518172, China; and Shenzhen Research Institute of Big Data, Shenzhen 512182, China"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "ORCID": "https://orcid.org/0000-0003-0828-7280",
+              "authenticated-orcid": false,
+              "given": "Zizhuo",
+              "family": "Wang",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "School of Management and Economics, The Chinese University of Hong Kong, Shenzhen 518172, China"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            }
+          ],
+          "container-title": [
+            "Operations Research"
+          ],
+          "published": {
+            "date-parts": [
+              [
+                2025,
+                11
+              ]
+            ]
+          },
+          "published-print": {
+            "date-parts": [
+              [
+                2025,
+                11
+              ]
+            ]
+          },
+          "volume": "73",
+          "issue": "6",
+          "page": "2986-3009",
+          "DOI": "10.1287/opre.2024.1233",
+          "type": "journal-article"
+        }
+      }
+    ]
+  },
+  {
+    "key": "lu2025optmath",
+    "fields": {
+      "author": "Lu, Hongliang and Xie, Zhonglin and Wu, Yaoyu and Ren, Can and Chen, Yuxuan and Wen, Zaiwen",
+      "title": "{OptMATH}: A Scalable Bidirectional Data Synthesis Framework for Optimization Modeling",
+      "booktitle": "Proceedings of the 42nd International Conference on Machine Learning ({ICML} 2025)",
+      "series": "Proceedings of Machine Learning Research",
+      "volume": "267",
+      "pages": "40769--40802",
+      "year": "2025",
+      "publisher": "PMLR",
+      "url": "https://proceedings.mlr.press/v267/lu25o.html"
+    },
+    "checks": [
+      {
+        "kind": "primary",
+        "url": "https://proceedings.mlr.press/v267/lu25o.html",
+        "http_status": 200,
+        "final_url": "https://proceedings.mlr.press/v267/lu25o.html",
+        "sha256": "91facf8da5d45123ed35d276d11dacb35db6cf13edccf3a2018dffb7ddc72abb",
+        "metadata": {
+          "citation_publisher": [
+            "PMLR"
+          ],
+          "citation_title": [
+            "OptMATH: A Scalable Bidirectional Data Synthesis Framework for Optimization Modeling"
+          ],
+          "citation_language": [
+            "en"
+          ],
+          "citation_abstract_html_url": [
+            "https://proceedings.mlr.press/v267/lu25o.html"
+          ],
+          "citation_pdf_url": [
+            "https://raw.githubusercontent.com/mlresearch/v267/main/assets/lu25o/lu25o.pdf"
+          ],
+          "citation_firstpage": [
+            "40769"
+          ],
+          "citation_lastpage": [
+            "40802"
+          ],
+          "citation_author": [
+            "Hongliang Lu",
+            "Zhonglin Xie",
+            "Yaoyu Wu",
+            "Can Ren",
+            "Yuxuan Chen",
+            "Zaiwen Wen"
+          ],
+          "citation_publication_date": [
+            "2025/10/06"
+          ],
+          "citation_inbook_title": [
+            "International Conference on Machine Learning"
+          ],
+          "citation_conference_title": [
+            "International Conference on Machine Learning"
+          ],
+          "citation_issn": [
+            "2640-3498"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "xiao2026deepor",
+    "fields": {
+      "author": "Xiao, Ziyang and Wang, Yuan Jessica and Han, Xiongwei and Guan, Shisi and Zhu, Jingyan and Xie, Jingrong and Xu, Lilin and Wu, Han and Yu, Wing Yin and Liu, Zehua and Fu, Xiaojin and Chen, Gang and Zhang, Dongxiang",
+      "title": "{DeepOR}: A Deep Reasoning Foundation Model for Optimization Modeling",
+      "booktitle": "Proceedings of the Fortieth AAAI Conference on Artificial Intelligence ({AAAI}-26)",
+      "volume": "40",
+      "number": "40",
+      "pages": "34052--34060",
+      "year": "2026",
+      "doi": "10.1609/aaai.v40i40.40699"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.1609%2Faaai.v40i40.40699",
+        "http_status": 429,
+        "final_url": "https://api.crossref.org/works/10.1609%2Faaai.v40i40.40699",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "primary",
+        "url": "https://ojs.aaai.org/index.php/AAAI/article/view/40699",
+        "error": "('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+      },
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.1609%2Faaai.v40i40.40699",
+        "http_status": 429,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "key": "affolter2019nli",
+    "fields": {
+      "author": "Affolter, Katrin and Stockinger, Kurt and Bernstein, Abraham",
+      "title": "A Comparative Survey of Recent Natural Language Interfaces for Databases",
+      "journal": "The VLDB Journal",
+      "volume": "28",
+      "number": "5",
+      "pages": "793--819",
+      "year": "2019",
+      "doi": "10.1007/s00778-019-00567-8"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.1007%2Fs00778-019-00567-8",
+        "http_status": 429,
+        "final_url": "https://api.crossref.org/works/10.1007%2Fs00778-019-00567-8",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "primary",
+        "url": "https://link.springer.com/article/10.1007/s00778-019-00567-8",
+        "http_status": 200,
+        "final_url": "https://link.springer.com/article/10.1007/s00778-019-00567-8",
+        "sha256": "b20d930e079ff2f5f9327903e7f26e2e417ae2cebd297243d5eb644496da2bde",
+        "metadata": {
+          "dc.title": [
+            "A comparative survey of recent natural language interfaces for databases"
+          ],
+          "citation_pdf_url": [
+            "https://link.springer.com/content/pdf/10.1007/s00778-019-00567-8.pdf"
+          ],
+          "citation_fulltext_html_url": [
+            "https://link.springer.com/article/10.1007/s00778-019-00567-8"
+          ],
+          "citation_journal_title": [
+            "The VLDB Journal"
+          ],
+          "citation_journal_abbrev": [
+            "The VLDB Journal"
+          ],
+          "citation_publisher": [
+            "Springer Berlin Heidelberg"
+          ],
+          "citation_issn": [
+            "0949-877X"
+          ],
+          "citation_title": [
+            "A comparative survey of recent natural language interfaces for databases"
+          ],
+          "citation_volume": [
+            "28"
+          ],
+          "citation_issue": [
+            "5"
+          ],
+          "citation_publication_date": [
+            "2019/10"
+          ],
+          "citation_online_date": [
+            "2019/08/28"
+          ],
+          "citation_firstpage": [
+            "793"
+          ],
+          "citation_lastpage": [
+            "819"
+          ],
+          "citation_article_type": [
+            "Regular Paper"
+          ],
+          "citation_fulltext_world_readable": [
+            ""
+          ],
+          "citation_language": [
+            "en"
+          ],
+          "citation_doi": [
+            "10.1007/s00778-019-00567-8"
+          ],
+          "citation_springer_api_url": [
+            "http://api.springer.com/xmldata/jats?q=doi:10.1007/s00778-019-00567-8&api_key="
+          ],
+          "dc.creator": [
+            "Affolter, Katrin",
+            "Stockinger, Kurt",
+            "Bernstein, Abraham"
+          ],
+          "citation_author": [
+            "Affolter, Katrin",
+            "Stockinger, Kurt",
+            "Bernstein, Abraham"
+          ],
+          "citation_author_institution": [
+            "Zurich University of Applied Sciences, Winterthur, Switzerland",
+            "Zurich University of Applied Sciences, Winterthur, Switzerland",
+            "University of Zurich, Zurich, Switzerland"
+          ],
+          "citation_author_email": [
+            "Kurt.Stockinger@zhaw.ch"
+          ],
+          "citation_cover_date": [
+            "2019/10/01"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "yu2018spider",
+    "fields": {
+      "author": "Yu, Tao and Zhang, Rui and Yang, Kai and Yasunaga, Michihiro and Wang, Dongxu and Li, Zifan and Ma, James and Li, Irene and Yao, Qingning and Roman, Shanelle and Zhang, Zilin and Radev, Dragomir",
+      "title": "{Spider}: A Large-Scale Human-Labeled Dataset for Complex and Cross-Domain Semantic Parsing and Text-to-{SQL} Task",
+      "booktitle": "Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing",
+      "pages": "3911--3921",
+      "year": "2018",
+      "publisher": "Association for Computational Linguistics",
+      "doi": "10.18653/v1/D18-1425",
+      "url": "https://aclanthology.org/D18-1425/"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.18653%2Fv1%2FD18-1425",
+        "http_status": 200,
+        "final_url": "https://api.crossref.org/works/10.18653%2Fv1%2FD18-1425",
+        "sha256": "2c6b002a7b54a8948e7a3582ddce68f557cc71c724a39345f26d995e20854c24",
+        "metadata": {
+          "title": [
+            "Spider: A Large-Scale Human-Labeled Dataset for Complex and Cross-Domain Semantic Parsing and Text-to-SQL Task"
+          ],
+          "author": [
+            {
+              "given": "Tao",
+              "family": "Yu",
+              "sequence": "first",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Rui",
+              "family": "Zhang",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Kai",
+              "family": "Yang",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Michihiro",
+              "family": "Yasunaga",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Dongxu",
+              "family": "Wang",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Zifan",
+              "family": "Li",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "James",
+              "family": "Ma",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Irene",
+              "family": "Li",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Qingning",
+              "family": "Yao",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Shanelle",
+              "family": "Roman",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Zilin",
+              "family": "Zhang",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Dragomir",
+              "family": "Radev",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            }
+          ],
+          "container-title": [
+            "Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing"
+          ],
+          "published": {
+            "date-parts": [
+              [
+                2018
+              ]
+            ]
+          },
+          "published-print": {
+            "date-parts": [
+              [
+                2018
+              ]
+            ]
+          },
+          "page": "3911-3921",
+          "DOI": "10.18653/v1/d18-1425",
+          "type": "proceedings-article"
+        }
+      },
+      {
+        "kind": "primary",
+        "url": "https://aclanthology.org/D18-1425/",
+        "http_status": 200,
+        "final_url": "https://aclanthology.org/D18-1425/",
+        "sha256": "9e97bca006861a3659ba05ff1a994d840de3a1ceb17ee894fc2fb7297e465eb1",
+        "metadata": {
+          "citation_title": [
+            "Spider: A Large-Scale Human-Labeled Dataset for Complex and Cross-Domain Semantic Parsing and Text-to-SQL Task"
+          ],
+          "citation_author": [
+            "Tao Yu",
+            "Rui Zhang",
+            "Kai Yang",
+            "Michihiro Yasunaga",
+            "Dongxu Wang",
+            "Zifan Li",
+            "James Ma",
+            "Irene Li",
+            "Qingning Yao",
+            "Shanelle Roman",
+            "Zilin Zhang",
+            "Dragomir Radev"
+          ],
+          "citation_conference_title": [
+            "Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing"
+          ],
+          "citation_publication_date": [
+            "2018"
+          ],
+          "citation_pdf_url": [
+            "https://aclanthology.org/D18-1425.pdf"
+          ],
+          "citation_firstpage": [
+            "3911"
+          ],
+          "citation_lastpage": [
+            "3921"
+          ],
+          "citation_doi": [
+            "10.18653/v1/D18-1425"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "sheetrit2024rematch",
+    "fields": {
+      "author": "Sheetrit, Eitam and Brief, Menachem and Mishaeli, Moshik and Elisha, Oren",
+      "title": "{ReMatch}: Retrieval Enhanced Schema Matching with {LLM}s",
+      "journal": "arXiv preprint",
+      "eprint": "2403.01567",
+      "archiveprefix": "arXiv",
+      "year": "2024",
+      "doi": "10.48550/arXiv.2403.01567",
+      "url": "https://arxiv.org/abs/2403.01567"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.48550%2FarXiv.2403.01567",
+        "http_status": 429,
+        "final_url": "https://api.crossref.org/works/10.48550%2FarXiv.2403.01567",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "primary",
+        "url": "https://arxiv.org/abs/2403.01567",
+        "http_status": 200,
+        "final_url": "https://arxiv.org/abs/2403.01567",
+        "sha256": "98f919098d06a10f57208c50e29d63848893cdd45c8aab1ed15c2429e85c2161",
+        "metadata": {
+          "citation_title": [
+            "ReMatch: Retrieval Enhanced Schema Matching with LLMs"
+          ],
+          "citation_author": [
+            "Sheetrit, Eitam",
+            "Brief, Menachem",
+            "Mishaeli, Moshik",
+            "Elisha, Oren"
+          ],
+          "citation_date": [
+            "2024/03/03"
+          ],
+          "citation_online_date": [
+            "2024/05/30"
+          ],
+          "citation_pdf_url": [
+            "https://arxiv.org/pdf/2403.01567"
+          ],
+          "citation_arxiv_id": [
+            "2403.01567"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "astorga2025autoformulation",
+    "fields": {
+      "author": "Astorga, Nicol{\\'a}s and Liu, Tennison and Xiao, Yuanzhang and Van Der Schaar, Mihaela",
+      "title": "Autoformulation of Mathematical Optimization Models Using {LLM}s",
+      "booktitle": "Proceedings of the 42nd International Conference on Machine Learning ({ICML} 2025)",
+      "series": "Proceedings of Machine Learning Research",
+      "volume": "267",
+      "pages": "1864--1886",
+      "year": "2025",
+      "publisher": "PMLR",
+      "url": "https://proceedings.mlr.press/v267/astorga25a.html"
+    },
+    "checks": [
+      {
+        "kind": "primary",
+        "url": "https://proceedings.mlr.press/v267/astorga25a.html",
+        "http_status": 200,
+        "final_url": "https://proceedings.mlr.press/v267/astorga25a.html",
+        "sha256": "e1ab4e4d7a952fa35c08dde1f8674d792ffdb569cde7aa3866fdd75010564ce6",
+        "metadata": {
+          "citation_publisher": [
+            "PMLR"
+          ],
+          "citation_title": [
+            "Autoformulation of Mathematical Optimization Models Using LLMs"
+          ],
+          "citation_language": [
+            "en"
+          ],
+          "citation_abstract_html_url": [
+            "https://proceedings.mlr.press/v267/astorga25a.html"
+          ],
+          "citation_pdf_url": [
+            "https://raw.githubusercontent.com/mlresearch/v267/main/assets/astorga25a/astorga25a.pdf"
+          ],
+          "citation_firstpage": [
+            "1864"
+          ],
+          "citation_lastpage": [
+            "1886"
+          ],
+          "citation_author": [
+            "Nicolás Astorga",
+            "Tennison Liu",
+            "Yuanzhang Xiao",
+            "Mihaela Van Der Schaar"
+          ],
+          "citation_publication_date": [
+            "2025/10/06"
+          ],
+          "citation_inbook_title": [
+            "International Conference on Machine Learning"
+          ],
+          "citation_conference_title": [
+            "International Conference on Machine Learning"
+          ],
+          "citation_issn": [
+            "2640-3498"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "ding2026orr1",
+    "fields": {
+      "author": "Ding, Zezhen and Tan, Zhen and Zhang, Jiheng and Chen, Tianlong",
+      "title": "{OR-R1}: Automating Modeling and Solving of Operations Research Optimization Problem via Test-Time Reinforcement Learning",
+      "booktitle": "Proceedings of the Fortieth AAAI Conference on Artificial Intelligence ({AAAI}-26)",
+      "volume": "40",
+      "number": "1",
+      "pages": "228--236",
+      "year": "2026",
+      "doi": "10.1609/aaai.v40i1.36983"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.1609%2Faaai.v40i1.36983",
+        "http_status": 200,
+        "final_url": "https://api.crossref.org/works/10.1609%2Faaai.v40i1.36983",
+        "sha256": "b504b99888bb0ea51b9da46b295d4deba720e7a82400469090e75765f327f190",
+        "metadata": {
+          "title": [
+            "OR-R1: Automating Modeling and Solving of Operations Research Optimization Problem via Test-Time Reinforcement Learning"
+          ],
+          "author": [
+            {
+              "given": "Zezhen",
+              "family": "Ding",
+              "sequence": "first",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Zhen",
+              "family": "Tan",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Jiheng",
+              "family": "Zhang",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Tianlong",
+              "family": "Chen",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            }
+          ],
+          "container-title": [
+            "Proceedings of the AAAI Conference on Artificial Intelligence"
+          ],
+          "published": {
+            "date-parts": [
+              [
+                2026,
+                3,
+                14
+              ]
+            ]
+          },
+          "published-online": {
+            "date-parts": [
+              [
+                2026,
+                3,
+                14
+              ]
+            ]
+          },
+          "volume": "40",
+          "issue": "1",
+          "page": "228-236",
+          "DOI": "10.1609/aaai.v40i1.36983",
+          "type": "journal-article"
+        }
+      }
+    ]
+  },
+  {
+    "key": "rizzi2025conceptual",
+    "fields": {
+      "author": "Rizzi, Stefano and Francia, Matteo and Gallinucci, Enrico and Golfarelli, Matteo",
+      "title": "Conceptual Design of Multidimensional Cubes with {LLM}s: An Investigation",
+      "journal": "Data \\& Knowledge Engineering",
+      "volume": "159",
+      "pages": "102452",
+      "year": "2025",
+      "doi": "10.1016/j.datak.2025.102452"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.1016%2Fj.datak.2025.102452",
+        "http_status": 429,
+        "final_url": "https://api.crossref.org/works/10.1016%2Fj.datak.2025.102452",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "primary",
+        "url": "https://doi.org/10.1016/j.datak.2025.102452",
+        "http_status": 200,
+        "final_url": "https://linkinghub.elsevier.com/retrieve/pii/S0169023X25000473",
+        "sha256": "81e603e4321b48d9f6431ea1c08b219bad2696fdaccf778cb8d9df0078f4924d",
+        "metadata": {}
+      },
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.1016%2Fj.datak.2025.102452",
+        "http_status": 429,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "key": "atzeni2026semantic",
+    "fields": {
+      "author": "Atzeni, Paolo and Baldazzi, Teodoro and Bellomarini, Luigi and Laurenza, Eleonora and Sallinger, Emanuel",
+      "title": "Semantic-Aware Query Answering with Large Language Models",
+      "journal": "Data \\& Knowledge Engineering",
+      "volume": "161",
+      "pages": "102494",
+      "year": "2026",
+      "doi": "10.1016/j.datak.2025.102494"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.1016%2Fj.datak.2025.102494",
+        "http_status": 429,
+        "final_url": "https://api.crossref.org/works/10.1016%2Fj.datak.2025.102494",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "primary",
+        "url": "https://doi.org/10.1016/j.datak.2025.102494",
+        "http_status": 200,
+        "final_url": "https://linkinghub.elsevier.com/retrieve/pii/S0169023X25000898",
+        "sha256": "1f21756be43cf498327012d287cd4a186796ce15698309838fbd9e1ae95cfb7c",
+        "metadata": {}
+      },
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.1016%2Fj.datak.2025.102494",
+        "http_status": 200,
+        "sha256": "e78d1e8b56a374cd2b4af17536c8d6aedf61e6162fb8832793b2082d78f96f78",
+        "metadata": {
+          "title": [
+            "Semantic-aware query answering with Large Language Models"
+          ],
+          "author": [
+            {
+              "given": "Paolo",
+              "family": "Atzeni",
+              "sequence": "first",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Teodoro",
+              "family": "Baldazzi",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Luigi",
+              "family": "Bellomarini",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Eleonora",
+              "family": "Laurenza",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "given": "Emanuel",
+              "family": "Sallinger",
+              "sequence": "additional",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            }
+          ],
+          "container-title": [
+            "Data &amp; Knowledge Engineering"
+          ],
+          "published": {
+            "date-parts": [
+              [
+                2026,
+                1
+              ]
+            ]
+          },
+          "published-print": {
+            "date-parts": [
+              [
+                2026,
+                1
+              ]
+            ]
+          },
+          "volume": "161",
+          "page": "102494",
+          "DOI": "10.1016/j.datak.2025.102494"
+        }
+      }
+    ]
+  },
+  {
+    "key": "miplibnl2026",
+    "fields": {
+      "title": "Constructing Industrial-Scale Optimization Modeling Benchmark",
+      "author": "Li, Zhong and Lu, Hongliang and Wei, Tao and Chen, Yuxuan and Liu, Wenyu and Lan, Yuan and Zhang, Fan and Wen, Zaiwen",
+      "booktitle": "Proceedings of the 43rd International Conference on Machine Learning",
+      "series": "Proceedings of Machine Learning Research",
+      "volume": "306",
+      "pages": "68993--69036",
+      "year": "2026",
+      "publisher": "PMLR",
+      "url": "https://proceedings.mlr.press/v306/li26dz.html"
+    },
+    "checks": [
+      {
+        "kind": "primary",
+        "url": "https://proceedings.mlr.press/v306/li26dz.html",
+        "http_status": 200,
+        "final_url": "https://proceedings.mlr.press/v306/li26dz.html",
+        "sha256": "08ad4f9020eaffe7a25c3d3cd8bd1bf9b5882d2c35c06f5f7fafff32a1060f51",
+        "metadata": {
+          "citation_publisher": [
+            "PMLR"
+          ],
+          "citation_title": [
+            "Constructing Industrial-Scale Optimization Modeling Benchmark"
+          ],
+          "citation_language": [
+            "en"
+          ],
+          "citation_abstract_html_url": [
+            "https://proceedings.mlr.press/v306/li26dz.html"
+          ],
+          "citation_pdf_url": [
+            "https://raw.githubusercontent.com/mlresearch/v306/main/assets/li26dz/li26dz.pdf"
+          ],
+          "citation_firstpage": [
+            "68993"
+          ],
+          "citation_lastpage": [
+            "69036"
+          ],
+          "citation_author": [
+            "Zhong Li",
+            "Hongliang Lu",
+            "Tao Wei",
+            "Yuxuan Chen",
+            "Wenyu Liu",
+            "Yuan Lan",
+            "Fan Zhang",
+            "Zaiwen Wen"
+          ],
+          "citation_publication_date": [
+            "2026/09/29"
+          ],
+          "citation_inbook_title": [
+            "International Conference on Machine Learning"
+          ],
+          "citation_conference_title": [
+            "International Conference on Machine Learning"
+          ],
+          "citation_issn": [
+            "2640-3498"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "zhai2025equivamap",
+    "fields": {
+      "title": "{E}quiva{M}ap: Leveraging {LLM}s for Automatic Equivalence Checking of Optimization Formulations",
+      "author": "Zhai, Haotian and Lawless, Connor and Vitercik, Ellen and Leqi, Liu",
+      "booktitle": "Proceedings of the 42nd International Conference on Machine Learning (ICML)",
+      "pages": "74288--74305",
+      "year": "2025",
+      "volume": "267",
+      "series": "Proceedings of Machine Learning Research",
+      "publisher": "PMLR",
+      "url": "https://proceedings.mlr.press/v267/zhai25a.html"
+    },
+    "checks": [
+      {
+        "kind": "primary",
+        "url": "https://proceedings.mlr.press/v267/zhai25a.html",
+        "http_status": 200,
+        "final_url": "https://proceedings.mlr.press/v267/zhai25a.html",
+        "sha256": "6e50bfb9459b39cabfaaddbb5bec711ac55056cd3fa88f2b160a87a6d11ba820",
+        "metadata": {
+          "citation_publisher": [
+            "PMLR"
+          ],
+          "citation_title": [
+            "EquivaMap: Leveraging LLMs for Automatic Equivalence Checking of Optimization Formulations"
+          ],
+          "citation_language": [
+            "en"
+          ],
+          "citation_abstract_html_url": [
+            "https://proceedings.mlr.press/v267/zhai25a.html"
+          ],
+          "citation_pdf_url": [
+            "https://raw.githubusercontent.com/mlresearch/v267/main/assets/zhai25a/zhai25a.pdf"
+          ],
+          "citation_firstpage": [
+            "74288"
+          ],
+          "citation_lastpage": [
+            "74305"
+          ],
+          "citation_author": [
+            "Haotian Zhai",
+            "Connor Lawless",
+            "Ellen Vitercik",
+            "Liu Leqi"
+          ],
+          "citation_publication_date": [
+            "2025/10/06"
+          ],
+          "citation_inbook_title": [
+            "International Conference on Machine Learning"
+          ],
+          "citation_conference_title": [
+            "International Conference on Machine Learning"
+          ],
+          "citation_issn": [
+            "2640-3498"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "chen2025solver",
+    "fields": {
+      "title": "Solver-Informed {RL}: Grounding Large Language Models for Authentic Optimization Modeling",
+      "author": "Chen, Yitian and Xia, Jingfan and Shao, Siyu and Ge, Dongdong and Ye, Yinyu",
+      "booktitle": "Advances in Neural Information Processing Systems (NeurIPS)",
+      "volume": "38",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/98555b92e5dedbdad5921049281995bc-Abstract-Conference.html",
+      "doi": "10.52202/085713-3539",
+      "year": "2025"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.52202%2F085713-3539",
+        "http_status": 429,
+        "final_url": "https://api.crossref.org/works/10.52202%2F085713-3539",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "primary",
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/98555b92e5dedbdad5921049281995bc-Abstract-Conference.html",
+        "http_status": 200,
+        "final_url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/98555b92e5dedbdad5921049281995bc-Abstract-Conference.html",
+        "sha256": "f339f8519de41981089488fbc172ceab5dad4d04fa4622f21d930c51dd2ceab8",
+        "metadata": {
+          "citation_title": [
+            "Solver-Informed RL: Grounding Large Language Models for Authentic Optimization Modeling"
+          ],
+          "citation_author": [
+            "Chen, Yitian",
+            "Xia, Jingfan",
+            "Shao, Siyu",
+            "Ge, DongDong",
+            "Ye, Yinyu "
+          ],
+          "citation_journal_title": [
+            "Advances in Neural Information Processing Systems"
+          ],
+          "citation_volume": [
+            "38"
+          ],
+          "citation_doi": [
+            "10.52202/085713-3539"
+          ],
+          "citation_firstpage": [
+            "106027"
+          ],
+          "citation_lastpage": [
+            "106069"
+          ],
+          "citation_pdf_url": [
+            "https://proceedings.neurips.cc/paper_files/paper/2025/file/98555b92e5dedbdad5921049281995bc-Paper-Conference.pdf"
+          ],
+          "citation_publication_date": [
+            "2026-04-23"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "gao2026models",
+    "fields": {
+      "title": "Models Can Model, But Can't Bind: Structured Grounding in Text-to-Optimization",
+      "author": "Gao, Zhiqi and Ge, Albert and Berenbeim, Alexander M. and Bastian, Nathaniel D. and Sala, Frederic",
+      "booktitle": "Conference on Language Models",
+      "volume": "3",
+      "year": "2026",
+      "note": "Official COLM 2026 pre-proceedings; DOI not yet assigned",
+      "url": "https://proceedings.colm.cc/paper_files/paper/2026/hash/6feb9b30798abcfae937760d183605e1-Abstract-Conference.html"
+    },
+    "checks": [
+      {
+        "kind": "primary",
+        "url": "https://proceedings.colm.cc/paper_files/paper/2026/hash/6feb9b30798abcfae937760d183605e1-Abstract-Conference.html",
+        "http_status": 200,
+        "final_url": "https://proceedings.colm.cc/paper_files/paper/2026/hash/6feb9b30798abcfae937760d183605e1-Abstract-Conference.html",
+        "sha256": "757cc826815fcb97bf30444a153504a6e94c239f076c00301d85d348f591f5ad",
+        "metadata": {
+          "citation_title": [
+            "Models Can Model, But Can’t Bind: Structured Grounding in Text-to-Optimization"
+          ],
+          "citation_author": [
+            "Gao, Zhiqi",
+            "Ge, Albert",
+            "Berenbeim, Alexander M",
+            "Bastian, Nathaniel D",
+            "Sala, Frederic"
+          ],
+          "citation_journal_title": [
+            "Conference On Language Models"
+          ],
+          "citation_volume": [
+            "3"
+          ],
+          "citation_pdf_url": [
+            "proceedings.colm.cc/paper_files/paper/2026/file/6feb9b30798abcfae937760d183605e1-Paper-Conference.pdf"
+          ],
+          "citation_publication_date": [
+            "2026-10-15"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "chen2024m3embedding",
+    "fields": {
+      "title": "{M3-Embedding}: Multi-Linguality, Multi-Functionality, Multi-Granularity Text Embeddings Through Self-Knowledge Distillation",
+      "author": "Jianlyu Chen and Shitao Xiao and Peitian Zhang and Kun Luo and Defu Lian and Zheng Liu",
+      "booktitle": "Findings of the Association for Computational Linguistics: ACL 2024",
+      "pages": "2318--2335",
+      "publisher": "Association for Computational Linguistics",
+      "year": "2024",
+      "doi": "10.18653/v1/2024.findings-acl.137"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.18653%2Fv1%2F2024.findings-acl.137",
+        "http_status": 429,
+        "final_url": "https://api.crossref.org/works/10.18653%2Fv1%2F2024.findings-acl.137",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "primary",
+        "url": "https://aclanthology.org/2024.findings-acl.137/",
+        "http_status": 200,
+        "final_url": "https://aclanthology.org/2024.findings-acl.137/",
+        "sha256": "79bcb64e169b9bb4cdb9c2723c9197089645e629de947da02a29fafbcf1efe28",
+        "metadata": {
+          "citation_title": [
+            "M3-Embedding: Multi-Linguality, Multi-Functionality, Multi-Granularity Text Embeddings Through Self-Knowledge Distillation"
+          ],
+          "citation_author": [
+            "Jianlyu Chen",
+            "Shitao Xiao",
+            "Peitian Zhang",
+            "Kun Luo",
+            "Defu Lian",
+            "Zheng Liu"
+          ],
+          "citation_conference_title": [
+            "Findings of the Association for Computational Linguistics: ACL 2024"
+          ],
+          "citation_publication_date": [
+            "2024/8"
+          ],
+          "citation_pdf_url": [
+            "https://aclanthology.org/2024.findings-acl.137.pdf"
+          ],
+          "citation_firstpage": [
+            "2318"
+          ],
+          "citation_lastpage": [
+            "2335"
+          ],
+          "citation_doi": [
+            "10.18653/v1/2024.findings-acl.137"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "yu2026uncertainty",
+    "fields": {
+      "pages": "42658--42669",
+      "author": "Yu, Linlin and Zhao, Xujiang and Li, Dong and Liu, Yanchi and Cheng, Wei and Chen, Zhengzhang and Zhao, Chen and Chen, Feng and Chen, Haifeng",
+      "title": "Uncertainty-Aware Test-Time Search for Optimization Problem Solving",
+      "booktitle": "Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+      "year": "2026",
+      "publisher": "Association for Computational Linguistics",
+      "doi": "10.18653/v1/2026.acl-long.1975"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.18653%2Fv1%2F2026.acl-long.1975",
+        "http_status": 429,
+        "final_url": "https://api.crossref.org/works/10.18653%2Fv1%2F2026.acl-long.1975",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "primary",
+        "url": "https://aclanthology.org/2026.acl-long.1975/",
+        "http_status": 200,
+        "final_url": "https://aclanthology.org/2026.acl-long.1975/",
+        "sha256": "4ba6647b7b49d48aa530bc229b13bf939f07c01b1cf145444e7b2eb8e08bcf12",
+        "metadata": {
+          "citation_title": [
+            "Uncertainty-Aware Test-Time Search for Optimization Problem Solving"
+          ],
+          "citation_author": [
+            "Linlin Yu",
+            "Xujiang Zhao",
+            "Dong Li",
+            "Yanchi Liu",
+            "Wei Cheng",
+            "Zhengzhang Chen",
+            "Chen Zhao",
+            "Feng Chen",
+            "Haifeng Chen"
+          ],
+          "citation_conference_title": [
+            "Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)"
+          ],
+          "citation_publication_date": [
+            "2026/7"
+          ],
+          "citation_pdf_url": [
+            "https://aclanthology.org/2026.acl-long.1975.pdf"
+          ],
+          "citation_firstpage": [
+            "42658"
+          ],
+          "citation_lastpage": [
+            "42669"
+          ],
+          "citation_doi": [
+            "10.18653/v1/2026.acl-long.1975"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "xie2026escaping",
+    "fields": {
+      "pages": "14100--14116",
+      "author": "Xie, Wantong and Chen, Yinghao and Hu, Yi-Xiang and Wu, Feng and Xu, Jieyang and Zhang, Sijia and Li, Xiangyang",
+      "title": "Escaping the Sisyphus Dilemma: Experience Replay for Robust Text-to-Optimization Modeling",
+      "booktitle": "Findings of the Association for Computational Linguistics: ACL 2026",
+      "year": "2026",
+      "publisher": "Association for Computational Linguistics",
+      "doi": "10.18653/v1/2026.findings-acl.690"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.18653%2Fv1%2F2026.findings-acl.690",
+        "http_status": 429,
+        "final_url": "https://api.crossref.org/works/10.18653%2Fv1%2F2026.findings-acl.690",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "primary",
+        "url": "https://aclanthology.org/2026.findings-acl.690/",
+        "http_status": 200,
+        "final_url": "https://aclanthology.org/2026.findings-acl.690/",
+        "sha256": "c1b9fdc0ecca27e09dc4bdc9b403005b062c50f83c82677f71dbbea7fdbe8350",
+        "metadata": {
+          "citation_title": [
+            "Escaping the Sisyphus Dilemma: Experience Replay for Robust Text-to-Optimization Modeling"
+          ],
+          "citation_author": [
+            "Wantong Xie",
+            "Yinghao Chen",
+            "Yi-Xiang Hu",
+            "Feng Wu",
+            "Jieyang Xu",
+            "Sijia Zhang",
+            "Xiangyang Li"
+          ],
+          "citation_conference_title": [
+            "Findings of the Association for Computational Linguistics: ACL 2026"
+          ],
+          "citation_publication_date": [
+            "2026/7"
+          ],
+          "citation_pdf_url": [
+            "https://aclanthology.org/2026.findings-acl.690.pdf"
+          ],
+          "citation_firstpage": [
+            "14100"
+          ],
+          "citation_lastpage": [
+            "14116"
+          ],
+          "citation_doi": [
+            "10.18653/v1/2026.findings-acl.690"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "li2026solver",
+    "fields": {
+      "pages": "2138--2153",
+      "author": "Li, Yuchen and Wang, Handing and Xue, Bing and Zhang, Mengjie and Jin, Yaochu",
+      "title": "Solver-Independent Automated Problem Formulation via {LLM}s for High-Cost Simulation-Driven Design",
+      "booktitle": "Findings of the Association for Computational Linguistics: ACL 2026",
+      "year": "2026",
+      "publisher": "Association for Computational Linguistics",
+      "doi": "10.18653/v1/2026.findings-acl.102"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.18653%2Fv1%2F2026.findings-acl.102",
+        "http_status": 429,
+        "final_url": "https://api.crossref.org/works/10.18653%2Fv1%2F2026.findings-acl.102",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "primary",
+        "url": "https://aclanthology.org/2026.findings-acl.102/",
+        "http_status": 200,
+        "final_url": "https://aclanthology.org/2026.findings-acl.102/",
+        "sha256": "301473e126e62dacf1ff8ba157d7a55a8214d5f2477b87417cb21dd80438ca47",
+        "metadata": {
+          "citation_title": [
+            "Solver-Independent Automated Problem Formulation via LLMs for High-Cost Simulation-Driven Design"
+          ],
+          "citation_author": [
+            "Yuchen Li",
+            "Handing Wang",
+            "Bing Xue",
+            "Mengjie Zhang",
+            "Yaochu Jin"
+          ],
+          "citation_conference_title": [
+            "Findings of the Association for Computational Linguistics: ACL 2026"
+          ],
+          "citation_publication_date": [
+            "2026/7"
+          ],
+          "citation_pdf_url": [
+            "https://aclanthology.org/2026.findings-acl.102.pdf"
+          ],
+          "citation_firstpage": [
+            "2138"
+          ],
+          "citation_lastpage": [
+            "2153"
+          ],
+          "citation_doi": [
+            "10.18653/v1/2026.findings-acl.102"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "zhang2026dual",
+    "fields": {
+      "pages": "5895--5908",
+      "author": "Zhang, Xinyu and Wan, Yuchen and Zhang, Boxuan and Yang, Zesheng and Zhang, Lingling and Wei, Bifan and Liu, Jun",
+      "title": "Dual-Cluster Memory Agent: Resolving Multi-Paradigm Ambiguity in Optimization Problem Solving",
+      "booktitle": "Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+      "year": "2026",
+      "publisher": "Association for Computational Linguistics",
+      "doi": "10.18653/v1/2026.acl-long.266"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.18653%2Fv1%2F2026.acl-long.266",
+        "http_status": 429,
+        "final_url": "https://api.crossref.org/works/10.18653%2Fv1%2F2026.acl-long.266",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "primary",
+        "url": "https://aclanthology.org/2026.acl-long.266/",
+        "http_status": 200,
+        "final_url": "https://aclanthology.org/2026.acl-long.266/",
+        "sha256": "c0fadb383a4034a40f8af3a7ccceea01d073408d021607dcc7b58660c1624063",
+        "metadata": {
+          "citation_title": [
+            "Dual-Cluster Memory Agent: Resolving Multi-Paradigm Ambiguity in Optimization Problem Solving"
+          ],
+          "citation_author": [
+            "Xinyu Zhang",
+            "Yuchen Wan",
+            "Boxuan Zhang",
+            "Zesheng Yang",
+            "Lingling Zhang",
+            "Bifan Wei",
+            "Jun Liu"
+          ],
+          "citation_conference_title": [
+            "Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)"
+          ],
+          "citation_publication_date": [
+            "2026/7"
+          ],
+          "citation_pdf_url": [
+            "https://aclanthology.org/2026.acl-long.266.pdf"
+          ],
+          "citation_firstpage": [
+            "5895"
+          ],
+          "citation_lastpage": [
+            "5908"
+          ],
+          "citation_doi": [
+            "10.18653/v1/2026.acl-long.266"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "thind2025optimai",
+    "fields": {
+      "title": "{OptimAI}: Optimization from Natural Language Using {LLM}-Powered {AI} Agents",
+      "author": "Thind, Raghav and Sun, Youran and Liang, Ling and Yang, Haizhao",
+      "journal": "arXiv preprint",
+      "year": "2025",
+      "eprint": "2504.16918",
+      "archiveprefix": "arXiv",
+      "primaryclass": "cs.CL",
+      "url": "https://arxiv.org/abs/2504.16918"
+    },
+    "checks": [
+      {
+        "kind": "primary",
+        "url": "https://arxiv.org/abs/2504.16918",
+        "http_status": 200,
+        "final_url": "https://arxiv.org/abs/2504.16918",
+        "sha256": "8a06d442f2d12e6a2db9490aab7887d0c007b0f63c95c2fee36ce0cd3cc8f540",
+        "metadata": {
+          "citation_title": [
+            "OptimAI: Optimization from Natural Language Using LLM-Powered AI Agents"
+          ],
+          "citation_author": [
+            "Thind, Raghav",
+            "Sun, Youran",
+            "Liang, Ling",
+            "Yang, Haizhao"
+          ],
+          "citation_date": [
+            "2025/04/23"
+          ],
+          "citation_online_date": [
+            "2026/01/21"
+          ],
+          "citation_pdf_url": [
+            "https://arxiv.org/pdf/2504.16918"
+          ],
+          "citation_arxiv_id": [
+            "2504.16918"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "kong2025alphaopt",
+    "fields": {
+      "title": "{AlphaOPT}: Formulating Optimization Programs with Self-Improving {LLM} Experience Library",
+      "author": "Kong, Minwei and Qu, Ao and Guo, Xiaotong and Ouyang, Wenbin and Jiang, Chonghe and Zheng, Han and Ma, Yining and Zhuang, Dingyi and Tang, Yuhan and Li, Junyi and Wang, Shenhao and Koutsopoulos, Haris and Wang, Hai and Wu, Cathy and Zhao, Jinhua",
+      "booktitle": "Proceedings of the 32nd ACM SIGKDD Conference on Knowledge Discovery and Data Mining V.2",
+      "publisher": "ACM",
+      "year": "2026",
+      "pages": "2389--2400",
+      "doi": "10.1145/3770855.3817974",
+      "url": "https://dl.acm.org/doi/10.1145/3770855.3817974"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.1145%2F3770855.3817974",
+        "http_status": 429,
+        "final_url": "https://api.crossref.org/works/10.1145%2F3770855.3817974",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "primary",
+        "url": "https://dl.acm.org/doi/10.1145/3770855.3817974",
+        "http_status": 403,
+        "final_url": "https://dl.acm.org/doi/10.1145/3770855.3817974",
+        "sha256": "b9722e08eee0f169427b35e84e215c7dbd76f7024d3affb9d61a4e7f51254dc1"
+      },
+      {
+        "kind": "primary",
+        "url": "https://api.crossref.org/works/10.1145%2F3770855.3817974",
+        "http_status": 200,
+        "final_url": "https://api.crossref.org/works/10.1145%2F3770855.3817974",
+        "sha256": "89a04339be202bdffef7d8843c15b5eb36d0d01e9dde548bed481b6a6ac90175",
+        "metadata": {}
+      },
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.1145%2F3770855.3817974",
+        "http_status": 200,
+        "sha256": "89a04339be202bdffef7d8843c15b5eb36d0d01e9dde548bed481b6a6ac90175",
+        "metadata": {
+          "title": [
+            "AlphaOPT: Formulating Optimization Programs with Self-Improving LLM Experience Library"
+          ],
+          "author": [
+            {
+              "ORCID": "https://orcid.org/0009-0005-5801-9630",
+              "authenticated-orcid": false,
+              "given": "Minwei",
+              "family": "Kong",
+              "sequence": "first",
+              "affiliation": [
+                {
+                  "name": "Singapore-MIT Alliance for Research and Technology, Singapore, Singapore"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "ORCID": "https://orcid.org/0000-0003-3996-8521",
+              "authenticated-orcid": false,
+              "given": "Ao",
+              "family": "Qu",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "Massachusetts Institute of Technology, Cambridge, MA, USA"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "ORCID": "https://orcid.org/0000-0003-0079-7665",
+              "authenticated-orcid": false,
+              "given": "Xiaotong",
+              "family": "Guo",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "Massachusetts Institute of Technology, Cambridge, MA, USA"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "ORCID": "https://orcid.org/0009-0004-0298-4311",
+              "authenticated-orcid": false,
+              "given": "Wenbin",
+              "family": "Ouyang",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "Massachusetts Institute of Technology, Cambridge, MA, USA"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "ORCID": "https://orcid.org/0000-0001-8548-2691",
+              "authenticated-orcid": false,
+              "given": "Chonghe",
+              "family": "Jiang",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "Massachusetts Institute of Technology, Cambridge, MA, USA"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "ORCID": "https://orcid.org/0009-0008-3768-5556",
+              "authenticated-orcid": false,
+              "given": "Han",
+              "family": "Zheng",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "Massachusetts Institute of Technology, Cambridge, MA, USA"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "ORCID": "https://orcid.org/0000-0002-6639-8547",
+              "authenticated-orcid": false,
+              "given": "Yining",
+              "family": "Ma",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "Massachusetts Institute of Technology, Cambridge, MA, USA"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "ORCID": "https://orcid.org/0000-0003-3208-6016",
+              "authenticated-orcid": false,
+              "given": "Dingyi",
+              "family": "Zhuang",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "Massachusetts Institute of Technology, Cambridge, MA, USA"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "ORCID": "https://orcid.org/0009-0002-0535-6754",
+              "authenticated-orcid": false,
+              "given": "Yuhan",
+              "family": "Tang",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "Massachusetts Institute of Technology, Cambridge, MA, USA"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "ORCID": "https://orcid.org/0000-0002-8267-9939",
+              "authenticated-orcid": false,
+              "given": "Junyi",
+              "family": "Li",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "Singapore-MIT Alliance for Research and Technology, Singapore, Singapore"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "ORCID": "https://orcid.org/0000-0003-4374-8193",
+              "authenticated-orcid": false,
+              "given": "Shenhao",
+              "family": "Wang",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "University of Florida, Gainesville, FL, USA"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "ORCID": "https://orcid.org/0000-0003-3830-9794",
+              "authenticated-orcid": false,
+              "given": "Haris",
+              "family": "Koutsopoulos",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "Northeastern University, Boston, MA, USA"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "ORCID": "https://orcid.org/0000-0002-9260-3428",
+              "authenticated-orcid": false,
+              "given": "Hai",
+              "family": "Wang",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "Singapore Management University, Singapore, Singapore"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "ORCID": "https://orcid.org/0000-0001-8594-303X",
+              "authenticated-orcid": false,
+              "given": "Cathy",
+              "family": "Wu",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "Massachusetts Institute of Technology, Cambridge, MA, USA"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            },
+            {
+              "ORCID": "https://orcid.org/0000-0002-1929-7583",
+              "authenticated-orcid": false,
+              "given": "Jinhua",
+              "family": "Zhao",
+              "sequence": "additional",
+              "affiliation": [
+                {
+                  "name": "Massachusetts Institute of Technology, Cambridge, MA, USA"
+                }
+              ],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            }
+          ],
+          "container-title": [
+            "Proceedings of the 32nd ACM SIGKDD Conference on Knowledge Discovery and Data Mining V.2"
+          ],
+          "published": {
+            "date-parts": [
+              [
+                2026,
+                8,
+                8
+              ]
+            ]
+          },
+          "published-print": {
+            "date-parts": [
+              [
+                2026,
+                8,
+                9
+              ]
+            ]
+          },
+          "published-online": {
+            "date-parts": [
+              [
+                2026,
+                8,
+                8
+              ]
+            ]
+          },
+          "page": "2389-2400",
+          "DOI": "10.1145/3770855.3817974"
+        }
+      }
+    ]
+  },
+  {
+    "key": "yang2026orthought",
+    "fields": {
+      "title": "{ORThought}: Benchmarking and Automating Logistics Optimization Modeling via Structured {LLM} Reasoning",
+      "author": "Yang, Beinuo and Zhou, Qishen and Li, Junyi and Su, Chenxing and Angeloudis, Panagiotis and Hu, Simon",
+      "journal": "Artificial Intelligence for Transportation",
+      "volume": "6",
+      "pages": "100059",
+      "year": "2026",
+      "doi": "10.1016/j.ait.2026.100059",
+      "url": "https://doi.org/10.1016/j.ait.2026.100059"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.1016%2Fj.ait.2026.100059",
+        "http_status": 429,
+        "final_url": "https://api.crossref.org/works/10.1016%2Fj.ait.2026.100059",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "primary",
+        "url": "https://doi.org/10.1016/j.ait.2026.100059",
+        "http_status": 200,
+        "final_url": "https://linkinghub.elsevier.com/retrieve/pii/S3050860626000141",
+        "sha256": "4394ee7f2acb5aef1bc92383e2cbe96938aa0e7b1f51283f69ab2d342fcdcc6e",
+        "metadata": {}
+      },
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.1016%2Fj.ait.2026.100059",
+        "http_status": 429,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  {
+    "key": "holm1979followup",
+    "fields": {
+      "author": "Holm, Sture",
+      "title": "A Simple Sequentially Rejective Multiple Test Procedure",
+      "journal": "Scandinavian Journal of Statistics",
+      "volume": "6",
+      "number": "2",
+      "pages": "65--70",
+      "year": "1979",
+      "url": "https://www.jstor.org/stable/4615733"
+    },
+    "checks": [
+      {
+        "kind": "primary",
+        "url": "https://www.jstor.org/stable/4615733",
+        "http_status": 420,
+        "final_url": "https://www.jstor.org/stable/4615733",
+        "sha256": "4d3e8903456a1774a63f537d79cd1d393c0489f49a4f17be6513f73108d9b4f7"
+      }
+    ]
+  },
+  {
+    "key": "huang2017beamfollowup",
+    "fields": {
+      "author": "Huang, Liang and Zhao, Kai and Ma, Mingbo",
+      "title": "When to Finish? Optimal Beam Search for Neural Text Generation (modulo beam size)",
+      "booktitle": "Proceedings of the 2017 Conference on Empirical Methods in Natural Language Processing",
+      "year": "2017",
+      "pages": "2134--2139",
+      "doi": "10.18653/v1/D17-1227",
+      "url": "https://aclanthology.org/D17-1227/"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.18653%2Fv1%2FD17-1227",
+        "http_status": 429,
+        "final_url": "https://api.crossref.org/works/10.18653%2Fv1%2FD17-1227",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "primary",
+        "url": "https://aclanthology.org/D17-1227/",
+        "http_status": 200,
+        "final_url": "https://aclanthology.org/D17-1227/",
+        "sha256": "e00b52a23ce13574370ad7750f1d575a141b7189be5e3a311ec724e09841a739",
+        "metadata": {
+          "citation_title": [
+            "When to Finish? Optimal Beam Search for Neural Text Generation (modulo beam size)"
+          ],
+          "citation_author": [
+            "Liang Huang",
+            "Kai Zhao",
+            "Mingbo Ma"
+          ],
+          "citation_conference_title": [
+            "Proceedings of the 2017 Conference on Empirical Methods in Natural Language Processing"
+          ],
+          "citation_publication_date": [
+            "2017/9"
+          ],
+          "citation_pdf_url": [
+            "https://aclanthology.org/D17-1227.pdf"
+          ],
+          "citation_firstpage": [
+            "2134"
+          ],
+          "citation_lastpage": [
+            "2139"
+          ],
+          "citation_doi": [
+            "10.18653/v1/D17-1227"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "deng2021strug",
+    "fields": {
+      "author": "Deng, Xiang and Hassan Awadallah, Ahmed and Meek, Christopher and Polozov, Oleksandr and Sun, Huan and Richardson, Matthew",
+      "title": "Structure-Grounded Pretraining for Text-to-{SQL}",
+      "booktitle": "Proceedings of NAACL-HLT",
+      "year": "2021",
+      "pages": "1337--1350",
+      "doi": "10.18653/v1/2021.naacl-main.105",
+      "url": "https://aclanthology.org/2021.naacl-main.105/"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.18653%2Fv1%2F2021.naacl-main.105",
+        "http_status": 429,
+        "final_url": "https://api.crossref.org/works/10.18653%2Fv1%2F2021.naacl-main.105",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "primary",
+        "url": "https://aclanthology.org/2021.naacl-main.105/",
+        "http_status": 200,
+        "final_url": "https://aclanthology.org/2021.naacl-main.105/",
+        "sha256": "29d82259fba908f42112ec9090bef46608c3c3fa200c888d7bdd1293f1006b81",
+        "metadata": {
+          "citation_title": [
+            "Structure-Grounded Pretraining for Text-to-SQL"
+          ],
+          "citation_author": [
+            "Xiang Deng",
+            "Ahmed Hassan",
+            "Christopher Meek",
+            "Oleksandr Polozov",
+            "Huan Sun",
+            "Matthew Richardson"
+          ],
+          "citation_conference_title": [
+            "Proceedings of the 2021 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies"
+          ],
+          "citation_publication_date": [
+            "2021/6"
+          ],
+          "citation_pdf_url": [
+            "https://aclanthology.org/2021.naacl-main.105.pdf"
+          ],
+          "citation_firstpage": [
+            "1337"
+          ],
+          "citation_lastpage": [
+            "1350"
+          ],
+          "citation_doi": [
+            "10.18653/v1/2021.naacl-main.105"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "roy2017udg",
+    "fields": {
+      "author": "Roy, Subhro and Roth, Dan",
+      "title": "Unit Dependency Graph and Its Application to Arithmetic Word Problem Solving",
+      "booktitle": "Proceedings of the AAAI Conference on Artificial Intelligence",
+      "year": "2017",
+      "volume": "31",
+      "number": "1",
+      "doi": "10.1609/aaai.v31i1.10959",
+      "url": "https://ojs.aaai.org/index.php/AAAI/article/view/10959"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.1609%2Faaai.v31i1.10959",
+        "http_status": 429,
+        "final_url": "https://api.crossref.org/works/10.1609%2Faaai.v31i1.10959",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "primary",
+        "url": "https://ojs.aaai.org/index.php/AAAI/article/view/10959",
+        "error": "('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))"
+      },
+      {
+        "kind": "primary",
+        "url": "https://cdn.aaai.org/ojs/10959/10959-13-14487-1-2-20201228.pdf",
+        "http_status": 200,
+        "final_url": "https://cdn.aaai.org/ojs/10959/10959-13-14487-1-2-20201228.pdf",
+        "sha256": "f8ba63280667c2c97e5775a38aaec179833a184e5af631fcf609b419573bf1ea",
+        "metadata": {}
+      }
+    ]
+  },
+  {
+    "key": "punyakanok2004ilp",
+    "fields": {
+      "author": "Punyakanok, Vasin and Roth, Dan and Yih, Wen-tau and Zimak, Dav",
+      "title": "Semantic Role Labeling via Integer Linear Programming Inference",
+      "booktitle": "Proceedings of COLING",
+      "year": "2004",
+      "pages": "1346--1352",
+      "url": "https://aclanthology.org/C04-1197/"
+    },
+    "checks": [
+      {
+        "kind": "primary",
+        "url": "https://aclanthology.org/C04-1197/",
+        "http_status": 200,
+        "final_url": "https://aclanthology.org/C04-1197/",
+        "sha256": "09e3b868989e33dd93fb42881cdaa6ccc767dc0e7883a5bf12b5cd07d4a6d946",
+        "metadata": {
+          "citation_title": [
+            "Semantic Role Labeling Via Integer Linear Programming Inference"
+          ],
+          "citation_author": [
+            "Vasin Punyakanok",
+            "Dan Roth",
+            "Wen-tau Yih",
+            "Dav Zimak"
+          ],
+          "citation_conference_title": [
+            "COLING 2004: Proceedings of the 20th International Conference on Computational Linguistics"
+          ],
+          "citation_publication_date": [
+            "2004"
+          ],
+          "citation_pdf_url": [
+            "https://aclanthology.org/C04-1197.pdf"
+          ],
+          "citation_firstpage": [
+            "1346"
+          ],
+          "citation_lastpage": [
+            "1352"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "almasian2023cqe",
+    "fields": {
+      "author": "Almasian, Satya and Kazakova, Vivian and G{\\\"o}ldner, Philipp and Gertz, Michael",
+      "title": "{CQE}: A Comprehensive Quantity Extractor",
+      "booktitle": "Proceedings of EMNLP",
+      "year": "2023",
+      "pages": "12845--12859",
+      "doi": "10.18653/v1/2023.emnlp-main.793",
+      "url": "https://aclanthology.org/2023.emnlp-main.793/"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.18653%2Fv1%2F2023.emnlp-main.793",
+        "http_status": 429,
+        "final_url": "https://api.crossref.org/works/10.18653%2Fv1%2F2023.emnlp-main.793",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "primary",
+        "url": "https://aclanthology.org/2023.emnlp-main.793/",
+        "http_status": 200,
+        "final_url": "https://aclanthology.org/2023.emnlp-main.793/",
+        "sha256": "13401b7b0c979142473331d58a2a59f4e5dab24a38bbadd1d739d60a4f40bbbc",
+        "metadata": {
+          "citation_title": [
+            "CQE: A Comprehensive Quantity Extractor"
+          ],
+          "citation_author": [
+            "Satya Almasian",
+            "Vivian Kazakova",
+            "Philipp Göldner",
+            "Michael Gertz"
+          ],
+          "citation_conference_title": [
+            "Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing"
+          ],
+          "citation_publication_date": [
+            "2023/12"
+          ],
+          "citation_pdf_url": [
+            "https://aclanthology.org/2023.emnlp-main.793.pdf"
+          ],
+          "citation_firstpage": [
+            "12845"
+          ],
+          "citation_lastpage": [
+            "12859"
+          ],
+          "citation_doi": [
+            "10.18653/v1/2023.emnlp-main.793"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "wang2018execution",
+    "fields": {
+      "author": "Wang, Chenglong and Tatwawadi, Kedar and Brockschmidt, Marc and Huang, Po-Sen and Mao, Yi and Polozov, Oleksandr and Singh, Rishabh",
+      "title": "Robust Text-to-SQL Generation with Execution-Guided Decoding",
+      "journal": "arXiv preprint",
+      "eprint": "1807.03100",
+      "archiveprefix": "arXiv",
+      "year": "2018",
+      "doi": "10.48550/arXiv.1807.03100",
+      "url": "https://arxiv.org/abs/1807.03100"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.48550%2FarXiv.1807.03100",
+        "http_status": 429,
+        "final_url": "https://api.crossref.org/works/10.48550%2FarXiv.1807.03100",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "primary",
+        "url": "https://arxiv.org/abs/1807.03100",
+        "http_status": 200,
+        "final_url": "https://arxiv.org/abs/1807.03100",
+        "sha256": "43b5c01847765312a22185b211c388f35303da7ba6df862b4f9d82a8f319ed9e",
+        "metadata": {
+          "citation_title": [
+            "Robust Text-to-SQL Generation with Execution-Guided Decoding"
+          ],
+          "citation_author": [
+            "Wang, Chenglong",
+            "Tatwawadi, Kedar",
+            "Brockschmidt, Marc",
+            "Huang, Po-Sen",
+            "Mao, Yi",
+            "Polozov, Oleksandr",
+            "Singh, Rishabh"
+          ],
+          "citation_date": [
+            "2018/07/09"
+          ],
+          "citation_online_date": [
+            "2018/09/13"
+          ],
+          "citation_pdf_url": [
+            "https://arxiv.org/pdf/1807.03100"
+          ],
+          "citation_arxiv_id": [
+            "1807.03100"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "wang2020ratsql",
+    "fields": {
+      "author": "Wang, Bailin and Shin, Richard and Liu, Xiaodong and Polozov, Oleksandr and Richardson, Matthew",
+      "title": "{RAT-SQL}: Relation-Aware Schema Encoding and Linking for Text-to-{SQL} Parsers",
+      "booktitle": "Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics",
+      "pages": "7567--7578",
+      "year": "2020",
+      "publisher": "Association for Computational Linguistics",
+      "doi": "10.18653/v1/2020.acl-main.677",
+      "url": "https://aclanthology.org/2020.acl-main.677/"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.18653%2Fv1%2F2020.acl-main.677",
+        "http_status": 429,
+        "final_url": "https://api.crossref.org/works/10.18653%2Fv1%2F2020.acl-main.677",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "primary",
+        "url": "https://aclanthology.org/2020.acl-main.677/",
+        "http_status": 200,
+        "final_url": "https://aclanthology.org/2020.acl-main.677/",
+        "sha256": "9bfc141fcb40c58cd76bf66292558f401eabfeffa9f7772941ed98cf246f744f",
+        "metadata": {
+          "citation_title": [
+            "RAT-SQL: Relation-Aware Schema Encoding and Linking for Text-to-SQL Parsers"
+          ],
+          "citation_author": [
+            "Bailin Wang",
+            "Richard Shin",
+            "Xiaodong Liu",
+            "Oleksandr Polozov",
+            "Matthew Richardson"
+          ],
+          "citation_conference_title": [
+            "Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics"
+          ],
+          "citation_publication_date": [
+            "2020/7"
+          ],
+          "citation_pdf_url": [
+            "https://aclanthology.org/2020.acl-main.677.pdf"
+          ],
+          "citation_firstpage": [
+            "7567"
+          ],
+          "citation_lastpage": [
+            "7578"
+          ],
+          "citation_doi": [
+            "10.18653/v1/2020.acl-main.677"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "scholak2021picard",
+    "fields": {
+      "author": "Scholak, Torsten and Schucher, Nathan and Bahdanau, Dzmitry",
+      "title": "{PICARD}: Parsing Incrementally for Constrained Auto-Regressive Decoding from Language Models",
+      "booktitle": "Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing",
+      "pages": "9895--9901",
+      "year": "2021",
+      "publisher": "Association for Computational Linguistics",
+      "doi": "10.18653/v1/2021.emnlp-main.779",
+      "url": "https://aclanthology.org/2021.emnlp-main.779/"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.18653%2Fv1%2F2021.emnlp-main.779",
+        "http_status": 429,
+        "final_url": "https://api.crossref.org/works/10.18653%2Fv1%2F2021.emnlp-main.779",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "primary",
+        "url": "https://aclanthology.org/2021.emnlp-main.779/",
+        "http_status": 200,
+        "final_url": "https://aclanthology.org/2021.emnlp-main.779/",
+        "sha256": "328abe1739ed334dba02193b65149c50f2fa6771e511883ccc5dab6bd218ace2",
+        "metadata": {
+          "citation_title": [
+            "PICARD: Parsing Incrementally for Constrained Auto-Regressive Decoding from Language Models"
+          ],
+          "citation_author": [
+            "Torsten Scholak",
+            "Nathan Schucher",
+            "Dzmitry Bahdanau"
+          ],
+          "citation_conference_title": [
+            "Proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing"
+          ],
+          "citation_publication_date": [
+            "2021/11"
+          ],
+          "citation_pdf_url": [
+            "https://aclanthology.org/2021.emnlp-main.779.pdf"
+          ],
+          "citation_firstpage": [
+            "9895"
+          ],
+          "citation_lastpage": [
+            "9901"
+          ],
+          "citation_doi": [
+            "10.18653/v1/2021.emnlp-main.779"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "key": "kuhn1955assignment",
+    "fields": {
+      "author": "Kuhn, Harold W.",
+      "title": "The Hungarian Method for the Assignment Problem",
+      "journal": "Naval Research Logistics Quarterly",
+      "volume": "2",
+      "number": "1--2",
+      "pages": "83--97",
+      "year": "1955",
+      "doi": "10.1002/nav.3800020109",
+      "url": "https://onlinelibrary.wiley.com/doi/10.1002/nav.3800020109"
+    },
+    "checks": [
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.1002%2Fnav.3800020109",
+        "http_status": 429,
+        "final_url": "https://api.crossref.org/works/10.1002%2Fnav.3800020109",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "kind": "primary",
+        "url": "https://onlinelibrary.wiley.com/doi/10.1002/nav.3800020109",
+        "http_status": 403,
+        "final_url": "https://onlinelibrary.wiley.com/doi/10.1002/nav.3800020109",
+        "sha256": "a045f1cf65b0d9fb63b1011bb6e9e0de74a47565015076f02d51449407a9f8d5"
+      },
+      {
+        "kind": "primary",
+        "url": "https://api.crossref.org/works/10.1002%2Fnav.3800020109",
+        "http_status": 200,
+        "final_url": "https://api.crossref.org/works/10.1002%2Fnav.3800020109",
+        "sha256": "fcac0b381153abb0251ca99ada0d5133316560de0e3c4122f298d534097cd65d",
+        "metadata": {
+          "title": [
+            "The Hungarian method for the assignment problem"
+          ],
+          "author": [
+            {
+              "given": "H. W.",
+              "family": "Kuhn",
+              "sequence": "first",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            }
+          ],
+          "container-title": [
+            "Naval Research Logistics Quarterly"
+          ],
+          "published": {
+            "date-parts": [
+              [
+                1955,
+                3
+              ]
+            ]
+          },
+          "volume": "2",
+          "issue": "1-2",
+          "page": "83-97",
+          "DOI": "10.1002/nav.3800020109"
+        }
+      },
+      {
+        "kind": "crossref",
+        "url": "https://api.crossref.org/works/10.1002%2Fnav.3800020109",
+        "http_status": 200,
+        "sha256": "fcac0b381153abb0251ca99ada0d5133316560de0e3c4122f298d534097cd65d",
+        "metadata": {
+          "title": [
+            "The Hungarian method for the assignment problem"
+          ],
+          "author": [
+            {
+              "given": "H. W.",
+              "family": "Kuhn",
+              "sequence": "first",
+              "affiliation": [],
+              "role": [
+                {
+                  "vocabulary": "crossref",
+                  "role": "author"
+                }
+              ]
+            }
+          ],
+          "container-title": [
+            "Naval Research Logistics Quarterly"
+          ],
+          "published": {
+            "date-parts": [
+              [
+                1955,
+                3
+              ]
+            ]
+          },
+          "published-print": {
+            "date-parts": [
+              [
+                1955,
+                3
+              ]
+            ]
+          },
+          "published-online": {
+            "date-parts": [
+              [
+                2006,
+                10,
+                11
+              ]
+            ]
+          },
+          "volume": "2",
+          "issue": "1-2",
+          "page": "83-97",
+          "DOI": "10.1002/nav.3800020109"
+        }
+      }
+    ]
+  }
+]
