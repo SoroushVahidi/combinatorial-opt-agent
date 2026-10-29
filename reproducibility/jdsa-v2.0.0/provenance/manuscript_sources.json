@@ -1,0 +1,152 @@
+[
+  {
+    "difference_if_any": "Public PDF crosslinks and canonical source URL only; no numerical/narrative edits",
+    "editorial_origin_commit": "9d8c501c58415e766d0d5773cf7cbb576da66cfa",
+    "editorial_path": "manuscript/jdsa-final-review/main.tex",
+    "editorial_sha256": "0812bc51687f892b1d9e7d8d5f5d9261dc4678c7ab2a7e9f1e81248d46e61d50",
+    "identical_to_editorial": false,
+    "path": "manuscript/jdsa/source/main.tex",
+    "public_commit": "d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+    "sha256": "4b60388af306f7ad053519f08e3e729bcfffe8f1f5a993808d8bc24c50d581a3"
+  },
+  {
+    "difference_if_any": null,
+    "editorial_origin_commit": "9d8c501c58415e766d0d5773cf7cbb576da66cfa",
+    "editorial_path": "manuscript/jdsa-final-review/reproduction_map.tex",
+    "editorial_sha256": "4531d9e539de3559bfca3f2539adc9368be1b49a9cc7096043137e342f3277ae",
+    "identical_to_editorial": true,
+    "path": "manuscript/jdsa/source/reproduction_map.tex",
+    "public_commit": "d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+    "sha256": "4531d9e539de3559bfca3f2539adc9368be1b49a9cc7096043137e342f3277ae"
+  },
+  {
+    "difference_if_any": null,
+    "editorial_origin_commit": "9d8c501c58415e766d0d5773cf7cbb576da66cfa",
+    "editorial_path": "manuscript/jdsa-final-review/reference_conventions.tex",
+    "editorial_sha256": "44679d809f8212ce7c32821140417df769b050435ca8a8ebfbeaa7b5daa41b6f",
+    "identical_to_editorial": true,
+    "path": "manuscript/jdsa/source/reference_conventions.tex",
+    "public_commit": "d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+    "sha256": "44679d809f8212ce7c32821140417df769b050435ca8a8ebfbeaa7b5daa41b6f"
+  },
+  {
+    "difference_if_any": null,
+    "editorial_origin_commit": "9d8c501c58415e766d0d5773cf7cbb576da66cfa",
+    "editorial_path": "manuscript/jdsa-final-review/supervision_diagnostics.tex",
+    "editorial_sha256": "0dd0714082f0aa2d318bb780859976cfe3d3adc018727f992e140a222ce6ea3e",
+    "identical_to_editorial": true,
+    "path": "manuscript/jdsa/source/supervision_diagnostics.tex",
+    "public_commit": "d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+    "sha256": "0dd0714082f0aa2d318bb780859976cfe3d3adc018727f992e140a222ce6ea3e"
+  },
+  {
+    "difference_if_any": null,
+    "editorial_origin_commit": "9d8c501c58415e766d0d5773cf7cbb576da66cfa",
+    "editorial_path": "manuscript/jdsa-final-review/grounding_diagnostics.tex",
+    "editorial_sha256": "e52eb9accce4e9a3b7a698d6692e395f3754f220673e10adaa910c0418675e67",
+    "identical_to_editorial": true,
+    "path": "manuscript/jdsa/source/grounding_diagnostics.tex",
+    "public_commit": "d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+    "sha256": "e52eb9accce4e9a3b7a698d6692e395f3754f220673e10adaa910c0418675e67"
+  },
+  {
+    "difference_if_any": null,
+    "editorial_origin_commit": "9d8c501c58415e766d0d5773cf7cbb576da66cfa",
+    "editorial_path": "manuscript/jdsa-final-review/pipeline_figure.tex",
+    "editorial_sha256": "8693933108ff023468c019cee84b840702c8c7b7292a5a00284fdad23bddfb27",
+    "identical_to_editorial": true,
+    "path": "manuscript/jdsa/source/pipeline_figure.tex",
+    "public_commit": "d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+    "sha256": "8693933108ff023468c019cee84b840702c8c7b7292a5a00284fdad23bddfb27"
+  },
+  {
+    "difference_if_any": null,
+    "editorial_origin_commit": "9d8c501c58415e766d0d5773cf7cbb576da66cfa",
+    "editorial_path": "manuscript/jdsa-final-review/closed_audits.tex",
+    "editorial_sha256": "83feab4b81fc3ee1373b6c8c26dbfa6f258c08cb3fb79c65d1db57d4a8e1254c",
+    "identical_to_editorial": true,
+    "path": "manuscript/jdsa/source/closed_audits.tex",
+    "public_commit": "d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+    "sha256": "83feab4b81fc3ee1373b6c8c26dbfa6f258c08cb3fb79c65d1db57d4a8e1254c"
+  },
+  {
+    "difference_if_any": null,
+    "editorial_origin_commit": "9d8c501c58415e766d0d5773cf7cbb576da66cfa",
+    "editorial_path": "manuscript/jdsa-final-review/relationship_supplement.tex",
+    "editorial_sha256": "aad4f1194e2a92a04f1d3dfe275234566c6404061bd1ef6440989df683dd48f4",
+    "identical_to_editorial": true,
+    "path": "manuscript/jdsa/source/relationship_supplement.tex",
+    "public_commit": "d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+    "sha256": "aad4f1194e2a92a04f1d3dfe275234566c6404061bd1ef6440989df683dd48f4"
+  },
+  {
+    "difference_if_any": null,
+    "editorial_origin_commit": "9d8c501c58415e766d0d5773cf7cbb576da66cfa",
+    "editorial_path": "manuscript/jdsa-final-review/preserved_results_details.tex",
+    "editorial_sha256": "565b66a0cb79e5294521fbb33b01f51612e870e8e0e2ede2eef77bbad733ecad",
+    "identical_to_editorial": true,
+    "path": "manuscript/jdsa/source/preserved_results_details.tex",
+    "public_commit": "d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+    "sha256": "565b66a0cb79e5294521fbb33b01f51612e870e8e0e2ede2eef77bbad733ecad"
+  },
+  {
+    "difference_if_any": "Public PDF crosslinks and canonical source URL only; no numerical/narrative edits",
+    "editorial_origin_commit": "9d8c501c58415e766d0d5773cf7cbb576da66cfa",
+    "editorial_path": "manuscript/jdsa-final-review/supplement.tex",
+    "editorial_sha256": "2356b81d3c9a640a3c990b77d020d7c50cbf9246bd6dbb535095663b776abdae",
+    "identical_to_editorial": false,
+    "path": "manuscript/jdsa/source/supplement.tex",
+    "public_commit": "d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+    "sha256": "cb75d58d11bc69e8fb66331cde8a1c50bf3d1675d2e36dcb834fc2b11064da00"
+  },
+  {
+    "difference_if_any": null,
+    "editorial_origin_commit": "9d8c501c58415e766d0d5773cf7cbb576da66cfa",
+    "editorial_path": "manuscript/jdsa-final-review/llm_evidence.tex",
+    "editorial_sha256": "f9a3d7526c0d1d8cb648f1851100540c44328ab4168fba4e1ad75dbec732ca07",
+    "identical_to_editorial": true,
+    "path": "manuscript/jdsa/source/llm_evidence.tex",
+    "public_commit": "d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+    "sha256": "f9a3d7526c0d1d8cb648f1851100540c44328ab4168fba4e1ad75dbec732ca07"
+  },
+  {
+    "difference_if_any": null,
+    "editorial_origin_commit": "9d8c501c58415e766d0d5773cf7cbb576da66cfa",
+    "editorial_path": "manuscript/jdsa-final-review/grounding_summary.tex",
+    "editorial_sha256": "8ce06c8af156f5f8618241eeb3d6be41e561f719478ba406d719b2a04f3bc17d",
+    "identical_to_editorial": true,
+    "path": "manuscript/jdsa/source/grounding_summary.tex",
+    "public_commit": "d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+    "sha256": "8ce06c8af156f5f8618241eeb3d6be41e561f719478ba406d719b2a04f3bc17d"
+  },
+  {
+    "difference_if_any": null,
+    "editorial_origin_commit": "9d8c501c58415e766d0d5773cf7cbb576da66cfa",
+    "editorial_path": "manuscript/jdsa-final-review/relationship_evidence.tex",
+    "editorial_sha256": "7ee90ca40e0eef12109a3a1593540a401e3eb1fe8c6ba09f8e94991ed328358c",
+    "identical_to_editorial": true,
+    "path": "manuscript/jdsa/source/relationship_evidence.tex",
+    "public_commit": "d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+    "sha256": "7ee90ca40e0eef12109a3a1593540a401e3eb1fe8c6ba09f8e94991ed328358c"
+  },
+  {
+    "difference_if_any": null,
+    "editorial_origin_commit": "9d8c501c58415e766d0d5773cf7cbb576da66cfa",
+    "editorial_path": "manuscript/jdsa-final-review/additional_evidence.tex",
+    "editorial_sha256": "54781b16d878225ccdd3f547eca89106ae158fc54940817ce4560b2f74752520",
+    "identical_to_editorial": true,
+    "path": "manuscript/jdsa/source/additional_evidence.tex",
+    "public_commit": "d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+    "sha256": "54781b16d878225ccdd3f547eca89106ae158fc54940817ce4560b2f74752520"
+  },
+  {
+    "difference_if_any": null,
+    "editorial_origin_commit": "9d8c501c58415e766d0d5773cf7cbb576da66cfa",
+    "editorial_path": "manuscript/jdsa-final-review/d1_contrasts.tex",
+    "editorial_sha256": "82393866f7134b601c2f4fe3221ef283996eb8bb38a4132d80f3a2006e6fc8f1",
+    "identical_to_editorial": true,
+    "path": "manuscript/jdsa/source/d1_contrasts.tex",
+    "public_commit": "d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+    "sha256": "82393866f7134b601c2f4fe3221ef283996eb8bb38a4132d80f3a2006e6fc8f1"
+  }
+]

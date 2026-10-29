@@ -1,0 +1,5 @@
+model_kind,feature_set,dev_group_correct,dev_group_total,dev_group_accuracy
+logistic_regression,combined,115,245,0.4694
+gradient_boosted_trees,combined,114,245,0.4653
+logistic_regression,engineered_only,109,245,0.4449
+logistic_regression,embedding_only,58,245,0.2367

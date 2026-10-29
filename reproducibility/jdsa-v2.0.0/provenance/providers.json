@@ -1,0 +1,53 @@
+{
+  "authority": "manuscript/jdsa/source/llm_evidence.tex at d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+  "common18": {
+    "generic": {
+      "max_tokens": 8192,
+      "model": "Azure GPT-5.4",
+      "solver": "gurobipy",
+      "temperature": 0
+    },
+    "optmath": {
+      "checkpoint": "617fe77",
+      "max_tokens": 8192,
+      "seed": 0,
+      "temperature": 0.8,
+      "upstream_code": "f15bbc4477c70db85ad148df8bcc1b780bca0f8c"
+    },
+    "orlm": {
+      "checkpoint": "94fdc3c5738c6536d4880dc19a78f215529181c5",
+      "decoding": "greedy",
+      "execution": "unavailable: coptpy missing",
+      "max_tokens": 8192,
+      "seed": 0,
+      "upstream_code": "33bc47d0a1d1710d24ab839118bdf4cb89b9e31b"
+    },
+    "pamop": {
+      "max_corrections": 5,
+      "model": "Azure GPT-5.4",
+      "response_revision": "gpt-5.4-2026-03-05",
+      "solver": "AMPL/Gurobi, successful logs Gurobi 13.0.2",
+      "temperature": 0.2
+    }
+  },
+  "relationship217": {
+    "cohere": {
+      "api_version": "v2",
+      "model": "command-a-reasoning-08-2025"
+    },
+    "gemini": {
+      "api_version": "v1",
+      "model": "gemini-3.1-pro-preview"
+    },
+    "ionet": {
+      "api_version": "v1",
+      "model": "deepseek-ai/DeepSeek-V4-Pro-0813"
+    }
+  },
+  "unknown": [
+    "accepted account agreement/version",
+    "all hosted serving defaults",
+    "historical full prompt retention",
+    "BGE device/hash seed/complete environment"
+  ]
+}

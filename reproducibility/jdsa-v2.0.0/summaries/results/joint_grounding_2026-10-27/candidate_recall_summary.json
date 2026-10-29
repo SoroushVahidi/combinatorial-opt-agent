@@ -1,0 +1,47 @@
+[
+  {
+    "exact_recalled_slots": 773,
+    "k": "1",
+    "n_gold_slots": 1847,
+    "n_queries": 331,
+    "tolerant_recalled_slots": 823,
+    "whole_exact_candidate_ceiling": 22,
+    "whole_tolerant_candidate_ceiling": 23
+  },
+  {
+    "exact_recalled_slots": 1227,
+    "k": "3",
+    "n_gold_slots": 1847,
+    "n_queries": 331,
+    "tolerant_recalled_slots": 1256,
+    "whole_exact_candidate_ceiling": 87,
+    "whole_tolerant_candidate_ceiling": 95
+  },
+  {
+    "exact_recalled_slots": 1379,
+    "k": "5",
+    "n_gold_slots": 1847,
+    "n_queries": 331,
+    "tolerant_recalled_slots": 1404,
+    "whole_exact_candidate_ceiling": 146,
+    "whole_tolerant_candidate_ceiling": 155
+  },
+  {
+    "exact_recalled_slots": 1456,
+    "k": "8",
+    "n_gold_slots": 1847,
+    "n_queries": 331,
+    "tolerant_recalled_slots": 1464,
+    "whole_exact_candidate_ceiling": 195,
+    "whole_tolerant_candidate_ceiling": 199
+  },
+  {
+    "exact_recalled_slots": 1467,
+    "k": "all",
+    "n_gold_slots": 1847,
+    "n_queries": 331,
+    "tolerant_recalled_slots": 1473,
+    "whole_exact_candidate_ceiling": 203,
+    "whole_tolerant_candidate_ceiling": 206
+  }
+]

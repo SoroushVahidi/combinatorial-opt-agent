@@ -1,0 +1,29 @@
+{
+  "checked_at_utc": "2026-10-29T17:58:31.201274+00:00",
+  "environment_credentials_removed": true,
+  "full_verification_sha256": "1bacf16801ae0a3ab10e175a8f41965c6318a2b43d33abee1d66717d2a93350b",
+  "historical_raw_validation": {
+    "common18_checks": 350,
+    "common18_rows": 108,
+    "core_arms": 10,
+    "relationship_checks": 5120,
+    "saved_generated_cases": 72
+  },
+  "integrity_failure_tests_passed": 6,
+  "isolated_venv": true,
+  "limitations": "See AUDIT.md and claims.json; summary-only/semantic-truth claims are not scientific PASS.",
+  "namespace_isolation": "Unavailable: bubblewrap network/uid-map permission denied. Used fresh venv, copied payload, cleared environment and traced all child file/network syscalls. No claim of OS sandbox isolation.",
+  "network_connect_syscalls": 0,
+  "network_socket_syscalls": 0,
+  "new_model_calls": 0,
+  "new_solver_calls": 0,
+  "numpy": "2.3.5",
+  "package_copied_outside_worktrees": true,
+  "private_path_file_syscalls": 0,
+  "python": "3.12.3",
+  "release": "jdsa-evidence-v2.0.0",
+  "release_manifest_sha256": "ac20ad695b7ceea866890376ef5e08751921bbcb520c017624727524e79b8b38",
+  "scientific_reanalysis_checks_passed": 9737,
+  "status": "PASS",
+  "syscall_trace_sha256": "900b6b008f14e4d1946c7eb851a537f44be3cea8e9f4293013a570e26730d415"
+}

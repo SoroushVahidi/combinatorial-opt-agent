@@ -1,0 +1,30 @@
+{
+  "all_factorial_parser_signatures_equal": 48,
+  "all_statistics_exploratory": true,
+  "complete_checkpoints": 64,
+  "development_queries": 12,
+  "extra_reference_only_queries": [
+    "nlp4lp_test_48",
+    "nlp4lp_test_78"
+  ],
+  "factorial_checkpoints": 61,
+  "grouping_rule": "reused delexicalized 5-gram Jaccard >= .80, transitive; not an exhaustive semantic-duplicate guarantee",
+  "historical_inventory": "gold-assisted; cannot equate historical points and new controls",
+  "historical_reconciliation_only_overlap_query": "nlp4lp_test_291",
+  "inference_inventory": "predicted-schema scalar metadata, not gold scalar-key filtering",
+  "job_1462366_artifacts_hash_verified": 69,
+  "no_new_predictions_or_solver_calls": true,
+  "original_split_source_hash_checks": {
+    "LOCAL_WORKTREE/combinatorial-opt-agent/artifacts/learning_corpus/nlp4lp_dev.jsonl": true,
+    "LOCAL_WORKTREE/combinatorial-opt-agent/artifacts/learning_corpus/nlp4lp_test.jsonl": true,
+    "LOCAL_WORKTREE/combinatorial-opt-agent/artifacts/learning_corpus/nlp4lp_train.jsonl": true
+  },
+  "paired_test_family_size": 240,
+  "primary_gold_slots": 277,
+  "primary_parser_signatures_equal": 39,
+  "primary_queries": 49,
+  "primary_train_dev_group_overlap": [],
+  "primary_train_dev_id_overlap": [],
+  "retained_existing_bootstrap_intervals": "results/wulver_grounding_attribution_2026-10-27/slurm_1462366/summary.json",
+  "status": "PASS"
+}

@@ -1,0 +1,15 @@
+{
+  "CI_sampling_unit": "instances, 10000 paired ratio-of-sums bootstrap resamples, NumPy legacy seed 42",
+  "correct_macro_recall": 0.8135375383251147,
+  "correct_micro_recall": 0.8070071877495746,
+  "historical_numeric_values_changed": false,
+  "instance_count": 1000,
+  "micro_ci": [
+    0.7842296896896338,
+    0.8283250553286509
+  ],
+  "pooled_denominator": 28799,
+  "pooled_matched": 23241,
+  "recomputed_extraction": false,
+  "source": "scripts/verify_optmath_external.py::macro computes ratio of sums; micro computes mean of per-instance ratios. Stored names are reversed."
+}

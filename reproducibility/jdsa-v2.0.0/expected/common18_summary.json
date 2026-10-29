@@ -1,0 +1,105 @@
+{
+  "pamop": {
+    "frame": 18,
+    "generation_attempted": 18,
+    "parsed": 13,
+    "execution_attempted": 18,
+    "executed_successfully": 13,
+    "valid_extracted_objectives": 13,
+    "executed_reference_available": 11,
+    "comparison_classifiable": 2,
+    "confirmed_agreements": 0,
+    "precision_unresolved": 9,
+    "classification_counts": {
+      "OBJECTIVE_DISAGREEMENT": 2,
+      "UNRESOLVED_PRECISION": 9,
+      "PARSE_FAILED": 5,
+      "REFERENCE_UNAVAILABLE": 2
+    },
+    "aggregate_objective_published": false
+  },
+  "optmath": {
+    "frame": 18,
+    "generation_attempted": 18,
+    "parsed": 18,
+    "execution_attempted": 18,
+    "executed_successfully": 15,
+    "valid_extracted_objectives": 15,
+    "executed_reference_available": 15,
+    "comparison_classifiable": 15,
+    "confirmed_agreements": 11,
+    "precision_unresolved": 0,
+    "classification_counts": {
+      "OBJECTIVE_MATCH": 11,
+      "OBJECTIVE_DISAGREEMENT": 4,
+      "EXECUTION_UNSUCCESSFUL": 3
+    },
+    "aggregate_objective_published": true
+  },
+  "orlm": {
+    "frame": 18,
+    "generation_attempted": 18,
+    "parsed": 18,
+    "execution_attempted": 0,
+    "executed_successfully": null,
+    "valid_extracted_objectives": null,
+    "executed_reference_available": null,
+    "comparison_classifiable": null,
+    "confirmed_agreements": null,
+    "precision_unresolved": null,
+    "classification_counts": {
+      "N/A_ENVIRONMENT": 18
+    },
+    "aggregate_objective_published": false
+  },
+  "generic": {
+    "frame": 18,
+    "generation_attempted": 18,
+    "parsed": 18,
+    "execution_attempted": 18,
+    "executed_successfully": 16,
+    "valid_extracted_objectives": 16,
+    "executed_reference_available": 16,
+    "comparison_classifiable": 16,
+    "confirmed_agreements": 12,
+    "precision_unresolved": 0,
+    "classification_counts": {
+      "OBJECTIVE_MATCH": 12,
+      "OBJECTIVE_DISAGREEMENT": 4,
+      "EXECUTION_UNSUCCESSFUL": 2
+    },
+    "aggregate_objective_published": true
+  },
+  "deepor": {
+    "frame": 18,
+    "generation_attempted": 0,
+    "parsed": null,
+    "execution_attempted": null,
+    "executed_successfully": null,
+    "valid_extracted_objectives": null,
+    "executed_reference_available": null,
+    "comparison_classifiable": null,
+    "confirmed_agreements": null,
+    "precision_unresolved": null,
+    "classification_counts": {
+      "N/A_NO_ARTIFACT": 18
+    },
+    "aggregate_objective_published": false
+  },
+  "orr1": {
+    "frame": 18,
+    "generation_attempted": 0,
+    "parsed": null,
+    "execution_attempted": null,
+    "executed_successfully": null,
+    "valid_extracted_objectives": null,
+    "executed_reference_available": null,
+    "comparison_classifiable": null,
+    "confirmed_agreements": null,
+    "precision_unresolved": null,
+    "classification_counts": {
+      "N/A_NO_ARTIFACT": 18
+    },
+    "aggregate_objective_published": false
+  }
+}

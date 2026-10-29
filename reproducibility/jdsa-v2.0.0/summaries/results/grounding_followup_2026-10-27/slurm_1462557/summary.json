@@ -1,0 +1,23 @@
+{
+  "all_top_k_certified": true,
+  "api_cost_usd": 0,
+  "api_requests": 0,
+  "beam_nbest_successes": 8,
+  "complete": true,
+  "completed": 49,
+  "distinct_nbest_successes": 9,
+  "full_dataset_expanded": false,
+  "intended": 49,
+  "interpretation": "Exploratory N-best retention only. No new top-1 improvement; tied class membership is solver-dependent.",
+  "new_solver_calls": 23,
+  "paired_group_bootstrap95": [
+    0.0,
+    0.0
+  ],
+  "paired_group_swap_p": 1.0,
+  "retention_gains": 0,
+  "retention_losses": 0,
+  "saved_exact_nbest_successes": 9,
+  "selected_successes_unchanged": 3,
+  "signature": "3af7b1268407396dc2b82e20de0b3379aaa68f70b3efdc52b83743efd7385bcd"
+}

@@ -1,0 +1,3 @@
+baseline,subset_rule,subset_size,executable_rate,solver_success_rate,feasible_rate,objective_produced_rate,source_file
+tfidf,orig eval rows with non-empty gold optimus_code and static shim-compatibility filter; deterministic cap limit=20,20,0.95,0.8,0.8,0.8,analysis/eaai_final_solver_attempt_report.md
+oracle,orig eval rows with non-empty gold optimus_code and static shim-compatibility filter; deterministic cap limit=20,20,0.95,0.75,0.75,0.75,analysis/eaai_final_solver_attempt_report.md

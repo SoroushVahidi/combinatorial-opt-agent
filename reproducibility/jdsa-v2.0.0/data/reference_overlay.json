@@ -1,0 +1,107 @@
+{
+  "version": "numerical_reference_v2",
+  "changes": [
+    {
+      "query_id": "nlp4lp_test_102",
+      "slot": "MinPercentageAdultVaccines",
+      "original_value": 70.0,
+      "corrected_value": 0.7,
+      "action": "FRACTIONAL_REFERENCE_CORRECTION",
+      "confidence_classification": "CONFIRMED from source quantities and equation dimensional consistency",
+      "annotation_sha256": "ce099d3d7c0653ed7cf536cd849f3d8df9186a15ec82440bb3296fc18470cc69",
+      "historical_reference_file_changed": false
+    },
+    {
+      "query_id": "nlp4lp_test_157",
+      "slot": "MaxRickshawPercentage",
+      "original_value": 40.0,
+      "corrected_value": 0.4,
+      "action": "FRACTIONAL_REFERENCE_CORRECTION",
+      "confidence_classification": "CONFIRMED from source quantities and equation dimensional consistency",
+      "annotation_sha256": "826f4c14694f5574fea89ce118f4c53eebe71bb759efd7eae9e47cc12bbeab28",
+      "historical_reference_file_changed": false
+    },
+    {
+      "query_id": "nlp4lp_test_170",
+      "slot": "MinBoatTripPercentage",
+      "original_value": 50.0,
+      "corrected_value": 0.5,
+      "action": "FRACTIONAL_REFERENCE_CORRECTION",
+      "confidence_classification": "CONFIRMED from source quantities and equation dimensional consistency",
+      "annotation_sha256": "1c325e6a8a363dbd8acec460f39f0e758d6f22935a96b049a4947736b79faefb",
+      "historical_reference_file_changed": false
+    },
+    {
+      "query_id": "nlp4lp_test_174",
+      "slot": "MaxPercentageLabradors",
+      "original_value": 60.0,
+      "corrected_value": 0.6,
+      "action": "FRACTIONAL_REFERENCE_CORRECTION",
+      "confidence_classification": "CONFIRMED from source quantities and equation dimensional consistency",
+      "annotation_sha256": "dcd5dcf17f0e623bba75a29e5df0142d36d2f8d54483c360ec2e32c9438fbaf2",
+      "historical_reference_file_changed": false
+    },
+    {
+      "query_id": "nlp4lp_test_177",
+      "slot": "MaxCompanyCarRidePercentage",
+      "original_value": 60.0,
+      "corrected_value": 0.6,
+      "action": "FRACTIONAL_REFERENCE_CORRECTION",
+      "confidence_classification": "CONFIRMED from source quantities and equation dimensional consistency",
+      "annotation_sha256": "d0bc3f78b51279b66c5844075a46c63cdf08da0b99877543d0797d3c83ffc32c",
+      "historical_reference_file_changed": false
+    },
+    {
+      "query_id": "nlp4lp_test_180",
+      "slot": "MinCarTripPercentage",
+      "original_value": 30.0,
+      "corrected_value": 0.3,
+      "action": "FRACTIONAL_REFERENCE_CORRECTION",
+      "confidence_classification": "CONFIRMED from source quantities and equation dimensional consistency",
+      "annotation_sha256": "afa1a7043da844edb07d47e1dcf2eface44e4fc374b65ea32839bf81d4dfcf69",
+      "historical_reference_file_changed": false
+    },
+    {
+      "query_id": "nlp4lp_test_187",
+      "slot": "MaxVanPercentage",
+      "original_value": 30.0,
+      "corrected_value": 0.3,
+      "action": "FRACTIONAL_REFERENCE_CORRECTION",
+      "confidence_classification": "CONFIRMED from source quantities and equation dimensional consistency",
+      "annotation_sha256": "7cf2bc62c3a43378e6f354371e00cee64f7d95333fe251d0f329ad56d8d8b8b8",
+      "historical_reference_file_changed": false
+    },
+    {
+      "query_id": "nlp4lp_test_215",
+      "slot": "MaxTrolleyTransportPercentage",
+      "original_value": 40.0,
+      "corrected_value": 0.4,
+      "action": "FRACTIONAL_REFERENCE_CORRECTION",
+      "confidence_classification": "CONFIRMED from source quantities and equation dimensional consistency",
+      "annotation_sha256": "f2ad227de0360cf77df7088791ed635a6aeff2e94fe0262bb987260f14ab433f",
+      "historical_reference_file_changed": false
+    },
+    {
+      "query_id": "nlp4lp_test_48",
+      "slot": "MinLycheePercentage",
+      "original_value": 40.0,
+      "corrected_value": 0.4,
+      "action": "FRACTIONAL_REFERENCE_CORRECTION",
+      "confidence_classification": "CONFIRMED from source quantities and equation dimensional consistency",
+      "annotation_sha256": "2dc27b1d99f76cf32a16542dbfa0d3c9f1a7068f0f541d632f660eeeba80aa39",
+      "historical_reference_file_changed": false
+    },
+    {
+      "query_id": "nlp4lp_test_78",
+      "slot": "MinChickenCurryPercentage",
+      "original_value": 25.0,
+      "corrected_value": 0.25,
+      "action": "FRACTIONAL_REFERENCE_CORRECTION",
+      "confidence_classification": "CONFIRMED from source quantities and equation dimensional consistency",
+      "annotation_sha256": "96ceaa1249e843cdf0bd4e9504ea731b7275507968c46b74a4a676ac29fc103b",
+      "historical_reference_file_changed": false
+    }
+  ],
+  "source_sha256": "e8d6366efbef567dd15966880d2ceafac3c8965c2192cb27314ae2734fef10d1",
+  "boundary": "Correction metadata already documented in final manuscript; source statements/reference code and private witnesses omitted. Source-semantic validation requires separately obtained upstream data."
+}

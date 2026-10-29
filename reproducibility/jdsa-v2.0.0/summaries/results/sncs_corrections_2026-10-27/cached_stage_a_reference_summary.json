@@ -1,0 +1,21 @@
+{
+  "gold_slots": 1847,
+  "headline_historical_metrics_recomputed_under_overlay": false,
+  "headline_limitation": "Historical headline CSVs omit per-slot values; corrected-reference headline outcomes cannot be recovered without unavailable predictions. They remain original-reference results.",
+  "queries": 331,
+  "scope": "Saved pre-ratio Stage-A selections, gold-assisted inventories and unknown historical hash seed. Different configuration from headline 7/331, 40/331 or new factorial cells. Missing selections count wrong.",
+  "source": "results/role_quantity_stage_a/per_slot.csv",
+  "source_sha256": "b19630501b30de8cdb757fdd4193e44121f847a72183bb3109198ae7611b9127",
+  "totals": {
+    "gold_slots": 1847,
+    "raw_exact_full": 6,
+    "raw_exact_slots": 348,
+    "raw_tolerant_full": 6,
+    "raw_tolerant_slots": 401,
+    "reference_slots_changed": 10,
+    "v2_exact_full": 6,
+    "v2_exact_slots": 356,
+    "v2_tolerant_full": 6,
+    "v2_tolerant_slots": 409
+  }
+}

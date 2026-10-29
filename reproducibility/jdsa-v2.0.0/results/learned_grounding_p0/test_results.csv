@@ -1,0 +1,4 @@
+method,n,param_coverage,type_match,instantiation_ready
+M2_p0_greedy,50,0.980000,0.892833,0.800000
+M3_p0_max_weight,50,0.970000,0.891167,0.780000
+M4_p0_max_weight_repair,50,0.980000,0.881167,0.780000

@@ -1,0 +1,11 @@
+subset,k,n_queries,n_gold_slots,type_compatible_tolerant_recalled_slots,whole_type_compatible_tolerant_candidate_ceiling
+all_331,1,331,1847,781,22
+all_331,3,331,1847,1165,67
+all_331,5,331,1847,1298,109
+all_331,8,331,1847,1361,139
+all_331,all,331,1847,1370,143
+pilot_50,1,50,280,136,3
+pilot_50,3,50,280,203,15
+pilot_50,5,50,280,228,23
+pilot_50,8,50,280,243,32
+pilot_50,all,50,280,243,32

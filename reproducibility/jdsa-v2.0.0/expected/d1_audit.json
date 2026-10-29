@@ -1,0 +1,30 @@
+{
+  "additional_ai_assisted_decisions": 19,
+  "archived_broad_groups_in_selected_bases": 10,
+  "archived_selected_external_text_flags": 0,
+  "audit_time_utc": "2026-10-29T03:16:24.134132+00:00",
+  "author_label_disagreements": 0,
+  "batch_approvals": 12,
+  "eligible_samples": 24,
+  "exact_duplicate_selected_texts": 0,
+  "final_direct_ai_exposed_labels": 20,
+  "final_label_counts": {
+    "CORRECT": 12,
+    "INCORRECT": 12
+  },
+  "first_pass_records_preserved": 5,
+  "guided_revisions_preserved": 1,
+  "independent_blinded_gold_claimed": false,
+  "meaning_changing_pairs": 10,
+  "new_experiments": 0,
+  "new_provider_calls": 0,
+  "new_slurm_jobs": 0,
+  "pairs_accepted": 12,
+  "pairs_excluded": 0,
+  "pairs_unresolved": 0,
+  "paraphrase_pairs": 2,
+  "protected_d1_files_unchanged": 99,
+  "provider_performance_results_available": false,
+  "selected_max_archived_external_jaccard": 0.02564102564102564,
+  "status": "COMPLETED"
+}

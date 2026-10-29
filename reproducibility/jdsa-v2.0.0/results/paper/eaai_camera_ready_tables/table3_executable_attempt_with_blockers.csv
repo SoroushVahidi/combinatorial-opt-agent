@@ -1,0 +1,4 @@
+baseline,subset_size,schema_hit_rate,structural_valid_rate,instantiation_complete_rate,executable_model_rate,solver_success_rate,feasible_rate,objective_rate,blocker_note,source_file
+tfidf,269,0.9368,0.8141,0.6654,0.0,0.0,0.0,0.0,Missing gurobipy runtime (ModuleNotFoundError).,analysis/eaai_executable_subset_report.md
+bm25,269,0.9257,0.8104,0.658,0.0,0.0,0.0,0.0,Missing gurobipy runtime; plus 2 schema-miss rows with missing_optimus_code.,analysis/eaai_executable_subset_report.md
+oracle,269,1.0,0.8253,0.684,0.0,0.0,0.0,0.0,Missing gurobipy runtime (ModuleNotFoundError).,analysis/eaai_executable_subset_report.md

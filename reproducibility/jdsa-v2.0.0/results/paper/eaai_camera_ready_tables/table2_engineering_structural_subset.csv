@@ -1,0 +1,4 @@
+baseline,subset_size,schema_hit_rate,structural_valid_rate,instantiation_complete_rate,source_file
+tfidf,60,0.9333,0.75,0.75,analysis/eaai_engineering_subset_report.md
+bm25,60,0.9,0.7333,0.7333,analysis/eaai_engineering_subset_report.md
+oracle,60,1.0,0.7667,0.7833,analysis/eaai_engineering_subset_report.md
