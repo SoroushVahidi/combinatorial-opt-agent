@@ -1,0 +1,131 @@
+{
+  "common18": {
+    "counts": {
+      "deepor": {
+        "comparison_eligible": 0,
+        "execution_attempted": 0,
+        "generation_attempted": 0,
+        "numerical_agreement": 0,
+        "parsed": 0,
+        "precision_unresolved": 0,
+        "process_success": 0,
+        "valid_objective_extraction": 0
+      },
+      "generic": {
+        "comparison_eligible": 16,
+        "execution_attempted": 18,
+        "generation_attempted": 18,
+        "numerical_agreement": 12,
+        "parsed": 18,
+        "precision_unresolved": 0,
+        "process_success": 16,
+        "valid_objective_extraction": 16
+      },
+      "optmath": {
+        "comparison_eligible": 15,
+        "execution_attempted": 18,
+        "generation_attempted": 18,
+        "numerical_agreement": 11,
+        "parsed": 18,
+        "precision_unresolved": 0,
+        "process_success": 15,
+        "valid_objective_extraction": 15
+      },
+      "orlm": {
+        "comparison_eligible": 0,
+        "execution_attempted": 0,
+        "generation_attempted": 18,
+        "numerical_agreement": 0,
+        "parsed": 18,
+        "precision_unresolved": 0,
+        "process_success": 0,
+        "valid_objective_extraction": 0
+      },
+      "orr1": {
+        "comparison_eligible": 0,
+        "execution_attempted": 0,
+        "generation_attempted": 0,
+        "numerical_agreement": 0,
+        "parsed": 0,
+        "precision_unresolved": 0,
+        "process_success": 0,
+        "valid_objective_extraction": 0
+      },
+      "pamop": {
+        "comparison_eligible": 2,
+        "execution_attempted": 18,
+        "generation_attempted": 18,
+        "numerical_agreement": 0,
+        "parsed": 13,
+        "precision_unresolved": 9,
+        "process_success": 13,
+        "valid_objective_extraction": 13
+      }
+    },
+    "pamop_aggregate": "withheld; do not interpret false numerical flags as zero accuracy",
+    "source_sha256": "f78ff01b6e59360bba7a960624944421158593d6253f6d11a920fda7dbb0e81a"
+  },
+  "evidence_coverage": {
+    "all_groups_have_destinations": true,
+    "investigation_groups": 47,
+    "source_hashes_verified": 65
+  },
+  "pdfs": {
+    "Retrieval_Assisted_Scalar_Grounding_JDSA_Phase1_Supplement.pdf": {
+      "bibliography_rendered": true,
+      "external_pdf_targets": [
+        "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_JDSA_Phase1.pdf"
+      ],
+      "out_of_page_text_blocks": [],
+      "pages": 29,
+      "sha256": "d9a57e110368874554dd3684e5a159045f5642127dd6ab7c578e2f05873f97c0",
+      "unresolved_placeholder": false
+    },
+    "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_JDSA_Phase1.pdf": {
+      "bibliography_rendered": true,
+      "external_pdf_targets": [
+        "Retrieval_Assisted_Scalar_Grounding_JDSA_Phase1_Supplement.pdf"
+      ],
+      "out_of_page_text_blocks": [],
+      "pages": 30,
+      "sha256": "24ea7b4141694b99f05101737bea8057fefa512324a4106b44a73c763c93b8fc",
+      "unresolved_placeholder": false
+    }
+  },
+  "relationship217": {
+    "complete_items": 197,
+    "fleiss_kappa": 0.3708071786079691,
+    "semantic_accuracy": "not measured",
+    "source_sha256": "56da4161bb951636c1edfae75d32e3c2cf49f0461f6939053549303412144581",
+    "total_valid": 631,
+    "valid": {
+      "cohere": 197,
+      "gemini": 217,
+      "ionet": 217
+    }
+  },
+  "source_preservation": {
+    "abstract_introduction_and_pre_results": "identical except external PDF filename",
+    "main_direct_table_environments": 8,
+    "other_identical_assets": [
+      "references.bib",
+      "sn-basic.bst",
+      "reproduction_map.tex",
+      "reference_conventions.tex",
+      "supervision_diagnostics.tex",
+      "grounding_diagnostics.tex",
+      "closed_audits.tex",
+      "relationship_supplement.tex",
+      "llm_evidence.tex",
+      "relationship_evidence.tex",
+      "sn-jnl.cls",
+      "figures/pipeline_m1.tex",
+      "figures/pipeline_corrected.tex",
+      "figures/pipeline_corrected.pdf",
+      "figures/pipeline_m1.pdf",
+      "tables/corrected_significance_rows.tex"
+    ],
+    "sections_6_to_end": "byte-identical"
+  },
+  "unrelated_untracked_files_preserved": 141
+}

@@ -1,0 +1,736 @@
+[
+  {
+    "id": "E01",
+    "name": "Lexical schema retrieval and ranked-list diagnostics",
+    "status": "Completed",
+    "population": "331 NLP4LP queries in each of orig/noisy/short; 335-document main catalog",
+    "conditions": "BM25, TF\u2013IDF, LSA; fixed benchmark-derived catalog; target ID scoring",
+    "results": "Orig hits BM25 292, TF\u2013IDF 301, LSA 280; noisy 295/299/294; short 254/258/253. Saved P@5, MRR@10, nDCG@10 and Coverage@10 remain separate aggregate evidence.",
+    "sources": [
+      "current:results/eswa_revision/01_retrieval/retrieval_results.json",
+      "current:results/paper/nlp4lp_downstream_per_query_orig_tfidf.csv"
+    ],
+    "reconstructability": "R1 for top-1 IDs; R3 for higher-rank aggregates without full ranked lists. Twelve main retrieval cells checked offline.",
+    "limitations": "Known-catalog identification; evaluation-source templates and repeated development exposure. Sanitization uses another index.",
+    "current_location": "\u00a75.1, Table 1; S1",
+    "destination": "Main \u00a75.1/Table 1; additional ranked-list cells in S8."
+  },
+  {
+    "id": "E02",
+    "name": "Pretrained dense retrieval",
+    "status": "Completed",
+    "population": "Same 331 queries \u00d7 three variants; 335 templates",
+    "conditions": "Off-the-shelf BGE-M3, no benchmark fine-tuning",
+    "results": "313/331 orig, 312/331 noisy, 270/331 short; mean .9013. 15 BGE-only and three TF\u2013IDF-only orig hits.",
+    "sources": [
+      "current:results/dense_retrieval_bge_m3/nlp4lp_downstream_per_query_orig_bge_m3.csv",
+      "current:results/dense_retrieval_bge_m3/model_metadata.json"
+    ],
+    "reconstructability": "R1 top-1 outcomes; generation replay incomplete.",
+    "limitations": "Metadata does not authenticate runtime device, serving weights, hash seed or full environment; no unseen-template claim.",
+    "current_location": "\u00a75.1, Table 1",
+    "destination": "Main \u00a75.1; provenance in S3."
+  },
+  {
+    "id": "E03",
+    "name": "Four-arm scalar-grounding benchmark",
+    "status": "Completed",
+    "population": "331 orig queries per arm; eligible scalar inventories depend on selected schema and query reference",
+    "conditions": "Typed greedy with baseline/ratio extraction; TF\u2013IDF, BGE-M3 or reference-schema control",
+    "results": "Baseline/ratio/BGE/Oracle coarse counts 257/265/273/281; Strict 247/255/265/281; full-all-key 6/7/3/8. Exact20 comparable denominators 291/291/303/320.",
+    "sources": [
+      "m5:docs/manuscript_m5_2026-10-28/verified_author_review_20261029T002829Z/verification/core331.json",
+      "current:results/final_resubmission_method/nlp4lp_downstream_per_query_orig_tfidf.csv"
+    ],
+    "reconstructability": "R2: all aggregates independently checked from ten saved metric CSVs; no original scalar-map reevaluation.",
+    "limitations": "Gold-assisted participation; conditional Exact20 differs from all-query success; Oracle is not an upper bound on other grounders.",
+    "current_location": "\u00a75.2, Table 2; S3",
+    "destination": "Main \u00a75.2/Table 2; evidence boundary in S3."
+  },
+  {
+    "id": "E04",
+    "name": "Ratio-word extraction ablation",
+    "status": "Completed",
+    "population": "Same 331-query TF\u2013IDF frame",
+    "conditions": "Baseline versus extraction of multiplicative ratio words; retrieval unchanged",
+    "results": "Strict 247\u2192255 (eight gains, zero losses); coarse 257\u2192265; full scalar tolerance 6\u21927; Exact20 .2449\u2192.2614.",
+    "sources": [
+      "current:results/final_resubmission_method/metrics.json",
+      "current:results/final_resubmission_method/transitions.json"
+    ],
+    "reconstructability": "R2 saved metric rows and transitions.",
+    "limitations": "Improves coarse diagnostics; does not imply eight additional numerically correct problems.",
+    "current_location": "\u00a75.5/Table 5",
+    "destination": "Main \u00a75.6/Table 5; precursor diagnosis in S8."
+  },
+  {
+    "id": "E05",
+    "name": "Matched grounding alternatives",
+    "status": "Completed",
+    "population": "331 identical orig queries, TF\u2013IDF retrieval held fixed",
+    "conditions": "Typed, constrained, max-weight, role repair, search-structured, semantic IR; fixed assistance rule but several mechanism changes",
+    "results": "Full-all-key 7/40/37/35/46/9. Constrained eligible-only 41 excludes query 102 (3/7 keys). Constrained gains/losses 36/3. Coarse 265/252/246/244/233/237.",
+    "sources": [
+      "m5:docs/manuscript_m5_2026-10-28/verified_author_review_20261029T002829Z/verification/core331.json",
+      "stage1:results/joint_grounding_2026-10-27/completed_run_reanalysis.json"
+    ],
+    "reconstructability": "R2; exact all-key counts, means and conditional denominators checked from saved CSVs.",
+    "limitations": "Candidates, contexts, scores, abstention and decoding differ; no isolated search effect. Descriptive full-success ordering; no new significance test.",
+    "current_location": "\u00a75.3/Table 3; grounding_summary.tex",
+    "destination": "Main \u00a75.3/Table 3, with numerical endpoint prominent."
+  },
+  {
+    "id": "E06",
+    "name": "Residual-error and full-scalar analyses",
+    "status": "Completed offline investigation",
+    "population": "331 cases per headline arm; ratio gate-passing subset 221",
+    "conditions": "Ordered partition: schema, coverage, type, value, success",
+    "results": "Ratio 30/31/49/214/7; baseline 30/48/61/186/6; BGE 18/33/49/228/3; Oracle 0/35/49/239/8. Ratio conditional failure 214/221; BGE 228/231; Oracle 239/247.",
+    "sources": [
+      "current:results/final_resubmission_method/residual_error_analysis_2026-08-27.json",
+      "m5:docs/manuscript_m5_2026-10-28/verified_author_review_20261029T002829Z/verification/core331.json"
+    ],
+    "reconstructability": "R2: partitions reconstructed from query metrics.",
+    "limitations": "Stage-of-failure accounting, not adjudicated semantic cause frequencies; the 0.20 rule is absolute for magnitudes below one.",
+    "current_location": "\u00a75.5/Table 4",
+    "destination": "Main \u00a75.4/Table 4."
+  },
+  {
+    "id": "E07",
+    "name": "Frozen-score factorial assignment",
+    "status": "Completed",
+    "population": "49 primary queries/277 gold slots; 64 collected cases =49 primary+12 development+1 overlap+2 reference-only",
+    "conditions": "2 candidate pools \u00d73 scorers \u00d72 decoders \u00d72 reuse policies; identical edge matrices within decoder pairs",
+    "results": "Context exact slots typed 106\u2192136, rich 100\u2192133; full tolerance 5\u21925/49, one gain/one loss. Context decoder adjusted p=1 in 240-test family. All 24 cells retained.",
+    "sources": [
+      "stage1:docs/wulver_grounding_attribution_2026-10-27/FACTORIAL_TABLE.md",
+      "stage1:docs/wulver_grounding_attribution_2026-10-27/RESULTS.md"
+    ],
+    "reconstructability": "R1 for saved choices/matrices; independent previous checks retained. No decoder/solver rerun in this phase. Execution job 1462366; implementation 4db7265, archival result 45dd183.",
+    "limitations": "Partially assisted template inventory; ordinal score cardinalization; exploratory, exposed small pilot. No whole-instance equivalence.",
+    "current_location": "\u00a75.4; S3.1",
+    "destination": "Main \u00a75.5 summary; full table/certificates in S3.1."
+  },
+  {
+    "id": "E08",
+    "name": "Cached joint assignment pilot",
+    "status": "Completed",
+    "population": "Original 50 queries/280 gold scalars; primary slice excludes query 291:49/277",
+    "conditions": "Fixed top-8 pools, beam width32/top10; independent type/text/unit and joint controls",
+    "results": "Original six-method full-tolerance counts 1/2/2/3/3/3; local/joint units 3/49 on primary slice. Zero explicit parameter-only relations activated; constraint variant is a no-op.",
+    "sources": [
+      "stage1:results/joint_grounding_2026-10-27/pilot_metrics.json",
+      "stage1:results/joint_grounding_2026-10-27/pilot_summary.csv"
+    ],
+    "reconstructability": "R1 retained mappings/traces; protocol/scorer committed before execution (0288c52); archive df408d3.",
+    "limitations": "No-op arithmetic branch is not a test of meaningful constraints; source metadata remains assisted; differences are conditional.",
+    "current_location": "\u00a75.4; S3.1",
+    "destination": "Main \u00a75.5; all six methods and no-op finding in S8/S3.1."
+  },
+  {
+    "id": "E09",
+    "name": "Exact objective and beam-pruning diagnosis",
+    "status": "Completed",
+    "population": "50 pilot cases; 32 pool-compatible cases",
+    "conditions": "Frozen cached local/pairwise objective; exact MILP and correctness-restricted oracle diagnoses",
+    "results": "18 pool/inventory failures;14 prefix-pruning;6 complete-beam-pruning;4 top10-cut;5 retained-not-selected;3 selected. Among32:23 strict objective failures,6 ties,3 correct optima. Exact retention9/50 versus beam8/50.",
+    "sources": [
+      "stage1:docs/wulver_grounding_attribution_2026-10-27/RESULTS.md"
+    ],
+    "reconstructability": "R1 saved traces, frontiers and certificates at result commit45dd183; no new solves.",
+    "limitations": "Correctness-restricted solves are oracle diagnostics. Ties and retained reference criterion do not establish source semantics.",
+    "current_location": "S3.1; \u00a75.4",
+    "destination": "Main \u00a75.5; detailed partition/certificates in S3.1."
+  },
+  {
+    "id": "E10",
+    "name": "Value/type-distinct exact enumeration",
+    "status": "Completed negative follow-up",
+    "population": "49 primary queries; nine lists required additional historical enumeration",
+    "conditions": "Frozen scores/pools/top1; distinct numerical/type rather than mention-index mappings",
+    "results": "All49 lists certified;40 reused;23 historical extra solves for9 lists. Retention9/49 and selected3/49; zero gains/losses; empirical paired interval[0,0], p=1.",
+    "sources": [
+      "stage1:docs/grounding_followup_2026-10-27/RESULTS.md"
+    ],
+    "reconstructability": "R1 retained checkpoints; execution4d867f3/job1462557, result47c4733.",
+    "limitations": "Degenerate empirical interval is not population equivalence. No new run or full-dataset expansion.",
+    "current_location": "\u00a75.4; S3.1",
+    "destination": "Main \u00a75.5 negative result; detail S3.1."
+  },
+  {
+    "id": "E11",
+    "name": "Cached candidate availability and Stage-A error accounting",
+    "status": "Completed diagnosis",
+    "population": "331 queries/1847 gold scalars; cache covers311 queries/1705 rows",
+    "conditions": "Saved candidates; exact/tolerance pool ceilings with and without type gates",
+    "results": "All-pool value recall1467 exact/1473 tolerance; whole numerical ceilings203/206 of331. Top8 typed whole ceiling139/331. Pilot type-aware ceiling32/50; initial-pool error accounting preserved.",
+    "sources": [
+      "stage1:results/joint_grounding_2026-10-27/candidate_recall_summary.json",
+      "stage1:results/joint_grounding_2026-10-27/error_category_summary.json"
+    ],
+    "reconstructability": "R1 retained candidate sets/selected values, conditioned on available cache.",
+    "limitations": "Product-of-pools oracle ceiling allows reuse, not selected performance. Missing20 queries stay in denominator; equal values do not identify occurrences.",
+    "current_location": "S3.1/S3.3, partly summarized",
+    "destination": "S8 candidate table and S3 context; main only search-failure connection."
+  },
+  {
+    "id": "E12",
+    "name": "Reference conventions and frozen-prediction sensitivity",
+    "status": "Completed correction-only audit",
+    "population": "12 flagged slots;10 corrected fractional references; query206 keeps two percentage-point values",
+    "conditions": "Source/equation witnesses; separate numerical_reference_v2 overlay; no original reference replacement",
+    "results": "Stage-A exact slots348\u2192356, tolerance401\u2192409 of1847; full6/331 unchanged. No affected primary49 case; development177 adds no full success. 394 versus401 reconciled by seven metadata-excluded selections.",
+    "sources": [
+      "stage1:results/sncs_corrections_2026-10-27/cached_stage_a_reference_summary.json",
+      "stage1:results/sncs_corrections_2026-10-27/cached_inventory_scope_reconciliation.json"
+    ],
+    "reconstructability": "R1 saved Stage-A values; R0 unavailable for missing headline scalar maps.",
+    "limitations": "Overlay not maintainer-certified; query102 alias and query177 coefficient issues remain; historical7/331 is not rescored.",
+    "current_location": "S3.2",
+    "destination": "Keep S3.2; concise main qualification only."
+  },
+  {
+    "id": "E13",
+    "name": "Corrected paired significance and factorial multiplicity",
+    "status": "Completed statistical correction",
+    "population": "331 paired queries/327 heuristic groups; separate49-query factorial",
+    "conditions": "Existing group bootstrap B10000/seed42; exact count-swap tests; Holm16; separate factorial Holm240",
+    "results": "Ratio-baseline Strict p=.0078125, Holm .0301514; BGE retrieval p=.00753784, Holm .0301514; readiness alternative maximum adjusted .005859375. Main five CIs preserved.",
+    "sources": [
+      "stage1:results/sncs_corrections_2026-10-27/corrected_paired_statistics.csv",
+      "stage1:docs/sncs_corrections_2026-10-27/STATISTICAL_CORRECTIONS.md"
+    ],
+    "reconstructability": "R2 saved gate labels/group definitions support checks; retained corrected statistics checked, no new intervals generated.",
+    "limitations": "Post-outcome family, marginal CIs; exchangeability assumption; old bootstrap sign-tail and shifted-null intervals are not valid replacements.",
+    "current_location": "\u00a75.7/Table 6; S3.1",
+    "destination": "Main \u00a75.6; procedural history S7; factorial details S3.1."
+  },
+  {
+    "id": "E14",
+    "name": "Sanitization and overlap robustness",
+    "status": "Completed, aggregate-supported in part",
+    "population": "331 queries/cell;331-document diagnostic index;327 high-overlap/4 medium",
+    "conditions": "Remove numbers/stopwords;256-dimensional LSA; lexical Jaccard stratification",
+    "results": "TF\u2013IDF baseline .9063\u2192.9124 with stopwords removed; BM25 .8852\u2192.9063; LSA .8459\u2192.9184. High-overlap TF\u2013IDF .9174.",
+    "sources": [
+      "current:results/eswa_revision/14_reports/FINAL_REVISION_EXPERIMENT_SUMMARY.md"
+    ],
+    "reconstructability": "R3 full sanitization cells; no authenticated per-condition predictions.",
+    "limitations": "Different index from main335. Does not rule out shortcuts, template dependence or exposure. Old report causal interpretation rejected.",
+    "current_location": "\u00a75.7; S2/Table S4",
+    "destination": "Main concise qualification; complete historical cells S2."
+  },
+  {
+    "id": "E15",
+    "name": "Historical 60-case coverage/type proxy",
+    "status": "Completed, aggregate-supported",
+    "population": "First60 orig queries with2\u20138 gold scalar parameters",
+    "conditions": "Optimization-role relation repair; metadata presence/template predicates",
+    "results": "TF\u2013IDF/BM25/Oracle schema .9333/.9000/1; proxy .7500/.7333/.7667; completion .7500/.7333/.7833.",
+    "sources": [
+      "current:manuscript/jdsa-stage1/supplement.tex",
+      "phase3:docs/manuscript_scientific_revision_phase3_2026-10-28/FINAL_EXPERIMENTAL_TABLE_AUDIT.md"
+    ],
+    "reconstructability": "R3 reports only; original membership and per-case outcomes unavailable.",
+    "limitations": "Proxy passes empty inventory; neither numerical correctness nor formulation validation. Some overlap with269; not random.",
+    "current_location": "\u00a75.9; S2/Table S5",
+    "destination": "Main \u00a75.7 summary; S2 full table and S7 definitions."
+  },
+  {
+    "id": "E16",
+    "name": "Historical extended269 proxy",
+    "status": "Completed, aggregate-supported",
+    "population": "269 code-available queries;807 method-query evaluations",
+    "conditions": "Same relation-repair proxy, no solver execution",
+    "results": "TF\u2013IDF/BM25/Oracle schema .9368/.9257/1; proxy .8141/.8104/.8253; completion .6654/.6580/.6840. Events69 missing-slot,82 type,267 template-incompletion.",
+    "sources": [
+      "current:manuscript/jdsa-stage1/main.tex",
+      "phase3:docs/manuscript_scientific_revision_phase3_2026-10-28/FINAL_EXPERIMENTAL_TABLE_AUDIT.md"
+    ],
+    "reconstructability": "R3; manifest/outcome rows absent; do not deduce counts from rounded rates.",
+    "limitations": "Events overlap; not partition of269; code availability does not imply execution; some shared60-case examples.",
+    "current_location": "\u00a75.9",
+    "destination": "Main \u00a75.7 summary; complete rates preserved verbatim in S7."
+  },
+  {
+    "id": "E17",
+    "name": "Historical20-case reference-program execution",
+    "status": "Completed, aggregate-supported",
+    "population": "First20 programs passing literal compatibility filter;40 method-case evaluations",
+    "conditions": "SciPy HiGHS shim; selected reference code/default values; filled integers rounded",
+    "results": "TF\u2013IDF/Oracle executable .95/.95; success/feasibility/objective .80/.75. Two reported shim IndexErrors across40; raw logs unavailable.",
+    "sources": [
+      "current:manuscript/jdsa-stage1/supplement.tex",
+      "phase2:docs/historical_scalar_assignment_recovery_2026-10-28/THREE_TABLE_REASSESSMENT.md"
+    ],
+    "reconstructability": "R3 only; original membership, outcomes and scalar maps not recovered.",
+    "limitations": "Gold-assisted execution; success and feasibility share status predicate; one-case gap not tested.",
+    "current_location": "\u00a75.9; S2/Table S6",
+    "destination": "Main \u00a75.7; S2 table and S7 execution definitions."
+  },
+  {
+    "id": "E18",
+    "name": "Common18 formulation and terminal-objective audit",
+    "status": "Completed generation; ORLM execution blocked; PaMOP agreement inconclusive",
+    "population": "Same18 source problems;31 successful Python runs",
+    "conditions": "PaMOP reconstruction/GPT5.4; OptMATH and ORLM released-model adaptations; GPT5.4 zero-shot; distinct prompts/solvers/budgets",
+    "results": "Parse18/18 for Python; OptMATH15 runs/11 agreements, GPT16/12. PaMOP13 runs,11 references:2 robust discrepancies/9 unresolved,2 no-reference. ORLM no execution. Nine objective fields/seven labels corrected.",
+    "sources": [
+      "m5:docs/manuscript_m5_2026-10-28/verified_author_review_20261029T002829Z/verification/common18.json",
+      "m3:docs/manuscript_m3_2026-10-28/COMMON18_CORRECTED_CASES.csv"
+    ],
+    "reconstructability": "R1 archived code/stdout support terminal-proxy reaggregation; missing prompts/environment prevent full replay.",
+    "limitations": "Round-first5% predicate for Python; PaMOP1e-6 cannot be certified from displayed precision. No selective0/2 or inferred9/11, no ranking.",
+    "current_location": "\u00a76.1\u20136.2/Table 8; S4",
+    "destination": "Retain \u00a76 unchanged this phase; future concise main context, full S4 case ledger."
+  },
+  {
+    "id": "E19",
+    "name": "217-item three-service relationship judgments and recovery",
+    "status": "Completed; semantic accuracy unmeasured",
+    "population": "217 relationships clustered in16 NL4Opt train problems;651 selected judgments",
+    "conditions": "Gemini/DeepSeek through io.net/Cohere; original, offline repair, targeted historical replacement; changed output contracts",
+    "results": "Original valid215/180/105; final217/217/197=631/651.59 offline repairs+72 replacements. Complete197, kappa .3708071786; pairs213/217,123/197,120/197;119 determinate unanimous+77 disagreement+1 unresolved.",
+    "sources": [
+      "m5:docs/manuscript_m5_2026-10-28/verified_author_review_20261029T002829Z/verification/llm217/llm217_validation.json",
+      "m5:docs/manuscript_m5_2026-10-28/verified_author_review_20261029T002829Z/LLM_217_INDEPENDENT_VALIDATION.md"
+    ],
+    "reconstructability": "R1 locally retained frozen responses/packets; M5 independent verifier5120 checks recorded. Public candidate not automatically released here.",
+    "limitations": "Convenience sample, clustered items, unequal recovery; model assertions not human truth. Serving weight hashes unknown.",
+    "current_location": "\u00a76.3; S6",
+    "destination": "Keep unchanged this phase; later concise main semantic-evidence result, detailed S6."
+  },
+  {
+    "id": "E20",
+    "name": "D1 semantic contrast construction and author audit",
+    "status": "Completed construction/audit; provider pilot not executed",
+    "population": "12 accepted pairs/24 samples;8 categories;10 meaning changes/2 paraphrases",
+    "conditions": "Fixed candidate/source contrast; author validation with AI assistance; shared fixture lineage",
+    "results": "12 correct/12 incorrect labels; no excluded/unresolved pairs.20 final labels directly AI-exposed; archived10 template groups are not certified independent families.",
+    "sources": [
+      "d1:docs/d1_final_pair_audit_2026-10-29/evidence/audit_verification.json"
+    ],
+    "reconstructability": "R3 public summary; detailed private author logs remain local and are not published.",
+    "limitations": "Not independently blinded gold, no provider accuracy or causal explanation of7/331. Prior zero-gold gate does not erase later disclosed author approval.",
+    "current_location": "Abstract/Introduction; full details absent",
+    "destination": "New S8 descriptive construction/provenance summary; later integrate \u00a76/RQ3. Private logs excluded."
+  },
+  {
+    "id": "E21",
+    "name": "NL4Opt proposal, annotation and template audit",
+    "status": "Completed audit; training blocked",
+    "population": "713 pinned NL4Opt train problems;100-problem/954-row review packet",
+    "conditions": "Occurrence/declaration witnesses; conservative template quarantine; proposals not accepted labels",
+    "results": "3114 positive proposals/3246 ambiguous links;68 problems with proposals for every declared parameter;399 quarantined/314 unflagged but uncertified;0 approved training relations.",
+    "sources": [
+      "labels:docs/nl4opt_label_audit_2026-10-27/NL4OPT_LABEL_AUDIT.md",
+      "labels:docs/nl4opt_label_audit_2026-10-27/TEMPLATE_INDEPENDENCE_AUDIT.md"
+    ],
+    "reconstructability": "R1 local source/audit outputs; hashes and pinned revision49f1e0d; not independent semantic annotation.",
+    "limitations": "First-match equality cannot resolve occurrence roles; no negatives/NULL gold; text-screen negatives do not certify template independence.",
+    "current_location": "S3.6; \u00a77.2",
+    "destination": "Keep S3.6 and limitations; register preserves finite QC packet."
+  },
+  {
+    "id": "E22",
+    "name": "Historical DistilRoBERTa mention-slot learning",
+    "status": "Completed training; comparative interpretation inconclusive",
+    "population": "Jobs854608,854613,854626; largest230/50/50 internal eval-origin split,9729/2230/2339 pairs",
+    "conditions": "Weak first-equal-value labels, encoder+linear head; largest500 steps, batch8,lr2e-5,seed42",
+    "results": "854613:5/59 selections,0/8 legacy exact.854626:51/280 overall,51/259 aligned,0/45 legacy exact,19/280 type.854608 used test-as-train fallback.",
+    "sources": [
+      "supervised:docs/supervised_grounding_feasibility_2026-10-27/EXISTING_METHODS.md"
+    ],
+    "reconstructability": "R3 retained stdout proves fitting/checkpoint writes; original checkpoints, exact run SHAs and predictions missing.",
+    "limitations": "Conflicting baseline summary; possible untrained-head nominal rule path; five test cases omitted from exact denominator; split leakage. No claim learning generally fails.",
+    "current_location": "S3.5",
+    "destination": "Keep negative absolute observations/ambiguity in S3.5; detailed counts S8/register."
+  },
+  {
+    "id": "E23",
+    "name": "P0 learned feature scorer and assignment",
+    "status": "Completed",
+    "population": "Oracle-schema50 test cases;245 development slot groups",
+    "conditions": "Logistic regression26 features incl frozen MiniLM; independent/exact matching/repair; no encoder fine-tune",
+    "results": "Test coarse .80/.78/.78 versus retained typed comparator .86. Dev combined LR115/245,trees114/245,engineered109/245,embedding58/245.",
+    "sources": [
+      "current:results/learned_grounding_p0/test_results.csv",
+      "current:results/learned_grounding_p0/ablation_results.csv",
+      "supervised:docs/supervised_grounding_feasibility_2026-10-27/EXISTING_METHODS.md"
+    ],
+    "reconstructability": "R2 saved test metrics; dev counts retained; no new fitting.",
+    "limitations": "First-value labels, evaluation-origin splits and group crossings; no calibrated confidence or general learning-versus-rule conclusion.",
+    "current_location": "S3.5",
+    "destination": "Keep S3.5; dev ablation detail S8."
+  },
+  {
+    "id": "E24",
+    "name": "GAMS auxiliary weak-label training",
+    "status": "Completed, underpowered",
+    "population": "17 models/1135 pairs/85 heuristic positives;actual5/1/2 problem split",
+    "conditions": "Job854616;50 auxsteps then44 realsteps",
+    "results": "Baseline2/11 slot decisions versus auxiliary1/11;0/2 legacy exact for both.",
+    "sources": [
+      "supervised:docs/supervised_grounding_feasibility_2026-10-27/EXISTING_METHODS.md"
+    ],
+    "reconstructability": "R3 original training stdout audited; historical checkpoints absent.",
+    "limitations": "Index-derived weak labels; two effective test problems; cannot estimate broad transfer.",
+    "current_location": "S3.5 brief",
+    "destination": "Preserve exact small-sample results in S8; caveat S3.5."
+  },
+  {
+    "id": "E25",
+    "name": "Targeted synthetic auxiliary training",
+    "status": "Completed, underpowered",
+    "population": "155 template pairs;actual1 train/0 dev/1 test problem",
+    "conditions": "Job854618;20 auxiliary then6 real steps",
+    "results": "Slot decisions0/8\u21921/8;full0/1 both;type7/8\u21920/8.",
+    "sources": [
+      "supervised:docs/supervised_grounding_feasibility_2026-10-27/EXISTING_METHODS.md"
+    ],
+    "reconstructability": "R3 retained stdout/audit.",
+    "limitations": "One test problem, synthetic labels and conflicting indicators; not a general positive or negative transfer result.",
+    "current_location": "S3.5 brief",
+    "destination": "Preserve in S8 and supervision limitations."
+  },
+  {
+    "id": "E26",
+    "name": "Historical fine-tuned schema retrieval",
+    "status": "Completed fitting; separate task",
+    "population": "Jobs843334/850246; latter80297 training pairs",
+    "conditions": "MiniLM sentence-transformer MultipleNegativesRankingLoss; synthetic/collected query-schema pairs",
+    "results": "Retained training-runtime/loss records establish fitting; no new trustworthy scalar-grounding endpoint inferred.",
+    "sources": [
+      "supervised:docs/supervised_grounding_feasibility_2026-10-27/EXISTING_METHODS.md"
+    ],
+    "reconstructability": "R3 retained training reports; source introductions d0cd0e9/94e11e4 are not exact run SHAs.",
+    "limitations": "Task is schema retrieval, not mention binding; benchmark-derived weights are not independent initialization.",
+    "current_location": "S3.5 one sentence",
+    "destination": "S8 historical context; no scalar performance table."
+  },
+  {
+    "id": "E27",
+    "name": "OptMATH external numeric extraction and audit",
+    "status": "Completed; corrected CI only summary-supported",
+    "population": "Fixed1000 OptMATH-Train instances;150-case automated cross-validation/4801 literals",
+    "conditions": "Extraction/code-AST/text-support sets; two automated classifiers; no schema retrieval",
+    "results": "Raw pooled .7501; auto text-support .8118, complete .5910. Corrected pooled23241/28799=.8070; macro .8135; archived instance-bootstrap CI[.7842,.8283]. Agreement98.04%;7.28% implementation constants.",
+    "sources": [
+      "current:results/external_validation/optmath/aggregate_metrics.json",
+      "current:results/external_validation/optmath/final_verification/verified_metrics.json",
+      "current:results/external_validation/optmath/final_verification/classifier_validation.json"
+    ],
+    "reconstructability": "R1 original sets/counts; R3 corrected per-instance counts/CI unavailable.",
+    "limitations": "JSON micro/macro names reversed; occurrences not recoverable from sets; classifiers not human gold; no full-framework transfer.",
+    "current_location": "\u00a77.1",
+    "destination": "Retain unchanged now; future main short transfer result, detailed supplement audit."
+  },
+  {
+    "id": "E28",
+    "name": "G1 autonomous inventory feasibility",
+    "status": "Completed feasibility audit; experiment blocked",
+    "population": "Current validated pipeline/components; no evaluation sample launched",
+    "conditions": "Trace whether slots/eligibility can be inferred without reference-derived structure",
+    "results": "No validated autonomous slot-discovery path; no measured autonomous success rate.",
+    "sources": [
+      "phase3:docs/g1_gold_free_autonomous_scalar_grounding_2026-10-28/REPORT.txt"
+    ],
+    "reconstructability": "R3 source/record findings; no predictions.",
+    "limitations": "Infeasibility in inspected components is not theoretical impossibility or zero accuracy.",
+    "current_location": "\u00a77.4; S5",
+    "destination": "Retain concise boundary in \u00a77; S5 full context."
+  },
+  {
+    "id": "E29",
+    "name": "G2 fixed-slot gold-filter intervention",
+    "status": "Completed identifiability audit; experiment blocked",
+    "population": "Native typed path with frozen required slots",
+    "conditions": "Separate query-gold slot participation from mention-candidate construction",
+    "results": "No native gold-value mention filter exists. At fixed gold-required slots the proposed filter removal is vacuous; broader inventory changes task.",
+    "sources": [
+      "g2:docs/g2_gold_eligibility_ablation_2026-10-28/CONDITION_COMPARISON.md"
+    ],
+    "reconstructability": "R3 source audit; no A/B measurements.",
+    "limitations": "No causal estimate or equivalence test; not a performance result.",
+    "current_location": "\u00a77.4; S5",
+    "destination": "Retain as methodological limitation, not ablation score."
+  },
+  {
+    "id": "E30",
+    "name": "G3 schema-only participation sets",
+    "status": "Completed static audit; performance experiment not executed",
+    "population": "331 saved TF\u2013IDF IDs/1847 reference scalar occurrences; all49 primary cases equal-set",
+    "conditions": "Compare strict scalar metadata against its gold-key intersection without decoding",
+    "results": "301 equal/30 different;134 additions;172/1847 missing gold occurrences.29 changed cases miss required keys both ways;1 lacks numeric reference.7 cases differ from original fallback definition.",
+    "sources": [
+      "phase3:docs/g3_schema_only_slot_participation_feasibility_2026-10-28/inventory_counts.json"
+    ],
+    "reconstructability": "R1 retained inventories support set accounting; no model/decoder outcomes.",
+    "limitations": "Structural non-identifiability, not measured zero effect. Added132 unknown keys+2 symbolic-value keys not automatically wrong.",
+    "current_location": "\u00a77.4; S5",
+    "destination": "Retain S5 and short limitations summary."
+  },
+  {
+    "id": "E31",
+    "name": "Historical global compatibility family",
+    "status": "Completed legacy campaign",
+    "population": "331 queries \u00d7orig/noisy/short for each local/pairwise/full method",
+    "conditions": "Frozen historical scoring/beam families, predating later baseline changes",
+    "results": "Orig coarse138/140/143 of331; same retained legacy typed175/331. All72 historical CSV aggregates separately preserved in SAVED_METRIC_CHECKS.json.",
+    "sources": [
+      "current:results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_global_compat_full.csv"
+    ],
+    "reconstructability": "R2 saved CSVs; current offline aggregation.",
+    "limitations": "Legacy source vintage, not Stage6 controls; old report typed174 differs from retained corrected CSV175. No reused bootstrap significance or scoring-cause inference.",
+    "current_location": "Omitted as family; only general prior-method discussion",
+    "destination": "S8 full legacy variant table; no main headline substitution."
+  },
+  {
+    "id": "E32",
+    "name": "Historical relation-aware linking ablations",
+    "status": "Completed legacy campaign",
+    "population": "331 queries \u00d73 variants \u00d74 relation-feature modes",
+    "conditions": "Basic/operators/semantic/full hand-designed relation scoring",
+    "results": "Orig coarse165/155/144/138 of331; saved variant metrics retained.",
+    "sources": [
+      "current:results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_relation_aware_basic.csv"
+    ],
+    "reconstructability": "R2 saved metrics, not accepted semantic labels.",
+    "limitations": "Feature-package differences; old statistics and causal explanations not endorsed; not trained relation extraction.",
+    "current_location": "Not separately tabulated",
+    "destination": "S8 legacy table with all three variants."
+  },
+  {
+    "id": "E33",
+    "name": "Historical ambiguity-aware grounding",
+    "status": "Completed legacy campaign",
+    "population": "331 queries \u00d73 variants \u00d7candidate-greedy/beam/abstain/full",
+    "conditions": "Candidate competition, finite beam, confidence-triggered abstention",
+    "results": "Orig coarse140/140/9/139 of331; abstain coverage .2207.",
+    "sources": [
+      "current:results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_ambiguity_aware_abstain.csv"
+    ],
+    "reconstructability": "R2 saved metrics.",
+    "limitations": "Low readiness is not calibrated uncertainty; neither universal negative nor numerical-correctness ranking.",
+    "current_location": "Not separately tabulated",
+    "destination": "S8 legacy table and abstention interpretation."
+  },
+  {
+    "id": "E34",
+    "name": "Baseline staleness, hierarchical search and classical alternatives",
+    "status": "Completed comparison audit",
+    "population": "331 orig queries per12 retained configurations; earlier3-variant legacy cohort separate",
+    "conditions": "August12 synchronized records; includes BM25/LSA, acceptance/hierarchical rerank, hierarchical grounding",
+    "results": "Coarse typed257,Oracle273,BM25253,LSA243,constrained248,MWM246,role244,search233,hierarchical233,semantic237,acceptance253,hierarchical-rerank238. MWM versus typed:7 rescues/18 regressions.",
+    "sources": [
+      "current:results/baseline_staleness_audit_2026-08-12/regen_results_all_variants.json",
+      "current:results/max_weight_matching_validation/mechanism_and_error_analysis_summary.json",
+      "current:docs/BASELINE_STALENESS_AUDIT_2026-08-12.md"
+    ],
+    "reconstructability": "R2 archived CSVs and transitions.",
+    "limitations": "Stale .5287 comparator cannot establish a .7432 gain; no wholesale claim richer methods never improve numerical correctness. Historical ratio/Oracle versions remain separate.",
+    "current_location": "Implicit, not fully represented",
+    "destination": "S8 twelve-method table and correction history."
+  },
+  {
+    "id": "E35",
+    "name": "Top-k schema and reranking feasibility",
+    "status": "Completed retrospective diagnostic",
+    "population": "331 queries;30 top1 misses; saved top10 candidates",
+    "conditions": "Gold-schema/readiness oracle ceilings and multiple heuristic rerank rules",
+    "results": "Miss ranks2/3/4\u20135/6\u201310/>10:9/5/4/6/6. Gold in top10:325. Gold-schema top10 ready270; readiness oracle286 includes32 wrong-schema-ready cases. Best observed readiness rule282 with20 schema regressions.",
+    "sources": [
+      "current:results/topk_schema_rerank_stage_a/summary.json",
+      "current:results/topk_schema_rerank_stage_a/reranker_results.csv"
+    ],
+    "reconstructability": "R1 retained candidate groundings; R2 saved summaries/transitions.",
+    "limitations": "Oracle/projection not deployable score; selecting best among rules is exposed exploratory analysis. TOP2_GO was a historical decision, not authorization.",
+    "current_location": "Only selective follow-up mentioned",
+    "destination": "S8 ceilings and false-positive boundary."
+  },
+  {
+    "id": "E36",
+    "name": "Selective schema-grounding reranking",
+    "status": "Completed diagnostic",
+    "population": "331 queries;baseline257 ordinary-ready",
+    "conditions": "Selective top2 reranking changes retrieval and grounding",
+    "results": "Ordinary-ready265;8 newly ready of which6 wrong schema; motivates Strict gate.",
+    "sources": [
+      "current:docs/SELECTIVE_GROUNDING_RERANK_STAGE_B_2026-08-13.md",
+      "current:results/selective_grounding_rerank/nlp4lp_downstream_per_query_orig_tfidf.csv"
+    ],
+    "reconstructability": "R2 saved transitions and metric records.",
+    "limitations": "Not eight additional semantic successes, not fixed-retrieval grounding comparison.",
+    "current_location": "\u00a75.7/Table 7",
+    "destination": "Main \u00a75.6; supplemental context S7/S8."
+  },
+  {
+    "id": "E37",
+    "name": "Role/quantity Stage-A separability and cascade",
+    "status": "Completed negative feasibility diagnosis",
+    "population": "331-query frame;54 schema-hit/non-ready queries;49 targeted wrong assignments",
+    "conditions": "Saved roles/quantity conflict flags, separability and prospective triggers",
+    "results": "28 separable/10 ambiguous/11 not-separable assignments;0 projected ready rescues;baseline/projected257. Recorded all-query cascade trigger331/331, false-trigger1.0.",
+    "sources": [
+      "current:results/role_quantity_stage_a/summary.json"
+    ],
+    "reconstructability": "R1 cached per-slot records; summary projections are not executed new-policy outcomes.",
+    "limitations": "Readiness-neutral value corrections may still matter; no semantic generalization; no API escalation executed.",
+    "current_location": "Not explicitly tabulated",
+    "destination": "S8 diagnostic negative result."
+  },
+  {
+    "id": "E38",
+    "name": "Strict-failure diagnosis and quick-fix precursor",
+    "status": "Completed diagnosis/prototype; other interventions only oracle projections",
+    "population": "331-query frame;54 schema-hit/non-ready and58 Oracle non-ready cases",
+    "conditions": "Missing extraction/type/participation/reuse analysis; ratio-word prototype",
+    "results": "Ratio prototype247\u2192255 Strict (8 gains/0 losses); oracle extraction projected254,types271,reuse272,filter247. Overlapping cause counts remain in source.",
+    "sources": [
+      "current:results/strict_failure_quick_fix/summary.json"
+    ],
+    "reconstructability": "R2 saved diagnosis/prototype records.",
+    "limitations": "Do not present oracle projections as deployed fixes. Only completed ratio patch supplies main ablation.",
+    "current_location": "Ratio patch main; precursor not explicit",
+    "destination": "S8 distinguish prototype and unexecuted alternatives."
+  },
+  {
+    "id": "E39",
+    "name": "Archived OpenAI two-stage schema/slot baseline",
+    "status": "Completed saved-record campaign",
+    "population": "331 queries in each orig/noisy/short",
+    "conditions": "LLM schema selection then slot filling; separate from common18 GPT formulation",
+    "results": "Saved schema hits307/309/243;coarse280/116/4;conditional Exact20 .829103/.146067/.873016 over294/171/63 comparable hits.",
+    "sources": [
+      "current:results/paper/nlp4lp_downstream_orig_openai.json",
+      "current:results/paper/nlp4lp_downstream_per_query_orig_openai.csv"
+    ],
+    "reconstructability": "R2 all three metric files reaggregated; no original assignment replay asserted.",
+    "limitations": "Provider tag does not authenticate model snapshot or current serving settings; supplied catalog/slots and old protocol prevent autonomy/provider ranking.",
+    "current_location": "Omitted",
+    "destination": "S8 archival table; no main leaderboard or conflation with \u00a76."
+  },
+  {
+    "id": "E40",
+    "name": "Archived Mistral two-stage orig baseline",
+    "status": "Completed orig metric artifact; other variants unverified",
+    "population": "331 orig queries;job903088",
+    "conditions": "Separate historical schema/slot API path",
+    "results": "171 schema hits;154 coarse-ready;Exact20 .910143 over157 comparable hits;coverage .477090/type .483384.",
+    "sources": [
+      "current:results/rerun/mistral/run_903088/paper/nlp4lp_downstream_orig_mistral.json",
+      "current:results/rerun/mistral/run_903088/paper/nlp4lp_downstream_per_query_orig_mistral.csv"
+    ],
+    "reconstructability": "R2 saved rows; incomplete request/model-version lineage.",
+    "limitations": "High conditional Exact20 is not unconditional success; no verified noisy/short completion or provider ranking.",
+    "current_location": "Omitted",
+    "destination": "S8 archival table with provenance limitations."
+  },
+  {
+    "id": "E41",
+    "name": "Optional Gemini scalar-benchmark rerun",
+    "status": "Partially prepared/blocked; no full completed benchmark established",
+    "population": "Planned331 queries \u00d73 variants;retained job902357 preflight only",
+    "conditions": "Historical Gemini schema/slot workflow, not October217 relationship study",
+    "results": "No authenticated full per-query benchmark artifact located in retained rerun directory; no performance value assigned.",
+    "sources": [
+      "current:docs/GEMINI_RERUN_REPORT.md"
+    ],
+    "reconstructability": "R0 performance; infrastructure/preflight only.",
+    "limitations": "Cannot infer failed scientific predictions from availability/setup failure; do not conflate separate successful relationship campaign.",
+    "current_location": "Absent",
+    "destination": "S8 status-only; no accuracy cell."
+  },
+  {
+    "id": "E42",
+    "name": "CloudRift Qwen relationship extension",
+    "status": "Blocked before inference",
+    "population": "Planned217 relationships;0 attempted",
+    "conditions": "Historical requested model absent at availability gate; no substitute selected",
+    "results": "No new judgments, no pilot, no four-model comparison.",
+    "sources": [
+      "labels:docs/nl4opt_cloudrift_qwen_2026-10-27/HANDOFF.txt"
+    ],
+    "reconstructability": "R0 performance; historical availability receipt only.",
+    "limitations": "Account/budget identifiers not republished; unattempted is neither invalid judgment nor zero accuracy.",
+    "current_location": "Absent",
+    "destination": "S8 status-only; no scientific performance finding."
+  },
+  {
+    "id": "E43",
+    "name": "Independent relationship reference-label protocol",
+    "status": "Proposed/prepared, not completed",
+    "population": "36 probability+12 targeted relationships;2 overlaps=46 distinct across16 problems",
+    "conditions": "Finite blinded review design for selected217 frame",
+    "results": "No accepted formal independent reference labels; semantic accuracy/precision remains unavailable.",
+    "sources": [
+      "labels:docs/nl4opt_scientific_evaluation_phase1_2026-10-27/METRIC_READINESS.md"
+    ],
+    "reconstructability": "R0 performance; prepared sampling records only.",
+    "limitations": "Different from author-approved D1 generated contrasts; cannot transfer24 labels to217 historical judgments.",
+    "current_location": "\u00a77.3",
+    "destination": "Keep future prerequisite; S8 status ledger, no new reviewer task."
+  },
+  {
+    "id": "E44",
+    "name": "Earlier synthetic global-consistency evaluation",
+    "status": "Completed synthetic exercise; real benchmark blocked",
+    "population": "331 catalog-derived synthetic scalar assignments \u00d73 variants",
+    "conditions": "Type-assigned synthetic references, distinct global_consistency mode",
+    "results": "Report orig readiness typed16/331 versus global18/331;real Exact20 unavailable.",
+    "sources": [
+      "current:docs/archive/GCG_FINAL_EVAL_REPORT.md"
+    ],
+    "reconstructability": "R3 historical report; original temporary harness/per-query files not authenticated.",
+    "limitations": "Artificial values cannot support real-data performance or report claim that relative differences transfer. Distinct from global_compat real campaign.",
+    "current_location": "Omitted",
+    "destination": "S8 historical status and explicit exclusion from scientific benchmark comparison."
+  },
+  {
+    "id": "E45",
+    "name": "Neural/scorer scaffolds and proposed external supervision",
+    "status": "Implemented/proposed; completed non-smoke runs not verified",
+    "population": "MiniLM cross-encoder, NL4Opt multitask auxiliary, export stubs;no approved clean training set",
+    "conditions": "Code/protocol only; future clean external-supervision design",
+    "results": "No authenticated completed MiniLM non-smoke or NL4Opt auxiliary checkpoint;0 approved semantic training links. Other auxiliary runs are E24/E25.",
+    "sources": [
+      "supervised:docs/supervised_grounding_feasibility_2026-10-27/EXISTING_METHODS.md",
+      "supervised:docs/supervised_grounding_feasibility_2026-10-27/GO_NO_GO.md"
+    ],
+    "reconstructability": "R0 for unexecuted performance; source evidence only.",
+    "limitations": "File existence, tests or job submission are not model outcomes; no broad negative learning claim.",
+    "current_location": "S3.5/\u00a77.3",
+    "destination": "Keep S3.5 and S8 status-only."
+  },
+  {
+    "id": "E46",
+    "name": "Historical prediction recovery and source integrity",
+    "status": "Completed archival investigation; recovery inconclusive/negative",
+    "population": "Four headline metric CSVs;sanitization/60/269/20 target artifacts",
+    "conditions": "Inspect original writers, hashes, run identities; distinguish Stage-A cache from missing headline maps",
+    "results": "Four CSVs match first committed versions;13 metric columns;no authenticated original headline scalar export or full subset outcome manifests recovered.",
+    "sources": [
+      "phase2:docs/historical_scalar_assignment_recovery_2026-10-28/VERIFIED_ARTIFACTS.md",
+      "phase2:docs/historical_scalar_assignment_recovery_2026-10-28/THREE_TABLE_REASSESSMENT.md"
+    ],
+    "reconstructability": "R2 integrity/aggregation; R0 absent predictions; no assumptions substituted.",
+    "limitations": "Absence does not prove deletion; newer cache/loose blobs are not originals.",
+    "current_location": "S3.3 and \u00a77.2",
+    "destination": "Keep reproduction boundary and unresolved-issues register."
+  },
+  {
+    "id": "E47",
+    "name": "Public metrics and release provenance check",
+    "status": "Completed provenance audit; no performance experiment",
+    "population": "Pinned public revision24a047fa;331 canonical rows/4303 diagnostics/13 methods;1000 external rows",
+    "conditions": "Offline public-mirror verification in M5; dataset unchanged this phase",
+    "results": "Published metrics reproduce301 schema/265 coarse/255 Strict/7 full;release is metrics-only, not independent supervision.",
+    "sources": [
+      "m5:docs/manuscript_m5_2026-10-28/verified_author_review_20261029T002829Z/verification/public_metrics_audit.json"
+    ],
+    "reconstructability": "R2 retained public-mirror audit; no fresh Hugging Face publication or modification.",
+    "limitations": "License/access differences; raw gated NLP4LP and unresolved-license OptMATH corpus not copied. M5 candidate not claimed fully public.",
+    "current_location": "Declarations/S3.3",
+    "destination": "Keep data-access boundaries; source inventory records local-only evidence."
+  }
+]

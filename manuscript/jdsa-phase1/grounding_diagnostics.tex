@@ -1,0 +1,92 @@
+\subsection{Full Factorial and Search-Retention Evidence}
+\label{app:factorial-details}
+
+Section~\ref{M-subsec:grounding-followup} distinguishes the historical 40-versus-7 all-key result from the controlled 49-query study. The latter's 277 scalar slots and reference-derived template inventory are fixed within each decoder comparison. The known excluded query shares a delexicalized text group with earlier training/development data; grouping uses transitive five-gram Jaccard similarity at least 0.80. Exclusion addresses that known crossing, not prior benchmark exposure or unrecognized semantic duplicates.
+
+The design crosses two candidate constructors, three scorers, two decoders
+and two mention-reuse policies (24 cells). Decoder pairs share the exact
+same edge-score matrix, canonical lexical slot order, and zero-score null
+option. Scorers are an explicit ordinal encoding of the original type
+preference, the frozen contextual scorer, and a subtraction of only its
+percent/currency marker bonuses. The ordinal control introduces a documented
+cardinalization and does not reproduce every historical assignment.
+One-to-one assignment is a diagnostic restriction rather than a physical
+law. With unrestricted reuse and additive scores, independent per-slot
+maximization is already globally optimal; every corresponding local/global
+output agrees. Table~\ref{tab:grounding-factorial-diagnostic} shows the
+one-to-one controls; all 24 cells, candidate identities, matrices and
+per-query predictions are retained in the reproducibility artifacts.
+
+\begin{table}[t]
+\centering
+\caption{One-to-one factorial controls on the same 49 queries and 277 gold
+scalar slots. Entries show greedy $\rightarrow$ exact maximum-sum assignment.
+E/T denote numerical exact/tolerance-correct counts. Full instances also
+require compatible types and every gold scalar key. These controls are
+distinct from the historical 331-query configurations.}
+\label{tab:grounding-factorial-diagnostic}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}llcccc@{}}
+\toprule
+Pool & Scorer & E slots & T slots & E full & T full\\
+\midrule
+Typed & Ordinal & $71\to71$ & $87\to86$ & $3\to3$ & $3\to3$\\
+Typed & Context & $106\to136$ & $117\to145$ & $3\to4$ & $5\to5$\\
+Typed & No marker bonus & $97\to137$ & $111\to146$ & $3\to4$ & $5\to5$\\
+Rich & Ordinal & $67\to67$ & $81\to81$ & $3\to3$ & $3\to3$\\
+Rich & Context & $100\to133$ & $111\to142$ & $3\to4$ & $5\to5$\\
+Rich & No marker bonus & $97\to135$ & $111\to144$ & $3\to4$ & $5\to5$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+With contextual scores, exact assignment increases exact numerical slot
+counts by 30/277 (typed pool) and 33/277 (rich pool). Existing paired
+query-group bootstrap intervals ($B=2000$, seed 42) are respectively
+$[3.14,17.95]$ and $[4.07,18.84]$ percentage points. These are marginal,
+exploratory intervals. The full-tolerance count remains 5/49 for both
+decoders, with one gained and one lost query; the paired interval is
+$[-6.12,6.12]$ percentage points. A separate retrospective exact groupwise
+method-swap analysis covers every one-factor contrast and four numerical
+endpoints, using a single Holm family of 240 tests
+\cite{holm1979followup}. Neither contextual-score decoder contrast survives
+that familywise adjustment (adjusted $p=1$). Some contextual-versus-ordinal
+slot comparisons survive; no whole-instance endpoint does. These results
+support descriptive component differences, not a confirmed whole-instance
+improvement or attribution of all 33 historical additional successes to
+search. The recorded sub-millisecond cell timings include metric and
+instrumentation overhead and are not clean algorithm-speed comparisons.
+
+\medskip\noindent\textbf{Candidate availability, pruning and objective quality.}
+The earlier 50-query joint-grounding pilot selects 3 tolerance-correct
+instances with either local or joint scoring. In the saved common pools,
+32/50 permit a criterion-correct complete mapping, but only 8/50 retain one
+in the top ten. Reconciliation with identical saved beam outputs separates
+14 cases losing correct prefixes, 6 generating then pruning a complete
+correct mapping, 4 losing it at the final top-ten cut, 5 retaining it below
+the selected mapping, and 3 selecting it. The other 18 cases lack a complete
+compatible mapping in the pool or inventory. Width and ranking limitations
+must therefore be distinguished from candidate absence. Optimality claims
+about beam methods also depend on their search restriction
+\cite{huang2017beamfollowup}; that neural-generation result is methodological
+context, not a guarantee for this grounding algorithm.
+
+An exact MILP diagnostic holds the cached local/pairwise objective and
+domains fixed. Among the 32 pool-compatible cases, 23 have a strictly
+higher-scoring incorrect optimum than their best criterion-correct mapping;
+6 have tied correct and incorrect optima, and 3 select a correct optimum.
+The correctness-restricted solves are oracle diagnostics, never inference
+procedures. Exact mention-based top-ten enumeration retains a correct
+mapping in 9/50 cases versus 8/50 for the beam, with tied-optimum membership
+qualifications. More search cannot repair the 23 strict objective failures.
+Ten of the 50 exact top-ten lists contain duplicate numerical/type mappings
+realized by different mention indices. A separate 49-query follow-up ranks without evaluation values, conditional on the same supplied inventory. It reuses
+40 already-distinct lists and performs 23 additional solves for the other
+nine. Every retained top-ten list is certified, but criterion-correct list
+retention remains 9/49, with zero gained or lost queries; selected correctness
+remains 3/49. Thus reclaiming this alias budget supplies no observed
+correctness gain and no justification for full-dataset expansion. Mention equality, numerical equality and semantic identity are
+different concepts. No gold value is used to rank inference candidates.
+
+Detailed source/reference conventions, the versioned correction overlay and the historical tolerance limitation are given in Appendix~\ref{app:reference-conventions}. No reference correction is used during inference, and no new hard unit or mathematical relation was validated by these studies.
