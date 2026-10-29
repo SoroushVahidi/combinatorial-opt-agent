@@ -254,6 +254,7 @@ class TestIsShortQuery:
 
 
 class TestSearchIntegration:
+    @pytest.mark.requires_models
     @pytest.mark.requires_network
     def test_search_uses_expansion_by_default(self):
         from retrieval.search import search, _default_model_path
@@ -268,6 +269,7 @@ class TestSearchIntegration:
         assert results
         assert results[0][0]["id"] == "p1"
 
+    @pytest.mark.requires_models
     @pytest.mark.requires_network
     def test_search_can_disable_expansion(self):
         from retrieval.search import search, _default_model_path

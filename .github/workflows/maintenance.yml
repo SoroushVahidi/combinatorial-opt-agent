@@ -1,0 +1,32 @@
+name: Offline maintenance
+on:
+  pull_request:
+  push:
+    branches: [main, "cleanup/**"]
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install small test dependencies
+        run: python -m pip install -r requirements-dev.txt
+      - name: Parse source without executing research
+        run: python scripts/check_repository_syntax.py
+      - name: Check tracked documentation
+        run: python scripts/check_docs_integrity.py
+      - name: Run minimal offline fixtures
+        run: >-
+          python -m pytest -q
+          tests/test_cardinal_downloader.py
+          tests/test_documentation_integrity.py
+          tests/test_offline_policy.py
+          tests/test_repo_hygiene.py
+          tests/test_consistency_benchmark.py

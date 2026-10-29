@@ -136,6 +136,7 @@ def _entry_not_found():
     return EntryNotFoundError("404 (mocked)")
 
 
+@pytest.mark.requires_research_data
 @pytest.mark.requires_network
 @pytest.mark.parametrize("problem_id", [28, 51, 57, 123, 126, 135])
 def test_known_missing_ids_raise_missing_structured_data_error_live(problem_id):
@@ -146,6 +147,7 @@ def test_known_missing_ids_raise_missing_structured_data_error_live(problem_id):
         data.load_problem_record(problem_id)
 
 
+@pytest.mark.requires_research_data
 @pytest.mark.requires_network
 def test_known_good_id_still_loads_live():
     record = data.load_problem_record(1)
