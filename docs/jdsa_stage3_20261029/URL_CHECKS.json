@@ -214,11 +214,17 @@
     },
     {
       "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/manuscript/jdsa-stage3-submission-audit-20261029/docs/jdsa_stage3_20261029",
-      "status": "PENDING_BRANCH_PUBLICATION"
+      "status": "HTTP_SUCCESS_ONLY",
+      "http_status": 200,
+      "final_url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/manuscript/jdsa-stage3-submission-audit-20261029/docs/jdsa_stage3_20261029",
+      "checked_after_publication_at_utc": "2026-10-29T20:55:37.425978+00:00"
     },
     {
       "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/manuscript/jdsa-stage3-submission-audit-20261029/manuscript/jdsa-stage3",
-      "status": "PENDING_BRANCH_PUBLICATION"
+      "status": "HTTP_SUCCESS_ONLY",
+      "http_status": 200,
+      "final_url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/manuscript/jdsa-stage3-submission-audit-20261029/manuscript/jdsa-stage3",
+      "checked_after_publication_at_utc": "2026-10-29T20:55:37.930744+00:00"
     },
     {
       "url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0",

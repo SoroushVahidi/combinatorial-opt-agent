@@ -7,7 +7,6 @@ j=json.loads((D/'FINAL_DOCUMENT_CHECKS.json').read_text());urls=sorted({u for x 
 def check(u):
  r={'url':u}
  if u.startswith('mailto:'):return {**r,'status':'NOT_PROBED_EMAIL','note':'Preserved author-provided contact; no email sent.'}
- if 'jdsa-stage3-submission-audit-20261029' in u:return {**r,'status':'PENDING_BRANCH_PUBLICATION'}
  try:
   a=requests.get(u,timeout=15,headers={'User-Agent':'JDSA-submission-link-audit/1.0'});r.update(http_status=a.status_code,final_url=a.url)
   r['status']='HTTP_SUCCESS_ONLY' if a.status_code==200 else 'NOT_INDEPENDENTLY_ACCESSIBLE'

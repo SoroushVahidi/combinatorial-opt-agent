@@ -31,7 +31,7 @@ The focused RQ1–RQ3 structure, experimental results, conditional denominators,
 - Immutable evidence release: `jdsa-evidence-v2.0.0`, tag target `209fa982c0a0e2087bd021cbc7a9f57d94256c8f`.
 - Hugging Face revision: `f94012872211ab6a828147bb138fbe8ab695b982`; downloaded manifest byte-matches the local authenticated manifest.
 
-Only `manuscript/jdsa-stage3/` and `docs/jdsa_stage3_20261029/` are added. Original manuscripts, supplements, evidence, main branch and unrelated work are preserved. No merge, branch deletion or journal submission was performed. The publication receipt records anonymously verified downloads after pushing this isolated branch.
+Only `manuscript/jdsa-stage3/` and `docs/jdsa_stage3_20261029/` are added. Original manuscripts, supplements, evidence, main branch and unrelated work are preserved. No merge, branch deletion or journal submission was performed. The [publication receipt](PUBLICATION_VERIFICATION.json) records 12 anonymously downloaded artifacts with matching hashes, plus successful checks of both Stage 3 links in the PDFs, after pushing this isolated branch. Artifact commit: `c6b38bdb7b516beca6960b2b3df0aefa548445ba`; the subsequent receipt commit changes only audit documentation and the URL-check script.
 
 ## Author-review boundaries
 

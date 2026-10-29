@@ -1,0 +1,105 @@
+{
+  "status": "PASS",
+  "verified_at_utc": "2026-10-29T20:55:37.933040+00:00",
+  "artifact_commit": "c6b38bdb7b516beca6960b2b3df0aefa548445ba",
+  "method": "Anonymous HTTPS GET without credentials; each downloaded artifact byte-hashed against the local delivery.",
+  "downloads": [
+    {
+      "path": "manuscript/jdsa-stage3/manuscript.pdf",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/c6b38bdb7b516beca6960b2b3df0aefa548445ba/manuscript/jdsa-stage3/manuscript.pdf",
+      "http_status": 200,
+      "download_sha256": "168984b1f2356d668cd3022e9b30d76b4da06d5fd79d43372515bd0b74589b2e",
+      "local_sha256": "168984b1f2356d668cd3022e9b30d76b4da06d5fd79d43372515bd0b74589b2e",
+      "identical": true
+    },
+    {
+      "path": "manuscript/jdsa-stage3/ESM_1.pdf",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/c6b38bdb7b516beca6960b2b3df0aefa548445ba/manuscript/jdsa-stage3/ESM_1.pdf",
+      "http_status": 200,
+      "download_sha256": "a664087bb3e07cf753e0ed90e8d8c5a7e3707197a81a144e29a3e443af6e2ac7",
+      "local_sha256": "a664087bb3e07cf753e0ed90e8d8c5a7e3707197a81a144e29a3e443af6e2ac7",
+      "identical": true
+    },
+    {
+      "path": "manuscript/jdsa-stage3/JDSA_Stage3_Submission_Source.zip",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/c6b38bdb7b516beca6960b2b3df0aefa548445ba/manuscript/jdsa-stage3/JDSA_Stage3_Submission_Source.zip",
+      "http_status": 200,
+      "download_sha256": "c15ec3caa3a44d1c8cb958e22d88996f496785f570c38d4b497fb28bd9d89be7",
+      "local_sha256": "c15ec3caa3a44d1c8cb958e22d88996f496785f570c38d4b497fb28bd9d89be7",
+      "identical": true
+    },
+    {
+      "path": "docs/jdsa_stage3_20261029/FINAL_REPORT.md",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/c6b38bdb7b516beca6960b2b3df0aefa548445ba/docs/jdsa_stage3_20261029/FINAL_REPORT.md",
+      "http_status": 200,
+      "download_sha256": "cd6803a8e2658aa98cb989ca67e7b83890054a4303b7c825742fabe92490c8b6",
+      "local_sha256": "cd6803a8e2658aa98cb989ca67e7b83890054a4303b7c825742fabe92490c8b6",
+      "identical": true
+    },
+    {
+      "path": "docs/jdsa_stage3_20261029/EDITORIAL_CHANGE_REPORT.md",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/c6b38bdb7b516beca6960b2b3df0aefa548445ba/docs/jdsa_stage3_20261029/EDITORIAL_CHANGE_REPORT.md",
+      "http_status": 200,
+      "download_sha256": "df6325bacbfd607f35b6ac7e1332c3f4bd4a3d1e0b98a033258ed63821a64e36",
+      "local_sha256": "df6325bacbfd607f35b6ac7e1332c3f4bd4a3d1e0b98a033258ed63821a64e36",
+      "identical": true
+    },
+    {
+      "path": "docs/jdsa_stage3_20261029/JDSA_COMPLIANCE_CHECKLIST.md",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/c6b38bdb7b516beca6960b2b3df0aefa548445ba/docs/jdsa_stage3_20261029/JDSA_COMPLIANCE_CHECKLIST.md",
+      "http_status": 200,
+      "download_sha256": "883c9400cb034eff6e90407c448b027ef9cd59f6a18da667330a5774e1ffa8be",
+      "local_sha256": "883c9400cb034eff6e90407c448b027ef9cd59f6a18da667330a5774e1ffa8be",
+      "identical": true
+    },
+    {
+      "path": "docs/jdsa_stage3_20261029/REFERENCE_VERIFICATION_REPORT.md",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/c6b38bdb7b516beca6960b2b3df0aefa548445ba/docs/jdsa_stage3_20261029/REFERENCE_VERIFICATION_REPORT.md",
+      "http_status": 200,
+      "download_sha256": "9640b9379a9e015e5cefce972d965cbcd5e64aac4183c89b391a0bd93a549ff1",
+      "local_sha256": "9640b9379a9e015e5cefce972d965cbcd5e64aac4183c89b391a0bd93a549ff1",
+      "identical": true
+    },
+    {
+      "path": "docs/jdsa_stage3_20261029/NUMERICAL_CONSISTENCY_REPORT.md",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/c6b38bdb7b516beca6960b2b3df0aefa548445ba/docs/jdsa_stage3_20261029/NUMERICAL_CONSISTENCY_REPORT.md",
+      "http_status": 200,
+      "download_sha256": "e308f4db18f6184082b5115d0e7a2a1eb947c0592ba25cdac38f86123aa85d6b",
+      "local_sha256": "e308f4db18f6184082b5115d0e7a2a1eb947c0592ba25cdac38f86123aa85d6b",
+      "identical": true
+    },
+    {
+      "path": "docs/jdsa_stage3_20261029/COMPILATION_AND_VISUAL_QA_REPORT.md",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/c6b38bdb7b516beca6960b2b3df0aefa548445ba/docs/jdsa_stage3_20261029/COMPILATION_AND_VISUAL_QA_REPORT.md",
+      "http_status": 200,
+      "download_sha256": "eccc7fddc1d6251a4152c3920dc362f06af2b4a2cf12d26f1b2c3be48d12d04c",
+      "local_sha256": "eccc7fddc1d6251a4152c3920dc362f06af2b4a2cf12d26f1b2c3be48d12d04c",
+      "identical": true
+    },
+    {
+      "path": "docs/jdsa_stage3_20261029/REMAINING_LIMITATIONS_AND_SUBMISSION_RISKS.md",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/c6b38bdb7b516beca6960b2b3df0aefa548445ba/docs/jdsa_stage3_20261029/REMAINING_LIMITATIONS_AND_SUBMISSION_RISKS.md",
+      "http_status": 200,
+      "download_sha256": "f8fd2290256839b5d29c6ccf6dbc7ec30576dce462202ba9317ce6f9c5c616fb",
+      "local_sha256": "f8fd2290256839b5d29c6ccf6dbc7ec30576dce462202ba9317ce6f9c5c616fb",
+      "identical": true
+    },
+    {
+      "path": "docs/jdsa_stage3_20261029/CLAIM_LOCATION_CROSSWALK_V1.json",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/c6b38bdb7b516beca6960b2b3df0aefa548445ba/docs/jdsa_stage3_20261029/CLAIM_LOCATION_CROSSWALK_V1.json",
+      "http_status": 200,
+      "download_sha256": "90756f4b65303382db6560185a37e103d4fc490681340af4378168effc6edb93",
+      "local_sha256": "90756f4b65303382db6560185a37e103d4fc490681340af4378168effc6edb93",
+      "identical": true
+    },
+    {
+      "path": "docs/jdsa_stage3_20261029/SUBMISSION_PACKAGE_MANIFEST.json",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/c6b38bdb7b516beca6960b2b3df0aefa548445ba/docs/jdsa_stage3_20261029/SUBMISSION_PACKAGE_MANIFEST.json",
+      "http_status": 200,
+      "download_sha256": "df7bafec8e25b65c8f304ebbe9e19bf010fb5c8f15569ab594311fbccc097e31",
+      "local_sha256": "df7bafec8e25b65c8f304ebbe9e19bf010fb5c8f15569ab594311fbccc097e31",
+      "identical": true
+    }
+  ],
+  "branch_links_previously_pending": "Both returned HTTP 200 after publication."
+}
