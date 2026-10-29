@@ -1,0 +1,381 @@
+{
+  "status": "PASS",
+  "verified_at_utc": "2026-10-29T18:46:55.389581+00:00",
+  "method": "Anonymous unauthenticated HTTPS GET downloads at immutable artifact commit, each compared byte hash to local committed artifact; Git ls-remote checks",
+  "branch": "manuscript/jdsa-stage2-scientific-restructure-20261029",
+  "artifact_commit": "03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b",
+  "baseline": "3296f3bd20128077cd94a4eac82f0b5fe73e2946",
+  "files_verified": 51,
+  "files": [
+    {
+      "path": "docs/jdsa_stage2_20261029/BEFORE_AFTER_SECTION_MAP.md",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/docs/jdsa_stage2_20261029/BEFORE_AFTER_SECTION_MAP.md",
+      "bytes": 3409,
+      "sha256": "c85a214891d2587c68bbb7b1b0a305e872bce7b5d0de9b2c89a29fb9c489b176",
+      "status": "PASS"
+    },
+    {
+      "path": "docs/jdsa_stage2_20261029/CLAIM_LOCATION_CROSSWALK_V1.json",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/docs/jdsa_stage2_20261029/CLAIM_LOCATION_CROSSWALK_V1.json",
+      "bytes": 413286,
+      "sha256": "9569bb13e7b45774d226e5a81f68a20fed62d66d1c830f8092ab90f44e338c2c",
+      "status": "PASS"
+    },
+    {
+      "path": "docs/jdsa_stage2_20261029/CLAIM_LOCATION_CROSSWALK_V1.md",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/docs/jdsa_stage2_20261029/CLAIM_LOCATION_CROSSWALK_V1.md",
+      "bytes": 3494,
+      "sha256": "0f2566573bacad5d86692933ed77550fdd44c70bb27b8ba15272d6be382a20a6",
+      "status": "PASS"
+    },
+    {
+      "path": "docs/jdsa_stage2_20261029/COMPILATION_AND_VALIDATION_REPORT.md",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/docs/jdsa_stage2_20261029/COMPILATION_AND_VALIDATION_REPORT.md",
+      "bytes": 4630,
+      "sha256": "52cbc9ac6742d0e434ed13f89197fcc60d4dbf6a19403bee6c3d9bf55ea3fd6b",
+      "status": "PASS"
+    },
+    {
+      "path": "docs/jdsa_stage2_20261029/COMPILATION_RECEIPT.json",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/docs/jdsa_stage2_20261029/COMPILATION_RECEIPT.json",
+      "bytes": 1898,
+      "sha256": "1703bfebfcb821bc994404dea15266f09a0186818775de7e96f047b166fe2bf3",
+      "status": "PASS"
+    },
+    {
+      "path": "docs/jdsa_stage2_20261029/DERIVED_DIAGNOSTICS.json",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/docs/jdsa_stage2_20261029/DERIVED_DIAGNOSTICS.json",
+      "bytes": 147036,
+      "sha256": "e63222f8f04b853eec14836862ab229ce213fc82681aa080c5964ded90e42b3b",
+      "status": "PASS"
+    },
+    {
+      "path": "docs/jdsa_stage2_20261029/FROZEN_REANALYSIS_VERIFICATION.json",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/docs/jdsa_stage2_20261029/FROZEN_REANALYSIS_VERIFICATION.json",
+      "bytes": 1431318,
+      "sha256": "1bacf16801ae0a3ab10e175a8f41965c6318a2b43d33abee1d66717d2a93350b",
+      "status": "PASS"
+    },
+    {
+      "path": "docs/jdsa_stage2_20261029/LITERATURE_AND_JOURNAL_CHECKS.md",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/docs/jdsa_stage2_20261029/LITERATURE_AND_JOURNAL_CHECKS.md",
+      "bytes": 2570,
+      "sha256": "7042996c8cb561d362e6135fa559a5a2c8f130cc63f9ad637f5610f2af88f995",
+      "status": "PASS"
+    },
+    {
+      "path": "docs/jdsa_stage2_20261029/MANUSCRIPT_ARTIFACT_MANIFEST.json",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/docs/jdsa_stage2_20261029/MANUSCRIPT_ARTIFACT_MANIFEST.json",
+      "bytes": 5417,
+      "sha256": "5c26d796cdccec47c0895d2fa7b5e0fcc1c676211ce3cc9fe77ef2f4573d1b24",
+      "status": "PASS"
+    },
+    {
+      "path": "docs/jdsa_stage2_20261029/NARRATIVE_COUNTS.json",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/docs/jdsa_stage2_20261029/NARRATIVE_COUNTS.json",
+      "bytes": 255,
+      "sha256": "26cf7471add7f9d3a092b6ee4a4fae9461a7ae67f193824ca686450cbcc5c9b5",
+      "status": "PASS"
+    },
+    {
+      "path": "docs/jdsa_stage2_20261029/NUMERICAL_CLAIM_CONSISTENCY.json",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/docs/jdsa_stage2_20261029/NUMERICAL_CLAIM_CONSISTENCY.json",
+      "bytes": 86126,
+      "sha256": "dd6bec766e3b46944198c29fb30a0a66d22fe0598b9128ef4247b07955ba5a82",
+      "status": "PASS"
+    },
+    {
+      "path": "docs/jdsa_stage2_20261029/NUMERICAL_CLAIM_CONSISTENCY_REPORT.md",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/docs/jdsa_stage2_20261029/NUMERICAL_CLAIM_CONSISTENCY_REPORT.md",
+      "bytes": 4643,
+      "sha256": "671ec42871cb1a652ecc9af611a371a1ac2c83b071e4d86f490afce2af81ccc4",
+      "status": "PASS"
+    },
+    {
+      "path": "docs/jdsa_stage2_20261029/PACKAGE_CHECKS.json",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/docs/jdsa_stage2_20261029/PACKAGE_CHECKS.json",
+      "bytes": 3756,
+      "sha256": "16d0f02f55fcd638901ec8d4f417881e83549ecb54f919b4df2ba3662353fda5",
+      "status": "PASS"
+    },
+    {
+      "path": "docs/jdsa_stage2_20261029/PDF_GEOMETRY_CHECKS.json",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/docs/jdsa_stage2_20261029/PDF_GEOMETRY_CHECKS.json",
+      "bytes": 415,
+      "sha256": "710329ad7d260e8534bd756d740ed8fe17c1f8106db7f0381d292bdddccb7371",
+      "status": "PASS"
+    },
+    {
+      "path": "docs/jdsa_stage2_20261029/REDUNDANCY_REMOVAL_REPORT.md",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/docs/jdsa_stage2_20261029/REDUNDANCY_REMOVAL_REPORT.md",
+      "bytes": 2543,
+      "sha256": "70f195010cc7638516dd948953854efc5db63fcc1c8094d0debf71fee6196166",
+      "status": "PASS"
+    },
+    {
+      "path": "docs/jdsa_stage2_20261029/REMAINING_SCIENTIFIC_WEAKNESSES.md",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/docs/jdsa_stage2_20261029/REMAINING_SCIENTIFIC_WEAKNESSES.md",
+      "bytes": 4385,
+      "sha256": "38cb27f3cf405d820cc9a9d59ff7e73879b180b90b63308211c614baed0c436a",
+      "status": "PASS"
+    },
+    {
+      "path": "docs/jdsa_stage2_20261029/SCIENTIFIC_RESTRUCTURING_REPORT.md",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/docs/jdsa_stage2_20261029/SCIENTIFIC_RESTRUCTURING_REPORT.md",
+      "bytes": 6356,
+      "sha256": "fcd869660abd601887fc7db144b2e32a1f2827c97d639fee164ff89d607cab45",
+      "status": "PASS"
+    },
+    {
+      "path": "docs/jdsa_stage2_20261029/URL_CHECKS.json",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/docs/jdsa_stage2_20261029/URL_CHECKS.json",
+      "bytes": 14677,
+      "sha256": "9e64577e792ea4894b4fd5da5a44658a58113c1411d94a3d8f4c063382688dfe",
+      "status": "PASS"
+    },
+    {
+      "path": "docs/jdsa_stage2_20261029/build_crosswalk.py",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/docs/jdsa_stage2_20261029/build_crosswalk.py",
+      "bytes": 9589,
+      "sha256": "c8771d4496ea6b6110943253027245312192a37f8c9326052df084ef09ebfab2",
+      "status": "PASS"
+    },
+    {
+      "path": "docs/jdsa_stage2_20261029/derive_ready_conditionals.py",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/docs/jdsa_stage2_20261029/derive_ready_conditionals.py",
+      "bytes": 5264,
+      "sha256": "ec3c08ff6bf6b78e4d0e397e2eec480fe7598d311f3a3adfa10cbc7e84812eed",
+      "status": "PASS"
+    },
+    {
+      "path": "docs/jdsa_stage2_20261029/measure_narrative.py",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/docs/jdsa_stage2_20261029/measure_narrative.py",
+      "bytes": 1654,
+      "sha256": "2a2662f1bc1821f7cfb1dfa4f6b63d78e1a4e2d0587f7fa8d4e2120f70f7792f",
+      "status": "PASS"
+    },
+    {
+      "path": "docs/jdsa_stage2_20261029/validate_stage2.py",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/docs/jdsa_stage2_20261029/validate_stage2.py",
+      "bytes": 6876,
+      "sha256": "b4639214514cb6b52fd4ac19952752b48969865d3e20b674485b8a5c1e06ffa1",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/.gitignore",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/.gitignore",
+      "bytes": 73,
+      "sha256": "8b6e55052b8f1ddecadd4eae07851508a2fbc82193f87c3e7a912521bc9648c3",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/Fig1.pdf",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/Fig1.pdf",
+      "bytes": 51158,
+      "sha256": "59cf528cc5ab6b0b2023c9c0b86fdd9ddcd4e901911ef300de0e2e9d201a46f8",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/Fig1.tex",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/Fig1.tex",
+      "bytes": 150,
+      "sha256": "ed5f89a843169fe14eb294150210a744f5346bd5497302eb5c28cd8a0061e023",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/README.md",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/README.md",
+      "bytes": 2244,
+      "sha256": "39ad182c2d8ab6558f0a861a99495c6f8145eacf111996a439f8752053bbe3f2",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+      "bytes": 442951,
+      "sha256": "ccfb7f861fa8cef8de2872436b6a6472b517c67cef2051e582eb437c18b8a13e",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf",
+      "bytes": 426796,
+      "sha256": "051f365eb4cf86b3194525792ed3f8571dee5c4c3902a7d3ce9033a679dddc28",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/additional_evidence.tex",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/additional_evidence.tex",
+      "bytes": 15122,
+      "sha256": "54781b16d878225ccdd3f547eca89106ae158fc54940817ce4560b2f74752520",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/build.sh",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/build.sh",
+      "bytes": 1579,
+      "sha256": "1952327b7bbb5e7586ff354005618a8682a090f0c8a1d94c3c0a03d7cf0454f9",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/closed_audits.tex",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/closed_audits.tex",
+      "bytes": 2564,
+      "sha256": "83feab4b81fc3ee1373b6c8c26dbfa6f258c08cb3fb79c65d1db57d4a8e1254c",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/common18_overview.tex",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/common18_overview.tex",
+      "bytes": 1684,
+      "sha256": "223259f972c61f4d93acf2be409dd7a1868bae6ef8eb702cf27463c0d7582400",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/d1_contrasts.tex",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/d1_contrasts.tex",
+      "bytes": 4926,
+      "sha256": "82393866f7134b601c2f4fe3221ef283996eb8bb38a4132d80f3a2006e6fc8f1",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/grounding_diagnostics.tex",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/grounding_diagnostics.tex",
+      "bytes": 3917,
+      "sha256": "eda5f8740c64e59e7d223cdbf267503ce0021c5b6736c61137560f048e806645",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/llm_evidence.tex",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/llm_evidence.tex",
+      "bytes": 8715,
+      "sha256": "ccb64152063a5ff7f9116a6162fcd0b2ca3d8654daf3ad978a65d36c9ce0b02f",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/main.tex",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/main.tex",
+      "bytes": 59417,
+      "sha256": "1191c20c6d169ce01e948073e1cb59143ab29174e2593af44aeeeebfcfa9fbb6",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/orcidlink.sty",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/orcidlink.sty",
+      "bytes": 2483,
+      "sha256": "f1a6b71cdd115d8024969da302c63c93c937f6de0d783657f96e92ccfed4aa69",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/pipeline_figure.tex",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/pipeline_figure.tex",
+      "bytes": 1088,
+      "sha256": "8693933108ff023468c019cee84b840702c8c7b7292a5a00284fdad23bddfb27",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/preserved_results_details.tex",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/preserved_results_details.tex",
+      "bytes": 10033,
+      "sha256": "082884e917f678481970ed4abacc4b67ba3d7b995922557869e37a5f3f8102d4",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/ready_conditioned_rows.tex",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/ready_conditioned_rows.tex",
+      "bytes": 173,
+      "sha256": "73183524b2876899f50c0cfa43523ff3284e4d8ed9d85a7cc617c0fe6df00082",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/reference_conventions.tex",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/reference_conventions.tex",
+      "bytes": 4715,
+      "sha256": "9bbb6d0ba4e7a72b23629c8dceb50bb640afb4f4c332731bd80dcefd2f50c7af",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/references.bib",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/references.bib",
+      "bytes": 23968,
+      "sha256": "6632d047b5c4933c4f55f09658c17ee98af921b86fa0f4337ab46732737a9b70",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/related_context.tex",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/related_context.tex",
+      "bytes": 2325,
+      "sha256": "ab5e1276599f493877752e53231e920a92c7222352b8e8d1dd2523e0b9f04d0e",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/relationship_evidence.tex",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/relationship_evidence.tex",
+      "bytes": 1349,
+      "sha256": "d3f361cb002332cd7e3bde582080ba30a257055a19e419dc3b9e2bf5950ce5de",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/relationship_supplement.tex",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/relationship_supplement.tex",
+      "bytes": 10925,
+      "sha256": "648fe27e7c55daa95c413494e81dd9414a860b2934b33967b9a23a4d64226034",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/reproduction_map.tex",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/reproduction_map.tex",
+      "bytes": 8772,
+      "sha256": "5d548fcb0f5f903be5e2ad8decc8d2cec2c872b040859db8382971a32a3e8b06",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/sn-basic.bst",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/sn-basic.bst",
+      "bytes": 35515,
+      "sha256": "4b368414cc5593169907933b417aacfdb0ce905866a39bdf55d21aad65e9d46c",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/sn-jnl.cls",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/sn-jnl.cls",
+      "bytes": 55857,
+      "sha256": "36d0c3273a59d48dc6a9c7b080dfa1ec50dc10229d8751568d1f2e490ffa5ecc",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/supervision_diagnostics.tex",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/supervision_diagnostics.tex",
+      "bytes": 4503,
+      "sha256": "0dd0714082f0aa2d318bb780859976cfe3d3adc018727f992e140a222ce6ea3e",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/supplement.tex",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/supplement.tex",
+      "bytes": 12880,
+      "sha256": "4eb4795e32ccab6afe991654646d0a81c2d9d6146211010feeebedc0407c53ac",
+      "status": "PASS"
+    },
+    {
+      "path": "manuscript/jdsa-stage2/supporting_core.tex",
+      "url": "https://raw.githubusercontent.com/SoroushVahidi/combinatorial-opt-agent/03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b/manuscript/jdsa-stage2/supporting_core.tex",
+      "bytes": 4319,
+      "sha256": "99604f333cf24e1cf27487d14331829a353671a339506755d2951077f1763a8d",
+      "status": "PASS"
+    }
+  ],
+  "remote_refs": {
+    "refs/heads/main": "d3071ba31eaf7babdf1e7fe234d8527191ed93de",
+    "refs/heads/manuscript/jdsa-stage2-scientific-restructure-20261029": "03a94d3e4cb9a38d34fc8ce0cc658d39edfdf11b",
+    "refs/heads/reproducibility/jdsa-evidence-v2-20261029": "3296f3bd20128077cd94a4eac82f0b5fe73e2946",
+    "refs/tags/jdsa-evidence-v2.0.0": "209fa982c0a0e2087bd021cbc7a9f57d94256c8f"
+  },
+  "hugging_face_frozen_manifest": {
+    "url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/resolve/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0/release_manifest.json",
+    "revision": "f94012872211ab6a828147bb138fbe8ab695b982",
+    "sha256": "ac20ad695b7ceea866890376ef5e08751921bbcb520c017624727524e79b8b38",
+    "status": "PASS"
+  },
+  "subsequent_receipt_commit": "Publication receipt and finalized URL status are committed after this artifact commit; manuscript/evidence bytes do not change."
+}

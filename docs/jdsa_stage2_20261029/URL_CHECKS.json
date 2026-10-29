@@ -280,8 +280,10 @@
     },
     {
       "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/manuscript/jdsa-stage2-scientific-restructure-20261029/manuscript/jdsa-stage2",
-      "status": "PENDING_BRANCH_PUSH",
-      "reason": "New versioned source link will be checked after push"
+      "status": "PASS",
+      "reason": "New versioned source link will be checked after push",
+      "http_status": 200,
+      "publication_rechecked_at_utc": "2026-10-29T18:46:55.388122+00:00"
     },
     {
       "url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0",
