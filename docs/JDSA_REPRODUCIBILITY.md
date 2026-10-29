@@ -31,7 +31,7 @@ This table is derived from the authenticated [claims index](https://github.com/S
 [release manifest](https://github.com/SoroushVahidi/combinatorial-opt-agent/blob/209fa982c0a0e2087bd021cbc7a9f57d94256c8f/reproducibility/jdsa-v2.0.0/release_manifest.json). It is navigation, not a new claim
 verification. The full index retains all 47 investigation groups, including secondary
 studies. Passage locations there reflect the evidence release's manuscript stage;
-use the final manuscript release's crosswalk for final section/object locations.
+use the [final manuscript crosswalk](https://github.com/SoroushVahidi/combinatorial-opt-agent/blob/00adeca9d3d761da7f8ee2e5dcee7fc8d535f2bc/docs/jdsa_manuscript_v1_20261029/CLAIM_LOCATION_CROSSWALK_V1.md) for final section/object locations.
 
 | Investigation | Manifest-backed artifact or classified source mapping | Evidence limitation |
 |---|---|---|

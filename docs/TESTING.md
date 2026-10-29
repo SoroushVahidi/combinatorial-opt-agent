@@ -63,3 +63,14 @@ remain unchanged. No workflow was dispatched during this maintenance task.
 
 These trigger/permission changes follow the official
 [GitHub workflow syntax](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax).
+
+## Known historical regression failures
+
+Two existing dataset-backed aggregate tests fail when explicitly enabled with
+`PYTHONHASHSEED=0`: `test_production_candidate_regression` and
+`test_full_diagnostic_preserves_current_baseline`. Query 3 reproduced the same
+failures on the Query 2 baseline. The observed readiness values differ from the
+old expectations; the tests and scientific implementation were not numerically
+rewritten to hide this discrepancy. Both tests now also require
+`--run-research-data`. This capability marker is not a claim that they pass.
+See the [Query 3 validation report](repository_cleanup_q3_20261029/07_VALIDATION_RESULTS.md).

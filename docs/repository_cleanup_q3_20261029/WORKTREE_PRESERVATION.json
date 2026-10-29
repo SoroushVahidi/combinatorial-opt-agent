@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "preexisting_worktrees_preserved": 32,
+  "dirty_worktrees_preserved": 13,
+  "ignored_file_observations_preserved": 948,
+  "comparison": "HEAD/branch, status paths, changed/untracked hashes, ignored paths and sizes identical; ignored contents not exhaustively hashed",
+  "remote_refs_unchanged_before_push": true,
+  "primary_checkout_untouched": true
+}
