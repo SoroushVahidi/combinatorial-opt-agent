@@ -8,22 +8,52 @@ This is a pre-submission author-review manuscript, not an accepted journal artic
 
 - [Article PDF](Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf)
 - [Supplement: Online Resource 1](ESM_1_Retrieval_Assisted_Scalar_Grounding_Supplement.pdf)
-- [Complete editable submission package](Retrieval_Assisted_Scalar_Grounding_JDSA_Submission_Source.zip)
+- [Portal-ready main-manuscript LaTeX ZIP](Retrieval_Assisted_Scalar_Grounding_JDSA_Manuscript_LaTeX_Submission.zip)
+- [Portal ZIP file manifest and validation](JDSA_Manuscript_LaTeX_Submission_Manifest.json)
+- [Complete research/source archive (article and supplement)](Retrieval_Assisted_Scalar_Grounding_JDSA_Submission_Source.zip)
 - [SHA-256 checksums](SHA256SUMS.txt)
 - [Versioned manuscript release v1.1.1](https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.1.1)
 - [Canonical repository directory](https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa-stage3)
 
 `main.tex` is the primary article entry point. `supplement.tex` builds the 40-page Online Resource 1. `Fig1.tex` and `pipeline_figure.tex` are editable TikZ figure sources; `Fig1.pdf` is the embedded vector figure, with embedded fonts. The remaining LaTeX inputs, bibliography, generated bibliographies, and class/style files are required source dependencies. Bundled class/style notices and licensing restrictions remain intact.
 
-## Compile and upload
+## Springer Nature JDSA manuscript upload
 
-Install Python 3, pdfLaTeX/BibTeX, and the standard TeX Live packages graphicx, amsmath, amssymb, booktabs, tabularx, multirow, algorithm, algorithmicx, algpseudocode, xurl, microtype, placeins, xr-hyper, hyperref, TikZ/PGF, standalone, and orcidlink (bundled).
+Upload **`Retrieval_Assisted_Scalar_Grounding_JDSA_Manuscript_LaTeX_Submission.zip`** as the portal's **Manuscript file**, selecting **`main.tex`** as the entry point if prompted. The nine-file, 114,396-byte ZIP has a flat layout, following [JDSA's LaTeX source-upload instructions](https://link.springer.com/journal/41060/submission-guidelines). Its SHA-256 is:
 
-Run `KEEP_BUILD=1 sh build.sh` in this directory or an extracted source ZIP. It builds both documents and the figure in a fresh temporary directory, resolves cross-references, rejects serious LaTeX diagnostics, and copies the descriptive PDFs and generated bibliographies back. `KEEP_BUILD=1` retains diagnostic logs; omit it to remove the temporary build directory. Fixed timestamps permit byte-comparison between clean builds with the same toolchain. Python exports the small `main_crossrefs.tex` and `supplement_crossrefs.tex` companion-label dependencies; these allow either document to compile independently when a journal build does not generate the other document's auxiliary file. Fresh paired builds use the current auxiliary labels and refresh these exports.
+```text
+205b2b6f7d27f8040701c34e2d1efc31a29786204f2233aed16df29ecb87e21d
+```
 
-Run `python3 package_source.py` after a successful build to regenerate the ZIP and checksums. The upload package is flat, as required by [JDSA's LaTeX instructions](https://link.springer.com/journal/41060/submission-guidelines). Select `main.tex` as the primary manuscript and upload the descriptive `ESM_1_...pdf` as Online Resource 1. Retain the supplementary editable sources and companion-label definitions. Do not choose `Fig1.tex` or `supplement.tex` as the main article. Keep the article and supplement PDFs together with their original names for companion-document links. Viewer support for such links varies.
+This ZIP contains the unchanged v1.1.1 article source, Figure 1's vector PDF and editable TikZ fragment, bibliography database and generated bibliography, Springer class/bibliography style, ORCID style, and static supplementary cross-reference definitions. All tables and Algorithm 1 are editable within `main.tex`. Only `main.tex` declares a document; `pipeline_figure.tex` is an editable figure fragment, not another manuscript entry point. No article PDF, supplementary PDF, supplementary document sources, temporary build outputs, datasets, or project documentation are included. `supplement_crossrefs.tex` is the exact companion-label dependency needed for independent article compilation, not a supplementary manuscript.
 
-The ZIP includes the matching PDF pair, vector figure, editable sources, dependencies, README, and build/package tools. It excludes temporary `.aux`/`.log` files, generic `main.pdf`, research datasets, caches, credentials, private records, and audit correspondence. Author contributions and competing interests must also be entered in the journal submission interface; the manuscript declarations are not a substitute for those fields.
+Upload **`ESM_1_Retrieval_Assisted_Scalar_Grounding_Supplement.pdf`** separately as supplementary material / Online Resource 1. This unchanged 40-page PDF is not needed to compile the main manuscript. Keep it under its original filename when viewing companion-document links; viewer support varies. The canonical 17-page article PDF remains available separately if the portal requests a compiled PDF in addition to sources. Author contributions and competing interests must also be entered in the journal submission interface.
+
+The existing **`Retrieval_Assisted_Scalar_Grounding_JDSA_Submission_Source.zip`** is the complete research/source archive for release v1.1.1. It includes both documents, their PDFs and editable sources, figure sources, README, and build/package tools. It is preserved unchanged and is distinct from the new manuscript-only portal upload ZIP. No new manuscript version or release is created by this packaging update.
+
+### Verify the manuscript-only ZIP
+
+Extract it into a new empty directory and run the following there, using installed pdfLaTeX/BibTeX and standard TeX Live packages:
+
+```sh
+export SOURCE_DATE_EPOCH=1793313920 FORCE_SOURCE_DATE=1
+export TEXINPUTS=.: BIBINPUTS=.: BSTINPUTS=.:
+pdflatex -no-shell-escape -recorder -interaction=nonstopmode -halt-on-error main.tex
+bibtex main
+pdflatex -no-shell-escape -recorder -interaction=nonstopmode -halt-on-error main.tex
+pdflatex -no-shell-escape -recorder -interaction=nonstopmode -halt-on-error main.tex
+pdflatex -no-shell-escape -recorder -interaction=nonstopmode -halt-on-error main.tex
+```
+
+No network downloads or shell escape are needed. Clean-extraction validation with pdfTeX 1.40.25 (TeX Live 2023/Debian) reproduced the canonical 17-page v1.1.1 PDF byte for byte, including all 140 numerical table cells and 15 bold highlights. The final LaTeX log had no warnings, unresolved references, missing citations, or overfull boxes; 57 inherited underfull notices do not affect content. Every rendered page was reviewed. The [manifest](JDSA_Manuscript_LaTeX_Submission_Manifest.json) records each file's size and checksum, compilation commands, dependency checks, and validation results. The temporary build's `main.pdf` is not part of the upload ZIP or committed deliverables.
+
+### Rebuild the complete article and supplement
+
+For the complete research/source archive, install Python 3, pdfLaTeX/BibTeX, and the standard TeX Live packages graphicx, amsmath, amssymb, booktabs, tabularx, multirow, algorithm, algorithmicx, algpseudocode, xurl, microtype, placeins, xr-hyper, hyperref, TikZ/PGF, standalone, and orcidlink (bundled).
+
+Run `KEEP_BUILD=1 sh build.sh` in this repository directory or the extracted **complete** source archive. It builds both documents and the figure in a fresh temporary directory, resolves cross-references, rejects serious LaTeX diagnostics, and copies the descriptive PDFs and generated bibliographies back. `KEEP_BUILD=1` retains diagnostic logs; omit it to remove the temporary build directory. Fixed timestamps permit byte-comparison between clean builds with the same toolchain. Python exports `main_crossrefs.tex` and `supplement_crossrefs.tex` to support independent compilation. Fresh paired builds use the current auxiliary labels and refresh these exports.
+
+`package_source.py` packages the complete research/source archive, not the manuscript-only portal ZIP. It rewrites `SHA256SUMS.txt` for its own outputs; preserve the portal ZIP and manifest checksum entries if using it for a later revision. Existing versioned releases are immutable.
 
 ## Public evidence and preservation
 

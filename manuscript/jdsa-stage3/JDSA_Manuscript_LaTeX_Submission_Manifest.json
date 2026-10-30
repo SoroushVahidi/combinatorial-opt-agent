@@ -1,0 +1,211 @@
+{
+  "package": "Retrieval_Assisted_Scalar_Grounding_JDSA_Manuscript_LaTeX_Submission.zip",
+  "purpose": "Main-manuscript-only LaTeX ZIP for the Springer Nature JDSA Manuscript file upload.",
+  "validated_on": "2026-10-29",
+  "canonical_main_baseline": "09ba23247bd9b027281f5e29c40eeb5b8f700365",
+  "source_release": "jdsa-manuscript-v1.1.1",
+  "source_release_archive_url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.1.1/Retrieval_Assisted_Scalar_Grounding_JDSA_Submission_Source.zip",
+  "source_release_archive_sha256": "50b73ec7dde32d406b7eb6f8c722173fa09c2301612bbbca0b677bc8b98dc296",
+  "source_release_anonymous_download_matches_repository": true,
+  "zip_sha256": "205b2b6f7d27f8040701c34e2d1efc31a29786204f2233aed16df29ecb87e21d",
+  "zip_size_bytes": 114396,
+  "uncompressed_size_bytes": 262234,
+  "file_count": 9,
+  "flat_layout": true,
+  "zip_crc_test": "PASS: Python zipfile.testzip and ordinary unzip -t",
+  "main_entry_point": "main.tex",
+  "only_documentclass_entry": "main.tex",
+  "self_contained_for_main_compilation_with_standard_installed_TeX_packages": true,
+  "files": [
+    {
+      "name": "Fig1.pdf",
+      "size_bytes": 51119,
+      "sha256": "dd84c4f5fb14bb79ab75401beb342fe01ce109f2350f76a48cb83abc448b164d",
+      "role": "Embedded vector graphic for Figure 1; this is a figure asset, not a compiled manuscript."
+    },
+    {
+      "name": "main.bbl",
+      "size_bytes": 10802,
+      "sha256": "2b758c29c837ad8cde10921f85e629fa723c328d167565131f0d92558e613c48",
+      "role": "Validated generated bibliography, retained as an essential bibliography dependency; also regenerated successfully by BibTeX."
+    },
+    {
+      "name": "main.tex",
+      "size_bytes": 65261,
+      "sha256": "bf4e55b03b5eb47febee21ea66754b3cb1aa34006cc23a9731f3bc22a5ea5f2d",
+      "role": "Sole main manuscript entry point; contains all six tables and Algorithm 1."
+    },
+    {
+      "name": "orcidlink.sty",
+      "size_bytes": 2483,
+      "sha256": "f1a6b71cdd115d8024969da302c63c93c937f6de0d783657f96e92ccfed4aa69",
+      "role": "Bundled ORCID link style dependency."
+    },
+    {
+      "name": "pipeline_figure.tex",
+      "size_bytes": 1010,
+      "sha256": "9c3356832e20f1dba95ccc29ea7f8998b3563ad97bf8fba885a5989b9c7e57e0",
+      "role": "Editable TikZ source for Figure 1; an input fragment, not an independent document entry point. The manuscript embeds Fig1.pdf."
+    },
+    {
+      "name": "references.bib",
+      "size_bytes": 24028,
+      "sha256": "9c85adcaa0c3921a7bd3610145b4028b9d7e083adea125286eb4bc3d092992d7",
+      "role": "Editable bibliography database."
+    },
+    {
+      "name": "sn-basic.bst",
+      "size_bytes": 35515,
+      "sha256": "4b368414cc5593169907933b417aacfdb0ce905866a39bdf55d21aad65e9d46c",
+      "role": "Springer Nature numbered bibliography style selected by the class options."
+    },
+    {
+      "name": "sn-jnl.cls",
+      "size_bytes": 55857,
+      "sha256": "36d0c3273a59d48dc6a9c7b080dfa1ec50dc10229d8751568d1f2e490ffa5ecc",
+      "role": "Springer Nature journal class."
+    },
+    {
+      "name": "supplement_crossrefs.tex",
+      "size_bytes": 16159,
+      "sha256": "633cdb136d9394db6931845239cbf4411765a3d39071c5784b474a42ff79c42b",
+      "role": "Static companion-label definitions required for independent main-manuscript compilation; supplementary document sources and auxiliary files are unnecessary."
+    }
+  ],
+  "exclusions": {
+    "compiled_manuscript_pdf": true,
+    "supplementary_pdf": true,
+    "supplement_tex_and_supplementary_only_inputs": true,
+    "temporary_auxiliary_files_logs_caches": true,
+    "datasets_private_records_credentials_git_metadata": true,
+    "unnecessary_documentation_and_build_tools": true,
+    "static_supplement_label_dependency_included": "supplement_crossrefs.tex"
+  },
+  "separate_supplement": {
+    "filename": "ESM_1_Retrieval_Assisted_Scalar_Grounding_Supplement.pdf",
+    "sha256": "804285149f2f1e5a9db30d4a43152fdb8364ae114e3872d3c2c569d24ac17bac",
+    "pages": 40,
+    "modified": false,
+    "upload_role": "Separate supplementary material / Online Resource 1. It is not required to compile main.tex. Companion PDF navigation requires the separately available PDF with this filename and a supporting viewer."
+  },
+  "compilation": {
+    "procedure": "Extract this ZIP into a new empty directory outside the repository, change into that directory, set the environment below, and execute the commands in order. No source files from the repository or complete source archive are required.",
+    "environment": {
+      "SOURCE_DATE_EPOCH": "1793313920",
+      "FORCE_SOURCE_DATE": "1",
+      "TEXINPUTS": ".:",
+      "BIBINPUTS": ".:",
+      "BSTINPUTS": ".:"
+    },
+    "commands": [
+      "pdflatex -no-shell-escape -recorder -interaction=nonstopmode -halt-on-error main.tex",
+      "bibtex main",
+      "pdflatex -no-shell-escape -recorder -interaction=nonstopmode -halt-on-error main.tex",
+      "pdflatex -no-shell-escape -recorder -interaction=nonstopmode -halt-on-error main.tex",
+      "pdflatex -no-shell-escape -recorder -interaction=nonstopmode -halt-on-error main.tex"
+    ],
+    "engine": "pdfTeX 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian)",
+    "bibtex": "BibTeX 0.99d (TeX Live 2023/Debian)",
+    "network_downloads_required": false,
+    "shell_escape_enabled": false,
+    "recorder_input_audit": {
+      "unique_input_paths": 241,
+      "outside_extraction_only_standard_TeX_resources": true,
+      "system_roots": [
+        "/etc/texmf/",
+        "/usr/share/texlive/",
+        "/usr/share/texmf/",
+        "/var/lib/texmf/"
+      ],
+      "bibtex_inputs": "references.bib and sn-basic.bst, both bundled"
+    },
+    "output": "main.pdf in the temporary build directory only; excluded from the ZIP and repository update.",
+    "reproducibility": "With the recorded toolchain and timestamps, the generated PDF is byte-identical to the canonical v1.1.1 manuscript, including metadata. Other TeX distributions may change typography or metadata."
+  },
+  "validation": {
+    "status": "PASS",
+    "checks_passed": 397,
+    "pdf_pages": 17,
+    "pdf_sha256": "c09ec5e43b8b4423a79119dd5b259cb7acb881cf09a839479e11c946417afaa9",
+    "byte_identical_to_v1_1_1": true,
+    "tables": [
+      {
+        "table": 1,
+        "page": 9,
+        "numeric_cells": 20,
+        "bold_cells": 4
+      },
+      {
+        "table": 2,
+        "page": 10,
+        "numeric_cells": 20,
+        "bold_cells": 5
+      },
+      {
+        "table": 3,
+        "page": 10,
+        "numeric_cells": 16,
+        "bold_cells": 0
+      },
+      {
+        "table": 4,
+        "page": 11,
+        "numeric_cells": 24,
+        "bold_cells": 0
+      },
+      {
+        "table": 5,
+        "page": 11,
+        "numeric_cells": 36,
+        "bold_cells": 6
+      },
+      {
+        "table": 6,
+        "page": 12,
+        "numeric_cells": 24,
+        "bold_cells": 0
+      }
+    ],
+    "numeric_cells": 140,
+    "bold_highlights": 15,
+    "bibliography_entries": 28,
+    "latex_warnings": 0,
+    "overfull_boxes": 0,
+    "underfull_notices": 57,
+    "links_by_kind": {
+      "2": 76,
+      "4": 73,
+      "3": 20
+    }
+  },
+  "visual_review": {
+    "pages_inspected": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ],
+    "result": "PASS: all six tables, Figure 1, Algorithm 1 and bibliography render without observed clipping, overlap or missing content; layout is byte-identical to v1.1.1."
+  },
+  "preservation": {
+    "every_packaged_file_byte_identical_to_public_v1_1_1_archive": true,
+    "scientific_content_equations_tables_algorithm_citations_urls_and_PDF_annotations_identical": true,
+    "complete_source_archive_preserved": true,
+    "canonical_manuscript_and_supplement_sources_and_PDFs_unchanged": true
+  },
+  "portal_guidance_url": "https://link.springer.com/journal/41060/submission-guidelines",
+  "portal_check": "Flat source layout and one main entry point validated locally. No portal upload or journal submission performed. Supply the canonical compiled article PDF separately if requested by the portal; upload the supplement separately."
+}
