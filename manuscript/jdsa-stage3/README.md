@@ -16,6 +16,8 @@ Phase 1 presentation revision (2026-10-29): branch `manuscript/jdsa-presentation
 
 Phase 2 editorial revision (2026-10-29): continues the same presentation-polish branch from Phase 1 commit `ae9eb9c14c53c687dafe20d9d774a419d198424d`. The abstract and main-text prose are polished, with every substantive rewrite logged in `docs/jdsa_presentation_polish_phase2_20261029/EDITORIAL_LOG.json`. Scientific definitions, results, research questions, tables, captions, bibliography, public destinations, acknowledgments and declarations remain unchanged. Phase 3 presentation work and Phase 4 integration are pending.
 
+Phase 3 presentation revision (2026-10-29): continues from Phase 2 commit `70ff74c79628bdf5df2ae7e7375a0a0c3c6be240`. Tables use consistent descriptive highlighting, clearer captions and notes, and aligned numerical columns. Figure 1 has uniform node widths and improved spacing; Algorithm 1 has a concise caption, with its existing numbering and indentation retained. Every numerical table entry, algorithm operation, equation, and surrounding scientific paragraph is preserved. Online Resource 1 remains byte-identical to Phase 2. The numerical and rendered-font checks, change inventory, and independent source-package build results are recorded in `docs/jdsa_presentation_polish_phase3_20261029/`. Phase 4 review and integration remain pending.
+
 ## Clean build and source upload
 
 Install pdfLaTeX/BibTeX and standard TeX Live packages: graphicx, amsmath, amssymb, booktabs, tabularx, multirow, algorithm, algorithmicx, algpseudocode, xurl, microtype, placeins, xr-hyper, hyperref, TikZ/PGF and standalone.

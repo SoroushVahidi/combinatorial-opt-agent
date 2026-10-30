@@ -1,0 +1,162 @@
+JDSA PRESENTATION POLISH — PHASE 3 ONLY
+Date: 2026-10-29
+
+BASELINE AND SCOPE
+Starting commit: 70ff74c79628bdf5df2ae7e7375a0a0c3c6be240 (required Phase 2 tip).
+Phase 1 ancestor: ae9eb9c14c53c687dafe20d9d774a419d198424d.
+Branch: manuscript/jdsa-presentation-polish-20261029.
+Worktree: /home/soroush/combinatorial-opt-agent-jdsa-presentation-polish.
+Canonical source: manuscript/jdsa-stage3/main.tex.
+The worktree was clean at the start; the existing branch and remote tip matched
+Phase 2. No branch was recreated. The complete main manuscript and the rendered
+Phase 2 float pages were read before editing. Main, other worktrees, historical
+releases, evidence, and unrelated untracked work in the original checkout were
+preserved. No experiments, inference, or regeneration of predictions occurred.
+The final commit SHA is supplied in the delivery message; it is also obtainable
+with git log -1 --format=%H -- docs/jdsa_presentation_polish_phase3_20261029/REPORT.txt.
+
+EXACT FILE INVENTORY
+manuscript/jdsa-stage3/main.tex
+manuscript/jdsa-stage3/pipeline_figure.tex
+manuscript/jdsa-stage3/Fig1.pdf
+manuscript/jdsa-stage3/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf
+manuscript/jdsa-stage3/README.md
+manuscript/jdsa-stage3/JDSA_Stage3_Submission_Source.zip
+manuscript/jdsa-stage3/SHA256SUMS.txt
+docs/jdsa_presentation_polish_phase3_20261029/REPORT.txt
+docs/jdsa_presentation_polish_phase3_20261029/CHANGES.json
+docs/jdsa_presentation_polish_phase3_20261029/VALIDATION.json
+docs/jdsa_presentation_polish_phase3_20261029/verify_phase3.py
+
+HIGHLIGHTING POLICY AND TABLE-BY-TABLE DECISIONS
+Tables 1, 2 and 5 mark the largest eligible descriptive value in each numerical
+column. All ties would be bold; there are no ties at these maxima. Captions
+explicitly state that bold does not indicate statistical significance. Table 2
+excludes Oracle-TG. Conditional Exact20 is never described as unconditional
+accuracy or scientific superiority.
+
+Table 1 (page 8): retain all four existing BGE-M3 highlights:
+Orig 0.9456; Noisy 0.9426; Short 0.8157; Avg. 0.9013.
+Right-align the four fixed-precision columns. The shorter caption defines Orig
+and Avg., preserves saved top-1 provenance and 331 queries per variant, and
+retains the uniform random baseline 1/335 approximately 0.0030 over 335 schemas.
+
+Table 2 (page 9): retain all five existing non-oracle highlights:
+Coverage — BGE-M3 + ratio-aware, 0.9154.
+TypeMatch — BGE-M3 + ratio-aware, 0.8946.
+Exact20 — TF-IDF-TG ratio-aware extraction, 0.2614.
+InstReady — BGE-M3 + ratio-aware, 0.8248.
+Strict — BGE-M3 + ratio-aware, 0.8006.
+Oracle-TG has no bold cells. Right-align fixed-precision columns. The caption
+states the comparison rule and conditional-accuracy boundary. Aligned notes
+define TG, extraction, InstReady and Strict; preserve the full 331-query
+population for the four unconditional metrics; retain the ordered Exact20
+query denominators 291, 291, 303 and 320, the exclusion of noncomparable cases,
+the per-query macro-average, and the saved-metrics versus scalar-map boundary.
+
+Table 3 (page 9): no bold numerical cells. The conditional populations differ,
+so a largest-value highlight could suggest an unsupported method ranking.
+Add grouped ordinary-ready and strict-ready headers, consistent percentage
+headers and row spacing. The caption defines I, S and F^G, explains fractions,
+and retains the common 331-query frame and method-dependent denominators.
+All eight fractions and eight percentages remain exact, including two-decimal
+percentage precision and 7/265 = 2.64%.
+
+Table 4 (page 10): no bold numerical cells. Ordered failure categories and a
+success category are not uniformly ranked performance columns. Retain category
+order and all counts; separate the total row with a rule. Replace the awkward
+label 'Value inaccurate' with 'Stored-value disagreement', matching the existing
+Phase 2 explanation. The caption retains population, extraction comparison and
+descriptive BGE boundary. Notes retain full coverage/type gates c_i=t_i=1,
+inclusive tolerance, and the distinction from complete model correctness.
+Every column still sums to 331.
+
+Table 5 (page 11): retain the two readiness highlights and add the other four:
+Coverage — Typed greedy, 0.8886.
+TypeMatch — Search-structured grounding, 0.8795.
+Exact20 — Search-structured grounding, 0.6397.
+InstReady — Typed greedy, 0.8006.
+Strict — Typed greedy, 0.7704.
+Complete F^G success — Search-structured grounding, the entire 46/331 entry.
+Right-align numerical columns. The caption explicitly disclaims statistical
+significance and notes multiple component changes and differing conditional
+Exact20 denominators. Notes preserve the all-key, schema, type and tolerance
+requirements for F^G, denominator 331, the 291/285 conditional denominators,
+noncomparable exclusions, candidate/context/scoring/abstention/decoding changes,
+the absence of isolated global-search attribution, and enriched extractors.
+
+Table 6 (page 11): no bold numerical cells. Each pair compares greedy and exact
+assignment within a pool/scorer configuration; these scientifically distinct
+configurations do not warrant an imposed single-best convention. Fixed-width
+slot-count fields align arrows; row spacing and a small gap distinguish the
+Typed and Rich blocks. All 24 pairs and their arrow direction remain unchanged.
+The caption retains 49 queries, 277 slots, exact maximum-sum assignment, and the
+separation from historical 331-query procedures. Notes explicitly define E slots,
+T slots, E full and T full, including all-key and type-compatible full success.
+
+FIGURE AND ALGORITHM
+Figure 1 (page 7): uniform 36 mm node text widths, regular spacing, aligned lower
+nodes and an adjusted overall width prevent the previous awkward wrapping of
+'benchmark assistance' and 'no mention-index reuse'. Font family and size are
+consistent. All seven node texts and all six directed dependencies, including
+the dashed gold-key assistance edge, are unchanged. The shorter caption retains
+reference-key fallback, the gold-key intersection, mention-index rather than
+unique-value consumption, and the distinction from the later factorial inventory.
+Algorithm 1 (page 7): shorten the caption to 'Reference-assisted deterministic
+parameter instantiation without mention-index reuse.' Its Require and Ensure
+fields, all 17 numbered lines, decisions, assignments, loop rules, indentation,
+mathematical symbols and line-number formatting remain byte-identical. The
+existing pseudocode layout was already legible and needed no structural change.
+
+PRESERVATION AND VALIDATION
+412 automated preservation, presentation and build checks pass. VALIDATION.json
+records every check and every table row; CHANGES.json retains exact before/after
+float environments and editable figure source.
+- All 140 numerical table cells are identical to Phase 2, including fractions,
+  denominators, decimal precision and all 24 paired-count entries (48 counts).
+- Every numerical cell and its expected font weight is verified in the PDF.
+  All 15 bold values are correct; the entire 46/331 fraction is bold.
+- Every main.tex byte outside the eight float environments is unchanged. This
+  includes Phase 2 prose, all equations, abstract, keywords, scientific results,
+  limitations, author information, declarations and availability statements.
+- The algorithmic body, figure texts and dependency edges are unchanged.
+- Citations, cross-references, labels, external URLs and pinned identifiers have
+  identical source sequences. Bibliographic, supplementary and template sources
+  are unchanged. All 28 main and 23 supplementary bibliography entries are cited
+  and linked.
+- Main PDF: 16 pages before and after. All 16 revised pages were visually inspected,
+  with detailed inspection of pages 7–11 and a magnified standalone Figure 1.
+  No overlapping content, clipped text, orphaned captions, broken symbols, or
+  problematic new float displacement was observed. Floats remain on pages 7–11.
+- Online Resource 1: 38 pages, rebuilt and byte-identical to Phase 2. Its scientific
+  data, text, tables, layout and link annotations are therefore preserved.
+- Final main/supplement logs contain no unresolved references, missing citations,
+  missing characters, multiply defined labels, or overfull boxes. BibTeX is clean.
+- All 197 internal named links and 31 companion-document named links resolve.
+  The 77 main and 51 supplementary external link annotations preserve their
+  destination sets. Printed main URLs/pinned hashes agree with annotations.
+  No new network/public-access audit was performed in this presentation phase.
+- The 31-member flat source ZIP passes CRC and exact-member checks. A separate
+  extraction and clean build produce byte-identical main PDF, ESM_1.pdf, Fig1.pdf,
+  main.bbl and supplement.bbl. SHA256SUMS.txt matches all packaged artifacts.
+- The named manuscript PDF is preserved; no generic main.pdf is committed.
+
+BUILD RECORD
+Primary command: KEEP_BUILD=1 sh manuscript/jdsa-stage3/build.sh
+Primary build directory: /tmp/jdsa-build.oNGras
+Primary log: /tmp/jdsa-presentation-phase3-20261029/final-build.log
+Independent package extraction: /tmp/jdsa-presentation-phase3-20261029/package-check
+Independent output: /tmp/jdsa-presentation-phase3-20261029/independent
+Independent log: /tmp/jdsa-presentation-phase3-20261029/independent-build.log
+Verifier command:
+python3 docs/jdsa_presentation_polish_phase3_20261029/verify_phase3.py /tmp/jdsa-build.oNGras /tmp/jdsa-presentation-phase3-20261029/independent
+Temporary build paths are local verification artifacts, not package dependencies.
+
+REMAINING FOR PHASE 4
+No unresolved Phase 3 presentation defect was found. The main log retains the
+pre-existing hyperref bookmark-level jump warning; it does not break validated
+link destinations. Underfull notices remain 52 in main and 39 in the supplement,
+the same counts as Phase 2. Phase 4 may review those inherited formatting details
+as part of its final consolidated submission audit. Final integration into main
+is reserved for Phase 4. This work does not merge, publish a new release, delete
+historical artifacts, or begin Phase 4.

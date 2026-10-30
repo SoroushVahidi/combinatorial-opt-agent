@@ -1,0 +1,2232 @@
+{
+  "baseline": "70ff74c79628bdf5df2ae7e7375a0a0c3c6be240",
+  "build_directory": "/tmp/jdsa-build.oNGras",
+  "tables": [
+    {
+      "number": 1,
+      "label": "tab:nlp4lp-retrieval-main",
+      "page": 8,
+      "rows": [
+        {
+          "row": "Random",
+          "values": [
+            "0.0030",
+            "0.0030",
+            "0.0030",
+            "0.0030"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "LSA",
+          "values": [
+            "0.8459",
+            "0.8882",
+            "0.7644",
+            "0.8328"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "BM25",
+          "values": [
+            "0.8822",
+            "0.8912",
+            "0.7674",
+            "0.8469"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "TF--IDF",
+          "values": [
+            "0.9094",
+            "0.9033",
+            "0.7795",
+            "0.8640"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "BGE-M3",
+          "values": [
+            "0.9456",
+            "0.9426",
+            "0.8157",
+            "0.9013"
+          ],
+          "bold": [
+            true,
+            true,
+            true,
+            true
+          ]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "label": "tab:nlp4lp-downstream-main",
+      "page": 9,
+      "rows": [
+        {
+          "row": "TF--IDF-TG (baseline extr.)",
+          "values": [
+            "0.8794",
+            "0.8515",
+            "0.2449",
+            "0.7764",
+            "0.7462"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "TF--IDF-TG (ratio-aware extr.)",
+          "values": [
+            "0.8886",
+            "0.8665",
+            "0.2614",
+            "0.8006",
+            "0.7704"
+          ],
+          "bold": [
+            false,
+            false,
+            true,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "BGE-M3 + ratio-aware",
+          "values": [
+            "0.9154",
+            "0.8946",
+            "0.2436",
+            "0.8248",
+            "0.8006"
+          ],
+          "bold": [
+            true,
+            true,
+            false,
+            true,
+            true
+          ]
+        },
+        {
+          "row": "Oracle-TG",
+          "values": [
+            "0.9416",
+            "0.9230",
+            "0.2505",
+            "0.8489",
+            "0.8489"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "label": "tab:ready-conditioned",
+      "page": 9,
+      "rows": [
+        {
+          "row": "TF--IDF base",
+          "values": [
+            "6/257",
+            "2.33",
+            "6/247",
+            "2.43"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "TF--IDF ratio",
+          "values": [
+            "7/265",
+            "2.64",
+            "7/255",
+            "2.75"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "BGE-M3",
+          "values": [
+            "3/273",
+            "1.10",
+            "3/265",
+            "1.13"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Oracle",
+          "values": [
+            "8/281",
+            "2.85",
+            "8/281",
+            "2.85"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "label": "tab:nlp4lp-error-taxonomy",
+      "page": 10,
+      "rows": [
+        {
+          "row": "Wrong schema",
+          "values": [
+            "30",
+            "30",
+            "18",
+            "0"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Incomplete coverage",
+          "values": [
+            "48",
+            "31",
+            "33",
+            "35"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Type mismatch",
+          "values": [
+            "61",
+            "49",
+            "49",
+            "49"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Stored-value disagreement",
+          "values": [
+            "186",
+            "214",
+            "228",
+            "239"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Full scalar agreement",
+          "values": [
+            "6",
+            "7",
+            "3",
+            "8"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Total",
+          "values": [
+            "331",
+            "331",
+            "331",
+            "331"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "label": "tab:nlp4lp-grounding-baselines",
+      "page": 11,
+      "rows": [
+        {
+          "row": "Typed greedy (reference)",
+          "values": [
+            "0.8886",
+            "0.8665",
+            "0.2614",
+            "0.8006",
+            "0.7704",
+            "7/331"
+          ],
+          "bold": [
+            true,
+            false,
+            false,
+            true,
+            true,
+            false
+          ]
+        },
+        {
+          "row": "Constrained assignment",
+          "values": [
+            "0.8531",
+            "0.8745",
+            "0.5772",
+            "0.7613",
+            "0.7311",
+            "40/331"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Max-weight matching",
+          "values": [
+            "0.8436",
+            "0.8740",
+            "0.5225",
+            "0.7432",
+            "0.7130",
+            "37/331"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Optimization-role repair",
+          "values": [
+            "0.8436",
+            "0.8724",
+            "0.5210",
+            "0.7372",
+            "0.7069",
+            "35/331"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Search-structured grounding",
+          "values": [
+            "0.8195",
+            "0.8795",
+            "0.6397",
+            "0.7039",
+            "0.6737",
+            "46/331"
+          ],
+          "bold": [
+            false,
+            true,
+            true,
+            false,
+            false,
+            true
+          ]
+        },
+        {
+          "row": "Semantic-IR repair",
+          "values": [
+            "0.8131",
+            "0.8483",
+            "0.4949",
+            "0.7160",
+            "0.6949",
+            "9/331"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "label": "tab:grounding-factorial-diagnostic",
+      "page": 11,
+      "rows": [
+        {
+          "row": "Typed / Ordinal",
+          "values": [
+            "71\u219271",
+            "87\u219286",
+            "3\u21923",
+            "3\u21923"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Typed / Context",
+          "values": [
+            "106\u2192136",
+            "117\u2192145",
+            "3\u21924",
+            "5\u21925"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Typed / No marker bonus",
+          "values": [
+            "97\u2192137",
+            "111\u2192146",
+            "3\u21924",
+            "5\u21925"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Rich / Ordinal",
+          "values": [
+            "67\u219267",
+            "81\u219281",
+            "3\u21923",
+            "3\u21923"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Rich / Context",
+          "values": [
+            "100\u2192133",
+            "111\u2192142",
+            "3\u21924",
+            "5\u21925"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Rich / No marker bonus",
+          "values": [
+            "97\u2192135",
+            "111\u2192144",
+            "3\u21924",
+            "5\u21925"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      ]
+    }
+  ],
+  "pdfs": {
+    "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf": {
+      "pages_before_after": [
+        16,
+        16
+      ],
+      "cited_references": 28,
+      "links_by_kind": {
+        "2": 77,
+        "4": 73,
+        "3": 20
+      },
+      "sha256": "a83d194b0f9a576141197f879dc582116bd961ee7fd314980c67d8164a0aa0dd",
+      "warnings": [
+        "Package hyperref Warning: Difference (4) between bookmark levels is greater "
+      ],
+      "underfull_notices": 52
+    },
+    "ESM_1.pdf": {
+      "pages_before_after": [
+        38,
+        38
+      ],
+      "cited_references": 23,
+      "links_by_kind": {
+        "2": 51,
+        "4": 124,
+        "3": 11
+      },
+      "sha256": "2a07d7efbae43f533565cecaed855125d8f4187311331f97fa63048724ce2c29",
+      "warnings": [],
+      "underfull_notices": 39
+    }
+  },
+  "zip_members": 31,
+  "status": "PASS",
+  "checks_passed": 412,
+  "checks": [
+    {
+      "check": "same eight floats and labels",
+      "pass": true
+    },
+    {
+      "check": "all prose, equations, abstract, declarations and preamble outside floats byte-identical",
+      "pass": true
+    },
+    {
+      "check": "algorithm Require, Ensure, all 17 lines and indentation byte-identical",
+      "pass": true
+    },
+    {
+      "check": "exact sequence of citations and cross-references",
+      "pass": true
+    },
+    {
+      "check": "exact sequence of URLs and pinned identifiers",
+      "pass": true
+    },
+    {
+      "check": "exact sequence of labels",
+      "pass": true
+    },
+    {
+      "check": "seven figure node texts unchanged",
+      "pass": true
+    },
+    {
+      "check": "six directed figure dependencies and dashed assistance unchanged",
+      "pass": true
+    },
+    {
+      "check": "unchanged protected source references.bib",
+      "pass": true
+    },
+    {
+      "check": "unchanged protected source ready_conditioned_rows.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged protected source supplement.bbl",
+      "pass": true
+    },
+    {
+      "check": "unchanged protected source sn-basic.bst",
+      "pass": true
+    },
+    {
+      "check": "unchanged protected source reproduction_map.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged protected source main.bbl",
+      "pass": true
+    },
+    {
+      "check": "unchanged protected source reference_conventions.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged protected source supervision_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged protected source grounding_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged protected source closed_audits.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged protected source relationship_supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged protected source preserved_results_details.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged protected source Fig1.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged protected source supporting_core.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged protected source common18_overview.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged protected source supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged protected source llm_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged protected source orcidlink.sty",
+      "pass": true
+    },
+    {
+      "check": "unchanged protected source relationship_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged protected source sn-jnl.cls",
+      "pass": true
+    },
+    {
+      "check": "unchanged protected source additional_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged protected source d1_contrasts.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged protected source related_context.tex",
+      "pass": true
+    },
+    {
+      "check": "Table 1: every cell, precision and row order unchanged",
+      "pass": true
+    },
+    {
+      "check": "Table 1: caption describes descriptive highlighting and significance boundary",
+      "pass": true
+    },
+    {
+      "check": "Table 1: all and only eligible maxima bold (all ties included)",
+      "pass": true
+    },
+    {
+      "check": "Table 1: PDF values and font weight for Random",
+      "pass": true
+    },
+    {
+      "check": "Table 1: PDF values and font weight for LSA",
+      "pass": true
+    },
+    {
+      "check": "Table 1: PDF values and font weight for BM25",
+      "pass": true
+    },
+    {
+      "check": "Table 1: PDF values and font weight for TF--IDF",
+      "pass": true
+    },
+    {
+      "check": "Table 1: PDF values and font weight for BGE-M3",
+      "pass": true
+    },
+    {
+      "check": "Table 2: every cell, precision and row order unchanged",
+      "pass": true
+    },
+    {
+      "check": "Table 2: caption describes descriptive highlighting and significance boundary",
+      "pass": true
+    },
+    {
+      "check": "Table 2: all and only eligible maxima bold (all ties included)",
+      "pass": true
+    },
+    {
+      "check": "Table 2: PDF values and font weight for TF--IDF-TG (baseline extr.)",
+      "pass": true
+    },
+    {
+      "check": "Table 2: PDF values and font weight for TF--IDF-TG (ratio-aware extr.)",
+      "pass": true
+    },
+    {
+      "check": "Table 2: PDF values and font weight for BGE-M3 + ratio-aware",
+      "pass": true
+    },
+    {
+      "check": "Table 2: PDF values and font weight for Oracle-TG",
+      "pass": true
+    },
+    {
+      "check": "Table 3: every cell, precision and row order unchanged",
+      "pass": true
+    },
+    {
+      "check": "Table 3: all and only eligible maxima bold (all ties included)",
+      "pass": true
+    },
+    {
+      "check": "Table 3: PDF values and font weight for TF--IDF base",
+      "pass": true
+    },
+    {
+      "check": "Table 3: PDF values and font weight for TF--IDF ratio",
+      "pass": true
+    },
+    {
+      "check": "Table 3: PDF values and font weight for BGE-M3",
+      "pass": true
+    },
+    {
+      "check": "Table 3: PDF values and font weight for Oracle",
+      "pass": true
+    },
+    {
+      "check": "Table 4: every cell, precision and row order unchanged",
+      "pass": true
+    },
+    {
+      "check": "Table 4: all and only eligible maxima bold (all ties included)",
+      "pass": true
+    },
+    {
+      "check": "Table 4: PDF values and font weight for Wrong schema",
+      "pass": true
+    },
+    {
+      "check": "Table 4: PDF values and font weight for Incomplete coverage",
+      "pass": true
+    },
+    {
+      "check": "Table 4: PDF values and font weight for Type mismatch",
+      "pass": true
+    },
+    {
+      "check": "Table 4: PDF values and font weight for Stored-value disagreement",
+      "pass": true
+    },
+    {
+      "check": "Table 4: PDF values and font weight for Full scalar agreement",
+      "pass": true
+    },
+    {
+      "check": "Table 4: PDF values and font weight for Total",
+      "pass": true
+    },
+    {
+      "check": "Table 4: each mutually exclusive partition totals 331",
+      "pass": true
+    },
+    {
+      "check": "Table 5: every cell, precision and row order unchanged",
+      "pass": true
+    },
+    {
+      "check": "Table 5: caption describes descriptive highlighting and significance boundary",
+      "pass": true
+    },
+    {
+      "check": "Table 5: all and only eligible maxima bold (all ties included)",
+      "pass": true
+    },
+    {
+      "check": "Table 5: PDF values and font weight for Typed greedy (reference)",
+      "pass": true
+    },
+    {
+      "check": "Table 5: PDF values and font weight for Constrained assignment",
+      "pass": true
+    },
+    {
+      "check": "Table 5: PDF values and font weight for Max-weight matching",
+      "pass": true
+    },
+    {
+      "check": "Table 5: PDF values and font weight for Optimization-role repair",
+      "pass": true
+    },
+    {
+      "check": "Table 5: PDF values and font weight for Search-structured grounding",
+      "pass": true
+    },
+    {
+      "check": "Table 5: PDF values and font weight for Semantic-IR repair",
+      "pass": true
+    },
+    {
+      "check": "Table 6: every cell, precision and row order unchanged",
+      "pass": true
+    },
+    {
+      "check": "Table 6: all and only eligible maxima bold (all ties included)",
+      "pass": true
+    },
+    {
+      "check": "Table 6: PDF values and font weight for Typed / Ordinal",
+      "pass": true
+    },
+    {
+      "check": "Table 6: PDF values and font weight for Typed / Context",
+      "pass": true
+    },
+    {
+      "check": "Table 6: PDF values and font weight for Typed / No marker bonus",
+      "pass": true
+    },
+    {
+      "check": "Table 6: PDF values and font weight for Rich / Ordinal",
+      "pass": true
+    },
+    {
+      "check": "Table 6: PDF values and font weight for Rich / Context",
+      "pass": true
+    },
+    {
+      "check": "Table 6: PDF values and font weight for Rich / No marker bonus",
+      "pass": true
+    },
+    {
+      "check": "independent source-ZIP build byte identity main",
+      "pass": true
+    },
+    {
+      "check": "no unresolved/overfull LaTeX diagnostics main",
+      "pass": true
+    },
+    {
+      "check": "clean BibTeX log main",
+      "pass": true
+    },
+    {
+      "check": "all bibliography entries cited and linked main",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds main:1",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds main:2",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.kadioglu2024ner4opt",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.ramamonjison2022autoformulation",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.ramamonjison2023nl4opt",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.deng2021strug",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.wang2020ratsql",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.gao2026models",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:subsection.19",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:section.11",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:section.15",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:section.30",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:section.39",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:section.58",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.deng2021strug",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.wang2020ratsql",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.almasian2023cqe",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.roy2017udg",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds main:3",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.gao2026models",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.kadioglu2024ner4opt",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.ramamonjison2023nl4opt",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.pan2025pamop",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.huang2025orlm",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.xiao2026deepor",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.ahmed2025opt2code",
+      "pass": true
+    },
+    {
+      "check": "companion destination main:table.4",
+      "pass": true
+    },
+    {
+      "check": "companion destination main:section.104",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.refai2026component",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.chen2026optengine",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.astorga2025autoformulation",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.punyakanok2004ilp",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.scholak2021picard",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.zhai2025equivamap",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.kuhn1955assignment",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.nlp4lp_dataset",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds main:4",
+      "pass": true
+    },
+    {
+      "check": "companion destination main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:subsection.61",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds main:5",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:equation.22",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:equation.23",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:equation.26",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds main:6",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.nlp4lp_dataset",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:subsection.19",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.chen2024m3embedding",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.deerwester1990lsa",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.pedregosa2011sklearn",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.robertson2009bm25",
+      "pass": true
+    },
+    {
+      "check": "companion destination main:table.6",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.lhoest2021datasets",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:equation.18",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:subsection.21",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:algorithm.34",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:figure.36",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds main:7",
+      "pass": true
+    },
+    {
+      "check": "companion destination main:subsection.26",
+      "pass": true
+    },
+    {
+      "check": "companion destination main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds main:8",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.holm1979followup",
+      "pass": true
+    },
+    {
+      "check": "companion destination main:table.17",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:subsection.62",
+      "pass": true
+    },
+    {
+      "check": "companion destination main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:table.42",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:table.45",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:table.47",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds main:9",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:equation.25",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:equation.29",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:table.50",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:subsection.51",
+      "pass": true
+    },
+    {
+      "check": "companion destination main:section.9",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:table.53",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds main:10",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:equation.24",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:table.56",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:subsection.37",
+      "pass": true
+    },
+    {
+      "check": "companion destination main:subsection.26",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds main:11",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:table.45",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.gao2026models",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.refai2026component",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.chen2026optengine",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds main:12",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:cite.zhai2025equivamap",
+      "pass": true
+    },
+    {
+      "check": "companion destination main:subsection.63",
+      "pass": true
+    },
+    {
+      "check": "companion destination main:subsection.99",
+      "pass": true
+    },
+    {
+      "check": "companion destination main:section.40",
+      "pass": true
+    },
+    {
+      "check": "companion destination main:subsection.98",
+      "pass": true
+    },
+    {
+      "check": "companion destination main:subsection.74",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:subsection.19",
+      "pass": true
+    },
+    {
+      "check": "companion destination main:subsection.27",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds main:13",
+      "pass": true
+    },
+    {
+      "check": "companion destination main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "companion destination main:section.56",
+      "pass": true
+    },
+    {
+      "check": "companion destination main:subsection.72",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds main:14",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:subsection.62",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:subsection.62",
+      "pass": true
+    },
+    {
+      "check": "internal destination main:subsection.61",
+      "pass": true
+    },
+    {
+      "check": "companion destination main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds main:15",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds main:16",
+      "pass": true
+    },
+    {
+      "check": "exact external destination set main",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://github.com/SoroushVahidi/combinatorial-opt-agent",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa-stage3",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://huggingface.co/datasets/udell-lab/NLP4LP",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://proceedings.mlr.press/v235/ahmaditeshnizi24a.html",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.1016/j.nlp.2025.100185",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.18653/v1/2023.emnlp-main.793",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://proceedings.mlr.press/v267/astorga25a.html",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.18653/v1/2024.findings-acl.137",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://proceedings.mlr.press/v306/chen26o.html",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.1002/(SICI)1097-4571(199009)41:6<391::AID-ASI1>3.0.CO;2-9",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.18653/v1/2021.naacl-main.105",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://proceedings.colm.cc/paper_files/paper/2026/hash/6feb9b30798abcfae937760d183605e1-Abstract-Conference.html",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://www.jstor.org/stable/4615733",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.1287/opre.2024.1233",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.1007/s10601-024-09376-5",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.1002/nav.3800020109",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.18653/v1/2021.emnlp-demo.21",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://proceedings.mlr.press/v267/lu25o.html",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.24963/ijcai.2025/296",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://aclanthology.org/C04-1197/",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.18653/v1/2022.emnlp-industry.4",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://proceedings.mlr.press/v220/ramamonjison23a.html",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.1016/j.neucom.2026.133981",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.1561/1500000019",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.1609/aaai.v31i1.10959",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.18653/v1/2021.emnlp-main.779",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.18653/v1/2020.acl-main.677",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.1609/aaai.v40i40.40699",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://proceedings.mlr.press/v267/zhai25a.html",
+      "pass": true
+    },
+    {
+      "check": "independent source-ZIP build byte identity supplement",
+      "pass": true
+    },
+    {
+      "check": "no unresolved/overfull LaTeX diagnostics supplement",
+      "pass": true
+    },
+    {
+      "check": "clean BibTeX log supplement",
+      "pass": true
+    },
+    {
+      "check": "all bibliography entries cited and linked supplement",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:1",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:section.2",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:section.9",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.10",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.15",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:section.18",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:section.25",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.26",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.27",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.34",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.37",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.39",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:section.40",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.41",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:2",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.46",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.49",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.53",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:section.56",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:section.59",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.60",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.63",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.69",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.72",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:section.73",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.74",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.75",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.76",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.77",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:section.78",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.79",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.84",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.87",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.92",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.93",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.96",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:section.97",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.98",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.99",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:section.104",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.105",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.106",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:3",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.4",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.8",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:section.104",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:4",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:5",
+      "pass": true
+    },
+    {
+      "check": "companion destination supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "companion destination supplement:equation.27",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.12",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.14",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.17",
+      "pass": true
+    },
+    {
+      "check": "companion destination supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.77",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:6",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.20",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.22",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.24",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.74",
+      "pass": true
+    },
+    {
+      "check": "companion destination supplement:table.42",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:7",
+      "pass": true
+    },
+    {
+      "check": "companion destination supplement:subsection.37",
+      "pass": true
+    },
+    {
+      "check": "companion destination supplement:table.56",
+      "pass": true
+    },
+    {
+      "check": "companion destination supplement:subsubsection.54",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.huang2017beamfollowup",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:8",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.27",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.29",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:9",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:10",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.33",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:11",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.36",
+      "pass": true
+    },
+    {
+      "check": "companion destination supplement:equation.28",
+      "pass": true
+    },
+    {
+      "check": "companion destination supplement:equation.29",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:12",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:13",
+      "pass": true
+    },
+    {
+      "check": "companion destination supplement:subsection.60",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.63",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:14",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.43",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.45",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.48",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:15",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.43",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.pan2025pamop",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.huang2025orlm",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.xiao2026deepor",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.ding2026orr1",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:16",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.52",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:17",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.55",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:18",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.58",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:19",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.62",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:20",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.65",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:21",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.67",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:equation.68",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:22",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.71",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:23",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:24",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.22",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.24",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:25",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:26",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.holm1979followup",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.17",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.17",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.20",
+      "pass": true
+    },
+    {
+      "check": "companion destination supplement:table.42",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.14",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:27",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.81",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:28",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.83",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.86",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:29",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.77",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.89",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:30",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.91",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:31",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.27",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.95",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:32",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.99",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:subsection.72",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.81",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:section.40",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:33",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.101",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.103",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:34",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.101",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:table.4",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:35",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.pan2025pamop",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.huang2025orlm",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.xiao2026deepor",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.ahmed2025opt2code",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.astorga2025autoformulation",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.xiao2024chainofexperts",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.yu2026uncertainty",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.jiang2025llmopt",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.zhang2024optllm",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.chen2025solver",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.ding2026orr1",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.li2026solver",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.xie2026escaping",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.zhang2026dual",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.kong2025alphaopt",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.yang2026orthought",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.affolter2019nli",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.yu2018spider",
+      "pass": true
+    },
+    {
+      "check": "internal destination supplement:cite.miplibnl2026",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:36",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:37",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement:38",
+      "pass": true
+    },
+    {
+      "check": "exact external destination set supplement",
+      "pass": true
+    },
+    {
+      "check": "complete supplement PDF byte-identical to Phase 2",
+      "pass": true
+    },
+    {
+      "check": "independent build byte identity Fig1.pdf",
+      "pass": true
+    },
+    {
+      "check": "independent build byte identity main.bbl",
+      "pass": true
+    },
+    {
+      "check": "independent build byte identity supplement.bbl",
+      "pass": true
+    },
+    {
+      "check": "ZIP CRC",
+      "pass": true
+    },
+    {
+      "check": "all ZIP members match current source/artifacts",
+      "pass": true
+    },
+    {
+      "check": "checksum Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+      "pass": true
+    },
+    {
+      "check": "checksum ESM_1.pdf",
+      "pass": true
+    },
+    {
+      "check": "checksum JDSA_Stage3_Submission_Source.zip",
+      "pass": true
+    }
+  ]
+}

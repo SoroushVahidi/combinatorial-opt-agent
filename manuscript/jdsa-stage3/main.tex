@@ -225,7 +225,7 @@ t_i^*=\arg\max_{t\in\mathcal T\setminus\mathcal U_{i-1}}\mathrm{compat}(p_i,t).
 Compatibility ranks candidates by coarse type preference, absolute magnitude, and raw surface text, retaining source order for remaining ties. Mention indices cannot be reused, but equal values at distinct occurrences remain distinct candidates. Slot iteration follows Python set order, so replay requires the historical interpreter/hash configuration. The headline configurations omit optional lexical role cues. Algorithm~\ref{alg:instantiation} and Figure~\ref{fig:instantiation-pipeline} describe this protocol.
 
 \begin{algorithm*}[t]
-\caption{Deterministic parameter instantiation: extract and type mentions; intersect predicted parameter keys with gold scalar keys; assign without token reuse under a deterministic compatibility rule.}
+\caption{Reference-assisted deterministic parameter instantiation without mention-index reuse.}
 \label{alg:instantiation}
 \small
 \begin{algorithmic}[1]
@@ -253,8 +253,8 @@ Compatibility ranks candidates by coarse type preference, absolute magnitude, an
 
 \begin{figure*}[t]
   \centering
-  \includegraphics[width=0.78\textwidth]{Fig1.pdf}
-  \caption{Schema-conditioned deterministic parameter instantiation. The query supplies typed numeric mentions. All predicted-schema metadata keys, with reference-key fallback, are intersected with gold scalar keys to form participating slots; this benchmark assistance is explicit. Assignment consumes mention indices, not unique numerical values. The diagram describes the historical typed-greedy protocol; the later metadata-only factorial protocol uses a different inventory}
+  \includegraphics[width=0.90\textwidth]{Fig1.pdf}
+  \caption{Historical typed-greedy instantiation with explicit reference assistance. Typed query mentions fill slots formed by intersecting predicted-schema metadata keys (with reference-key fallback) and gold scalar keys. Assignment consumes mention indices, not unique values. The later metadata-only factorial protocol uses a different inventory.}
   \label{fig:instantiation-pipeline}
 \end{figure*}
 
@@ -285,11 +285,11 @@ BGE-M3 identifies the target on $313/331$ original queries ($94.56\%$), compared
 \begin{table}[t]
   \centering
   \renewcommand{\arraystretch}{1.18}
-  \caption{Schema retrieval accuracy across query variants, reported as \textit{Schema R@1}. Each nonrandom value is reconstructed from saved top-1 schema IDs over all 331 test queries in the corresponding variant. The random baseline is the theoretical top-1 chance rate under uniform schema selection over the 335 candidate schemas, i.e., $1/335 \approx 0.0030$. Best result in each column is shown in bold.}
+  \caption{Schema retrieval accuracy (\textit{Schema R@1}) from saved top-1 IDs for 331 queries per variant: original (Orig), noisy, and short; Avg. averages the variants. Random is the theoretical uniform-selection rate over 335 schemas, $1/335 \approx 0.0030$. Bold marks each column's largest descriptive value, not statistical significance.}
   \label{tab:nlp4lp-retrieval-main}
   \small
   \setlength{\tabcolsep}{3pt}
-  \begin{tabular}{lcccc}
+  \begin{tabular}{@{}lrrrr@{}}
     \toprule
     Baseline & Orig & Noisy & Short & Avg. \\
     \midrule
@@ -308,13 +308,12 @@ Ratio-aware TF--IDF passes ordinary readiness on 265 queries ($80.06\%$ of 331) 
 
 \begin{table*}[t]
   \centering
-  \renewcommand{\arraystretch}{1.18}
-  \caption{Main downstream diagnostics on the original queries, computed from frozen evaluation records. InstReady and Strict measure coarse readiness without checking numerical values. \textit{Coverage}, \textit{TypeMatch}, \textit{InstantiationReady}, and \textit{StrictInstantiationReady} use the full 331-query denominator. \textit{Exact20} (on hits) is conditional on schema-hit cases with comparable predicted and gold numeric values. Best non-oracle result in each column is shown in bold.}
+  \caption{Main downstream diagnostics from frozen records on 331 original queries. Bold marks the largest descriptive non-oracle value in each column, not statistical significance. Conditional Exact20 does not establish unconditional superiority.}
   \label{tab:nlp4lp-downstream-main}
   \small
   \setlength{\tabcolsep}{3.2pt}
   \renewcommand{\arraystretch}{1.12}
-  \begin{tabular}{@{}lccccc@{}}
+  \begin{tabular}{@{}lrrrrr@{}}
     \toprule
     Method & Coverage & TypeMatch & Exact20 & InstReady & Strict \\
     \midrule
@@ -328,19 +327,23 @@ Oracle-TG & 0.9416 & 0.9230 & 0.2505 & 0.8489 & 0.8489 \\
   \end{tabular}
 
   \vspace{2mm}
-  \raggedright
-  \small
-  TF--IDF-TG denotes TF--IDF retrieval with typed-greedy grounding; Oracle-TG uses the reference schema. Exact20 macro-averages the per-query slot fractions in Eq.~\eqref{eq:exact20} over 291, 291, 303 and 320 comparable schema-hit queries, respectively; noncomparable cases are excluded. All cells aggregate saved query metrics, not retained scalar mappings.
+  \begin{minipage}{\textwidth}
+  \small\raggedright
+  TG denotes typed-greedy grounding; extr. denotes extraction. TF--IDF-TG uses TF--IDF retrieval; Oracle-TG uses the reference schema. InstReady and Strict abbreviate InstantiationReady and StrictInstantiationReady: coarse readiness without numerical-value checks. Coverage, TypeMatch, InstReady, and Strict use all 331 queries. Exact20 macro-averages the per-query slot fractions in Eq.~\eqref{eq:exact20} over 291, 291, 303, and 320 comparable schema-hit queries, respectively; noncomparable cases are excluded. Cells aggregate saved query metrics, not retained scalar mappings.
+  \end{minipage}
 \end{table*}
 
 Table~\ref{tab:ready-conditioned} expresses this discrepancy among ready outputs. Of the 265 ordinary-ready ratio-aware outputs, $7/265=2.64\%$ satisfy $F^G$, while $258/265=97.36\%$ do not. Adding the schema gate raises the fraction only to $7/255=2.75\%$, leaving 248 strict-ready outputs without complete agreement. These fractions are intersections of saved query-level gates, independently checked against their subset relations. They are reanalyses, not new experiments; their method-dependent populations share the exposed benchmark and support neither independent-sample comparisons nor interpretation as semantic precision.
 
 \begin{table}[t]\centering\small
-\caption{Complete stored-reference scalar agreement among ready outputs (Eq.~\eqref{eq:conditional-agreement}). Each fraction states its numerator and conditional query denominator; percentages are descriptive. All four configurations start from the same 331-query frame.}
+\caption{Complete stored-reference scalar agreement among ordinary-ready ($I$) and strict-ready ($S$) outputs (Eq.~\eqref{eq:conditional-agreement}). Fractions give complete successes ($F^G$) over ready outputs. Percentages are descriptive; denominators are method-dependent subsets of the same 331-query frame.}
 \label{tab:ready-conditioned}
 \setlength{\tabcolsep}{2.2pt}
+\renewcommand{\arraystretch}{1.18}
 \begin{tabular}{@{}lrrrr@{}}\toprule
-Method & $|F^G|/|I|$ & \% & $|F^G|/|S|$ & \%\\\midrule
+& \multicolumn{2}{c}{Ordinary-ready} & \multicolumn{2}{c}{Strict-ready} \\
+\cmidrule(lr){2-3}\cmidrule(l){4-5}
+Method & $|F^G|/|I|$ & (\%) & $|F^G|/|S|$ & (\%)\\\midrule
 % BEGIN DERIVED READY CONDITIONED ROWS
 TF--IDF base & 6/257 & 2.33 & 6/247 & 2.43 \\
 TF--IDF ratio & 7/265 & 2.64 & 7/255 & 2.75 \\
@@ -361,11 +364,11 @@ BGE-M3 and ratio-aware TF--IDF share 298 schema hits but differ in Exact20 on 16
 \begin{table*}[t]
   \centering
   \renewcommand{\arraystretch}{1.18}
-  \caption{Mutually exclusive residual partition reconstructed from saved query metrics on all 331 original queries per configuration. Categories apply in the stated order; full coverage and types mean $c_i=t_i=1$. Full scalar agreement requires all eligible scalar values within the inclusive tolerance of Eq.~\eqref{eq:bounded_error}, and does not certify complete model correctness. TF--IDF columns differ only in extraction; numerical differences involving BGE-M3 are descriptive (see text).}
+  \caption{Mutually exclusive residual partition from saved metrics on 331 original queries per configuration. Categories apply in the listed order. TF--IDF columns differ only in extraction; differences involving BGE-M3 are descriptive.}
   \label{tab:nlp4lp-error-taxonomy}
   \small
   \setlength{\tabcolsep}{4pt}
-  \begin{tabular}{lrrrr}
+  \begin{tabular}{@{}lrrrr@{}}
     \toprule
     Category & TF--IDF base & TF--IDF ratio & BGE-M3 & Oracle \\
     \midrule
@@ -373,12 +376,19 @@ BGE-M3 and ratio-aware TF--IDF share 298 schema hits but differ in Exact20 on 16
 Wrong schema & 30 & 30 & 18 & 0 \\
 Incomplete coverage & 48 & 31 & 33 & 35 \\
 Type mismatch & 61 & 49 & 49 & 49 \\
-Value inaccurate & 186 & 214 & 228 & 239 \\
+Stored-value disagreement & 186 & 214 & 228 & 239 \\
 Full scalar agreement & 6 & 7 & 3 & 8 \\
+\midrule
 Total & 331 & 331 & 331 & 331 \\
 % END GENERATED metric_audit_residual_rows.tex
     \bottomrule
   \end{tabular}
+
+  \vspace{2mm}
+  \begin{minipage}{\textwidth}
+  \small\raggedright
+  Full coverage and type compatibility require $c_i=t_i=1$. Full scalar agreement requires all eligible scalar values within the inclusive tolerance in Eq.~\eqref{eq:bounded_error}; it does not certify complete model correctness.
+  \end{minipage}
 \end{table*}
 
 \subsection{RQ3: Grounding Mechanisms and Their Identifiable Effects}
@@ -389,29 +399,29 @@ Typed greedy has the highest ordinary and strict readiness rates, $0.8006$ and $
 
 \begin{table*}[t]
   \centering
-  \renewcommand{\arraystretch}{1.18}
-  \caption{Matched same-task grounding baselines from saved metrics on the $331$ original queries with TF--IDF retrieval held fixed. Queries and retrieval are fixed under the gold-assisted inventory rule; candidate construction, context, scoring, abstention and decoding can differ. Best InstantiationReady / StrictInstantiationReady values are shown in bold. $F^G$ requires the correct schema, all gold scalar keys, compatible types and complete stored-reference scalar tolerance; its denominator is 331 for every row.}
+  \caption{Matched grounding baselines from saved metrics on 331 original queries, with TF--IDF retrieval and the gold-assisted inventory rule fixed. Bold marks the largest descriptive value in each column, not statistical significance. Procedures change multiple components; conditional Exact20 denominators can differ.}
   \label{tab:nlp4lp-grounding-baselines}
   \small
   \setlength{\tabcolsep}{2.2pt}
   \renewcommand{\arraystretch}{1.12}
-  \begin{tabular}{@{}lcccccc@{}}
+  \begin{tabular}{@{}lrrrrrr@{}}
     \toprule
     Grounding method & Coverage & TypeMatch & Exact20 & InstReady & Strict & $F^G$ \\
     \midrule
-    Typed greedy (reference) & 0.8886 & 0.8665 & 0.2614 & \textbf{0.8006} & \textbf{0.7704} & 7/331 \\
+    Typed greedy (reference) & \textbf{0.8886} & 0.8665 & 0.2614 & \textbf{0.8006} & \textbf{0.7704} & 7/331 \\
     Constrained assignment & 0.8531 & 0.8745 & 0.5772 & 0.7613 & 0.7311 & 40/331 \\
     Max-weight matching & 0.8436 & 0.8740 & 0.5225 & 0.7432 & 0.7130 & 37/331 \\
     Optimization-role repair & 0.8436 & 0.8724 & 0.5210 & 0.7372 & 0.7069 & 35/331 \\
-    Search-structured grounding & 0.8195 & 0.8795 & 0.6397 & 0.7039 & 0.6737 & 46/331 \\
+    Search-structured grounding & 0.8195 & \textbf{0.8795} & \textbf{0.6397} & 0.7039 & 0.6737 & \textbf{46/331} \\
     Semantic-IR repair & 0.8131 & 0.8483 & 0.4949 & 0.7160 & 0.6949 & 9/331 \\
     \bottomrule
   \end{tabular}
 
   \vspace{2mm}
-  \raggedright
-  \small
-  IR denotes intermediate representation. Typed greedy and constrained assignment share ratio-aware patterns but use different token/mention constructors and context. Their comparison changes scoring, abstention and decoding together; it does not isolate global search. The other rows use intrinsic enriched extractors as part of their grounding definitions. \textit{Exact20 (on hits)} denominators are 291 comparable schema-hit queries for all rows except semantic-IR repair (285), under the same exclude-noncomparable convention as Table~\ref{tab:nlp4lp-downstream-main}.
+  \begin{minipage}{\textwidth}
+  \small\raggedright
+  InstReady and Strict denote ordinary and strict coarse readiness. $F^G$ requires the correct schema, all gold scalar keys, compatible types, and complete stored-reference scalar tolerance; every row uses denominator 331. IR denotes intermediate representation. Typed greedy and constrained assignment share ratio-aware patterns but differ in token/mention construction, context, scoring, abstention, and decoding; their comparison does not isolate global search. Other methods use intrinsic enriched extractors. Exact20 (on hits) uses 291 comparable schema-hit queries except for semantic-IR repair (285); noncomparable cases are excluded, as in Table~\ref{tab:nlp4lp-downstream-main}.
+  \end{minipage}
 \end{table*}
 
 \subsubsection{Frozen-Score Assignment on 49 Queries}
@@ -420,26 +430,31 @@ Table~\ref{tab:grounding-factorial-diagnostic} reports the separate 49-query/277
 
 \begin{table*}[t]
 \centering
-\caption{One-to-one factorial controls on the same 49 queries and 277 gold
-scalar slots. Entries show greedy $\rightarrow$ exact maximum-sum assignment.
-E/T denote numerical exact/tolerance-correct counts. Full instances also
-require compatible types and every gold scalar key. These controls are
-distinct from the historical 331-query configurations.}
+\caption{One-to-one factorial controls on 49 queries and 277 gold scalar slots, distinct from the historical 331-query configurations. Each pair shows greedy $\rightarrow$ exact maximum-sum assignment.}
 \label{tab:grounding-factorial-diagnostic}
 \small
-\setlength{\tabcolsep}{3pt}
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.18}
+\newcommand{\pairedcounts}[2]{\makebox[1.7em][r]{$#1$}\,$\to$\,\makebox[1.7em][r]{$#2$}}
 \begin{tabular}{@{}llcccc@{}}
 \toprule
 Pool & Scorer & E slots & T slots & E full & T full\\
 \midrule
-Typed & Ordinal & $71\to71$ & $87\to86$ & $3\to3$ & $3\to3$\\
-Typed & Context & $106\to136$ & $117\to145$ & $3\to4$ & $5\to5$\\
-Typed & No marker bonus & $97\to137$ & $111\to146$ & $3\to4$ & $5\to5$\\
-Rich & Ordinal & $67\to67$ & $81\to81$ & $3\to3$ & $3\to3$\\
-Rich & Context & $100\to133$ & $111\to142$ & $3\to4$ & $5\to5$\\
-Rich & No marker bonus & $97\to135$ & $111\to144$ & $3\to4$ & $5\to5$\\
+Typed & Ordinal & \pairedcounts{71}{71} & \pairedcounts{87}{86} & $3\to3$ & $3\to3$\\
+Typed & Context & \pairedcounts{106}{136} & \pairedcounts{117}{145} & $3\to4$ & $5\to5$\\
+Typed & No marker bonus & \pairedcounts{97}{137} & \pairedcounts{111}{146} & $3\to4$ & $5\to5$\\
+\addlinespace[3pt]
+Rich & Ordinal & \pairedcounts{67}{67} & \pairedcounts{81}{81} & $3\to3$ & $3\to3$\\
+Rich & Context & \pairedcounts{100}{133} & \pairedcounts{111}{142} & $3\to4$ & $5\to5$\\
+Rich & No marker bonus & \pairedcounts{97}{135} & \pairedcounts{111}{144} & $3\to4$ & $5\to5$\\
 \bottomrule
 \end{tabular}
+
+  \vspace{2mm}
+  \begin{minipage}{\textwidth}
+  \small\raggedright
+  E slots and T slots count numerically exact and tolerance-correct scalar assignments, respectively. E full and T full count queries for which every gold scalar key is assigned a type-compatible value and all values meet the corresponding numerical criterion. Pairs compare decoders within each pool/scorer configuration; no best-value ranking is imposed across configurations.
+  \end{minipage}
 \end{table*}
 
 All additive-score decoder pairs with unrestricted mention reuse agree, as the separable objective predicts. Some contextual-versus-ordinal slot contrasts survive multiplicity adjustment, but no whole-instance endpoint does. The controls isolate conditional assignment differences without establishing whole-instance equivalence or explaining all 33 additional historical constrained successes on the 331-query frame. Recorded sub-millisecond cell times include instrumentation and do not support clean speed comparisons.
