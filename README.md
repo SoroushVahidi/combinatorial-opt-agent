@@ -9,8 +9,8 @@ Scientific source: corrected commit `d3583fa28fcdb87f7a446f764ca3225ab5f855d3`.
 Canonical current package: [`manuscript/jdsa-stage3/`](https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa-stage3).
 
 - [Current manuscript PDF](https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa-stage3/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf)
-- [Current supplement — Online Resource 1](https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa-stage3/ESM_1.pdf)
-- [Matching editable submission-source ZIP](https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa-stage3/JDSA_Stage3_Submission_Source.zip)
+- [Current supplement — Online Resource 1](https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa-stage3/ESM_1_Retrieval_Assisted_Scalar_Grounding_Supplement.pdf)
+- [Matching editable submission-source ZIP](https://github.com/SoroushVahidi/combinatorial-opt-agent/raw/refs/heads/main/manuscript/jdsa-stage3/Retrieval_Assisted_Scalar_Grounding_JDSA_Submission_Source.zip)
 - [Build instructions](https://github.com/SoroushVahidi/combinatorial-opt-agent/blob/main/manuscript/jdsa-stage3/README.md)
 - [Historical manuscript v1.0.0 release](https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0): immutable earlier version, superseded scientifically by the current corrected manuscript.
 - [Immutable scientific evidence release](https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0)

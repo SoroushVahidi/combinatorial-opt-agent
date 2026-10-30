@@ -1,0 +1,391 @@
+[
+  {
+    "url": "https://aclanthology.org/C04-1197/",
+    "status": 200,
+    "final_url": "https://aclanthology.org/C04-1197/",
+    "bytes": 33505
+  },
+  {
+    "url": "https://doi.org/#1",
+    "status": 200,
+    "final_url": "https://www.doi.org/#1",
+    "bytes": 24206
+  },
+  {
+    "url": "https://doi.org/10.1002/(SICI)1097-4571(199009)41:6<391::AID-ASI1>3.0.CO;2-9",
+    "status": 403,
+    "final_url": "https://onlinelibrary.wiley.com/doi/10.1002/(SICI)1097-4571(199009)41:6%3C391::AID-ASI1%3E3.0.CO;2-9",
+    "bytes": 5756,
+    "registry_verification": {
+      "url": "https://api.crossref.org/works/10.1002%2F%28SICI%291097-4571%28199009%2941%3A6%3C391%3A%3AAID-ASI1%3E3.0.CO%3B2-9",
+      "status": 200,
+      "title": [
+        "Indexing by latent semantic analysis"
+      ],
+      "DOI": "10.1002/(sici)1097-4571(199009)41:6<391::aid-asi1>3.0.co;2-9",
+      "volume": "41",
+      "issue": "6",
+      "page": "391-407"
+    }
+  },
+  {
+    "url": "https://doi.org/10.1002/nav.3800020109",
+    "status": 403,
+    "final_url": "https://onlinelibrary.wiley.com/doi/10.1002/nav.3800020109",
+    "bytes": 5566,
+    "registry_verification": {
+      "url": "https://api.crossref.org/works/10.1002%2Fnav.3800020109",
+      "status": 429,
+      "title": null,
+      "DOI": null,
+      "volume": null,
+      "issue": null,
+      "page": null
+    },
+    "doi_registration": {
+      "status": 302,
+      "location": "https://onlinelibrary.wiley.com/doi/10.1002/nav.3800020109"
+    }
+  },
+  {
+    "url": "https://doi.org/10.1007/s00778-019-00567-8",
+    "status": 200,
+    "final_url": "https://link.springer.com/article/10.1007/s00778-019-00567-8",
+    "bytes": 549566
+  },
+  {
+    "url": "https://doi.org/10.1007/s10601-024-09376-5",
+    "status": 200,
+    "final_url": "https://link.springer.com/article/10.1007/s10601-024-09376-5",
+    "bytes": 621171
+  },
+  {
+    "url": "https://doi.org/10.1016/j.ait.2026.100059",
+    "status": 200,
+    "final_url": "https://linkinghub.elsevier.com/retrieve/pii/S3050860626000141",
+    "bytes": 2715
+  },
+  {
+    "url": "https://doi.org/10.1016/j.neucom.2026.133981",
+    "status": 200,
+    "final_url": "https://linkinghub.elsevier.com/retrieve/pii/S0925231226013792",
+    "bytes": 2706
+  },
+  {
+    "url": "https://doi.org/10.1016/j.nlp.2025.100185",
+    "status": 200,
+    "final_url": "https://linkinghub.elsevier.com/retrieve/pii/S2949719125000615",
+    "bytes": 2697
+  },
+  {
+    "url": "https://doi.org/10.1145/3770855.3817974",
+    "status": 403,
+    "final_url": "https://dl.acm.org/doi/10.1145/3770855.3817974",
+    "bytes": 5513,
+    "registry_verification": {
+      "url": "https://api.crossref.org/works/10.1145%2F3770855.3817974",
+      "status": 429,
+      "title": null,
+      "DOI": null,
+      "volume": null,
+      "issue": null,
+      "page": null
+    },
+    "doi_registration": {
+      "status": 302,
+      "location": "https://dl.acm.org/doi/10.1145/3770855.3817974"
+    }
+  },
+  {
+    "url": "https://doi.org/10.1287/opre.2024.1233",
+    "status": 403,
+    "final_url": "https://pubsonline.informs.org/doi/10.1287/opre.2024.1233",
+    "bytes": 5565,
+    "registry_verification": {
+      "url": "https://api.crossref.org/works/10.1287%2Fopre.2024.1233",
+      "status": 200,
+      "title": [
+        "ORLM: A Customizable Framework in Training Large Models for Automated Optimization Modeling"
+      ],
+      "DOI": "10.1287/opre.2024.1233",
+      "volume": "73",
+      "issue": "6",
+      "page": "2986-3009"
+    }
+  },
+  {
+    "url": "https://doi.org/10.1561/1500000019",
+    "status": 403,
+    "final_url": "https://www.emerald.com/ftinr/article/4/1-2/1/1326508/The-Probabilistic-Relevance-Framework-BM25-and",
+    "bytes": 5730,
+    "registry_verification": {
+      "url": "https://api.crossref.org/works/10.1561%2F1500000019",
+      "status": 200,
+      "title": [
+        "The Probabilistic Relevance Framework: BM25 and Beyond"
+      ],
+      "DOI": "10.1561/1500000019",
+      "volume": "4",
+      "issue": "1-2",
+      "page": "1-174"
+    }
+  },
+  {
+    "url": "https://doi.org/10.1609/aaai.v31i1.10959",
+    "error": "('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+    "registry_verification": {
+      "url": "https://api.crossref.org/works/10.1609%2Faaai.v31i1.10959",
+      "status": 429,
+      "title": null,
+      "DOI": null,
+      "volume": null,
+      "issue": null,
+      "page": null
+    },
+    "doi_registration": {
+      "status": 302,
+      "location": "https://ojs.aaai.org/index.php/AAAI/article/view/10959"
+    }
+  },
+  {
+    "url": "https://doi.org/10.1609/aaai.v40i1.36983",
+    "error": "('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+    "registry_verification": {
+      "url": "https://api.crossref.org/works/10.1609%2Faaai.v40i1.36983",
+      "status": 200,
+      "title": [
+        "OR-R1: Automating Modeling and Solving of Operations Research Optimization Problem via Test-Time Reinforcement Learning"
+      ],
+      "DOI": "10.1609/aaai.v40i1.36983",
+      "volume": "40",
+      "issue": "1",
+      "page": "228-236"
+    }
+  },
+  {
+    "url": "https://doi.org/10.1609/aaai.v40i40.40699",
+    "error": "('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+    "registry_verification": {
+      "url": "https://api.crossref.org/works/10.1609%2Faaai.v40i40.40699",
+      "status": 200,
+      "title": [
+        "DeepOR: A Deep Reasoning Foundation Model for Optimization Modeling"
+      ],
+      "DOI": "10.1609/aaai.v40i40.40699",
+      "volume": "40",
+      "issue": "40",
+      "page": "34052-34060"
+    }
+  },
+  {
+    "url": "https://doi.org/10.18653/v1/2020.acl-main.677",
+    "status": 418,
+    "final_url": "https://www.aclweb.org/anthology/2020.acl-main.677",
+    "bytes": 0,
+    "registry_verification": {
+      "url": "https://api.crossref.org/works/10.18653%2Fv1%2F2020.acl-main.677",
+      "status": 429,
+      "title": null,
+      "DOI": null,
+      "volume": null,
+      "issue": null,
+      "page": null
+    },
+    "doi_registration": {
+      "status": 302,
+      "location": "https://www.aclweb.org/anthology/2020.acl-main.677"
+    }
+  },
+  {
+    "url": "https://doi.org/10.18653/v1/2021.emnlp-demo.21",
+    "status": 200,
+    "final_url": "https://aclanthology.org/2021.emnlp-demo.21/",
+    "bytes": 58316
+  },
+  {
+    "url": "https://doi.org/10.18653/v1/2021.emnlp-main.779",
+    "status": 200,
+    "final_url": "https://aclanthology.org/2021.emnlp-main.779/",
+    "bytes": 41304
+  },
+  {
+    "url": "https://doi.org/10.18653/v1/2021.naacl-main.105",
+    "status": 200,
+    "final_url": "https://aclanthology.org/2021.naacl-main.105/",
+    "bytes": 47042
+  },
+  {
+    "url": "https://doi.org/10.18653/v1/2022.emnlp-industry.4",
+    "status": 200,
+    "final_url": "https://aclanthology.org/2022.emnlp-industry.4/",
+    "bytes": 42581
+  },
+  {
+    "url": "https://doi.org/10.18653/v1/2023.emnlp-main.793",
+    "status": 200,
+    "final_url": "https://aclanthology.org/2023.emnlp-main.793/",
+    "bytes": 41841
+  },
+  {
+    "url": "https://doi.org/10.18653/v1/2024.findings-acl.137",
+    "status": 200,
+    "final_url": "https://aclanthology.org/2024.findings-acl.137/",
+    "bytes": 43795
+  },
+  {
+    "url": "https://doi.org/10.18653/v1/2024.naacl-industry.42",
+    "status": 200,
+    "final_url": "https://aclanthology.org/2024.naacl-industry.42/",
+    "bytes": 46796
+  },
+  {
+    "url": "https://doi.org/10.18653/v1/2026.acl-long.1975",
+    "status": 200,
+    "final_url": "https://aclanthology.org/2026.acl-long.1975/",
+    "bytes": 45931
+  },
+  {
+    "url": "https://doi.org/10.18653/v1/2026.acl-long.266",
+    "status": 200,
+    "final_url": "https://aclanthology.org/2026.acl-long.266/",
+    "bytes": 45691
+  },
+  {
+    "url": "https://doi.org/10.18653/v1/2026.findings-acl.102",
+    "status": 200,
+    "final_url": "https://aclanthology.org/2026.findings-acl.102/",
+    "bytes": 45875
+  },
+  {
+    "url": "https://doi.org/10.18653/v1/2026.findings-acl.690",
+    "status": 200,
+    "final_url": "https://aclanthology.org/2026.findings-acl.690/",
+    "bytes": 45493
+  },
+  {
+    "url": "https://doi.org/10.18653/v1/D17-1227",
+    "status": 406,
+    "final_url": "http://aclweb.org/anthology/D17-1227",
+    "bytes": 226,
+    "registry_verification": {
+      "url": "https://api.crossref.org/works/10.18653%2Fv1%2FD17-1227",
+      "status": 200,
+      "title": [
+        "When to Finish? Optimal Beam Search for Neural Text Generation\n            (modulo beam size)"
+      ],
+      "DOI": "10.18653/v1/d17-1227",
+      "volume": null,
+      "issue": null,
+      "page": "2134-2139"
+    }
+  },
+  {
+    "url": "https://doi.org/10.18653/v1/D18-1425",
+    "status": 406,
+    "final_url": "http://aclweb.org/anthology/D18-1425",
+    "bytes": 226,
+    "registry_verification": {
+      "url": "https://api.crossref.org/works/10.18653%2Fv1%2FD18-1425",
+      "status": 429,
+      "title": null,
+      "DOI": null,
+      "volume": null,
+      "issue": null,
+      "page": null
+    },
+    "doi_registration": {
+      "status": 302,
+      "location": "http://aclweb.org/anthology/D18-1425"
+    }
+  },
+  {
+    "url": "https://doi.org/10.24963/ijcai.2025/296",
+    "status": 200,
+    "final_url": "https://ijcai.org/proceedings/2025/296",
+    "bytes": 96860
+  },
+  {
+    "url": "https://doi.org/10.52202/085713-3539",
+    "status": 200,
+    "final_url": "https://www.proceedings.com/085713-3539.html",
+    "bytes": 553055
+  },
+  {
+    "url": "https://huggingface.co/datasets/udell-lab/NLP4LP",
+    "status": 200,
+    "final_url": "https://huggingface.co/datasets/udell-lab/NLP4LP",
+    "bytes": 118940
+  },
+  {
+    "url": "https://jmlr.org/papers/v12/pedregosa11a.html",
+    "status": 200,
+    "final_url": "https://jmlr.org/papers/v12/pedregosa11a.html",
+    "bytes": 6429
+  },
+  {
+    "url": "https://proceedings.colm.cc/paper_files/paper/2026/hash/6feb9b30798abcfae937760d183605e1-Abstract-Conference.html",
+    "status": 200,
+    "final_url": "https://proceedings.colm.cc/paper_files/paper/2026/hash/6feb9b30798abcfae937760d183605e1-Abstract-Conference.html",
+    "bytes": 9348
+  },
+  {
+    "url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/d45ee77826332c100a1e15f7765b99ff-Abstract-Conference.html",
+    "status": 200,
+    "final_url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/d45ee77826332c100a1e15f7765b99ff-Abstract-Conference.html",
+    "bytes": 9769
+  },
+  {
+    "url": "https://proceedings.iclr.cc/paper_files/paper/2025/file/fbe6dd68b0cf2b1d43b458d2b8ca31b0-Paper-Conference.pdf",
+    "status": 200,
+    "final_url": "https://proceedings.iclr.cc/paper_files/paper/2025/file/fbe6dd68b0cf2b1d43b458d2b8ca31b0-Paper-Conference.pdf",
+    "bytes": 1190314
+  },
+  {
+    "url": "https://proceedings.mlr.press/v220/ramamonjison23a.html",
+    "status": 200,
+    "final_url": "https://proceedings.mlr.press/v220/ramamonjison23a.html",
+    "bytes": 16831
+  },
+  {
+    "url": "https://proceedings.mlr.press/v235/ahmaditeshnizi24a.html",
+    "status": 200,
+    "final_url": "https://proceedings.mlr.press/v235/ahmaditeshnizi24a.html",
+    "bytes": 16289
+  },
+  {
+    "url": "https://proceedings.mlr.press/v267/astorga25a.html",
+    "status": 200,
+    "final_url": "https://proceedings.mlr.press/v267/astorga25a.html",
+    "bytes": 16824
+  },
+  {
+    "url": "https://proceedings.mlr.press/v267/lu25o.html",
+    "status": 200,
+    "final_url": "https://proceedings.mlr.press/v267/lu25o.html",
+    "bytes": 16985
+  },
+  {
+    "url": "https://proceedings.mlr.press/v267/zhai25a.html",
+    "status": 200,
+    "final_url": "https://proceedings.mlr.press/v267/zhai25a.html",
+    "bytes": 16744
+  },
+  {
+    "url": "https://proceedings.mlr.press/v306/chen26o.html",
+    "status": 200,
+    "final_url": "https://proceedings.mlr.press/v306/chen26o.html",
+    "bytes": 17400
+  },
+  {
+    "url": "https://proceedings.mlr.press/v306/li26dz.html",
+    "status": 200,
+    "final_url": "https://proceedings.mlr.press/v306/li26dz.html",
+    "bytes": 17509
+  },
+  {
+    "url": "https://www.jstor.org/stable/4615733",
+    "status": 420,
+    "final_url": "https://www.jstor.org/stable/4615733",
+    "bytes": 2212
+  }
+]

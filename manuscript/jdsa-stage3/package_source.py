@@ -5,9 +5,9 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parent
 MANUSCRIPT = 'Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf'
-ARCHIVE = 'JDSA_Stage3_Submission_Source.zip'
+ARCHIVE = 'Retrieval_Assisted_Scalar_Grounding_JDSA_Submission_Source.zip'
 SUFFIXES = {'.tex', '.bib', '.bbl', '.cls', '.bst', '.sty'}
-EXTRA = {'Fig1.pdf', MANUSCRIPT, 'ESM_1.pdf', 'README.md', 'build.sh', 'package_source.py'}
+EXTRA = {'Fig1.pdf', MANUSCRIPT, 'ESM_1_Retrieval_Assisted_Scalar_Grounding_Supplement.pdf', 'README.md', 'build.sh', 'package_source.py', 'export_crossrefs.py'}
 
 def main():
     files = sorted(p for p in ROOT.iterdir() if p.is_file() and (p.suffix in SUFFIXES or p.name in EXTRA))
@@ -21,7 +21,7 @@ def main():
             entry.external_attr = 0o100644 << 16
             archive.writestr(entry, path.read_bytes())
     checksums = []
-    for name in [MANUSCRIPT, 'ESM_1.pdf', ARCHIVE]:
+    for name in [MANUSCRIPT, 'ESM_1_Retrieval_Assisted_Scalar_Grounding_Supplement.pdf', ARCHIVE]:
         checksums.append(hashlib.sha256((ROOT / name).read_bytes()).hexdigest() + '  ' + name)
     (ROOT / 'SHA256SUMS.txt').write_text('\n'.join(checksums) + '\n')
     print('Packaged', len(files), 'flat source/artifact files; SHA256SUMS.txt updated.')

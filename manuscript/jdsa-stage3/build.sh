@@ -27,12 +27,13 @@ for pass in 1 2 3; do
     pdflatex -interaction=nonstopmode -halt-on-error supplement.tex
     pdflatex -interaction=nonstopmode -halt-on-error main.tex
 done
-if grep -E 'undefined|Rerun to get cross-references right|There were multiply-defined labels|Missing character:|Overfull' main.log supplement.log; then
+if grep -E 'undefined|Rerun to get cross-references right|There were multiply-defined labels|Missing character:|Overfull|between bookmark levels' main.log supplement.log; then
     echo 'Unresolved LaTeX diagnostics; PDFs were not published.' >&2
     exit 1
 fi
 cp main.pdf "$output_dir/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf"
 cp main.bbl supplement.bbl Fig1.pdf "$output_dir/"
-cp supplement.pdf "$output_dir/ESM_1.pdf"
+python3 "$source_dir/export_crossrefs.py" "$build_dir" "$output_dir"
+cp supplement.pdf "$output_dir/ESM_1_Retrieval_Assisted_Scalar_Grounding_Supplement.pdf"
 
 printf "%s\n" "PASS: final main/supplement logs have no unresolved citations, references, missing characters or overfull boxes."

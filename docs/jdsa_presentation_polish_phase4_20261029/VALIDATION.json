@@ -1,0 +1,3792 @@
+{
+  "baseline": "b0eae08b711185eaf189a50b27bef2b73a04815b",
+  "abstract_words": 220,
+  "keywords": 6,
+  "tables": [
+    {
+      "number": 1,
+      "label": "tab:nlp4lp-retrieval-main",
+      "page": 8,
+      "rows": [
+        {
+          "row": "Random",
+          "values": [
+            "0.0030",
+            "0.0030",
+            "0.0030",
+            "0.0030"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "LSA",
+          "values": [
+            "0.8459",
+            "0.8882",
+            "0.7644",
+            "0.8328"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "BM25",
+          "values": [
+            "0.8822",
+            "0.8912",
+            "0.7674",
+            "0.8469"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "TF--IDF",
+          "values": [
+            "0.9094",
+            "0.9033",
+            "0.7795",
+            "0.8640"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "BGE-M3",
+          "values": [
+            "0.9456",
+            "0.9426",
+            "0.8157",
+            "0.9013"
+          ],
+          "bold": [
+            true,
+            true,
+            true,
+            true
+          ]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "label": "tab:nlp4lp-downstream-main",
+      "page": 9,
+      "rows": [
+        {
+          "row": "TF--IDF-TG (baseline extr.)",
+          "values": [
+            "0.8794",
+            "0.8515",
+            "0.2449",
+            "0.7764",
+            "0.7462"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "TF--IDF-TG (ratio-aware extr.)",
+          "values": [
+            "0.8886",
+            "0.8665",
+            "0.2614",
+            "0.8006",
+            "0.7704"
+          ],
+          "bold": [
+            false,
+            false,
+            true,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "BGE-M3 + ratio-aware",
+          "values": [
+            "0.9154",
+            "0.8946",
+            "0.2436",
+            "0.8248",
+            "0.8006"
+          ],
+          "bold": [
+            true,
+            true,
+            false,
+            true,
+            true
+          ]
+        },
+        {
+          "row": "Oracle-TG",
+          "values": [
+            "0.9416",
+            "0.9230",
+            "0.2505",
+            "0.8489",
+            "0.8489"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "label": "tab:ready-conditioned",
+      "page": 9,
+      "rows": [
+        {
+          "row": "TF--IDF base",
+          "values": [
+            "6/257",
+            "2.33",
+            "6/247",
+            "2.43"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "TF--IDF ratio",
+          "values": [
+            "7/265",
+            "2.64",
+            "7/255",
+            "2.75"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "BGE-M3",
+          "values": [
+            "3/273",
+            "1.10",
+            "3/265",
+            "1.13"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Oracle",
+          "values": [
+            "8/281",
+            "2.85",
+            "8/281",
+            "2.85"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "label": "tab:nlp4lp-error-taxonomy",
+      "page": 10,
+      "rows": [
+        {
+          "row": "Wrong schema",
+          "values": [
+            "30",
+            "30",
+            "18",
+            "0"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Incomplete coverage",
+          "values": [
+            "48",
+            "31",
+            "33",
+            "35"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Type mismatch",
+          "values": [
+            "61",
+            "49",
+            "49",
+            "49"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Stored-value disagreement",
+          "values": [
+            "186",
+            "214",
+            "228",
+            "239"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Full scalar agreement",
+          "values": [
+            "6",
+            "7",
+            "3",
+            "8"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Total",
+          "values": [
+            "331",
+            "331",
+            "331",
+            "331"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "label": "tab:nlp4lp-grounding-baselines",
+      "page": 11,
+      "rows": [
+        {
+          "row": "Typed greedy (reference)",
+          "values": [
+            "0.8886",
+            "0.8665",
+            "0.2614",
+            "0.8006",
+            "0.7704",
+            "7/331"
+          ],
+          "bold": [
+            true,
+            false,
+            false,
+            true,
+            true,
+            false
+          ]
+        },
+        {
+          "row": "Constrained assignment",
+          "values": [
+            "0.8531",
+            "0.8745",
+            "0.5772",
+            "0.7613",
+            "0.7311",
+            "40/331"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Max-weight matching",
+          "values": [
+            "0.8436",
+            "0.8740",
+            "0.5225",
+            "0.7432",
+            "0.7130",
+            "37/331"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Optimization-role repair",
+          "values": [
+            "0.8436",
+            "0.8724",
+            "0.5210",
+            "0.7372",
+            "0.7069",
+            "35/331"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Search-structured grounding",
+          "values": [
+            "0.8195",
+            "0.8795",
+            "0.6397",
+            "0.7039",
+            "0.6737",
+            "46/331"
+          ],
+          "bold": [
+            false,
+            true,
+            true,
+            false,
+            false,
+            true
+          ]
+        },
+        {
+          "row": "Semantic-IR repair",
+          "values": [
+            "0.8131",
+            "0.8483",
+            "0.4949",
+            "0.7160",
+            "0.6949",
+            "9/331"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "label": "tab:grounding-factorial-diagnostic",
+      "page": 11,
+      "rows": [
+        {
+          "row": "Typed / Ordinal",
+          "values": [
+            "71\u219271",
+            "87\u219286",
+            "3\u21923",
+            "3\u21923"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Typed / Context",
+          "values": [
+            "106\u2192136",
+            "117\u2192145",
+            "3\u21924",
+            "5\u21925"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Typed / No marker bonus",
+          "values": [
+            "97\u2192137",
+            "111\u2192146",
+            "3\u21924",
+            "5\u21925"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Rich / Ordinal",
+          "values": [
+            "67\u219267",
+            "81\u219281",
+            "3\u21923",
+            "3\u21923"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Rich / Context",
+          "values": [
+            "100\u2192133",
+            "111\u2192142",
+            "3\u21924",
+            "5\u21925"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Rich / No marker bonus",
+          "values": [
+            "97\u2192135",
+            "111\u2192144",
+            "3\u21924",
+            "5\u21925"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      ]
+    }
+  ],
+  "pdfs": {
+    "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf": {
+      "pages": 16,
+      "sha256": "bdd2384c0fedb2b563bf72f6cd44116aba7b277b3e4a9abc5b3e2a87d4642701",
+      "references": 28,
+      "link_counts": {
+        "2": 77,
+        "4": 73,
+        "3": 20
+      },
+      "warnings": [],
+      "underfull_notices": 52
+    },
+    "ESM_1_Retrieval_Assisted_Scalar_Grounding_Supplement.pdf": {
+      "pages": 38,
+      "sha256": "15253bb79524a8fa0b8dd68a869aa6a6ee4bc55891aaef28175d31c17149abdf",
+      "references": 23,
+      "link_counts": {
+        "2": 51,
+        "4": 124,
+        "3": 11
+      },
+      "warnings": [],
+      "underfull_notices": 39
+    }
+  },
+  "zip_members": [
+    "ESM_1_Retrieval_Assisted_Scalar_Grounding_Supplement.pdf",
+    "Fig1.pdf",
+    "Fig1.tex",
+    "README.md",
+    "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+    "additional_evidence.tex",
+    "build.sh",
+    "closed_audits.tex",
+    "common18_overview.tex",
+    "d1_contrasts.tex",
+    "export_crossrefs.py",
+    "grounding_diagnostics.tex",
+    "llm_evidence.tex",
+    "main.bbl",
+    "main.tex",
+    "main_crossrefs.tex",
+    "orcidlink.sty",
+    "package_source.py",
+    "pipeline_figure.tex",
+    "preserved_results_details.tex",
+    "reference_conventions.tex",
+    "references.bib",
+    "related_context.tex",
+    "relationship_evidence.tex",
+    "relationship_supplement.tex",
+    "reproduction_map.tex",
+    "sn-basic.bst",
+    "sn-jnl.cls",
+    "supervision_diagnostics.tex",
+    "supplement.bbl",
+    "supplement.tex",
+    "supplement_crossrefs.tex",
+    "supporting_core.tex"
+  ],
+  "evidence_checks": 9737,
+  "status": "PASS",
+  "checks_passed": 795,
+  "checks": [
+    {
+      "check": "exact logged source segment supplement.tex:Bundled label definitions support standalone supplementary compilation.",
+      "pass": true
+    },
+    {
+      "check": "only logged changes supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "exact logged source segment reproduction_map.tex:Remove stale unreleased status before the authorized versioned public manuscript release; preserve review status and evidence boundaries.",
+      "pass": true
+    },
+    {
+      "check": "only logged changes reproduction_map.tex",
+      "pass": true
+    },
+    {
+      "check": "exact logged source segment references.bib:Protect the proper noun verified in the official ACL proceedings record.",
+      "pass": true
+    },
+    {
+      "check": "exact logged source segment references.bib:Preserve capitalization after the question mark, verified in the official ACL proceedings record.",
+      "pass": true
+    },
+    {
+      "check": "only logged changes references.bib",
+      "pass": true
+    },
+    {
+      "check": "exact logged source segment main.tex:Correct bookmark hierarchy without changing printed headings or the class.",
+      "pass": true
+    },
+    {
+      "check": "exact logged source segment main.tex:Descriptive companion filename; bundled label definitions allow direct journal compilation without temporary auxiliary files.",
+      "pass": true
+    },
+    {
+      "check": "exact logged source segment main.tex:Explain the benchmark name in the abstract without adding an unspecified citation or changing its population.",
+      "pass": true
+    },
+    {
+      "check": "exact logged source segment main.tex:Define SQL at its first main-text use.",
+      "pass": true
+    },
+    {
+      "check": "exact logged source segment main.tex:JDSA Figure Captions instructions prohibit terminal caption punctuation.",
+      "pass": true
+    },
+    {
+      "check": "only logged changes main.tex",
+      "pass": true
+    },
+    {
+      "check": "protected source byte identity sn-basic.bst",
+      "pass": true
+    },
+    {
+      "check": "protected source byte identity reference_conventions.tex",
+      "pass": true
+    },
+    {
+      "check": "protected source byte identity supervision_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "protected source byte identity grounding_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "protected source byte identity pipeline_figure.tex",
+      "pass": true
+    },
+    {
+      "check": "protected source byte identity closed_audits.tex",
+      "pass": true
+    },
+    {
+      "check": "protected source byte identity relationship_supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "protected source byte identity preserved_results_details.tex",
+      "pass": true
+    },
+    {
+      "check": "protected source byte identity Fig1.tex",
+      "pass": true
+    },
+    {
+      "check": "protected source byte identity supporting_core.tex",
+      "pass": true
+    },
+    {
+      "check": "protected source byte identity common18_overview.tex",
+      "pass": true
+    },
+    {
+      "check": "protected source byte identity llm_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "protected source byte identity orcidlink.sty",
+      "pass": true
+    },
+    {
+      "check": "protected source byte identity relationship_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "protected source byte identity sn-jnl.cls",
+      "pass": true
+    },
+    {
+      "check": "protected source byte identity additional_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "protected source byte identity d1_contrasts.tex",
+      "pass": true
+    },
+    {
+      "check": "protected source byte identity related_context.tex",
+      "pass": true
+    },
+    {
+      "check": "byte-identical complete table environments",
+      "pass": true
+    },
+    {
+      "check": "byte-identical complete equation environments",
+      "pass": true
+    },
+    {
+      "check": "byte-identical complete algorithm environments",
+      "pass": true
+    },
+    {
+      "check": "exact sequence research questions",
+      "pass": true
+    },
+    {
+      "check": "exact sequence citations, references and labels",
+      "pass": true
+    },
+    {
+      "check": "exact sequence public URLs and evidence pins",
+      "pass": true
+    },
+    {
+      "check": "all main scientific numeral tokens unchanged",
+      "pass": true
+    },
+    {
+      "check": "all funding, disclosures, declarations and availability exact",
+      "pass": true
+    },
+    {
+      "check": "acknowledgment substance exact",
+      "pass": true
+    },
+    {
+      "check": "abstract 150\u2013250 words",
+      "pass": true
+    },
+    {
+      "check": "keywords 4\u20136",
+      "pass": true
+    },
+    {
+      "check": "Springer two-column numbered basic style retained",
+      "pass": true
+    },
+    {
+      "check": "headings at most three levels",
+      "pass": true
+    },
+    {
+      "check": "figure caption has no terminal punctuation",
+      "pass": true
+    },
+    {
+      "check": "Phase 3 table values and highlighting 1",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 1:Random",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 1:LSA",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 1:BM25",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 1:TF--IDF",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 1:BGE-M3",
+      "pass": true
+    },
+    {
+      "check": "Phase 3 table values and highlighting 2",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 2:TF--IDF-TG (baseline extr.)",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 2:TF--IDF-TG (ratio-aware extr.)",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 2:BGE-M3 + ratio-aware",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 2:Oracle-TG",
+      "pass": true
+    },
+    {
+      "check": "Phase 3 table values and highlighting 3",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 3:TF--IDF base",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 3:TF--IDF ratio",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 3:BGE-M3",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 3:Oracle",
+      "pass": true
+    },
+    {
+      "check": "Phase 3 table values and highlighting 4",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 4:Wrong schema",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 4:Incomplete coverage",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 4:Type mismatch",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 4:Stored-value disagreement",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 4:Full scalar agreement",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 4:Total",
+      "pass": true
+    },
+    {
+      "check": "Phase 3 table values and highlighting 5",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 5:Typed greedy (reference)",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 5:Constrained assignment",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 5:Max-weight matching",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 5:Optimization-role repair",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 5:Search-structured grounding",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 5:Semantic-IR repair",
+      "pass": true
+    },
+    {
+      "check": "Phase 3 table values and highlighting 6",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 6:Typed / Ordinal",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 6:Typed / Context",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 6:Typed / No marker bonus",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 6:Rich / Ordinal",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 6:Rich / Context",
+      "pass": true
+    },
+    {
+      "check": "PDF table values/fonts 6:Rich / No marker bonus",
+      "pass": true
+    },
+    {
+      "check": "140 table cells",
+      "pass": true
+    },
+    {
+      "check": "15 highlighted table cells",
+      "pass": true
+    },
+    {
+      "check": "page count main",
+      "pass": true
+    },
+    {
+      "check": "independent clean ZIP build byte identity main",
+      "pass": true
+    },
+    {
+      "check": "standalone journal-style build byte identity main",
+      "pass": true
+    },
+    {
+      "check": "clean final diagnostics /tmp/jdsa-build.DkqfRM/main.log",
+      "pass": true
+    },
+    {
+      "check": "clean final diagnostics /tmp/jdsa-presentation-phase4-20261029/direct-main/main.log",
+      "pass": true
+    },
+    {
+      "check": "BibTeX clean main",
+      "pass": true
+    },
+    {
+      "check": "all references used and linked main",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds main:1",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:132",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:133",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:134",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:135",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:136",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:138",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:139",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:140",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:142",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:143",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds main:2",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.kadioglu2024ner4opt",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.ramamonjison2022autoformulation",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.ramamonjison2023nl4opt",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.deng2021strug",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.wang2020ratsql",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.gao2026models",
+      "pass": true
+    },
+    {
+      "check": "internal link main:subsection.19",
+      "pass": true
+    },
+    {
+      "check": "internal link main:section.11",
+      "pass": true
+    },
+    {
+      "check": "internal link main:section.15",
+      "pass": true
+    },
+    {
+      "check": "internal link main:section.30",
+      "pass": true
+    },
+    {
+      "check": "internal link main:section.39",
+      "pass": true
+    },
+    {
+      "check": "internal link main:section.58",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.deng2021strug",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.wang2020ratsql",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.almasian2023cqe",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.roy2017udg",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:136",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:142",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:143",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds main:3",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.gao2026models",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.kadioglu2024ner4opt",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.ramamonjison2023nl4opt",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.pan2025pamop",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.huang2025orlm",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.xiao2026deepor",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.ahmed2025opt2code",
+      "pass": true
+    },
+    {
+      "check": "companion link main:table.4",
+      "pass": true
+    },
+    {
+      "check": "companion link main:section.104",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.refai2026component",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.chen2026optengine",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.astorga2025autoformulation",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.punyakanok2004ilp",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.scholak2021picard",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.zhai2025equivamap",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.kuhn1955assignment",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.nlp4lp_dataset",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:136",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:143",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:205",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:206",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:135",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:207",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:209",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:210",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds main:4",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal link main:subsection.61",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:136",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:206",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:207",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:135",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:210",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:205",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:232",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:143",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:209",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:233",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:142",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds main:5",
+      "pass": true
+    },
+    {
+      "check": "internal link main:equation.22",
+      "pass": true
+    },
+    {
+      "check": "internal link main:equation.23",
+      "pass": true
+    },
+    {
+      "check": "internal link main:equation.26",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:136",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:206",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:207",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:233",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:205",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:210",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:135",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:209",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:245",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:142",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:246",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:232",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds main:6",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.nlp4lp_dataset",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal link main:subsection.19",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.chen2024m3embedding",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.deerwester1990lsa",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.pedregosa2011sklearn",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.robertson2009bm25",
+      "pass": true
+    },
+    {
+      "check": "companion link main:table.6",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.lhoest2021datasets",
+      "pass": true
+    },
+    {
+      "check": "internal link main:equation.18",
+      "pass": true
+    },
+    {
+      "check": "internal link main:subsection.21",
+      "pass": true
+    },
+    {
+      "check": "internal link main:algorithm.34",
+      "pass": true
+    },
+    {
+      "check": "internal link main:figure.36",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:136",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:143",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:210",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:206",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:205",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:246",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:209",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:207",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:245",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:270",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:271",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds main:7",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.26",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:142",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:136",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:138",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:139",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:287",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:207",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:135",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:288",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:209",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:140",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:134",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:294",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:297",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:300",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:303",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:306",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds main:8",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.holm1979followup",
+      "pass": true
+    },
+    {
+      "check": "companion link main:table.17",
+      "pass": true
+    },
+    {
+      "check": "internal link main:subsection.62",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal link main:table.42",
+      "pass": true
+    },
+    {
+      "check": "internal link main:table.45",
+      "pass": true
+    },
+    {
+      "check": "internal link main:table.47",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:143",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:136",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:206",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:140",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:134",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:337",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:338",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:339",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:139",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:138",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:207",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds main:9",
+      "pass": true
+    },
+    {
+      "check": "internal link main:equation.25",
+      "pass": true
+    },
+    {
+      "check": "internal link main:equation.29",
+      "pass": true
+    },
+    {
+      "check": "internal link main:table.50",
+      "pass": true
+    },
+    {
+      "check": "internal link main:subsection.51",
+      "pass": true
+    },
+    {
+      "check": "companion link main:section.9",
+      "pass": true
+    },
+    {
+      "check": "internal link main:table.53",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:140",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:134",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:139",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:138",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:338",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:245",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:288",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:287",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:207",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:142",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:136",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:206",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:205",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:143",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds main:10",
+      "pass": true
+    },
+    {
+      "check": "internal link main:equation.24",
+      "pass": true
+    },
+    {
+      "check": "internal link main:table.56",
+      "pass": true
+    },
+    {
+      "check": "internal link main:subsection.37",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.26",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:140",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:134",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:139",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:287",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:207",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:136",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:142",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:206",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:205",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:143",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds main:11",
+      "pass": true
+    },
+    {
+      "check": "internal link main:table.45",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.gao2026models",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.refai2026component",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.chen2026optengine",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:140",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:134",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:139",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:287",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:207",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:138",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:339",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:288",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:136",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds main:12",
+      "pass": true
+    },
+    {
+      "check": "internal link main:cite.zhai2025equivamap",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.63",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.99",
+      "pass": true
+    },
+    {
+      "check": "companion link main:section.40",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.98",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.74",
+      "pass": true
+    },
+    {
+      "check": "internal link main:subsection.19",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.27",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:136",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:143",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:206",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:210",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:246",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds main:13",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "companion link main:section.56",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.72",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:136",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:143",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:142",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:246",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds main:14",
+      "pass": true
+    },
+    {
+      "check": "internal link main:subsection.62",
+      "pass": true
+    },
+    {
+      "check": "internal link main:subsection.62",
+      "pass": true
+    },
+    {
+      "check": "internal link main:subsection.61",
+      "pass": true
+    },
+    {
+      "check": "companion link main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:136",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:246",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:142",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:143",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds main:15",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:246",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:136",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds main:16",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:136",
+      "pass": true
+    },
+    {
+      "check": "embedded font main:246",
+      "pass": true
+    },
+    {
+      "check": "external URL destination set unchanged main",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://github.com/SoroushVahidi/combinatorial-opt-agent",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa-stage3",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://huggingface.co/datasets/udell-lab/NLP4LP",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://proceedings.mlr.press/v235/ahmaditeshnizi24a.html",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://doi.org/10.1016/j.nlp.2025.100185",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://doi.org/10.18653/v1/2023.emnlp-main.793",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://proceedings.mlr.press/v267/astorga25a.html",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://doi.org/10.18653/v1/2024.findings-acl.137",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://proceedings.mlr.press/v306/chen26o.html",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://doi.org/10.1002/(SICI)1097-4571(199009)41:6<391::AID-ASI1>3.0.CO;2-9",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://doi.org/10.18653/v1/2021.naacl-main.105",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://proceedings.colm.cc/paper_files/paper/2026/hash/6feb9b30798abcfae937760d183605e1-Abstract-Conference.html",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://www.jstor.org/stable/4615733",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://doi.org/10.1287/opre.2024.1233",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://doi.org/10.1007/s10601-024-09376-5",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://doi.org/10.1002/nav.3800020109",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://doi.org/10.18653/v1/2021.emnlp-demo.21",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://proceedings.mlr.press/v267/lu25o.html",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://doi.org/10.24963/ijcai.2025/296",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://aclanthology.org/C04-1197/",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://doi.org/10.18653/v1/2022.emnlp-industry.4",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://proceedings.mlr.press/v220/ramamonjison23a.html",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://doi.org/10.1016/j.neucom.2026.133981",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://doi.org/10.1561/1500000019",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://doi.org/10.1609/aaai.v31i1.10959",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://doi.org/10.18653/v1/2021.emnlp-main.779",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://doi.org/10.18653/v1/2020.acl-main.677",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://doi.org/10.1609/aaai.v40i40.40699",
+      "pass": true
+    },
+    {
+      "check": "visible URL/hash https://proceedings.mlr.press/v267/zhai25a.html",
+      "pass": true
+    },
+    {
+      "check": "Supplementary information top-level bookmark",
+      "pass": true
+    },
+    {
+      "check": "page count supplement",
+      "pass": true
+    },
+    {
+      "check": "independent clean ZIP build byte identity supplement",
+      "pass": true
+    },
+    {
+      "check": "standalone journal-style build byte identity supplement",
+      "pass": true
+    },
+    {
+      "check": "clean final diagnostics /tmp/jdsa-build.DkqfRM/supplement.log",
+      "pass": true
+    },
+    {
+      "check": "clean final diagnostics /tmp/jdsa-presentation-phase4-20261029/direct-supplement/supplement.log",
+      "pass": true
+    },
+    {
+      "check": "BibTeX clean supplement",
+      "pass": true
+    },
+    {
+      "check": "all references used and linked supplement",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:1",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.2",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.9",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.10",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.15",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.18",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.25",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.26",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.27",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.34",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.37",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.39",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.40",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.41",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:194",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:195",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:196",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:197",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:199",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:2",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.46",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.49",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.53",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.56",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.59",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.60",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.63",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.69",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.72",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.73",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.74",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.75",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.76",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.77",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.78",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.79",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.84",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.87",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.92",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.93",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.96",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.97",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.98",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.99",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.104",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.105",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.106",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:199",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:3",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.4",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.8",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.104",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:242",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:196",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:244",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:245",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:246",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:247",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:4",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:242",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:196",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:245",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:260",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:5",
+      "pass": true
+    },
+    {
+      "check": "companion link supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "companion link supplement:equation.27",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.12",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.14",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.17",
+      "pass": true
+    },
+    {
+      "check": "companion link supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.77",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:242",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:196",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:245",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:244",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:277",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:278",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:279",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:197",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:280",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:6",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.20",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.22",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.24",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.74",
+      "pass": true
+    },
+    {
+      "check": "companion link supplement:table.42",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:242",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:196",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:277",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:245",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:279",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:246",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:244",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:7",
+      "pass": true
+    },
+    {
+      "check": "companion link supplement:subsection.37",
+      "pass": true
+    },
+    {
+      "check": "companion link supplement:table.56",
+      "pass": true
+    },
+    {
+      "check": "companion link supplement:subsubsection.54",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.huang2017beamfollowup",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:242",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:196",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:245",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:280",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:199",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:8",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.27",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.29",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:309",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:280",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:310",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:242",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:196",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:313",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:245",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:9",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:310",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:280",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:197",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:247",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:309",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:10",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.33",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:242",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:196",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:245",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:280",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:310",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:11",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.36",
+      "pass": true
+    },
+    {
+      "check": "companion link supplement:equation.28",
+      "pass": true
+    },
+    {
+      "check": "companion link supplement:equation.29",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:309",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:280",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:337",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:310",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:12",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:242",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:196",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:245",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:13",
+      "pass": true
+    },
+    {
+      "check": "companion link supplement:subsection.60",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.63",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:309",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:14",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.43",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.45",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.48",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:242",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:196",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:245",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:309",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:15",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.43",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.pan2025pamop",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.huang2025orlm",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.xiao2026deepor",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.ding2026orr1",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:242",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:196",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:245",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:373",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:280",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:197",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:247",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:16",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.52",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:242",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:196",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:245",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:279",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:199",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:387",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:310",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:280",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:247",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:197",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:309",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:17",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.55",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:242",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:196",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:245",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:280",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:310",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:247",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:197",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:18",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.58",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:242",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:196",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:245",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:280",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:197",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:337",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:310",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:19",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.62",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:242",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:196",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:245",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:20",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.65",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:309",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:280",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:21",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.67",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:equation.68",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:242",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:196",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:245",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:280",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:337",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:387",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:310",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:197",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:22",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.71",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:280",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:309",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:310",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:23",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:242",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:196",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:245",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:24",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.22",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.24",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:309",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:447",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:199",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:280",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:25",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:280",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:260",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:310",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:309",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:26",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.holm1979followup",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.17",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.17",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.20",
+      "pass": true
+    },
+    {
+      "check": "companion link supplement:table.42",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.14",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:280",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:309",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:27",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.81",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:242",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:196",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:245",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:280",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:28",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.83",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.86",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:280",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:242",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:196",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:245",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:309",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:29",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.77",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.89",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:242",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:196",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:245",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:309",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:280",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:30",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.91",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:242",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:196",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:245",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:31",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.27",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.95",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:280",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:32",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.99",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:subsection.72",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.81",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:section.40",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:242",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:196",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:245",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:279",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:260",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:280",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:33",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.101",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.103",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:280",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:260",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:242",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:196",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:245",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:279",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:246",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:34",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.101",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:table.4",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:242",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:196",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:245",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:279",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:246",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:280",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:35",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.pan2025pamop",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.huang2025orlm",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.xiao2026deepor",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.ahmed2025opt2code",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.astorga2025autoformulation",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.xiao2024chainofexperts",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.yu2026uncertainty",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.jiang2025llmopt",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.zhang2024optllm",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.chen2025solver",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.ding2026orr1",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.li2026solver",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.xie2026escaping",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.zhang2026dual",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.kong2025alphaopt",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.yang2026orthought",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.affolter2019nli",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.yu2018spider",
+      "pass": true
+    },
+    {
+      "check": "internal link supplement:cite.miplibnl2026",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:201",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:36",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:37",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "page text in bounds supplement:38",
+      "pass": true
+    },
+    {
+      "check": "embedded font supplement:198",
+      "pass": true
+    },
+    {
+      "check": "external URL destination set unchanged supplement",
+      "pass": true
+    },
+    {
+      "check": "all supplementary PDF numerical tokens unchanged",
+      "pass": true
+    },
+    {
+      "check": "clean ZIP regeneration byte identity Fig1.pdf",
+      "pass": true
+    },
+    {
+      "check": "clean ZIP regeneration byte identity main.bbl",
+      "pass": true
+    },
+    {
+      "check": "clean ZIP regeneration byte identity supplement.bbl",
+      "pass": true
+    },
+    {
+      "check": "clean ZIP regeneration byte identity main_crossrefs.tex",
+      "pass": true
+    },
+    {
+      "check": "clean ZIP regeneration byte identity supplement_crossrefs.tex",
+      "pass": true
+    },
+    {
+      "check": "main bibliography byte-identical",
+      "pass": true
+    },
+    {
+      "check": "supplement bibliography changes only two verified capitals",
+      "pass": true
+    },
+    {
+      "check": "ZIP CRC",
+      "pass": true
+    },
+    {
+      "check": "flat source ZIP",
+      "pass": true
+    },
+    {
+      "check": "ZIP matches all packaged files",
+      "pass": true
+    },
+    {
+      "check": "no temporary/private/unrelated files in ZIP",
+      "pass": true
+    },
+    {
+      "check": "checksum Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+      "pass": true
+    },
+    {
+      "check": "checksum ESM_1_Retrieval_Assisted_Scalar_Grounding_Supplement.pdf",
+      "pass": true
+    },
+    {
+      "check": "checksum Retrieval_Assisted_Scalar_Grounding_JDSA_Submission_Source.zip",
+      "pass": true
+    },
+    {
+      "check": "authenticated public saved-record reanalysis",
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,1258 @@
+[
+  {
+    "name": "repository",
+    "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent",
+    "status": 200,
+    "final_url": "https://github.com/SoroushVahidi/combinatorial-opt-agent",
+    "bytes": 378346,
+    "sha256": "103e10ef5641d962669987a8c43f6a5b99660768964795681f27c69e1d4e1c3a",
+    "anonymous": true
+  },
+  {
+    "name": "evidence_release",
+    "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0",
+    "status": 200,
+    "final_url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0",
+    "bytes": 159107,
+    "sha256": "0fb56d5b586fd5064d186bebda1ef3affc22438791c771228f04f1245f7f4d21",
+    "anonymous": true
+  },
+  {
+    "name": "evidence_api",
+    "url": "https://api.github.com/repos/SoroushVahidi/combinatorial-opt-agent/releases/tags/jdsa-evidence-v2.0.0",
+    "status": 200,
+    "final_url": "https://api.github.com/repos/SoroushVahidi/combinatorial-opt-agent/releases/tags/jdsa-evidence-v2.0.0",
+    "bytes": 14445,
+    "sha256": "2f3d1295a26417f2bd0b8ba981897bde4297e624a1efff517b1ce86d8404aab3",
+    "anonymous": true,
+    "summary": {
+      "tag_name": "jdsa-evidence-v2.0.0",
+      "target_commitish": "209fa982c0a0e2087bd021cbc7a9f57d94256c8f",
+      "draft": false,
+      "published_at": "2026-10-29T18:00:26Z"
+    },
+    "assets": [
+      {
+        "name": "ASSET_CHECKSUMS.sha256",
+        "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-evidence-v2.0.0/ASSET_CHECKSUMS.sha256",
+        "size": 438
+      },
+      {
+        "name": "CHECKSUMS.sha256",
+        "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-evidence-v2.0.0/CHECKSUMS.sha256",
+        "size": 24088
+      },
+      {
+        "name": "jdsa-evidence-v2.0.0.zip",
+        "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-evidence-v2.0.0/jdsa-evidence-v2.0.0.zip",
+        "size": 1154571
+      },
+      {
+        "name": "release_manifest.json",
+        "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-evidence-v2.0.0/release_manifest.json",
+        "size": 35957
+      },
+      {
+        "name": "verification-receipt.json",
+        "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-evidence-v2.0.0/verification-receipt.json",
+        "size": 1300
+      },
+      {
+        "name": "verification.json",
+        "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-evidence-v2.0.0/verification.json",
+        "size": 1431318
+      }
+    ]
+  },
+  {
+    "name": "manuscript_release_api",
+    "url": "https://api.github.com/repos/SoroushVahidi/combinatorial-opt-agent/releases/tags/jdsa-manuscript-v1.0.0",
+    "status": 200,
+    "final_url": "https://api.github.com/repos/SoroushVahidi/combinatorial-opt-agent/releases/tags/jdsa-manuscript-v1.0.0",
+    "bytes": 13189,
+    "sha256": "d592bcdec27a836f5b6d917efa5afd3625ade3b94b8d757646b236c43bf963f2",
+    "anonymous": true,
+    "summary": {
+      "tag_name": "jdsa-manuscript-v1.0.0",
+      "target_commitish": "main",
+      "draft": false,
+      "published_at": "2026-10-29T21:15:36Z"
+    },
+    "assets": [
+      {
+        "name": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+        "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization.pdf",
+        "size": 444142
+      },
+      {
+        "name": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Source.zip",
+        "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Source.zip",
+        "size": 1013756
+      },
+      {
+        "name": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf",
+        "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_Supplement.pdf",
+        "size": 435970
+      },
+      {
+        "name": "SHA256SUMS.txt",
+        "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-manuscript-v1.0.0/SHA256SUMS.txt",
+        "size": 438
+      }
+    ]
+  },
+  {
+    "name": "hf_repository",
+    "url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics",
+    "status": 200,
+    "final_url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics",
+    "bytes": 455097,
+    "sha256": "262014d9c3b303fbcc5d582b1c07a3f7fc683e801c4506b946f279ee6f764e75",
+    "anonymous": true
+  },
+  {
+    "name": "hf_pinned",
+    "url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0",
+    "status": 200,
+    "final_url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0",
+    "bytes": 225787,
+    "sha256": "4c0e57a79fbd158fe984d3a83b08911314738bbeedb9dd17f976bb9052af4c4f",
+    "anonymous": true
+  },
+  {
+    "name": "hf_tree_api",
+    "url": "https://huggingface.co/api/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0?recursive=true&limit=1000",
+    "status": 200,
+    "final_url": "https://huggingface.co/api/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0?recursive=true&limit=1000",
+    "bytes": 39810,
+    "sha256": "5f2f072585e347e949d012d29ec4d06b2e56d3e46c4fec5be4605a9f1d537eca",
+    "anonymous": true,
+    "summary": [
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/data",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/expected",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/provenance",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/baseline_staleness_audit_2026-08-12",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/dense_retrieval_bge_m3",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/01_retrieval",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/final_resubmission_method",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/grounding_followup_2026-10-27",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/grounding_followup_2026-10-27/audit",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/grounding_followup_2026-10-27/slurm_1462557",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/joint_grounding_2026-10-27",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/learned_grounding_p0",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/oracle_recomputation_2026-08-15",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/paper",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/paper/eaai_camera_ready_tables",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/rerun",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/rerun/mistral",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/rerun/mistral/run_903088",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/rerun/mistral/run_903088/paper",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/selective_grounding_rerank",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/sncs_corrections_2026-10-27",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/stage6_matched_grounding_baselines_2026-08-27",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/external_validation",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/external_validation/optmath",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/external_validation/optmath/final_verification",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/final_resubmission_method",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/grounding_followup_2026-10-27",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/grounding_followup_2026-10-27/audit",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/grounding_followup_2026-10-27/slurm_1462557",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/joint_grounding_2026-10-27",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/role_quantity_stage_a",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/sncs_corrections_2026-10-27",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/strict_failure_quick_fix",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/topk_schema_rerank_stage_a",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/wulver_grounding_attribution_2026-10-27",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/wulver_grounding_attribution_2026-10-27/slurm_1462366",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/upstream_required",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/upstream_required/baselines",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/upstream_required/baselines/comparison",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/upstream_required/tools",
+        "type": "directory",
+        "size": 0
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/AUDIT.md",
+        "type": "file",
+        "size": 11115
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/CHECKSUMS.sha256",
+        "type": "file",
+        "size": 24088
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/ENVIRONMENT.md",
+        "type": "file",
+        "size": 983
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/LICENSE_DATA.md",
+        "type": "file",
+        "size": 1373
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/LICENSE_SOFTWARE",
+        "type": "file",
+        "size": 1071
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/LIMITATIONS.md",
+        "type": "file",
+        "size": 2195
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/PUBLICATION_REVIEW.md",
+        "type": "file",
+        "size": 4311
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/README.md",
+        "type": "file",
+        "size": 3995
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/UPSTREAM_ACCESS.md",
+        "type": "file",
+        "size": 2626
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/claims.json",
+        "type": "file",
+        "size": 3018256
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/data/assignment_controls.json",
+        "type": "file",
+        "size": 1673140
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/data/common18_cases.csv",
+        "type": "file",
+        "size": 32589
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/data/d1_author_decisions.csv",
+        "type": "file",
+        "size": 8139
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/data/d1_cases.json",
+        "type": "file",
+        "size": 31337
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/data/g3_counts.json",
+        "type": "file",
+        "size": 100282
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/data/llm217_missing20.csv",
+        "type": "file",
+        "size": 3874
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/data/llm217_per_judgment.csv",
+        "type": "file",
+        "size": 102087
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/data/llm217_requests.csv",
+        "type": "file",
+        "size": 33689
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/data/llm217_validation.json",
+        "type": "file",
+        "size": 17557
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/data/reference_overlay.json",
+        "type": "file",
+        "size": 4895
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/data/relationship_stages.json",
+        "type": "file",
+        "size": 415378
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/expected/PRESERVED_PAIRED_STATISTICS.csv",
+        "type": "file",
+        "size": 3221
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/expected/PRESERVED_TEXT_GROUPS.json",
+        "type": "file",
+        "size": 13023
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/expected/SAVED_METRIC_CHECKS.json",
+        "type": "file",
+        "size": 65741
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/expected/common18_summary.json",
+        "type": "file",
+        "size": 2888
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/expected/d1_audit.json",
+        "type": "file",
+        "size": 930
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/expected/manuscript_cells.json",
+        "type": "file",
+        "size": 1351
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/provenance/build_sources.json",
+        "type": "file",
+        "size": 115476
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/provenance/investigation_sources.json",
+        "type": "file",
+        "size": 40869
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/provenance/investigations.json",
+        "type": "file",
+        "size": 47692
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/provenance/m5_inventory.json",
+        "type": "file",
+        "size": 1526983
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/provenance/manuscript_sources.json",
+        "type": "file",
+        "size": 8032
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/provenance/providers.json",
+        "type": "file",
+        "size": 1434
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/provenance/publication_scan.json",
+        "type": "file",
+        "size": 32423
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/release_manifest.json",
+        "type": "file",
+        "size": 35957
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/requirements-validation.txt",
+        "type": "file",
+        "size": 13
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/baseline_staleness_audit_2026-08-12/nlp4lp_downstream_per_query_orig_bm25.csv",
+        "type": "file",
+        "size": 32400
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/baseline_staleness_audit_2026-08-12/nlp4lp_downstream_per_query_orig_lsa.csv",
+        "type": "file",
+        "size": 31770
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/baseline_staleness_audit_2026-08-12/nlp4lp_downstream_per_query_orig_oracle.csv",
+        "type": "file",
+        "size": 33423
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/baseline_staleness_audit_2026-08-12/nlp4lp_downstream_per_query_orig_tfidf.csv",
+        "type": "file",
+        "size": 32750
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/baseline_staleness_audit_2026-08-12/nlp4lp_downstream_per_query_orig_tfidf_acceptance_rerank.csv",
+        "type": "file",
+        "size": 38527
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/baseline_staleness_audit_2026-08-12/nlp4lp_downstream_per_query_orig_tfidf_constrained.csv",
+        "type": "file",
+        "size": 36357
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/baseline_staleness_audit_2026-08-12/nlp4lp_downstream_per_query_orig_tfidf_hierarchical_acceptance_rerank.csv",
+        "type": "file",
+        "size": 42333
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/baseline_staleness_audit_2026-08-12/nlp4lp_downstream_per_query_orig_tfidf_hierarchical_structured_grounding.csv",
+        "type": "file",
+        "size": 43779
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/baseline_staleness_audit_2026-08-12/nlp4lp_downstream_per_query_orig_tfidf_max_weight_matching.csv",
+        "type": "file",
+        "size": 38840
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/baseline_staleness_audit_2026-08-12/nlp4lp_downstream_per_query_orig_tfidf_optimization_role_repair.csv",
+        "type": "file",
+        "size": 40553
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/baseline_staleness_audit_2026-08-12/nlp4lp_downstream_per_query_orig_tfidf_search_structured_grounding.csv",
+        "type": "file",
+        "size": 41637
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/baseline_staleness_audit_2026-08-12/nlp4lp_downstream_per_query_orig_tfidf_semantic_ir_repair.csv",
+        "type": "file",
+        "size": 38871
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/dense_retrieval_bge_m3/nlp4lp_downstream_per_query_noisy_bge_m3.csv",
+        "type": "file",
+        "size": 29959
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/dense_retrieval_bge_m3/nlp4lp_downstream_per_query_orig_bge_m3.csv",
+        "type": "file",
+        "size": 32787
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/dense_retrieval_bge_m3/nlp4lp_downstream_per_query_short_bge_m3.csv",
+        "type": "file",
+        "size": 28573
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/01_retrieval/retrieval_results.json",
+        "type": "file",
+        "size": 2288
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_bm25.csv",
+        "type": "file",
+        "size": 28774
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_lsa.csv",
+        "type": "file",
+        "size": 28441
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_oracle.csv",
+        "type": "file",
+        "size": 29628
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf.csv",
+        "type": "file",
+        "size": 29095
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_acceptance_rerank.csv",
+        "type": "file",
+        "size": 34899
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_ambiguity_aware_abstain.csv",
+        "type": "file",
+        "size": 36084
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_ambiguity_aware_beam.csv",
+        "type": "file",
+        "size": 35122
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_ambiguity_aware_full.csv",
+        "type": "file",
+        "size": 34988
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_ambiguity_candidate_greedy.csv",
+        "type": "file",
+        "size": 37108
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_constrained.csv",
+        "type": "file",
+        "size": 33744
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_global_compat_full.csv",
+        "type": "file",
+        "size": 34319
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_global_compat_local.csv",
+        "type": "file",
+        "size": 34493
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_global_compat_pairwise.csv",
+        "type": "file",
+        "size": 35598
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_hierarchical_acceptance_rerank.csv",
+        "type": "file",
+        "size": 39077
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_optimization_role_repair.csv",
+        "type": "file",
+        "size": 36133
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_relation_aware_basic.csv",
+        "type": "file",
+        "size": 34824
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_relation_aware_full.csv",
+        "type": "file",
+        "size": 34508
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_relation_aware_ops.csv",
+        "type": "file",
+        "size": 34237
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_relation_aware_semantic.csv",
+        "type": "file",
+        "size": 35846
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_noisy_tfidf_semantic_ir_repair.csv",
+        "type": "file",
+        "size": 35046
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_bm25.csv",
+        "type": "file",
+        "size": 32494
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_lsa.csv",
+        "type": "file",
+        "size": 31786
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_oracle.csv",
+        "type": "file",
+        "size": 33468
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf.csv",
+        "type": "file",
+        "size": 32727
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_acceptance_rerank.csv",
+        "type": "file",
+        "size": 38402
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_ambiguity_aware_abstain.csv",
+        "type": "file",
+        "size": 37586
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_ambiguity_aware_beam.csv",
+        "type": "file",
+        "size": 40657
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_ambiguity_aware_full.csv",
+        "type": "file",
+        "size": 40764
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_ambiguity_candidate_greedy.csv",
+        "type": "file",
+        "size": 42643
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_constrained.csv",
+        "type": "file",
+        "size": 37307
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_global_compat_full.csv",
+        "type": "file",
+        "size": 40099
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_global_compat_local.csv",
+        "type": "file",
+        "size": 40358
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_global_compat_pairwise.csv",
+        "type": "file",
+        "size": 41378
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_hierarchical_acceptance_rerank.csv",
+        "type": "file",
+        "size": 42501
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_optimization_role_repair.csv",
+        "type": "file",
+        "size": 41631
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_relation_aware_basic.csv",
+        "type": "file",
+        "size": 40292
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_relation_aware_full.csv",
+        "type": "file",
+        "size": 40296
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_relation_aware_ops.csv",
+        "type": "file",
+        "size": 39869
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_relation_aware_semantic.csv",
+        "type": "file",
+        "size": 41373
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_orig_tfidf_semantic_ir_repair.csv",
+        "type": "file",
+        "size": 39600
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_bm25.csv",
+        "type": "file",
+        "size": 27864
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_lsa.csv",
+        "type": "file",
+        "size": 27452
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_oracle.csv",
+        "type": "file",
+        "size": 28723
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf.csv",
+        "type": "file",
+        "size": 28178
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_acceptance_rerank.csv",
+        "type": "file",
+        "size": 34082
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_ambiguity_aware_abstain.csv",
+        "type": "file",
+        "size": 34963
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_ambiguity_aware_beam.csv",
+        "type": "file",
+        "size": 34172
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_ambiguity_aware_full.csv",
+        "type": "file",
+        "size": 34172
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_ambiguity_candidate_greedy.csv",
+        "type": "file",
+        "size": 36158
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_constrained.csv",
+        "type": "file",
+        "size": 32075
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_global_compat_full.csv",
+        "type": "file",
+        "size": 33510
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_global_compat_local.csv",
+        "type": "file",
+        "size": 33841
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_global_compat_pairwise.csv",
+        "type": "file",
+        "size": 34834
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_hierarchical_acceptance_rerank.csv",
+        "type": "file",
+        "size": 38253
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_optimization_role_repair.csv",
+        "type": "file",
+        "size": 35504
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_relation_aware_basic.csv",
+        "type": "file",
+        "size": 34172
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_relation_aware_full.csv",
+        "type": "file",
+        "size": 33841
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_relation_aware_ops.csv",
+        "type": "file",
+        "size": 33510
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_relation_aware_semantic.csv",
+        "type": "file",
+        "size": 35165
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/eswa_revision/02_downstream_postfix/nlp4lp_downstream_per_query_short_tfidf_semantic_ir_repair.csv",
+        "type": "file",
+        "size": 33518
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/final_resubmission_method/nlp4lp_downstream_per_query_orig_tfidf.csv",
+        "type": "file",
+        "size": 32171
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/grounding_followup_2026-10-27/audit/factorial_all_24.csv",
+        "type": "file",
+        "size": 3347
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/grounding_followup_2026-10-27/audit/factorial_per_query.csv",
+        "type": "file",
+        "size": 124086
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/grounding_followup_2026-10-27/audit/search_retention_saved.csv",
+        "type": "file",
+        "size": 5470
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/grounding_followup_2026-10-27/audit/single_factor_paired_tests.csv",
+        "type": "file",
+        "size": 43526
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/grounding_followup_2026-10-27/slurm_1462557/distinct_retention_per_query.csv",
+        "type": "file",
+        "size": 3762
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/joint_grounding_2026-10-27/candidate_recall_per_query.csv",
+        "type": "file",
+        "size": 46673
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/joint_grounding_2026-10-27/pilot_per_query.csv",
+        "type": "file",
+        "size": 18554
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/joint_grounding_2026-10-27/pilot_summary.csv",
+        "type": "file",
+        "size": 718
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/joint_grounding_2026-10-27/type_aware_candidate_ceiling.csv",
+        "type": "file",
+        "size": 386
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/learned_grounding_p0/ablation_results.csv",
+        "type": "file",
+        "size": 272
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/learned_grounding_p0/test_results.csv",
+        "type": "file",
+        "size": 199
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/oracle_recomputation_2026-08-15/nlp4lp_downstream_per_query_orig_oracle.csv",
+        "type": "file",
+        "size": 33198
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/paper/eaai_camera_ready_tables/table2_engineering_structural_subset.csv",
+        "type": "file",
+        "size": 312
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/paper/eaai_camera_ready_tables/table3_executable_attempt_with_blockers.csv",
+        "type": "file",
+        "size": 622
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/paper/eaai_camera_ready_tables/table4_final_solver_backed_subset.csv",
+        "type": "file",
+        "size": 494
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/paper/nlp4lp_downstream_per_query_noisy_bm25.csv",
+        "type": "file",
+        "size": 28995
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/paper/nlp4lp_downstream_per_query_noisy_lsa.csv",
+        "type": "file",
+        "size": 28628
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/paper/nlp4lp_downstream_per_query_noisy_openai.csv",
+        "type": "file",
+        "size": 29063
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/paper/nlp4lp_downstream_per_query_noisy_tfidf.csv",
+        "type": "file",
+        "size": 29331
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/paper/nlp4lp_downstream_per_query_orig_bm25.csv",
+        "type": "file",
+        "size": 32284
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/paper/nlp4lp_downstream_per_query_orig_lsa.csv",
+        "type": "file",
+        "size": 31638
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/paper/nlp4lp_downstream_per_query_orig_openai.csv",
+        "type": "file",
+        "size": 30071
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/paper/nlp4lp_downstream_per_query_orig_tfidf.csv",
+        "type": "file",
+        "size": 32636
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/paper/nlp4lp_downstream_per_query_short_bm25.csv",
+        "type": "file",
+        "size": 27996
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/paper/nlp4lp_downstream_per_query_short_lsa.csv",
+        "type": "file",
+        "size": 27608
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/paper/nlp4lp_downstream_per_query_short_openai.csv",
+        "type": "file",
+        "size": 27770
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/paper/nlp4lp_downstream_per_query_short_tfidf.csv",
+        "type": "file",
+        "size": 28293
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/rerun/mistral/run_903088/paper/nlp4lp_downstream_per_query_orig_mistral.csv",
+        "type": "file",
+        "size": 28456
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/selective_grounding_rerank/nlp4lp_downstream_per_query_orig_tfidf.csv",
+        "type": "file",
+        "size": 32418
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/sncs_corrections_2026-10-27/cached_stage_a_reference_reanalysis.csv",
+        "type": "file",
+        "size": 17267
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/sncs_corrections_2026-10-27/corrected_paired_statistics.csv",
+        "type": "file",
+        "size": 3221
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/stage6_matched_grounding_baselines_2026-08-27/nlp4lp_downstream_per_query_orig_tfidf.csv",
+        "type": "file",
+        "size": 32503
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/stage6_matched_grounding_baselines_2026-08-27/nlp4lp_downstream_per_query_orig_tfidf_constrained.csv",
+        "type": "file",
+        "size": 36154
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/stage6_matched_grounding_baselines_2026-08-27/nlp4lp_downstream_per_query_orig_tfidf_max_weight_matching.csv",
+        "type": "file",
+        "size": 38840
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/stage6_matched_grounding_baselines_2026-08-27/nlp4lp_downstream_per_query_orig_tfidf_optimization_role_repair.csv",
+        "type": "file",
+        "size": 40553
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/stage6_matched_grounding_baselines_2026-08-27/nlp4lp_downstream_per_query_orig_tfidf_search_structured_grounding.csv",
+        "type": "file",
+        "size": 41637
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/results/stage6_matched_grounding_baselines_2026-08-27/nlp4lp_downstream_per_query_orig_tfidf_semantic_ir_repair.csv",
+        "type": "file",
+        "size": 38871
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/g3_inventory.json",
+        "type": "file",
+        "size": 15484
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/external_validation/optmath/aggregate_metrics.json",
+        "type": "file",
+        "size": 209
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/external_validation/optmath/final_verification/classifier_validation.json",
+        "type": "file",
+        "size": 143
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/external_validation/optmath/final_verification/verified_metrics.json",
+        "type": "file",
+        "size": 486
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/final_resubmission_method/runtime.json",
+        "type": "file",
+        "size": 169
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/grounding_followup_2026-10-27/audit/audit.json",
+        "type": "file",
+        "size": 1414
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/grounding_followup_2026-10-27/slurm_1462557/summary.json",
+        "type": "file",
+        "size": 671
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/joint_grounding_2026-10-27/candidate_recall_summary.json",
+        "type": "file",
+        "size": 1139
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/joint_grounding_2026-10-27/completed_run_reanalysis.json",
+        "type": "file",
+        "size": 7791
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/joint_grounding_2026-10-27/error_category_summary.json",
+        "type": "file",
+        "size": 183
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/role_quantity_stage_a/summary.json",
+        "type": "file",
+        "size": 2734
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/sncs_corrections_2026-10-27/cached_stage_a_reference_summary.json",
+        "type": "file",
+        "size": 974
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/sncs_corrections_2026-10-27/external_extraction_aggregation_correction.json",
+        "type": "file",
+        "size": 584
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/strict_failure_quick_fix/summary.json",
+        "type": "file",
+        "size": 6497
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/topk_schema_rerank_stage_a/summary.json",
+        "type": "file",
+        "size": 11747
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/summaries/results/wulver_grounding_attribution_2026-10-27/slurm_1462366/summary.json",
+        "type": "file",
+        "size": 80399
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/test_verifier.py",
+        "type": "file",
+        "size": 1683
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/upstream_required/baselines/comparison/objective_evidence.py",
+        "type": "file",
+        "size": 6210
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/upstream_required/tools/validate_common18_m3.py",
+        "type": "file",
+        "size": 5443
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/upstream_required/tools/verify_llm217_m5.py",
+        "type": "file",
+        "size": 14884
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/verify.py",
+        "type": "file",
+        "size": 19457
+      },
+      {
+        "path": "releases/jdsa-evidence-v2.0.0/verify_saved_metrics.py",
+        "type": "file",
+        "size": 8902
+      }
+    ]
+  },
+  {
+    "name": "guidelines",
+    "url": "https://link.springer.com/journal/41060/submission-guidelines",
+    "status": 200,
+    "final_url": "https://link.springer.com/journal/41060/submission-guidelines",
+    "bytes": 298192,
+    "sha256": "65285df5e2091820709a950eee7e6c9b653cd2bb28629d45cd70670fd61ad2e3",
+    "anonymous": true
+  },
+  {
+    "name": "colm",
+    "url": "https://proceedings.colm.cc/paper_files/paper/2026/hash/6feb9b30798abcfae937760d183605e1-Abstract-Conference.html",
+    "status": 200,
+    "anonymous": true,
+    "sha256": "757cc826815fcb97bf30444a153504a6e94c239f076c00301d85d348f591f5ad",
+    "pre_proceedings": true
+  },
+  {
+    "name": "ASSET_CHECKSUMS.sha256",
+    "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-evidence-v2.0.0/ASSET_CHECKSUMS.sha256",
+    "status": 200,
+    "anonymous": true,
+    "bytes": 438,
+    "sha256": "e4ddd389251cbc25676bdb200f58f56c3e1467d44fda2f2b432eea8b6a00a5ef"
+  },
+  {
+    "name": "jdsa-evidence-v2.0.0.zip",
+    "url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/download/jdsa-evidence-v2.0.0/jdsa-evidence-v2.0.0.zip",
+    "status": 200,
+    "anonymous": true,
+    "bytes": 1154571,
+    "sha256": "de7f968bd4dbf4dfc9efa67818c461c0aa48b2993e704823bbf1b321ce44bd37"
+  },
+  {
+    "name": "hf_pinned_verifier",
+    "url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/resolve/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0/verify.py",
+    "status": 200,
+    "anonymous": true,
+    "sha256": "45a8afac843dd65c3352a9a910a389130e433f7c7a6a3d3dad727053451bcc6f"
+  }
+]

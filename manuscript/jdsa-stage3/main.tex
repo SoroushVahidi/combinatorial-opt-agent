@@ -14,6 +14,10 @@
 \usepackage{microtype}
 \usepackage{xr-hyper}
 \usepackage{hyperref}
+% Springer bmhead uses subparagraph typography; these are top-level bookmarks.
+\makeatletter
+\def\toclevel@subparagraph{1}
+\makeatother
 % Full URL/DOI links need no redundant "URL" label.
 \providecommand{\urlprefix}{}
 % Avoid duplicate caption destinations in the preserved Springer template.
@@ -28,7 +32,9 @@
 \raggedbottom
 
 % Use standard PDF destinations in the corrected local companion document.
-\externaldocument[S-]{supplement}[ESM_1.pdf]
+\IfFileExists{supplement.aux}{%
+  \externaldocument[S-]{supplement}[ESM_1_Retrieval_Assisted_Scalar_Grounding_Supplement.pdf]%
+}{\input{supplement_crossrefs.tex}}
 \begin{document}
 
 \title[Retrieval-Assisted Scalar Grounding]{Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study}
@@ -37,7 +43,7 @@
 
 \affil*[1]{\orgdiv{Department of Computer Science, Ying Wu College of Computing}, \orgname{New Jersey Institute of Technology}, \orgaddress{\street{University Heights}, \city{Newark}, \state{NJ}~\postcode{07102-1982}, \country{USA}}}
 
-\abstract{Retrieval and structural checks can make natural-language optimization outputs appear usable even when numerical grounding is incomplete. We examine this diagnostic gap through three questions: fixed-catalog schema identification, the validity of coverage/type readiness as a numerical check, and the mechanisms underlying grounding outcomes. On 331 NLP4LP benchmark queries and 335 schema documents, term frequency--inverse document frequency retrieval and a pretrained dense encoder identify the target schema for 301 and 313 queries. Ratio-aware lexical grounding passes coarse readiness on 265 queries, but only seven meet the complete stored-reference scalar-tolerance criterion: 2.64\% of ready outputs. A mutually exclusive residual partition distinguishes retrieval, coverage, type, and numerical failures. Six grounding procedures under fixed retrieval yield between seven and 46 complete successes, with candidates, scoring, abstention, and decoding changing together. A separate 49-query frozen-score assignment study improves exact slot counts without increasing the five whole-instance tolerance successes, limiting attribution to search. The methodological contribution is joint reporting of retrieval, readiness, and complete scalar agreement with explicit assistance, denominators, and evidence boundaries. Reference-derived inventories and benchmark exposure restrict the findings to assisted grounding. Supplementary relationship judgments and author contrasts assisted by artificial intelligence illustrate semantic limits without establishing accuracy. A versioned public release supports saved-record reanalysis; missing historical predictions and restricted originals prevent full experimental reproduction.}
+\abstract{Retrieval and structural checks can make natural-language optimization outputs appear usable even when numerical grounding is incomplete. We examine this diagnostic gap through three questions: fixed-catalog schema identification, the validity of coverage/type readiness as a numerical check, and the mechanisms underlying grounding outcomes. On 331 queries from NLP4LP, a benchmark for natural-language linear and mixed-integer linear programming, and 335 schema documents, term frequency--inverse document frequency retrieval and a pretrained dense encoder identify the target schema for 301 and 313 queries. Ratio-aware lexical grounding passes coarse readiness on 265 queries, but only seven meet the complete stored-reference scalar-tolerance criterion: 2.64\% of ready outputs. A mutually exclusive residual partition distinguishes retrieval, coverage, type, and numerical failures. Six grounding procedures under fixed retrieval yield between seven and 46 complete successes, with candidates, scoring, abstention, and decoding changing together. A separate 49-query frozen-score assignment study improves exact slot counts without increasing the five whole-instance tolerance successes, limiting attribution to search. The methodological contribution is joint reporting of retrieval, readiness, and complete scalar agreement with explicit assistance, denominators, and evidence boundaries. Reference-derived inventories and benchmark exposure restrict the findings to assisted grounding. Supplementary relationship judgments and author contrasts assisted by artificial intelligence illustrate semantic limits without establishing accuracy. A versioned public release supports saved-record reanalysis; missing historical predictions and restricted originals prevent full experimental reproduction.}
 
 \keywords{natural language processing, optimization modeling, knowledge representation, information retrieval, semantic grounding, intelligent information systems}
 
@@ -83,7 +89,7 @@ Section~\ref{sec:related_work} places this diagnostic approach in the context of
 \label{sec:related_work}
 \subsection{Structured Grounding and Numerical Binding}
 \label{subsec:rw_binding}
-StruG learns column grounding, value grounding, and column--value mapping for text-to-SQL \cite{deng2021strug}; RAT-SQL encodes schema relations and linking \cite{wang2020ratsql}. Quantity interpretation similarly associates values with units and concepts \cite{almasian2023cqe,roy2017udg}. These studies distinguish element identification from linking to textual evidence. Their learned representations do not implement the supplied-slot protocol evaluated here.
+StruG learns column grounding, value grounding, and column--value mapping for text-to-SQL (Structured Query Language) \cite{deng2021strug}; RAT-SQL encodes schema relations and linking \cite{wang2020ratsql}. Quantity interpretation similarly associates values with units and concepts \cite{almasian2023cqe,roy2017udg}. These studies distinguish element identification from linking to textual evidence. Their learned representations do not implement the supplied-slot protocol evaluated here.
 
 Text2Opt-Bench studies solver-verified optimization problems with increasing numerical data, even when formulation structure remains simple \cite{gao2026models}. Its BIND interventions distinguish oracle-assisted data externalization from trained binding specialists; the study also documents failures of an untrained two-stage pipeline. We do not reproduce these interventions. Our narrower question concerns complete stored-reference scalar agreement among outputs that pass coverage/type checks and the explanations supported when assignment inputs and scores are fixed. The scaling and intervention results are therefore not directly comparable to these exposed-catalog conditional diagnostics.
 
@@ -254,7 +260,7 @@ Compatibility ranks candidates by coarse type preference, absolute magnitude, an
 \begin{figure*}[t]
   \centering
   \includegraphics[width=0.90\textwidth]{Fig1.pdf}
-  \caption{Historical typed-greedy instantiation with explicit reference assistance. Typed query mentions fill slots formed by intersecting predicted-schema metadata keys (with reference-key fallback) and gold scalar keys. Assignment consumes mention indices, not unique values. The later metadata-only factorial protocol uses a different inventory.}
+  \caption{Historical typed-greedy instantiation with explicit reference assistance. Typed query mentions fill slots formed by intersecting predicted-schema metadata keys (with reference-key fallback) and gold scalar keys. Assignment consumes mention indices, not unique values. The later metadata-only factorial protocol uses a different inventory}
   \label{fig:instantiation-pipeline}
 \end{figure*}
 

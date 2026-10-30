@@ -57,7 +57,7 @@ Huang C, Tang Z, Hu S, et~al (2025) {ORLM}: A customizable framework in
   Research 73(6):2986--3009. \doi{10.1287/opre.2024.1233}
 
 \bibitem[{Huang et~al.(2017)Huang, Zhao, and Ma}]{huang2017beamfollowup}
-Huang L, Zhao K, Ma M (2017) When to finish? optimal beam search for neural
+Huang L, Zhao K, Ma M (2017) When to finish? {Optimal} beam search for neural
   text generation (modulo beam size). In: Proceedings of the 2017 Conference on
   Empirical Methods in Natural Language Processing, pp 2134--2139,
   \doi{10.18653/v1/D17-1227}
@@ -121,7 +121,7 @@ Xiao Z, Wang YJ, Han X, et~al (2026) {DeepOR}: A deep reasoning foundation
 
 \bibitem[{Xie et~al.(2026)Xie, Chen, Hu, Wu, Xu, Zhang, and
   Li}]{xie2026escaping}
-Xie W, Chen Y, Hu YX, et~al (2026) Escaping the sisyphus dilemma: Experience
+Xie W, Chen Y, Hu YX, et~al (2026) Escaping the {Sisyphus} dilemma: Experience
   replay for robust text-to-optimization modeling. In: Findings of the
   Association for Computational Linguistics: ACL 2026. Association for
   Computational Linguistics, pp 14100--14116,

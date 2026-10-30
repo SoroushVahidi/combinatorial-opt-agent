@@ -28,7 +28,9 @@
 \raggedbottom
 
 % Use standard PDF destinations in the corrected local companion document.
-\externaldocument[M-]{main}[Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf]
+\IfFileExists{main.aux}{%
+  \externaldocument[M-]{main}[Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf]%
+}{\input{main_crossrefs.tex}}
 \begin{document}
 \title[Online Resource 1: Scalar Grounding]{Online Resource 1: Retrieval-Assisted Scalar Grounding for Natural-Language Optimization: A Diagnostic Study}
 \author*[1]{\fnm{Soroush} \sur{Vahidi}}\email{sv96@njit.edu}

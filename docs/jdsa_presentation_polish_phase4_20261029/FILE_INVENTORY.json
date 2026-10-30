@@ -1,0 +1,113 @@
+{
+  "baseline": "b0eae08b711185eaf189a50b27bef2b73a04815b",
+  "files": [
+    {
+      "status": "M",
+      "path": "README.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/jdsa_presentation_polish_phase4_20261029/EDITORIAL_CHANGES.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/jdsa_presentation_polish_phase4_20261029/EVIDENCE_CHECK.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/jdsa_presentation_polish_phase4_20261029/FILE_INVENTORY.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/jdsa_presentation_polish_phase4_20261029/FINAL_AUDIT.txt"
+    },
+    {
+      "status": "A",
+      "path": "docs/jdsa_presentation_polish_phase4_20261029/PUBLIC_ACCESS.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/jdsa_presentation_polish_phase4_20261029/REFERENCE_ACCESS.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/jdsa_presentation_polish_phase4_20261029/VALIDATION.json"
+    },
+    {
+      "status": "A",
+      "path": "docs/jdsa_presentation_polish_phase4_20261029/verify_phase4.py"
+    },
+    {
+      "status": "D",
+      "path": "manuscript/jdsa-stage3/ESM_1.pdf"
+    },
+    {
+      "status": "A",
+      "path": "manuscript/jdsa-stage3/ESM_1_Retrieval_Assisted_Scalar_Grounding_Supplement.pdf"
+    },
+    {
+      "status": "D",
+      "path": "manuscript/jdsa-stage3/JDSA_Stage3_Submission_Source.zip"
+    },
+    {
+      "status": "M",
+      "path": "manuscript/jdsa-stage3/README.md"
+    },
+    {
+      "status": "A",
+      "path": "manuscript/jdsa-stage3/Retrieval_Assisted_Scalar_Grounding_JDSA_Submission_Source.zip"
+    },
+    {
+      "status": "M",
+      "path": "manuscript/jdsa-stage3/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf"
+    },
+    {
+      "status": "M",
+      "path": "manuscript/jdsa-stage3/SHA256SUMS.txt"
+    },
+    {
+      "status": "M",
+      "path": "manuscript/jdsa-stage3/build.sh"
+    },
+    {
+      "status": "A",
+      "path": "manuscript/jdsa-stage3/export_crossrefs.py"
+    },
+    {
+      "status": "M",
+      "path": "manuscript/jdsa-stage3/main.tex"
+    },
+    {
+      "status": "A",
+      "path": "manuscript/jdsa-stage3/main_crossrefs.tex"
+    },
+    {
+      "status": "M",
+      "path": "manuscript/jdsa-stage3/package_source.py"
+    },
+    {
+      "status": "D",
+      "path": "manuscript/jdsa-stage3/ready_conditioned_rows.tex"
+    },
+    {
+      "status": "M",
+      "path": "manuscript/jdsa-stage3/references.bib"
+    },
+    {
+      "status": "M",
+      "path": "manuscript/jdsa-stage3/reproduction_map.tex"
+    },
+    {
+      "status": "M",
+      "path": "manuscript/jdsa-stage3/supplement.bbl"
+    },
+    {
+      "status": "M",
+      "path": "manuscript/jdsa-stage3/supplement.tex"
+    },
+    {
+      "status": "A",
+      "path": "manuscript/jdsa-stage3/supplement_crossrefs.tex"
+    }
+  ]
+}

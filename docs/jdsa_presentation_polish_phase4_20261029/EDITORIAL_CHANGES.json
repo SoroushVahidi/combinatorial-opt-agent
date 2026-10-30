@@ -1,0 +1,56 @@
+[
+  {
+    "file": "main.tex",
+    "before": "\\usepackage{hyperref}",
+    "after": "\\usepackage{hyperref}\n% Springer bmhead uses subparagraph typography; these are top-level bookmarks.\n\\makeatletter\n\\def\\toclevel@subparagraph{1}\n\\makeatother",
+    "reason": "Correct bookmark hierarchy without changing printed headings or the class."
+  },
+  {
+    "file": "main.tex",
+    "before": "\\externaldocument[S-]{supplement}[ESM_1.pdf]",
+    "after": "\\IfFileExists{supplement.aux}{%\n  \\externaldocument[S-]{supplement}[ESM_1_Retrieval_Assisted_Scalar_Grounding_Supplement.pdf]%\n}{\\input{supplement_crossrefs.tex}}",
+    "reason": "Descriptive companion filename; bundled label definitions allow direct journal compilation without temporary auxiliary files."
+  },
+  {
+    "file": "supplement.tex",
+    "before": "\\externaldocument[M-]{main}[Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf]",
+    "after": "\\IfFileExists{main.aux}{%\n  \\externaldocument[M-]{main}[Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf]%\n}{\\input{main_crossrefs.tex}}",
+    "reason": "Bundled label definitions support standalone supplementary compilation."
+  },
+  {
+    "file": "main.tex",
+    "before": "On 331 NLP4LP benchmark queries and 335 schema documents",
+    "after": "On 331 queries from NLP4LP, a benchmark for natural-language linear and mixed-integer linear programming, and 335 schema documents",
+    "reason": "Explain the benchmark name in the abstract without adding an unspecified citation or changing its population."
+  },
+  {
+    "file": "main.tex",
+    "before": "mapping for text-to-SQL \\cite{deng2021strug}",
+    "after": "mapping for text-to-SQL (Structured Query Language) \\cite{deng2021strug}",
+    "reason": "Define SQL at its first main-text use."
+  },
+  {
+    "file": "main.tex",
+    "before": "The later metadata-only factorial protocol uses a different inventory.}",
+    "after": "The later metadata-only factorial protocol uses a different inventory}",
+    "reason": "JDSA Figure Captions instructions prohibit terminal caption punctuation."
+  },
+  {
+    "file": "references.bib",
+    "before": "title     = {Escaping the Sisyphus Dilemma:",
+    "after": "title     = {Escaping the {Sisyphus} Dilemma:",
+    "reason": "Protect the proper noun verified in the official ACL proceedings record."
+  },
+  {
+    "file": "references.bib",
+    "before": "title={When to Finish? Optimal Beam",
+    "after": "title={When to Finish? {Optimal} Beam",
+    "reason": "Preserve capitalization after the question mark, verified in the official ACL proceedings record."
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before": "This attribution correction remains an unreleased author-review revision.",
+    "after": "The corrected manuscript remains a pre-submission author-review version.",
+    "reason": "Remove stale unreleased status before the authorized versioned public manuscript release; preserve review status and evidence boundaries."
+  }
+]

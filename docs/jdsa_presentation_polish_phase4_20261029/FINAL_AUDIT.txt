@@ -1,0 +1,189 @@
+JDSA FINAL PRESENTATION AUDIT — PHASE 4
+Audit date: 2026-10-29
+Starting commit: b0eae08b711185eaf189a50b27bef2b73a04815b
+Branch: manuscript/jdsa-presentation-polish-20261029
+Canonical source: manuscript/jdsa-stage3/main.tex
+
+TECHNICAL AUDIT: PASS. Administrative submission clearance remains unverified.
+The delivery message records the final branch/main SHAs and post-push public
+verification. This report is committed with the audited manuscript before the
+conditional fast-forward integration and new manuscript release publication.
+
+BASELINE AND SCIENTIFIC PRESERVATION
+The initial worktree was clean at the required Phase 3 tip. Phase 1 commit
+ae9eb9c14c53c687dafe20d9d774a419d198424d and Phase 2 commit
+70ff74c79628bdf5df2ae7e7375a0a0c3c6be240 are ancestors. No earlier phase was
+restarted or overwritten. The main manuscript was read in full before editing;
+both printed bibliographies and the relevant supplementary provenance were read.
+
+795 final automated checks pass. Every table environment, equation environment,
+and Algorithm 1 environment is byte-identical to Phase 3. All 140 numerical cells,
+24 paired entries and 15 bold highlights match the Phase 3 source and rendered
+PDF. Research questions, citations, labels, cross-references and public evidence
+URLs/pins retain their exact sequences. All main-text numeral tokens and all
+supplementary PDF numeral tokens are unchanged. Declarations, funding, author
+contributions, AI-use disclosures and acknowledgment substance are byte-identical.
+The 331-query and 49-query populations, all conditional denominators, retrospective
+statistics, negative findings and evidence/semantic limitations are preserved.
+
+The independently downloaded immutable evidence ZIP matches its published asset
+checksum and passes 9,737 saved-record checks under Python 3.12.3 / NumPy 2.3.5.
+No model, inference, training or solver experiment ran. EVIDENCE_CHECK.json records
+the command, versions, checks and hashes. Historical inference remains incompletely
+reproducible; the manuscript makes no broader claim.
+
+MINIMAL CORRECTIONS
+EDITORIAL_CHANGES.json records every changed manuscript/bibliography source segment.
+1. Explain the NLP4LP benchmark in the abstract; expand SQL at its first body use.
+   Abstract: 211 -> 220 whitespace-delimited words; keywords remain six.
+2. Remove Figure 1's terminal caption period to follow the journal's caption rule.
+3. Correct the bookmark level described below without changing printed typography.
+4. Protect Sisyphus and post-question-mark Optimal against BibTeX lowercasing,
+   verified against the official ACL records. No bibliographic identity, DOI,
+   year, volume, pages, publication status or citation selection changes.
+5. Remove the supplement's stale 'unreleased' description before public release,
+   retaining its pre-submission author-review status and all scientific provenance.
+6. Use a descriptive supplementary PDF filename and update companion references.
+7. Add generated companion-label source dependencies so a journal can compile
+   either main.tex or supplement.tex independently without temporary auxiliary files.
+
+JDSA COMPLIANCE CHECKLIST
+Official source, consulted on the audit date:
+https://link.springer.com/journal/41060/submission-guidelines
+
+PASS — Springer two-column format: existing sn-jnl, iicol, sn-basic, Numbered.
+PASS — Title page: unchanged title; Soroush Vahidi; complete NJIT affiliation;
+       sv96@njit.edu; ORCID 0000-0003-1934-6282; corresponding-author marker.
+PASS — Abstract: 220 words, within 150–250; benchmark clarified; no citations.
+PASS — Keywords: six, within four–six.
+PASS — Decimal headings: at most three numbered levels.
+PASS — Numbered square-bracket citations; all 28 main / 23 supplement entries used.
+PASS — DOI presentation; verified titles; full journal names retained where used.
+PASS — Six sequential main tables, one figure, one algorithm; all referenced.
+PASS — Captions, notes, denominators and descriptive highlighting conventions.
+PASS — Figure: editable TikZ, embedded fonts, legible final scale, adequate lines;
+       information remains distinguishable without color.
+PASS — Statements and Declarations, data/code availability, ethics, authorship,
+       funding, competing interests and accurate AI disclosures retained.
+PASS — Supplement: numbered Online Resource 1; article, journal, author, affiliation
+       and corresponding email present; descriptive ESM_1-prefixed PDF supplied.
+PASS — Flat editable LaTeX ZIP with dependencies, figures and matching PDFs;
+       no temporary build outputs or restricted research data.
+PENDING AUTHOR ACTION — Confirm withdrawal/non-overlap before journal submission;
+       enter contribution/competing-interest details in the submission interface.
+
+The iicol template option is explicitly recommended by the current instructions.
+Sans-serif figure lettering and EPS are preferences, not reasons to replace the
+existing legible embedded-font vector PDF. No study-specific registration applies
+to this non-human-participant diagnostic study. No new template was introduced.
+
+TABLE HIGHLIGHTS
+Table 1 — BGE-M3: Orig 0.9456; Noisy 0.9426; Short 0.8157; Avg. 0.9013.
+Table 2 — Best non-oracle: BGE-M3 Coverage 0.9154, TypeMatch 0.8946,
+          InstReady 0.8248, Strict 0.8006; ratio-aware TF-IDF Exact20 0.2614.
+          Oracle-TG remains unbolded; Exact20 remains conditional.
+Table 3 — No ranking imposed on differing conditional populations.
+Table 4 — No ranking imposed on ordered failure/success categories.
+Table 5 — Typed greedy Coverage 0.8886, InstReady 0.8006, Strict 0.7704;
+          search-structured TypeMatch 0.8795, Exact20 0.6397, entire 46/331.
+Table 6 — No ranking across distinct paired pool/scorer controls; arrows unchanged.
+There are no tied maxima in Tables 1/2/5. Bold is descriptive, not significance.
+
+BOOKMARK WARNING: RESOLVED
+In the bundled unmodified sn-jnl.cls, bmhead invokes
+@startsection{subparagraph}{5}; after the level-one Conclusion it attempts a
+level-five Supplementary information bookmark. Hyperref previously repaired this
+four-level jump to level two, incorrectly nesting that bookmark under Conclusion.
+A preamble definition of toclevel@subparagraph=1 fixes only bookmark semantics.
+There are no actual paragraph/subparagraph scientific headings in this manuscript.
+Printed headings and content are preserved; Acknowledgements and Supplementary
+information are now valid top-level bookmarks. The final main/supplement logs
+have no warnings. The build rejects future bookmark-level warnings.
+
+COMPILATION AND VISUAL CHECKS
+Article: 16 pages. Supplement: 38 pages. Abstract: 220 words. Keywords: six.
+All 16 final article pages were visually inspected, including tables, figure,
+algorithm, DOI links, availability statements and bibliography. The supplement's
+changed pages 9, 10, 36 and 37 were inspected; all other 34 pages render pixel-
+identically to Phase 3. No clipped text, overlapping elements, missing symbols,
+or problematic float displacement was observed. Figure 1 and all table layouts
+retain the validated Phase 3 presentation.
+
+Both paired clean builds and separate journal-style main-only/supplement-only
+builds reproduce the final PDFs byte for byte. The independent package build also
+reproduces Fig1.pdf, both bibliographies, and both companion-label sources exactly.
+The package contains 33 flat files. No .aux, .log, .blg, .out, cache, credential,
+private correspondence, dataset or generic main.pdf is included. General text
+underfull notices remain 52 in main and 39 in the supplement, as in Phase 3; there
+are no overfull boxes, missing citations, unresolved references or BibTeX errors.
+All fonts are embedded. All 197 internal and 31 companion-document named links
+resolve; 128 external annotations retain their exact destination sets. Main
+printed URLs and pinned hashes match their link annotations.
+
+Primary build directory: /tmp/jdsa-build.DkqfRM
+Paired independent output: /tmp/jdsa-presentation-phase4-20261029/independent
+Independent primary-document builds: /tmp/jdsa-presentation-phase4-20261029/direct-main
+and /tmp/jdsa-presentation-phase4-20261029/direct-supplement
+Validator command:
+python3 docs/jdsa_presentation_polish_phase4_20261029/verify_phase4.py /tmp/jdsa-build.DkqfRM /tmp/jdsa-presentation-phase4-20261029/independent /tmp/jdsa-presentation-phase4-20261029
+These temporary paths are verification records, not package dependencies.
+
+PUBLIC ACCESS AND REFERENCES
+Anonymous requests use requests.Session with trust_env=False, no credentials,
+Authorization header, cookie jar reused from authenticated sessions, or netrc.
+HTTP 200 verified for:
+https://github.com/SoroushVahidi/combinatorial-opt-agent
+https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0
+https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics
+https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0
+The evidence ZIP, its checksum file, exact pinned directory API listing and pinned
+verify.py were downloaded anonymously. The 172-file ZIP passed CRC and its own
+integrity verifier. Existing historical manuscript release metadata is public.
+The final delivery message records post-push article/supplement/source-ZIP checks.
+
+The complete printed bibliographies were reviewed. Of 44 citation destinations,
+32 returned HTTP 200 directly. Others encountered publisher automation blocking,
+rate limiting or a DOI redirect to an older ACL host; DOI resolution or registry
+metadata was verified where applicable. JSTOR's anti-automation response prevents
+a fresh full-content check of the unchanged Holm record. No citation was replaced
+on that basis. REFERENCE_ACCESS.json preserves actual statuses rather than
+misclassifying restricted automated access as a missing paper.
+
+COLM primary record still explicitly identifies pre-proceedings and offers no
+BibTeX download; the existing preliminary status and absence of DOI are retained:
+https://proceedings.colm.cc/paper_files/paper/2026/hash/6feb9b30798abcfae937760d183605e1-Abstract-Conference.html
+The two capitalization corrections are supported by:
+https://aclanthology.org/2026.findings-acl.690/
+https://aclanthology.org/D17-1227/
+The benchmark description is consistent with its primary dataset record:
+https://huggingface.co/datasets/udell-lab/NLP4LP
+No gated dataset was downloaded or redistributed.
+
+CANONICAL CLEANUP
+Only three old paths are removed, all recoverable at the Phase 3 commit:
+- ESM_1.pdf: replaced by ESM_1_Retrieval_Assisted_Scalar_Grounding_Supplement.pdf.
+- JDSA_Stage3_Submission_Source.zip: replaced by the descriptive
+  Retrieval_Assisted_Scalar_Grounding_JDSA_Submission_Source.zip.
+- ready_conditioned_rows.tex: unused exact duplicate of the four Table 3 rows
+  already embedded in main.tex; equality verified before removal.
+All three paths are under manuscript/jdsa-stage3/. No other manuscript, evidence,
+research output, historical release, tag, or worktree is removed. Required .bbl
+files and the distinct Fig1.pdf figure asset remain. Root and canonical READMEs
+point to the renamed current deliverables. FILE_INVENTORY.json lists exact paths.
+
+INTEGRATION AND RELEASE CONDITIONS
+All technical pre-integration checks above pass. The next authorized actions are
+to commit/push this branch, fetch current main, inspect divergence, fast-forward
+when possible, and verify remote files anonymously. Any new main changes must be
+preserved; conflicts require review and revalidation. No force push or history
+rewrite is permitted. The cleared new release target is jdsa-manuscript-v1.1.0,
+which does not exist at audit time. It contains only the final article, supplement,
+editable source ZIP and checksums; the existing evidence and manuscript v1.0.0
+releases/tags are not changed. No new dataset or private record is published.
+
+ADMINISTRATIVE ITEM BEFORE SUBMISSION
+Available records establish a prior overlapping submission and a withdrawal
+request, but do not establish completed withdrawal. The author must verify formal
+withdrawal/non-overlap before submitting. This does not block the authorized
+repository integration. No private correspondence is copied into the repository
+or release, and no journal is contacted. No manuscript is submitted.

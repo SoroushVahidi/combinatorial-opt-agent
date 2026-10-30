@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "checks_passed": 9737,
+  "release": "jdsa-evidence-v2.0.0",
+  "scope": "Frozen-record reanalysis; not full experimental reproduction",
+  "python": "3.12.3",
+  "numpy": "2.3.5",
+  "primary_statistics": {
+    "all_CIs_and_exact_tests_match": true,
+    "contrasts": 16,
+    "numpy": "2.3.5",
+    "resamples": 10000,
+    "seed": 42
+  },
+  "new_model_calls": 0,
+  "new_solver_calls": 0,
+  "downloaded_zip_sha256": "de7f968bd4dbf4dfc9efa67818c461c0aa48b2993e704823bbf1b321ce44bd37",
+  "release_asset_checksum_match": true,
+  "verification_report_sha256": "1bacf16801ae0a3ab10e175a8f41965c6318a2b43d33abee1d66717d2a93350b",
+  "command": "OPENBLAS_NUM_THREADS=1 python3 -I verify.py --output /tmp/jdsa-presentation-phase4-20261029/evidence-verification.json"
+}
