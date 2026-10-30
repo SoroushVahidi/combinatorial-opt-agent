@@ -1,0 +1,1055 @@
+[
+  {
+    "file": "additional_evidence.tex",
+    "before_lines": [
+      4,
+      4
+    ],
+    "after_lines": [
+      4,
+      4
+    ],
+    "before": "The archived ESWA-era campaign evaluates 20 configurations over the same 331-query frame in three variants. Table~\\ref{tab:legacy-grounding} reaggregates ordinary readiness from its preserved per-query CSVs. The historical typed baseline has 175 ready original queries, not the 174 stated in one older narrative summary; the retained row observations take precedence. These are historical configurations, not new evaluations of current code. Coverage, TypeMatch, conditional Exact20 and ordered partitions from all 60 files remain in the accompanying offline check record.",
+    "after": "The archived early grounding campaign evaluates 20 configurations over the same 331-query frame in three variants. Table~\\ref{tab:legacy-grounding} reaggregates ordinary readiness from its preserved per-query CSVs. The historical typed baseline has 175 ready original queries, not the 174 stated in one older narrative summary; the retained row observations take precedence. These are historical configurations, not new evaluations of current code. Coverage, TypeMatch, conditional Exact20 and ordered partitions from all 60 files remain in the accompanying offline check record."
+  },
+  {
+    "file": "additional_evidence.tex",
+    "before_lines": [
+      7,
+      7
+    ],
+    "after_lines": [
+      7,
+      7
+    ],
+    "before": "\\caption{Ordinary-ready counts in the retained legacy campaign; denominator 331 for every cell. These input-corruption and scoring variants are distinct from the ratio-aware main comparison. No historical significance claim is inferred from this descriptive table.}\\label{tab:legacy-grounding}",
+    "after": "\\caption{Ordinary-ready counts in the retained legacy campaign; denominator 331 for every cell. IR denotes intermediate representation. These input-corruption and scoring variants are distinct from the ratio-aware main comparison. No historical significance claim is inferred from this descriptive table.}\\label{tab:legacy-grounding}"
+  },
+  {
+    "file": "additional_evidence.tex",
+    "before_lines": [
+      36,
+      36
+    ],
+    "after_lines": [
+      36,
+      36
+    ],
+    "before": "\\caption{August 12 baseline-staleness audit, saved ordinary-ready counts on 331 original queries per row. This is a separate historical configuration cohort.}\\label{tab:staleness-grounding}",
+    "after": "\\caption{August 12 baseline-staleness audit, saved ordinary-ready counts on 331 original queries per row. This is a separate historical configuration cohort; IR denotes intermediate representation.}\\label{tab:staleness-grounding}"
+  },
+  {
+    "file": "additional_evidence.tex",
+    "before_lines": [
+      54,
+      54
+    ],
+    "after_lines": [
+      54,
+      54
+    ],
+    "before": "Historical higher-rank retrieval aggregates are preserved in Table~\\ref{tab:ranked-retrieval}. Main top-1 rates can be checked against retained schema IDs; the full original ranked lists needed to independently recalculate every higher-rank cell were not authenticated. The values below therefore retain aggregate-supported status and are not independent replications of retrieval. Hit@5 averages indicators that the target occurs among the first five results; the historical implementation stores this quantity under the field name \\texttt{P@5}. It is not precision among the five retrieved documents.",
+    "after": "Historical higher-rank retrieval aggregates are preserved in Table~\\ref{tab:ranked-retrieval}. Main top-1 rates can be checked against retained schema IDs; the full original ranked lists needed to independently recalculate every higher-rank cell were not authenticated. The values below therefore retain aggregate-supported status and are not independent replications of retrieval. Hit@5 averages indicators that the target occurs among the first five results; the historical implementation stores this quantity under the field name \\texttt{P@5}. It is not precision among the five retrieved documents. MRR@10 is mean reciprocal rank truncated at ten; nDCG@10 is normalized discounted cumulative gain at ten; Coverage@10 is the fraction with the target among the first ten results."
+  },
+  {
+    "file": "additional_evidence.tex",
+    "before_lines": [
+      75,
+      75
+    ],
+    "after_lines": [
+      75,
+      75
+    ],
+    "before": "The role/quantity Stage-A audit examines 49 targeted wrong assignments on a 331-query frame: 28 are marked separable, 10 ambiguous and 11 not separable by its rules. It projects zero additional coarse-ready queries (257 before and after); its recorded all-query cascade has false-trigger rate 1.0. Readiness neutrality does not show that a corrected value would be scientifically irrelevant. The separate strict-failure precursor identifies 54 schema-hit/non-ready cases and 58 Oracle non-ready cases. Its ratio-word prototype moves Strict from 247 to 255 with eight gains and no losses, later confirmed by the completed extraction ablation. Oracle projections of 254 for perfect extraction, 271 for expected-type repair, 272 for reuse and 247 for candidate filtering are not executed repair-policy outcomes.",
+    "after": "The role/quantity separability audit (also labeled Stage A in its own archive) examines 49 targeted wrong assignments on a 331-query frame: 28 are marked separable, 10 ambiguous and 11 not separable by its rules. It projects zero additional coarse-ready queries (257 before and after); its recorded all-query cascade has false-trigger rate 1.0. Readiness neutrality does not show that a corrected value would be scientifically irrelevant. The separate strict-failure precursor identifies 54 schema-hit/non-ready cases and 58 Oracle non-ready cases. Its ratio-word prototype moves Strict from 247 to 255 with eight gains and no losses, later confirmed by the completed extraction ablation. Oracle projections of 254 for perfect extraction, 271 for expected-type repair, 272 for reuse and 247 for candidate filtering are not executed repair-policy outcomes."
+  },
+  {
+    "file": "additional_evidence.tex",
+    "before_lines": [
+      112,
+      112
+    ],
+    "after_lines": [
+      112,
+      112
+    ],
+    "before": "Separate historical MiniLM schema-retrieval training has retained completed fitting records (including an 80,297-pair run), but addresses retrieval rather than occurrence binding. No completed MS-MARCO MiniLM cross-encoder or NL4Opt auxiliary neural checkpoint was authenticated. Implementations, export stubs and proposed clean external-supervision protocols are not counted as model outcomes.",
+    "after": "Separate historical MiniLM schema-retrieval training has retained completed fitting records (including an 80,297-pair run), but addresses retrieval rather than occurrence binding. No completed MiniLM cross-encoder run using the MS-MARCO passage-ranking benchmark or NL4Opt auxiliary neural checkpoint was authenticated. Implementations, export stubs and proposed clean external-supervision protocols are not counted as model outcomes."
+  },
+  {
+    "file": "additional_evidence.tex",
+    "before_lines": [
+      118,
+      118
+    ],
+    "after_lines": [
+      118,
+      118
+    ],
+    "before": "\\caption{Archived two-stage scalar-baseline observations. Each row has 331 queries. Exact20 uses the explicitly stated comparable schema-hit denominator; no provider ranking or semantic accuracy is inferred.}\\label{tab:archived-scalar-llm}",
+    "after": "\\caption{Archived two-stage scalar-baseline observations; orig is full text, noisy is corrupted/masked input, and short is the first sentence. Each row has 331 queries. Exact20 uses the explicitly stated comparable schema-hit denominator; no provider ranking or semantic accuracy is inferred.}\\label{tab:archived-scalar-llm}"
+  },
+  {
+    "file": "closed_audits.tex",
+    "before_lines": [
+      1,
+      1
+    ],
+    "after_lines": [
+      1,
+      1
+    ],
+    "before": "The G1--G3 audits were bounded source/record investigations and produced no experimental predictions. G1 found missing validated autonomous slot discovery; G2 distinguished slot participation from mention-candidate filtering. For G3, let $P_{\\mathrm{scalar}}(\\hat{s})$ select only metadata entries whose declared shape is empty. Table~\\ref{tab:g3-inventory} compares $K_G\\cap P_{\\mathrm{scalar}}$ against $P_{\\mathrm{scalar}}$ using saved TF--IDF IDs, without running a decoder.",
+    "after": "The autonomous-inventory and slot-participation audits (G1--G3) were bounded source/record investigations and produced no experimental predictions. G1 found missing validated autonomous slot discovery; G2 distinguished slot participation from mention-candidate filtering. G3 statically compared schema-only slot participation with reference-filtered participation. Here $\\hat{s}$ is the retrieved schema and $K_G$ its query\\textquotesingle s reference scalar-key set. For G3, let $P_{\\mathrm{scalar}}(\\hat{s})$ select only metadata entries whose declared shape is empty. Table~\\ref{tab:g3-inventory} compares $K_G\\cap P_{\\mathrm{scalar}}$ against $P_{\\mathrm{scalar}}$ using saved TF--IDF IDs, without running a decoder."
+  },
+  {
+    "file": "closed_audits.tex",
+    "before_lines": [
+      12,
+      12
+    ],
+    "after_lines": [
+      12,
+      12
+    ],
+    "before": "Cases where strict metadata-scalar A differs from original fallback A &7\\\\\\bottomrule",
+    "after": "Cases where metadata-scalar inventory differs from fallback inventory &7\\\\\\bottomrule"
+  },
+  {
+    "file": "common18_overview.tex",
+    "before_lines": [
+      3,
+      3
+    ],
+    "after_lines": [
+      3,
+      3
+    ],
+    "before": "The same 18 historically selected NLP4LP problems were attempted by a project reconstruction of PaMOP, adapted OptMATH and ORLM models, and zero-shot GPT-5.4. Table~\\ref{tab:ext-outcomes} preserves the original comparison with corrected terminal-objective accounting. Different prompts, weights, correction budgets and solver interfaces prevent equal-treatment ranking; the scalar-only pipeline is outside these columns. The following sections retain the full configurations, failures, conditional denominators and PaMOP precision withholding.",
+    "after": "The same 18 historically selected NLP4LP problems (the common-18 subset) were attempted by a project reconstruction of the partition-based formulation system PaMOP, adapted OptMATH and ORLM models for optimization modeling, and zero-shot GPT-5.4. Table~\\ref{tab:ext-outcomes} preserves the original comparison with corrected terminal-objective accounting. Different prompts, weights, correction budgets and solver interfaces prevent equal-treatment ranking; the scalar-only pipeline is outside these columns. The following sections retain the full configurations, failures, conditional denominators and PaMOP precision withholding."
+  },
+  {
+    "file": "common18_overview.tex",
+    "before_lines": [
+      8,
+      8
+    ],
+    "after_lines": [
+      8,
+      8
+    ],
+    "before": "\\caption{Offline reaggregation of archived common-18 records. Every system attempted generation on the same 18 cases. Parse denotes a retained AMPL parse or Python code extraction; Run denotes successful process/solve completion. Obj. counts valid numerical text extractions among successful runs, and Ref. counts available reference objectives among those extractions. Agreement is conditional on classifiable executed reference comparisons. W/H means withheld for insufficient precision; N/A means an unavailable execution environment.}",
+    "after": "\\caption{Offline reaggregation of archived common-18 records. Every system attempted generation on the same 18 cases. Parse denotes a retained parse in the AMPL algebraic modeling language or Python code extraction; Run denotes successful process/solve completion. Obj. counts valid numerical text extractions among successful runs, and Ref. counts available reference objectives among those extractions. Agreement is conditional on classifiable executed reference comparisons. W/H means withheld for insufficient precision; N/A means an unavailable execution environment.}"
+  },
+  {
+    "file": "d1_contrasts.tex",
+    "before_lines": [
+      4,
+      4
+    ],
+    "after_lines": [
+      4,
+      4
+    ],
+    "before": "\\caption{D1 contrast pairs, part 1. IDs omit the common D1P prefix. Labels are base/contrast judgments about the fixed candidate, not judgments about a generated complete model.}\\label{tab:d1-a}",
+    "after": "\\caption{D1 contrast pairs, part 1. C/I mean CORRECT/INCORRECT relative to the fixed candidate. IDs omit the common D1P prefix. Labels are base/contrast judgments about the fixed candidate, not judgments about a generated complete model.}\\label{tab:d1-a}"
+  },
+  {
+    "file": "d1_contrasts.tex",
+    "before_lines": [
+      17,
+      17
+    ],
+    "after_lines": [
+      17,
+      17
+    ],
+    "before": "\\caption{D1 contrast pairs, part 2. Together with Table~\\ref{tab:d1-a}, these cover eight categories. Pairs 01-06 and 07-05 preserve meaning; the remaining ten change it.}\\label{tab:d1-b}",
+    "after": "\\caption{D1 contrast pairs, part 2. C/I mean CORRECT/INCORRECT relative to the fixed candidate. Together with Table~\\ref{tab:d1-a}, these cover eight categories. Pairs 01-06 and 07-05 preserve meaning; the remaining ten change it.}\\label{tab:d1-b}"
+  },
+  {
+    "file": "grounding_diagnostics.tex",
+    "before_lines": [
+      6,
+      6
+    ],
+    "after_lines": [
+      6,
+      6
+    ],
+    "before": "Main Section~\\ref{M-subsec:method_controls} specifies the 24-cell design; Table~\\ref{M-tab:grounding-factorial-diagnostic} reports every one-to-one control. All 24 cells are preserved in the release's numeric ledgers and score/choice projections. Candidate identities, source context, values and lexical traces remain in local originals, not the public projection. The ordinal control's cardinalization and partially assisted inventory limit interpretation.",
+    "after": "Main Section~\\ref{M-subsec:method_controls} specifies the 24-cell design; Table~\\ref{M-tab:grounding-factorial-diagnostic} reports every one-to-one control. All 24 cells are preserved in the release's numeric ledgers and score/choice projections. Candidate identities, source context, values and lexical traces remain in local originals, not the public projection. Assigning numerical scores to ordinal preferences and using a partially assisted inventory limit interpretation of the ordinal control."
+  },
+  {
+    "file": "grounding_diagnostics.tex",
+    "before_lines": [
+      24,
+      24
+    ],
+    "after_lines": [
+      24,
+      24
+    ],
+    "before": "An exact MILP diagnostic holds the cached local/pairwise objective and",
+    "after": "An exact mixed-integer linear programming diagnostic holds the cached local/pairwise objective and"
+  },
+  {
+    "file": "llm_evidence.tex",
+    "before_lines": [
+      6,
+      6
+    ],
+    "after_lines": [
+      6,
+      6
+    ],
+    "before": "\\caption{Actual historical implementation and configuration, not original-author performance reproduction.}\\label{tab:llm-provenance}",
+    "after": "\\caption{Actual historical implementation and configuration, not original-author performance reproduction. $T$ is the sampling temperature; greedy generation selects the highest-probability next token.}\\label{tab:llm-provenance}"
+  },
+  {
+    "file": "llm_evidence.tex",
+    "before_lines": [
+      19,
+      19
+    ],
+    "after_lines": [
+      19,
+      19
+    ],
+    "before": "For continuity the reported Python proxy retains its original predicate. Let $a=\\operatorname{round}_{\\mathrm{even}}(\\hat z)$ and $b=\\operatorname{round}_{\\mathrm{even}}(z^*)$, using Python's float conversion and nearest-integer ties-to-even behavior. Agreement is",
+    "after": "For continuity the reported Python proxy retains its original predicate. Let $\\hat z$ be the generated program\\textquotesingle s terminal objective and $z^*$ the reference objective. Let $a=\\operatorname{round}_{\\mathrm{even}}(\\hat z)$ and $b=\\operatorname{round}_{\\mathrm{even}}(z^*)$, using Python's float conversion and nearest-integer ties-to-even behavior. Agreement is"
+  },
+  {
+    "file": "llm_evidence.tex",
+    "before_lines": [
+      28,
+      28
+    ],
+    "after_lines": [
+      28,
+      28
+    ],
+    "before": "Five PaMOP cases finish with parse failure; nine of its 13 successful cases execute without correction and four after correction. Adapted OptMATH has three unsuccessful processes, and zero-shot has two. Four of these five Python failures (cases 219 and 237 for both systems) invoke Gurobi, terminate infeasible or infeasible-or-unbounded, and then fail accessing an objective; OptMATH case 232 has a distinct nonlinear-constraint API construction error. These failure stages do not provide interchangeable semantic diagnoses. All successful runs report optimal/solved generated-model outcomes, with conditional feasibility counts $13/13$, $15/15$ and $16/16$ for PaMOP, OptMATH and zero-shot, respectively. This does not show that the generated models express the source problems.",
+    "after": "Five PaMOP cases finish with parse failure; nine of its 13 successful cases execute without correction and four after correction. Adapted OptMATH has three unsuccessful processes, and zero-shot has two. Four of these five Python failures (cases 219 and 237 for both systems) invoke Gurobi, terminate infeasible or infeasible-or-unbounded, and then fail accessing an objective; OptMATH case 232 has a distinct nonlinear-constraint application programming interface (API) construction error. These failure stages do not provide interchangeable semantic diagnoses. All successful runs report optimal/solved generated-model outcomes, with conditional feasibility counts $13/13$, $15/15$ and $16/16$ for PaMOP, OptMATH and zero-shot, respectively. This does not show that the generated models express the source problems."
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      46,
+      46
+    ],
+    "after_lines": [
+      46,
+      46
+    ],
+    "before": "\\abstract{Retrieval and structural checks can make natural-language optimization outputs appear usable even when numerical grounding is incomplete. We examine this diagnostic gap through three questions: fixed-catalog schema identification, the validity of coverage/type readiness as a numerical check, and the mechanisms underlying grounding outcomes. On 331 queries from NLP4LP, a benchmark for natural-language linear and mixed-integer linear programming, and 335 schema documents, term frequency--inverse document frequency retrieval and a pretrained dense encoder identify the target schema for 301 and 313 queries. Ratio-aware lexical grounding passes coarse readiness on 265 queries, but only seven meet the complete stored-reference scalar-tolerance criterion: 2.64\\% of ready outputs. A mutually exclusive residual partition distinguishes retrieval, coverage, type, and numerical failures. Six grounding procedures under fixed retrieval yield between seven and 46 complete successes, with candidates, scoring, abstention, and decoding changing together. A separate 49-query frozen-score assignment study improves exact slot counts without increasing the five whole-instance tolerance successes, limiting attribution to search. The methodological contribution is joint reporting of retrieval, readiness, and complete scalar agreement with explicit assistance, denominators, and evidence boundaries. Reference-derived inventories and benchmark exposure restrict the findings to assisted grounding. Supplementary relationship judgments and author contrasts assisted by artificial intelligence illustrate semantic limits without establishing accuracy. A versioned public release supports saved-record reanalysis; missing historical predictions and restricted originals prevent full experimental reproduction.}",
+    "after": "\\abstract{Retrieval and structural checks can make natural-language optimization outputs appear usable even when numerical grounding---assigning textual quantities to model parameters---is incomplete. We examine this diagnostic gap through three questions: fixed-catalog schema identification, the validity of coverage/type readiness as a numerical check, and the mechanisms underlying grounding outcomes. On 331 queries from NLP4LP, a benchmark for natural-language linear and mixed-integer linear programming, and 335 schema documents, term frequency--inverse document frequency retrieval and a pretrained dense encoder identify the target schema for 301 and 313 queries. Lexical grounding with multiplicative-word extraction passes coverage/type readiness on 265 queries, but only seven meet the complete stored-reference scalar-tolerance criterion: 2.64\\% of ready outputs. A mutually exclusive residual partition distinguishes retrieval, coverage, type, and numerical failures. Six grounding procedures under fixed retrieval yield between seven and 46 complete successes, with candidates, scoring, abstention, and decoding changing together. A separate 49-query assignment study with fixed candidates and scores improves exact slot counts without increasing the five whole-instance tolerance successes, limiting attribution to search. The methodological contribution is joint reporting of retrieval, readiness, and complete scalar agreement with explicit assistance, denominators, and evidence boundaries. Reference-derived inventories and benchmark exposure restrict the findings to assisted grounding. Supplementary relationship judgments and author contrasts assisted by artificial intelligence illustrate semantic limits without establishing accuracy. A versioned public release supports saved-record reanalysis; missing historical predictions and restricted originals prevent full experimental reproduction.}"
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      65,
+      65
+    ],
+    "after_lines": [
+      65,
+      65
+    ],
+    "before": "Retrieval-assisted scalar grounding provides an inspectable setting for this diagnosis. A retriever selects a document from a fixed catalog, and an existing deterministic procedure assigns extracted numerical mentions to scalar slots, producing a partial parameter mapping. The benchmark supplies reference-derived inventory information and includes all target schemas (Section~\\ref{subsec:assistance-setting}). This setting supports analysis of intermediate checks under supplied structure, rather than evaluation of autonomous model formulation.",
+    "after": "Retrieval-assisted scalar grounding provides an inspectable setting for this diagnosis. A retriever selects a document from a fixed catalog, and an existing deterministic procedure assigns numerical mentions (occurrences of quantities in the text) to scalar slots (parameters requiring single numerical values), producing a partial parameter mapping. The benchmark supplies reference-derived inventory information and includes all target schemas (Section~\\ref{subsec:assistance-setting}). This setting supports analysis of intermediate checks under supplied structure, rather than evaluation of autonomous model formulation."
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      74,
+      74
+    ],
+    "after_lines": [
+      74,
+      74
+    ],
+    "before": "The 331-query NLP4LP analysis jointly reports schema hits, coarse readiness, and agreement across every required stored-reference scalar, then partitions residual failures. It includes a comparison of six complete grounding procedures on that frame and a separate 49-query assignment control that fixes candidate pools and scores within decoder comparisons. Neither population is an independent confirmatory sample.",
+    "after": "The 331-query analysis of NLP4LP, a natural-language linear and mixed-integer linear programming benchmark, jointly reports schema hits (correct top-ranked templates), coarse readiness (coverage/type checks), and agreement across every required stored-reference scalar, then partitions residual failures. It includes a comparison of six complete grounding procedures on that frame and a separate 49-query assignment control that fixes candidate pools and scores within decoder comparisons. Neither population is an independent confirmatory sample."
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      79,
+      80
+    ],
+    "after_lines": [
+      79,
+      80
+    ],
+    "before": "\\item A diagnostic protocol for reference-assisted supplied-slot grounding that jointly reports retrieval, coverage/type readiness, and complete stored-reference scalar agreement with explicit input assistance and denominators.\n\\item A saved-record analysis of the 331-query benchmark that quantifies the readiness--grounding discrepancy through a mutually exclusive residual partition while preserving conditional Exact20 populations.",
+    "after": "\\item A diagnostic protocol for reference-assisted grounding with a supplied parameter inventory that jointly reports retrieval, coverage/type readiness, and complete stored-reference scalar agreement with explicit input assistance and denominators.\n\\item A saved-record analysis of the 331-query benchmark that quantifies the readiness--grounding discrepancy through a mutually exclusive residual partition while preserving the conditional populations of Exact20, the mean within-tolerance slot fraction on comparable schema hits."
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      94,
+      94
+    ],
+    "after_lines": [
+      94,
+      94
+    ],
+    "before": "Text2Opt-Bench studies solver-verified optimization problems with increasing numerical data, even when formulation structure remains simple \\cite{gao2026models}. Its BIND interventions distinguish oracle-assisted data externalization from trained binding specialists; the study also documents failures of an untrained two-stage pipeline. We do not reproduce these interventions. Our narrower question concerns complete stored-reference scalar agreement among outputs that pass coverage/type checks and the explanations supported when assignment inputs and scores are fixed. The scaling and intervention results are therefore not directly comparable to these exposed-catalog conditional diagnostics.",
+    "after": "Text2Opt-Bench studies solver-verified optimization problems with increasing numerical data, even when formulation structure remains simple \\cite{gao2026models}. Its BIND interventions, which externalize numerical data for programmatic binding, distinguish oracle-assisted data externalization from trained binding specialists; the study also documents failures of an untrained two-stage pipeline. We do not reproduce these interventions. Our narrower question concerns complete stored-reference scalar agreement among outputs that pass coverage/type checks and the explanations supported when assignment inputs and scores are fixed. The scaling and intervention results are therefore not directly comparable to these exposed-catalog conditional diagnostics."
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      98,
+      98
+    ],
+    "after_lines": [
+      98,
+      98
+    ],
+    "before": "Optimization systems also differ in their outputs and evaluation endpoints. NL4Opt and Ner4Opt examine optimization-related extraction and representations \\cite{ramamonjison2023nl4opt,kadioglu2024ner4opt}. OptiMUS and PaMOP generate formulations or solver code with feedback \\cite{ahmaditeshnizi2024optimus_icml,pan2025pamop}, whereas OptMATH, ORLM, and DeepOR develop data or trained modeling systems \\cite{lu2025optmath,huang2025orlm,xiao2026deepor}. Retrieval for code generation, as in OPT2CODE, differs from selecting the parameter inventory itself \\cite{ahmed2025opt2code}. Online Resource 1, Table~\\ref{S-tab:comparison_landscape} and Section~\\ref{S-app:related-context}, provide the broader system context. End-to-end outcomes from these systems cannot substitute for scalar-binding measurements.",
+    "after": "Optimization systems also differ in their outputs and evaluation endpoints. Natural Language for Optimization (NL4Opt) and Ner4Opt, a named-entity recognition framework for optimization, examine extraction and representations \\cite{ramamonjison2023nl4opt,kadioglu2024ner4opt}. OptiMUS and PaMOP generate formulations or solver code with feedback \\cite{ahmaditeshnizi2024optimus_icml,pan2025pamop}, whereas the OptMATH data-synthesis framework and the ORLM and DeepOR modeling systems develop data or trained models \\cite{lu2025optmath,huang2025orlm,xiao2026deepor}. Retrieval for code generation, as in OPT2CODE, differs from selecting the parameter inventory itself \\cite{ahmed2025opt2code}. Online Resource 1, Table~\\ref{S-tab:comparison_landscape} and Section~\\ref{S-app:related-context}, provide the broader system context. End-to-end outcomes from these systems cannot substitute for scalar-binding measurements."
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      104,
+      104
+    ],
+    "after_lines": [
+      104,
+      104
+    ],
+    "before": "Structural validity and semantic validation require different checks. Constrained semantic-role inference and PICARD impose structural restrictions \\cite{punyakanok2004ilp,scholak2021picard}, whereas EquivaMap checks mappings between formulations that preserve feasibility and optimality \\cite{zhai2025equivamap}. Our stored-scalar test establishes neither formulation equivalence nor fidelity to the source description; these stronger endpoints delimit what a positive diagnostic result means.",
+    "after": "Structural validity and semantic validation require different checks. Constrained semantic-role inference and the incremental parsing method PICARD impose structural restrictions \\cite{punyakanok2004ilp,scholak2021picard}, whereas EquivaMap checks mappings between formulations that preserve feasibility and optimality \\cite{zhai2025equivamap}. Our stored-scalar test establishes neither formulation equivalence nor fidelity to the source description; these stronger endpoints delimit what a positive diagnostic result means."
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      115,
+      115
+    ],
+    "after_lines": [
+      115,
+      115
+    ],
+    "before": "Given a query, the system returns a top-1 catalog schema and a partial mapping of its scalar parameters \\cite{nlp4lp_dataset}. Schema retrieval ranks $\\mathcal{S}=\\{s_1,\\dots,s_M\\}$ and returns",
+    "after": "Given a query $q$, the system returns a top-1 catalog schema and a partial mapping of its scalar parameters \\cite{nlp4lp_dataset}. Schema retrieval ranks the catalog $\\mathcal{S}=\\{s_1,\\dots,s_M\\}$ of $M$ schemas and returns"
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      129,
+      129
+    ],
+    "after_lines": [
+      129,
+      129
+    ],
+    "before": "Gold scalar status therefore filters the slot inventory \\emph{before} assignment: gold keys affect both prediction construction and evaluation, although the mention-selection rule does not receive gold numerical magnitudes. Let $y_q : K_G(q) \\to \\mathbb{R}$ be the gold map and $\\hat{y}_{q}$ the partial assignment on $A(q) \\subseteq E(q,\\hat{s})$; masked inputs may leave a raw unknown token rather than a numeric value. Retrieval quality measures top-1 schema match, whereas downstream quality measures how well eligible scalars are filled from text.",
+    "after": "Here, gold denotes the stored benchmark reference, not independently verified semantic truth. Gold scalar status therefore filters the slot inventory \\emph{before} assignment: gold keys affect both prediction construction and evaluation, although the mention-selection rule does not receive gold numerical magnitudes. Let $y_q : K_G(q) \\to \\mathbb{R}$ be the gold map and $\\hat{y}_{q}$ the partial assignment on $A(q) \\subseteq E(q,\\hat{s})$; masked inputs may leave a raw unknown token rather than a numeric value. Retrieval quality measures top-1 schema match, whereas downstream quality measures how well eligible scalars are filled from text."
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      142,
+      142
+    ],
+    "after_lines": [
+      142,
+      142
+    ],
+    "before": "The lexical path uses catalog-fitted term frequency--inverse document frequency (TF--IDF), cosine ranking, numerical parsing, and typed assignment, without generative-model calls or task-specific neural training. Optional BGE-M3 retrieval uses a pretrained encoder; the external generation and relationship studies use model services separately. Cached dependencies and metadata permit local lexical inference, but no comparative cost, privacy, or reliability benefit is measured. Historical replay also requires the run's ordering and environment (Section~\\ref{subsec:limitations}).",
+    "after": "The lexical path uses catalog-fitted term frequency--inverse document frequency (TF--IDF), cosine ranking, numerical parsing, and typed assignment, without generative-model calls or task-specific neural training. Optional BGE-M3 retrieval uses a pretrained multilingual text encoder to represent queries and schemas as dense vectors; the external generation and relationship studies use model services separately. Cached dependencies and metadata permit local lexical inference, but no comparative cost, privacy, or reliability benefit is measured. Historical replay also requires the run's ordering and environment (Section~\\ref{subsec:limitations})."
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      145,
+      145
+    ],
+    "after_lines": [
+      145,
+      145
+    ],
+    "before": "\\textit{Schema R@1} is $N^{-1}\\sum_{i=1}^N H_i$, where $H_i=\\mathbf{1}[\\hat{s}_i=s_i^*]$ and $N=331$. For downstream metrics, let $E_i=E(q_i,\\hat{s}_i)$ and let $A_i\\subseteq E_i$ denote the assigned slots. Let $T_i\\subseteq A_i$ contain assignments accepted by the implemented coarse-type compatibility predicate. Compatibility is broader than literal type equality: in addition to same-type matches, integer mentions are accepted for float slots, and integer or float mentions for currency slots. Expected types are inferred heuristically from slot names, not from annotated semantic roles. Define",
+    "after": "\\textit{Schema R@1} (recall at rank one) is $N^{-1}\\sum_{i=1}^N H_i$, where $H_i=\\mathbf{1}[\\hat{s}_i=s_i^*]$ indicates a schema hit, $s_i^*$ is query $i$\\textquotesingle s reference schema, and $N=331$. For downstream metrics, let $E_i=E(q_i,\\hat{s}_i)$ and let $A_i\\subseteq E_i$ denote the assigned slots. Let $T_i\\subseteq A_i$ contain assignments accepted by the implemented coarse-type compatibility predicate. Compatibility is broader than literal type equality: in addition to same-type matches, integer mentions are accepted for float slots, and integer or float mentions for currency slots. Expected types are inferred heuristically from slot names, not from annotated semantic roles. Define"
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      162,
+      162
+    ],
+    "after_lines": [
+      162,
+      162
+    ],
+    "before": "Coverage and TypeMatch in Eqs.~\\eqref{eq:coverage} and~\\eqref{eq:typematch} are \\emph{macro-averages over queries}, with zero-denominator queries contributing zero. Separate type-stratified diagnostic files instead pool slots by type. Abstention leaves a slot unfilled and reduces coverage; TypeMatch conditions on assigned slots within each query before averaging across all queries. Missing retrieval yields an empty eligible set and zero coverage and type score. A masked mention can count as assigned without a comparable numerical value, but its implemented unknown type fails the coarse-type predicate.",
+    "after": "Coverage and TypeMatch in Eqs.~\\eqref{eq:coverage} and~\\eqref{eq:typematch} are \\emph{macro-averages over queries} (each query receives equal weight), with zero-denominator queries contributing zero. Separate type-stratified diagnostic files instead pool slots by type. Abstention leaves a slot unfilled and reduces coverage; TypeMatch conditions on assigned slots within each query before averaging across all queries. Missing retrieval yields an empty eligible set and zero coverage and type score. A masked mention can count as assigned without a comparable numerical value, but its implemented unknown type fails the coarse-type predicate."
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      169,
+      169
+    ],
+    "after_lines": [
+      169,
+      169
+    ],
+    "before": "A slot passes the inclusive tolerance rule if $e_{i,s}\\leq0.20$: absolute error at most $0.20$ for $|y|<1$, otherwise relative error at most $20\\%$. No additional type gate is imposed on this numerical comparison. With $J=\\{i:H_i=1,\\ |C_i|>0\\}$,",
+    "after": "A slot passes the inclusive tolerance rule if $e_{i,s}\\leq0.20$: absolute error at most $0.20$ for $|y|<1$, otherwise relative error at most $20\\%$. No additional type gate is imposed on this numerical comparison. The conditional denominator counts only queries with a schema hit and at least one comparable slot. With $J=\\{i:H_i=1,\\ |C_i|>0\\}$,"
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      220,
+      220
+    ],
+    "after_lines": [
+      220,
+      220
+    ],
+    "before": "We compare BM25, TF--IDF cosine retrieval, latent semantic analysis (LSA), and the pretrained BGE-M3 encoder \\cite{robertson2009bm25,pedregosa2011sklearn,deerwester1990lsa,chen2024m3embedding}; Table~\\ref{S-tab:retrieval_backbones} summarizes their representations. Classical indexes fit the catalog without query-label supervision, and only the top-1 schema enters grounding. Uniform random retrieval gives the theoretical reference $1/335\\approx0.0030$. Oracle selection substitutes the target schema as a control; it is not a guaranteed upper bound on other grounders. BGE reporting metadata specifies float32, L2-normalized 1024-dimensional embeddings and cosine similarity, but does not authenticate the executed device or complete environment. Dataset tooling uses Hugging Face \\texttt{datasets} \\cite{lhoest2021datasets}.",
+    "after": "We compare BM25 probabilistic lexical ranking, TF--IDF cosine retrieval, latent semantic analysis (LSA), and the pretrained BGE-M3 encoder \\cite{robertson2009bm25,pedregosa2011sklearn,deerwester1990lsa,chen2024m3embedding}; Table~\\ref{S-tab:retrieval_backbones} summarizes their representations. Classical indexes fit the catalog without query-label supervision, and only the top-1 schema enters grounding. Uniform random retrieval gives the theoretical reference $1/335\\approx0.0030$. Oracle selection substitutes the target schema as a control; it is not a guaranteed upper bound on other grounders. BGE-M3 reporting metadata specifies float32 precision and unit-Euclidean-length (L2-normalized) 1024-dimensional embeddings and cosine similarity, but does not authenticate the executed device or complete environment. Dataset tooling uses Hugging Face \\texttt{datasets} \\cite{lhoest2021datasets}."
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      226,
+      226
+    ],
+    "after_lines": [
+      226,
+      226
+    ],
+    "before": "Typed greedy visits the run's slot order and assigns an unused indexed mention:",
+    "after": "Typed greedy visits slots $p_i$ in the run\\textquotesingle s order. With $\\mathcal T$ the extracted mentions and $\\mathcal U_{i-1}$ the mentions already used, it assigns an unused indexed mention:"
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      231,
+      231
+    ],
+    "after_lines": [
+      231,
+      231
+    ],
+    "before": "Compatibility ranks candidates by coarse type preference, absolute magnitude, and raw surface text, retaining source order for remaining ties. Mention indices cannot be reused, but equal values at distinct occurrences remain distinct candidates. Slot iteration follows Python set order, so replay requires the historical interpreter/hash configuration. The headline configurations omit optional lexical role cues. Algorithm~\\ref{alg:instantiation} and Figure~\\ref{fig:instantiation-pipeline} describe this protocol.",
+    "after": "Here $i$ indexes slots, rather than queries, and $\\mathrm{compat}$ ranks candidates by coarse type preference, absolute magnitude, and raw surface text, retaining source order for remaining ties. Mention indices cannot be reused, but equal values at distinct occurrences remain distinct candidates. Slot iteration follows Python set order, so replay requires the historical interpreter/hash configuration. The headline configurations omit optional lexical role cues. Algorithm~\\ref{alg:instantiation} and Figure~\\ref{fig:instantiation-pipeline} describe this protocol. In the algorithm, $A$ is the slot--value mapping, $\\mathcal P$ the eligible inventory, and $\\mathcal C_i$ the unused-mention candidates; these differ from the evaluation sets $A_i$ and $C_i$."
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      273,
+      273
+    ],
+    "after_lines": [
+      273,
+      273
+    ],
+    "before": "The separate factorial holds candidates and edge-score matrices fixed within each decoder pair. It crosses two candidate constructors, three scorers, two decoders, and two mention-reuse policies: 24 cells on 49 primary queries and 277 scalar slots. Each pair shares canonical lexical slot order and a zero-score null option. The ordinal type-preference control explicitly cardinalizes preferences; it does not reconstruct every historical greedy decision. The remaining scorers use contextual scores with or without percent/currency marker bonuses. With unrestricted reuse and additive scores, independent per-slot maximization already solves the stated objective. One-to-one matching is thus a diagnostic restriction, not a general requirement of formulation.",
+    "after": "The separate factorial holds candidates and edge-score matrices fixed within each decoder pair. It crosses two candidate constructors, three scorers, two decoders, and two mention-reuse policies: 24 cells on 49 primary queries and 277 scalar slots. Each pair shares canonical lexical slot order and a zero-score null option (leaving a slot unfilled). The ordinal type-preference control assigns numerical scores to ordered preferences; it does not reconstruct every historical greedy decision. The remaining scorers use contextual scores with or without percent/currency marker bonuses. With unrestricted reuse and additive scores, independent per-slot maximization already solves the stated objective. One-to-one matching, which prohibits reuse of a mention index, is thus a diagnostic restriction, not a general requirement of formulation."
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      279,
+      279
+    ],
+    "after_lines": [
+      279,
+      279
+    ],
+    "before": "All statistical inference is retrospective. The primary 331-query comparisons use 327 frozen delexicalized text groups, marginal 95\\% group-percentile bootstrap intervals ($B=10{,}000$, NumPy seed 42), exact groupwise method-swap tests, and Holm adjustment over 16 retrieval/readiness contrasts \\cite{holm1979followup}. Supplementary Table~\\ref{S-tab:nlp4lp-significance} preserves five displayed contrasts; the complete family also includes BGE--TF--IDF retrieval and ten readiness comparisons with grounding alternatives. The release retains exact query-level McNemar checks alongside, rather than in place of, the group tests.",
+    "after": "All statistical inference is retrospective. The primary 331-query comparisons use 327 frozen delexicalized text groups (formed after masking numerical expressions), marginal 95\\% group-percentile bootstrap intervals ($B=10{,}000$ bootstrap resamples, NumPy seed 42), exact groupwise method-swap tests, and Holm adjustment over 16 retrieval/readiness contrasts \\cite{holm1979followup}. Supplementary Table~\\ref{S-tab:nlp4lp-significance} preserves five displayed contrasts; the complete family also includes BGE--TF--IDF retrieval and ten readiness comparisons with grounding alternatives. The release retains exact query-level McNemar checks alongside, rather than in place of, the group tests."
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      294,
+      294
+    ],
+    "after_lines": [
+      294,
+      294
+    ],
+    "before": "  \\caption{Schema retrieval accuracy (\\textit{Schema R@1}) from saved top-1 IDs for 331 queries per variant: original (Orig), noisy, and short; Avg. averages the variants. Random is the theoretical uniform-selection rate over 335 schemas, $1/335 \\approx 0.0030$. Bold marks each column's largest descriptive value, not statistical significance.}",
+    "after": "  \\caption{Schema retrieval accuracy (recall at rank one, \\textit{Schema R@1}) from saved top-1 IDs for 331 queries per variant: original (Orig), noisy, and short; Avg. averages the variants. LSA is latent semantic analysis; TF--IDF is term frequency--inverse document frequency; BM25 is a lexical ranker and BGE-M3 a dense text encoder. Random is the theoretical uniform-selection rate over 335 schemas, $1/335 \\approx 0.0030$. Bold marks each column's largest descriptive value, not statistical significance.}"
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      338,
+      338
+    ],
+    "after_lines": [
+      338,
+      338
+    ],
+    "before": "  TG denotes typed-greedy grounding; extr. denotes extraction. TF--IDF-TG uses TF--IDF retrieval; Oracle-TG uses the reference schema. InstReady and Strict abbreviate InstantiationReady and StrictInstantiationReady: coarse readiness without numerical-value checks. Coverage, TypeMatch, InstReady, and Strict use all 331 queries. Exact20 macro-averages the per-query slot fractions in Eq.~\\eqref{eq:exact20} over 291, 291, 303, and 320 comparable schema-hit queries, respectively; noncomparable cases are excluded. Cells aggregate saved query metrics, not retained scalar mappings.",
+    "after": "  TG denotes typed-greedy grounding; extr. denotes extraction. TF--IDF-TG uses TF--IDF retrieval; Oracle-TG uses the reference schema. InstReady and Strict abbreviate InstantiationReady and StrictInstantiationReady: coarse readiness without numerical-value checks; Strict also requires the correct schema. Coverage is the assigned fraction of eligible slots, and TypeMatch the compatible fraction of assigned slots, averaged over queries. Coverage, TypeMatch, InstReady, and Strict use all 331 queries. Exact20 macro-averages the per-query slot fractions in Eq.~\\eqref{eq:exact20} over 291, 291, 303, and 320 comparable schema-hit queries, respectively; noncomparable cases are excluded. Cells aggregate saved query metrics, not retained scalar mappings."
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      368,
+      368
+    ],
+    "after_lines": [
+      368,
+      368
+    ],
+    "before": "BGE-M3 and ratio-aware TF--IDF share 298 schema hits but differ in Exact20 on 162 of them. Only TF--IDF records its hash seed; missing BGE runtime details and original scalar maps prevent attribution to retrieval alone. The ratio-word ablation permits a more specific comparison: strict readiness improves by eight cases with no losses ($247\\to255$), while complete scalar success rises from six to seven. The exact paired/group $p=0.0078125$ adjusts to $0.0302$. Online Resource 1, Section~\\ref{S-app:core-support}, retains the supporting ablation and schema-gate tables.",
+    "after": "BGE-M3 and ratio-aware TF--IDF share 298 schema hits but differ in Exact20 on 162 of them. Only TF--IDF records its hash seed; missing BGE-M3 runtime details and original scalar maps prevent attribution to retrieval alone. The ratio-word ablation permits a more specific comparison: strict readiness improves by eight cases with no losses ($247\\to255$), while complete scalar success rises from six to seven. The exact paired/group $p=0.0078125$ adjusts to $0.0302$. Online Resource 1, Section~\\ref{S-app:core-support}, retains the supporting ablation and schema-gate tables."
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      429,
+      429
+    ],
+    "after_lines": [
+      429,
+      429
+    ],
+    "before": "  InstReady and Strict denote ordinary and strict coarse readiness. $F^G$ requires the correct schema, all gold scalar keys, compatible types, and complete stored-reference scalar tolerance; every row uses denominator 331. IR denotes intermediate representation. Typed greedy and constrained assignment share ratio-aware patterns but differ in token/mention construction, context, scoring, abstention, and decoding; their comparison does not isolate global search. Other methods use intrinsic enriched extractors. Exact20 (on hits) uses 291 comparable schema-hit queries except for semantic-IR repair (285); noncomparable cases are excluded, as in Table~\\ref{tab:nlp4lp-downstream-main}.",
+    "after": "  Coverage and TypeMatch are query-averaged slot coverage and type compatibility. InstReady denotes coarse readiness; Strict additionally requires a schema hit. $F^G$ requires the correct schema, all gold scalar keys, compatible types, and complete stored-reference scalar tolerance; every row uses denominator 331. IR denotes intermediate representation. Typed greedy and constrained assignment share ratio-aware patterns but differ in token/mention construction, context, scoring, abstention, and decoding; their comparison does not isolate global search. Other methods use intrinsic enriched extractors. Exact20 (on hits), the query-averaged within-tolerance slot fraction, uses 291 comparable schema-hit queries except for semantic-IR repair (285); noncomparable cases are excluded, as in Table~\\ref{tab:nlp4lp-downstream-main}."
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      439,
+      439
+    ],
+    "after_lines": [
+      439,
+      439
+    ],
+    "before": "\\caption{One-to-one factorial controls on 49 queries and 277 gold scalar slots, distinct from the historical 331-query configurations. Each pair shows greedy $\\rightarrow$ exact maximum-sum assignment.}",
+    "after": "\\caption{One-to-one factorial controls on 49 queries and 277 gold scalar slots, distinct from the historical 331-query configurations. Each pair shows greedy $\\rightarrow$ exact maximum-sum assignment. Typed and Rich denote the typed-token and richer contextual mention parsers; Ordinal uses numerical ranks of type preferences, Context uses contextual scores, and No marker bonus removes percent/currency bonuses.}"
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      487,
+      487
+    ],
+    "after_lines": [
+      487,
+      487
+    ],
+    "before": "The 217-relationship study covers three services and 16 selected NL4Opt source problems. Historical repair and recovery yield $631/651$ structurally valid judgments and 197 complete cases with Fleiss' $\\kappa=0.371$. The 119 determinate unanimous, 77 disputed, and one unresolved complete cases describe agreement among assertions, not service correctness. No independently accepted human labels are available, and recovery changes the conditions and complete-case membership. Online Resource 1, Section~\\ref{S-app:relationship-evidence}, preserves the full validity and agreement accounting.",
+    "after": "The 217-relationship study covers three services and 16 selected NL4Opt source problems. Historical repair and recovery yield $631/651$ structurally valid judgments and 197 complete cases with chance-corrected inter-rater agreement, Fleiss' $\\kappa=0.371$. The 119 determinate unanimous, 77 disputed, and one unresolved complete cases describe agreement among assertions, not service correctness. No independently accepted human labels are available, and recovery changes the conditions and complete-case membership. Online Resource 1, Section~\\ref{S-app:relationship-evidence}, preserves the full validity and agreement accounting."
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      490,
+      490
+    ],
+    "after_lines": [
+      490,
+      490
+    ],
+    "before": "The 12 D1 pairs contain 24 author/AI-assisted samples across eight categories: ten meaning-changing pairs and two paraphrases. They illustrate bounds, units, roles, and logical relations that numerical overlap cannot resolve. They provide neither provider predictions nor independently blinded gold, and they do not explain measured pipeline error frequencies. Online Resource 1, Section~\\ref{S-app:d1-details}, preserves all final decisions and annotation dependencies.",
+    "after": "The author-reviewed semantic contrast set (D1) comprises 12 pairs containing 24 author/AI-assisted samples across eight categories: ten meaning-changing pairs and two paraphrases. They illustrate bounds, units, roles, and logical relations that numerical overlap cannot resolve. They provide neither provider predictions nor independently blinded gold, and they do not explain measured pipeline error frequencies. Online Resource 1, Section~\\ref{S-app:d1-details}, preserves all final decisions and annotation dependencies."
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      493,
+      493
+    ],
+    "after_lines": [
+      493,
+      493
+    ],
+    "before": "The common-18 formulation comparison, OptMATH extraction check, and historical 60/269/20-case proxies/executions address separate questions (Online Resource 1, Sections~\\ref{S-app:common18}, \\ref{S-app:extraction-details}, and~\\ref{S-app:restricted-details}). Heterogeneous generation protocols preclude a common leaderboard, and PaMOP objective agreement remains withheld because of unresolved precision. Extraction recall does not establish full-framework transfer, nor do the subset proxies establish numerical correctness. Their positive and negative findings, single-run timings, and auxiliary learning histories remain available as supporting evidence without determining the core conclusions.",
+    "after": "The formulation comparison on the same 18 selected problems (common-18), OptMATH extraction check, and historical 60/269/20-case proxies/executions address separate questions (Online Resource 1, Sections~\\ref{S-app:common18}, \\ref{S-app:extraction-details}, and~\\ref{S-app:restricted-details}). Heterogeneous generation protocols preclude a common leaderboard, and PaMOP objective agreement remains withheld because of unresolved precision. Extraction recall does not establish full-framework transfer, nor do the subset proxies establish numerical correctness. Their positive and negative findings, single-run timings, and auxiliary learning histories remain available as supporting evidence without determining the core conclusions."
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      501,
+      501
+    ],
+    "after_lines": [
+      501,
+      501
+    ],
+    "before": "\\emph{Historical reconstruction.} Unrecovered records include original headline scalar maps, complete manifests and outcomes for the 60/269/20-case subsets, full historical ranked lists, and some rendered prompts and provider settings. BGE lacks an authenticated hash seed, device, and environment; PaMOP lacks sufficient full-precision returns; and corrected OptMATH per-instance bootstrap counts are missing. Later caches cannot replace these observations. Public reanalysis is limited to the released records described below.",
+    "after": "\\emph{Historical reconstruction.} Unrecovered records include original headline scalar maps, complete manifests and outcomes for the 60/269/20-case subsets, full historical ranked lists, and some rendered prompts and provider settings. BGE-M3 lacks an authenticated hash seed, device, and environment; PaMOP lacks sufficient full-precision returns; and corrected OptMATH per-instance bootstrap counts are missing. Later caches cannot replace these observations. Public reanalysis is limited to the released records described below."
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      505,
+      505
+    ],
+    "after_lines": [
+      505,
+      505
+    ],
+    "before": "The public \\url{https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0} package supports deterministic aggregation of saved records, grouped statistical checks, and sanitized ledger/projection analysis. Online Resource 1, Section~\\ref{S-app:reproduction}, gives its exact Hugging Face revision and source hashes. Projections alone cannot support the raw source-dependent checks that passed locally. Complete local M5 originals, private reviews, and gated or permission-unclear third-party content remain nonpublic; historical v1.2 remains a separate frozen release.",
+    "after": "The public \\url{https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0} package supports deterministic aggregation of saved records, grouped statistical checks, and sanitized ledger/projection analysis. Online Resource 1, Section~\\ref{S-app:reproduction}, gives its exact Hugging Face revision and source hashes. Projections alone cannot support the raw source-dependent checks that passed locally. Complete local originals from the evidence-validation audit (M5), private reviews, and gated or permission-unclear third-party content remain nonpublic; historical v1.2 remains a separate frozen release."
+  },
+  {
+    "file": "main.tex",
+    "before_lines": [
+      507,
+      507
+    ],
+    "after_lines": [
+      507,
+      507
+    ],
+    "before": "The G1--G3 feasibility audits found neither a validated autonomous inventory path nor an informative native fixed-slot filter-removal comparison. Online Resource 1, Section~\\ref{S-app:g3}, preserves their static participation accounting; these findings are not measured zero effects. Stronger validation requires autonomous inventory discovery, retained occurrence-level predictions, independently reviewed templates, and full-precision execution records. The separate independent relationship-review protocol remains incomplete (Section~\\ref{S-app:future-reference}), and D1 does not complete it. These are requirements for future studies, not experiments performed here.",
+    "after": "The autonomous-inventory and slot-participation feasibility audits (G1--G3) found neither a validated autonomous inventory path nor an informative native fixed-slot filter-removal comparison. Online Resource 1, Section~\\ref{S-app:g3}, preserves their static participation accounting; these findings are not measured zero effects. Stronger validation requires autonomous inventory discovery, retained occurrence-level predictions, independently reviewed templates, and full-precision execution records. The separate independent relationship-review protocol remains incomplete (Section~\\ref{S-app:future-reference}), and D1 does not complete it. These are requirements for future studies, not experiments performed here."
+  },
+  {
+    "file": "preserved_results_details.tex",
+    "before_lines": [
+      29,
+      29
+    ],
+    "after_lines": [
+      29,
+      29
+    ],
+    "before": "The recorded lexical backbone has a small computational footprint on this catalog. TF--IDF fits a sparse vectorizer once over the $M=335$ schema documents and, for each query, transforms the query and scores it against the full catalog matrix by sparse cosine similarity (\\textsc{scikit-learn}); with fixed small $M$, the lexical query path consists of sparse vector operations and does not execute a neural encoder. Rule-based extraction is linear in query length. Typed-greedy assignment scans candidates in $O(|\\mathcal{P}|\\cdot|\\mathcal{T}|)$ comparisons in the (typically small) numbers of eligible slots and mentions. A historical timing summary for TF--IDF + ratio-aware typed greedy (331 queries, \\texttt{PYTHONHASHSEED=0}) records wall time $1.09$\\,s ($3.29$\\,ms/query) with peak RSS $\\approx 198$\\,MB. The recorded scope excludes BGE-M3 embedding load/compute and remote LLM baselines; the single retained timing summary is contextual, not a reproducible timing distribution or cross-method efficiency benchmark.",
+    "after": "The recorded lexical backbone has a small computational footprint on this catalog. TF--IDF fits a sparse vectorizer once over the $M=335$ schema documents and, for each query, transforms the query and scores it against the full catalog matrix by sparse cosine similarity (\\textsc{scikit-learn}); with fixed small $M$, the lexical query path consists of sparse vector operations and does not execute a neural encoder. Rule-based extraction is linear in query length. Typed-greedy assignment scans candidates in $O(|\\mathcal{P}|\\cdot|\\mathcal{T}|)$ comparisons in the (typically small) numbers of eligible slots $\\mathcal P$ and mentions $\\mathcal T$. A historical timing summary for TF--IDF + ratio-aware typed greedy (331 queries, \\texttt{PYTHONHASHSEED=0}) records wall time $1.09$\\,s ($3.29$\\,ms/query) with peak resident set size (RSS, physical memory use) $\\approx 198$\\,MB. The recorded scope excludes BGE-M3 embedding load/compute and remote LLM baselines; the single retained timing summary is contextual, not a reproducible timing distribution or cross-method efficiency benchmark."
+  },
+  {
+    "file": "preserved_results_details.tex",
+    "before_lines": [
+      35,
+      35
+    ],
+    "after_lines": [
+      35,
+      35
+    ],
+    "before": "The stored-value failures motivate an occurrence-level relationship audit; they do not by themselves identify semantic error causes. A mention has a source occurrence, not just a magnitude: for the auxiliary relation audit, write $m=(a,b,v)$ for its half-open character interval and normalized value, and $r=(q,m,p)$ for the proposed relation to parameter $p$. This diagnostic representation does not imply that the historical typed-greedy outputs retained character-aligned assignment traces. Two occurrences with the same $v$ can refer to different resources; one occurrence may also legitimately support several declarations. No-reuse assignment is therefore an experimental restriction, not a general law of optimization modeling. Implicit objective or identity terms introduce a different problem: there may be no lexical number to align. Their absence cannot be converted automatically into a verified null relationship.",
+    "after": "The stored-value failures motivate an occurrence-level relationship audit; they do not by themselves identify semantic error causes. A mention has a source occurrence, not just a magnitude: for the auxiliary relation audit, write $m=(a,b,v)$ for its character interval $[a,b)$ (start included, end excluded) and normalized value $v$, and $r=(q,m,p)$ for the proposed relation to parameter $p$. This diagnostic representation does not imply that the historical typed-greedy outputs retained character-aligned assignment traces. Two occurrences with the same $v$ can refer to different resources; one occurrence may also legitimately support several declarations. No-reuse assignment is therefore an experimental restriction, not a general law of optimization modeling. Implicit objective or identity terms introduce a different problem: there may be no lexical number to align. Their absence cannot be converted automatically into a verified null relationship."
+  },
+  {
+    "file": "preserved_results_details.tex",
+    "before_lines": [
+      43,
+      43
+    ],
+    "after_lines": [
+      43,
+      43
+    ],
+    "before": "All inferential analyses here are retrospective. Query identities are paired across methods; the correction-only reanalysis reuses the existing 327 delexicalized text groups for all 331 original queries. It reports marginal paired group-percentile bootstrap intervals ($B=10{,}000$, NumPy seed 42), exact groupwise method-swap tests on integer count differences, and Holm adjustment over the 16 reported retrieval/readiness contrasts \\cite{holm1979followup}. That family contains five contrasts in Supplementary Table~\\ref{tab:nlp4lp-significance}, the BGE--TF--IDF retrieval contrast, and ten ordinary/Strict contrasts against the five grounding alternatives. The factorial's separate 240-test family remains unchanged. Grouping is heuristic and does not remove all dependence or prior benchmark exposure.",
+    "after": "All inferential analyses here are retrospective. Query identities are paired across methods; the correction-only reanalysis reuses the existing 327 delexicalized text groups for all 331 original queries. It reports marginal paired group-percentile bootstrap intervals ($B=10{,}000$ bootstrap resamples, NumPy seed 42), exact groupwise method-swap tests on integer count differences, and Holm adjustment over the 16 reported retrieval/readiness contrasts \\cite{holm1979followup}. That family contains five contrasts in Supplementary Table~\\ref{tab:nlp4lp-significance}, the BGE--TF--IDF retrieval contrast, and ten ordinary/Strict contrasts against the five grounding alternatives. The factorial's separate 240-test family remains unchanged. Grouping is heuristic and does not remove all dependence or prior benchmark exposure."
+  },
+  {
+    "file": "reference_conventions.tex",
+    "before_lines": [
+      9,
+      9
+    ],
+    "after_lines": [
+      9,
+      9
+    ],
+    "before": "each conversion: a share $p$ in $X\\geq p(X+Y)$ or its rearrangement",
+    "after": "each conversion: for component quantities $X$ and $Y$, a share $p$ in $X\\geq p(X+Y)$ or its rearrangement"
+  },
+  {
+    "file": "reference_conventions.tex",
+    "before_lines": [
+      75,
+      75
+    ],
+    "after_lines": [
+      75,
+      75
+    ],
+    "before": "The historical numerical tolerance remains",
+    "after": "With $\\hat y$ the predicted value and $y$ the reference value, the historical numerical tolerance remains"
+  },
+  {
+    "file": "related_context.tex",
+    "before_lines": [
+      7,
+      7
+    ],
+    "after_lines": [
+      7,
+      7
+    ],
+    "before": "Spider and the survey by Affolter et al. contextualize database interfaces \\cite{yu2018spider,affolter2019nli}. ReMatch (Sheetrit et al., unpublished preprint, \\href{https://arxiv.org/abs/2403.01567}{arXiv:2403.01567}) uses retrieval-enhanced schema matching. Execution-guided decoding (Wang et al., unpublished preprint, \\href{https://arxiv.org/abs/1807.03100}{arXiv:1807.03100}) uses partial SQL execution to reject some faulty programs. MIPLIB-NL addresses more complex optimization formulations \\cite{miplibnl2026}. These settings provide methodological context, not interchangeable scalar-grounding scores.",
+    "after": "Spider and the survey by Affolter et al. contextualize database interfaces \\cite{yu2018spider,affolter2019nli}. ReMatch (Sheetrit et al., unpublished preprint, \\href{https://arxiv.org/abs/2403.01567}{arXiv:2403.01567}) uses retrieval-enhanced schema matching. Execution-guided decoding (Wang et al., unpublished preprint, \\href{https://arxiv.org/abs/1807.03100}{arXiv:1807.03100}) uses partial Structured Query Language (SQL) execution to reject some faulty programs. MIPLIB-NL addresses more complex optimization formulations \\cite{miplibnl2026}. These settings provide methodological context, not interchangeable scalar-grounding scores."
+  },
+  {
+    "file": "relationship_evidence.tex",
+    "before_lines": [
+      3,
+      3
+    ],
+    "after_lines": [
+      3,
+      3
+    ],
+    "before": "Three services judged the same 217 occurrence--declaration targets from 16 selected NL4Opt training problems. The four labels (CORRECT, INCORRECT, AMBIGUOUS, CANNOT\\_DETERMINE) are assertions, not accepted human reference judgments. Table~\\ref{tab:relationship-validity} separates original validity, offline repairs and historical replacements. The following protocol account specifies the changing treatment, complete-case populations and limits of semantic interpretation.",
+    "after": "Three services judged the same 217 occurrence--declaration targets (proposed links from textual mentions to model elements) from 16 selected NL4Opt training problems. The four labels (CORRECT, INCORRECT, AMBIGUOUS, CANNOT\\_DETERMINE) are assertions, not accepted human reference judgments. Table~\\ref{tab:relationship-validity} separates original validity, offline repairs and historical replacements. The following protocol account specifies the changing treatment, complete-case populations and limits of semantic interpretation."
+  },
+  {
+    "file": "relationship_supplement.tex",
+    "before_lines": [
+      2,
+      2
+    ],
+    "after_lines": [
+      2,
+      2
+    ],
+    "before": "The packet contains 217 unique occurrence--declaration pairs in 16 source problems, all from NL4Opt train (713 source records), pinned to revision \\path{49f1e0d66b7fdcd33305a7f281c2a7c13f5620ea}. The complete source-file SHA-256 digest is recorded with the source-to-result manifest. Selection is a high-priority convenience handoff with category coverage from an exposed 100-problem review packet, not a new probability sample or 217 independently sampled observations. IDs and hashes are public; selected source objects and raw responses remain local. Reused mentions or declarations remain separate relationships. There are no missing or duplicate targets in the original 217-target frame for any model; historical replacements are additional attempts at a subset, not additional independent observations.",
+    "after": "The packet contains 217 unique occurrence--declaration pairs in 16 source problems, all from NL4Opt train (713 source records), pinned to revision \\path{49f1e0d66b7fdcd33305a7f281c2a7c13f5620ea}. The complete source-file SHA-256 cryptographic checksum is recorded with the source-to-result manifest. Selection is a high-priority convenience handoff with category coverage from an exposed 100-problem review packet, not a new probability sample or 217 independently sampled observations. IDs and hashes are public; selected source objects and raw responses remain local. Reused mentions or declarations remain separate relationships. There are no missing or duplicate targets in the original 217-target frame for any model; historical replacements are additional attempts at a subset, not additional independent observations."
+  },
+  {
+    "file": "relationship_supplement.tex",
+    "before_lines": [
+      4,
+      4
+    ],
+    "after_lines": [
+      4,
+      4
+    ],
+    "before": "Each service originally received 33 batches of up to eight targets, with complete source text and supplied variables, objective and constraints; peer judgments were withheld. After offline repair, 92 targets remained invalid and were historically reissued in smaller batches with explicit identifier and quotation instructions. Cohere additionally received a native JSON Schema with identifier enums. These changes affect treatment comparability.",
+    "after": "Each service originally received 33 batches of up to eight targets, with complete source text and supplied variables, objective and constraints; peer judgments were withheld. After offline repair, 92 targets remained invalid and were historically reissued in smaller batches with explicit identifier and quotation instructions. Cohere additionally received a native JavaScript Object Notation (JSON) Schema with enumerated identifier choices. These changes affect treatment comparability."
+  },
+  {
+    "file": "relationship_supplement.tex",
+    "before_lines": [
+      6,
+      6
+    ],
+    "after_lines": [
+      6,
+      6
+    ],
+    "before": "All retained study calls are dated October 27, 2026 (UTC). Original raw-response timestamps span 20:58:09--21:12:23; targeted-recovery responses span 21:45:10--21:52:12. Synthetic access probes and model-list lookups in preflight are not study judgments. Vertex uses the v1 \\texttt{generateContent} route (project ID excluded from public projections), io.net uses \\url{https://api.intelligence.io.solutions/api/v1/chat/completions}, and Cohere uses \\url{https://api.cohere.com/v2/chat}. The requested models are \\path{gemini-3.1-pro-preview} through Google Vertex AI, \\path{deepseek-ai/DeepSeek-V4-Pro-0813} through io.net io.intelligence (recorded FP8), and \\path{command-a-reasoning-08-2025} through Cohere's direct v2 API. DeepSeek here names the served model, not a direct DeepSeek API. All use temperature 0 and a 12,000-output-token cap; Gemini uses LOW thinking, Cohere a 256-token thinking budget, and io.net its default reasoning behavior. Sampling/analysis seed 20261027 is not an inference seed. The identifiers authenticate the requested or echoed service names, not underlying weight checksums or every server default. Gemini and io.net responses echo their requested model strings; Cohere does not supply a separately authenticated version in the retained response. No serving weight checksum is available. Unrecorded top-$p$, inference seeds and other defaults are unknown.",
+    "after": "All retained study calls are dated October 27, 2026 (Coordinated Universal Time, UTC). Original raw-response timestamps span 20:58:09--21:12:23; targeted-recovery responses span 21:45:10--21:52:12. Synthetic access probes and model-list lookups in preflight are not study judgments. Vertex uses the v1 \\texttt{generateContent} route (project ID excluded from public projections), io.net uses \\url{https://api.intelligence.io.solutions/api/v1/chat/completions}, and Cohere uses \\url{https://api.cohere.com/v2/chat}. The requested models are \\path{gemini-3.1-pro-preview} through Google Vertex AI, \\path{deepseek-ai/DeepSeek-V4-Pro-0813} through io.net io.intelligence (recorded eight-bit floating-point format, FP8), and \\path{command-a-reasoning-08-2025} through Cohere's direct v2 API. DeepSeek here names the served model, not a direct DeepSeek API. All use temperature 0 and a 12,000-output-token cap; Gemini uses LOW thinking, Cohere a 256-token thinking budget, and io.net its default reasoning behavior. Sampling/analysis seed 20261027 is not an inference seed. The identifiers authenticate the requested or echoed service names, not underlying weight checksums or every server default. Gemini and io.net responses echo their requested model strings; Cohere does not supply a separately authenticated version in the retained response. No serving weight checksum is available. Unrecorded top-$p$ (cumulative-probability sampling threshold), inference seeds and other defaults are unknown."
+  },
+  {
+    "file": "relationship_supplement.tex",
+    "before_lines": [
+      9,
+      9
+    ],
+    "after_lines": [
+      9,
+      9
+    ],
+    "before": "\\caption{Retained HTTP attempts, distinct from model-item judgments. A response with HTTP 200 may still contain invalid judgment objects. The initial Cohere recovery transport was rejected before the amended native-schema transport.}\\label{tab:relationship-requests}",
+    "after": "\\caption{Retained Hypertext Transfer Protocol (HTTP) attempts, distinct from model-item judgments. A response with HTTP 200 may still contain invalid judgment objects. The initial Cohere recovery transport was rejected before the amended native-schema transport.}\\label{tab:relationship-requests}"
+  },
+  {
+    "file": "relationship_supplement.tex",
+    "before_lines": [
+      16,
+      16
+    ],
+    "after_lines": [
+      16,
+      16
+    ],
+    "before": "Table~\\ref{tab:relationship-requests} records the HTTP attempts. The remaining original Cohere attempt returns HTTP 422. Recovery retains 27 Cohere HTTP 400 responses from the initial native-schema format, four HTTP 422 responses, and 27 HTTP 200 responses after amendment. These 58 attempts must not be described as 27 total requests. The completed replacement batches target four io.net items and 88 Cohere items. Neither HTTP retries nor transport amendments constitute new target observations. The amended schema removes unsupported native length constraints and supplies explicit enum types; local validation is unchanged. This is a historical protocol deviation, fully retained, not an M5 rerun.",
+    "after": "Table~\\ref{tab:relationship-requests} records the Hypertext Transfer Protocol (HTTP) attempts. The remaining original Cohere attempt returns HTTP 422. Recovery retains 27 Cohere HTTP 400 responses from the initial native-schema format, four HTTP 422 responses, and 27 HTTP 200 responses after amendment. These 58 attempts must not be described as 27 total requests. The completed replacement batches target four io.net items and 88 Cohere items. Neither HTTP retries nor transport amendments constitute new target observations. The amended schema removes unsupported native length constraints and supplies explicit enum types; local validation is unchanged. This is a historical protocol deviation, fully retained, not an M5 rerun."
+  },
+  {
+    "file": "relationship_supplement.tex",
+    "before_lines": [
+      21,
+      21
+    ],
+    "after_lines": [
+      21,
+      21
+    ],
+    "before": "\\caption{Valid-label distributions after Recovery v2.1. C = CORRECT, I = INCORRECT, A = AMBIGUOUS, CD = CANNOT\\_DETERMINE; these are model assertions, not human reference labels. Invalid judgments are excluded from these label totals.}\\label{tab:relationship-labels}",
+    "after": "\\caption{Valid-label distributions after Recovery v2.1, the final archived repair/replacement stage. C = CORRECT, I = INCORRECT, A = AMBIGUOUS, CD = CANNOT\\_DETERMINE; these are model assertions, not human reference labels. Invalid judgments are excluded from these label totals.}\\label{tab:relationship-labels}"
+  },
+  {
+    "file": "relationship_supplement.tex",
+    "before_lines": [
+      38,
+      38
+    ],
+    "after_lines": [
+      38,
+      38
+    ],
+    "before": "Using all four categories in Eq.~\\eqref{eq:fleiss} gives $\\bar P=0.7394247039$, $P_e=0.5858578050$ and $\\kappa=0.3708071786$. Complete-case selection is conditional on output validity and may be informative. Offline-only repair yields 128 complete items and $\\kappa=0.4293652076$; the original 89 complete items give $0.5016425265$, unchanged when those exact 89 items are assessed in the final records. No interval or inferential model treats the 217 relationships as independent. The residual 20 items are all final Cohere nonliteral-evidence failures, individually listed in the machine-readable \\path{llm217_missing20.csv}. The complete-case partition $119+77+1=197$, together with these 20, exhausts the frame of 217.",
+    "after": "Here $\\bar P$ is observed agreement, $P_e$ chance agreement from category frequencies, and Fleiss\\textquotesingle{} $\\kappa$ their chance-corrected agreement. Using all four categories in Eq.~\\eqref{eq:fleiss} gives $\\bar P=0.7394247039$, $P_e=0.5858578050$ and $\\kappa=0.3708071786$. Complete-case selection is conditional on output validity and may be informative. Offline-only repair yields 128 complete items and $\\kappa=0.4293652076$; the original 89 complete items give $0.5016425265$, unchanged when those exact 89 items are assessed in the final records. No interval or inferential model treats the 217 relationships as independent. The residual 20 items are all final Cohere nonliteral-evidence failures, individually listed in the machine-readable \\path{llm217_missing20.csv}. The complete-case partition $119+77+1=197$, together with these 20, exhausts the frame of 217."
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before_lines": [
+      3,
+      3
+    ],
+    "after_lines": [
+      3,
+      3
+    ],
+    "before": "The public \\href{https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0}{JDSA evidence v2.0.0} is a curated saved-record reanalysis package, not the complete local M5 bundle. Its evidence commit is \\path{209fa982c0a0e2087bd021cbc7a9f57d94256c8f}; the \\href{https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0}{exact-version Hugging Face evidence} is pinned to revision \\path{f94012872211ab6a828147bb138fbe8ab695b982}. Historical v1.2 is retained at \\path{24a047fa5d661be6cfcf75980ac8f62e6c942243}. The immutable claim manifest keeps original locations; the \\href{https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0}{versioned manuscript release} provides the baseline manuscript sources, a separate claim-location crosswalk and audit reports. The corrected manuscript remains a pre-submission author-review version.",
+    "after": "The public \\href{https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0}{JDSA evidence v2.0.0} is a curated saved-record reanalysis package, not the complete local evidence-validation bundle (internal audit M5). Its evidence commit is \\path{209fa982c0a0e2087bd021cbc7a9f57d94256c8f}; the \\href{https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0}{exact-version Hugging Face evidence} is pinned to revision \\path{f94012872211ab6a828147bb138fbe8ab695b982}. Historical v1.2 is retained at \\path{24a047fa5d661be6cfcf75980ac8f62e6c942243}. The immutable claim manifest keeps original locations; the \\href{https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0}{versioned manuscript release} provides the baseline manuscript sources, a separate claim-location crosswalk and audit reports. The corrected manuscript remains a pre-submission author-review version."
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before_lines": [
+      27,
+      27
+    ],
+    "after_lines": [
+      27,
+      27
+    ],
+    "before": "Relationship QC & 217 items / 16 problems & 651 public ledger rows\\\\",
+    "after": "Relationship quality checks & 217 items / 16 problems & 651 public ledger rows\\\\"
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before_lines": [
+      32,
+      32
+    ],
+    "after_lines": [
+      32,
+      32
+    ],
+    "before": "The four headline metric CSVs match their first committed versions, whose runners serialized 13 metric columns and omitted scalar mappings. Integrity therefore supports aggregation, not recovery or corrected-reference reevaluation of original assignments. Saved top-1 IDs support retrieval rates; full historical ranked lists and per-condition sanitization predictions were not recovered. The corrected TF--IDF variant mean remains $(301+299+258)/(3\\cdot331)=0.8640$ before rounding.",
+    "after": "The four headline metric files, stored as comma-separated values (CSV), match their first committed versions, whose runners serialized 13 metric columns and omitted scalar mappings. Integrity therefore supports aggregation, not recovery or corrected-reference reevaluation of original assignments. Saved top-1 IDs support retrieval rates; full historical ranked lists and per-condition sanitization predictions were not recovered. The corrected TF--IDF variant mean remains $(301+299+258)/(3\\cdot331)=0.8640$ before rounding."
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before_lines": [
+      38,
+      38
+    ],
+    "after_lines": [
+      38,
+      38
+    ],
+    "before": "Public common-18 numeric tokens/dispositions and relationship labels/validity flags support reanalysis of their reported summaries. Raw generated programs, stdout, prompts, full provider responses and source quotations remain excluded. The original M3 evaluator \\path{tools/reaggregate_common18_m3.py} and M5 raw-response validator \\path{tools/verify_llm217_m5.py} require separately authorized original layouts; the default public verifier does not pretend those inputs exist. D1 publishes original project fixtures and final assisted-author decisions, excluding private review conversations.",
+    "after": "Public numeric tokens/dispositions for the shared 18-problem formulation subset (common-18) and relationship labels/validity flags support reanalysis of their reported summaries. Raw generated programs, stdout, prompts, full provider responses and source quotations remain excluded. The original formulation-result reaggregation evaluator (M3) \\path{tools/reaggregate_common18_m3.py} and M5 raw-response validator \\path{tools/verify_llm217_m5.py} require separately authorized original layouts; the default public verifier does not pretend those inputs exist. The author-reviewed semantic contrast set (D1) publishes original project fixtures and final assisted-author decisions, excluding private review conversations."
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before_lines": [
+      40,
+      40
+    ],
+    "after_lines": [
+      40,
+      40
+    ],
+    "before": "The 60/269/20 studies lack full original manifests/outcomes. Five reported examples from each of 60 and 269 include three shared IDs, but cannot reconstruct either population. The 20-case writer also omitted scalar maps. BGE's literal reporting metadata does not authenticate its executed weights, device, environment or hash seed. Historical rendered prompts/provider defaults are incomplete; PaMOP full precision and corrected OptMATH per-instance bootstrap inputs are missing. Unmatched loose blobs, later caches and replay configurations do not fill these gaps.",
+    "after": "The 60/269/20 studies lack full original manifests/outcomes. Five reported examples from each of 60 and 269 include three shared IDs, but cannot reconstruct either population. The 20-case writer also omitted scalar maps. BGE-M3's literal reporting metadata does not authenticate its executed weights, device, environment or hash seed. Historical rendered prompts/provider defaults are incomplete; PaMOP full precision and corrected OptMATH per-instance bootstrap inputs are missing. Unmatched loose blobs, later caches and replay configurations do not fill these gaps."
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before_lines": [
+      62,
+      62
+    ],
+    "after_lines": [
+      62,
+      62
+    ],
+    "before": "Table~\\ref{tab:input-dependencies} summarizes the supplied inputs. Main Eqs.~\\eqref{M-eq:full-scalar}--\\eqref{M-eq:conditional-agreement} formalize $F^G\\subseteq S\\subseteq I$. The observed $7\\leq255\\leq265$ relation yields descriptive conditional agreement, not autonomous or semantic accuracy. The broader eligible-only endpoint $F$ can include missing required keys; constrained query 102 is the documented exception. No adjustment from assisted to autonomous performance is identifiable without additional assumptions.",
+    "after": "Table~\\ref{tab:input-dependencies} summarizes the supplied inputs. Main Eqs.~\\eqref{M-eq:full-scalar}--\\eqref{M-eq:conditional-agreement} formalize $F^G\\subseteq S\\subseteq I$: complete required-scalar agreement, strict-ready outputs, and ordinary-ready outputs, respectively. The observed $7\\leq255\\leq265$ relation yields descriptive conditional agreement, not autonomous or semantic accuracy. The broader eligible-only endpoint $F$ can include missing required keys; constrained query 102 is the documented exception. No adjustment from assisted to autonomous performance is identifiable without additional assumptions."
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before_lines": [
+      67,
+      67
+    ],
+    "after_lines": [
+      67,
+      67
+    ],
+    "before": "Extract the named evidence ZIP or its versioned HF directory. In a clean Python 3.12 environment, install \\path{requirements-validation.txt} (NumPy 2.3.5), then run \\texttt{python -I verify.py --output /tmp/jdsa-verification.json}. Outputs stay outside the immutable package. The manifest checks all 172 payload files; the machine-readable report separates supported arithmetic from historical and semantic limitations. Both independently downloaded releases passed 9,737 checks, with six integrity/statistics tests. File/network tracing found no private-path access or network calls during reanalysis; no new inference or scientific solver experiment was performed.",
+    "after": "Extract the named evidence ZIP or its versioned Hugging Face directory. In a clean Python 3.12 environment, install \\path{requirements-validation.txt} (NumPy 2.3.5), then run \\texttt{python -I verify.py --output /tmp/jdsa-verification.json}. Outputs stay outside the immutable package. The manifest checks all 172 payload files; the machine-readable report separates supported arithmetic from historical and semantic limitations. Both independently downloaded releases passed 9,737 checks, with six integrity/statistics tests. File/network tracing found no private-path access or network calls during reanalysis; no new inference or scientific solver experiment was performed."
+  },
+  {
+    "file": "supervision_diagnostics.tex",
+    "before_lines": [
+      4,
+      4
+    ],
+    "after_lines": [
+      4,
+      4
+    ],
+    "before": "Completed training, negative performance, inconclusive evidence and unavailable supervision are different outcomes. Retained training logs establish that a DistilRoBERTa mention--slot classifier was fitted. Its weak labels selected the first numerically matching mention. The largest retained run (job 854626) used 230/50/50 internal train/development/test instances drawn from the existing NLP4LP evaluation corpus. The logged selection counts are 51/280 slots and 0/45 legacy exact-instance outcomes. Five nominal test instances do not enter that latter denominator. Those metrics are not the all-required-scalar criterion used in this manuscript.",
+    "after": "Completed training, negative performance, inconclusive evidence and unavailable supervision are different outcomes. Retained training logs establish that a mention--slot classifier based on the compact pretrained DistilRoBERTa text encoder was fitted. Its weak labels selected the first numerically matching mention. The largest retained run (job 854626) used 230/50/50 internal train/development/test instances drawn from the existing NLP4LP evaluation corpus. The logged selection counts are 51/280 slots and 0/45 legacy exact-instance outcomes. Five nominal test instances do not enter that latter denominator. Those metrics are not the all-required-scalar criterion used in this manuscript."
+  },
+  {
+    "file": "supervision_diagnostics.tex",
+    "before_lines": [
+      6,
+      6
+    ],
+    "after_lines": [
+      6,
+      6
+    ],
+    "before": "A later summary's claim that this run was worse than a rule baseline on every metric conflicts with the preserved stdout. The audit also identifies an evaluator path that can instantiate an untrained neural head for a nominal rule configuration. Missing original run checkpoints, exact run source SHAs and prediction traces prevent resolving that comparison by replay. Therefore these logs demonstrate completed weak-label learning with poor recorded absolute outcomes, but not a clean causal comparison of neural learning against rules. No headline result is substituted from the conflicting summary.",
+    "after": "A later summary's claim that this run was worse than a rule baseline on every metric conflicts with the preserved stdout. The audit also identifies an evaluator path that can instantiate an untrained neural head for a nominal rule configuration. Missing original run checkpoints, exact source-commit hashes and prediction traces prevent resolving that comparison by replay. Therefore these logs demonstrate completed weak-label learning with poor recorded absolute outcomes, but not a clean causal comparison of neural learning against rules. No headline result is substituted from the conflicting summary."
+  },
+  {
+    "file": "supervision_diagnostics.tex",
+    "before_lines": [
+      8,
+      8
+    ],
+    "after_lines": [
+      8,
+      8
+    ],
+    "before": "P0 is a separate completed classifier-plus-assignment study. Logistic regression over 25 handcrafted features and one frozen MiniLM cosine feature was selected on development slot selection; the encoder was not fine-tuned. On its 50 oracle-schema cases, independent selection has coarse readiness 0.80, exact maximum-weight assignment 0.78, and assignment plus repair 0.78, versus a separately retained typed-greedy comparator at 0.86. These are the saved readiness outcomes, not whole-instance numerical correctness. Calibration of the probability outputs has not been established; the exact assignment has no private null option, and several components differ from the comparator. Its first-value-match labels and evaluation-origin split do not establish an independent semantic test.",
+    "after": "The separate completed classifier-plus-assignment study is identified as P0 in the archived records. Logistic regression over 25 handcrafted features and one cosine-similarity feature from a frozen MiniLM text encoder was selected on development slot selection; the encoder was not fine-tuned. On its 50 oracle-schema cases, independent selection has coarse readiness 0.80, exact maximum-weight assignment 0.78, and assignment plus repair 0.78, versus a separately retained typed-greedy comparator at 0.86. These are the saved readiness outcomes, not whole-instance numerical correctness. Calibration of the probability outputs has not been established; the exact assignment has no private null option, and several components differ from the comparator. Its first-value-match labels and evaluation-origin split do not establish an independent semantic test."
+  },
+  {
+    "file": "supervision_diagnostics.tex",
+    "before_lines": [
+      12,
+      12
+    ],
+    "after_lines": [
+      12,
+      12
+    ],
+    "before": "MiniLM cross-encoder and multitask grounder implementations also exist, but a completed run beyond a smoke test for the former and a completed NL4Opt auxiliary neural checkpoint for the latter were not verified. They are not counted as negative model results. Actual GAMS and targeted-synthetic auxiliary runs used only two and one effective test problems; they are too small and weakly supervised to justify general transfer claims. Those execution records remain in the audit inventory rather than a new performance table. Fine-tuned retrieval addresses a different task, and an encoder substitution alone is not a new relationship-grounding contribution.",
+    "after": "MiniLM cross-encoder and multitask grounder implementations also exist, but a completed run beyond a smoke test for the former and a completed NL4Opt auxiliary neural checkpoint for the latter were not verified. They are not counted as negative model results. Actual auxiliary runs using GAMS optimization-model sources and targeted synthetic data used only two and one effective test problems; they are too small and weakly supervised to justify general transfer claims. Those execution records remain in the audit inventory rather than a new performance table. Fine-tuned retrieval addresses a different task, and an encoder substitution alone is not a new relationship-grounding contribution."
+  },
+  {
+    "file": "supplement.tex",
+    "before_lines": [
+      46,
+      46
+    ],
+    "after_lines": [
+      46,
+      46
+    ],
+    "before": "This supplement preserves secondary evidence, population boundaries and source provenance. It accompanies the main article and includes the archived 217-relationship Gemini--DeepSeek--Cohere audit, with explicit recovery and denominator accounting. The analyses use archived records; public projections, local originals and historical summaries have distinct verification boundaries (Section~\\ref{app:reproduction}).",
+    "after": "This supplement preserves secondary evidence, population boundaries and source provenance. A schema is a model template; scalar grounding assigns textual quantities to its single-valued parameters. Reference or gold denotes stored benchmark annotations, not independent semantic truth. Supplied-slot grounding uses a provided parameter inventory; in the main benchmark, eligible slots are the reference scalar keys present in the retrieved schema. The core benchmark, NLP4LP, contains natural-language linear and mixed-integer linear programming problems. The auxiliary Natural Language for Optimization (NL4Opt) corpus supplies extraction and formulation tasks. It accompanies the main article and includes the archived 217-relationship Gemini--DeepSeek--Cohere audit, with explicit recovery and denominator accounting. The analyses use archived records; public projections, local originals and historical summaries have distinct verification boundaries (Section~\\ref{app:reproduction})."
+  },
+  {
+    "file": "supplement.tex",
+    "before_lines": [
+      56,
+      56
+    ],
+    "after_lines": [
+      56,
+      56
+    ],
+    "before": "Tables~\\ref{tab:comparison_landscape}--\\ref{tab:exp_blocks} summarize the system context, retrieval methods and experimental blocks.",
+    "after": "Tables~\\ref{tab:comparison_landscape}--\\ref{tab:exp_blocks} summarize the system context, retrieval methods and experimental blocks. Large language models (LLMs) generate text or code; the core scalar grounder is rule-based. Coverage measures assigned eligible slots, and TypeMatch measures compatible assigned slots, each averaged over queries. InstantiationReady (coarse or ordinary readiness) requires both per-query fractions to reach 0.8 (empty inventories fail); StrictInstantiationReady additionally requires a correct schema. Exact20 averages within-tolerance slot fractions only over schema hits with comparable numerical assignments; its denominator can therefore vary by method."
+  },
+  {
+    "file": "supplement.tex",
+    "before_lines": [
+      62,
+      63
+    ],
+    "after_lines": [
+      62,
+      63
+    ],
+    "before": "Sol.\\ = solver feedback during generation or training; FT = fine-tuning or reinforcement-learning training; OR = operations research; CoT = chain of thought; NL = natural language; (MI)LP = (mixed-integer) linear programming;\nComp.\\ = directly comparable",
+    "after": "Sol.\\ = solver feedback during generation or training; FT = fine-tuning or reinforcement-learning training; RL = reinforcement learning; OR = operations research; CoT = chain of thought; NL = natural language; (MI)LP = (mixed-integer) linear programming;\ninst.\\ = instantiation; Comp.\\ = directly comparable"
+  },
+  {
+    "file": "supplement.tex",
+    "before_lines": [
+      102,
+      102
+    ],
+    "after_lines": [
+      102,
+      102
+    ],
+    "before": "\\caption{Retrieval methods used for schema identification.}",
+    "after": "\\caption{Retrieval methods used for schema identification. TF--IDF denotes term frequency--inverse document frequency and LSA latent semantic analysis. BM25 is a probabilistic lexical ranker; BGE-M3 is a pretrained multilingual text encoder, used here for dense retrieval.}"
+  },
+  {
+    "file": "supplement.tex",
+    "before_lines": [
+      118,
+      118
+    ],
+    "after_lines": [
+      118,
+      118
+    ],
+    "before": "\\caption{Summary of the experimental blocks used in the paper.}",
+    "after": "\\caption{Summary of the experimental blocks used in the paper. Schema R@1 is recall at rank one (target-schema accuracy). Orig denotes original input; inst. denotes instances. SciPy is the scientific Python library; HiGHS is the optimization solver, accessed through a compatibility wrapper (shim).}"
+  },
+  {
+    "file": "supplement.tex",
+    "before_lines": [
+      172,
+      172
+    ],
+    "after_lines": [
+      172,
+      172
+    ],
+    "before": "\\caption{Historically reported gold-assisted execution on 20 instances (SciPy HiGHS MILP shim); per-instance outputs and the original manifest are unavailable for reconstruction. Every rate divides by 20.}",
+    "after": "\\caption{Historically reported gold-assisted execution on 20 instances (SciPy HiGHS mixed-integer linear programming (MILP) shim); per-instance outputs and the original manifest are unavailable for reconstruction. Every rate divides by 20.}"
+  },
+  {
+    "file": "supplement.tex",
+    "before_lines": [
+      235,
+      235
+    ],
+    "after_lines": [
+      235,
+      235
+    ],
+    "before": "Pooled raw AST code-value overlap recall is $0.7501$; pooled automatic text-support recall is $0.8118$ (complete-instance rate $0.5910$). The saved automatic category counts classify $2{,}310/31{,}736=7.28\\%$ of code-side values across the 1,000 instances as implementation, solver/API, index/loop or array/dimension constants. This is distinct from the 150-instance classifier comparison (seed 20260815). ",
+    "after": "Pooled raw abstract syntax tree (AST) code-value overlap recall is $0.7501$; pooled automatic text-support recall is $0.8118$ (complete-instance rate $0.5910$). The saved automatic category counts classify $2{,}310/31{,}736=7.28\\%$ of code-side values across the 1,000 instances as implementation, solver/API, index/loop or array/dimension constants. This is distinct from the 150-instance classifier comparison (seed 20260815)."
+  },
+  {
+    "file": "supporting_core.tex",
+    "before_lines": [
+      3,
+      3
+    ],
+    "after_lines": [
+      3,
+      3
+    ],
+    "before": "The following tables preserve the extraction, paired-statistic and schema-gate checks supporting RQ2 and RQ3. They use the same frozen observations as the main paper; relocation does not define a new comparison family.",
+    "after": "The following tables preserve the extraction, paired-statistic and schema-gate checks supporting the diagnostic-validity and grounding-mechanism research questions (RQ2 and RQ3). They use the same frozen observations as the main paper; relocation does not define a new comparison family."
+  },
+  {
+    "file": "supporting_core.tex",
+    "before_lines": [
+      53,
+      53
+    ],
+    "after_lines": [
+      53,
+      53
+    ],
+    "before": "\\caption{Correction-only paired reanalysis of the saved 331-query gate records (327 text groups). Difference is the first configuration minus the second; CI is a marginal 95\\% paired group-bootstrap interval. Exact $p$-values use groupwise method swaps; the final column adjusts the stated family of 16 tests. All comparisons are exploratory.}",
+    "after": "\\caption{Correction-only paired reanalysis of the saved 331-query gate records (327 text groups). Difference is the first configuration minus the second; CI denotes a confidence interval, here a marginal 95\\% paired group-bootstrap interval. Exact $p$-values use groupwise method swaps; the final column adjusts the stated family of 16 tests. All comparisons are exploratory.}"
+  }
+]

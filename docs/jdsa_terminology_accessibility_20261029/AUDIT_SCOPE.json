@@ -1,0 +1,27 @@
+{
+  "baseline": "f2b8a94ea01922618e36b667c1d9b5e2c08f893c",
+  "register_terms": 333,
+  "term_occurrences_before": 1672,
+  "term_occurrences_after": 1778,
+  "mathematical_occurrences": 658,
+  "scientific_files_read": [
+    "additional_evidence.tex",
+    "closed_audits.tex",
+    "common18_overview.tex",
+    "d1_contrasts.tex",
+    "grounding_diagnostics.tex",
+    "llm_evidence.tex",
+    "main.tex",
+    "pipeline_figure.tex",
+    "preserved_results_details.tex",
+    "reference_conventions.tex",
+    "related_context.tex",
+    "relationship_evidence.tex",
+    "relationship_supplement.tex",
+    "reproduction_map.tex",
+    "supervision_diagnostics.tex",
+    "supplement.tex",
+    "supporting_core.tex"
+  ],
+  "method": "Full sequential source reading of article and recursively included supplement, followed by term/notation scan and local-context review. Bibliographic titles and exact identifiers are protected; common arithmetic is indexed without unnecessary expansion."
+}

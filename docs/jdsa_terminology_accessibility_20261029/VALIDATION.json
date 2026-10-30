@@ -1,0 +1,3165 @@
+{
+  "baseline": "f2b8a94ea01922618e36b667c1d9b5e2c08f893c",
+  "abstract_words_whitespace": 230,
+  "abstract_words_dash_separated": 232,
+  "keywords": 6,
+  "tables": [
+    {
+      "number": 1,
+      "page": 9,
+      "rows": [
+        {
+          "row": "Random",
+          "values": [
+            "0.0030",
+            "0.0030",
+            "0.0030",
+            "0.0030"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "LSA",
+          "values": [
+            "0.8459",
+            "0.8882",
+            "0.7644",
+            "0.8328"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "BM25",
+          "values": [
+            "0.8822",
+            "0.8912",
+            "0.7674",
+            "0.8469"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "TF--IDF",
+          "values": [
+            "0.9094",
+            "0.9033",
+            "0.7795",
+            "0.8640"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "BGE-M3",
+          "values": [
+            "0.9456",
+            "0.9426",
+            "0.8157",
+            "0.9013"
+          ],
+          "bold": [
+            true,
+            true,
+            true,
+            true
+          ]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "page": 10,
+      "rows": [
+        {
+          "row": "TF--IDF-TG (baseline extr.)",
+          "values": [
+            "0.8794",
+            "0.8515",
+            "0.2449",
+            "0.7764",
+            "0.7462"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "TF--IDF-TG (ratio-aware extr.)",
+          "values": [
+            "0.8886",
+            "0.8665",
+            "0.2614",
+            "0.8006",
+            "0.7704"
+          ],
+          "bold": [
+            false,
+            false,
+            true,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "BGE-M3 + ratio-aware",
+          "values": [
+            "0.9154",
+            "0.8946",
+            "0.2436",
+            "0.8248",
+            "0.8006"
+          ],
+          "bold": [
+            true,
+            true,
+            false,
+            true,
+            true
+          ]
+        },
+        {
+          "row": "Oracle-TG",
+          "values": [
+            "0.9416",
+            "0.9230",
+            "0.2505",
+            "0.8489",
+            "0.8489"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "page": 10,
+      "rows": [
+        {
+          "row": "TF--IDF base",
+          "values": [
+            "6/257",
+            "2.33",
+            "6/247",
+            "2.43"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "TF--IDF ratio",
+          "values": [
+            "7/265",
+            "2.64",
+            "7/255",
+            "2.75"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "BGE-M3",
+          "values": [
+            "3/273",
+            "1.10",
+            "3/265",
+            "1.13"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Oracle",
+          "values": [
+            "8/281",
+            "2.85",
+            "8/281",
+            "2.85"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "page": 11,
+      "rows": [
+        {
+          "row": "Wrong schema",
+          "values": [
+            "30",
+            "30",
+            "18",
+            "0"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Incomplete coverage",
+          "values": [
+            "48",
+            "31",
+            "33",
+            "35"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Type mismatch",
+          "values": [
+            "61",
+            "49",
+            "49",
+            "49"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Stored-value disagreement",
+          "values": [
+            "186",
+            "214",
+            "228",
+            "239"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Full scalar agreement",
+          "values": [
+            "6",
+            "7",
+            "3",
+            "8"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Total",
+          "values": [
+            "331",
+            "331",
+            "331",
+            "331"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "page": 11,
+      "rows": [
+        {
+          "row": "Typed greedy (reference)",
+          "values": [
+            "0.8886",
+            "0.8665",
+            "0.2614",
+            "0.8006",
+            "0.7704",
+            "7/331"
+          ],
+          "bold": [
+            true,
+            false,
+            false,
+            true,
+            true,
+            false
+          ]
+        },
+        {
+          "row": "Constrained assignment",
+          "values": [
+            "0.8531",
+            "0.8745",
+            "0.5772",
+            "0.7613",
+            "0.7311",
+            "40/331"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Max-weight matching",
+          "values": [
+            "0.8436",
+            "0.8740",
+            "0.5225",
+            "0.7432",
+            "0.7130",
+            "37/331"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Optimization-role repair",
+          "values": [
+            "0.8436",
+            "0.8724",
+            "0.5210",
+            "0.7372",
+            "0.7069",
+            "35/331"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Search-structured grounding",
+          "values": [
+            "0.8195",
+            "0.8795",
+            "0.6397",
+            "0.7039",
+            "0.6737",
+            "46/331"
+          ],
+          "bold": [
+            false,
+            true,
+            true,
+            false,
+            false,
+            true
+          ]
+        },
+        {
+          "row": "Semantic-IR repair",
+          "values": [
+            "0.8131",
+            "0.8483",
+            "0.4949",
+            "0.7160",
+            "0.6949",
+            "9/331"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "page": 12,
+      "rows": [
+        {
+          "row": "Typed / Ordinal",
+          "values": [
+            "71\u219271",
+            "87\u219286",
+            "3\u21923",
+            "3\u21923"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Typed / Context",
+          "values": [
+            "106\u2192136",
+            "117\u2192145",
+            "3\u21924",
+            "5\u21925"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Typed / No marker bonus",
+          "values": [
+            "97\u2192137",
+            "111\u2192146",
+            "3\u21924",
+            "5\u21925"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Rich / Ordinal",
+          "values": [
+            "67\u219267",
+            "81\u219281",
+            "3\u21923",
+            "3\u21923"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Rich / Context",
+          "values": [
+            "100\u2192133",
+            "111\u2192142",
+            "3\u21924",
+            "5\u21925"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        {
+          "row": "Rich / No marker bonus",
+          "values": [
+            "97\u2192135",
+            "111\u2192144",
+            "3\u21924",
+            "5\u21925"
+          ],
+          "bold": [
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      ]
+    }
+  ],
+  "pdfs": {
+    "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf": {
+      "pages": 17,
+      "changed_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "sha256": "c09ec5e43b8b4423a79119dd5b259cb7acb881cf09a839479e11c946417afaa9",
+      "link_counts": {
+        "2": 76,
+        "4": 73,
+        "3": 20
+      },
+      "references": 28,
+      "warnings": [],
+      "underfull_notices": 57
+    },
+    "ESM_1_Retrieval_Assisted_Scalar_Grounding_Supplement.pdf": {
+      "pages": 40,
+      "changed_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "sha256": "804285149f2f1e5a9db30d4a43152fdb8364ae114e3872d3c2c569d24ac17bac",
+      "link_counts": {
+        "2": 53,
+        "4": 124,
+        "3": 11
+      },
+      "references": 23,
+      "warnings": [],
+      "underfull_notices": 42
+    }
+  },
+  "zip_members": [
+    "ESM_1_Retrieval_Assisted_Scalar_Grounding_Supplement.pdf",
+    "Fig1.pdf",
+    "Fig1.tex",
+    "README.md",
+    "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+    "additional_evidence.tex",
+    "build.sh",
+    "closed_audits.tex",
+    "common18_overview.tex",
+    "d1_contrasts.tex",
+    "export_crossrefs.py",
+    "grounding_diagnostics.tex",
+    "llm_evidence.tex",
+    "main.bbl",
+    "main.tex",
+    "main_crossrefs.tex",
+    "orcidlink.sty",
+    "package_source.py",
+    "pipeline_figure.tex",
+    "preserved_results_details.tex",
+    "reference_conventions.tex",
+    "references.bib",
+    "related_context.tex",
+    "relationship_evidence.tex",
+    "relationship_supplement.tex",
+    "reproduction_map.tex",
+    "sn-basic.bst",
+    "sn-jnl.cls",
+    "supervision_diagnostics.tex",
+    "supplement.bbl",
+    "supplement.tex",
+    "supplement_crossrefs.tex",
+    "supporting_core.tex"
+  ],
+  "status": "PASS",
+  "checks_passed": 624,
+  "checks": [
+    {
+      "check": "unique logged source segment llm_evidence.tex:Define local T, distinct from type-compatible set and tolerance columns.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment llm_evidence.tex:Define objective symbols before existing comparison.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment llm_evidence.tex:Expand API at first supplement use.",
+      "pass": true
+    },
+    {
+      "check": "all source edits logged llm_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "no existing numerical tokens removed llm_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "only reviewed definition/identifier numeral additions llm_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "every existing inline mathematical expression retained llm_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "protected equation exact llm_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "protected algorithmic exact llm_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "all table-body numerical sequences exact llm_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "citations/references/labels exact llm_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "URLs and pins exact llm_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment closed_audits.tex:Explain internal audit family.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment closed_audits.tex:State specific G3 purpose before notation.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment closed_audits.tex:Define main-document symbols locally.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment closed_audits.tex:Remove undefined local A label without changing count.",
+      "pass": true
+    },
+    {
+      "check": "all source edits logged closed_audits.tex",
+      "pass": true
+    },
+    {
+      "check": "no existing numerical tokens removed closed_audits.tex",
+      "pass": true
+    },
+    {
+      "check": "only reviewed definition/identifier numeral additions closed_audits.tex",
+      "pass": true
+    },
+    {
+      "check": "every existing inline mathematical expression retained closed_audits.tex",
+      "pass": true
+    },
+    {
+      "check": "protected equation exact closed_audits.tex",
+      "pass": true
+    },
+    {
+      "check": "protected algorithmic exact closed_audits.tex",
+      "pass": true
+    },
+    {
+      "check": "all table-body numerical sequences exact closed_audits.tex",
+      "pass": true
+    },
+    {
+      "check": "citations/references/labels exact closed_audits.tex",
+      "pass": true
+    },
+    {
+      "check": "URLs and pins exact closed_audits.tex",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment grounding_diagnostics.tex:Explain cardinalization without jargon.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment grounding_diagnostics.tex:Avoid separate expansion ambiguity from float order.",
+      "pass": true
+    },
+    {
+      "check": "all source edits logged grounding_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "no existing numerical tokens removed grounding_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "only reviewed definition/identifier numeral additions grounding_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "every existing inline mathematical expression retained grounding_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "protected equation exact grounding_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "protected algorithmic exact grounding_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "all table-body numerical sequences exact grounding_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "citations/references/labels exact grounding_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "URLs and pins exact grounding_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment reproduction_map.tex:Define M5 when first used in supplement.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment reproduction_map.tex:Expand file format independently.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment reproduction_map.tex:Remove one-use QC abbreviation in table.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment reproduction_map.tex:Explain traceable evaluator phase ID.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment reproduction_map.tex:Define D1 at first supplement use.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment reproduction_map.tex:Define companion-document set symbols locally.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment reproduction_map.tex:Remove unnecessary one-use acronym.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment reproduction_map.tex:Consistent model identifier.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment reproduction_map.tex:Define common-18 at its actual first supplement body occurrence.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment reproduction_map.tex:Keep first-use file-format expansion grammatical.",
+      "pass": true
+    },
+    {
+      "check": "all source edits logged reproduction_map.tex",
+      "pass": true
+    },
+    {
+      "check": "no existing numerical tokens removed reproduction_map.tex",
+      "pass": true
+    },
+    {
+      "check": "only reviewed definition/identifier numeral additions reproduction_map.tex",
+      "pass": true
+    },
+    {
+      "check": "every existing inline mathematical expression retained reproduction_map.tex",
+      "pass": true
+    },
+    {
+      "check": "protected equation exact reproduction_map.tex",
+      "pass": true
+    },
+    {
+      "check": "protected algorithmic exact reproduction_map.tex",
+      "pass": true
+    },
+    {
+      "check": "all table-body numerical sequences exact reproduction_map.tex",
+      "pass": true
+    },
+    {
+      "check": "citations/references/labels exact reproduction_map.tex",
+      "pass": true
+    },
+    {
+      "check": "URLs and pins exact reproduction_map.tex",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment reference_conventions.tex:Define local component symbols without altering expression.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment reference_conventions.tex:Define scalar prediction/reference symbols independently.",
+      "pass": true
+    },
+    {
+      "check": "all source edits logged reference_conventions.tex",
+      "pass": true
+    },
+    {
+      "check": "no existing numerical tokens removed reference_conventions.tex",
+      "pass": true
+    },
+    {
+      "check": "only reviewed definition/identifier numeral additions reference_conventions.tex",
+      "pass": true
+    },
+    {
+      "check": "every existing inline mathematical expression retained reference_conventions.tex",
+      "pass": true
+    },
+    {
+      "check": "protected equation exact reference_conventions.tex",
+      "pass": true
+    },
+    {
+      "check": "protected algorithmic exact reference_conventions.tex",
+      "pass": true
+    },
+    {
+      "check": "all table-body numerical sequences exact reference_conventions.tex",
+      "pass": true
+    },
+    {
+      "check": "citations/references/labels exact reference_conventions.tex",
+      "pass": true
+    },
+    {
+      "check": "URLs and pins exact reference_conventions.tex",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment supervision_diagnostics.tex:Explain proper model name functionally.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment supervision_diagnostics.tex:Replace unexplained version-control shorthand.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment supervision_diagnostics.tex:Explain internal ID and why retained.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment supervision_diagnostics.tex:Define feature/model function without invented expansion.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment supervision_diagnostics.tex:Explain name through its source role.",
+      "pass": true
+    },
+    {
+      "check": "all source edits logged supervision_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "no existing numerical tokens removed supervision_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "only reviewed definition/identifier numeral additions supervision_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "every existing inline mathematical expression retained supervision_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "protected equation exact supervision_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "protected algorithmic exact supervision_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "all table-body numerical sequences exact supervision_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "citations/references/labels exact supervision_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "URLs and pins exact supervision_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment relationship_supplement.tex:Explain checksum purpose without unnecessary expansion.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment relationship_supplement.tex:Explain serialization and enum shorthand.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment relationship_supplement.tex:Expand time standard.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment relationship_supplement.tex:Explain recorded precision label without changing provenance.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment relationship_supplement.tex:Explain local sampling p, distinct from statistical p.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment relationship_supplement.tex:Expand transport abbreviation independently in caption.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment relationship_supplement.tex:Explain agreement symbols while preserving equation and interpretation.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment relationship_supplement.tex:Identify local recovery-version label.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment relationship_supplement.tex:Define transport acronym in running text even when caption floats to following page.",
+      "pass": true
+    },
+    {
+      "check": "all source edits logged relationship_supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "no existing numerical tokens removed relationship_supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "only reviewed definition/identifier numeral additions relationship_supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "every existing inline mathematical expression retained relationship_supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "protected equation exact relationship_supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "protected algorithmic exact relationship_supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "all table-body numerical sequences exact relationship_supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "citations/references/labels exact relationship_supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "URLs and pins exact relationship_supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment d1_contrasts.tex:Define contrast-label shorthand in first table caption.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment d1_contrasts.tex:Define contrast-label shorthand in second table caption.",
+      "pass": true
+    },
+    {
+      "check": "all source edits logged d1_contrasts.tex",
+      "pass": true
+    },
+    {
+      "check": "no existing numerical tokens removed d1_contrasts.tex",
+      "pass": true
+    },
+    {
+      "check": "only reviewed definition/identifier numeral additions d1_contrasts.tex",
+      "pass": true
+    },
+    {
+      "check": "every existing inline mathematical expression retained d1_contrasts.tex",
+      "pass": true
+    },
+    {
+      "check": "protected equation exact d1_contrasts.tex",
+      "pass": true
+    },
+    {
+      "check": "protected algorithmic exact d1_contrasts.tex",
+      "pass": true
+    },
+    {
+      "check": "all table-body numerical sequences exact d1_contrasts.tex",
+      "pass": true
+    },
+    {
+      "check": "citations/references/labels exact d1_contrasts.tex",
+      "pass": true
+    },
+    {
+      "check": "URLs and pins exact d1_contrasts.tex",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment supplement.tex:Introduce core concepts and datasets independently in supplement.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment supplement.tex:Supply independent metric/LLM introduction before tables; thresholds unchanged.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment supplement.tex:Define RL used in table body.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment supplement.tex:Define shortened table task label.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment supplement.tex:Define retrieval identifiers independently in table.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment supplement.tex:Explain metrics, software and abbreviation used in block table.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment supplement.tex:Expand MILP at first supplement occurrence.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment supplement.tex:Expand program-representation abbreviation.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment supplement.tex:Explain assistance and eligibility independently in supplement.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment supplement.tex:Preserve zero-inventory qualification in independent metric introduction.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment supplement.tex:Remove inherited trailing space on the edited AST-definition line; rendered text unchanged.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment supplement.tex:Scope the introductory eligibility summary to the main benchmark; the factorial metadata-only inventory remains distinct.",
+      "pass": true
+    },
+    {
+      "check": "all source edits logged supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "no existing numerical tokens removed supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "only reviewed definition/identifier numeral additions supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "every existing inline mathematical expression retained supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "protected equation exact supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "protected algorithmic exact supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "all table-body numerical sequences exact supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "citations/references/labels exact supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "URLs and pins exact supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Define numerical grounding independently in the abstract.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Explain ratio-aware and coarse readiness without unexplained abstract shorthand.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Explain frozen-score control in the abstract.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Distinguish occurrences from parameters at first substantive use.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Introduce benchmark and schema hit independently in main text.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Explain supplied-slot without project shorthand at first use.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Explain metric at its first introduction, leaving formal definition intact.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Give the named intervention a function, not a guessed expansion.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Verify NL4Opt expansion; explain Ner4Opt function from cited publication.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Distinguish framework names and functions without artificial expansions.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Explain one-use proper method name functionally.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Define q at first mathematical use.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Define catalog size and members.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Clarify gold and preserve reference-validity limits.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Explain model purpose at first use without expanding its proper name.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Define retrieval abbreviation, indicator, reference schema and query index.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Explain macro averaging locally.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Explain conditioning in ordinary language before formal Exact20 definition.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Define assignment symbols before equation; slot index differs from query index.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Clarify local index scope without changing equation.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Disambiguate algorithm mappings and candidates from evaluation sets.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Define abstention option.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Replace unnecessary specialist verb without changing control.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Explain assignment restriction.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Describe established algorithm rather than forcing an expansion.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Keep model name consistent; explain normalization.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Explain grouping term without changing group construction.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Define bootstrap replication symbol.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Use full model identifier consistently.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Use full model identifier consistently.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Introduce internal semantic set with its provenance.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Explain internal population label at first use.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Explain internal evidence-bundle label at first use.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Provide descriptive umbrella for traceable audit IDs.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Define table abbreviation independently.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Expand retrieval acronyms in compact table caption.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Make table metric distinctions self-contained.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Explain matched-table metric labels locally.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Explain conditional matched-table metric locally.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Match archived grouping implementation: digits and number words are masked.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Explain coarse readiness at first main-text occurrence.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Explain factorial table configuration names from archived protocol.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Explain agreement statistic at first main-text use.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment main.tex:Explain all method labels for standalone retrieval table reading.",
+      "pass": true
+    },
+    {
+      "check": "all source edits logged main.tex",
+      "pass": true
+    },
+    {
+      "check": "no existing numerical tokens removed main.tex",
+      "pass": true
+    },
+    {
+      "check": "only reviewed definition/identifier numeral additions main.tex",
+      "pass": true
+    },
+    {
+      "check": "every existing inline mathematical expression retained main.tex",
+      "pass": true
+    },
+    {
+      "check": "protected equation exact main.tex",
+      "pass": true
+    },
+    {
+      "check": "protected algorithmic exact main.tex",
+      "pass": true
+    },
+    {
+      "check": "all table-body numerical sequences exact main.tex",
+      "pass": true
+    },
+    {
+      "check": "citations/references/labels exact main.tex",
+      "pass": true
+    },
+    {
+      "check": "URLs and pins exact main.tex",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment common18_overview.tex:Define population ID independently.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment common18_overview.tex:Explain modeling language at first occurrence.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment common18_overview.tex:Explain proper system names locally without altering provenance.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment common18_overview.tex:Keep functional explanation grammatical.",
+      "pass": true
+    },
+    {
+      "check": "all source edits logged common18_overview.tex",
+      "pass": true
+    },
+    {
+      "check": "no existing numerical tokens removed common18_overview.tex",
+      "pass": true
+    },
+    {
+      "check": "only reviewed definition/identifier numeral additions common18_overview.tex",
+      "pass": true
+    },
+    {
+      "check": "every existing inline mathematical expression retained common18_overview.tex",
+      "pass": true
+    },
+    {
+      "check": "protected equation exact common18_overview.tex",
+      "pass": true
+    },
+    {
+      "check": "protected algorithmic exact common18_overview.tex",
+      "pass": true
+    },
+    {
+      "check": "all table-body numerical sequences exact common18_overview.tex",
+      "pass": true
+    },
+    {
+      "check": "citations/references/labels exact common18_overview.tex",
+      "pass": true
+    },
+    {
+      "check": "URLs and pins exact common18_overview.tex",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment relationship_evidence.tex:Explain relationship unit at first substantive use.",
+      "pass": true
+    },
+    {
+      "check": "all source edits logged relationship_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "no existing numerical tokens removed relationship_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "only reviewed definition/identifier numeral additions relationship_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "every existing inline mathematical expression retained relationship_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "protected equation exact relationship_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "protected algorithmic exact relationship_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "all table-body numerical sequences exact relationship_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "citations/references/labels exact relationship_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "URLs and pins exact relationship_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment preserved_results_details.tex:Explain runtime memory measure.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment preserved_results_details.tex:Define symbols locally in supplement runtime expression.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment preserved_results_details.tex:Explain mention-span notation.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment preserved_results_details.tex:Define B independently in supplement.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment preserved_results_details.tex:Avoid introducing another unnecessary acronym.",
+      "pass": true
+    },
+    {
+      "check": "all source edits logged preserved_results_details.tex",
+      "pass": true
+    },
+    {
+      "check": "no existing numerical tokens removed preserved_results_details.tex",
+      "pass": true
+    },
+    {
+      "check": "only reviewed definition/identifier numeral additions preserved_results_details.tex",
+      "pass": true
+    },
+    {
+      "check": "every existing inline mathematical expression retained preserved_results_details.tex",
+      "pass": true
+    },
+    {
+      "check": "protected equation exact preserved_results_details.tex",
+      "pass": true
+    },
+    {
+      "check": "protected algorithmic exact preserved_results_details.tex",
+      "pass": true
+    },
+    {
+      "check": "all table-body numerical sequences exact preserved_results_details.tex",
+      "pass": true
+    },
+    {
+      "check": "citations/references/labels exact preserved_results_details.tex",
+      "pass": true
+    },
+    {
+      "check": "URLs and pins exact preserved_results_details.tex",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment related_context.tex:Expand SQL independently in supplement.",
+      "pass": true
+    },
+    {
+      "check": "all source edits logged related_context.tex",
+      "pass": true
+    },
+    {
+      "check": "no existing numerical tokens removed related_context.tex",
+      "pass": true
+    },
+    {
+      "check": "only reviewed definition/identifier numeral additions related_context.tex",
+      "pass": true
+    },
+    {
+      "check": "every existing inline mathematical expression retained related_context.tex",
+      "pass": true
+    },
+    {
+      "check": "protected equation exact related_context.tex",
+      "pass": true
+    },
+    {
+      "check": "protected algorithmic exact related_context.tex",
+      "pass": true
+    },
+    {
+      "check": "all table-body numerical sequences exact related_context.tex",
+      "pass": true
+    },
+    {
+      "check": "citations/references/labels exact related_context.tex",
+      "pass": true
+    },
+    {
+      "check": "URLs and pins exact related_context.tex",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment additional_evidence.tex:Remove irrelevant journal-era shorthand; preserve historical cohort.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment additional_evidence.tex:Define ranked metric headers from retained implementation.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment additional_evidence.tex:Explain dataset and avoid implying model expansion.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment additional_evidence.tex:Define row variants independently.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment additional_evidence.tex:Distinguish same-named audit from pre-ratio candidate cache.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment additional_evidence.tex:Define semantic-IR independently in supplement table.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment additional_evidence.tex:Keep later standalone legacy table readable.",
+      "pass": true
+    },
+    {
+      "check": "all source edits logged additional_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "no existing numerical tokens removed additional_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "only reviewed definition/identifier numeral additions additional_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "every existing inline mathematical expression retained additional_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "protected equation exact additional_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "protected algorithmic exact additional_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "all table-body numerical sequences exact additional_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "citations/references/labels exact additional_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "URLs and pins exact additional_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment supporting_core.tex:Identify main research-question shorthand independently.",
+      "pass": true
+    },
+    {
+      "check": "unique logged source segment supporting_core.tex:Expand statistical abbreviation.",
+      "pass": true
+    },
+    {
+      "check": "all source edits logged supporting_core.tex",
+      "pass": true
+    },
+    {
+      "check": "no existing numerical tokens removed supporting_core.tex",
+      "pass": true
+    },
+    {
+      "check": "only reviewed definition/identifier numeral additions supporting_core.tex",
+      "pass": true
+    },
+    {
+      "check": "every existing inline mathematical expression retained supporting_core.tex",
+      "pass": true
+    },
+    {
+      "check": "protected equation exact supporting_core.tex",
+      "pass": true
+    },
+    {
+      "check": "protected algorithmic exact supporting_core.tex",
+      "pass": true
+    },
+    {
+      "check": "all table-body numerical sequences exact supporting_core.tex",
+      "pass": true
+    },
+    {
+      "check": "citations/references/labels exact supporting_core.tex",
+      "pass": true
+    },
+    {
+      "check": "URLs and pins exact supporting_core.tex",
+      "pass": true
+    },
+    {
+      "check": "protected source exact references.bib",
+      "pass": true
+    },
+    {
+      "check": "protected source exact supplement.bbl",
+      "pass": true
+    },
+    {
+      "check": "protected source exact sn-basic.bst",
+      "pass": true
+    },
+    {
+      "check": "protected source exact main.bbl",
+      "pass": true
+    },
+    {
+      "check": "protected source exact pipeline_figure.tex",
+      "pass": true
+    },
+    {
+      "check": "protected source exact Fig1.tex",
+      "pass": true
+    },
+    {
+      "check": "protected source exact orcidlink.sty",
+      "pass": true
+    },
+    {
+      "check": "protected source exact sn-jnl.cls",
+      "pass": true
+    },
+    {
+      "check": "research questions exact",
+      "pass": true
+    },
+    {
+      "check": "declarations/funding/AI/availability exact",
+      "pass": true
+    },
+    {
+      "check": "acknowledgment exact",
+      "pass": true
+    },
+    {
+      "check": "abstract range",
+      "pass": true
+    },
+    {
+      "check": "six keywords",
+      "pass": true
+    },
+    {
+      "check": "two-column format exact",
+      "pass": true
+    },
+    {
+      "check": "all main table cells/highlights exact 1",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 1:Random",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 1:LSA",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 1:BM25",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 1:TF--IDF",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 1:BGE-M3",
+      "pass": true
+    },
+    {
+      "check": "all main table cells/highlights exact 2",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 2:TF--IDF-TG (baseline extr.)",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 2:TF--IDF-TG (ratio-aware extr.)",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 2:BGE-M3 + ratio-aware",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 2:Oracle-TG",
+      "pass": true
+    },
+    {
+      "check": "all main table cells/highlights exact 3",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 3:TF--IDF base",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 3:TF--IDF ratio",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 3:BGE-M3",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 3:Oracle",
+      "pass": true
+    },
+    {
+      "check": "all main table cells/highlights exact 4",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 4:Wrong schema",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 4:Incomplete coverage",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 4:Type mismatch",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 4:Stored-value disagreement",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 4:Full scalar agreement",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 4:Total",
+      "pass": true
+    },
+    {
+      "check": "all main table cells/highlights exact 5",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 5:Typed greedy (reference)",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 5:Constrained assignment",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 5:Max-weight matching",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 5:Optimization-role repair",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 5:Search-structured grounding",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 5:Semantic-IR repair",
+      "pass": true
+    },
+    {
+      "check": "all main table cells/highlights exact 6",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 6:Typed / Ordinal",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 6:Typed / Context",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 6:Typed / No marker bonus",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 6:Rich / Ordinal",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 6:Rich / Context",
+      "pass": true
+    },
+    {
+      "check": "rendered numerical value/font 6:Rich / No marker bonus",
+      "pass": true
+    },
+    {
+      "check": "140 main numerical cells",
+      "pass": true
+    },
+    {
+      "check": "15 bold highlights",
+      "pass": true
+    },
+    {
+      "check": "algorithm complete exact",
+      "pass": true
+    },
+    {
+      "check": "figure source and rendering exact",
+      "pass": true
+    },
+    {
+      "check": "clean diagnostics main",
+      "pass": true
+    },
+    {
+      "check": "clean bibliography main",
+      "pass": true
+    },
+    {
+      "check": "independent clean package PDF byte identity main",
+      "pass": true
+    },
+    {
+      "check": "all references cited/linked main",
+      "pass": true
+    },
+    {
+      "check": "text within page main:1",
+      "pass": true
+    },
+    {
+      "check": "text within page main:2",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.kadioglu2024ner4opt",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.ramamonjison2022autoformulation",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.ramamonjison2023nl4opt",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.deng2021strug",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.wang2020ratsql",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.gao2026models",
+      "pass": true
+    },
+    {
+      "check": "internal main:subsection.19",
+      "pass": true
+    },
+    {
+      "check": "internal main:section.11",
+      "pass": true
+    },
+    {
+      "check": "internal main:section.15",
+      "pass": true
+    },
+    {
+      "check": "internal main:section.30",
+      "pass": true
+    },
+    {
+      "check": "internal main:section.39",
+      "pass": true
+    },
+    {
+      "check": "internal main:section.58",
+      "pass": true
+    },
+    {
+      "check": "text within page main:3",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.deng2021strug",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.wang2020ratsql",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.almasian2023cqe",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.roy2017udg",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.gao2026models",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.kadioglu2024ner4opt",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.ramamonjison2023nl4opt",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.pan2025pamop",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.huang2025orlm",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.xiao2026deepor",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.ahmed2025opt2code",
+      "pass": true
+    },
+    {
+      "check": "companion main:table.4",
+      "pass": true
+    },
+    {
+      "check": "companion main:section.104",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.refai2026component",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.chen2026optengine",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.astorga2025autoformulation",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.punyakanok2004ilp",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.scholak2021picard",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.zhai2025equivamap",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.kuhn1955assignment",
+      "pass": true
+    },
+    {
+      "check": "text within page main:4",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.nlp4lp_dataset",
+      "pass": true
+    },
+    {
+      "check": "companion main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "text within page main:5",
+      "pass": true
+    },
+    {
+      "check": "internal main:subsection.61",
+      "pass": true
+    },
+    {
+      "check": "internal main:equation.22",
+      "pass": true
+    },
+    {
+      "check": "internal main:equation.23",
+      "pass": true
+    },
+    {
+      "check": "internal main:equation.26",
+      "pass": true
+    },
+    {
+      "check": "text within page main:6",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.nlp4lp_dataset",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal main:subsection.19",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.chen2024m3embedding",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.deerwester1990lsa",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.pedregosa2011sklearn",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.robertson2009bm25",
+      "pass": true
+    },
+    {
+      "check": "companion main:table.6",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.lhoest2021datasets",
+      "pass": true
+    },
+    {
+      "check": "internal main:equation.18",
+      "pass": true
+    },
+    {
+      "check": "internal main:subsection.21",
+      "pass": true
+    },
+    {
+      "check": "internal main:algorithm.34",
+      "pass": true
+    },
+    {
+      "check": "internal main:figure.36",
+      "pass": true
+    },
+    {
+      "check": "text within page main:7",
+      "pass": true
+    },
+    {
+      "check": "text within page main:8",
+      "pass": true
+    },
+    {
+      "check": "companion main:subsection.26",
+      "pass": true
+    },
+    {
+      "check": "companion main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.holm1979followup",
+      "pass": true
+    },
+    {
+      "check": "companion main:table.17",
+      "pass": true
+    },
+    {
+      "check": "internal main:subsection.62",
+      "pass": true
+    },
+    {
+      "check": "companion main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal main:table.42",
+      "pass": true
+    },
+    {
+      "check": "internal main:table.45",
+      "pass": true
+    },
+    {
+      "check": "text within page main:9",
+      "pass": true
+    },
+    {
+      "check": "internal main:table.47",
+      "pass": true
+    },
+    {
+      "check": "internal main:table.50",
+      "pass": true
+    },
+    {
+      "check": "internal main:subsection.51",
+      "pass": true
+    },
+    {
+      "check": "companion main:section.9",
+      "pass": true
+    },
+    {
+      "check": "internal main:table.53",
+      "pass": true
+    },
+    {
+      "check": "internal main:table.56",
+      "pass": true
+    },
+    {
+      "check": "internal main:subsection.37",
+      "pass": true
+    },
+    {
+      "check": "text within page main:10",
+      "pass": true
+    },
+    {
+      "check": "internal main:equation.25",
+      "pass": true
+    },
+    {
+      "check": "internal main:equation.29",
+      "pass": true
+    },
+    {
+      "check": "companion main:subsection.26",
+      "pass": true
+    },
+    {
+      "check": "text within page main:11",
+      "pass": true
+    },
+    {
+      "check": "internal main:equation.24",
+      "pass": true
+    },
+    {
+      "check": "internal main:table.45",
+      "pass": true
+    },
+    {
+      "check": "text within page main:12",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.gao2026models",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.refai2026component",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.chen2026optengine",
+      "pass": true
+    },
+    {
+      "check": "internal main:cite.zhai2025equivamap",
+      "pass": true
+    },
+    {
+      "check": "companion main:subsection.63",
+      "pass": true
+    },
+    {
+      "check": "companion main:subsection.99",
+      "pass": true
+    },
+    {
+      "check": "companion main:section.40",
+      "pass": true
+    },
+    {
+      "check": "companion main:subsection.98",
+      "pass": true
+    },
+    {
+      "check": "companion main:subsection.74",
+      "pass": true
+    },
+    {
+      "check": "internal main:subsection.19",
+      "pass": true
+    },
+    {
+      "check": "text within page main:13",
+      "pass": true
+    },
+    {
+      "check": "companion main:subsection.27",
+      "pass": true
+    },
+    {
+      "check": "companion main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "companion main:section.56",
+      "pass": true
+    },
+    {
+      "check": "companion main:subsection.72",
+      "pass": true
+    },
+    {
+      "check": "text within page main:14",
+      "pass": true
+    },
+    {
+      "check": "internal main:subsection.62",
+      "pass": true
+    },
+    {
+      "check": "internal main:subsection.62",
+      "pass": true
+    },
+    {
+      "check": "internal main:subsection.61",
+      "pass": true
+    },
+    {
+      "check": "companion main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "text within page main:15",
+      "pass": true
+    },
+    {
+      "check": "text within page main:16",
+      "pass": true
+    },
+    {
+      "check": "text within page main:17",
+      "pass": true
+    },
+    {
+      "check": "fonts embedded main",
+      "pass": true
+    },
+    {
+      "check": "external destination sets exact main",
+      "pass": true
+    },
+    {
+      "check": "bookmark level correction retained main",
+      "pass": true
+    },
+    {
+      "check": "clean diagnostics supplement",
+      "pass": true
+    },
+    {
+      "check": "clean bibliography supplement",
+      "pass": true
+    },
+    {
+      "check": "independent clean package PDF byte identity supplement",
+      "pass": true
+    },
+    {
+      "check": "all references cited/linked supplement",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:1",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:section.2",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:section.9",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.10",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.15",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:section.18",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:section.25",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.26",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.27",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:2",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.34",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.37",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.39",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:section.40",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.41",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.46",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.49",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.53",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:section.56",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:section.59",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.60",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.63",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.69",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.72",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:section.73",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.74",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.75",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.76",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.77",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:section.78",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.79",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.84",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.87",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.92",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.93",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.96",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:section.97",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.98",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.99",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:section.104",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.105",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.106",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:3",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.4",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.8",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:4",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:section.104",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:5",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:6",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.12",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.14",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.17",
+      "pass": true
+    },
+    {
+      "check": "companion supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.77",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.20",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.22",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.24",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.74",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:7",
+      "pass": true
+    },
+    {
+      "check": "companion supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "companion supplement:equation.27",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:8",
+      "pass": true
+    },
+    {
+      "check": "companion supplement:table.42",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:9",
+      "pass": true
+    },
+    {
+      "check": "companion supplement:subsection.37",
+      "pass": true
+    },
+    {
+      "check": "companion supplement:table.56",
+      "pass": true
+    },
+    {
+      "check": "companion supplement:subsubsection.54",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.huang2017beamfollowup",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:10",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.27",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.29",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:11",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.33",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:12",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:13",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:14",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.36",
+      "pass": true
+    },
+    {
+      "check": "companion supplement:equation.28",
+      "pass": true
+    },
+    {
+      "check": "companion supplement:equation.29",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:15",
+      "pass": true
+    },
+    {
+      "check": "companion supplement:subsection.60",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.63",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:16",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.43",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.45",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.48",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:17",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.43",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.pan2025pamop",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.huang2025orlm",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.xiao2026deepor",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.ding2026orr1",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:18",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:19",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.52",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.55",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:20",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.58",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:21",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.62",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:22",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.65",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:23",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.67",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:24",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:equation.68",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:25",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.71",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:26",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.22",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:27",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.24",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:28",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.holm1979followup",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.17",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.17",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.20",
+      "pass": true
+    },
+    {
+      "check": "companion supplement:table.42",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.14",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:29",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.81",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.83",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.86",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:30",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:31",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:32",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.77",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.89",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.91",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:33",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.27",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:34",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.95",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.99",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:subsection.72",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.81",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:section.40",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:35",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.101",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.103",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:36",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.101",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:37",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:table.4",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.pan2025pamop",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.huang2025orlm",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.xiao2026deepor",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.ahmed2025opt2code",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.astorga2025autoformulation",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.xiao2024chainofexperts",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.yu2026uncertainty",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.jiang2025llmopt",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.zhang2024optllm",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.chen2025solver",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.ding2026orr1",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.li2026solver",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.xie2026escaping",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.zhang2026dual",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.kong2025alphaopt",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.yang2026orthought",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.affolter2019nli",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.yu2018spider",
+      "pass": true
+    },
+    {
+      "check": "internal supplement:cite.miplibnl2026",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:38",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:39",
+      "pass": true
+    },
+    {
+      "check": "text within page supplement:40",
+      "pass": true
+    },
+    {
+      "check": "fonts embedded supplement",
+      "pass": true
+    },
+    {
+      "check": "external destination sets exact supplement",
+      "pass": true
+    },
+    {
+      "check": "bookmark level correction retained supplement",
+      "pass": true
+    },
+    {
+      "check": "package rebuild byte identity Fig1.pdf",
+      "pass": true
+    },
+    {
+      "check": "package rebuild byte identity main.bbl",
+      "pass": true
+    },
+    {
+      "check": "package rebuild byte identity supplement.bbl",
+      "pass": true
+    },
+    {
+      "check": "package rebuild byte identity main_crossrefs.tex",
+      "pass": true
+    },
+    {
+      "check": "package rebuild byte identity supplement_crossrefs.tex",
+      "pass": true
+    },
+    {
+      "check": "ZIP CRC",
+      "pass": true
+    },
+    {
+      "check": "flat ZIP",
+      "pass": true
+    },
+    {
+      "check": "all ZIP members current",
+      "pass": true
+    },
+    {
+      "check": "no temp/private/data files",
+      "pass": true
+    },
+    {
+      "check": "checksum Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+      "pass": true
+    },
+    {
+      "check": "checksum ESM_1_Retrieval_Assisted_Scalar_Grounding_Supplement.pdf",
+      "pass": true
+    },
+    {
+      "check": "checksum Retrieval_Assisted_Scalar_Grounding_JDSA_Submission_Source.zip",
+      "pass": true
+    },
+    {
+      "check": "register first uses and occurrence lists",
+      "pass": true
+    }
+  ],
+  "register_terms": 333,
+  "local_edits": 113
+}

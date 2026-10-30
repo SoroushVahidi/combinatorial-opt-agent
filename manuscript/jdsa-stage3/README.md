@@ -10,10 +10,10 @@ This is a pre-submission author-review manuscript, not an accepted journal artic
 - [Supplement: Online Resource 1](ESM_1_Retrieval_Assisted_Scalar_Grounding_Supplement.pdf)
 - [Complete editable submission package](Retrieval_Assisted_Scalar_Grounding_JDSA_Submission_Source.zip)
 - [SHA-256 checksums](SHA256SUMS.txt)
-- [Versioned manuscript release v1.1.0](https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.1.0)
+- [Versioned manuscript release v1.1.1](https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.1.1)
 - [Canonical repository directory](https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa-stage3)
 
-`main.tex` is the primary article entry point. `supplement.tex` builds the 38-page Online Resource 1. `Fig1.tex` and `pipeline_figure.tex` are editable TikZ figure sources; `Fig1.pdf` is the embedded vector figure, with embedded fonts. The remaining LaTeX inputs, bibliography, generated bibliographies, and class/style files are required source dependencies. Bundled class/style notices and licensing restrictions remain intact.
+`main.tex` is the primary article entry point. `supplement.tex` builds the 40-page Online Resource 1. `Fig1.tex` and `pipeline_figure.tex` are editable TikZ figure sources; `Fig1.pdf` is the embedded vector figure, with embedded fonts. The remaining LaTeX inputs, bibliography, generated bibliographies, and class/style files are required source dependencies. Bundled class/style notices and licensing restrictions remain intact.
 
 ## Compile and upload
 
@@ -35,3 +35,5 @@ The ZIP includes the matching PDF pair, vector figure, editable sources, depende
 Evidence revision `f94012872211ab6a828147bb138fbe8ab695b982`, evidence release `jdsa-evidence-v2.0.0`, and the historical manuscript release remain unchanged. The public evidence supports saved-record reanalysis, not full historical inference reproduction or independent semantic ground truth. Restricted originals, private reviews, and missing observations retain the boundaries documented in the article and supplement.
 
 The four presentation phases preserve scientific results and qualifications from correction commit `d3583fa28fcdb87f7a446f764ca3225ab5f855d3`. Phase baselines and exact edits, numerical preservation checks, public-access checks, bibliography verification, and build results are recorded in `docs/jdsa_presentation_polish_phase1_20261029/` through `docs/jdsa_presentation_polish_phase4_20261029/` at the repository root. Historical source/PDF versions remain recoverable through Git and the unchanged releases.
+
+The terminology-accessibility revision starts from manuscript release v1.1.0 (`f2b8a94ea01922618e36b667c1d9b5e2c08f893c`). Its complete terminology register, before/after locations, local change log, source checks, and validation report are in `docs/jdsa_terminology_accessibility_20261029/` at the repository root. The prior four editorial phases and all immutable evidence remain preserved.

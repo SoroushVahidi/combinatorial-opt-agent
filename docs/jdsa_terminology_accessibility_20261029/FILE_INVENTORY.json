@@ -1,0 +1,150 @@
+[
+  {
+    "status": "M",
+    "path": "manuscript/jdsa-stage3/ESM_1_Retrieval_Assisted_Scalar_Grounding_Supplement.pdf"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/jdsa-stage3/README.md"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/jdsa-stage3/Retrieval_Assisted_Scalar_Grounding_JDSA_Submission_Source.zip"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/jdsa-stage3/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/jdsa-stage3/SHA256SUMS.txt"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/jdsa-stage3/additional_evidence.tex"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/jdsa-stage3/closed_audits.tex"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/jdsa-stage3/common18_overview.tex"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/jdsa-stage3/d1_contrasts.tex"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/jdsa-stage3/grounding_diagnostics.tex"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/jdsa-stage3/llm_evidence.tex"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/jdsa-stage3/main.tex"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/jdsa-stage3/main_crossrefs.tex"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/jdsa-stage3/preserved_results_details.tex"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/jdsa-stage3/reference_conventions.tex"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/jdsa-stage3/related_context.tex"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/jdsa-stage3/relationship_evidence.tex"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/jdsa-stage3/relationship_supplement.tex"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/jdsa-stage3/reproduction_map.tex"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/jdsa-stage3/supervision_diagnostics.tex"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/jdsa-stage3/supplement.tex"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/jdsa-stage3/supplement_crossrefs.tex"
+  },
+  {
+    "status": "M",
+    "path": "manuscript/jdsa-stage3/supporting_core.tex"
+  },
+  {
+    "status": "A",
+    "path": "docs/jdsa_terminology_accessibility_20261029/AUDIT.txt"
+  },
+  {
+    "status": "A",
+    "path": "docs/jdsa_terminology_accessibility_20261029/AUDIT_SCOPE.json"
+  },
+  {
+    "status": "A",
+    "path": "docs/jdsa_terminology_accessibility_20261029/BASELINE_RELEASE_CHECK.json"
+  },
+  {
+    "status": "A",
+    "path": "docs/jdsa_terminology_accessibility_20261029/BEFORE_AFTER.json"
+  },
+  {
+    "status": "A",
+    "path": "docs/jdsa_terminology_accessibility_20261029/CHANGES.json"
+  },
+  {
+    "status": "A",
+    "path": "docs/jdsa_terminology_accessibility_20261029/MATHEMATICAL_OCCURRENCES.json"
+  },
+  {
+    "status": "A",
+    "path": "docs/jdsa_terminology_accessibility_20261029/PRIMARY_SOURCES.json"
+  },
+  {
+    "status": "A",
+    "path": "docs/jdsa_terminology_accessibility_20261029/STANDALONE_BUILDS.json"
+  },
+  {
+    "status": "A",
+    "path": "docs/jdsa_terminology_accessibility_20261029/TERMINOLOGY_REGISTER.json"
+  },
+  {
+    "status": "A",
+    "path": "docs/jdsa_terminology_accessibility_20261029/TERMINOLOGY_REGISTER.tsv"
+  },
+  {
+    "status": "A",
+    "path": "docs/jdsa_terminology_accessibility_20261029/VALIDATION.json"
+  },
+  {
+    "status": "A",
+    "path": "docs/jdsa_terminology_accessibility_20261029/build_register.py"
+  },
+  {
+    "status": "A",
+    "path": "docs/jdsa_terminology_accessibility_20261029/verify_terminology.py"
+  },
+  {
+    "status": "A",
+    "path": "docs/jdsa_terminology_accessibility_20261029/FILE_INVENTORY.json"
+  }
+]

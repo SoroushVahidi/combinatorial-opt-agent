@@ -1,0 +1,125 @@
+[
+  {
+    "terms": [
+      "NL4Opt"
+    ],
+    "source": "https://proceedings.mlr.press/v220/ramamonjison23a.html",
+    "verification": "Official proceedings explicitly expand Natural Language for Optimization and describe extraction/representation tasks."
+  },
+  {
+    "terms": [
+      "Ner4Opt",
+      "TF--IDF",
+      "LSA",
+      "StruG",
+      "RAT-SQL",
+      "PICARD",
+      "NLP4LP",
+      "OptMATH",
+      "ORLM",
+      "OptiMUS"
+    ],
+    "source": "manuscript/jdsa-stage3/references.bib at f2b8a94",
+    "verification": "Existing primary-source titles and accompanying cited descriptions checked; no bibliographic changes or fabricated proper-name expansions."
+  },
+  {
+    "terms": [
+      "BGE-M3"
+    ],
+    "source": "https://huggingface.co/BAAI/bge-m3",
+    "verification": "Official model card confirms multilingual text embeddings and dense retrieval use; other model capabilities are not attributed to this experiment."
+  },
+  {
+    "terms": [
+      "PaMOP"
+    ],
+    "source": "https://ijcai.org/proceedings/2025/296",
+    "verification": "Primary proceedings describe partitioning and iterative correction; manuscript retains project-reconstruction distinction."
+  },
+  {
+    "terms": [
+      "BIND",
+      "Text2Opt-Bench"
+    ],
+    "source": "https://proceedings.colm.cc/paper_files/paper/2026/hash/6feb9b30798abcfae937760d183605e1-Abstract-Conference.html",
+    "verification": "Primary pre-proceedings describe programmatic binding via externalized numerical data. Publication status unchanged."
+  },
+  {
+    "terms": [
+      "MiniLM"
+    ],
+    "source": "https://huggingface.co/microsoft/MiniLM-L12-H384-uncased",
+    "verification": "Official model card supports compact pretrained text-model description; no new checkpoint identity claimed."
+  },
+  {
+    "terms": [
+      "DistilRoBERTa"
+    ],
+    "source": "https://huggingface.co/distilbert/distilroberta-base",
+    "verification": "Official model card describes distilled RoBERTa; no invented acronym expansion."
+  },
+  {
+    "terms": [
+      "MS-MARCO"
+    ],
+    "source": "https://microsoft.github.io/msmarco/",
+    "verification": "Primary benchmark site confirms passage-ranking task; no dataset downloaded."
+  },
+  {
+    "terms": [
+      "HiGHS"
+    ],
+    "source": "https://highs.dev/",
+    "verification": "Official solver documentation confirms optimization solver role; name retained."
+  },
+  {
+    "terms": [
+      "MRR@10",
+      "nDCG@10",
+      "Coverage@10",
+      "Hit@5",
+      "P@5"
+    ],
+    "source": "training/metrics.py at f2b8a94",
+    "verification": "Read only: reciprocal_rank_at_k, ndcg_at_k, coverage_at_k, precision_at_k. No metric or evaluation code executed."
+  },
+  {
+    "terms": [
+      "D1",
+      "G1",
+      "G2",
+      "G3",
+      "M5",
+      "P0",
+      "Stage-A"
+    ],
+    "source": "https://github.com/SoroushVahidi/combinatorial-opt-agent/blob/209fa982c0a0e2087bd021cbc7a9f57d94256c8f/reproducibility/jdsa-v2.0.0/claims.json",
+    "verification": "Read archived investigation identities and population/evidence restrictions; public evidence unmodified."
+  },
+  {
+    "terms": [
+      "Typed",
+      "Rich",
+      "Ordinal",
+      "Context",
+      "No marker bonus"
+    ],
+    "source": "git:45dd183:docs/wulver_grounding_attribution_2026-10-27/PROTOCOL.md",
+    "verification": "Read frozen constructor/scorer descriptions; no parsing, decoding, solver or model run."
+  },
+  {
+    "terms": [
+      "delexicalized"
+    ],
+    "source": "git:df408d3:tools/analyze_cached_joint_grounding.py:grouping",
+    "verification": "Read implementation: lowercasing/tokenization and masking numeric tokens/number words before five-gram Jaccard grouping. No grouping computation run."
+  },
+  {
+    "terms": [
+      "AMPL",
+      "GAMS"
+    ],
+    "source": "Existing supplementary provenance and cited PaMOP record",
+    "verification": "Retained proper names with functional modeling-language/source descriptions. Attempted AMPL site access failed and GAMS page returned no readable content; neither is represented as a freshly verified official expansion."
+  }
+]

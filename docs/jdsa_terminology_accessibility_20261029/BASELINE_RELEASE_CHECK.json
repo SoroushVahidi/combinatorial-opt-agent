@@ -1,0 +1,22 @@
+[
+  {
+    "file": "ESM_1_Retrieval_Assisted_Scalar_Grounding_Supplement.pdf",
+    "status": 200,
+    "sha256": "15253bb79524a8fa0b8dd68a869aa6a6ee4bc55891aaef28175d31c17149abdf"
+  },
+  {
+    "file": "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+    "status": 200,
+    "sha256": "bdd2384c0fedb2b563bf72f6cd44116aba7b277b3e4a9abc5b3e2a87d4642701"
+  },
+  {
+    "file": "Retrieval_Assisted_Scalar_Grounding_JDSA_Submission_Source.zip",
+    "status": 200,
+    "sha256": "ae37c308923b64788cb5f765bd037e03917cd171e3b3379ef71552b6467ce096"
+  },
+  {
+    "file": "SHA256SUMS.txt",
+    "status": 200,
+    "sha256": "e4252f6e4f70ea87c9e1dd4181ec54b6675125bf8ec5987e5bae930b6d0fa052"
+  }
+]

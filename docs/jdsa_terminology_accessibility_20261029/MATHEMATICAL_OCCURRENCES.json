@@ -1,0 +1,5238 @@
+[
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 115,
+    "document": "main",
+    "expression": "\\mathcal{S}=\\{s_1,\\dots,s_M\\}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 120,
+    "document": "main",
+    "expression": "\\hat{s}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 124,
+    "document": "main",
+    "expression": "K_G(q)",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 124,
+    "document": "main",
+    "expression": "P_{\\mathrm{all}}(\\hat{s})",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 129,
+    "document": "main",
+    "expression": "y_q : K_G(q) \\to \\mathbb{R}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 129,
+    "document": "main",
+    "expression": "\\hat{y}_{q}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 129,
+    "document": "main",
+    "expression": "A(q) \\subseteq E(q,\\hat{s})",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 134,
+    "document": "main",
+    "expression": "K_G(q)",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 145,
+    "document": "main",
+    "expression": "N^{-1}\\sum_{i=1}^N H_i",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 145,
+    "document": "main",
+    "expression": "H_i=\\mathbf{1}[\\hat{s}_i=s_i^*]",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 145,
+    "document": "main",
+    "expression": "N=331",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 145,
+    "document": "main",
+    "expression": "E_i=E(q_i,\\hat{s}_i)",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 145,
+    "document": "main",
+    "expression": "A_i\\subseteq E_i",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 145,
+    "document": "main",
+    "expression": "T_i\\subseteq A_i",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 164,
+    "document": "main",
+    "expression": "C_i\\subseteq A_i",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 169,
+    "document": "main",
+    "expression": "e_{i,s}\\leq0.20",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 169,
+    "document": "main",
+    "expression": "0.20",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 169,
+    "document": "main",
+    "expression": "|y|<1",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 169,
+    "document": "main",
+    "expression": "20\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 169,
+    "document": "main",
+    "expression": "J=\\{i:H_i=1,\\ |C_i|>0\\}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 178,
+    "document": "main",
+    "expression": "x_i",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 178,
+    "document": "main",
+    "expression": "C_i",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 178,
+    "document": "main",
+    "expression": "J",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 188,
+    "document": "main",
+    "expression": "N",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 188,
+    "document": "main",
+    "expression": "H_i=1",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 195,
+    "document": "main",
+    "expression": "80\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 195,
+    "document": "main",
+    "expression": "80\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 198,
+    "document": "main",
+    "expression": "F_i^G",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 206,
+    "document": "main",
+    "expression": "F_i^G",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 206,
+    "document": "main",
+    "expression": "I_i",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 206,
+    "document": "main",
+    "expression": "S_i",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 206,
+    "document": "main",
+    "expression": "F^G",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 206,
+    "document": "main",
+    "expression": "S",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 206,
+    "document": "main",
+    "expression": "I",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 206,
+    "document": "main",
+    "expression": "F^G\\subseteq S\\subseteq I",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 220,
+    "document": "main",
+    "expression": "1/335\\approx0.0030",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 238,
+    "document": "main",
+    "expression": "q",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 238,
+    "document": "main",
+    "expression": "\\hat{s}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 238,
+    "document": "main",
+    "expression": "K_G(q)",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 239,
+    "document": "main",
+    "expression": "A",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 240,
+    "document": "main",
+    "expression": "\\mathcal{T}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 240,
+    "document": "main",
+    "expression": "q",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 241,
+    "document": "main",
+    "expression": "\\mathcal{T}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 242,
+    "document": "main",
+    "expression": "\\hat{s}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 243,
+    "document": "main",
+    "expression": "\\mathcal{P}=P_{\\mathrm{all}}(\\hat{s})\\cap K_G(q)",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 244,
+    "document": "main",
+    "expression": "\\mathcal{P}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 245,
+    "document": "main",
+    "expression": "A \\leftarrow \\emptyset",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 245,
+    "document": "main",
+    "expression": "\\mathcal{U}\\leftarrow \\emptyset",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 246,
+    "document": "main",
+    "expression": "p_i \\in \\mathcal{P}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 247,
+    "document": "main",
+    "expression": "\\mathcal{C}_i \\leftarrow \\mathcal{T} \\setminus \\mathcal{U}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 248,
+    "document": "main",
+    "expression": "\\mathcal{C}_i = \\emptyset",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 251,
+    "document": "main",
+    "expression": "\\mathcal{C}_i",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 252,
+    "document": "main",
+    "expression": "t_i^{*}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 253,
+    "document": "main",
+    "expression": "A[p_i] \\leftarrow \\mathrm{value}(t_i^{*})",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 254,
+    "document": "main",
+    "expression": "\\mathcal{U} \\leftarrow \\mathcal{U} \\cup \\{t_i^{*}\\}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 256,
+    "document": "main",
+    "expression": "A",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 279,
+    "document": "main",
+    "expression": "B=10{,}000",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 281,
+    "document": "main",
+    "expression": "B=2000",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 289,
+    "document": "main",
+    "expression": "313/331",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 289,
+    "document": "main",
+    "expression": "94.56\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 289,
+    "document": "main",
+    "expression": "301/331",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 289,
+    "document": "main",
+    "expression": "90.94\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 289,
+    "document": "main",
+    "expression": "p=0.0075",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 289,
+    "document": "main",
+    "expression": "p=0.0302",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 294,
+    "document": "main",
+    "expression": "1/335 \\approx 0.0030",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 313,
+    "document": "main",
+    "expression": "80.06\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 313,
+    "document": "main",
+    "expression": "2.11\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 313,
+    "document": "main",
+    "expression": "273/331",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 313,
+    "document": "main",
+    "expression": "281/331",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 313,
+    "document": "main",
+    "expression": "3/331",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 313,
+    "document": "main",
+    "expression": "8/331",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 342,
+    "document": "main",
+    "expression": "7/265=2.64\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 342,
+    "document": "main",
+    "expression": "F^G",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 342,
+    "document": "main",
+    "expression": "258/265=97.36\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 342,
+    "document": "main",
+    "expression": "7/255=2.75\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 345,
+    "document": "main",
+    "expression": "I",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 345,
+    "document": "main",
+    "expression": "S",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 345,
+    "document": "main",
+    "expression": "F^G",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 352,
+    "document": "main",
+    "expression": "|F^G|/|I|",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 352,
+    "document": "main",
+    "expression": "|F^G|/|S|",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 364,
+    "document": "main",
+    "expression": "c_i=t_i=1",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 366,
+    "document": "main",
+    "expression": "30+31+49+214+7=331",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 366,
+    "document": "main",
+    "expression": "214/331=64.65\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 366,
+    "document": "main",
+    "expression": "214/221=96.83\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 366,
+    "document": "main",
+    "expression": "228/231=98.70\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 366,
+    "document": "main",
+    "expression": "239/247=96.76\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 368,
+    "document": "main",
+    "expression": "247\\to255",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 368,
+    "document": "main",
+    "expression": "p=0.0078125",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 368,
+    "document": "main",
+    "expression": "0.0302",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 396,
+    "document": "main",
+    "expression": "c_i=t_i=1",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 402,
+    "document": "main",
+    "expression": "46/331=13.90\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 404,
+    "document": "main",
+    "expression": "0.8006",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 404,
+    "document": "main",
+    "expression": "0.7704",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 404,
+    "document": "main",
+    "expression": "p\\leq0.0059",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 415,
+    "document": "main",
+    "expression": "F^G",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 429,
+    "document": "main",
+    "expression": "F^G",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 435,
+    "document": "main",
+    "expression": "5/49",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 435,
+    "document": "main",
+    "expression": "[3.14,17.95]",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 435,
+    "document": "main",
+    "expression": "[4.07,18.84]",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 435,
+    "document": "main",
+    "expression": "[-6.12,6.12]",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 435,
+    "document": "main",
+    "expression": "p=1",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 439,
+    "document": "main",
+    "expression": "\\rightarrow",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 444,
+    "document": "main",
+    "expression": "#1",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 444,
+    "document": "main",
+    "expression": "\\to",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 444,
+    "document": "main",
+    "expression": "#2",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 449,
+    "document": "main",
+    "expression": "3\\to3",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 449,
+    "document": "main",
+    "expression": "3\\to3",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 450,
+    "document": "main",
+    "expression": "3\\to4",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 450,
+    "document": "main",
+    "expression": "5\\to5",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 451,
+    "document": "main",
+    "expression": "3\\to4",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 451,
+    "document": "main",
+    "expression": "5\\to5",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 453,
+    "document": "main",
+    "expression": "3\\to3",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 453,
+    "document": "main",
+    "expression": "3\\to3",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 454,
+    "document": "main",
+    "expression": "3\\to4",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 454,
+    "document": "main",
+    "expression": "5\\to5",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 455,
+    "document": "main",
+    "expression": "3\\to4",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 455,
+    "document": "main",
+    "expression": "5\\to5",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 471,
+    "document": "main",
+    "expression": "9/49",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 471,
+    "document": "main",
+    "expression": "3/49",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 487,
+    "document": "main",
+    "expression": "631/651",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 487,
+    "document": "main",
+    "expression": "\\kappa=0.371",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 497,
+    "document": "main",
+    "expression": "0.20",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supplement.tex",
+    "line": 74,
+    "document": "supplement",
+    "expression": "\\rightarrow",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supplement.tex",
+    "line": 74,
+    "document": "supplement",
+    "expression": "^{*}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supplement.tex",
+    "line": 84,
+    "document": "supplement",
+    "expression": "^{\\ddagger}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supplement.tex",
+    "line": 93,
+    "document": "supplement",
+    "expression": "^{*}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supplement.tex",
+    "line": 94,
+    "document": "supplement",
+    "expression": "^{\\ddagger}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 6,
+    "document": "supplement",
+    "expression": "247/331",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 6,
+    "document": "supplement",
+    "expression": "255/331",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 10,
+    "document": "supplement",
+    "expression": "\\Delta",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 16,
+    "document": "supplement",
+    "expression": "\\Delta",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 31,
+    "document": "supplement",
+    "expression": "\\Delta",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 31,
+    "document": "supplement",
+    "expression": "n_{\\text{differ}}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 37,
+    "document": "supplement",
+    "expression": "\\Delta",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 37,
+    "document": "supplement",
+    "expression": "n_{\\text{differ}}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 53,
+    "document": "supplement",
+    "expression": "p",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 59,
+    "document": "supplement",
+    "expression": "p",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 59,
+    "document": "supplement",
+    "expression": "p",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 62,
+    "document": "supplement",
+    "expression": "-0.0483",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 62,
+    "document": "supplement",
+    "expression": "[-0.0751,-0.0240]",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 62,
+    "document": "supplement",
+    "expression": "<0.001",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 62,
+    "document": "supplement",
+    "expression": "0.0028",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 63,
+    "document": "supplement",
+    "expression": "-0.0785",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 63,
+    "document": "supplement",
+    "expression": "[-0.1108,-0.0486]",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 63,
+    "document": "supplement",
+    "expression": "<0.001",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 63,
+    "document": "supplement",
+    "expression": "<0.001",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 64,
+    "document": "supplement",
+    "expression": "+0.0242",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 64,
+    "document": "supplement",
+    "expression": "[0.0091,0.0423]",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 64,
+    "document": "supplement",
+    "expression": "0.0078",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 64,
+    "document": "supplement",
+    "expression": "0.0302",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 65,
+    "document": "supplement",
+    "expression": "+0.0242",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 65,
+    "document": "supplement",
+    "expression": "[0.0030,0.0455]",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 65,
+    "document": "supplement",
+    "expression": "0.0386",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 65,
+    "document": "supplement",
+    "expression": "0.0386",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 66,
+    "document": "supplement",
+    "expression": "+0.0302",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 66,
+    "document": "supplement",
+    "expression": "[0.0091,0.0534]",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 66,
+    "document": "supplement",
+    "expression": "0.0129",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supporting_core.tex",
+    "line": 66,
+    "document": "supplement",
+    "expression": "0.0302",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "grounding_diagnostics.tex",
+    "line": 8,
+    "document": "supplement",
+    "expression": "5/49",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "reference_conventions.tex",
+    "line": 9,
+    "document": "supplement",
+    "expression": "p",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "reference_conventions.tex",
+    "line": 9,
+    "document": "supplement",
+    "expression": "X\\geq p(X+Y)",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "reference_conventions.tex",
+    "line": 10,
+    "document": "supplement",
+    "expression": "(1-p)X\\geq pY",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "reference_conventions.tex",
+    "line": 41,
+    "document": "supplement",
+    "expression": "(100-p)/100",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "reference_conventions.tex",
+    "line": 48,
+    "document": "supplement",
+    "expression": "p_1=20",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "reference_conventions.tex",
+    "line": 48,
+    "document": "supplement",
+    "expression": "p_2=35",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "reference_conventions.tex",
+    "line": 48,
+    "document": "supplement",
+    "expression": "x_1,x_2",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "reference_conventions.tex",
+    "line": 49,
+    "document": "supplement",
+    "expression": "b_{\\mathrm{cat}}=20",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "reference_conventions.tex",
+    "line": 76,
+    "document": "supplement",
+    "expression": "|\\hat y-y|/\\max(1,|y|)\\leq0.20",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "reference_conventions.tex",
+    "line": 79,
+    "document": "supplement",
+    "expression": "10^{-9}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "reproduction_map.tex",
+    "line": 32,
+    "document": "supplement",
+    "expression": "(301+299+258)/(3\\cdot331)=0.8640",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "reproduction_map.tex",
+    "line": 62,
+    "document": "supplement",
+    "expression": "F^G\\subseteq S\\subseteq I",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "reproduction_map.tex",
+    "line": 62,
+    "document": "supplement",
+    "expression": "7\\leq255\\leq265",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "reproduction_map.tex",
+    "line": 62,
+    "document": "supplement",
+    "expression": "F",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 9,
+    "document": "supplement",
+    "expression": "T=0.2",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 10,
+    "document": "supplement",
+    "expression": "T=0",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 11,
+    "document": "supplement",
+    "expression": "T=0.8",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 17,
+    "document": "supplement",
+    "expression": "11/15",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 17,
+    "document": "supplement",
+    "expression": "12/16",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 19,
+    "document": "supplement",
+    "expression": "a=\\operatorname{round}_{\\mathrm{even}}(\\hat z)",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 19,
+    "document": "supplement",
+    "expression": "b=\\operatorname{round}_{\\mathrm{even}}(z^*)",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 24,
+    "document": "supplement",
+    "expression": "0.05",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 24,
+    "document": "supplement",
+    "expression": "0.05",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 26,
+    "document": "supplement",
+    "expression": "10^{-6}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 26,
+    "document": "supplement",
+    "expression": "16666.7",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 26,
+    "document": "supplement",
+    "expression": "16666.66667",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 26,
+    "document": "supplement",
+    "expression": "16666.666666666664",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 26,
+    "document": "supplement",
+    "expression": "10^{-6}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 28,
+    "document": "supplement",
+    "expression": "13/13",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 28,
+    "document": "supplement",
+    "expression": "15/15",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 28,
+    "document": "supplement",
+    "expression": "16/16",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 71,
+    "document": "supplement",
+    "expression": "100x+72y",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 71,
+    "document": "supplement",
+    "expression": "60x+40y\\geq10000",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 71,
+    "document": "supplement",
+    "expression": "x\\geq(x+y)/3",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 71,
+    "document": "supplement",
+    "expression": "100x+72y\\geq(5/3)(60x+40y)\\geq50000/3",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 71,
+    "document": "supplement",
+    "expression": "x=500/3,y=0",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 71,
+    "document": "supplement",
+    "expression": "50000/3",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 71,
+    "document": "supplement",
+    "expression": "16666.66667",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 71,
+    "document": "supplement",
+    "expression": "10^{-6}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "closed_audits.tex",
+    "line": 1,
+    "document": "supplement",
+    "expression": "P_{\\mathrm{scalar}}(\\hat{s})",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "closed_audits.tex",
+    "line": 1,
+    "document": "supplement",
+    "expression": "K_G\\cap P_{\\mathrm{scalar}}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "closed_audits.tex",
+    "line": 1,
+    "document": "supplement",
+    "expression": "P_{\\mathrm{scalar}}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "closed_audits.tex",
+    "line": 15,
+    "document": "supplement",
+    "expression": "K_G",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "relationship_supplement.tex",
+    "line": 6,
+    "document": "supplement",
+    "expression": "p",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "relationship_supplement.tex",
+    "line": 31,
+    "document": "supplement",
+    "expression": "N=197",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "relationship_supplement.tex",
+    "line": 31,
+    "document": "supplement",
+    "expression": "n=3",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "relationship_supplement.tex",
+    "line": 31,
+    "document": "supplement",
+    "expression": "n_{ic}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "relationship_supplement.tex",
+    "line": 31,
+    "document": "supplement",
+    "expression": "c",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "relationship_supplement.tex",
+    "line": 38,
+    "document": "supplement",
+    "expression": "\\bar P=0.7394247039",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "relationship_supplement.tex",
+    "line": 38,
+    "document": "supplement",
+    "expression": "P_e=0.5858578050",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "relationship_supplement.tex",
+    "line": 38,
+    "document": "supplement",
+    "expression": "\\kappa=0.3708071786",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "relationship_supplement.tex",
+    "line": 38,
+    "document": "supplement",
+    "expression": "\\kappa=0.4293652076",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "relationship_supplement.tex",
+    "line": 38,
+    "document": "supplement",
+    "expression": "0.5016425265",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "relationship_supplement.tex",
+    "line": 38,
+    "document": "supplement",
+    "expression": "119+77+1=197",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "relationship_supplement.tex",
+    "line": 40,
+    "document": "supplement",
+    "expression": "213/217",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "relationship_supplement.tex",
+    "line": 40,
+    "document": "supplement",
+    "expression": "98.16\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "relationship_supplement.tex",
+    "line": 40,
+    "document": "supplement",
+    "expression": "123/197",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "relationship_supplement.tex",
+    "line": 40,
+    "document": "supplement",
+    "expression": "62.44\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "relationship_supplement.tex",
+    "line": 40,
+    "document": "supplement",
+    "expression": "120/197",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "relationship_supplement.tex",
+    "line": 40,
+    "document": "supplement",
+    "expression": "60.91\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "relationship_supplement.tex",
+    "line": 40,
+    "document": "supplement",
+    "expression": "120/197",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "relationship_supplement.tex",
+    "line": 40,
+    "document": "supplement",
+    "expression": "119/197",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "relationship_supplement.tex",
+    "line": 45,
+    "document": "supplement",
+    "expression": "-790646361",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "relationship_supplement.tex",
+    "line": 45,
+    "document": "supplement",
+    "expression": "-2101760318",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "relationship_supplement.tex",
+    "line": 47,
+    "document": "supplement",
+    "expression": "-790646361",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "relationship_supplement.tex",
+    "line": 47,
+    "document": "supplement",
+    "expression": "-1202959445",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 16,
+    "document": "supplement",
+    "expression": "0.9368",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 16,
+    "document": "supplement",
+    "expression": "0.9257",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 16,
+    "document": "supplement",
+    "expression": "1.0000",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 16,
+    "document": "supplement",
+    "expression": "0.8141",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 16,
+    "document": "supplement",
+    "expression": "0.8104",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 16,
+    "document": "supplement",
+    "expression": "0.8253",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 16,
+    "document": "supplement",
+    "expression": "0.6654",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 16,
+    "document": "supplement",
+    "expression": "0.6580",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 16,
+    "document": "supplement",
+    "expression": "0.6840",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 19,
+    "document": "supplement",
+    "expression": "0.80",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 19,
+    "document": "supplement",
+    "expression": "0.75",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 29,
+    "document": "supplement",
+    "expression": "M=335",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 29,
+    "document": "supplement",
+    "expression": "M",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 29,
+    "document": "supplement",
+    "expression": "O(|\\mathcal{P}|\\cdot|\\mathcal{T}|)",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 29,
+    "document": "supplement",
+    "expression": "1.09",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 29,
+    "document": "supplement",
+    "expression": "3.29",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 29,
+    "document": "supplement",
+    "expression": "\\approx 198",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 35,
+    "document": "supplement",
+    "expression": "m=(a,b,v)",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 35,
+    "document": "supplement",
+    "expression": "r=(q,m,p)",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 35,
+    "document": "supplement",
+    "expression": "p",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 35,
+    "document": "supplement",
+    "expression": "v",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 43,
+    "document": "supplement",
+    "expression": "B=10{,}000",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 45,
+    "document": "supplement",
+    "expression": "8/331=0.0242",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 45,
+    "document": "supplement",
+    "expression": "p=0.0078125",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 45,
+    "document": "supplement",
+    "expression": "0.0302",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 46,
+    "document": "supplement",
+    "expression": "0.8459",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 46,
+    "document": "supplement",
+    "expression": "0.9174",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 48,
+    "document": "supplement",
+    "expression": "257/331",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 48,
+    "document": "supplement",
+    "expression": "265/331",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 48,
+    "document": "supplement",
+    "expression": "6",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 48,
+    "document": "supplement",
+    "expression": "8",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 48,
+    "document": "supplement",
+    "expression": "0.0483",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 48,
+    "document": "supplement",
+    "expression": "0.0785",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 48,
+    "document": "supplement",
+    "expression": "0.0028",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "preserved_results_details.tex",
+    "line": 48,
+    "document": "supplement",
+    "expression": "<0.001",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "additional_evidence.tex",
+    "line": 31,
+    "document": "supplement",
+    "expression": "0.2207",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "additional_evidence.tex",
+    "line": 33,
+    "document": "supplement",
+    "expression": "0.5287",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "additional_evidence.tex",
+    "line": 33,
+    "document": "supplement",
+    "expression": "0.7432",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "additional_evidence.tex",
+    "line": 33,
+    "document": "supplement",
+    "expression": "0.7764",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "additional_evidence.tex",
+    "line": 71,
+    "document": "supplement",
+    "expression": "k",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "additional_evidence.tex",
+    "line": 73,
+    "document": "supplement",
+    "expression": "2/3",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "additional_evidence.tex",
+    "line": 73,
+    "document": "supplement",
+    "expression": "1/2",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "additional_evidence.tex",
+    "line": 110,
+    "document": "supplement",
+    "expression": "0.80/0.78/0.78",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "additional_evidence.tex",
+    "line": 120,
+    "document": "supplement",
+    "expression": "n",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supplement.tex",
+    "line": 235,
+    "document": "supplement",
+    "expression": "0.7501",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supplement.tex",
+    "line": 235,
+    "document": "supplement",
+    "expression": "0.8118",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supplement.tex",
+    "line": 235,
+    "document": "supplement",
+    "expression": "0.5910",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supplement.tex",
+    "line": 235,
+    "document": "supplement",
+    "expression": "2{,}310/31{,}736=7.28\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supplement.tex",
+    "line": 237,
+    "document": "supplement",
+    "expression": "23{,}241/28{,}799=0.8070",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supplement.tex",
+    "line": 237,
+    "document": "supplement",
+    "expression": "[0.7842,0.8283]",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supplement.tex",
+    "line": 237,
+    "document": "supplement",
+    "expression": "B=10{,}000",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supplement.tex",
+    "line": 237,
+    "document": "supplement",
+    "expression": "0.8135",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "supplement.tex",
+    "line": 239,
+    "document": "supplement",
+    "expression": "98.04\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "d1_contrasts.tex",
+    "line": 8,
+    "document": "supplement",
+    "expression": "x\\geq7",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "d1_contrasts.tex",
+    "line": 9,
+    "document": "supplement",
+    "expression": "x\\geq1",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "d1_contrasts.tex",
+    "line": 10,
+    "document": "supplement",
+    "expression": "x\\leq19",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "d1_contrasts.tex",
+    "line": 11,
+    "document": "supplement",
+    "expression": "-4",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "d1_contrasts.tex",
+    "line": 11,
+    "document": "supplement",
+    "expression": "-4",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "d1_contrasts.tex",
+    "line": 11,
+    "document": "supplement",
+    "expression": "d\\leq-4",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "d1_contrasts.tex",
+    "line": 11,
+    "document": "supplement",
+    "expression": "d",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "d1_contrasts.tex",
+    "line": 12,
+    "document": "supplement",
+    "expression": "x",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "d1_contrasts.tex",
+    "line": 12,
+    "document": "supplement",
+    "expression": "\\min x",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "d1_contrasts.tex",
+    "line": 21,
+    "document": "supplement",
+    "expression": "1/4",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "d1_contrasts.tex",
+    "line": 23,
+    "document": "supplement",
+    "expression": "x",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "d1_contrasts.tex",
+    "line": 23,
+    "document": "supplement",
+    "expression": "y",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "d1_contrasts.tex",
+    "line": 23,
+    "document": "supplement",
+    "expression": "x\\leq41",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "d1_contrasts.tex",
+    "line": 24,
+    "document": "supplement",
+    "expression": "x",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "d1_contrasts.tex",
+    "line": 24,
+    "document": "supplement",
+    "expression": "y",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "d1_contrasts.tex",
+    "line": 24,
+    "document": "supplement",
+    "expression": "x-0.2y=0",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "d1_contrasts.tex",
+    "line": 25,
+    "document": "supplement",
+    "expression": "a",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "d1_contrasts.tex",
+    "line": 25,
+    "document": "supplement",
+    "expression": "b",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "d1_contrasts.tex",
+    "line": 25,
+    "document": "supplement",
+    "expression": "\\neg b\\Rightarrow a",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "d1_contrasts.tex",
+    "line": 25,
+    "document": "supplement",
+    "expression": "a=b=1",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "d1_contrasts.tex",
+    "line": 26,
+    "document": "supplement",
+    "expression": "\\min22x",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "d1_contrasts.tex",
+    "line": 29,
+    "document": "supplement",
+    "expression": "3x",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 115,
+    "document": "main",
+    "expression": "q",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 115,
+    "document": "main",
+    "expression": "\\mathcal{S}=\\{s_1,\\dots,s_M\\}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 115,
+    "document": "main",
+    "expression": "M",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 120,
+    "document": "main",
+    "expression": "\\hat{s}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 124,
+    "document": "main",
+    "expression": "K_G(q)",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 124,
+    "document": "main",
+    "expression": "P_{\\mathrm{all}}(\\hat{s})",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 129,
+    "document": "main",
+    "expression": "y_q : K_G(q) \\to \\mathbb{R}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 129,
+    "document": "main",
+    "expression": "\\hat{y}_{q}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 129,
+    "document": "main",
+    "expression": "A(q) \\subseteq E(q,\\hat{s})",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 134,
+    "document": "main",
+    "expression": "K_G(q)",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 145,
+    "document": "main",
+    "expression": "N^{-1}\\sum_{i=1}^N H_i",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 145,
+    "document": "main",
+    "expression": "H_i=\\mathbf{1}[\\hat{s}_i=s_i^*]",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 145,
+    "document": "main",
+    "expression": "s_i^*",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 145,
+    "document": "main",
+    "expression": "i",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 145,
+    "document": "main",
+    "expression": "N=331",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 145,
+    "document": "main",
+    "expression": "E_i=E(q_i,\\hat{s}_i)",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 145,
+    "document": "main",
+    "expression": "A_i\\subseteq E_i",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 145,
+    "document": "main",
+    "expression": "T_i\\subseteq A_i",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 164,
+    "document": "main",
+    "expression": "C_i\\subseteq A_i",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 169,
+    "document": "main",
+    "expression": "e_{i,s}\\leq0.20",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 169,
+    "document": "main",
+    "expression": "0.20",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 169,
+    "document": "main",
+    "expression": "|y|<1",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 169,
+    "document": "main",
+    "expression": "20\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 169,
+    "document": "main",
+    "expression": "J=\\{i:H_i=1,\\ |C_i|>0\\}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 178,
+    "document": "main",
+    "expression": "x_i",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 178,
+    "document": "main",
+    "expression": "C_i",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 178,
+    "document": "main",
+    "expression": "J",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 188,
+    "document": "main",
+    "expression": "N",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 188,
+    "document": "main",
+    "expression": "H_i=1",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 195,
+    "document": "main",
+    "expression": "80\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 195,
+    "document": "main",
+    "expression": "80\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 198,
+    "document": "main",
+    "expression": "F_i^G",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 206,
+    "document": "main",
+    "expression": "F_i^G",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 206,
+    "document": "main",
+    "expression": "I_i",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 206,
+    "document": "main",
+    "expression": "S_i",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 206,
+    "document": "main",
+    "expression": "F^G",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 206,
+    "document": "main",
+    "expression": "S",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 206,
+    "document": "main",
+    "expression": "I",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 206,
+    "document": "main",
+    "expression": "F^G\\subseteq S\\subseteq I",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 220,
+    "document": "main",
+    "expression": "1/335\\approx0.0030",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 226,
+    "document": "main",
+    "expression": "p_i",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 226,
+    "document": "main",
+    "expression": "\\mathcal T",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 226,
+    "document": "main",
+    "expression": "\\mathcal U_{i-1}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 231,
+    "document": "main",
+    "expression": "i",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 231,
+    "document": "main",
+    "expression": "\\mathrm{compat}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 231,
+    "document": "main",
+    "expression": "A",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 231,
+    "document": "main",
+    "expression": "\\mathcal P",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 231,
+    "document": "main",
+    "expression": "\\mathcal C_i",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 231,
+    "document": "main",
+    "expression": "A_i",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 231,
+    "document": "main",
+    "expression": "C_i",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 238,
+    "document": "main",
+    "expression": "q",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 238,
+    "document": "main",
+    "expression": "\\hat{s}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 238,
+    "document": "main",
+    "expression": "K_G(q)",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 239,
+    "document": "main",
+    "expression": "A",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 240,
+    "document": "main",
+    "expression": "\\mathcal{T}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 240,
+    "document": "main",
+    "expression": "q",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 241,
+    "document": "main",
+    "expression": "\\mathcal{T}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 242,
+    "document": "main",
+    "expression": "\\hat{s}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 243,
+    "document": "main",
+    "expression": "\\mathcal{P}=P_{\\mathrm{all}}(\\hat{s})\\cap K_G(q)",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 244,
+    "document": "main",
+    "expression": "\\mathcal{P}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 245,
+    "document": "main",
+    "expression": "A \\leftarrow \\emptyset",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 245,
+    "document": "main",
+    "expression": "\\mathcal{U}\\leftarrow \\emptyset",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 246,
+    "document": "main",
+    "expression": "p_i \\in \\mathcal{P}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 247,
+    "document": "main",
+    "expression": "\\mathcal{C}_i \\leftarrow \\mathcal{T} \\setminus \\mathcal{U}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 248,
+    "document": "main",
+    "expression": "\\mathcal{C}_i = \\emptyset",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 251,
+    "document": "main",
+    "expression": "\\mathcal{C}_i",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 252,
+    "document": "main",
+    "expression": "t_i^{*}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 253,
+    "document": "main",
+    "expression": "A[p_i] \\leftarrow \\mathrm{value}(t_i^{*})",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 254,
+    "document": "main",
+    "expression": "\\mathcal{U} \\leftarrow \\mathcal{U} \\cup \\{t_i^{*}\\}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 256,
+    "document": "main",
+    "expression": "A",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 279,
+    "document": "main",
+    "expression": "B=10{,}000",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 281,
+    "document": "main",
+    "expression": "B=2000",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 289,
+    "document": "main",
+    "expression": "313/331",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 289,
+    "document": "main",
+    "expression": "94.56\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 289,
+    "document": "main",
+    "expression": "301/331",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 289,
+    "document": "main",
+    "expression": "90.94\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 289,
+    "document": "main",
+    "expression": "p=0.0075",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 289,
+    "document": "main",
+    "expression": "p=0.0302",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 294,
+    "document": "main",
+    "expression": "1/335 \\approx 0.0030",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 313,
+    "document": "main",
+    "expression": "80.06\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 313,
+    "document": "main",
+    "expression": "2.11\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 313,
+    "document": "main",
+    "expression": "273/331",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 313,
+    "document": "main",
+    "expression": "281/331",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 313,
+    "document": "main",
+    "expression": "3/331",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 313,
+    "document": "main",
+    "expression": "8/331",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 342,
+    "document": "main",
+    "expression": "7/265=2.64\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 342,
+    "document": "main",
+    "expression": "F^G",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 342,
+    "document": "main",
+    "expression": "258/265=97.36\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 342,
+    "document": "main",
+    "expression": "7/255=2.75\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 345,
+    "document": "main",
+    "expression": "I",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 345,
+    "document": "main",
+    "expression": "S",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 345,
+    "document": "main",
+    "expression": "F^G",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 352,
+    "document": "main",
+    "expression": "|F^G|/|I|",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 352,
+    "document": "main",
+    "expression": "|F^G|/|S|",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 364,
+    "document": "main",
+    "expression": "c_i=t_i=1",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 366,
+    "document": "main",
+    "expression": "30+31+49+214+7=331",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 366,
+    "document": "main",
+    "expression": "214/331=64.65\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 366,
+    "document": "main",
+    "expression": "214/221=96.83\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 366,
+    "document": "main",
+    "expression": "228/231=98.70\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 366,
+    "document": "main",
+    "expression": "239/247=96.76\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 368,
+    "document": "main",
+    "expression": "247\\to255",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 368,
+    "document": "main",
+    "expression": "p=0.0078125",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 368,
+    "document": "main",
+    "expression": "0.0302",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 396,
+    "document": "main",
+    "expression": "c_i=t_i=1",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 402,
+    "document": "main",
+    "expression": "46/331=13.90\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 404,
+    "document": "main",
+    "expression": "0.8006",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 404,
+    "document": "main",
+    "expression": "0.7704",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 404,
+    "document": "main",
+    "expression": "p\\leq0.0059",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 415,
+    "document": "main",
+    "expression": "F^G",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 429,
+    "document": "main",
+    "expression": "F^G",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 435,
+    "document": "main",
+    "expression": "5/49",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 435,
+    "document": "main",
+    "expression": "[3.14,17.95]",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 435,
+    "document": "main",
+    "expression": "[4.07,18.84]",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 435,
+    "document": "main",
+    "expression": "[-6.12,6.12]",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 435,
+    "document": "main",
+    "expression": "p=1",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 439,
+    "document": "main",
+    "expression": "\\rightarrow",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 444,
+    "document": "main",
+    "expression": "#1",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 444,
+    "document": "main",
+    "expression": "\\to",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 444,
+    "document": "main",
+    "expression": "#2",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 449,
+    "document": "main",
+    "expression": "3\\to3",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 449,
+    "document": "main",
+    "expression": "3\\to3",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 450,
+    "document": "main",
+    "expression": "3\\to4",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 450,
+    "document": "main",
+    "expression": "5\\to5",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 451,
+    "document": "main",
+    "expression": "3\\to4",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 451,
+    "document": "main",
+    "expression": "5\\to5",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 453,
+    "document": "main",
+    "expression": "3\\to3",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 453,
+    "document": "main",
+    "expression": "3\\to3",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 454,
+    "document": "main",
+    "expression": "3\\to4",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 454,
+    "document": "main",
+    "expression": "5\\to5",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 455,
+    "document": "main",
+    "expression": "3\\to4",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 455,
+    "document": "main",
+    "expression": "5\\to5",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 471,
+    "document": "main",
+    "expression": "9/49",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 471,
+    "document": "main",
+    "expression": "3/49",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 487,
+    "document": "main",
+    "expression": "631/651",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 487,
+    "document": "main",
+    "expression": "\\kappa=0.371",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 497,
+    "document": "main",
+    "expression": "0.20",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supplement.tex",
+    "line": 74,
+    "document": "supplement",
+    "expression": "\\rightarrow",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supplement.tex",
+    "line": 74,
+    "document": "supplement",
+    "expression": "^{*}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supplement.tex",
+    "line": 84,
+    "document": "supplement",
+    "expression": "^{\\ddagger}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supplement.tex",
+    "line": 93,
+    "document": "supplement",
+    "expression": "^{*}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supplement.tex",
+    "line": 94,
+    "document": "supplement",
+    "expression": "^{\\ddagger}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 6,
+    "document": "supplement",
+    "expression": "247/331",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 6,
+    "document": "supplement",
+    "expression": "255/331",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 10,
+    "document": "supplement",
+    "expression": "\\Delta",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 16,
+    "document": "supplement",
+    "expression": "\\Delta",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 31,
+    "document": "supplement",
+    "expression": "\\Delta",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 31,
+    "document": "supplement",
+    "expression": "n_{\\text{differ}}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 37,
+    "document": "supplement",
+    "expression": "\\Delta",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 37,
+    "document": "supplement",
+    "expression": "n_{\\text{differ}}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 53,
+    "document": "supplement",
+    "expression": "p",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 59,
+    "document": "supplement",
+    "expression": "p",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 59,
+    "document": "supplement",
+    "expression": "p",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 62,
+    "document": "supplement",
+    "expression": "-0.0483",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 62,
+    "document": "supplement",
+    "expression": "[-0.0751,-0.0240]",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 62,
+    "document": "supplement",
+    "expression": "<0.001",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 62,
+    "document": "supplement",
+    "expression": "0.0028",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 63,
+    "document": "supplement",
+    "expression": "-0.0785",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 63,
+    "document": "supplement",
+    "expression": "[-0.1108,-0.0486]",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 63,
+    "document": "supplement",
+    "expression": "<0.001",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 63,
+    "document": "supplement",
+    "expression": "<0.001",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 64,
+    "document": "supplement",
+    "expression": "+0.0242",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 64,
+    "document": "supplement",
+    "expression": "[0.0091,0.0423]",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 64,
+    "document": "supplement",
+    "expression": "0.0078",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 64,
+    "document": "supplement",
+    "expression": "0.0302",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 65,
+    "document": "supplement",
+    "expression": "+0.0242",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 65,
+    "document": "supplement",
+    "expression": "[0.0030,0.0455]",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 65,
+    "document": "supplement",
+    "expression": "0.0386",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 65,
+    "document": "supplement",
+    "expression": "0.0386",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 66,
+    "document": "supplement",
+    "expression": "+0.0302",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 66,
+    "document": "supplement",
+    "expression": "[0.0091,0.0534]",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 66,
+    "document": "supplement",
+    "expression": "0.0129",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supporting_core.tex",
+    "line": 66,
+    "document": "supplement",
+    "expression": "0.0302",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "grounding_diagnostics.tex",
+    "line": 8,
+    "document": "supplement",
+    "expression": "5/49",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "reference_conventions.tex",
+    "line": 9,
+    "document": "supplement",
+    "expression": "X",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "reference_conventions.tex",
+    "line": 9,
+    "document": "supplement",
+    "expression": "Y",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "reference_conventions.tex",
+    "line": 9,
+    "document": "supplement",
+    "expression": "p",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "reference_conventions.tex",
+    "line": 9,
+    "document": "supplement",
+    "expression": "X\\geq p(X+Y)",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "reference_conventions.tex",
+    "line": 10,
+    "document": "supplement",
+    "expression": "(1-p)X\\geq pY",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "reference_conventions.tex",
+    "line": 41,
+    "document": "supplement",
+    "expression": "(100-p)/100",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "reference_conventions.tex",
+    "line": 48,
+    "document": "supplement",
+    "expression": "p_1=20",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "reference_conventions.tex",
+    "line": 48,
+    "document": "supplement",
+    "expression": "p_2=35",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "reference_conventions.tex",
+    "line": 48,
+    "document": "supplement",
+    "expression": "x_1,x_2",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "reference_conventions.tex",
+    "line": 49,
+    "document": "supplement",
+    "expression": "b_{\\mathrm{cat}}=20",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "reference_conventions.tex",
+    "line": 75,
+    "document": "supplement",
+    "expression": "\\hat y",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "reference_conventions.tex",
+    "line": 75,
+    "document": "supplement",
+    "expression": "y",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "reference_conventions.tex",
+    "line": 76,
+    "document": "supplement",
+    "expression": "|\\hat y-y|/\\max(1,|y|)\\leq0.20",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "reference_conventions.tex",
+    "line": 79,
+    "document": "supplement",
+    "expression": "10^{-9}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "reproduction_map.tex",
+    "line": 32,
+    "document": "supplement",
+    "expression": "(301+299+258)/(3\\cdot331)=0.8640",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "reproduction_map.tex",
+    "line": 62,
+    "document": "supplement",
+    "expression": "F^G\\subseteq S\\subseteq I",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "reproduction_map.tex",
+    "line": 62,
+    "document": "supplement",
+    "expression": "7\\leq255\\leq265",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "reproduction_map.tex",
+    "line": 62,
+    "document": "supplement",
+    "expression": "F",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 6,
+    "document": "supplement",
+    "expression": "T",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 9,
+    "document": "supplement",
+    "expression": "T=0.2",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 10,
+    "document": "supplement",
+    "expression": "T=0",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 11,
+    "document": "supplement",
+    "expression": "T=0.8",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 17,
+    "document": "supplement",
+    "expression": "11/15",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 17,
+    "document": "supplement",
+    "expression": "12/16",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 19,
+    "document": "supplement",
+    "expression": "\\hat z",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 19,
+    "document": "supplement",
+    "expression": "z^*",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 19,
+    "document": "supplement",
+    "expression": "a=\\operatorname{round}_{\\mathrm{even}}(\\hat z)",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 19,
+    "document": "supplement",
+    "expression": "b=\\operatorname{round}_{\\mathrm{even}}(z^*)",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 24,
+    "document": "supplement",
+    "expression": "0.05",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 24,
+    "document": "supplement",
+    "expression": "0.05",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 26,
+    "document": "supplement",
+    "expression": "10^{-6}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 26,
+    "document": "supplement",
+    "expression": "16666.7",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 26,
+    "document": "supplement",
+    "expression": "16666.66667",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 26,
+    "document": "supplement",
+    "expression": "16666.666666666664",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 26,
+    "document": "supplement",
+    "expression": "10^{-6}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 28,
+    "document": "supplement",
+    "expression": "13/13",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 28,
+    "document": "supplement",
+    "expression": "15/15",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 28,
+    "document": "supplement",
+    "expression": "16/16",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 71,
+    "document": "supplement",
+    "expression": "100x+72y",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 71,
+    "document": "supplement",
+    "expression": "60x+40y\\geq10000",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 71,
+    "document": "supplement",
+    "expression": "x\\geq(x+y)/3",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 71,
+    "document": "supplement",
+    "expression": "100x+72y\\geq(5/3)(60x+40y)\\geq50000/3",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 71,
+    "document": "supplement",
+    "expression": "x=500/3,y=0",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 71,
+    "document": "supplement",
+    "expression": "50000/3",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 71,
+    "document": "supplement",
+    "expression": "16666.66667",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 71,
+    "document": "supplement",
+    "expression": "10^{-6}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "closed_audits.tex",
+    "line": 1,
+    "document": "supplement",
+    "expression": "\\hat{s}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "closed_audits.tex",
+    "line": 1,
+    "document": "supplement",
+    "expression": "K_G",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "closed_audits.tex",
+    "line": 1,
+    "document": "supplement",
+    "expression": "P_{\\mathrm{scalar}}(\\hat{s})",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "closed_audits.tex",
+    "line": 1,
+    "document": "supplement",
+    "expression": "K_G\\cap P_{\\mathrm{scalar}}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "closed_audits.tex",
+    "line": 1,
+    "document": "supplement",
+    "expression": "P_{\\mathrm{scalar}}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "closed_audits.tex",
+    "line": 15,
+    "document": "supplement",
+    "expression": "K_G",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 6,
+    "document": "supplement",
+    "expression": "p",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 31,
+    "document": "supplement",
+    "expression": "N=197",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 31,
+    "document": "supplement",
+    "expression": "n=3",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 31,
+    "document": "supplement",
+    "expression": "n_{ic}",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 31,
+    "document": "supplement",
+    "expression": "c",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 38,
+    "document": "supplement",
+    "expression": "\\bar P",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 38,
+    "document": "supplement",
+    "expression": "P_e",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 38,
+    "document": "supplement",
+    "expression": "\\kappa",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 38,
+    "document": "supplement",
+    "expression": "\\bar P=0.7394247039",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 38,
+    "document": "supplement",
+    "expression": "P_e=0.5858578050",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 38,
+    "document": "supplement",
+    "expression": "\\kappa=0.3708071786",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 38,
+    "document": "supplement",
+    "expression": "\\kappa=0.4293652076",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 38,
+    "document": "supplement",
+    "expression": "0.5016425265",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 38,
+    "document": "supplement",
+    "expression": "119+77+1=197",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 40,
+    "document": "supplement",
+    "expression": "213/217",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 40,
+    "document": "supplement",
+    "expression": "98.16\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 40,
+    "document": "supplement",
+    "expression": "123/197",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 40,
+    "document": "supplement",
+    "expression": "62.44\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 40,
+    "document": "supplement",
+    "expression": "120/197",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 40,
+    "document": "supplement",
+    "expression": "60.91\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 40,
+    "document": "supplement",
+    "expression": "120/197",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 40,
+    "document": "supplement",
+    "expression": "119/197",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 45,
+    "document": "supplement",
+    "expression": "-790646361",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 45,
+    "document": "supplement",
+    "expression": "-2101760318",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 47,
+    "document": "supplement",
+    "expression": "-790646361",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 47,
+    "document": "supplement",
+    "expression": "-1202959445",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 16,
+    "document": "supplement",
+    "expression": "0.9368",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 16,
+    "document": "supplement",
+    "expression": "0.9257",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 16,
+    "document": "supplement",
+    "expression": "1.0000",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 16,
+    "document": "supplement",
+    "expression": "0.8141",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 16,
+    "document": "supplement",
+    "expression": "0.8104",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 16,
+    "document": "supplement",
+    "expression": "0.8253",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 16,
+    "document": "supplement",
+    "expression": "0.6654",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 16,
+    "document": "supplement",
+    "expression": "0.6580",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 16,
+    "document": "supplement",
+    "expression": "0.6840",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 19,
+    "document": "supplement",
+    "expression": "0.80",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 19,
+    "document": "supplement",
+    "expression": "0.75",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 29,
+    "document": "supplement",
+    "expression": "M=335",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 29,
+    "document": "supplement",
+    "expression": "M",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 29,
+    "document": "supplement",
+    "expression": "O(|\\mathcal{P}|\\cdot|\\mathcal{T}|)",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 29,
+    "document": "supplement",
+    "expression": "\\mathcal P",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 29,
+    "document": "supplement",
+    "expression": "\\mathcal T",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 29,
+    "document": "supplement",
+    "expression": "1.09",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 29,
+    "document": "supplement",
+    "expression": "3.29",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 29,
+    "document": "supplement",
+    "expression": "\\approx 198",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 35,
+    "document": "supplement",
+    "expression": "m=(a,b,v)",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 35,
+    "document": "supplement",
+    "expression": "[a,b)",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 35,
+    "document": "supplement",
+    "expression": "v",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 35,
+    "document": "supplement",
+    "expression": "r=(q,m,p)",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 35,
+    "document": "supplement",
+    "expression": "p",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 35,
+    "document": "supplement",
+    "expression": "v",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 43,
+    "document": "supplement",
+    "expression": "B=10{,}000",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 45,
+    "document": "supplement",
+    "expression": "8/331=0.0242",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 45,
+    "document": "supplement",
+    "expression": "p=0.0078125",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 45,
+    "document": "supplement",
+    "expression": "0.0302",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 46,
+    "document": "supplement",
+    "expression": "0.8459",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 46,
+    "document": "supplement",
+    "expression": "0.9174",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 48,
+    "document": "supplement",
+    "expression": "257/331",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 48,
+    "document": "supplement",
+    "expression": "265/331",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 48,
+    "document": "supplement",
+    "expression": "6",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 48,
+    "document": "supplement",
+    "expression": "8",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 48,
+    "document": "supplement",
+    "expression": "0.0483",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 48,
+    "document": "supplement",
+    "expression": "0.0785",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 48,
+    "document": "supplement",
+    "expression": "0.0028",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "preserved_results_details.tex",
+    "line": 48,
+    "document": "supplement",
+    "expression": "<0.001",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "additional_evidence.tex",
+    "line": 31,
+    "document": "supplement",
+    "expression": "0.2207",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "additional_evidence.tex",
+    "line": 33,
+    "document": "supplement",
+    "expression": "0.5287",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "additional_evidence.tex",
+    "line": 33,
+    "document": "supplement",
+    "expression": "0.7432",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "additional_evidence.tex",
+    "line": 33,
+    "document": "supplement",
+    "expression": "0.7764",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "additional_evidence.tex",
+    "line": 71,
+    "document": "supplement",
+    "expression": "k",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "additional_evidence.tex",
+    "line": 73,
+    "document": "supplement",
+    "expression": "2/3",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "additional_evidence.tex",
+    "line": 73,
+    "document": "supplement",
+    "expression": "1/2",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "additional_evidence.tex",
+    "line": 110,
+    "document": "supplement",
+    "expression": "0.80/0.78/0.78",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "additional_evidence.tex",
+    "line": 120,
+    "document": "supplement",
+    "expression": "n",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supplement.tex",
+    "line": 235,
+    "document": "supplement",
+    "expression": "0.7501",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supplement.tex",
+    "line": 235,
+    "document": "supplement",
+    "expression": "0.8118",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supplement.tex",
+    "line": 235,
+    "document": "supplement",
+    "expression": "0.5910",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supplement.tex",
+    "line": 235,
+    "document": "supplement",
+    "expression": "2{,}310/31{,}736=7.28\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supplement.tex",
+    "line": 237,
+    "document": "supplement",
+    "expression": "23{,}241/28{,}799=0.8070",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supplement.tex",
+    "line": 237,
+    "document": "supplement",
+    "expression": "[0.7842,0.8283]",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supplement.tex",
+    "line": 237,
+    "document": "supplement",
+    "expression": "B=10{,}000",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supplement.tex",
+    "line": 237,
+    "document": "supplement",
+    "expression": "0.8135",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "supplement.tex",
+    "line": 239,
+    "document": "supplement",
+    "expression": "98.04\\%",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "d1_contrasts.tex",
+    "line": 8,
+    "document": "supplement",
+    "expression": "x\\geq7",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "d1_contrasts.tex",
+    "line": 9,
+    "document": "supplement",
+    "expression": "x\\geq1",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "d1_contrasts.tex",
+    "line": 10,
+    "document": "supplement",
+    "expression": "x\\leq19",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "d1_contrasts.tex",
+    "line": 11,
+    "document": "supplement",
+    "expression": "-4",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "d1_contrasts.tex",
+    "line": 11,
+    "document": "supplement",
+    "expression": "-4",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "d1_contrasts.tex",
+    "line": 11,
+    "document": "supplement",
+    "expression": "d\\leq-4",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "d1_contrasts.tex",
+    "line": 11,
+    "document": "supplement",
+    "expression": "d",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "d1_contrasts.tex",
+    "line": 12,
+    "document": "supplement",
+    "expression": "x",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "d1_contrasts.tex",
+    "line": 12,
+    "document": "supplement",
+    "expression": "\\min x",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "d1_contrasts.tex",
+    "line": 21,
+    "document": "supplement",
+    "expression": "1/4",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "d1_contrasts.tex",
+    "line": 23,
+    "document": "supplement",
+    "expression": "x",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "d1_contrasts.tex",
+    "line": 23,
+    "document": "supplement",
+    "expression": "y",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "d1_contrasts.tex",
+    "line": 23,
+    "document": "supplement",
+    "expression": "x\\leq41",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "d1_contrasts.tex",
+    "line": 24,
+    "document": "supplement",
+    "expression": "x",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "d1_contrasts.tex",
+    "line": 24,
+    "document": "supplement",
+    "expression": "y",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "d1_contrasts.tex",
+    "line": 24,
+    "document": "supplement",
+    "expression": "x-0.2y=0",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "d1_contrasts.tex",
+    "line": 25,
+    "document": "supplement",
+    "expression": "a",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "d1_contrasts.tex",
+    "line": 25,
+    "document": "supplement",
+    "expression": "b",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "d1_contrasts.tex",
+    "line": 25,
+    "document": "supplement",
+    "expression": "\\neg b\\Rightarrow a",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "d1_contrasts.tex",
+    "line": 25,
+    "document": "supplement",
+    "expression": "a=b=1",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "d1_contrasts.tex",
+    "line": 26,
+    "document": "supplement",
+    "expression": "\\min22x",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "revised",
+    "file": "d1_contrasts.tex",
+    "line": 29,
+    "document": "supplement",
+    "expression": "3x",
+    "disposition": "Reviewed in local context; formal meanings and numerical criteria preserved. See scoped mathematical rows in register."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 116,
+    "expression": "\\begin{equation}\n\\hat{s}=\\arg\\max_{s \\in \\mathcal{S}} \\mathrm{score}(q,s).\n\\label{eq:top1_schema}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 125,
+    "expression": "\\begin{equation}\nE(q,\\hat{s}) = K_G(q) \\cap P_{\\mathrm{all}}(\\hat{s}).\n\\label{eq:eligible_slots}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 146,
+    "expression": "\\begin{equation}\n\\begin{gathered}\nc_i=\\begin{cases}|A_i|/|E_i|,& |E_i|>0,\\\\0,& |E_i|=0,\\end{cases}\n\\\\[3pt]\n\\textit{Coverage}=\\frac{1}{N}\\sum_{i=1}^N c_i,\n\\end{gathered}\n\\label{eq:coverage}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 154,
+    "expression": "\\begin{equation}\n\\begin{gathered}\nt_i=\\begin{cases}|T_i|/|A_i|,& |A_i|>0,\\\\0,& |A_i|=0,\\end{cases}\n\\\\[3pt]\n\\textit{TypeMatch}=\\frac{1}{N}\\sum_{i=1}^N t_i.\n\\end{gathered}\n\\label{eq:typematch}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 165,
+    "expression": "\\begin{equation}\n e_{i,s}=\\frac{|\\hat{y}_{i,s}-y_{i,s}|}{\\max(1.0,|y_{i,s}|)}.\n\\label{eq:bounded_error}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 170,
+    "expression": "\\begin{equation}\n\\begin{gathered}\nx_i=\\frac{1}{|C_i|}\\sum_{s\\in C_i}\\mathbf{1}[e_{i,s}\\leq0.20],\n\\\\[3pt]\n\\textit{Exact20 (on hits)}=\\frac{1}{|J|}\\sum_{i\\in J}x_i.\n\\end{gathered}\n\\label{eq:exact20}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 181,
+    "expression": "\\begin{equation}\n\\begin{gathered}\n\\mathit{InstantiationReady}_i\\\\[2pt]\n=\\mathbf{1}[c_i\\geq0.8\\ \\wedge\\ t_i\\geq0.8].\n\\end{gathered}\n\\label{eq:instantiation_ready}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 189,
+    "expression": "\\begin{equation}\n\\begin{gathered}\n\\mathit{StrictInstantiationReady}_i\\\\[2pt]\n= \\mathbf{1}[H_i=1\\ \\wedge\\ c_i\\geq0.8\\ \\wedge\\ t_i\\geq0.8].\n\\end{gathered}\n\\label{eq:strict_instantiation_ready}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 199,
+    "expression": "\\begin{equation}\n\\begin{split}\nF_i^G=\\mathbf{1}[\\,&H_i=1,\\ K_G(q_i)\\ne\\varnothing,\\\\\n&A_i=C_i=T_i=K_G(q_i),\\\\\n&\\max_{s\\in K_G(q_i)}e_{i,s}\\leq0.20\\,].\n\\end{split}\\label{eq:full-scalar}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 207,
+    "expression": "\\begin{equation}\n\\rho_I=\\frac{\\sum_i F_i^G}{\\sum_i I_i},\\qquad\n\\rho_S=\\frac{\\sum_i F_i^G}{\\sum_i S_i}.\n\\label{eq:conditional-agreement}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "main.tex",
+    "line": 227,
+    "expression": "\\begin{equation}\nt_i^*=\\arg\\max_{t\\in\\mathcal T\\setminus\\mathcal U_{i-1}}\\mathrm{compat}(p_i,t).\n\\label{eq:typed_assignment}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "reference_conventions.tex",
+    "line": 44,
+    "expression": "\\begin{equation}\n (p_1/100)x_1+(p_2/100)x_2\\leq b_{\\mathrm{cat}},\n \\label{eq:snack-overlay}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "llm_evidence.tex",
+    "line": 20,
+    "expression": "\\begin{equation}\n \\mathbf{1}\\!\\left[\\begin{cases}|a-b|\\leq0.05,&b=0,\\\\ |a-b|/|b|\\leq0.05,&b\\ne0.\\end{cases}\\right].\n \\label{eq:common18-objective-proxy}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "v1.1.0",
+    "file": "relationship_supplement.tex",
+    "line": 32,
+    "expression": "\\begin{equation}\n\\bar P=\\frac{1}{N}\\sum_i\\frac{\\sum_c n_{ic}(n_{ic}-1)}{n(n-1)},\\quad\nP_e=\\sum_c\\left(\\frac{\\sum_i n_{ic}}{Nn}\\right)^2,\\quad\n\\kappa=\\frac{\\bar P-P_e}{1-P_e}.\n\\label{eq:fleiss}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 116,
+    "expression": "\\begin{equation}\n\\hat{s}=\\arg\\max_{s \\in \\mathcal{S}} \\mathrm{score}(q,s).\n\\label{eq:top1_schema}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 125,
+    "expression": "\\begin{equation}\nE(q,\\hat{s}) = K_G(q) \\cap P_{\\mathrm{all}}(\\hat{s}).\n\\label{eq:eligible_slots}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 146,
+    "expression": "\\begin{equation}\n\\begin{gathered}\nc_i=\\begin{cases}|A_i|/|E_i|,& |E_i|>0,\\\\0,& |E_i|=0,\\end{cases}\n\\\\[3pt]\n\\textit{Coverage}=\\frac{1}{N}\\sum_{i=1}^N c_i,\n\\end{gathered}\n\\label{eq:coverage}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 154,
+    "expression": "\\begin{equation}\n\\begin{gathered}\nt_i=\\begin{cases}|T_i|/|A_i|,& |A_i|>0,\\\\0,& |A_i|=0,\\end{cases}\n\\\\[3pt]\n\\textit{TypeMatch}=\\frac{1}{N}\\sum_{i=1}^N t_i.\n\\end{gathered}\n\\label{eq:typematch}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 165,
+    "expression": "\\begin{equation}\n e_{i,s}=\\frac{|\\hat{y}_{i,s}-y_{i,s}|}{\\max(1.0,|y_{i,s}|)}.\n\\label{eq:bounded_error}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 170,
+    "expression": "\\begin{equation}\n\\begin{gathered}\nx_i=\\frac{1}{|C_i|}\\sum_{s\\in C_i}\\mathbf{1}[e_{i,s}\\leq0.20],\n\\\\[3pt]\n\\textit{Exact20 (on hits)}=\\frac{1}{|J|}\\sum_{i\\in J}x_i.\n\\end{gathered}\n\\label{eq:exact20}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 181,
+    "expression": "\\begin{equation}\n\\begin{gathered}\n\\mathit{InstantiationReady}_i\\\\[2pt]\n=\\mathbf{1}[c_i\\geq0.8\\ \\wedge\\ t_i\\geq0.8].\n\\end{gathered}\n\\label{eq:instantiation_ready}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 189,
+    "expression": "\\begin{equation}\n\\begin{gathered}\n\\mathit{StrictInstantiationReady}_i\\\\[2pt]\n= \\mathbf{1}[H_i=1\\ \\wedge\\ c_i\\geq0.8\\ \\wedge\\ t_i\\geq0.8].\n\\end{gathered}\n\\label{eq:strict_instantiation_ready}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 199,
+    "expression": "\\begin{equation}\n\\begin{split}\nF_i^G=\\mathbf{1}[\\,&H_i=1,\\ K_G(q_i)\\ne\\varnothing,\\\\\n&A_i=C_i=T_i=K_G(q_i),\\\\\n&\\max_{s\\in K_G(q_i)}e_{i,s}\\leq0.20\\,].\n\\end{split}\\label{eq:full-scalar}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 207,
+    "expression": "\\begin{equation}\n\\rho_I=\\frac{\\sum_i F_i^G}{\\sum_i I_i},\\qquad\n\\rho_S=\\frac{\\sum_i F_i^G}{\\sum_i S_i}.\n\\label{eq:conditional-agreement}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "revised",
+    "file": "main.tex",
+    "line": 227,
+    "expression": "\\begin{equation}\nt_i^*=\\arg\\max_{t\\in\\mathcal T\\setminus\\mathcal U_{i-1}}\\mathrm{compat}(p_i,t).\n\\label{eq:typed_assignment}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "revised",
+    "file": "reference_conventions.tex",
+    "line": 44,
+    "expression": "\\begin{equation}\n (p_1/100)x_1+(p_2/100)x_2\\leq b_{\\mathrm{cat}},\n \\label{eq:snack-overlay}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "revised",
+    "file": "llm_evidence.tex",
+    "line": 20,
+    "expression": "\\begin{equation}\n \\mathbf{1}\\!\\left[\\begin{cases}|a-b|\\leq0.05,&b=0,\\\\ |a-b|/|b|\\leq0.05,&b\\ne0.\\end{cases}\\right].\n \\label{eq:common18-objective-proxy}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  },
+  {
+    "version": "revised",
+    "file": "relationship_supplement.tex",
+    "line": 32,
+    "expression": "\\begin{equation}\n\\bar P=\\frac{1}{N}\\sum_i\\frac{\\sum_c n_{ic}(n_{ic}-1)}{n(n-1)},\\quad\nP_e=\\sum_c\\left(\\frac{\\sum_i n_{ic}}{Nn}\\right)^2,\\quad\n\\kappa=\\frac{\\bar P-P_e}{1-P_e}.\n\\label{eq:fleiss}\n\\end{equation}",
+    "disposition": "Protected display equation: byte identity verified against release baseline."
+  }
+]

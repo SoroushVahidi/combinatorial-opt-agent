@@ -1,0 +1,14 @@
+[
+  {
+    "document": "main",
+    "status": "PASS",
+    "byte_identical": true,
+    "sha256": "c09ec5e43b8b4423a79119dd5b259cb7acb881cf09a839479e11c946417afaa9"
+  },
+  {
+    "document": "supplement",
+    "status": "PASS",
+    "byte_identical": true,
+    "sha256": "804285149f2f1e5a9db30d4a43152fdb8364ae114e3872d3c2c569d24ac17bac"
+  }
+]

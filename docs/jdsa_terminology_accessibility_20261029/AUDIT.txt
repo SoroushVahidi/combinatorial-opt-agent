@@ -1,0 +1,63 @@
+JDSA TERMINOLOGY AND ACCESSIBILITY AUDIT
+Date: 2026-10-29
+Baseline: f2b8a94ea01922618e36b667c1d9b5e2c08f893c (public manuscript v1.1.0)
+Branch: manuscript/jdsa-terminology-accessibility
+Canonical source: manuscript/jdsa-stage3/main.tex
+
+STATUS: Technical verification PASS; formal withdrawal/non-overlap clearance remains an author action before journal submission. No journal contacted and no manuscript submitted. The delivery report records final commits and post-publication anonymous downloads; this audit is committed before conditional integration/release.
+
+SCOPE AND BASELINE
+Remote main was fetched and confirmed at the required baseline. All four prior editorial phases are preserved. The isolated worktree was created from verified origin/main, with no preexisting branch/worktree overwritten. All four public v1.1.0 assets downloaded anonymously and matched local bytes. Existing unrelated worktrees and the three untracked documentation directories in the main checkout remain untouched.
+
+The entire manuscript, all recursively included supplementary sources, figure source, captions, algorithm, and existing reference definitions were read. The register contains 333 term/symbol/identifier entries, with before/after first occurrences separately for abstract, main text and supplement, every located occurrence, existing definition/scope, identified issue, recommended correction and final action. Standard arithmetic and mathematical expressions also have a complete occurrence index (658 before/after records). Official bibliographic titles and exact version/record identifiers are protected rather than unnecessarily expanded.
+
+FILES FOR REVIEW
+TERMINOLOGY_REGISTER.tsv: compact human-readable requested register.
+TERMINOLOGY_REGISTER.json: same decisions plus all source occurrence locations/context.
+MATHEMATICAL_OCCURRENCES.json: inline and displayed mathematical occurrence index.
+CHANGES.json: 113 exact sequential local replacements, each with rationale; one is inherited trailing whitespace on an edited line.
+BEFORE_AFTER.json: final baseline-to-revised source hunks with before/after line locations.
+PRIMARY_SOURCES.json: primary documentation, cited records and archived implementation checks for explanations.
+VALIDATION.json: 624 passing checks and final PDF hashes.
+BASELINE_RELEASE_CHECK.json: anonymous v1.1.0 asset identities.
+STANDALONE_BUILDS.json: independent main-only/supplement-only PDF reproduction.
+FILE_INVENTORY.json: complete changed/added paths; no deletions.
+build_register.py and verify_terminology.py: reproducible editorial inventory and checks, no scientific computation.
+
+FOCUSED CORRECTIONS
+- Explain numerical grounding and fixed-candidate/fixed-score controls independently in the abstract; retain all findings and caveats.
+- Introduce mentions versus scalar slots, schema hits, the NLP4LP benchmark, conditional Exact20 and coarse readiness near first main-text use.
+- Define R@1, explain BM25/BGE-M3 functionally, and use the full BGE-M3 name in running references. Verify NL4Opt expansion; explain Ner4Opt and named systems without invented expansions.
+- Clarify query versus slot index i; algorithm mapping A and candidate set mathcal C_i versus evaluation assigned/comparable sets A_i/C_i; define catalog size, reference schema, bootstrap B and local objective/agreement symbols.
+- Retain all main equations, algorithm operations and figure elements exactly. Clarify factorial pool/scorer labels in the caption while preserving numerical cells, arrows and boldface.
+- Introduce D1 as the author-reviewed semantic contrast set, common-18 as the shared selected formulation subset, M5 as the local evidence-validation audit/bundle, M3 as formulation reaggregation, P0 as classifier-plus-assignment, and G1--G3 as autonomous-inventory/slot-participation audits. Their populations and evidence classes remain distinct.
+- Distinguish the pre-ratio Stage-A cache from the separately named role/quantity Stage A audit. Remove one-use HF, QC, SHAs and ESWA-era shorthand where full descriptive wording is clearer.
+- Make supplement metrics and datasets independently readable; define CSV, JSON, API, AST, HTTP, UTC, FP8, RSS, RL, MILP and ranking-metric headers. Explain IR and D1 C/I labels in relevant table captions.
+- Explain proper software/model names by role instead of guessing expansions. Preserve all exact provider paths, revisions, source IDs and publication metadata.
+No article glossary, new scientific example, new experiment or general prose rewrite was introduced.
+
+SCIENTIFIC PRESERVATION
+PASS: all 140 main numerical table cells and all 15 validated bold highlights match v1.1.0 in source and rendered PDF. Every supplementary table's numerical sequence is unchanged. All original inline mathematical expressions remain, and every displayed equation is byte-identical. Algorithm 1 including its caption is byte-identical; Figure 1 source and PDF are byte-identical.
+PASS: all original source numeral tokens remain. The only added digit tokens repeat existing method/version identifiers, rank cutoffs, the common-18 description or the already-defined 0.8 readiness threshold; the validator checks the exact per-file additions. No scientific numerical result is changed.
+PASS: exact research questions, citations, cross-reference/label sequences, URLs, evidence revisions, funding, acknowledgments, availability statements, author contributions and AI disclosures are retained. references.bib and both generated bibliographies are byte-identical.
+The 331-query and 49-query populations, 7/265 result, conditional Exact20 exclusions, full required-key endpoint, permissive small-fraction tolerance, semantic limitations and incomplete historical reproducibility remain intact. Source inspection only was used for internal labels and archived metric definitions; no experiments, training, inference, decoding, regrouping, model calls or solver computations were performed.
+
+BUILD AND VISUAL VALIDATION
+Manuscript: 17 pages (baseline 16). Supplement: 40 pages (baseline 38).
+Abstract: 230 whitespace-delimited LaTeX words, or 232 when em-dash-joined words are separated; both within 150--250. Keywords: six.
+Local definitions and ordinary float/text reflow account for pagination; no new template, font reduction, imposed page target or layout redesign.
+All 17 manuscript and 40 supplementary pages were visually inspected. After final caption/definition refinements, the eight changed supplement pages were inspected again; a final eligibility-scope clarification changed only supplement page 1, which was also inspected; the main PDF and remaining supplement pages were pixel-identical to the reviewed build. No clipping, overlaps, missing symbols or serious line-breaking defects were found. Float pages retain the existing Springer layout.
+Final logs: no unresolved citations/references, missing characters, overfull boxes, bookmark warnings or BibTeX errors. Nonfatal underfull notices: main 57, supplement 42; visual inspection found no serious defect. All fonts are embedded.
+All 197 internal named links and 31 companion-document links resolve. External destination sets are identical to v1.1.0; annotation counts can differ because line wrapping splits rectangles. No displayed destination or evidence pin was changed.
+The 33-file flat editable ZIP contains matching PDFs, complete sources, bibliographies, styles, figure and build helpers, with no auxiliary logs, caches, datasets or private records. Independent extraction and clean paired compilation reproduced both PDFs and generated dependencies byte for byte. Separate main-only and supplement-only builds also reproduced the PDFs using the companion-label source dependencies. SHA256SUMS.txt validates the three deliverables.
+Primary build: /tmp/jdsa-build.eOwV9C
+Independent package output: /tmp/jdsa-terminology-20261029/independent
+Validation command:
+python3 docs/jdsa_terminology_accessibility_20261029/verify_terminology.py /tmp/jdsa-build.eOwV9C /tmp/jdsa-terminology-20261029/independent
+The final packaged sources, including the scoped eligibility explanation, were rebuilt independently and reproduced the final PDFs byte for byte.
+
+INTEGRATION AND RELEASE
+All technical checks pass before the authorized push/integration. Fetch current main and integrate by fast-forward if ancestry still permits; preserve any intervening main work otherwise. Publish new manuscript tag/release jdsa-manuscript-v1.1.1, never replace v1.1.0 or any evidence release. Publish only the descriptive article/supplement PDFs, editable ZIP and checksums. The delivery message records final branch/main SHAs and independently downloaded public asset checksums.
+
+REMAINING ADMINISTRATIVE BLOCKER
+The earlier overlapping submission still lacks confirmed completed withdrawal. The author must obtain formal withdrawal/non-overlap confirmation before submitting to any journal. This does not block authorized public manuscript maintenance. No private correspondence is copied into this audit or package.

@@ -43,7 +43,7 @@
 \noindent\textbf{Online Resource 1.} International Journal of Data Science and Analytics.\par
 \noindent ORCID: \href{https://orcid.org/0000-0003-1934-6282}{0000-0003-1934-6282}.\par
 
-This supplement preserves secondary evidence, population boundaries and source provenance. It accompanies the main article and includes the archived 217-relationship Gemini--DeepSeek--Cohere audit, with explicit recovery and denominator accounting. The analyses use archived records; public projections, local originals and historical summaries have distinct verification boundaries (Section~\ref{app:reproduction}).
+This supplement preserves secondary evidence, population boundaries and source provenance. A schema is a model template; scalar grounding assigns textual quantities to its single-valued parameters. Reference or gold denotes stored benchmark annotations, not independent semantic truth. Supplied-slot grounding uses a provided parameter inventory; in the main benchmark, eligible slots are the reference scalar keys present in the retrieved schema. The core benchmark, NLP4LP, contains natural-language linear and mixed-integer linear programming problems. The auxiliary Natural Language for Optimization (NL4Opt) corpus supplies extraction and formulation tasks. It accompanies the main article and includes the archived 217-relationship Gemini--DeepSeek--Cohere audit, with explicit recovery and denominator accounting. The analyses use archived records; public projections, local originals and historical summaries have distinct verification boundaries (Section~\ref{app:reproduction}).
 % Widen contents number columns for S10/S11 and their subsections.
 \makeatletter
 \renewcommand*\l@section[2]{\@dottedtocline{1}{0em}{2.5em}{\bfseries #1}{#2}}
@@ -53,14 +53,14 @@ This supplement preserves secondary evidence, population boundaries and source p
 \tableofcontents
 \clearpage
 \section{System Context and Secondary Protocol Tables}
-Tables~\ref{tab:comparison_landscape}--\ref{tab:exp_blocks} summarize the system context, retrieval methods and experimental blocks.
+Tables~\ref{tab:comparison_landscape}--\ref{tab:exp_blocks} summarize the system context, retrieval methods and experimental blocks. Large language models (LLMs) generate text or code; the core scalar grounder is rule-based. Coverage measures assigned eligible slots, and TypeMatch measures compatible assigned slots, each averaged over queries. InstantiationReady (coarse or ordinary readiness) requires both per-query fractions to reach 0.8 (empty inventories fail); StrictInstantiationReady additionally requires a correct schema. Exact20 averages within-tolerance slot fractions only over schema hits with comparable numerical assignments; its denominator can therefore vary by method.
 \begin{table}[htbp]
 \centering
 \caption{Task-level comparison landscape for recent natural-language optimization modeling systems.
 This table is deliberately \emph{not} a leaderboard: systems differ in output type, supervision, and
 evaluation protocol, so accuracy numbers are omitted. Abbreviations: Ret.\ = retrieval/memory;
-Sol.\ = solver feedback during generation or training; FT = fine-tuning or reinforcement-learning training; OR = operations research; CoT = chain of thought; NL = natural language; (MI)LP = (mixed-integer) linear programming;
-Comp.\ = directly comparable
+Sol.\ = solver feedback during generation or training; FT = fine-tuning or reinforcement-learning training; RL = reinforcement learning; OR = operations research; CoT = chain of thought; NL = natural language; (MI)LP = (mixed-integer) linear programming;
+inst.\ = instantiation; Comp.\ = directly comparable
 to the InstantiationReady / Exact20 (on hits) protocol of this paper.}
 \label{tab:comparison_landscape}
 \small
@@ -99,7 +99,7 @@ task and InstantiationReady / Exact20 protocol; end-to-end solver accuracy is a 
 \end{table}
 \begin{table}[htbp]
 \centering
-\caption{Retrieval methods used for schema identification.}
+\caption{Retrieval methods used for schema identification. TF--IDF denotes term frequency--inverse document frequency and LSA latent semantic analysis. BM25 is a probabilistic lexical ranker; BGE-M3 is a pretrained multilingual text encoder, used here for dense retrieval.}
 \label{tab:retrieval_backbones}
 \small
 \begin{tabularx}{\linewidth}{@{}lXX@{}}
@@ -115,7 +115,7 @@ BGE-M3 & Pretrained dense text embeddings & Modern semantic retrieval baseline \
 \end{table}
 \begin{table}[htbp]
 \centering
-\caption{Summary of the experimental blocks used in the paper.}
+\caption{Summary of the experimental blocks used in the paper. Schema R@1 is recall at rank one (target-schema accuracy). Orig denotes original input; inst. denotes instances. SciPy is the scientific Python library; HiGHS is the optimization solver, accessed through a compatibility wrapper (shim).}
 \label{tab:exp_blocks}
 \small
 \begin{tabularx}{\linewidth}{X X X}
@@ -169,7 +169,7 @@ Table~\ref{tab:nlp4lp-overlap} reports the historical sanitization aggregates. T
 \end{table}
 \begin{table}[htbp]
 \centering
-\caption{Historically reported gold-assisted execution on 20 instances (SciPy HiGHS MILP shim); per-instance outputs and the original manifest are unavailable for reconstruction. Every rate divides by 20.}
+\caption{Historically reported gold-assisted execution on 20 instances (SciPy HiGHS mixed-integer linear programming (MILP) shim); per-instance outputs and the original manifest are unavailable for reconstruction. Every rate divides by 20.}
 \label{tab:eng-solver}
 \small
 \begin{tabular}{lcccc}
@@ -232,7 +232,7 @@ Table~\ref{tab:ext-context} identifies each system's provenance and execution en
 \label{app:extraction-details}\label{subsec:exp_external_validation}
 As a component-level check, we evaluated numeric extraction on a fixed 1,000-instance \textsc{OptMATH}-Train sample \cite{lu2025optmath} (no fixed schema catalog, so extraction only).
 
-Pooled raw AST code-value overlap recall is $0.7501$; pooled automatic text-support recall is $0.8118$ (complete-instance rate $0.5910$). The saved automatic category counts classify $2{,}310/31{,}736=7.28\%$ of code-side values across the 1,000 instances as implementation, solver/API, index/loop or array/dimension constants. This is distinct from the 150-instance classifier comparison (seed 20260815). 
+Pooled raw abstract syntax tree (AST) code-value overlap recall is $0.7501$; pooled automatic text-support recall is $0.8118$ (complete-instance rate $0.5910$). The saved automatic category counts classify $2{,}310/31{,}736=7.28\%$ of code-side values across the 1,000 instances as implementation, solver/API, index/loop or array/dimension constants. This is distinct from the 150-instance classifier comparison (seed 20260815).
 
 The later verification summary reports audit-calibrated text-supported recall as the pooled (micro) ratio $23{,}241/28{,}799=0.8070$ (95\% instance-bootstrap CI $[0.7842,0.8283]$, $B=10{,}000$, seed 42, over the 1,000 sampled instances). Its corrected per-instance counts are unavailable for independent rebootstrap of that historical CI. The reported mean of per-instance ratios (macro recall) is $0.8135$. The stored verification JSON reverses the names of these two aggregates; the values are preserved here with their implemented definitions. The 28,799 values are not independent samples, and occurrence-aware recall is not identifiable from these set-based artifacts. 
 

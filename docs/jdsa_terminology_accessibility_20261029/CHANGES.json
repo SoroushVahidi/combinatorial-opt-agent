@@ -1,0 +1,680 @@
+[
+  {
+    "file": "main.tex",
+    "before": "even when numerical grounding is incomplete.",
+    "after": "even when numerical grounding---assigning textual quantities to model parameters---is incomplete.",
+    "reason": "Define numerical grounding independently in the abstract."
+  },
+  {
+    "file": "main.tex",
+    "before": "Ratio-aware lexical grounding passes coarse readiness on 265 queries",
+    "after": "Lexical grounding with multiplicative-word extraction passes coverage/type readiness on 265 queries",
+    "reason": "Explain ratio-aware and coarse readiness without unexplained abstract shorthand."
+  },
+  {
+    "file": "main.tex",
+    "before": "A separate 49-query frozen-score assignment study",
+    "after": "A separate 49-query assignment study with fixed candidates and scores",
+    "reason": "Explain frozen-score control in the abstract."
+  },
+  {
+    "file": "main.tex",
+    "before": "assigns extracted numerical mentions to scalar slots, producing a partial parameter mapping.",
+    "after": "assigns numerical mentions (occurrences of quantities in the text) to scalar slots (parameters requiring single numerical values), producing a partial parameter mapping.",
+    "reason": "Distinguish occurrences from parameters at first substantive use."
+  },
+  {
+    "file": "main.tex",
+    "before": "The 331-query NLP4LP analysis jointly reports schema hits,",
+    "after": "The 331-query analysis of NLP4LP, a natural-language linear and mixed-integer linear programming benchmark, jointly reports schema hits (correct top-ranked templates),",
+    "reason": "Introduce benchmark and schema hit independently in main text."
+  },
+  {
+    "file": "main.tex",
+    "before": "reference-assisted supplied-slot grounding that jointly reports",
+    "after": "reference-assisted grounding with a supplied parameter inventory that jointly reports",
+    "reason": "Explain supplied-slot without project shorthand at first use."
+  },
+  {
+    "file": "main.tex",
+    "before": "while preserving conditional Exact20 populations.",
+    "after": "while preserving the conditional populations of Exact20, the mean within-tolerance slot fraction on comparable schema hits.",
+    "reason": "Explain metric at its first introduction, leaving formal definition intact."
+  },
+  {
+    "file": "main.tex",
+    "before": "Its BIND interventions distinguish",
+    "after": "Its BIND interventions, which externalize numerical data for programmatic binding, distinguish",
+    "reason": "Give the named intervention a function, not a guessed expansion."
+  },
+  {
+    "file": "main.tex",
+    "before": "NL4Opt and Ner4Opt examine optimization-related extraction and representations",
+    "after": "Natural Language for Optimization (NL4Opt) and Ner4Opt, a named-entity recognition framework for optimization, examine extraction and representations",
+    "reason": "Verify NL4Opt expansion; explain Ner4Opt function from cited publication."
+  },
+  {
+    "file": "main.tex",
+    "before": "whereas OptMATH, ORLM, and DeepOR develop data or trained modeling systems",
+    "after": "whereas the OptMATH data-synthesis framework and the ORLM and DeepOR modeling systems develop data or trained models",
+    "reason": "Distinguish framework names and functions without artificial expansions."
+  },
+  {
+    "file": "main.tex",
+    "before": "Constrained semantic-role inference and PICARD impose structural restrictions",
+    "after": "Constrained semantic-role inference and the incremental parsing method PICARD impose structural restrictions",
+    "reason": "Explain one-use proper method name functionally."
+  },
+  {
+    "file": "main.tex",
+    "before": "Given a query, the system returns",
+    "after": "Given a query $q$, the system returns",
+    "reason": "Define q at first mathematical use."
+  },
+  {
+    "file": "main.tex",
+    "before": "Schema retrieval ranks $\\mathcal{S}=\\{s_1,\\dots,s_M\\}$ and returns",
+    "after": "Schema retrieval ranks the catalog $\\mathcal{S}=\\{s_1,\\dots,s_M\\}$ of $M$ schemas and returns",
+    "reason": "Define catalog size and members."
+  },
+  {
+    "file": "main.tex",
+    "before": "Gold scalar status therefore filters",
+    "after": "Here, gold denotes the stored benchmark reference, not independently verified semantic truth. Gold scalar status therefore filters",
+    "reason": "Clarify gold and preserve reference-validity limits."
+  },
+  {
+    "file": "main.tex",
+    "before": "Optional BGE-M3 retrieval uses a pretrained encoder;",
+    "after": "Optional BGE-M3 retrieval uses a pretrained multilingual text encoder to represent queries and schemas as dense vectors;",
+    "reason": "Explain model purpose at first use without expanding its proper name."
+  },
+  {
+    "file": "main.tex",
+    "before": "\\textit{Schema R@1} is $N^{-1}\\sum_{i=1}^N H_i$, where $H_i=\\mathbf{1}[\\hat{s}_i=s_i^*]$ and $N=331$.",
+    "after": "\\textit{Schema R@1} (recall at rank one) is $N^{-1}\\sum_{i=1}^N H_i$, where $H_i=\\mathbf{1}[\\hat{s}_i=s_i^*]$ indicates a schema hit, $s_i^*$ is query $i$\\textquotesingle s reference schema, and $N=331$.",
+    "reason": "Define retrieval abbreviation, indicator, reference schema and query index."
+  },
+  {
+    "file": "main.tex",
+    "before": "are \\emph{macro-averages over queries},",
+    "after": "are \\emph{macro-averages over queries} (each query receives equal weight),",
+    "reason": "Explain macro averaging locally."
+  },
+  {
+    "file": "main.tex",
+    "before": "With $J=\\{i:H_i=1,\\ |C_i|>0\\}$,",
+    "after": "The conditional denominator counts only queries with a schema hit and at least one comparable slot. With $J=\\{i:H_i=1,\\ |C_i|>0\\}$,",
+    "reason": "Explain conditioning in ordinary language before formal Exact20 definition."
+  },
+  {
+    "file": "main.tex",
+    "before": "Typed greedy visits the run's slot order and assigns an unused indexed mention:",
+    "after": "Typed greedy visits slots $p_i$ in the run\\textquotesingle s order. With $\\mathcal T$ the extracted mentions and $\\mathcal U_{i-1}$ the mentions already used, it assigns an unused indexed mention:",
+    "reason": "Define assignment symbols before equation; slot index differs from query index."
+  },
+  {
+    "file": "main.tex",
+    "before": "Compatibility ranks candidates by coarse type preference,",
+    "after": "Here $i$ indexes slots, rather than queries, and $\\mathrm{compat}$ ranks candidates by coarse type preference,",
+    "reason": "Clarify local index scope without changing equation."
+  },
+  {
+    "file": "main.tex",
+    "before": "Algorithm~\\ref{alg:instantiation} and Figure~\\ref{fig:instantiation-pipeline} describe this protocol.",
+    "after": "Algorithm~\\ref{alg:instantiation} and Figure~\\ref{fig:instantiation-pipeline} describe this protocol. In the algorithm, $A$ is the slot--value mapping, $\\mathcal P$ the eligible inventory, and $\\mathcal C_i$ the unused-mention candidates; these differ from the evaluation sets $A_i$ and $C_i$.",
+    "reason": "Disambiguate algorithm mappings and candidates from evaluation sets."
+  },
+  {
+    "file": "main.tex",
+    "before": "Each pair shares canonical lexical slot order and a zero-score null option.",
+    "after": "Each pair shares canonical lexical slot order and a zero-score null option (leaving a slot unfilled).",
+    "reason": "Define abstention option."
+  },
+  {
+    "file": "main.tex",
+    "before": "The ordinal type-preference control explicitly cardinalizes preferences;",
+    "after": "The ordinal type-preference control assigns numerical scores to ordered preferences;",
+    "reason": "Replace unnecessary specialist verb without changing control."
+  },
+  {
+    "file": "main.tex",
+    "before": "One-to-one matching is thus a diagnostic restriction,",
+    "after": "One-to-one matching, which prohibits reuse of a mention index, is thus a diagnostic restriction,",
+    "reason": "Explain assignment restriction."
+  },
+  {
+    "file": "main.tex",
+    "before": "We compare BM25, TF--IDF cosine retrieval,",
+    "after": "We compare BM25 probabilistic lexical ranking, TF--IDF cosine retrieval,",
+    "reason": "Describe established algorithm rather than forcing an expansion."
+  },
+  {
+    "file": "main.tex",
+    "before": "BGE reporting metadata specifies float32, L2-normalized 1024-dimensional embeddings",
+    "after": "BGE-M3 reporting metadata specifies float32 precision and unit-Euclidean-length (L2-normalized) 1024-dimensional embeddings",
+    "reason": "Keep model name consistent; explain normalization."
+  },
+  {
+    "file": "main.tex",
+    "before": "327 frozen delexicalized text groups,",
+    "after": "327 frozen delexicalized text groups (formed after masking lexical details),",
+    "reason": "Explain grouping term without changing group construction."
+  },
+  {
+    "file": "main.tex",
+    "before": "($B=10{,}000$, NumPy seed 42)",
+    "after": "($B=10{,}000$ bootstrap resamples, NumPy seed 42)",
+    "reason": "Define bootstrap replication symbol."
+  },
+  {
+    "file": "main.tex",
+    "before": "schema hits but differ in Exact20 on 162 of them. Only TF--IDF records its hash seed; missing BGE runtime details",
+    "after": "schema hits but differ in Exact20 on 162 of them. Only TF--IDF records its hash seed; missing BGE-M3 runtime details",
+    "reason": "Use full model identifier consistently."
+  },
+  {
+    "file": "main.tex",
+    "before": "BGE lacks an authenticated hash seed,",
+    "after": "BGE-M3 lacks an authenticated hash seed,",
+    "reason": "Use full model identifier consistently."
+  },
+  {
+    "file": "main.tex",
+    "before": "The 12 D1 pairs contain",
+    "after": "The author-reviewed semantic contrast set (D1) comprises 12 pairs containing",
+    "reason": "Introduce internal semantic set with its provenance."
+  },
+  {
+    "file": "main.tex",
+    "before": "The common-18 formulation comparison,",
+    "after": "The formulation comparison on the same 18 selected problems (common-18),",
+    "reason": "Explain internal population label at first use."
+  },
+  {
+    "file": "main.tex",
+    "before": "Complete local M5 originals, private reviews,",
+    "after": "Complete local originals from the evidence-validation audit (M5), private reviews,",
+    "reason": "Explain internal evidence-bundle label at first use."
+  },
+  {
+    "file": "main.tex",
+    "before": "The G1--G3 feasibility audits found",
+    "after": "The autonomous-inventory and slot-participation feasibility audits (G1--G3) found",
+    "reason": "Provide descriptive umbrella for traceable audit IDs."
+  },
+  {
+    "file": "main.tex",
+    "before": "Schema retrieval accuracy (\\textit{Schema R@1})",
+    "after": "Schema retrieval accuracy (recall at rank one, \\textit{Schema R@1})",
+    "reason": "Define table abbreviation independently."
+  },
+  {
+    "file": "main.tex",
+    "before": "Random is the theoretical uniform-selection rate",
+    "after": "LSA is latent semantic analysis; TF--IDF is term frequency--inverse document frequency. Random is the theoretical uniform-selection rate",
+    "reason": "Expand retrieval acronyms in compact table caption."
+  },
+  {
+    "file": "main.tex",
+    "before": "coarse readiness without numerical-value checks. Coverage,",
+    "after": "coarse readiness without numerical-value checks; Strict also requires the correct schema. Coverage is the assigned fraction of eligible slots, and TypeMatch the compatible fraction of assigned slots, averaged over queries. Coverage,",
+    "reason": "Make table metric distinctions self-contained."
+  },
+  {
+    "file": "main.tex",
+    "before": "InstReady and Strict denote ordinary and strict coarse readiness. $F^G$",
+    "after": "Coverage and TypeMatch are query-averaged slot coverage and type compatibility. InstReady denotes coarse readiness; Strict additionally requires a schema hit. $F^G$",
+    "reason": "Explain matched-table metric labels locally."
+  },
+  {
+    "file": "main.tex",
+    "before": "Exact20 (on hits) uses 291 comparable schema-hit queries",
+    "after": "Exact20 (on hits), the query-averaged within-tolerance slot fraction, uses 291 comparable schema-hit queries",
+    "reason": "Explain conditional matched-table metric locally."
+  },
+  {
+    "file": "supplement.tex",
+    "before": "This supplement preserves secondary evidence, population boundaries and source provenance.",
+    "after": "This supplement preserves secondary evidence, population boundaries and source provenance. A schema is a model template; scalar grounding assigns textual quantities to its single-valued parameters. The core benchmark, NLP4LP, contains natural-language linear and mixed-integer linear programming problems. The auxiliary Natural Language for Optimization (NL4Opt) corpus supplies extraction and formulation tasks.",
+    "reason": "Introduce core concepts and datasets independently in supplement."
+  },
+  {
+    "file": "supplement.tex",
+    "before": "Tables~\\ref{tab:comparison_landscape}--\\ref{tab:exp_blocks} summarize the system context, retrieval methods and experimental blocks.",
+    "after": "Tables~\\ref{tab:comparison_landscape}--\\ref{tab:exp_blocks} summarize the system context, retrieval methods and experimental blocks. Large language models (LLMs) generate text or code; the core scalar grounder is rule-based. Coverage measures assigned eligible slots, and TypeMatch measures compatible assigned slots, each averaged over queries. InstantiationReady (coarse or ordinary readiness) requires both per-query fractions to reach 0.8; StrictInstantiationReady additionally requires a correct schema. Exact20 averages within-tolerance slot fractions only over schema hits with comparable numerical assignments; its denominator can therefore vary by method.",
+    "reason": "Supply independent metric/LLM introduction before tables; thresholds unchanged."
+  },
+  {
+    "file": "supplement.tex",
+    "before": "FT = fine-tuning or reinforcement-learning training;",
+    "after": "FT = fine-tuning or reinforcement-learning training; RL = reinforcement learning;",
+    "reason": "Define RL used in table body."
+  },
+  {
+    "file": "supplement.tex",
+    "before": "Comp.\\ = directly comparable",
+    "after": "inst.\\ = instantiation; Comp.\\ = directly comparable",
+    "reason": "Define shortened table task label."
+  },
+  {
+    "file": "supplement.tex",
+    "before": "\\caption{Retrieval methods used for schema identification.}",
+    "after": "\\caption{Retrieval methods used for schema identification. TF--IDF denotes term frequency--inverse document frequency and LSA latent semantic analysis. BM25 is a probabilistic lexical ranker; BGE-M3 is a pretrained multilingual text encoder, used here for dense retrieval.}",
+    "reason": "Define retrieval identifiers independently in table."
+  },
+  {
+    "file": "supplement.tex",
+    "before": "\\caption{Summary of the experimental blocks used in the paper.}",
+    "after": "\\caption{Summary of the experimental blocks used in the paper. Schema R@1 is recall at rank one (target-schema accuracy). Orig denotes original input; inst. denotes instances. SciPy is the scientific Python library; HiGHS is the optimization solver, accessed through a compatibility wrapper (shim).}",
+    "reason": "Explain metrics, software and abbreviation used in block table."
+  },
+  {
+    "file": "supplement.tex",
+    "before": "(SciPy HiGHS MILP shim)",
+    "after": "(SciPy HiGHS mixed-integer linear programming (MILP) shim)",
+    "reason": "Expand MILP at first supplement occurrence."
+  },
+  {
+    "file": "supporting_core.tex",
+    "before": "supporting RQ2 and RQ3.",
+    "after": "supporting the diagnostic-validity and grounding-mechanism research questions (RQ2 and RQ3).",
+    "reason": "Identify main research-question shorthand independently."
+  },
+  {
+    "file": "supporting_core.tex",
+    "before": "CI is a marginal 95\\% paired group-bootstrap interval.",
+    "after": "CI denotes a confidence interval, here a marginal 95\\% paired group-bootstrap interval.",
+    "reason": "Expand statistical abbreviation."
+  },
+  {
+    "file": "grounding_diagnostics.tex",
+    "before": "The ordinal control's cardinalization and partially assisted inventory limit interpretation.",
+    "after": "Assigning numerical scores to ordinal preferences and using a partially assisted inventory limit interpretation of the ordinal control.",
+    "reason": "Explain cardinalization without jargon."
+  },
+  {
+    "file": "grounding_diagnostics.tex",
+    "before": "An exact MILP diagnostic holds",
+    "after": "An exact mixed-integer linear programming diagnostic holds",
+    "reason": "Avoid separate expansion ambiguity from float order."
+  },
+  {
+    "file": "reference_conventions.tex",
+    "before": "each conversion: a share $p$ in $X\\geq p(X+Y)$",
+    "after": "each conversion: for component quantities $X$ and $Y$, a share $p$ in $X\\geq p(X+Y)$",
+    "reason": "Define local component symbols without altering expression."
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before": "not the complete local M5 bundle.",
+    "after": "not the complete local evidence-validation bundle (internal audit M5).",
+    "reason": "Define M5 when first used in supplement."
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before": "The four headline metric CSVs",
+    "after": "The four headline metric comma-separated values (CSV) files",
+    "reason": "Expand file format independently."
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before": "Relationship QC &",
+    "after": "Relationship quality checks &",
+    "reason": "Remove one-use QC abbreviation in table."
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before": "The original M3 evaluator",
+    "after": "The original formulation-result reaggregation evaluator (M3)",
+    "reason": "Explain traceable evaluator phase ID."
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before": "D1 publishes original project fixtures",
+    "after": "The author-reviewed semantic contrast set (D1) publishes original project fixtures",
+    "reason": "Define D1 at first supplement use."
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before": "formalize $F^G\\subseteq S\\subseteq I$.",
+    "after": "formalize $F^G\\subseteq S\\subseteq I$: complete required-scalar agreement, strict-ready outputs, and ordinary-ready outputs, respectively.",
+    "reason": "Define companion-document set symbols locally."
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before": "versioned HF directory.",
+    "after": "versioned Hugging Face directory.",
+    "reason": "Remove unnecessary one-use acronym."
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before": "BGE's literal reporting metadata",
+    "after": "BGE-M3's literal reporting metadata",
+    "reason": "Consistent model identifier."
+  },
+  {
+    "file": "supervision_diagnostics.tex",
+    "before": "a DistilRoBERTa mention--slot classifier",
+    "after": "a mention--slot classifier based on the compact pretrained DistilRoBERTa text encoder",
+    "reason": "Explain proper model name functionally."
+  },
+  {
+    "file": "supervision_diagnostics.tex",
+    "before": "exact run source SHAs",
+    "after": "exact source-commit hashes",
+    "reason": "Replace unexplained version-control shorthand."
+  },
+  {
+    "file": "supervision_diagnostics.tex",
+    "before": "P0 is a separate completed classifier-plus-assignment study.",
+    "after": "The separate completed classifier-plus-assignment study is identified as P0 in the archived records.",
+    "reason": "Explain internal ID and why retained."
+  },
+  {
+    "file": "supervision_diagnostics.tex",
+    "before": "one frozen MiniLM cosine feature",
+    "after": "one cosine-similarity feature from a frozen MiniLM text encoder",
+    "reason": "Define feature/model function without invented expansion."
+  },
+  {
+    "file": "supervision_diagnostics.tex",
+    "before": "Actual GAMS and targeted-synthetic auxiliary runs",
+    "after": "Actual auxiliary runs using GAMS optimization-model sources and targeted synthetic data",
+    "reason": "Explain name through its source role."
+  },
+  {
+    "file": "common18_overview.tex",
+    "before": "The same 18 historically selected NLP4LP problems were attempted",
+    "after": "The same 18 historically selected NLP4LP problems (the common-18 subset) were attempted",
+    "reason": "Define population ID independently."
+  },
+  {
+    "file": "common18_overview.tex",
+    "before": "Parse denotes a retained AMPL parse",
+    "after": "Parse denotes a retained parse in the AMPL algebraic modeling language",
+    "reason": "Explain modeling language at first occurrence."
+  },
+  {
+    "file": "llm_evidence.tex",
+    "before": "\\caption{Actual historical implementation and configuration, not original-author performance reproduction.}",
+    "after": "\\caption{Actual historical implementation and configuration, not original-author performance reproduction. $T$ is the sampling temperature; greedy generation selects the highest-probability next token.}",
+    "reason": "Define local T, distinct from type-compatible set and tolerance columns."
+  },
+  {
+    "file": "llm_evidence.tex",
+    "before": "Let $a=\\operatorname{round}_{\\mathrm{even}}(\\hat z)$",
+    "after": "Let $\\hat z$ be the generated program\\textquotesingle s terminal objective and $z^*$ the reference objective. Let $a=\\operatorname{round}_{\\mathrm{even}}(\\hat z)$",
+    "reason": "Define objective symbols before existing comparison."
+  },
+  {
+    "file": "llm_evidence.tex",
+    "before": "nonlinear-constraint API construction error.",
+    "after": "nonlinear-constraint application programming interface (API) construction error.",
+    "reason": "Expand API at first supplement use."
+  },
+  {
+    "file": "closed_audits.tex",
+    "before": "The G1--G3 audits were bounded source/record investigations",
+    "after": "The autonomous-inventory and slot-participation audits (G1--G3) were bounded source/record investigations",
+    "reason": "Explain internal audit family."
+  },
+  {
+    "file": "closed_audits.tex",
+    "before": "For G3, let",
+    "after": "G3 statically compared schema-only slot participation with reference-filtered participation. For G3, let",
+    "reason": "State specific G3 purpose before notation."
+  },
+  {
+    "file": "closed_audits.tex",
+    "before": "For G3, let $P_{\\mathrm{scalar}}(\\hat{s})$",
+    "after": "Here $\\hat{s}$ is the retrieved schema and $K_G$ its query\\textquotesingle s reference scalar-key set. For G3, let $P_{\\mathrm{scalar}}(\\hat{s})$",
+    "reason": "Define main-document symbols locally."
+  },
+  {
+    "file": "closed_audits.tex",
+    "before": "Cases where strict metadata-scalar A differs from original fallback A",
+    "after": "Cases where metadata-scalar inventory differs from fallback inventory",
+    "reason": "Remove undefined local A label without changing count."
+  },
+  {
+    "file": "relationship_supplement.tex",
+    "before": "source-file SHA-256 digest",
+    "after": "source-file SHA-256 cryptographic checksum",
+    "reason": "Explain checksum purpose without unnecessary expansion."
+  },
+  {
+    "file": "relationship_supplement.tex",
+    "before": "a native JSON Schema with identifier enums.",
+    "after": "a native JavaScript Object Notation (JSON) Schema with enumerated identifier choices.",
+    "reason": "Explain serialization and enum shorthand."
+  },
+  {
+    "file": "relationship_supplement.tex",
+    "before": "(UTC).",
+    "after": "(Coordinated Universal Time, UTC).",
+    "reason": "Expand time standard."
+  },
+  {
+    "file": "relationship_supplement.tex",
+    "before": "(recorded FP8)",
+    "after": "(recorded eight-bit floating-point format, FP8)",
+    "reason": "Explain recorded precision label without changing provenance."
+  },
+  {
+    "file": "relationship_supplement.tex",
+    "before": "Unrecorded top-$p$, inference seeds",
+    "after": "Unrecorded top-$p$ (cumulative-probability sampling threshold), inference seeds",
+    "reason": "Explain local sampling p, distinct from statistical p."
+  },
+  {
+    "file": "relationship_supplement.tex",
+    "before": "\\caption{Retained HTTP attempts,",
+    "after": "\\caption{Retained Hypertext Transfer Protocol (HTTP) attempts,",
+    "reason": "Expand transport abbreviation independently in caption."
+  },
+  {
+    "file": "relationship_supplement.tex",
+    "before": "Using all four categories in Eq.~\\eqref{eq:fleiss}",
+    "after": "Here $\\bar P$ is observed agreement, $P_e$ chance agreement from category frequencies, and Fleiss\\textquotesingle{} $\\kappa$ their chance-corrected agreement. Using all four categories in Eq.~\\eqref{eq:fleiss}",
+    "reason": "Explain agreement symbols while preserving equation and interpretation."
+  },
+  {
+    "file": "relationship_evidence.tex",
+    "before": "217 occurrence--declaration targets",
+    "after": "217 occurrence--declaration targets (proposed links from textual mentions to model elements)",
+    "reason": "Explain relationship unit at first substantive use."
+  },
+  {
+    "file": "preserved_results_details.tex",
+    "before": "with peak RSS",
+    "after": "with peak resident set size (RSS, memory held in physical RAM)",
+    "reason": "Explain runtime memory measure."
+  },
+  {
+    "file": "preserved_results_details.tex",
+    "before": "numbers of eligible slots and mentions.",
+    "after": "numbers of eligible slots $\\mathcal P$ and mentions $\\mathcal T$.",
+    "reason": "Define symbols locally in supplement runtime expression."
+  },
+  {
+    "file": "preserved_results_details.tex",
+    "before": "for its half-open character interval and normalized value,",
+    "after": "for its character interval $[a,b)$ (start included, end excluded) and normalized value $v$,",
+    "reason": "Explain mention-span notation."
+  },
+  {
+    "file": "preserved_results_details.tex",
+    "before": "($B=10{,}000$, NumPy seed 42)",
+    "after": "($B=10{,}000$ bootstrap resamples, NumPy seed 42)",
+    "reason": "Define B independently in supplement."
+  },
+  {
+    "file": "additional_evidence.tex",
+    "before": "The archived ESWA-era campaign",
+    "after": "The archived early grounding campaign",
+    "reason": "Remove irrelevant journal-era shorthand; preserve historical cohort."
+  },
+  {
+    "file": "additional_evidence.tex",
+    "before": "It is not precision among the five retrieved documents.",
+    "after": "It is not precision among the five retrieved documents. MRR@10 is mean reciprocal rank truncated at ten; nDCG@10 is normalized discounted cumulative gain at ten; Coverage@10 is the fraction with the target among the first ten results.",
+    "reason": "Define ranked metric headers from retained implementation."
+  },
+  {
+    "file": "additional_evidence.tex",
+    "before": "No completed MS-MARCO MiniLM cross-encoder",
+    "after": "No completed MiniLM cross-encoder run using the MS-MARCO passage-ranking benchmark",
+    "reason": "Explain dataset and avoid implying model expansion."
+  },
+  {
+    "file": "additional_evidence.tex",
+    "before": "\\caption{Archived two-stage scalar-baseline observations.",
+    "after": "\\caption{Archived two-stage scalar-baseline observations; orig is full text, noisy is corrupted/masked input, and short is the first sentence.",
+    "reason": "Define row variants independently."
+  },
+  {
+    "file": "supplement.tex",
+    "before": "Pooled raw AST code-value overlap recall",
+    "after": "Pooled raw abstract syntax tree (AST) code-value overlap recall",
+    "reason": "Expand program-representation abbreviation."
+  },
+  {
+    "file": "related_context.tex",
+    "before": "uses partial SQL execution",
+    "after": "uses partial Structured Query Language (SQL) execution",
+    "reason": "Expand SQL independently in supplement."
+  },
+  {
+    "file": "main.tex",
+    "before": "(formed after masking lexical details)",
+    "after": "(formed after masking numerical expressions)",
+    "reason": "Match archived grouping implementation: digits and number words are masked."
+  },
+  {
+    "file": "main.tex",
+    "before": "schema hits (correct top-ranked templates), coarse readiness,",
+    "after": "schema hits (correct top-ranked templates), coarse readiness (coverage/type checks),",
+    "reason": "Explain coarse readiness at first main-text occurrence."
+  },
+  {
+    "file": "main.tex",
+    "before": "Each pair shows greedy $\\rightarrow$ exact maximum-sum assignment.",
+    "after": "Each pair shows greedy $\\rightarrow$ exact maximum-sum assignment. Typed and Rich denote the typed-token and richer contextual mention parsers; Ordinal uses numerical ranks of type preferences, Context uses contextual scores, and No marker bonus removes percent/currency bonuses.",
+    "reason": "Explain factorial table configuration names from archived protocol."
+  },
+  {
+    "file": "main.tex",
+    "before": "with Fleiss' $\\kappa=0.371$",
+    "after": "with chance-corrected inter-rater agreement, Fleiss' $\\kappa=0.371$",
+    "reason": "Explain agreement statistic at first main-text use."
+  },
+  {
+    "file": "supplement.tex",
+    "before": "The core benchmark, NLP4LP,",
+    "after": "Reference or gold denotes stored benchmark annotations, not independent semantic truth. Supplied-slot grounding uses a provided parameter inventory; eligible slots are the reference scalar keys present in the retrieved schema. The core benchmark, NLP4LP,",
+    "reason": "Explain assistance and eligibility independently in supplement."
+  },
+  {
+    "file": "supplement.tex",
+    "before": "requires both per-query fractions to reach 0.8;",
+    "after": "requires both per-query fractions to reach 0.8 (empty inventories fail);",
+    "reason": "Preserve zero-inventory qualification in independent metric introduction."
+  },
+  {
+    "file": "reference_conventions.tex",
+    "before": "The historical numerical tolerance remains",
+    "after": "With $\\hat y$ the predicted value and $y$ the reference value, the historical numerical tolerance remains",
+    "reason": "Define scalar prediction/reference symbols independently."
+  },
+  {
+    "file": "preserved_results_details.tex",
+    "before": "(RSS, memory held in physical RAM)",
+    "after": "(RSS, physical memory use)",
+    "reason": "Avoid introducing another unnecessary acronym."
+  },
+  {
+    "file": "common18_overview.tex",
+    "before": "project reconstruction of PaMOP, adapted OptMATH and ORLM models,",
+    "after": "project reconstruction of the partition-based formulation system PaMOP, adapted OptMATH and ORLM modeling models,",
+    "reason": "Explain proper system names locally without altering provenance."
+  },
+  {
+    "file": "common18_overview.tex",
+    "before": "adapted OptMATH and ORLM modeling models,",
+    "after": "adapted OptMATH and ORLM models for optimization modeling,",
+    "reason": "Keep functional explanation grammatical."
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before": "Public common-18 numeric tokens/dispositions",
+    "after": "Public numeric tokens/dispositions for the shared 18-problem formulation subset (common-18)",
+    "reason": "Define common-18 at its actual first supplement body occurrence."
+  },
+  {
+    "file": "relationship_supplement.tex",
+    "before": "Valid-label distributions after Recovery v2.1.",
+    "after": "Valid-label distributions after Recovery v2.1, the final archived repair/replacement stage.",
+    "reason": "Identify local recovery-version label."
+  },
+  {
+    "file": "additional_evidence.tex",
+    "before": "The role/quantity Stage-A audit examines",
+    "after": "The role/quantity separability audit (also labeled Stage A in its own archive) examines",
+    "reason": "Distinguish same-named audit from pre-ratio candidate cache."
+  },
+  {
+    "file": "main.tex",
+    "before": "term frequency--inverse document frequency. Random",
+    "after": "term frequency--inverse document frequency; BM25 is a lexical ranker and BGE-M3 a dense text encoder. Random",
+    "reason": "Explain all method labels for standalone retrieval table reading."
+  },
+  {
+    "file": "reproduction_map.tex",
+    "before": "The four headline metric comma-separated values (CSV) files match",
+    "after": "The four headline metric files, stored as comma-separated values (CSV), match",
+    "reason": "Keep first-use file-format expansion grammatical."
+  },
+  {
+    "file": "relationship_supplement.tex",
+    "before": "Table~\\ref{tab:relationship-requests} records the HTTP attempts.",
+    "after": "Table~\\ref{tab:relationship-requests} records the Hypertext Transfer Protocol (HTTP) attempts.",
+    "reason": "Define transport acronym in running text even when caption floats to following page."
+  },
+  {
+    "file": "additional_evidence.tex",
+    "before": "Ordinary-ready counts in the retained legacy campaign; denominator 331 for every cell.",
+    "after": "Ordinary-ready counts in the retained legacy campaign; denominator 331 for every cell. IR denotes intermediate representation.",
+    "reason": "Define semantic-IR independently in supplement table."
+  },
+  {
+    "file": "additional_evidence.tex",
+    "before": "This is a separate historical configuration cohort.}",
+    "after": "This is a separate historical configuration cohort; IR denotes intermediate representation.}",
+    "reason": "Keep later standalone legacy table readable."
+  },
+  {
+    "file": "d1_contrasts.tex",
+    "before": "D1 contrast pairs, part 1. IDs omit",
+    "after": "D1 contrast pairs, part 1. C/I mean CORRECT/INCORRECT relative to the fixed candidate. IDs omit",
+    "reason": "Define contrast-label shorthand in first table caption."
+  },
+  {
+    "file": "d1_contrasts.tex",
+    "before": "D1 contrast pairs, part 2. Together",
+    "after": "D1 contrast pairs, part 2. C/I mean CORRECT/INCORRECT relative to the fixed candidate. Together",
+    "reason": "Define contrast-label shorthand in second table caption."
+  },
+  {
+    "file": "supplement.tex",
+    "before": "Pooled raw abstract syntax tree (AST) code-value overlap recall is $0.7501$; pooled automatic text-support recall is $0.8118$ (complete-instance rate $0.5910$). The saved automatic category counts classify $2{,}310/31{,}736=7.28\\%$ of code-side values across the 1,000 instances as implementation, solver/API, index/loop or array/dimension constants. This is distinct from the 150-instance classifier comparison (seed 20260815). ",
+    "after": "Pooled raw abstract syntax tree (AST) code-value overlap recall is $0.7501$; pooled automatic text-support recall is $0.8118$ (complete-instance rate $0.5910$). The saved automatic category counts classify $2{,}310/31{,}736=7.28\\%$ of code-side values across the 1,000 instances as implementation, solver/API, index/loop or array/dimension constants. This is distinct from the 150-instance classifier comparison (seed 20260815).",
+    "reason": "Remove inherited trailing space on the edited AST-definition line; rendered text unchanged."
+  },
+  {
+    "file": "supplement.tex",
+    "before": "Supplied-slot grounding uses a provided parameter inventory; eligible slots are the reference scalar keys present in the retrieved schema.",
+    "after": "Supplied-slot grounding uses a provided parameter inventory; in the main benchmark, eligible slots are the reference scalar keys present in the retrieved schema.",
+    "reason": "Scope the introductory eligibility summary to the main benchmark; the factorial metadata-only inventory remains distinct."
+  }
+]

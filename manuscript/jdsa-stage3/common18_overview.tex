@@ -1,11 +1,11 @@
 \subsection{Formulation Execution and Objective Agreement}
 \label{subsec:exp_external}
-The same 18 historically selected NLP4LP problems were attempted by a project reconstruction of PaMOP, adapted OptMATH and ORLM models, and zero-shot GPT-5.4. Table~\ref{tab:ext-outcomes} preserves the original comparison with corrected terminal-objective accounting. Different prompts, weights, correction budgets and solver interfaces prevent equal-treatment ranking; the scalar-only pipeline is outside these columns. The following sections retain the full configurations, failures, conditional denominators and PaMOP precision withholding.
+The same 18 historically selected NLP4LP problems (the common-18 subset) were attempted by a project reconstruction of the partition-based formulation system PaMOP, adapted OptMATH and ORLM models for optimization modeling, and zero-shot GPT-5.4. Table~\ref{tab:ext-outcomes} preserves the original comparison with corrected terminal-objective accounting. Different prompts, weights, correction budgets and solver interfaces prevent equal-treatment ranking; the scalar-only pipeline is outside these columns. The following sections retain the full configurations, failures, conditional denominators and PaMOP precision withholding.
 
 \begin{table}[t]
 \centering
   \renewcommand{\arraystretch}{1.18}\small
-\caption{Offline reaggregation of archived common-18 records. Every system attempted generation on the same 18 cases. Parse denotes a retained AMPL parse or Python code extraction; Run denotes successful process/solve completion. Obj. counts valid numerical text extractions among successful runs, and Ref. counts available reference objectives among those extractions. Agreement is conditional on classifiable executed reference comparisons. W/H means withheld for insufficient precision; N/A means an unavailable execution environment.}
+\caption{Offline reaggregation of archived common-18 records. Every system attempted generation on the same 18 cases. Parse denotes a retained parse in the AMPL algebraic modeling language or Python code extraction; Run denotes successful process/solve completion. Obj. counts valid numerical text extractions among successful runs, and Ref. counts available reference objectives among those extractions. Agreement is conditional on classifiable executed reference comparisons. W/H means withheld for insufficient precision; N/A means an unavailable execution environment.}
 \label{tab:ext-outcomes}
 \setlength{\tabcolsep}{2.5pt}
 \begin{tabular}{@{}lccccc@{}}
