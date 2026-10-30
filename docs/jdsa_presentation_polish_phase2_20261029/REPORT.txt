@@ -1,0 +1,95 @@
+JDSA PRESENTATION POLISH — PHASE 2
+Starting commit: ae9eb9c14c53c687dafe20d9d774a419d198424d.
+Branch: manuscript/jdsa-presentation-polish-20261029.
+Worktree: /home/soroush/combinatorial-opt-agent-jdsa-presentation-polish.
+Canonical source: manuscript/jdsa-stage3/main.tex.
+Local validation: complete. Final commit SHA and confirmed push are reported in the final task response; this report is written before that commit.
+
+Baseline investigation:
+The clean worktree and remote presentation branch both pointed exactly to the required Phase 1 commit. That commit was confirmed as an ancestor. No branch or worktree was created, no main changes were imported, and no unrelated changes were present in the presentation worktree. The original checkout, other worktrees, evidence, historical releases and Phase 1 records remain intact.
+The entire 523-line current manuscript was read before editing, then reviewed in full again after rewriting. Relevant supplementary factorial/search-retention, reference-assistance/reproduction, G1–G3, and semantic-evidence sections were consulted to protect qualifications. All 16 revised article pages were rendered and inspected.
+
+Exact changed files:
+- manuscript/jdsa-stage3/JDSA_Stage3_Submission_Source.zip
+- manuscript/jdsa-stage3/README.md
+- manuscript/jdsa-stage3/Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf
+- manuscript/jdsa-stage3/SHA256SUMS.txt
+- manuscript/jdsa-stage3/main.tex
+- docs/jdsa_presentation_polish_phase2_20261029/EDITORIAL_LOG.json
+- docs/jdsa_presentation_polish_phase2_20261029/PUBLIC_ACCESS.json
+- docs/jdsa_presentation_polish_phase2_20261029/REPORT.txt
+- docs/jdsa_presentation_polish_phase2_20261029/VALIDATION.json
+- docs/jdsa_presentation_polish_phase2_20261029/verify_phase2.py
+
+Abstract:
+Before: 219 words. After: 211 words (whitespace-separated LaTeX prose tokens, as in Phase 1). The abstract remains within 150–250 words; all six keywords are unchanged. All abstract counts, endpoints, confounding, assistance and exposure restrictions, semantic-evidence boundaries, and reconstruction limits remain.
+
+Section-by-section editorial summary:
+- Abstract: clarify the diagnostic question, arrange results before contribution and limitations, and replace cumbersome phrases such as “readiness-passing population.”
+- Introduction: connect template retrieval and slot filling more directly, distinguish the research questions from the numbered contributions, shorten repeated RQ explanations, and strengthen the transition to Related Work. All three research questions are verbatim. Define AI at first body use.
+- Related Work: improve transitions between grounding, formulation systems, evaluation endpoints, and search. Consolidate repeated scope/priority disclaimers while preserving every citation and the distinctions between assisted grounding, autonomous formulation, BIND interventions, synthesis frameworks, and semantic equivalence. Define LLM at first use.
+- Problem setting/evaluation: split the long eligible-inventory definition; clarify reference use during prediction, metadata fallback, and partially assisted controls. Explain macro-averaging, zero denominators, incompatible/unknown types, conditional Exact20, and complete agreement more directly. All formal definitions, conditions, thresholds and denominators retain their meaning. Define TF–IDF at first body use, CSV at first use, and standardize the narrative shorthand “strict readiness.”
+- Methods: use direct descriptions of extraction, compatibility ordering and replay; distinguish whole-procedure comparisons from the separate fixed-score factorial. Retain every design factor, population, exclusion, retrospective statistical family, bootstrap setting and provenance restriction.
+- Results: lead with the important paired comparisons and readiness/complete-agreement gap. Remove only the prose transcription of the four retrieval averages and six grounding success counts, all preserved in unchanged Tables 1 and 5. Retain statistical results, conditional populations, 41-versus-40 eligibility, no-net-gain decoder findings, inactive constraints, and search-retention failures.
+- Discussion: interpret the diagnostic levels instead of repeating the results; retain attribution limits and the distinction between finite negative observations and general ineffectiveness. Preserve prior-work attribution and the unmeasured status of deployment aids.
+- Limitations/reanalysis: organize reference validity, dependence and unrecovered records in direct sentences. Preserve every material restriction, missing record type, access boundary, and uncompleted validation requirement. Keep the exact Phase 1 evidence URL.
+- Conclusion: lead with the interpretive lesson, retain every headline count and the separate 49-query population, and close with the methodological contribution and its applicability rather than repeating the abstract’s setup.
+
+Repetitions removed and where the full meaning remains:
+- Repeated RQ-by-RQ explanation in the Introduction: the unchanged numbered RQs remain immediately above; the population/design paragraph and Section 4.3 preserve the 331-query versus 49-query distinction and non-independent status.
+- A second explanation of readiness-conditioned agreement in contribution 1: complete definitions remain in Section 3.4 and the seven-of-265 analysis remains in Section 5.2/Table 3.
+- Repeated priority/new-algorithm disclaimers in Related Work and Discussion: the Introduction explicitly preserves no priority for component-level evaluation and no new retrieval/matching algorithm; Sections 2.1–2.3 retain prior binding work and classical assignment attribution.
+- Four variant-average numbers repeated from Table 1: the unchanged Avg. column retains 0.9013, 0.8640, 0.8469 and 0.8328 with their method associations; Section 5.1 still states calculation before rounding.
+- Six method counts repeated from Table 5: the unchanged F^G column retains 7/331, 40/331, 37/331, 35/331, 46/331 and 9/331. Section 5.3 still reports the largest count, paired gains/losses, and eligible-only exception.
+- Repeated procedure trade-off and slot-level/no-net-instance-gain narration in Section 6.1: full numerical and statistical interpretation remains in Sections 5.3–5.3.2; the discussion retains why denominators and fixed-score controls matter.
+- General assistance, semantic and reconstruction reminders remain short in the Introduction/Conclusion; the detailed qualifications remain visible in Sections 3.1–3.4, 4.3–4.4 and 6.2–6.4, with the same supplementary cross-references.
+
+Before-and-after examples (exact excerpts):
+- Abstract: “2.64\% of the readiness-passing population” → “2.64\% of ready outputs”.
+- Reference access: “Reference access must be distinguished from reference scoring.” → “The main four-arm and matched-baseline experiments use reference information during prediction, not only for scoring.”
+- Statistics: “All inference is retrospective.” → “All statistical inference is retrospective.”
+- Introduction: “This controlled scope permits analysis of the relation between intermediate checks without claiming autonomous model formulation.” → “This setting supports analysis of intermediate checks under supplied structure, rather than evaluation of autonomous model formulation.”
+- Conclusion: “The three research questions support a focused diagnostic conclusion.” → “Readiness must be interpreted alongside complete scalar agreement.”
+EDITORIAL_LOG.json records all 67 substantive paragraph rewrites with the exact Phase 1 line, full before/after text, rationale, and preservation location. No unlogged source change exists.
+
+Scientific preservation:
+- All 11 displayed equation environments, the algorithm, six complete table environments (including every cell, boldface command, caption and note), and the figure environment are byte-identical to Phase 1.
+- All inline mathematical expressions are retained except the ten duplicate literal values explicitly logged above and preserved in unchanged tables. Per-paragraph numerical-token checks exclude only method names and RQ identifiers; they permit no new numbers and only those ten logged duplicate removals.
+- All research questions, citation commands and their order, reference targets, labels, public URL commands and pinned identifiers are unchanged.
+- Every supplementary source, bibliography entry, generated bibliography, class/style file, and figure asset is unchanged. ESM_1.pdf is byte-identical, with every page rendering and all extracted text unchanged.
+- The complete acknowledgment paragraph and all back matter, including funding, author contributions, ethics, availability and both AI disclosures, are byte-identical.
+- Scientific meaning, numerical results, comparisons, statistical conclusions, evidence classifications, and experimental conclusions are preserved. No experiments, model inference, solver execution, historical-prediction regeneration or evidence-file edits occurred.
+
+Compilation and validation:
+- Complete paired pdfLaTeX/BibTeX build succeeded using the existing build.sh. Main article remains 16 pages; supplement remains 38 pages. No page-count target or template change was introduced.
+- Independent extraction/build of the refreshed source ZIP reproduces both PDFs byte for byte. The archive contains the matching sources, PDFs, bibliography outputs and build files; checksums match.
+- Final logs contain no undefined references/citations, multiply-defined labels, missing characters, or overfull boxes. BibTeX logs are clean.
+- All 28 article and 23 supplement entries are cited and linked. All 197 internal named link annotations and all 31 companion-document destinations resolve. The article has 77 external annotation rectangles because line wrapping can split a URL; the destination set is exactly unchanged.
+- Every visible article URL and pinned hash matches the corresponding PDF link annotation. Phase 1 literal underscore/angle-bracket rendering and column-safe URL breaks remain intact.
+- Full-page visual inspection found readable text, tables, equations and URLs without clipping. Source comparison and the numerical checks cover all findings; the revised prose was also reviewed for semantic equivalence and coherence.
+- 524 automated editorial/build checks passed. Results are recorded in VALIDATION.json.
+- Retained nonfatal notices: the inherited main bookmark-level warning, 52 main underfull-box notices (Phase 1: 56), and 39 supplement underfull notices. These are not broken cross-references or overfull/clipped content.
+
+Public access of exact evidence locations (before editing):
+- https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0
+  HTTP 200; final URL unchanged; expected release/revision identity present. none; fresh session, environment credentials disabled.
+- https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0
+  HTTP 200; final URL unchanged; expected release/revision identity present. none; fresh session, environment credentials disabled.
+No authentication, destination substitution or root-repository fallback was used. Both exact pinned locations were independently accessible.
+
+Commands and build locations:
+KEEP_BUILD=1 OUTPUT_DIR=/tmp/jdsa-presentation-phase2-20261029/output sh manuscript/jdsa-stage3/build.sh
+Build directory: /tmp/jdsa-build.f958kd
+python3 manuscript/jdsa-stage3/package_source.py
+KEEP_BUILD=1 sh /tmp/jdsa-presentation-phase2-20261029/package-check/build.sh
+python3 docs/jdsa_presentation_polish_phase2_20261029/verify_phase2.py /tmp/jdsa-build.f958kd /tmp/jdsa-presentation-phase2-20261029/package-check
+git diff --check
+
+Remaining work:
+- No blocking Phase 2 issue remains.
+- Phase 3: table boldface and caption consistency, figure presentation, and float proximity to the relevant prose remain reserved. The existing Figure 1 caption’s terminal punctuation is unchanged for that phase.
+- Phase 4: perform the final submission audit and integration, including a fresh publication/link-status check and any final handling of the inherited bookmark warning. No final submission audit or merge into main was performed here.
+- Phase 1’s note that COLM is pre-proceedings remains unchanged; no bibliographic metadata was updated in Phase 2.
+
+Publication boundary:
+Commit and push only to the existing presentation-polish branch; retain main at its existing commit. The final task response records the actual final SHA and remote verification. Phase 3 is not started.

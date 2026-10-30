@@ -1,0 +1,16 @@
+[
+  {
+    "requested_url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0",
+    "status": 200,
+    "resolved_url": "https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0",
+    "authentication": "none; fresh session, environment credentials disabled",
+    "expected_identity_present": true
+  },
+  {
+    "requested_url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0",
+    "status": 200,
+    "resolved_url": "https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0",
+    "authentication": "none; fresh session, environment credentials disabled",
+    "expected_identity_present": true
+  }
+]

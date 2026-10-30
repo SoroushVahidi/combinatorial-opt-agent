@@ -14,6 +14,8 @@ Scientific sources are taken from correction commit `d3583fa28fcdb87f7a446f764ca
 
 Phase 1 presentation revision (2026-10-29): branch `manuscript/jdsa-presentation-polish-20261029`, based on verified main `1e90184923c753ed18652951f2037525fffad383`. Visible external links, bibliography presentation and the Newark postal-address order are polished; scientific content is unchanged. The PDF pair, generated bibliographies, source ZIP and checksums match these sources. This branch awaits Phase 4 integration into main. Validation and the exact change inventory are in `docs/jdsa_presentation_polish_phase1_20261029/` at the repository root.
 
+Phase 2 editorial revision (2026-10-29): continues the same presentation-polish branch from Phase 1 commit `ae9eb9c14c53c687dafe20d9d774a419d198424d`. The abstract and main-text prose are polished, with every substantive rewrite logged in `docs/jdsa_presentation_polish_phase2_20261029/EDITORIAL_LOG.json`. Scientific definitions, results, research questions, tables, captions, bibliography, public destinations, acknowledgments and declarations remain unchanged. Phase 3 presentation work and Phase 4 integration are pending.
+
 ## Clean build and source upload
 
 Install pdfLaTeX/BibTeX and standard TeX Live packages: graphicx, amsmath, amssymb, booktabs, tabularx, multirow, algorithm, algorithmicx, algpseudocode, xurl, microtype, placeins, xr-hyper, hyperref, TikZ/PGF and standalone.

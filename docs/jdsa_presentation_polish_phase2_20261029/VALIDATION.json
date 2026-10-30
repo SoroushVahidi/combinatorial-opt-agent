@@ -1,0 +1,2166 @@
+{
+  "baseline": "ae9eb9c14c53c687dafe20d9d774a419d198424d",
+  "build_directory": "/tmp/jdsa-build.f958kd",
+  "abstract_words_before_after": [
+    219,
+    211
+  ],
+  "keywords": 6,
+  "logged_rewrites": 67,
+  "protected_environments": {
+    "equation": 11,
+    "algorithm": 1,
+    "figure": 1,
+    "table": 6
+  },
+  "omitted_duplicate_prose_values": {
+    "283": {
+      "0.9013": 1,
+      "0.8640": 1,
+      "0.8469": 1,
+      "0.8328": 1
+    },
+    "386": {
+      "7": 1,
+      "40": 1,
+      "37": 1,
+      "35": 1,
+      "46": 1,
+      "9": 1
+    }
+  },
+  "pdfs": {
+    "Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf": {
+      "pages_before_after": [
+        16,
+        16
+      ],
+      "cited_references": 28,
+      "links_by_kind": {
+        "2": 77,
+        "4": 73,
+        "3": 20
+      },
+      "sha256": "ca4147bc2f7e8b62d2c6c4dedf8dc7dae78dd9363af9230655e4a4a0ebd51d07",
+      "warnings": [
+        "Package hyperref Warning: Difference (4) between bookmark levels is greater "
+      ],
+      "underfull_notices": 52
+    },
+    "ESM_1.pdf": {
+      "pages_before_after": [
+        38,
+        38
+      ],
+      "cited_references": 23,
+      "links_by_kind": {
+        "2": 51,
+        "4": 124,
+        "3": 11
+      },
+      "sha256": "2a07d7efbae43f533565cecaed855125d8f4187311331f97fa63048724ce2c29",
+      "warnings": [],
+      "underfull_notices": 39
+    }
+  },
+  "status": "PASS",
+  "checks_passed": 524,
+  "checks": [
+    {
+      "check": "logged baseline text P2-040",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-040",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-040",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-055",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-055",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-055",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-057",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-057",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-057",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-059",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-059",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-059",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-068",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-068",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-068",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-073",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-073",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-073",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-074",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-074",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-074",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-075",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-075",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-075",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-078",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-078",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-078",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-080",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-080",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-080",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-086",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-086",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-086",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-088",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-088",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-088",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-092",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-092",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-092",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-094",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-094",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-094",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-096",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-096",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-096",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-098",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-098",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-098",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-102",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-102",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-102",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-114",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-114",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-114",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-118",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-118",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-118",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-123",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-123",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-123",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-128",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-128",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-128",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-130",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-130",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-130",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-132",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-132",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-132",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-136",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-136",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-136",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-139",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-139",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-139",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-156",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-156",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-156",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-172",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-172",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-172",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-182",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-182",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-182",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-200",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-200",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-200",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-206",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-206",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-206",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-212",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-212",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-212",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-214",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-214",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-214",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-218",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-218",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-218",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-225",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-225",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-225",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-261",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-261",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-261",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-265",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-265",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-265",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-267",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-267",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-267",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-269",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-269",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-269",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-273",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-273",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-273",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-275",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-275",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-275",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-277",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-277",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-277",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-283",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-283",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-283",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-307",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-307",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-307",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-336",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-336",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-336",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-355",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-355",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-355",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-357",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-357",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-357",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-359",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-359",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-359",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-386",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-386",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-386",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-388",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-388",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-388",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-419",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-419",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-419",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-445",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-445",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-445",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-448",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-448",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-448",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-450",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-450",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-450",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-455",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-455",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-455",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-457",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-457",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-457",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-459",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-459",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-459",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-463",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-463",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-463",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-466",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-466",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-466",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-469",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-469",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-469",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-472",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-472",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-472",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-476",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-476",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-476",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-478",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-478",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-478",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-480",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-480",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-480",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-484",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-484",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-484",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-486",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-486",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-486",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-490",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-490",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-490",
+      "pass": true
+    },
+    {
+      "check": "logged baseline text P2-492",
+      "pass": true
+    },
+    {
+      "check": "rationale and preservation location P2-492",
+      "pass": true
+    },
+    {
+      "check": "numerical findings preserved P2-492",
+      "pass": true
+    },
+    {
+      "check": "every source edit is logged",
+      "pass": true
+    },
+    {
+      "check": "byte-identical complete equation environments",
+      "pass": true
+    },
+    {
+      "check": "byte-identical complete algorithm environments",
+      "pass": true
+    },
+    {
+      "check": "byte-identical complete figure environments",
+      "pass": true
+    },
+    {
+      "check": "byte-identical complete table environments",
+      "pass": true
+    },
+    {
+      "check": "all mathematical notation preserved except logged duplicate table values",
+      "pass": true
+    },
+    {
+      "check": "exact sequence of citations",
+      "pass": true
+    },
+    {
+      "check": "exact sequence of cross-references",
+      "pass": true
+    },
+    {
+      "check": "exact sequence of public URLs and pinned identifiers",
+      "pass": true
+    },
+    {
+      "check": "exact sequence of labels",
+      "pass": true
+    },
+    {
+      "check": "exact sequence of research questions",
+      "pass": true
+    },
+    {
+      "check": "exact sequence of keywords",
+      "pass": true
+    },
+    {
+      "check": "front matter, author identity and URL configuration preserved",
+      "pass": true
+    },
+    {
+      "check": "acknowledgments and post-abstract configuration preserved",
+      "pass": true
+    },
+    {
+      "check": "all back matter, funding, contributions, disclosures and availability statements exact",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/bibliographic/template source references.bib",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/bibliographic/template source ready_conditioned_rows.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/bibliographic/template source supplement.bbl",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/bibliographic/template source sn-basic.bst",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/bibliographic/template source reproduction_map.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/bibliographic/template source main.bbl",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/bibliographic/template source reference_conventions.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/bibliographic/template source supervision_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/bibliographic/template source grounding_diagnostics.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/bibliographic/template source pipeline_figure.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/bibliographic/template source closed_audits.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/bibliographic/template source relationship_supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/bibliographic/template source preserved_results_details.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/bibliographic/template source Fig1.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/bibliographic/template source supporting_core.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/bibliographic/template source common18_overview.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/bibliographic/template source supplement.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/bibliographic/template source llm_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/bibliographic/template source orcidlink.sty",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/bibliographic/template source relationship_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/bibliographic/template source sn-jnl.cls",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/bibliographic/template source additional_evidence.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/bibliographic/template source d1_contrasts.tex",
+      "pass": true
+    },
+    {
+      "check": "unchanged supplementary/bibliographic/template source related_context.tex",
+      "pass": true
+    },
+    {
+      "check": "abstract word limit",
+      "pass": true
+    },
+    {
+      "check": "keyword count",
+      "pass": true
+    },
+    {
+      "check": "independent source-ZIP build byte identity main",
+      "pass": true
+    },
+    {
+      "check": "no unresolved/overfull LaTeX diagnostics main",
+      "pass": true
+    },
+    {
+      "check": "clean BibTeX log main",
+      "pass": true
+    },
+    {
+      "check": "all printed bibliography entries cited main",
+      "pass": true
+    },
+    {
+      "check": "all bibliography entries linked main",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.kadioglu2024ner4opt",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.ramamonjison2022autoformulation",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.ramamonjison2023nl4opt",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.deng2021strug",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.wang2020ratsql",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.gao2026models",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:subsection.19",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:section.11",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:section.15",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:section.30",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:section.39",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:section.58",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.deng2021strug",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.wang2020ratsql",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.almasian2023cqe",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.roy2017udg",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.gao2026models",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.kadioglu2024ner4opt",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.ramamonjison2023nl4opt",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.pan2025pamop",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.huang2025orlm",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.xiao2026deepor",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.ahmed2025opt2code",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main:table.4",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main:section.104",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.refai2026component",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.chen2026optengine",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.astorga2025autoformulation",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.punyakanok2004ilp",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.scholak2021picard",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.zhai2025equivamap",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.kuhn1955assignment",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.nlp4lp_dataset",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:subsection.61",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:equation.22",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:equation.23",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:equation.26",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.nlp4lp_dataset",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:subsection.19",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.chen2024m3embedding",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.deerwester1990lsa",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.pedregosa2011sklearn",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.robertson2009bm25",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main:table.6",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.lhoest2021datasets",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:equation.18",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:subsection.21",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:algorithm.34",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:figure.36",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main:subsection.26",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.holm1979followup",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main:table.17",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:subsection.62",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:table.42",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:table.45",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:table.47",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:equation.25",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:equation.29",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:table.50",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:subsection.51",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main:section.9",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:table.53",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:equation.24",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:table.56",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:subsection.37",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main:subsection.26",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:table.45",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.gao2026models",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.refai2026component",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.chen2026optengine",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:cite.zhai2025equivamap",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main:subsection.63",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main:subsection.99",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main:section.40",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main:subsection.98",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main:subsection.74",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:subsection.19",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main:subsection.27",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main:section.56",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main:subsection.72",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:subsection.62",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:subsection.62",
+      "pass": true
+    },
+    {
+      "check": "internal named destination main:subsection.61",
+      "pass": true
+    },
+    {
+      "check": "companion named destination main:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds main",
+      "pass": true
+    },
+    {
+      "check": "exact external destination set main",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-evidence-v2.0.0",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://huggingface.co/datasets/SoroushVahidi/nl-optimization-instantiation-metrics/tree/f94012872211ab6a828147bb138fbe8ab695b982/releases/jdsa-evidence-v2.0.0",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://github.com/SoroushVahidi/combinatorial-opt-agent",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://github.com/SoroushVahidi/combinatorial-opt-agent/releases/tag/jdsa-manuscript-v1.0.0",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://github.com/SoroushVahidi/combinatorial-opt-agent/tree/main/manuscript/jdsa-stage3",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://huggingface.co/datasets/udell-lab/NLP4LP",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://proceedings.mlr.press/v235/ahmaditeshnizi24a.html",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.1016/j.nlp.2025.100185",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.18653/v1/2023.emnlp-main.793",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://proceedings.mlr.press/v267/astorga25a.html",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.18653/v1/2024.findings-acl.137",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://proceedings.mlr.press/v306/chen26o.html",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.1002/(SICI)1097-4571(199009)41:6<391::AID-ASI1>3.0.CO;2-9",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.18653/v1/2021.naacl-main.105",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://proceedings.colm.cc/paper_files/paper/2026/hash/6feb9b30798abcfae937760d183605e1-Abstract-Conference.html",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://www.jstor.org/stable/4615733",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.1287/opre.2024.1233",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.1007/s10601-024-09376-5",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.1002/nav.3800020109",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.18653/v1/2021.emnlp-demo.21",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://proceedings.mlr.press/v267/lu25o.html",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.24963/ijcai.2025/296",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://aclanthology.org/C04-1197/",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.18653/v1/2022.emnlp-industry.4",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://proceedings.mlr.press/v220/ramamonjison23a.html",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.1016/j.neucom.2026.133981",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.1561/1500000019",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.1609/aaai.v31i1.10959",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.18653/v1/2021.emnlp-main.779",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.18653/v1/2020.acl-main.677",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://doi.org/10.1609/aaai.v40i40.40699",
+      "pass": true
+    },
+    {
+      "check": "printed URL/hash matches annotation https://proceedings.mlr.press/v267/zhai25a.html",
+      "pass": true
+    },
+    {
+      "check": "independent source-ZIP build byte identity supplement",
+      "pass": true
+    },
+    {
+      "check": "no unresolved/overfull LaTeX diagnostics supplement",
+      "pass": true
+    },
+    {
+      "check": "clean BibTeX log supplement",
+      "pass": true
+    },
+    {
+      "check": "all printed bibliography entries cited supplement",
+      "pass": true
+    },
+    {
+      "check": "all bibliography entries linked supplement",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:section.2",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:section.9",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.10",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.15",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:section.18",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:section.25",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.26",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.27",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.31",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.34",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.37",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.39",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:section.40",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.41",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.46",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.49",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.53",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:section.56",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:section.59",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.60",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.63",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.69",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.72",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:section.73",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.74",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.75",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.76",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.77",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:section.78",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.79",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.84",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.87",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.92",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.93",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.96",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:section.97",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.98",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.99",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:section.104",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.105",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.106",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.4",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.8",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:section.104",
+      "pass": true
+    },
+    {
+      "check": "companion named destination supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "companion named destination supplement:equation.27",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.12",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.14",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.17",
+      "pass": true
+    },
+    {
+      "check": "companion named destination supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.77",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.20",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.22",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.24",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.74",
+      "pass": true
+    },
+    {
+      "check": "companion named destination supplement:table.42",
+      "pass": true
+    },
+    {
+      "check": "companion named destination supplement:subsection.37",
+      "pass": true
+    },
+    {
+      "check": "companion named destination supplement:table.56",
+      "pass": true
+    },
+    {
+      "check": "companion named destination supplement:subsubsection.54",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.huang2017beamfollowup",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.27",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.29",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.33",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.36",
+      "pass": true
+    },
+    {
+      "check": "companion named destination supplement:equation.28",
+      "pass": true
+    },
+    {
+      "check": "companion named destination supplement:equation.29",
+      "pass": true
+    },
+    {
+      "check": "companion named destination supplement:subsection.60",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.63",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.43",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.45",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.48",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.43",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.pan2025pamop",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.huang2025orlm",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.xiao2026deepor",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.ding2026orr1",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.52",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.55",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.58",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.62",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.65",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.67",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:equation.68",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.71",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.22",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.24",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.holm1979followup",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.17",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.17",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.20",
+      "pass": true
+    },
+    {
+      "check": "companion named destination supplement:table.42",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.14",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.81",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.83",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.86",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.77",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.89",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.91",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.27",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.38",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.95",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.99",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:subsection.72",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.81",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:section.40",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.101",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.103",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.101",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:table.4",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.ahmaditeshnizi2024optimus_icml",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.pan2025pamop",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.huang2025orlm",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.lu2025optmath",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.xiao2026deepor",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.ahmed2025opt2code",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.astorga2025autoformulation",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.xiao2024chainofexperts",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.yu2026uncertainty",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.jiang2025llmopt",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.zhang2024optllm",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.chen2025solver",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.ding2026orr1",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.li2026solver",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.xie2026escaping",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.zhang2026dual",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.kong2025alphaopt",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.yang2026orthought",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.affolter2019nli",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.yu2018spider",
+      "pass": true
+    },
+    {
+      "check": "internal named destination supplement:cite.miplibnl2026",
+      "pass": true
+    },
+    {
+      "check": "all text within page bounds supplement",
+      "pass": true
+    },
+    {
+      "check": "exact external destination set supplement",
+      "pass": true
+    },
+    {
+      "check": "complete extracted supplement text unchanged",
+      "pass": true
+    },
+    {
+      "check": "every supplement page renders identically",
+      "pass": true
+    },
+    {
+      "check": "ZIP CRC",
+      "pass": true
+    },
+    {
+      "check": "ZIP members match edited source/artifacts",
+      "pass": true
+    },
+    {
+      "check": "checksum Retrieval_Assisted_Scalar_Grounding_for_Natural_Language_Optimization_A_Diagnostic_Study.pdf",
+      "pass": true
+    },
+    {
+      "check": "checksum ESM_1.pdf",
+      "pass": true
+    },
+    {
+      "check": "checksum JDSA_Stage3_Submission_Source.zip",
+      "pass": true
+    }
+  ]
+}
